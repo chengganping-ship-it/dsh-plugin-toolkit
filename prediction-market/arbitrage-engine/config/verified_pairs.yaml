@@ -1,0 +1,49 @@
+# Verified Cross-Market Pairs
+# ==========================
+# CRITICAL: These require MANUAL verification of resolution rules on BOTH exchanges.
+# Without Kalshi API key, these remain candidates for shadow analysis once key is acquired.
+#
+# To verify:
+#   1. Read Polymarket resolution criteria (hover "Resolution" on market page)
+#   2. Read Kalshi resolution criteria (click "Market Info" → "Resolution Sources")
+#   3. Confirm: same data source, same timezone, same deadline, same boundary conditions
+#   4. Update status to "verified" with your name and date
+
+pairs:
+  # === POLITICS - High liquidity, likely matchable ===
+  - id: trump_2024_winner
+    status: candidate  # NOT YET VERIFIED
+    polymarket_question_contains: "Trump win"
+    polymarket_condition_id: ""
+    kalshi_ticker: ""
+    resolution_notes: ""
+    max_exposure_usd: 0  # 0 = not approved for trading
+    verified_by: ""
+    verified_at: ""
+
+  - id: biden_2024_winner
+    status: candidate
+    polymarket_question_contains: "Biden win"
+    polymarket_condition_id: ""
+    kalshi_ticker: ""
+    resolution_notes: ""
+    max_exposure_usd: 0
+    verified_by: ""
+    verified_at: ""
+
+  - id: fed_rate_dec_2025
+    status: candidate
+    polymarket_question_contains: "Fed rate"
+    polymarket_condition_id: ""
+    kalshi_ticker: ""
+    resolution_notes: ""
+    max_exposure_usd: 0
+    verified_by: ""
+    verified_at: ""
+
+  # === INSTRUCTIONS ===
+  # 1. Get Kalshi API key from https://kalshi.com/account/api-keys
+  # 2. Run cross_spread_scanner.py to find matching pairs
+  # 3. Manually verify resolution criteria for each match
+  # 4. Set status: verified + max_exposure_usd > 0 + your name
+  # 5. Only "verified" pairs with max_exposure_usd > 0 will be tradable

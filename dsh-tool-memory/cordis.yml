@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Agent Memory Management System v0.1.0
+# Persistent cross-session memory, context recall, and intelligent token optimization
+
+- id: dsh-tool-memory
+  name: dsh-tool-memory
+  version: 0.1.0
+  description: Agent Memory Management System - Memory storage, recall, compression, decay analysis, context assembly, knowledge graph building, conflict resolution, and audit reporting
+  author: chengganping-ship-it
+  tools:
+    - memory_store
+    - memory_recall
+    - memory_compress
+    - memory_decay_analyzer
+    - context_assembler
+    - memory_graph_builder
+    - memory_conflict_resolver
+    - memory_audit_report

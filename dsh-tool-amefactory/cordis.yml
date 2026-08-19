@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: AI Multi-modal Content Factory v0.1.0
+# Content generation, optimization, and repurposing toolkit
+
+- id: dsh-tool-amefactory
+  name: dsh-tool-amefactory
+  version: 0.1.0
+  description: AI Multi-modal Content Factory - Content briefs, image prompts, video scripts, social media optimization, SEO scoring, brand voice analysis, content calendars, and repurposing engine
+  author: chengganping-ship-it
+  tools:
+    - content_brief_generator
+    - image_prompt_engine
+    - video_script_writer
+    - social_media_optimizer
+    - seo_content_scorer
+    - brand_voice_analyzer
+    - content_calendar_planner
+    - repurposing_engine

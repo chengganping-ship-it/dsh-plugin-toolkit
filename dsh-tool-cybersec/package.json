@@ -1,0 +1,60 @@
+{
+  "name": "dsh-tool-cybersec",
+  "version": "0.1.0",
+  "description": "Cybersecurity Threat Intelligence Plugin for DeepSeek Harness - Threat detection, vulnerability assessment, security scoring, incident response, phishing detection, firewall auditing, and compliance mapping",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/types/**/*.d.ts",
+    "cordis.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "pack": "npm pack",
+    "prepack": "npm run build"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-cybersec.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "cybersecurity",
+    "threat-intelligence",
+    "vulnerability",
+    "security-scoring",
+    "incident-response",
+    "phishing",
+    "firewall",
+    "compliance",
+    "soc2",
+    "iso27001",
+    "pci-dss",
+    "hipaa"
+  ],
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dsh": {
+    "bundle": "cordis.yml"
+  }
+}

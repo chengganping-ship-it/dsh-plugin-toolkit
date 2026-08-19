@@ -1,0 +1,46 @@
+============================================================
+  证据包: DUP-0103
+============================================================
+  异常类型: duplicate_charge
+  严重程度: critical
+  标题: 重复扣费: ORD-20260003
+  描述:
+    同一笔费用被收取两次。
+    关键字段: {'order_id': 'ORD-20260003', 'description': None}
+    金额: ¥249.9
+    首次收取: 2026-08-05
+    重复收取: 2026-07-26
+    预估可追回: ¥249.9
+  预估可追回: ¥249.90
+
+  相关记录:
+    --- 记录 1 ---
+      settlement_id: STL-20260003
+      order_id: ORD-20260003
+      order_no: ORD-20260003
+      amount: 249.9
+      expected_amount: 249.9
+      fee: 12.5
+      type: settlement
+      date: 2026-08-05
+      status: completed
+      platform: Shopee
+    --- 记录 2 ---
+      settlement_id: STL-20260103
+      order_id: ORD-20260003
+      order_no: ORD-20260003
+      amount: 249.9
+      expected_amount: 249.9
+      fee: 12.5
+      type: duplicate
+      date: 2026-07-26
+      status: completed
+      platform: Shopee
+
+  证据元数据:
+    rule: duplicate_detection
+    key_fields: ['order_id', 'description']
+    amount_field: amount
+    match_signature: f20502e57679:249.9
+    record_indices: [3, 103]
+============================================================

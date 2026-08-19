@@ -1,0 +1,14 @@
+{
+  "name": "dsh-tool-apistalk",
+  "version": "0.1.0",
+  "description": "API change tracking and drift detection for DSH - schema monitoring, breaking change detection, migration impact analysis",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

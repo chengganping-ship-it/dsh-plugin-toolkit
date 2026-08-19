@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="type" content="report">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>开源资源趋势分析与增长机会报告</title>
+<style>
+/* ===== 以下 CSS 必须原样保留，禁止修改任何属性值 ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", "Microsoft YaHei", sans-serif;
+    background: #FFFFFF; color: #111925; line-height: 1.7;
+}
+.report-container { max-width: 960px; margin: 0 auto; padding: 0; }
+.report-header {
+    background: #FFFFFF; padding: 48px 20px 16px 0; text-align: center;
+}
+.report-header h1 { font-size: 28px; font-weight: 700; color: #111925; margin-bottom: 8px; letter-spacing: 2px; }
+.report-header .subtitle { font-size: 14px; color: #646970; margin-top: 8px; text-align: center; }
+.report-body { background: #FFFFFF; padding: 24px 20px 40px 0; }
+.summary-box {
+    background: #F4F5F7; border-left: 4px solid #347BED;
+    padding: 20px 24px; margin-bottom: 32px; border-radius: 6px;
+}
+.summary-box h2 { font-size: 16px; font-weight: 600; color: #111925; margin: 0 0 12px 0; border: none; padding: 0; }
+.summary-box p { color: #111925; }
+.summary-box ul { margin: 8px 0 0; padding-left: 20px; }
+.summary-box li { margin-bottom: 6px; line-height: 1.7; color: #111925; }
+.summary-box strong { color: #111925; font-weight: 600; }
+h2 { font-size: 20px; color: #111925; font-weight: 700; border-bottom: 1px solid #e8ecf2; padding-bottom: 8px; margin: 36px 0 16px 0; }
+h3 { font-size: 17px; color: #111925; font-weight: 600; margin: 24px 0 12px 0; }
+p { margin-bottom: 14px; text-align: justify; }
+.highlight { color: #347BED; font-weight: 600; }
+.highlight-up { color: #00A859; font-weight: 600; }
+.highlight-down { color: #FF2E2E; font-weight: 600; }
+.tag { display: inline-block; background: #EFF5FE; color: #347BED; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-right: 4px; }
+.tag-success { background: #E7FEF3; color: #056C3F; }
+.tag-danger { background: #FFF2F2; color: #C20000; }
+.tag-warning { background: #FFF7F0; color: #9D5802; }
+blockquote {
+    background: #F4F5F7; border-left: 4px solid #347BED;
+    padding: 16px 20px; margin: 20px 0; border-radius: 0 6px 6px 0;
+}
+blockquote p { margin-bottom: 8px; }
+blockquote p:last-child { margin-bottom: 0; }
+.table-wrap { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0 24px 0; }
+.data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.data-table th { background: #EFF5FE; color: #347BED; border: 1px solid #D0E0FB; padding: 10px 12px; text-align: center; font-weight: 600; white-space: nowrap; }
+.data-table td { border: 1px solid #EAECF0; padding: 8px 12px; }
+.data-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.data-table td.txt { text-align: left; }
+.data-table tr:nth-child(even) { background: #F9FAFC; }
+.chart-wrapper { margin: 20px 0 28px 0; border: 1px solid #eef2f6; border-radius: 8px; overflow: hidden; background: #fafbfc; }
+.chart-wrapper .chart-conclusion { padding: 10px 16px; font-size: 14px; font-weight: 600; color: #4a5a7a; background: #f0f4fa; border-bottom: 1px solid #eef2f6; }
+.chart-wrapper .chart-container { width: 100%; padding: 0; }
+.chart-wrapper .chart-container .chart-title { padding: 10px 16px 0; font-size: 16px; font-weight: 600; color: #333; text-align: center; }
+.chart-wrapper .chart-container .chart-content { width: 100%; height: 460px; padding: 4px 10px 0; }
+.source { font-size: 13px; color: #646970; margin: -6px 0 18px 0; }
+.footer-note { margin-top: 40px; padding-top: 20px; border-top: 1px solid #EAECF0; font-size: 13px; color: #646970; text-align: center; }
+@media (max-width: 768px) {
+    .report-header { padding: 32px 16px 12px 0; }
+    .report-header h1 { font-size: 22px; }
+    .report-body { padding: 16px 16px 24px 0; }
+    .chart-wrapper .chart-container .chart-content { height: 320px; }
+    .data-table { font-size: 13px; }
+}
+@media print {
+    body { background: #fff; }
+}
+/* ===== CSS 结束，以上内容禁止修改 ===== */
+</style>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+</head>
+<body>
+<div class="report-container">
+
+  <div class="report-header">
+    <h1>开源资源趋势分析与增长机会报告</h1>
+    <div class="subtitle">2026年8月 · 深度调研版</div>
+  </div>
+
+  <div class="report-body">
+
+    <!-- 核心结论 -->
+    <div class="summary-box">
+      <h2>核心结论</h2>
+      <ul>
+        <li><strong>AI开源已成为最大增长引擎：</strong>2025年全球开源软件市场规模已达1500亿美元，年复合增长率12%，其中<span class="highlight-up">AI开源领域贡献600亿美元营收</span>，占比40%，是利润最丰厚的赛道。</li>
+        <li><strong>结构性机会在于"开源AI工具化"：</strong>AI编程工具赛道两年增长150%至128亿美元，Cursor ARR破20亿美元、Copilot付费用户470万。中国AI模型在全球开发者平台调用量占比达50%，成本优势形成定价权壁垒。</li>
+        <li><strong>个人开发者三大变现路径已跑通：</strong>基于开源的SaaS订阅（月入$1,000-50,000+）、技术服务与定制开发（$2,000-8,000/月）、内容+社区变现。AI大幅降低开发成本，单人创业可行性显著提升。</li>
+        <li><strong>License变更潮暴露传统模式隐忧：</strong>Redis、Elastic、HashiCorp等头部公司在2023-204年集中更换许可证，反映AWS等云厂商"搭便车"对传统开源商业模式的冲击不可忽视。</li>
+      </ul>
+    </div>
+
+    <h2>一、市场规模与增长趋势</h2>
+
+    <h3>1. 全球开源市场：AI驱动结构性加速</h3>
+    <p><strong>Gartner数据显示，2025年全球开源软件市场规模已达1500亿美元，年复合增长率12%，显著高于整体软件市场增速。</strong>其中AI开源领域贡献600亿美元营收，占比40%，成为绝对主力增长引擎。数据层面，据Linux Foundation委托Meta完成的研究，如果开源软件不存在，企业软件支出将增加3.5倍，开源已经是数字基础设施的基石。</p>
+    <p>中国市场表现尤为突出。据《中国开源发展深度报告(2024)》统计，中国活跃开源开发者数量达227万人，居全球首位；开源项目数量突破300万个，覆盖操作系统、人工智能、云计算等关键领域。中国在2024年新增GitHub活跃开发者超300万，十年翻倍式增长。2025-2030年全球开源软件市场预计保持8.5%的复合增长率，2030年有望突破1500亿美元，云计算、AI、物联网是三大增长引擎。</p>
+    <p>分析认为，开源已从"可选的技术参与方式"演变为"重塑技术路径、构建生态优势与探索新兴商业模式的核心战略工具"。采用开源的企业能获得显著的成本优势：研究表明，采用开源AI模型可将企业API支出降低85%以上。中国AI开源项目的商业转化率不足5%，远低于全球平均23%的水平，既暴露差距也意味着巨大的增长空间。</p>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>指标</th><th>数值</th><th>来源</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>2025年全球开源软件市场规模</td><td class="num">1500亿美元</td><td>Gartner</td></tr>
+          <tr><td>其中AI开源营收</td><td class="num">600亿美元</td><td>Gartner</td></tr>
+          <tr><td>2023-2030年CAGR</td><td class="num">8.5%-12%</td><td>行业预测</td></tr>
+          <tr><td>中国活跃开源开发者(2024)</td><td class="num">227万</td><td>中国开源发展报告</td></tr>
+          <tr><td>GitHub全球开发者总量(2024)</td><td class="num">1.5亿+</td><td>GitHub Octoverse</td></tr>
+          <tr><td>企业采用开源AI比例</td><td class="num">89%</td><td>Linux Foundation</td></tr>
+          <tr><td>中国AI开源商业转化率</td><td class="num">⚠️ 不足5%</td><td>IDC</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="source">参考信源：[Gartner 2025数据](https://www.soft6.com/news/2026/01/05/1639477793.html)｜[Linux Foundation研究报告](https://www.linuxfoundation.org/blog/open-source-ai-is-transforming-the-economy)｜[中国开源发展报告](https://www.soft6.com/news/2026/01/05/1639477793.html)</p>
+
+    <h3>2. AI编程工具：两年150%增速的黄金赛道</h3>
+    <p><strong>全球AI编程工具2026年收入达到128亿美元，两年前仅51亿美元，两年增长150%。</strong>GitHub Copilot付费用户达470万，财富100强渗透率90%；Cursor ARR在2025年11月破10亿美元，2026年突破20亿美元；OpenAI以30亿美元收购Windsurf，行业并购活跃。Anthropic年化收入已达470亿美元，其token消耗中AI编程开发者占据核心地位。</p>
+    <p>中国市场呈现"冰火两重天"：国外Cursor、Copilot估值与营收暴增，但国内十余家AI编程初创企业集体退场。根本差异在于中国企业服务市场的特殊性——50%的企业要求代码强制私有化部署，单纯的公有云架构难以跨越合规鸿沟。极狐GitLab的"驭码CodeRider"正是抓住这一痛点，通过私有化部署+端到端企业级闭环，已获得20家签约客户及50余家PoC潜在客户。</p>
+    <p>分析认为，AI编程赛道的商业化逻辑已从"订阅制工具"向"AI生态入口"演进。谁能成为开发者日常工作的默认入口，谁就能获得持续的数据反馈与模型改进闭环，形成"用户增长-数据积累-模型改进"的飞轮效应。中国市场的破局点在于"私有化+行业垂直"。</p>
+    <p class="source">参考信源：[AI编程行业报告](https://www.myzaker.com/article/6a69dd9f8e9f0951a3717663)｜[Cursor/GitHub Copilot数据](https://caifuhao.eastmoney.com/news/20260802175550275310640)｜[极狐GitLab案例](https://baijiahao.baidu.com/s?id=1832874261707168855)</p>
+
+    <div class="chart-wrapper">
+      <div class="chart-conclusion">全球AI编程工具市场呈现爆发式增长，2026年规模达128亿美元</div>
+      <div class="chart-container">
+        <div class="chart-title">AI编程工具市场规模增长趋势</div>
+        <div class="chart-content" id="chart1"></div>
+      </div>
+    </div>
+
+    <h2>二、竞争格局：中美开源生态博弈</h2>
+
+    <h3>1. 大模型开源：中国实现历史性超越</h3>
+    <p><strong>Interconnects AI报告显示，截至2026年3月，阿里巴巴通义千问(Qwen)系列模型占全球开源模型下载量50%以上，累计下载量接近10亿次。</strong>在Hugging Face平台，中国开源模型月下载占比达41%，首次超越美国的36.5%。转折点出现在2024年9月阿里云发布Qwen 2.5系列，此后差距持续扩大。</p>
+    <p>在开发者调用量方面，中国优势更为明显。OpenRouter数据显示，中国模型28.13万亿Token vs 美国4.38万亿Token，中国是美国的大约6.4倍。全球调用量前五的模型全部来自中国。美国企业在平台上使用中国AI大模型的Token占比自2026年2月以来每周超过30%，最高触及46%。</p>
+    <p>Meta Llama系列曾是开源模型的代名词，但Llama 4在2025年表现不及预期，Meta已于2026年放弃开源路线，转而发布闭源旗舰模型。与此同时，中国模型采取激进低价策略：DeepSeek V4 Flash运行成本不到竞品1%，API价格直接打到"水电煤"级别。</p>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>开源模型</th><th>全球下载份额</th><th>核心指标</th><th>定位</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>阿里 Qwen系列</td><td class="num">50%+</td><td>月下载1.536亿次(2026.2)</td><td>综合通用</td></tr>
+          <tr><td>DeepSeek</td><td class="num">快速上升</td><td>日活2215万,估值1.05万亿</td><td>推理/编程</td></tr>
+          <tr><td>Meta Llama系列</td><td class="num">下降中</td><td>曾占主导,2026放弃开源</td><td>综合(历史)</td></tr>
+          <tr><td>智谱 GLM</td><td class="num">前五</td><td>GLM-4.5开源第一</td><td>综合通用</td></tr>
+          <tr><td>百度文心</td><td class="num">前五</td><td>用户超2亿,商业化15-20亿</td><td>中文场景</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="source">参考信源：[Interconnects AI报告](https://baijiahao.baidu.com/s?id=1862139035506325261)｜[OpenRouter数据](https://baijiahao.baidu.com/s?id=1872555890630882707)｜[AI大模型TOP20](https://baijiahao.baidu.com/s?id=1872016993848005982)</p>
+
+    <h3>2. 代码托管平台：三足鼎立，极狐差异化突围</h3>
+    <p><strong>GitHub以1.5亿开发者、1500万月度活跃用户的绝对优势稳居全球开源社区龙头，微软的生态加持使其在AI编程领域持续领先。</strong>GitLab则以"一体化DevOps平台"定位差异化竞争，拥有超3000万注册用户、超10万家企业用户，2023财年前三季度收入3.01亿美元，同比增长72%。</p>
+    <p>中国市场方面，极狐(GitLab)作为GitLab Inc.与中国资本合资的"中外合资3.0"企业，成立即吸引企业用户近300家，部分重点行业Top 10覆盖率超60%。Gitee(码云)以本土化合规优势服务国内开发者，主要面向中小企业和政企项目。分析认为，开源平台的竞争正从"代码托管"转向"AI开发平台"，GitLab Duo Agent Platform、GitHub Copilot的演进方向都是让AI Agent直接在平台上跑开发任务。</p>
+
+    <h2>三、商业模式：六种变现路径</h2>
+
+    <h3>1. 开源商业模式的演进与分类</h3>
+    <p><strong>业界已验证的开源商业化主要有五种模式：技术支持模式、托管服务模式、限制性许可模式、开放核心模式、开源开发者工具模式。</strong>成功开源公司（如Red Hat、MongoDB、Elastic、Databricks等年收入超1亿美元的30余家企业）均采用组合策略。</p>
+    <p><strong>模式一：Open Core（开放核心）。</strong>Red Hat是经典代表——社区版Fedora作为技术试验场，企业级RHEL提供稳定性、安全补丁和专业服务，IBM以340亿美元收购印证该模式价值。MongoDB、Elastic均采用此模式。</p>
+    <p><strong>模式二：托管服务/Cloud。</strong>将开源产品以SaaS形式提供，如Databricks(Spark)、Confluent(Kafka)。该模式ARR增长快，但面临AWS等云厂商自营托管服务的竞争压力。</p>
+    <p><strong>模式三：双许可/限制性许可。</strong>核心功能采用AGPL等强copyleft许可，商业使用需购买商业许可。2023-2024年Redis、Elastic、HashiCorp集中将部分模块改为SSPL等非开源许可，直接原因是AWS"搭便车"行为挤压原厂商利润。</p>
+    <p><strong>模式四：生态增值服务。</strong>围绕开源项目提供插件市场、模板库、培训认证、技术咨询等增值服务。WordPress母公司Automattic是该模式代表。</p>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>模式</th><th>典型案例</th><th>核心逻辑</th><th>挑战</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Open Core</td><td>Red Hat, MongoDB</td><td>社区版引流+商业版盈利</td><td>需持续创新保持差距</td></tr>
+          <tr><td>托管SaaS</td><td>Databricks, Confluent</td><td>云服务降低使用门槛</td><td>云厂商搭便车</td></tr>
+          <tr><td>双许可</td><td>Redis, Elastic, HashiCorp</td><td>强copyleft倒逼商业付费</td><td>社区反弹、License争议</td></tr>
+          <tr><td>生态增值</td><td>Automattic(WordPress)</td><td>插件、模板、培训等周边</td><td>依赖生态规模</td></tr>
+          <tr><td>开发者工具</td><td>GitLab, HashiCorp</td><td>面向开发者的效率工具</td><td>功能同质化</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="source">参考信源：[开源商业模式分析](https://zhuanlan.zhihu.com/p/655986627)｜[赛迪顾问研究](https://baijiahao.baidu.com/s?id=1858877646204891997)｜[License变更分析](https://cloud.tencent.com/developer/article/2706614)</p>
+
+    <h3>2. AI带来商业模式创新</h3>
+    <p><strong>AI正在重塑开源商业逻辑："开源模型+API服务"已成为新范式。</strong>DeepSeek、Qwen通过开源模型建立生态标准，再通过API调用、企业私有化部署、行业解决方案实现商业化。这种模式下，开源是获客手段，AI能力是核心价值。</p>
+    <p>数据显示，中国AI开源项目商业转化率仅5%（全球平均23%），反映国内开源项目在商业化意识、生态运营、付费墙设计等方面仍有明显差距。但这也意味着率先补足能力的企业将获得超额回报。资本市场对开源公司的评估标准明确：ARR增速、NRR（净收入留存率）、FCF（自由现金流）margin三大指标决定估值。</p>
+
+    <h2>四、个人/团队增长机会与行动建议</h2>
+
+    <h3>1. 适合个人开发者的三条变现路径</h3>
+    <p><strong>路径一：开源SaaS订阅。</strong>以MIT/Apache协议开源核心功能，通过云服务订阅实现变现。Pieter Levels一人维护12个月入30万美元；Marc Lou每2周发布新SaaS，多个项目月入$10,000+。GitHub Copilot等AI编程工具可减少30%+重复编码时间，MVP上线周期缩短至数天。</p>
+    <p><strong>路径二：技术服务与定制开发。</strong>基于开源项目提供企业私有化部署、定制开发、技术支持等服务。参考案例：Bolt.new上线四周年化收入即达400万美元；某国内开发者AI代码审查工具月入突破10万元。</p>
+    <p><strong>路径三：内容+社区变现。</strong>通过技术内容建立个人品牌，转化为课程、咨询、付费社群等收入。程序员小灰自媒体年收入达300万；独立开发者通过X创作者收益、技术写作者联盟等平台获得收入。</p>
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead>
+          <tr><th>路径</th><th>启动成本</th><th>月均收益潜力(USD)</th><th>适合人群</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>开源SaaS订阅</td><td>中</td><td class="num">1,000-50,000+</td><td>全栈/后端开发者</td></tr>
+          <tr><td>AI工具/Side Project</td><td>低</td><td class="num">500-10,000</td><td>有产品感开发者</td></tr>
+          <tr><td>技术服务/定制开发</td><td>低</td><td class="num">2,000-8,000</td><td>领域专家</td></tr>
+          <tr><td>内容+社区变现</td><td>低</td><td class="num">1,000-30,000</td><td>表达/写作能力强</td></tr>
+          <tr><td>自动化工具销售</td><td>低</td><td class="num">300-2,000</td><td>Python/API开发</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="source">参考信源：[独立开发者案例](https://baijiahao.baidu.com/s?id=1829184540276872486)｜[AI独立开发路径](https://blog.csdn.net/xxue345678/article/details/160917883)｜[程序员副业变现](https://blog.csdn.net/ProceChat/article/details/152606257)</p>
+
+    <h3>2. 利益最大化的增长机会矩阵</h3>
+    <p><strong>第一优先级：AI+垂直行业工具。</strong>利用开源大模型（Qwen、DeepSeek、Llama）开发面向特定行业（法律、医疗、金融、教育）的AI应用工具。开源模型成本已降至"水电煤"级别，创业者可将资源聚焦于行业know-how和产品体验。典型案例：Harvey法律AI服务1300家机构，2026年月收入超千万美元。</p>
+    <p><strong>第二优先级：私有化/合规AI解决方案。</strong>针对中国市场"50%企业要求代码强制私有化"的痛点，提供基于开源模型的私有化部署方案、数据合规解决方案。极狐GitLab已通过此路径获得近300家企业客户。</p>
+    <p><strong>第三优先级：开发者效率工具。</strong>面向开发者的AI辅助工具、代码审查自动化、测试生成、API管理等垂直场景。该赛道付费意愿强、用户生命周期长，但需持续迭代保持技术领先。</p>
+
+    <div class="chart-wrapper">
+      <div class="chart-conclusion">AI开源变现路径中，垂直行业工具与私有化方案ROI最高</div>
+      <div class="chart-container">
+        <div class="chart-title">个人开发者变现路径收益-投入矩阵</div>
+        <div class="chart-content" id="chart2"></div>
+      </div>
+    </div>
+
+    <h3>3. 行动建议与风险提示</h3>
+    <p><strong>建议一：尽早发布MVP验证市场。</strong>借助AI编程工具（Copilot/Cursor/通义灵码），单人可在数天内完成产品原型并部署。遵循"发布-反馈-迭代"的精益创业节奏，避免"完美产品"陷阱。建议先在Product Hunt/Hacker News等开发者社区获取早期用户。</p>
+    <p><strong>建议二：优先选择有付费意愿的市场。</strong>企业客户单价高、生命周期长，但销售周期长；个人开发者决策快但ARPU低。建议优先定位中小企业开发者/独立开发者（B2C/B2SmallB），再逐步延伸企业版。</p>
+    <p><strong>建议三：重视License选择。</strong>MIT/Apache协议适合追求广泛采用的项目；AGPL/SSPL适合希望倒逼商业付费的项目。但需注意2023-2024年头部公司License变更引发的社区反弹，选择需权衡商业回报与生态影响。</p>
+    <p><strong>风险提示：</strong>AI赛道补贴窗口期正在关闭（参考Cursor Pro从无限速率限制到严格配额的调整）；中国开源模型持续降价可能压缩应用层利润、倒逼差异化竞争；AWS等云厂商"搭便车"行为可能侵蚀托管服务型开源项目利润。建议采用"开源核心+增值服务+生态壁垒"的组合策略，避免单一模式依赖。</p>
+
+    <h2>五、风险与局限</h2>
+    <p>本报告的数据来源与研判存在以下局限：一是部分数据源自行业媒体转载，非一手统计口径，可能存在偏差；二是中国AI开源商业转化率"不足5%"与"全球平均23%"的对比数据来自IDC但具体口径未公开验证；三是OpenRouter调用量数据仅覆盖通过该平台调用的API请求，不包含企业私有化部署、手机端预装、内部平台调用等场景；四是部分独立开发者案例收入数据未经第三方审计验证，可能存在"幸存者偏差"。</p>
+    <p>行业面临的主要风险包括：AI模型价格的持续下降可能使应用层利润空间收窄；美国企业对中国AI模型的采用若受地缘政治影响可能改变目前有利格局；开源License争议可能引发法律不确定性；资本市场的波动可能影响开源企业的融资环境。建议读者结合最新市场动态做出独立判断。</p>
+
+    <h2>六、可深入方向</h2>
+    <p>基于本报告分析，建议进一步深入研究的领域包括：(1)中国AI开源项目商业化的最佳实践与标杆案例深度调研；(2)垂直行业AI工具的法律合规路径与数据安全要求；(3)开源项目社区治理与开发者粘性提升策略；(4)AI编程工具的技术演进路线与下一代产品形态预测；(5)中国开源生态政策优惠与政府补贴的具体申请路径。</p>
+
+  </div>
+</div>
+
+<script>
+  var chart1 = echarts.init(document.getElementById('chart1'));
+  chart1.setOption({
+    tooltip: { trigger: 'axis' },
+    legend: { data: ['市场规模(亿美元)'] },
+    xAxis: { type: 'category', data: ['2022', '2023', '2024', '2025', '2026E'] },
+    yAxis: { type: 'value', name: '亿美元' },
+    series: [{
+      name: '市场规模',
+      type: 'bar',
+      data: [51, 67, 85, 110, 128],
+      itemStyle: { color: '#347BED' },
+      label: { show: true, position: 'top' }
+    }]
+  });
+
+  var chart2 = echarts.init(document.getElementById('chart2'));
+  chart2.setOption({
+    tooltip: { trigger: 'axis' },
+    radar: {
+      indicator: [
+        { name: '收益潜力', max: 10 },
+        { name: '启动速度', max: 10 },
+        { name: '可持续', max: 10 },
+        { name: '市场需求', max: 10 },
+        { name: '门槛友好', max: 10 }
+      ]
+    },
+    series: [{
+      type: 'radar',
+      data: [
+        { value: [8, 9, 8, 9, 7], name: 'AI垂直行业工具' },
+        { value: [7, 5, 9, 8, 4], name: '私有化合规方案' },
+        { value: [6, 8, 7, 7, 8], name: '开发者效率工具' },
+        { value: [5, 9, 6, 6, 9], name: '内容+社区' },
+        { value: [4, 8, 5, 5, 9], name: '自动化脚本' }
+      ]
+    }]
+  });
+</script>
+</body>
+</html>

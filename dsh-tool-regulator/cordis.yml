@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Cross-Border Regulatory Compliance Radar v0.1.0
+# Policy monitoring, compliance analysis, sanctions screening, tariff calculation
+
+- id: dsh-tool-regulator
+  name: dsh-tool-regulator
+  version: 0.1.0
+  description: Cross-Border Regulatory Compliance Radar - Policy change detection, compliance gap analysis, sanctions screening, tariff impact calculation, license requirement checking, deadline tracking, cross-border risk scoring, and regulation summarization
+  author: chengganping-ship-it
+  tools:
+    - policy_change_detector
+    - compliance_gap_analyzer
+    - sanctions_screening
+    - tariff_impact_calculator
+    - license_requirement_checker
+    - regulatory_deadline_tracker
+    - cross_border_risk_scorer
+    - regulation_summarizer

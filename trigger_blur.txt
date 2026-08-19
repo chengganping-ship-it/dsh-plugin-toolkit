@@ -1,0 +1,17 @@
+
+(function(){
+  var inp = document.querySelectorAll("input[type=text]")[1];
+  // Trigger blur event which typically triggers validation
+  inp.blur();
+  var be = document.createEvent("HTMLEvents");
+  be.initEvent("blur", true, true);
+  inp.dispatchEvent(be);
+  
+  // Also try change event
+  var ce = document.createEvent("HTMLEvents");
+  ce.initEvent("change", true, true);
+  inp.dispatchEvent(ce);
+  
+  return "blur/change dispatched";
+})()
+

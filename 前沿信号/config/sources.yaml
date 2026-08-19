@@ -1,0 +1,106 @@
+# 前沿信号 - 数据采集信源配置
+# 按行业分类，覆盖创业/投资/AI/跨境
+
+ai_tech:
+  - name: "TechCrunch AI"
+    url: "https://techcrunch.com/category/artificial-intelligence/"
+    type: "rss"
+    priority: 1
+    
+  - name: "The Verge AI"
+    url: "https://www.theverge.com/ai-artificial-intelligence"
+    type: "rss"
+    priority: 1
+
+  - name: "MIT Technology Review"
+    url: "https://www.technologyreview.com/feed/"
+    type: "rss"
+    priority: 1
+
+  - name: "Hacker News"
+    url: "https://hnrss.org/frontpage"
+    type: "rss"
+    priority: 2
+
+  - name: "量子位"
+    url: "https://www.qbitai.com/feed"
+    type: "rss"
+    priority: 1
+
+  - name: "机器之心"
+    url: "https://www.jiqizhixin.com/rss"
+    type: "rss"
+    priority: 1
+
+  - name: "Anthropic Blog"
+    url: "https://www.anthropic.com/news"
+    type: "rss"
+    priority: 2
+
+  - name: "OpenAI Blog"
+    url: "https://openai.com/blog/rss.xml"
+    type: "rss"
+    priority: 2
+
+startup_vc:
+  - name: "36氪"
+    url: "https://36kr.com/feed"
+    type: "rss"
+    priority: 1
+
+  - name: "IT桔子"
+    url: "https://www.itjuzi.com/api/news/feed"
+    type: "rss"
+    priority: 2
+
+  - name: "Crunchbase News"
+    url: "https://news.crunchbase.com/feed/"
+    type: "rss"
+    priority: 1
+
+  - name: "Product Hunt"
+    url: "https://www.producthunt.com/feed"
+    type: "rss"
+    priority: 1
+
+  - name: "YC Blog"
+    url: "https://www.ycombinator.com/blog/rss.xml"
+    type: "rss"
+    priority: 2
+
+ecommerce_crossboard:
+  - name: "雨果跨境"
+    url: "https://www.cifnews.com/feed"
+    type: "rss"
+    priority: 1
+
+  - name: "电商报"
+    url: "https://www.dsmbox.com/rss"
+    type: "rss"
+    priority: 2
+
+  - name: "Shopify News"
+    url: "https://news.shopify.com/news.rss"
+    type: "rss"
+    priority: 1
+
+macro_economy:
+  - name: "华尔街见闻"
+    url: "https://wallstreetcn.com/rss/news"
+    type: "rss"
+    priority: 1
+
+  - name: "财联社"
+    url: "https://www.cls.cn/rss/telegraph"
+    type: "rss"
+    priority: 1
+
+  - name: "Reuters Business"
+    url: "https://www.reutersagency.com/feed/?best-topics=business-finance"
+    type: "rss"
+    priority: 2
+
+  - name: "Bloomberg Markets"
+    url: "https://feeds.bloomberg.com/markets/news.rss"
+    type: "rss"
+    priority: 2

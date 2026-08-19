@@ -1,0 +1,14 @@
+- id: dsh-tool-redblue
+  name: dsh-tool-redblue
+  version: 0.1.0
+  description: Red-Blue security audit - auto pentest, defense verification, compliance mapping, fix prioritization
+  author: chengganping-ship-it
+  tools:
+    - red_team_pentest
+    - blue_team_defense
+    - audit_compliance_map
+    - exploit_chain_analysis
+    - defense_gap_scan
+    - attack_surface_map
+    - fix_priority_matrix
+    - threat_model_gen

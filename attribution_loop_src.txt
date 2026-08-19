@@ -1,0 +1,42 @@
+"""T04 Step 1 — 归因回灌模块。
+
+输入：AttributionResult（订单回传 / 用户反馈）
+输出：ReplayReport（偏差分数 + 是否沉淀）
+副作用：当 deviation ≥ threshold 时，向 LAAP memory 追加 Causal Model Update 块
+
+离线验证：
+- mock 时间快进 → 构造 ≥3 条预测记录 + ≥3 条归因结果
+- 验证回灌逻辑正确：分差计算准确、memory 写入格式正确
+"""
+
+from __future__ import annotations
+
+import typing
+
+from xingyue_group_agent.services.laap_client import LaapClient, build_offline_client
+from xingyue_group_agent.models import AttributionResult
+
+
+class AttributionLoop:
+    """归因回灌管道 — T04 Step 1 命门。"""
+
+    def __init__(self, laap: LaapClient):
+        self._laap = laap
+
+    def on_attribution(self, result: AttributionResult) -> ReplayReport:
+        """订单回传 / 用户反馈入口。"""
+        return self._laap.replay(result)
+
+    @property
+    def stats(self) -> dict:
+        """统计计数器（测试断言用）。"""
+        return {
+            "predict_count": getattr(self._laap, "predict_count", -1),
+            "replay_count": getattr(self._laap, "replay_count", -1),
+            "sedimented_count": getattr(self._laap, "sedimented_count", -1),
+        }
+
+
+def build_loop(memory_path: typing.Optional[str] = None) -> AttributionLoop:
+    """工厂 — 组装离线归因管道。"""
+    return AttributionLoop(laap=build_offline_client(memory_path=memory_path))

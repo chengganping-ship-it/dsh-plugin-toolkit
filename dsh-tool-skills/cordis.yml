@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Agent Skills Marketplace v0.1.0
+# Skill discovery, composition, versioning, quality scoring, packaging, and lifecycle management
+
+- id: dsh-tool-skills
+  name: dsh-tool-skills
+  version: 0.1.0
+  description: Agent Skills Marketplace - Skill discovery, composition, versioning, quality scoring, packaging, trigger optimization, analytics, and template generation for AI agent skills
+  author: chengganping-ship-it
+  tools:
+    - skill_discoverer
+    - skill_composer
+    - skill_version_manager
+    - skill_quality_scorer
+    - skill_packager
+    - trigger_optimizer
+    - skill_analytics
+    - skill_template_generator

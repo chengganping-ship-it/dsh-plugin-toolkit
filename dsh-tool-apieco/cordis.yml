@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: API Economy & Monetization Engine v0.1.0
+# API discovery, rate limiting strategy, developer experience scoring, API product management
+
+- id: dsh-tool-apieco
+  name: dsh-tool-apieco
+  version: 0.1.0
+  description: API Economy & Monetization Engine - API valuation, rate limiting strategy, developer experience scoring, API monetization advisory, analytics dashboard, security auditing, GraphQL optimization, and API portfolio management
+  author: chengganping-ship-it
+  tools:
+    - api_valuator
+    - rate_limiter_designer
+    - developer_experience_scorer
+    - api_monetization_advisor
+    - api_analytics_dashboard
+    - api_security_auditor
+    - graphql_optimizer
+    - api_portfolio_manager

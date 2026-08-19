@@ -1,0 +1,14 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0
+rootdir: D:\Ai团队\xingyue\xingyue_group_agent
+collected 195 items
+
+tests\test_frontier_signal.py .......................................... [ 21%]
+....                                                                     [ 23%]
+tests\test_frontier_signal_w2.py ................................        [ 40%]
+tests\test_reflexion_dspy_kb.py ........................................ [ 60%]
+......................                                                   [ 71%]
+tests\test_open_ended.py ............................................... [ 95%]
+........                                                                 [100%]
+
+============================= 195 passed in 1.21s =============================

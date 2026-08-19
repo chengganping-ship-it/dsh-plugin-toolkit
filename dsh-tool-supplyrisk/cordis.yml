@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Supply Chain Risk Early Warning System v0.1.0
+# Supplier health, geopolitical risk, logistics bottlenecks, supply chain resilience
+
+- id: dsh-tool-supplyrisk
+  name: dsh-tool-supplyrisk
+  version: 0.1.0
+  description: Supply Chain Risk Early Warning System - Supplier health scoring, geopolitical risk mapping, disruption early warning, alternative supplier finding, logistics bottleneck detection, cost volatility tracking, single-source detection, and resilience scoring
+  author: chengganping-ship-it
+  tools:
+    - supplier_health_scorer
+    - geopolitical_risk_mapper
+    - disruption_early_warning
+    - alternative_supplier_finder
+    - logistics_bottleneck_detector
+    - cost_volatility_tracker
+    - single_source_detector
+    - supply_chain_resilience_scorer

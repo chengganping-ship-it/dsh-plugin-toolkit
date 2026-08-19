@@ -1,0 +1,130 @@
+# 数据源清单 — 报告2: 变压器交付危机量化分析
+snapshot_date: 2025-08-08
+replication_script: ../scripts/verify_transformer_leadtime.sh
+
+sources:
+  - id: S1_R2
+    claim: "标准电力变压器平均交期达128周"
+    value: 128
+    unit: weeks (average)
+    source:
+      name: Wood Mackenzie
+      title: "Equipment Lead Time Tracker Q4 2024 / Q2 2025 Survey"
+      type: industry research (subscription)
+      date: 2025-06
+      url: "https://www.woodmac.com/"
+      access_date: 2025-08-08
+      tier: verified
+    replication: "Wood Mackenzie subscription; public citation in baijiahao.baidu.com 2025-06-04 '美国电网设备短缺加剧' article"
+    caveat: "Wood Mackenzie 付费数据源；二级引用需注明"
+
+  - id: S2_R2
+    claim: "发电机升压变压器平均交期达144周"
+    value: 144
+    unit: weeks (average)
+    source:
+      name: Wood Mackenzie (same survey)
+      type: industry research
+      date: 2025-06
+      tier: verified
+    replication: "同上"
+    caveat: "部分特殊订单延伸至4年"
+
+  - id: S3_R2
+    claim: "电力变压器价格自2019年累计上涨77%"
+    value: 77
+    unit: percent increase
+    source:
+      name: Wood Mackenzie / Morgan Stanley research
+      type: inferred from industry reports
+      date: 2025-06
+      tier: verified
+    replication: "Wood Mackenzie; Morgan Stanley 2025-01 'Transformer Supercycle Started'"
+
+  - id: S4_R2
+    claim: "美国大型电力变压器市场规模CAGR 14%，至2030年"
+    value: 14
+    unit: percent CAGR
+    source:
+      name: Morgan Stanley Research
+      title: "North America Large Power Transformer Market Sizing"
+      date: 2025-01
+      type: investment bank research
+      tier: verified
+    replication: "Morgan Stanley research report 2025-01; repriced in baijiahao.baidu.com 2025-01 '变压器超级周期启动'"
+
+  - id: S5_R2
+    claim: "美国大型电力变压器对进口依赖度从2021年70%升至2025年85%"
+    value: 85
+    unit: percent (import dependency)
+    source:
+      name: Morgan Stanley / US Department of Commerce
+      type: inferred
+      date: 2025-Q1
+      tier: inferred
+    replication: "Morgan Stanley 2025-Q1; USITC import data"
+
+  - id: S6_R2
+    claim: "取向硅钢是变压器铁芯关键材料，价格自2020年翻倍"
+    value: 2.0
+    unit: x (doubling)
+    source:
+      name: "Cleveland-Cliffs (US sole GOES producer) / Wood Mackenzie"
+      type: inferred
+      tier: inferred
+    replication: "US GOES import data; S&P Global steel commodity pricing"
+
+  - id: S7_R2
+    claim: "中国变压器对美出口2025年增速达182%"
+    value: 182
+    unit: percent YoY
+    source:
+      name: "Customs statistics (China-US trade)"
+      type: inferred from news
+      date: 2025-07
+      tier: unverified
+    replication: "Daily Economic News / 环球时报 2025-07; USITC trade database"
+    caveat: "需通过中国海关总署+美国商务部双边数据交叉验证"
+
+  - id: S8_R2
+    claim: "CenterPoint Energy Q1 2025收到7GW大型负荷互联请求"
+    value: 7
+    unit: GW
+    source:
+      name: "CenterPoint Energy Q1 2025 Earnings Call Transcript"
+      type: official earnings call
+      date: 2025-04-24
+      tier: verified
+    replication: "CenterPoint Energy investor relations website; Seeking Alpha transcript"
+    caveat: "仅德州ERCOT地区公用事业代表，非全美数据"
+
+  - id: S9_R2
+    claim: "2025-2030年新增能源产能需约4300台大型电力变压器"
+    value: 4300
+    unit: units (transformers)
+    source:
+      name: Morgan Stanley projection
+      type: forecast
+      date: 2025-01
+      tier: inferred
+    replication: "Morgan Stanley 基于IEA并网数据+US EIA装机规划推算"
+
+  - id: S10_R2
+    claim: "美国2024年产量仅约200-300台大型电力变压器"
+    value: 250
+    unit: units/year (midpoint)
+    source:
+      name: Morgan Stanley / US Department of Energy
+      type: inferred
+      tier: inferred
+    replication: "同上"
+
+  - id: S11_R2
+    claim: "数据中心用电: 美国占全国4.4%(2025), 2028年可能升至12%"
+    value: 4.4
+    unit: percent (current, 2025)
+    source:
+      name: IEA "World Energy Outlook 2025" / US EIA
+      type: official international organization
+      tier: verified
+    replication: "IEA 2025 Outlook; US EIA Annual Energy Outlook 2025"

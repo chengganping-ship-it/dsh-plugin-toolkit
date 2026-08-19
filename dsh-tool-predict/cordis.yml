@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Predictive Analytics Engine v0.1.0
+# Time series forecasting, trend prediction, anomaly detection, scenario simulation
+
+- id: dsh-tool-predict
+  name: dsh-tool-predict
+  version: 0.1.0
+  description: Predictive Analytics Engine - Time series forecasting, trend prediction, anomaly detection, demand forecasting, churn prediction, revenue projection, risk scoring, and scenario simulation
+  author: chengganping-ship-it
+  tools:
+    - time_series_forecaster
+    - trend_predictor
+    - anomaly_detector
+    - demand_forecaster
+    - churn_predictor
+    - revenue_projector
+    - risk_propensity_scorer
+    - scenario_simulator

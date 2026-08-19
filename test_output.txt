@@ -1,0 +1,254 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.13, pytest-9.1.1, pluggy-1.6.0 -- C:\Users\123\.meituan-catpaw\runtimes\python\versions\3.12.13\python.exe
+cachedir: .pytest_cache
+rootdir: D:\Ai团队\xingyue\xingyue_group_agent
+collecting ... collected 62 items
+
+tests/test_reflexion_dspy_kb.py::TestFeedbackVector::test_composite_all_zero PASSED [  1%]
+tests/test_reflexion_dspy_kb.py::TestFeedbackVector::test_composite_score PASSED [  3%]
+tests/test_reflexion_dspy_kb.py::TestFeedbackVector::test_default_values PASSED [  4%]
+tests/test_reflexion_dspy_kb.py::TestReflectionMemory::test_add_and_retrieve FAILED [  6%]
+tests/test_reflexion_dspy_kb.py::TestReflectionMemory::test_add_and_retrieve ERROR [  6%]
+tests/test_reflexion_dspy_kb.py::TestReflectionMemory::test_get_recent FAILED [  8%]
+tests/test_reflexion_dspy_kb.py::TestReflectionMemory::test_get_recent ERROR [  8%]
+tests/test_reflexion_dspy_kb.py::TestReflectionMemory::test_retrieve_nonexistent_policy_type FAILED [  9%]
+tests/test_reflexion_dspy_kb.py::TestContinuousReflexionEngine::test_build_context FAILED [ 11%]
+tests/test_reflexion_dspy_kb.py::TestContinuousReflexionEngine::test_reflect_generates_entry FAILED [ 12%]
+tests/test_reflexion_dspy_kb.py::TestContinuousReflexionEngine::test_reflect_on_low_accuracy FAILED [ 14%]
+tests/test_reflexion_dspy_kb.py::TestContinuousReflexionEngine::test_rule_based_reflection FAILED [ 16%]
+tests/test_reflexion_dspy_kb.py::TestPolicyAnalysisSignature::test_default_init PASSED [ 17%]
+tests/test_reflexion_dspy_kb.py::TestPolicyAnalysisSignature::test_input_output_dict PASSED [ 19%]
+tests/test_reflexion_dspy_kb.py::TestPromptTemplate::test_render_basic FAILED [ 20%]
+tests/test_reflexion_dspy_kb.py::TestPromptTemplate::test_render_with_kb_context PASSED [ 22%]
+tests/test_reflexion_dspy_kb.py::TestPromptTemplate::test_render_with_reflection PASSED [ 24%]
+tests/test_reflexion_dspy_kb.py::TestMIPROv2StyleOptimizer::test_compile_returns_template PASSED [ 25%]
+tests/test_reflexion_dspy_kb.py::TestMIPROv2StyleOptimizer::test_history_recorded PASSED [ 27%]
+tests/test_reflexion_dspy_kb.py::TestDefaultMetric::test_empty_expected PASSED [ 29%]
+tests/test_reflexion_dspy_kb.py::TestDefaultMetric::test_partial_match PASSED [ 30%]
+tests/test_reflexion_dspy_kb.py::TestDefaultMetric::test_perfect_match PASSED [ 32%]
+tests/test_reflexion_dspy_kb.py::TestKnowledgeMemory::test_add_and_get FAILED [ 33%]
+tests/test_reflexion_dspy_kb.py::TestKnowledgeMemory::test_batch_add FAILED [ 35%]
+tests/test_reflexion_dspy_kb.py::TestKnowledgeMemory::test_count FAILED  [ 37%]
+tests/test_reflexion_dspy_kb.py::TestKnowledgeMemory::test_delete FAILED [ 38%]
+tests/test_reflexion_dspy_kb.py::TestKnowledgeMemory::test_format_empty FAILED [ 40%]
+tests/test_reflexion_dspy_kb.py::TestKnowledgeMemory::test_format_for_dspy FAILED [ 41%]
+tests/test_reflexion_dspy_kb.py::TestKnowledgeMemory::test_search_by_keywords FAILED [ 43%]
+tests/test_reflexion_dspy_kb.py::TestKnowledgeMemory::test_search_by_policy_type FAILED [ 45%]
+tests/test_reflexion_dspy_kb.py::TestKnowledgeMemory::test_strategy_property FAILED [ 46%]
+tests/test_reflexion_dspy_kb.py::TestKnowledgeMemory::test_update FAILED [ 48%]
+tests/test_reflexion_dspy_kb.py::TestRewardVector::test_addition PASSED  [ 50%]
+tests/test_reflexion_dspy_kb.py::TestRewardVector::test_clamp PASSED     [ 51%]
+tests/test_reflexion_dspy_kb.py::TestRewardVector::test_default_zero PASSED [ 53%]
+tests/test_reflexion_dspy_kb.py::TestRewardVector::test_iadd PASSED      [ 54%]
+tests/test_reflexion_dspy_kb.py::TestRewardVector::test_magnitude PASSED [ 56%]
+tests/test_reflexion_dspy_kb.py::TestRewardVector::test_to_feedback_vector PASSED [ 58%]
+tests/test_reflexion_dspy_kb.py::TestActionRewards::test_click_reward PASSED [ 59%]
+tests/test_reflexion_dspy_kb.py::TestActionRewards::test_dislike_penalty PASSED [ 61%]
+tests/test_reflexion_dspy_kb.py::TestActionRewards::test_open_reward PASSED [ 62%]
+tests/test_reflexion_dspy_kb.py::TestActionRewards::test_report_false_penalty PASSED [ 64%]
+tests/test_reflexion_dspy_kb.py::TestActionRewards::test_report_miss_coverage PASSED [ 66%]
+tests/test_reflexion_dspy_kb.py::TestRewardMapper::test_accumulated_rewards PASSED [ 67%]
+tests/test_reflexion_dspy_kb.py::TestRewardMapper::test_kb_expansion_callback PASSED [ 69%]
+tests/test_reflexion_dspy_kb.py::TestRewardMapper::test_map_action_returns_reward PASSED [ 70%]
+tests/test_reflexion_dspy_kb.py::TestRewardMapper::test_normalized_rewards PASSED [ 72%]
+tests/test_reflexion_dspy_kb.py::TestRewardMapper::test_reflection_triggered_on_dislike PASSED [ 74%]
+tests/test_reflexion_dspy_kb.py::TestRewardMapper::test_reset PASSED     [ 75%]
+tests/test_reflexion_dspy_kb.py::TestRewardMapper::test_reset_all PASSED [ 77%]
+tests/test_reflexion_dspy_kb.py::TestRewardMapper::test_summary PASSED   [ 79%]
+tests/test_reflexion_dspy_kb.py::TestLearningLoop::test_add_training_example FAILED [ 80%]
+tests/test_reflexion_dspy_kb.py::TestLearningLoop::test_analyze_returns_signature FAILED [ 82%]
+tests/test_reflexion_dspy_kb.py::TestLearningLoop::test_analyze_with_kb FAILED [ 83%]
+tests/test_reflexion_dspy_kb.py::TestLearningLoop::test_compile_prompt FAILED [ 85%]
+tests/test_reflexion_dspy_kb.py::TestLearningLoop::test_diagnostics FAILED [ 87%]
+tests/test_reflexion_dspy_kb.py::TestLearningLoop::test_expand_knowledge FAILED [ 88%]
+tests/test_reflexion_dspy_kb.py::TestLearningLoop::test_next_round FAILED [ 90%]
+tests/test_reflexion_dspy_kb.py::TestLearningLoop::test_state_snapshot FAILED [ 91%]
+tests/test_reflexion_dspy_kb.py::TestLearningLoop::test_submit_feedback FAILED [ 93%]
+tests/test_reflexion_dspy_kb.py::TestEndToEndLearningCycle::test_dislike_triggers_reflection_engine FAILED [ 95%]
+tests/test_reflexion_dspy_kb.py::TestEndToEndLearningCycle::test_feedback_accumulation_drives_reflection FAILED [ 96%]
+tests/test_reflexion_dspy_kb.py::TestEndToEndLearningCycle::test_learning_loop_multi_round FAILED [ 98%]
+tests/test_reflexion_dspy_kb.py::TestEndToEndLearningCycle::test_report_miss_triggers_kb_expansion FAILED [100%]
+
+=================================== ERRORS ====================================
+_______ ERROR at teardown of TestReflectionMemory.test_add_and_retrieve _______
+tests\test_reflexion_dspy_kb.py:85: in tearDown
+    os.unlink(self._db.name)
+E   PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'C:\\Users\\123\\AppData\\Local\\Temp\\tmprj2hwnrp.db'
+__________ ERROR at teardown of TestReflectionMemory.test_get_recent __________
+tests\test_reflexion_dspy_kb.py:85: in tearDown
+    os.unlink(self._db.name)
+E   PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'C:\\Users\\123\\AppData\\Local\\Temp\\tmpx2zt0xoa.db'
+================================== FAILURES ===================================
+_________________ TestReflectionMemory.test_add_and_retrieve __________________
+tests\test_reflexion_dspy_kb.py:88: in test_add_and_retrieve
+    entry = ReflectionEntry(
+E   TypeError: ReflectionEntry.__init__() got an unexpected keyword argument 'feedback_vector'
+____________________ TestReflectionMemory.test_get_recent _____________________
+tests\test_reflexion_dspy_kb.py:106: in test_get_recent
+    self.mem.add(ReflectionEntry(
+E   TypeError: ReflectionEntry.__init__() got an unexpected keyword argument 'feedback_vector'
+_________ TestReflectionMemory.test_retrieve_nonexistent_policy_type __________
+tests\test_reflexion_dspy_kb.py:85: in tearDown
+    os.unlink(self._db.name)
+E   PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'C:\\Users\\123\\AppData\\Local\\Temp\\tmpetguvi5g.db'
+______________ TestContinuousReflexionEngine.test_build_context _______________
+tests\test_reflexion_dspy_kb.py:119: in setUp
+    self.engine = ContinuousReflexionEngine(
+E   TypeError: ContinuousReflexionEngine.__init__() got an unexpected keyword argument 'db_path'
+_________ TestContinuousReflexionEngine.test_reflect_generates_entry __________
+tests\test_reflexion_dspy_kb.py:119: in setUp
+    self.engine = ContinuousReflexionEngine(
+E   TypeError: ContinuousReflexionEngine.__init__() got an unexpected keyword argument 'db_path'
+_________ TestContinuousReflexionEngine.test_reflect_on_low_accuracy __________
+tests\test_reflexion_dspy_kb.py:119: in setUp
+    self.engine = ContinuousReflexionEngine(
+E   TypeError: ContinuousReflexionEngine.__init__() got an unexpected keyword argument 'db_path'
+__________ TestContinuousReflexionEngine.test_rule_based_reflection ___________
+tests\test_reflexion_dspy_kb.py:119: in setUp
+    self.engine = ContinuousReflexionEngine(
+E   TypeError: ContinuousReflexionEngine.__init__() got an unexpected keyword argument 'db_path'
+____________________ TestPromptTemplate.test_render_basic _____________________
+tests\test_reflexion_dspy_kb.py:198: in test_render_basic
+    self.assertIn("system", system.lower())  # instruction text included
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   AssertionError: 'system' not found in '你是跨境电商政策情报分析师。请分析以下政策文本, 输出结构化分析结果。\n重点关注: 政策变化要点、对卖家的影响、紧急度、具体行动建议。\n\n请输出 json:\n{\n    "summary": "100字以内核心要点",\n    "urgency": "high|medium|low",\n    "affected_entities": ["受影响的卖家类型"],\n    "action_items": ["建议采取的具体行动1", "行动2"]\n}\n'
+____________________ TestKnowledgeMemory.test_add_and_get _____________________
+tests\test_reflexion_dspy_kb.py:267: in tearDown
+    os.unlink(self._db.name)
+E   PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'C:\\Users\\123\\AppData\\Local\\Temp\\tmp8gu857ki.db'
+_____________________ TestKnowledgeMemory.test_batch_add ______________________
+tests\test_reflexion_dspy_kb.py:267: in tearDown
+    os.unlink(self._db.name)
+E   PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'C:\\Users\\123\\AppData\\Local\\Temp\\tmpx3oe4w2_.db'
+_______________________ TestKnowledgeMemory.test_count ________________________
+tests\test_reflexion_dspy_kb.py:267: in tearDown
+    os.unlink(self._db.name)
+E   PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'C:\\Users\\123\\AppData\\Local\\Temp\\tmpxm1b5__k.db'
+_______________________ TestKnowledgeMemory.test_delete _______________________
+tests\test_reflexion_dspy_kb.py:267: in tearDown
+    os.unlink(self._db.name)
+E   PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'C:\\Users\\123\\AppData\\Local\\Temp\\tmpy9qm90pn.db'
+____________________ TestKnowledgeMemory.test_format_empty ____________________
+tests\test_reflexion_dspy_kb.py:267: in tearDown
+    os.unlink(self._db.name)
+E   PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'C:\\Users\\123\\AppData\\Local\\Temp\\tmpmz8n5wu6.db'
+__________________ TestKnowledgeMemory.test_format_for_dspy ___________________
+tests\test_reflexion_dspy_kb.py:267: in tearDown
+    os.unlink(self._db.name)
+E   PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'C:\\Users\\123\\AppData\\Local\\Temp\\tmprmee9jdx.db'
+_________________ TestKnowledgeMemory.test_search_by_keywords _________________
+tests\test_reflexion_dspy_kb.py:267: in tearDown
+    os.unlink(self._db.name)
+E   PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'C:\\Users\\123\\AppData\\Local\\Temp\\tmpi003_tbx.db'
+_______________ TestKnowledgeMemory.test_search_by_policy_type ________________
+tests\test_reflexion_dspy_kb.py:267: in tearDown
+    os.unlink(self._db.name)
+E   PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'C:\\Users\\123\\AppData\\Local\\Temp\\tmp5uip7d1e.db'
+_________________ TestKnowledgeMemory.test_strategy_property __________________
+tests\test_reflexion_dspy_kb.py:267: in tearDown
+    os.unlink(self._db.name)
+E   PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'C:\\Users\\123\\AppData\\Local\\Temp\\tmpi3n34iyv.db'
+_______________________ TestKnowledgeMemory.test_update _______________________
+tests\test_reflexion_dspy_kb.py:267: in tearDown
+    os.unlink(self._db.name)
+E   PermissionError: [WinError 32] 另一个程序正在使用此文件，进程无法访问。: 'C:\\Users\\123\\AppData\\Local\\Temp\\tmpx09yowom.db'
+_________________ TestLearningLoop.test_add_training_example __________________
+tests\test_reflexion_dspy_kb.py:490: in setUp
+    reflexion_engine=ContinuousReflexionEngine(db_path=self._refl_db.name),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: ContinuousReflexionEngine.__init__() got an unexpected keyword argument 'db_path'
+_______________ TestLearningLoop.test_analyze_returns_signature _______________
+tests\test_reflexion_dspy_kb.py:490: in setUp
+    reflexion_engine=ContinuousReflexionEngine(db_path=self._refl_db.name),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: ContinuousReflexionEngine.__init__() got an unexpected keyword argument 'db_path'
+____________________ TestLearningLoop.test_analyze_with_kb ____________________
+tests\test_reflexion_dspy_kb.py:490: in setUp
+    reflexion_engine=ContinuousReflexionEngine(db_path=self._refl_db.name),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: ContinuousReflexionEngine.__init__() got an unexpected keyword argument 'db_path'
+____________________ TestLearningLoop.test_compile_prompt _____________________
+tests\test_reflexion_dspy_kb.py:490: in setUp
+    reflexion_engine=ContinuousReflexionEngine(db_path=self._refl_db.name),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: ContinuousReflexionEngine.__init__() got an unexpected keyword argument 'db_path'
+______________________ TestLearningLoop.test_diagnostics ______________________
+tests\test_reflexion_dspy_kb.py:490: in setUp
+    reflexion_engine=ContinuousReflexionEngine(db_path=self._refl_db.name),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: ContinuousReflexionEngine.__init__() got an unexpected keyword argument 'db_path'
+___________________ TestLearningLoop.test_expand_knowledge ____________________
+tests\test_reflexion_dspy_kb.py:490: in setUp
+    reflexion_engine=ContinuousReflexionEngine(db_path=self._refl_db.name),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: ContinuousReflexionEngine.__init__() got an unexpected keyword argument 'db_path'
+______________________ TestLearningLoop.test_next_round _______________________
+tests\test_reflexion_dspy_kb.py:490: in setUp
+    reflexion_engine=ContinuousReflexionEngine(db_path=self._refl_db.name),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: ContinuousReflexionEngine.__init__() got an unexpected keyword argument 'db_path'
+____________________ TestLearningLoop.test_state_snapshot _____________________
+tests\test_reflexion_dspy_kb.py:490: in setUp
+    reflexion_engine=ContinuousReflexionEngine(db_path=self._refl_db.name),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: ContinuousReflexionEngine.__init__() got an unexpected keyword argument 'db_path'
+____________________ TestLearningLoop.test_submit_feedback ____________________
+tests\test_reflexion_dspy_kb.py:490: in setUp
+    reflexion_engine=ContinuousReflexionEngine(db_path=self._refl_db.name),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: ContinuousReflexionEngine.__init__() got an unexpected keyword argument 'db_path'
+______ TestEndToEndLearningCycle.test_dislike_triggers_reflection_engine ______
+tests\test_reflexion_dspy_kb.py:569: in setUp
+    reflexion_engine=ContinuousReflexionEngine(db_path=self._refl_db.name),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: ContinuousReflexionEngine.__init__() got an unexpected keyword argument 'db_path'
+___ TestEndToEndLearningCycle.test_feedback_accumulation_drives_reflection ____
+tests\test_reflexion_dspy_kb.py:569: in setUp
+    reflexion_engine=ContinuousReflexionEngine(db_path=self._refl_db.name),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: ContinuousReflexionEngine.__init__() got an unexpected keyword argument 'db_path'
+__________ TestEndToEndLearningCycle.test_learning_loop_multi_round ___________
+tests\test_reflexion_dspy_kb.py:569: in setUp
+    reflexion_engine=ContinuousReflexionEngine(db_path=self._refl_db.name),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: ContinuousReflexionEngine.__init__() got an unexpected keyword argument 'db_path'
+______ TestEndToEndLearningCycle.test_report_miss_triggers_kb_expansion _______
+tests\test_reflexion_dspy_kb.py:569: in setUp
+    reflexion_engine=ContinuousReflexionEngine(db_path=self._refl_db.name),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: ContinuousReflexionEngine.__init__() got an unexpected keyword argument 'db_path'
+=========================== short test summary info ===========================
+FAILED tests/test_reflexion_dspy_kb.py::TestReflectionMemory::test_add_and_retrieve
+FAILED tests/test_reflexion_dspy_kb.py::TestReflectionMemory::test_get_recent
+FAILED tests/test_reflexion_dspy_kb.py::TestReflectionMemory::test_retrieve_nonexistent_policy_type
+FAILED tests/test_reflexion_dspy_kb.py::TestContinuousReflexionEngine::test_build_context
+FAILED tests/test_reflexion_dspy_kb.py::TestContinuousReflexionEngine::test_reflect_generates_entry
+FAILED tests/test_reflexion_dspy_kb.py::TestContinuousReflexionEngine::test_reflect_on_low_accuracy
+FAILED tests/test_reflexion_dspy_kb.py::TestContinuousReflexionEngine::test_rule_based_reflection
+FAILED tests/test_reflexion_dspy_kb.py::TestPromptTemplate::test_render_basic
+FAILED tests/test_reflexion_dspy_kb.py::TestKnowledgeMemory::test_add_and_get
+FAILED tests/test_reflexion_dspy_kb.py::TestKnowledgeMemory::test_batch_add
+FAILED tests/test_reflexion_dspy_kb.py::TestKnowledgeMemory::test_count - Per...
+FAILED tests/test_reflexion_dspy_kb.py::TestKnowledgeMemory::test_delete - Pe...
+FAILED tests/test_reflexion_dspy_kb.py::TestKnowledgeMemory::test_format_empty
+FAILED tests/test_reflexion_dspy_kb.py::TestKnowledgeMemory::test_format_for_dspy
+FAILED tests/test_reflexion_dspy_kb.py::TestKnowledgeMemory::test_search_by_keywords
+FAILED tests/test_reflexion_dspy_kb.py::TestKnowledgeMemory::test_search_by_policy_type
+FAILED tests/test_reflexion_dspy_kb.py::TestKnowledgeMemory::test_strategy_property
+FAILED tests/test_reflexion_dspy_kb.py::TestKnowledgeMemory::test_update - Pe...
+FAILED tests/test_reflexion_dspy_kb.py::TestLearningLoop::test_add_training_example
+FAILED tests/test_reflexion_dspy_kb.py::TestLearningLoop::test_analyze_returns_signature
+FAILED tests/test_reflexion_dspy_kb.py::TestLearningLoop::test_analyze_with_kb
+FAILED tests/test_reflexion_dspy_kb.py::TestLearningLoop::test_compile_prompt
+FAILED tests/test_reflexion_dspy_kb.py::TestLearningLoop::test_diagnostics - ...
+FAILED tests/test_reflexion_dspy_kb.py::TestLearningLoop::test_expand_knowledge
+FAILED tests/test_reflexion_dspy_kb.py::TestLearningLoop::test_next_round - T...
+FAILED tests/test_reflexion_dspy_kb.py::TestLearningLoop::test_state_snapshot
+FAILED tests/test_reflexion_dspy_kb.py::TestLearningLoop::test_submit_feedback
+FAILED tests/test_reflexion_dspy_kb.py::TestEndToEndLearningCycle::test_dislike_triggers_reflection_engine
+FAILED tests/test_reflexion_dspy_kb.py::TestEndToEndLearningCycle::test_feedback_accumulation_drives_reflection
+FAILED tests/test_reflexion_dspy_kb.py::TestEndToEndLearningCycle::test_learning_loop_multi_round
+FAILED tests/test_reflexion_dspy_kb.py::TestEndToEndLearningCycle::test_report_miss_triggers_kb_expansion
+ERROR tests/test_reflexion_dspy_kb.py::TestReflectionMemory::test_add_and_retrieve
+ERROR tests/test_reflexion_dspy_kb.py::TestReflectionMemory::test_get_recent
+=================== 31 failed, 31 passed, 2 errors in 1.89s ===================

@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: E-commerce Competitor Intelligence v0.1.0
+# Competitor pricing, review analysis, keyword rankings, trend forecasting
+
+- id: dsh-tool-ecomintel
+  name: dsh-tool-ecomintel
+  version: 0.1.0
+  description: E-commerce Competitor Intelligence - Pricing analysis, review sentiment, keyword rankings, listing quality, trend forecasting, ad spend estimation, market share, pricing strategy
+  author: chengganping-ship-it
+  tools:
+    - competitor_price_tracker
+    - product_review_analyzer
+    - keyword_ranking_monitor
+    - listing_quality_scorer
+    - trend_forecaster
+    - ad_spend_estimator
+    - market_share_analyzer
+    - pricing_strategy_advisor

@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VTON 虚拟试穿 · AI 一秒换装</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f0f14;color:#e4e4e8;min-height:100vh}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:16px 32px;background:#16161f;border-bottom:1px solid #2a2a3a}
+.nav h1{font-size:20px;background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav .user-info{display:flex;gap:12px;align-items:center;font-size:14px}
+.nav .credits{background:#1e293b;padding:4px 12px;border-radius:14px;font-weight:600;color:#60a5fa;border:1px solid #334155}
+button{background:linear-gradient(135deg,#3b82f6,#6366f1);color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-size:14px;font-weight:600;transition:transform .1s}
+button:hover{transform:translateY(-1px)}
+button:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-sm{padding:6px 14px;font-size:13px}
+.btn-ghost{background:transparent;border:1px solid #3b82f6}
+.btn-ghost:hover{background:#1e293b}
+.btn-warn{background:linear-gradient(135deg,#f59e0b,#ef4444)}
+.container{max-width:960px;margin:0 auto;padding:32px 24px}
+.panel{background:#1a1a26;border:1px solid #2a2a3a;border-radius:12px;padding:24px;margin-bottom:24px}
+.panel h2{font-size:18px;margin-bottom:16px;color:#a5b4fc}
+.upload-area{display:flex;gap:24px;flex-wrap:wrap}
+.upload-box{flex:1;min-width:260px;border:2px dashed #334155;border-radius:12px;padding:24px;text-align:center;cursor:pointer;transition:border-color .2s;min-height:220px;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.upload-box:hover{border-color:#3b82f6}
+.upload-box img{max-width:100%;max-height:180px;border-radius:8px;margin-bottom:8px}
+.upload-box p{color:#94a3b8;font-size:13px}
+.upload-box .label{font-size:15px;color:#cbd5e1;margin-top:4px;font-weight:600}
+.form-row{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end;margin-bottom:12px}
+.form-row label{display:block;font-size:13px;color:#94a3b8;margin-bottom:4px}
+.form-row select,.form-row input[type=text],.form-row input[type=number],.form-row input[type=password],.form-row textarea{
+  background:#0f172a;border:1px solid #334155;color:#e4e4e8;padding:9px 12px;border-radius:8px;font-size:14px;width:100%
+}
+.form-row .field{flex:1;min-width:140px}
+.auth-wrap{max-width:400px;margin:80px auto}
+.auth-wrap input{width:100%;margin-bottom:12px}
+.auth-wrap button{width:100%;margin-top:8px}
+.tabs{display:flex;gap:4px;margin-bottom:20px}
+.tab{padding:9px 18px;border-radius:7px;cursor:pointer;font-size:14px;background:#1e293b;color:#94a3b8;border:1px solid #334155}
+.tab.active{background:#3b82f6;color:#fff;border-color:#3b82f6}
+.packages{display:flex;gap:12px;flex-wrap:wrap}
+.pkg{flex:1;min-width:140px;background:#0f172a;border:1px solid #334155;border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:border-color .2s}
+.pkg:hover{border-color:#3b82f6}
+.pkg.active{border-color:#3b82f6;background:#1e293b}
+.pkg .price{font-size:24px;font-weight:700;color:#fbbf24}
+.pkg .desc{font-size:12px;color:#94a3b8;margin-top:4px}
+.result-area{text-align:center;min-height:160px;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.result-area img{max-width:100%;max-height:480px;border-radius:8px;border:1px solid #2a2a3a}
+.status-bar{display:flex;gap:16px;font-size:13px;color:#94a3b8;margin-top:8px}
+.status-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block;margin-right:4px}
+.status-dot.queued{background:#f59e0b}
+.status-dot.err{background:#ef4444}
+.model-grid,.scene-grid{display:flex;gap:8px;flex-wrap:wrap}
+.model-card,.scene-card{width:90px;height:90px;border-radius:8px;border:2px solid #334155;cursor:pointer;display:flex;align-items:flex-end;padding:6px;font-size:11px;background:#0f172a;transition:border-color .2s}
+.model-card:hover,.scene-card:hover{border-color:#3b82f6}
+.model-card.sel,.scene-card.sel{border-color:#3b82f6;background:#1e293b}
+.model-card .name,.scene-card .name{background:rgba(0,0,0,0.7);padding:2px 4px;border-radius:4px;width:100%;text-align:center}
+.task-list{display:flex;flex-direction:column;gap:8px;max-height:300px;overflow:auto}
+.task-item{display:flex;justify-content:space-between;align-items:center;background:#0f172a;padding:10px 14px;border-radius:8px;font-size:13px}
+.task-color{width:8px;height:8px;border-radius:50%;margin-right:10px}
+.log-list{max-height:260px;overflow:auto;font-size:12px}
+.log-item{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1e293b}
+.log-item .pos{color:#22c55e}
+.log-item .neg{color:#ef4444}
+.toast{position:fixed;top:70px;right:24px;padding:12px 20px;border-radius:8px;font-size:14px;z-index:999;animation:fade .3s}
+.toast.err{background:#7f1d1d;border:1px solid #ef4444}
+.toast.ok{background:#14532d;border:1px solid #22c55e}
+@keyframes fade{from{opacity:0;transform:translateY(-8px)}to{opacity:1}}
+.hidden{display:none!important}
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:200;display:flex;align-items:center;justify-content:center}
+.modal{background:#1a1a26;border:1px solid #3b82f6;border-radius:12px;padding:24px;max-width:600px;width:90%;max-height:80vh;overflow:auto}
+.modal h3{margin-bottom:16px}
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <h1>VTON 虚拟试穿</h1>
+  <div class="user-info" id="userInfoEl"></div>
+</div>
+
+<div class="container">
+
+  <!-- Auth -->
+  <div id="authPanel" class="auth-wrap">
+    <div class="panel">
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab('login')">登录</div>
+        <div class="tab" onclick="switchTab('signup')">注册</div>
+      </div>
+      <div>
+        <input type="text" id="authUser" placeholder="用户名" maxlength="32">
+        <input type="password" id="authPass" placeholder="密码" maxlength="64">
+        <button onclick="authSubmit()" id="authBtn">登录</button>
+      </div>
+      <p style="text-align:center;color:#64748b;font-size:12px;margin-top:16px">新用户注册即送 10 积分, 每日可领 2 积分</p>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div id="mainPanel" class="hidden">
+
+    <!-- Upload -->
+    <div class="panel">
+      <h2>◆ 上传区域</h2>
+      <div class="upload-area">
+        <div class="upload-box" onclick="clickInput('personInput')" id="personBox">
+          <input type="file" id="personInput" accept="image/*" class="hidden" onchange="previewFile(this,'personBox')">
+          <p>📤 点击上传人像</p>
+          <p class="label">您的照片</p>
+        </div>
+        <div class="upload-box" onclick="clickInput('clothInput')" id="clothBox">
+          <input type="file" id="clothInput" accept="image/*" class="hidden" onchange="previewFile(this,'clothBox')">
+          <p>👕 点击上传服装</p>
+          <p class="label">想试的衣服</p>
+        </div>
+      </div>
+      <div class="form-row" style="margin-top:16px">
+        <div class="field">
+          <label>服装位置</label>
+          <select id="garmentType">
+            <option value="upperbody">上身 (T恤/衬衫)</option>
+            <option value="lowerbody">下身 (裤子/裙)</option>
+            <option value="dress">连衣裙</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>场景选择</label>
+          <select id="sceneSelect">
+            <option value="">— 不使用场景 —</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>模特选择</label>
+          <select id="modelSelect">
+            <option value="">— 使用上传人像 —</option>
+          </select>
+        </div>
+        <button onclick="submitTryon()" style="align-self:flex-end" id="tryonBtn">✨ 试穿 (2积分)</button>
+      </div>
+      <div id="taskStatus" class="status-bar hidden"></div>
+    </div>
+
+    <!-- Result -->
+    <div class="panel">
+      <h2>◆ 试穿结果</h2>
+      <div class="result-area" id="resultArea">
+        <p style="color:#64748b">试穿结果将显示在此</p>
+      </div>
+      <div id="resultActions" class="hidden" style="margin-top:12px;text-align:center">
+        <button class="btn-sm btn-ghost" onclick="generateWorkflow()">🎬 生成视频</button>
+        <button class="btn-sm btn-ghost" onclick="openCopyModal()">✍️ 生成文案</button>
+      </div>
+    </div>
+
+    <!-- Copywriting -->
+    <div class="panel copy-panel" id="copyPanel">
+      <h2>◆ AI 文案生成</h2>
+      <div class="form-row">
+        <div class="field">
+          <label>产品名</label>
+          <input type="text" id="cName" placeholder="法式碎花连衣裙">
+        </div>
+        <div class="field">
+          <label>卖点 (逗号分隔)</label>
+          <input type="text" id="cDesc" placeholder="V领剪裁,显瘦,法式风情">
+        </div>
+        <div class="field">
+          <label>平台</label>
+          <select id="cPlatform">
+            <option value="xiaohongshu">小红书</option>
+            <option value="douyin">抖音</option>
+            <option value="taobao">淘宝详情</option>
+            <option value="amazon">Amazon英文</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>语气</label>
+          <select id="cTone">
+            <option value="professional">专业</option>
+            <option value="casual">接地气</option>
+            <option value="luxury">轻奢</option>
+            <option value="youth">年轻</option>
+          </select>
+        </div>
+        <button onclick="genCopy()" style="align-self:flex-end">生成</button>
+      </div>
+      <div id="copyResult" style="background:#0f172a;padding:16px;border-radius:8px;font-size:13px;white-space:pre-wrap;line-height:1.6;color:#e4e4e8;margin-top:12px;min-height:60px"></div>
+    </div>
+
+    <!-- Credits -->
+    <div class="panel">
+      <h2>◆ 积分充值</h2>
+      <div class="packages" id="pkgList"></div>
+      <div style="margin-top:16px;display:flex;gap:12px;align-items:center">
+        <button onclick="buyPackage()" id="buyBtn">购买 (模拟支付)</button>
+        <button class="btn-ghost btn-sm" onclick="loadCredits()">刷新</button>
+        <span id="buyMsg" style="font-size:13px;color:#94a3b8"></span>
+      </div>
+    </div>
+
+    <!-- Tasks -->
+    <div class="panel">
+      <h2>◆ 最近任务</h2>
+      <div class="task-list" id="taskList"></div>
+    </div>
+
+    <!-- Logs -->
+    <div class="panel">
+      <h2>◆ 积分明细</h2>
+      <div class="log-list" id="logList"></div>
+    </div>
+
+  </div>
+</div>
+
+<div id="videoModal" class="modal-overlay hidden" onclick="closeModal('videoModal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <h3>🎬 视频工作流</h3>
+    <div class="status-bar" id="workflowStatus">生成中...</div>
+    <div style="margin-top:12px;background:#0f172a;padding:16px;border-radius:8px;font-size:13px" id="workflowBody">
+    </div>
+    <div style="text-align:right;margin-top:12px">
+      <button class="btn-ghost btn-sm" onclick="closeModal('videoModal')">关闭</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const S = {
+  token: localStorage.getItem('vton_token') || null,
+  user: null,
+  authMode: 'login',
+  pollTimer: null,
+  selectedPkg: null,
+  lastResultId: null,
+  scenes: [],
+  models: [],
+};
+
+/* ==== utilities ==== */
+function toast(msg, isErr) {
+  const el = document.createElement('div');
+  el.className = 'toast ' + (isErr ? 'err' : 'ok');
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 3000);
+}
+
+async function api(path, opts = {}) {
+  const headers = { ...(opts.headers || {}) };
+  if (S.token) headers['Authorization'] = 'Bearer ' + S.token;
+  if (opts.body && !(opts.body instanceof FormData) && typeof opts.body === 'object') {
+    headers['Content-Type'] = 'application/json';
+    opts.body = JSON.stringify(opts.body);
+  }
+  const res = await fetch(path, { ...opts, headers });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    if (res.status === 401) { logout(); throw new Error('登录过期'); }
+    if (res.status === 402) { toast('积分不足, 请先充值', true); throw new Error('积分不足'); }
+    throw new Error(data.detail || '请求失败');
+  }
+  return data;
+}
+
+/* ==== auth ==== */
+function switchTab(mode) {
+  S.authMode = mode;
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    t.classList.toggle('active', (mode === 'login' && i === 0) || (mode === 'signup' && i === 1));
+  });
+  document.getElementById('authBtn').textContent = mode === 'login' ? '登录' : '注册';
+}
+
+async function authSubmit() {
+  const username = document.getElementById('authUser').value.trim();
+  const password = document.getElementById('authPass').value.trim();
+  if (!username || !password) return toast('请填写信息', true);
+  const path = S.authMode === 'login' ? '/api/login' : '/api/signup';
+  try {
+    const d = await api(path, { method: 'POST', body: { username, password } });
+    S.token = d.token;
+    S.user = d.user;
+    localStorage.setItem('vton_token', S.token);
+    enterMain();
+  } catch (e) { toast(e.message, true); }
+}
+
+function logout() {
+  S.token = null;
+  S.user = null;
+  localStorage.removeItem('vton_token');
+  document.getElementById('authPanel').classList.remove('hidden');
+  document.getElementById('mainPanel').classList.add('hidden');
+}
+
+function renderUser() {
+  document.getElementById('userInfoEl').innerHTML = `
+    <span>${S.user?.username || ''}</span>
+    <span class="credits">💎 ${S.user?.credits ?? 0}</span>
+    <button class="btn-ghost btn-sm" onclick="logout()">退出</button>`;
+}
+
+/* ==== main ==== */
+async function enterMain() {
+  document.getElementById('authPanel').classList.add('hidden');
+  document.getElementById('mainPanel').classList.remove('hidden');
+  await loadCredits();
+  await loadScenes();
+  await loadModels();
+  await loadPackages();
+  await loadTasks();
+  await loadLogs();
+  api('/api/claim_daily', { method: 'POST' }).then(d => {
+    if (d.claimed) toast(`🎉 已领取 ${d.claimed ? 2 : 0} 积分`), loadCredits();
+  }).catch(() => {});
+}
+
+/* ==== credits ==== */
+async function loadCredits() {
+  try { S.user = await api('/api/me'); renderUser(); } catch {}
+}
+
+async function loadPackages() {
+  const pkgs = await api('/api/packages');
+  const el = document.getElementById('pkgList');
+  el.innerHTML = Object.entries(pkgs).map(([k, v]) =>
+    `<div class="pkg" onclick="selectPkg('${k}',this)"><div class="price">￥${v.price_rmb}</div><div class="desc">${v.label}</div></div>`
+  ).join('');
+  S.selectedPkg = null;
+  if (el.firstChild) el.firstChild.click();
+}
+
+function selectPkg(key, el) {
+  document.querySelectorAll('.pkg').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  S.selectedPkg = key;
+}
+
+async function buyPackage() {
+  if (!S.selectedPkg) return toast('请选择套餐', true);
+  document.getElementById('buyMsg').textContent = '...';
+  try {
+    const order = await api(`/api/order?pkg=${S.selectedPkg}`, { method: 'POST' });
+    const paid = await api(`/api/order/${order.order_no}/pay`, { method: 'POST' });
+    document.getElementById('buyMsg').textContent = `✅ 已到账 ${paid.added} 积分`;
+    toast('充值成功!');
+    loadCredits();
+  } catch (e) {
+    toast(e.message, true);
+    document.getElementById('buyMsg').textContent = '';
+  }
+}
+
+/* ==== upload & tryon ==== */
+function clickInput(id) { document.getElementById(id).click(); }
+
+function previewFile(input, boxId) {
+  const file = input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const box = document.getElementById(boxId);
+    box.innerHTML = `<img src="${e.target.result}"><p class="label">${file.name}</p>`;
+    const ni = document.createElement('input');
+    ni.type = 'file'; ni.accept = 'image/*'; ni.className = 'hidden'; ni.id = input.id;
+    ni.onchange = () => previewFile(ni, boxId);
+    box.appendChild(ni);
+  };
+  reader.readAsDataURL(file);
+}
+
+async function submitTryon() {
+  const personFile = document.getElementById('personInput').files[0];
+  const clothFile = document.getElementById('clothInput').files[0];
+  if (!personFile || !clothFile) return toast('请上传人像和服装', true);
+  const fd = new FormData();
+  fd.append('person_image', personFile);
+  fd.append('cloth_image', clothFile);
+  fd.append('garment_type', document.getElementById('garmentType').value);
+  fd.append('seed', '-1');
+  try {
+    const d = await api('/api/tryon', { method: 'POST', body: fd });
+    S.user.credits = d.credits_left;
+    renderUser();
+    toast(`已提交, 剩余 ${d.credits_left} 积分`);
+    pollTask(d.task_id);
+  } catch (e) { toast(e.message, true); }
+}
+
+function pollTask(taskId) {
+  const bar = document.getElementById('taskStatus');
+  bar.classList.remove('hidden');
+  bar.innerHTML = '<span class="status-dot queued"></span>排队中...';
+  if (S.pollTimer) clearInterval(S.pollTimer);
+  S.pollTimer = setInterval(async () => {
+    try {
+      const t = await api(`/api/tryon/${taskId}`);
+      if (t.status === 'done') {
+        clearInterval(S.pollTimer);
+        bar.innerHTML = '<span class="status-dot"></span>✅ 完成';
+        showResult(t.result_image);
+        S.lastResultId = t.task_id;
+        loadCredits();
+        loadTasks();
+      } else if (t.status === 'failed') {
+        clearInterval(S.pollTimer);
+        bar.innerHTML = `<span class="status-dot err"></span>❌ ${t.error_msg || '失败'}`;
+      } else if (t.status === 'processing') {
+        bar.innerHTML = '<span class="status-dot"></span>处理中...';
+      }
+    } catch { clearInterval(S.pollTimer); }
+  }, 1500);
+}
+
+function showResult(url) {
+  const ts = Date.now();
+  document.getElementById('resultArea').innerHTML =
+    `<img src="${url}?t=${ts}"><div style="margin-top:10px"><a href="${url}" download><button class="btn-sm">下载图片</button></a></div>`;
+  document.getElementById('resultActions').classList.remove('hidden');
+}
+
+/* ==== workflow, video, copywriting ==== */
+function generateWorkflow() {
+  document.getElementById('videoModal').classList.remove('hidden');
+  document.getElementById('workflowStatus').innerHTML = '<span class="status-dot"></span> 生成中...';
+  api('/api/workflow', {
+    method: 'POST',
+    body: { images: [S.lastResultId], product_name: '样例产品' }
+  }).then(brief => {
+    document.getElementById('workflowBody').textContent = JSON.stringify(brief, null, 2);
+    document.getElementById('workflowStatus').innerHTML = '✅ 工作流已创建';
+  }).catch(e => {
+    document.getElementById('workflowStatus').textContent = '失败: ' + e.message;
+  });
+}
+
+async function openCopyModal() {
+  document.getElementById('copyPanel').scrollIntoView({ behavior: 'smooth' });
+}
+
+async function genCopy() {
+  const name = document.getElementById('cName').value.trim();
+  const desc = document.getElementById('cDesc').value.trim();
+  if (!name) return toast('请填写产品名', true);
+  const r = await api('/api/copywriting', {
+    method: 'POST',
+    body: { name, desc, platform: document.getElementById('cPlatform').value, tone: document.getElementById('cTone').value }
+  });
+  document.getElementById('copyResult').textContent = r.text + (r.ok ? '' : '\n\n(当前为模板, 接入 DeepSeek API 后可生成智能文案)');
+}
+
+async function loadScenes() {
+  S.scenes = await api('/api/scenes');
+  const sel = document.getElementById('sceneSelect');
+  sel.innerHTML = '<option value="">— 不使用 —</option>' +
+    S.scenes.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+}
+
+async function loadModels() {
+  S.models = await api('/api/models');
+  const sel = document.getElementById('modelSelect');
+  sel.innerHTML = '<option value="">— 上传自行 —</option>' +
+    S.models.map(m => `<option value="${m.id}">${m.name}</option>`).join('');
+}
+
+/* ==== tasks & logs ==== */
+async function loadTasks() {
+  try {
+    const list = await api('/api/tasks');
+    document.getElementById('taskList').innerHTML = list.length ? list.map(t => `
+      <div class="task-item">
+        <span><span class="task-color" style="background:${t.status==='done'?'#22c55e':t.status==='failed'?'#ef4444':'#f59e0b'}"></span>${t.task_id.slice(0,8)} · ${t.garment_type || ''} · ${t.status}</span>
+        ${t.result ? `<a href="${t.result}"><button class="btn-sm btn-ghost">查看</button></a>` : ''}
+      </div>`).join('') : '<p style="color:#64748b;text-align:center;padding:20px">暂无任务</p>';
+  } catch {}
+}
+
+async function loadLogs() {
+  try {
+    const list = await api('/api/credit_logs');
+    document.getElementById('logList').innerHTML = list.length ? list.map(l => `
+      <div class="log-item">
+        <span>${l.reason}</span>
+        <span class="${l.amount >= 0 ? 'pos' : 'neg'}">${l.amount >= 0 ? '+' : ''}${l.amount}</span>
+        <span style="color:#64748b">余额 ${l.balance}</span>
+      </div>`).join('') : '<p style="color:#64748b;text-align:center;padding:20px">暂无</p>';
+  } catch {}
+}
+
+function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+/* ==== init ==== */
+if (S.token) {
+  api('/api/me').then(u => { S.user = u; enterMain(); }).catch(() => { logout(); });
+}
+setInterval(() => { if (S.token) loadCredits(); }, 30000);
+setInterval(() => { if (S.token) { loadTasks(); loadLogs(); } }, 30000);
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Agent Security Governance v0.1.0
+# Agent compliance auditing, permission management, and safety guardrails
+
+- id: dsh-tool-governance
+  name: dsh-tool-governance
+  version: 0.1.0
+  description: Agent Security Governance Plugin - Permission Auditing, Compliance Checking, Guardrail Design, Audit Trail Generation, Data Leak Detection, Tool Sandbox Scoring, Prompt Injection Detection, Governance Maturity Assessment
+  author: chengganping-ship-it
+  tools:
+    - permission_auditor
+    - compliance_checker
+    - guardrail_designer
+    - audit_trail_generator
+    - data_leak_detector
+    - tool_sandbox_scorer
+    - prompt_injection_detector
+    - governance_maturity_assessor

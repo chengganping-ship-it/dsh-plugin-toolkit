@@ -1,0 +1,45 @@
+
+(function(){
+  var all = document.querySelectorAll("div");
+  var results = [];
+  for (var i = 0; i < all.length; i++) {
+    var fk = null;
+    var ks = Object.keys(all[i]);
+    for (var j = 0; j < ks.length; j++) {
+      if (ks[j].indexOf("__reactFiber") === 0) {
+        fk = ks[j];
+        break;
+      }
+    }
+    if (!fk) continue;
+    var f = all[i][fk];
+    var triesF = 0;
+    while (f && triesF < 80) {
+      triesF++;
+      if (f.memoizedState) {
+        var curState = f.memoizedState;
+        var hookDepth = 0;
+        while (curState && hookDepth < 25) {
+          hookDepth++;
+          try {
+            var q = curState.queue;
+            if (q && q.lastRenderedState !== undefined && q.dispatch) {
+              var lrs = q.lastRenderedState;
+              if (lrs && typeof lrs === "object") {
+                var keys = Object.keys(lrs);
+                if (keys.length > 0 && keys.length < 5) {
+                  results.push({triesF: triesF, hookDepth: hookDepth, keys: keys, oneKey: lrs["1"] ? "has1" : "no1"});
+                }
+              }
+            }
+          } catch(e) {}
+          if (curState.next) curState = curState.next; else break;
+        }
+      }
+      if (f.return) f = f.return; else break;
+    }
+    if (results.length > 0) break;
+  }
+  return JSON.stringify(results.slice(0, 5));
+})()
+

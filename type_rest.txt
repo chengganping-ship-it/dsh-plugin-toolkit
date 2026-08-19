@@ -1,0 +1,26 @@
+
+(function(){
+  var inp = document.querySelectorAll("input[type=text]")[1];
+  function safeTypeChar(el, c) {
+    var nativeSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
+    var beforeVal = el.value;
+    var afterVal = beforeVal + c;
+    var kd = new KeyboardEvent("keydown", { key: c, bubbles: true, cancelable: true });
+    var kp = new KeyboardEvent("keypress", { key: c, charCode: c.charCodeAt(0), bubbles: true, cancelable: true });
+    var ku = new KeyboardEvent("keyup", { key: c, bubbles: true, cancelable: true });
+    el.dispatchEvent(kd);
+    el.dispatchEvent(kp);
+    nativeSetter.call(el, afterVal);
+    var ie = document.createEvent("HTMLEvents");
+    ie.initEvent("input", true, true);
+    el.dispatchEvent(ie);
+    el.dispatchEvent(ku);
+    return afterVal;
+  }
+  var text = " Resume Writer";
+  for (var i = 0; i < text.length; i++) {
+    safeTypeChar(inp, text[i]);
+  }
+  return inp.value;
+})()
+

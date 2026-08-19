@@ -1,0 +1,46 @@
+============================================================
+  证据包: DUP-0104
+============================================================
+  异常类型: duplicate_charge
+  严重程度: critical
+  标题: 重复扣费: ORD-20260004
+  描述:
+    同一笔费用被收取两次。
+    关键字段: {'order_id': 'ORD-20260004', 'description': None}
+    金额: ¥599.8
+    首次收取: 2026-08-04
+    重复收取: 2026-07-25
+    预估可追回: ¥599.8
+  预估可追回: ¥599.80
+
+  相关记录:
+    --- 记录 1 ---
+      settlement_id: STL-20260004
+      order_id: ORD-20260004
+      order_no: ORD-20260004
+      amount: 599.8
+      expected_amount: 599.8
+      fee: 29.99
+      type: settlement
+      date: 2026-08-04
+      status: completed
+      platform: Amazon
+    --- 记录 2 ---
+      settlement_id: STL-20260104
+      order_id: ORD-20260004
+      order_no: ORD-20260004
+      amount: 599.8
+      expected_amount: 599.8
+      fee: 29.99
+      type: duplicate
+      date: 2026-07-25
+      status: completed
+      platform: Amazon
+
+  证据元数据:
+    rule: duplicate_detection
+    key_fields: ['order_id', 'description']
+    amount_field: amount
+    match_signature: 0bcb7fac5b46:599.8
+    record_indices: [4, 104]
+============================================================

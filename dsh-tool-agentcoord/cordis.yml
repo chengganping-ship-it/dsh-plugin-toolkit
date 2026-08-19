@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Multi-Agent Orchestration Coordinator v0.1.0
+# Task decomposition, agent matching, dependency graphs, consensus, conflict resolution
+
+- id: dsh-tool-agentcoord
+  name: dsh-tool-agentcoord
+  version: 0.1.0
+  description: Multi-Agent Orchestration Coordinator - Task decomposition, agent capability matching, dependency graph building, consensus mechanism design, conflict resolution, progress aggregation, communication optimization, and coordination health monitoring
+  author: chengganping-ship-it
+  tools:
+    - task_decomposer
+    - agent_capability_matcher
+    - dependency_graph_builder
+    - consensus_mechanism_designer
+    - conflict_resolver
+    - progress_aggregator
+    - communication_optimizer
+    - coordination_health_monitor

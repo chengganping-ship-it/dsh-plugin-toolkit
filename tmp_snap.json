@@ -1,0 +1,1623 @@
+{
+  "id": "cmd_59",
+  "success": true,
+  "data": {
+    "origin": "https://www.fiverr.com/seller_onboarding/0",
+    "refs": {
+      "e1": {
+        "name": "Quick Accessibility Options",
+        "role": "region"
+      },
+      "e10": {
+        "name": "Edit your new profile",
+        "role": "heading"
+      },
+      "e100": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e101": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e102": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e103": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e104": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e105": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e106": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e107": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e108": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e109": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e11": {
+        "name": "Work experience",
+        "role": "heading"
+      },
+      "e110": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e111": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e112": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e113": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e114": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e115": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e116": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e117": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e118": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e119": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e12": {
+        "name": "Add work experience",
+        "role": "button"
+      },
+      "e120": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e121": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e122": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e123": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e124": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e125": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e126": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e127": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e128": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e129": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e13": {
+        "name": "Education",
+        "role": "heading"
+      },
+      "e130": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e131": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e132": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e133": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e134": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e135": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e136": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e137": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e138": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e139": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e14": {
+        "name": "Add education",
+        "role": "button"
+      },
+      "e140": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e141": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e142": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e143": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e144": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e145": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e146": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e147": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e148": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e149": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e15": {
+        "name": "Certifications",
+        "role": "heading"
+      },
+      "e150": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e151": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e152": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e153": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e154": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e155": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e156": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e157": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e158": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e159": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e16": {
+        "name": "Add certifications",
+        "role": "button"
+      },
+      "e160": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e161": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e162": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e163": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e164": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e165": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e166": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e167": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e168": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e169": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e17": {
+        "name": "",
+        "role": "link"
+      },
+      "e170": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e171": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e172": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e173": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e174": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e175": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e176": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e177": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e178": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e179": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e18": {
+        "name": "",
+        "role": "generic"
+      },
+      "e180": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e181": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e182": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e183": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e184": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e185": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e186": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e187": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e188": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e189": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e19": {
+        "name": "",
+        "role": "generic"
+      },
+      "e190": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e191": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e192": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e193": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e194": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e195": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e196": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e197": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e198": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e199": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e2": {
+        "name": "Virtual Assistant Chat",
+        "role": "Iframe"
+      },
+      "e20": {
+        "name": "",
+        "role": "generic"
+      },
+      "e200": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e201": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e202": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e203": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e204": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e205": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e206": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e207": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e208": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e209": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e21": {
+        "name": "About",
+        "role": "heading"
+      },
+      "e210": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e211": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e212": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e213": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e214": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e215": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e216": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e217": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e218": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e219": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e22": {
+        "name": "Add details",
+        "role": "button"
+      },
+      "e220": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e221": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e222": {
+        "name": "English",
+        "role": "radio"
+      },
+      "e223": {
+        "name": "Spanish",
+        "role": "radio"
+      },
+      "e224": {
+        "name": "French",
+        "role": "radio"
+      },
+      "e225": {
+        "name": "German",
+        "role": "radio"
+      },
+      "e226": {
+        "name": "Italian",
+        "role": "radio"
+      },
+      "e227": {
+        "name": "Afar",
+        "role": "radio"
+      },
+      "e228": {
+        "name": "Abkhazian",
+        "role": "radio"
+      },
+      "e229": {
+        "name": "Avestan",
+        "role": "radio"
+      },
+      "e23": {
+        "name": "Skills and expertise",
+        "role": "heading"
+      },
+      "e230": {
+        "name": "Afrikaans",
+        "role": "radio"
+      },
+      "e231": {
+        "name": "Akan",
+        "role": "radio"
+      },
+      "e232": {
+        "name": "Amharic",
+        "role": "radio"
+      },
+      "e233": {
+        "name": "Aragonese",
+        "role": "radio"
+      },
+      "e234": {
+        "name": "Arabic",
+        "role": "radio"
+      },
+      "e235": {
+        "name": "Assamese",
+        "role": "radio"
+      },
+      "e236": {
+        "name": "Avaric",
+        "role": "radio"
+      },
+      "e237": {
+        "name": "Aymara",
+        "role": "radio"
+      },
+      "e238": {
+        "name": "Azerbaijani",
+        "role": "radio"
+      },
+      "e239": {
+        "name": "Bashkir",
+        "role": "radio"
+      },
+      "e24": {
+        "name": "Add skills and expertise",
+        "role": "button"
+      },
+      "e240": {
+        "name": "Belarusian",
+        "role": "radio"
+      },
+      "e241": {
+        "name": "Bulgarian",
+        "role": "radio"
+      },
+      "e242": {
+        "name": "Bihari",
+        "role": "radio"
+      },
+      "e243": {
+        "name": "Bislama",
+        "role": "radio"
+      },
+      "e244": {
+        "name": "Bambara",
+        "role": "radio"
+      },
+      "e245": {
+        "name": "Bengali",
+        "role": "radio"
+      },
+      "e246": {
+        "name": "Tibetan",
+        "role": "radio"
+      },
+      "e247": {
+        "name": "Breton",
+        "role": "radio"
+      },
+      "e248": {
+        "name": "Bosnian",
+        "role": "radio"
+      },
+      "e249": {
+        "name": "Catalan",
+        "role": "radio"
+      },
+      "e25": {
+        "name": "",
+        "role": "LabelText"
+      },
+      "e250": {
+        "name": "Chechen",
+        "role": "radio"
+      },
+      "e251": {
+        "name": "Chamorro",
+        "role": "radio"
+      },
+      "e252": {
+        "name": "Corsican",
+        "role": "radio"
+      },
+      "e253": {
+        "name": "Cree",
+        "role": "radio"
+      },
+      "e254": {
+        "name": "Czech",
+        "role": "radio"
+      },
+      "e255": {
+        "name": "Chuvash",
+        "role": "radio"
+      },
+      "e256": {
+        "name": "Welsh",
+        "role": "radio"
+      },
+      "e257": {
+        "name": "Danish",
+        "role": "radio"
+      },
+      "e258": {
+        "name": "Ewe",
+        "role": "radio"
+      },
+      "e259": {
+        "name": "Greek",
+        "role": "radio"
+      },
+      "e26": {
+        "name": "Add display name",
+        "role": "textbox"
+      },
+      "e260": {
+        "name": "Esperanto",
+        "role": "radio"
+      },
+      "e261": {
+        "name": "Estonian",
+        "role": "radio"
+      },
+      "e262": {
+        "name": "Basque",
+        "role": "radio"
+      },
+      "e263": {
+        "name": "Persian",
+        "role": "radio"
+      },
+      "e264": {
+        "name": "Fulah",
+        "role": "radio"
+      },
+      "e265": {
+        "name": "Finnish",
+        "role": "radio"
+      },
+      "e266": {
+        "name": "Fijian",
+        "role": "radio"
+      },
+      "e267": {
+        "name": "Faroese",
+        "role": "radio"
+      },
+      "e268": {
+        "name": "Western Frisian",
+        "role": "radio"
+      },
+      "e269": {
+        "name": "Irish",
+        "role": "radio"
+      },
+      "e27": {
+        "name": "Add title",
+        "role": "textbox"
+      },
+      "e270": {
+        "name": "Scottish Gaelic",
+        "role": "radio"
+      },
+      "e271": {
+        "name": "Galician",
+        "role": "radio"
+      },
+      "e272": {
+        "name": "Guarani",
+        "role": "radio"
+      },
+      "e273": {
+        "name": "Gujarati",
+        "role": "radio"
+      },
+      "e274": {
+        "name": "Manx",
+        "role": "radio"
+      },
+      "e275": {
+        "name": "Hausa",
+        "role": "radio"
+      },
+      "e276": {
+        "name": "Hebrew",
+        "role": "radio"
+      },
+      "e277": {
+        "name": "Hindi",
+        "role": "radio"
+      },
+      "e278": {
+        "name": "Hiri Motu",
+        "role": "radio"
+      },
+      "e279": {
+        "name": "Croatian",
+        "role": "radio"
+      },
+      "e28": {
+        "name": "Add languages",
+        "role": "button"
+      },
+      "e280": {
+        "name": "Haitian",
+        "role": "radio"
+      },
+      "e281": {
+        "name": "Hungarian",
+        "role": "radio"
+      },
+      "e282": {
+        "name": "Armenian",
+        "role": "radio"
+      },
+      "e283": {
+        "name": "Herero",
+        "role": "radio"
+      },
+      "e284": {
+        "name": "Interlingua",
+        "role": "radio"
+      },
+      "e285": {
+        "name": "Indonesian",
+        "role": "radio"
+      },
+      "e286": {
+        "name": "Igbo",
+        "role": "radio"
+      },
+      "e287": {
+        "name": "Sichuan Yi",
+        "role": "radio"
+      },
+      "e288": {
+        "name": "Inupliaq",
+        "role": "radio"
+      },
+      "e289": {
+        "name": "Ido",
+        "role": "radio"
+      },
+      "e29": {
+        "name": "",
+        "role": "generic"
+      },
+      "e290": {
+        "name": "Icelandic",
+        "role": "radio"
+      },
+      "e291": {
+        "name": "Inuktitut",
+        "role": "radio"
+      },
+      "e292": {
+        "name": "Japanese",
+        "role": "radio"
+      },
+      "e293": {
+        "name": "",
+        "role": "radio"
+      },
+      "e294": {
+        "name": "Javanese",
+        "role": "radio"
+      },
+      "e295": {
+        "name": "Javanese",
+        "role": "radio"
+      },
+      "e296": {
+        "name": "Georgian",
+        "role": "radio"
+      },
+      "e297": {
+        "name": "Kongo",
+        "role": "radio"
+      },
+      "e298": {
+        "name": "Kikuyu",
+        "role": "radio"
+      },
+      "e299": {
+        "name": "Kuanyama",
+        "role": "radio"
+      },
+      "e3": {
+        "name": "Skip to main content",
+        "role": "button"
+      },
+      "e30": {
+        "name": "",
+        "role": "generic"
+      },
+      "e300": {
+        "name": "Kazakh",
+        "role": "radio"
+      },
+      "e301": {
+        "name": "Kalaallisut",
+        "role": "radio"
+      },
+      "e302": {
+        "name": "Khmer",
+        "role": "radio"
+      },
+      "e303": {
+        "name": "Kannada",
+        "role": "radio"
+      },
+      "e304": {
+        "name": "Korean",
+        "role": "radio"
+      },
+      "e305": {
+        "name": "Kanuri",
+        "role": "radio"
+      },
+      "e306": {
+        "name": "Kashmiri",
+        "role": "radio"
+      },
+      "e307": {
+        "name": "Kurdish",
+        "role": "radio"
+      },
+      "e308": {
+        "name": "Komi",
+        "role": "radio"
+      },
+      "e309": {
+        "name": "Cornish",
+        "role": "radio"
+      },
+      "e31": {
+        "name": "",
+        "role": "generic"
+      },
+      "e310": {
+        "name": "Kyrgyz",
+        "role": "radio"
+      },
+      "e311": {
+        "name": "Latin",
+        "role": "radio"
+      },
+      "e312": {
+        "name": "Luxembourgish",
+        "role": "radio"
+      },
+      "e313": {
+        "name": "Ganda",
+        "role": "radio"
+      },
+      "e314": {
+        "name": "Limburgan",
+        "role": "radio"
+      },
+      "e315": {
+        "name": "Lingala",
+        "role": "radio"
+      },
+      "e316": {
+        "name": "Lao",
+        "role": "radio"
+      },
+      "e317": {
+        "name": "Lithuanian",
+        "role": "radio"
+      },
+      "e318": {
+        "name": "Luba-Katanga",
+        "role": "radio"
+      },
+      "e319": {
+        "name": "Latvian",
+        "role": "radio"
+      },
+      "e32": {
+        "name": "Delete",
+        "role": "button"
+      },
+      "e320": {
+        "name": "Malagasy",
+        "role": "radio"
+      },
+      "e321": {
+        "name": "Marshallese",
+        "role": "radio"
+      },
+      "e322": {
+        "name": "Māori",
+        "role": "radio"
+      },
+      "e323": {
+        "name": "Macedonian",
+        "role": "radio"
+      },
+      "e324": {
+        "name": "Malayalam",
+        "role": "radio"
+      },
+      "e325": {
+        "name": "Mongolian",
+        "role": "radio"
+      },
+      "e326": {
+        "name": "Marathi",
+        "role": "radio"
+      },
+      "e327": {
+        "name": "Malay",
+        "role": "radio"
+      },
+      "e328": {
+        "name": "Maltese",
+        "role": "radio"
+      },
+      "e329": {
+        "name": "Burmese",
+        "role": "radio"
+      },
+      "e33": {
+        "name": "Add languages",
+        "role": "button"
+      },
+      "e330": {
+        "name": "Nauru",
+        "role": "radio"
+      },
+      "e331": {
+        "name": "Norwegian Bokmål",
+        "role": "radio"
+      },
+      "e332": {
+        "name": "North Ndebele",
+        "role": "radio"
+      },
+      "e333": {
+        "name": "Nepali",
+        "role": "radio"
+      },
+      "e334": {
+        "name": "Ndonga",
+        "role": "radio"
+      },
+      "e335": {
+        "name": "Dutch",
+        "role": "radio"
+      },
+      "e336": {
+        "name": "Norwegian Nynorsk",
+        "role": "radio"
+      },
+      "e337": {
+        "name": "Norwegian",
+        "role": "radio"
+      },
+      "e338": {
+        "name": "South Ndebele",
+        "role": "radio"
+      },
+      "e339": {
+        "name": "Navajo",
+        "role": "radio"
+      },
+      "e34": {
+        "name": "Add languages",
+        "role": "link"
+      },
+      "e340": {
+        "name": "Chichewa",
+        "role": "radio"
+      },
+      "e341": {
+        "name": "Occitan",
+        "role": "radio"
+      },
+      "e342": {
+        "name": "Ojibwa",
+        "role": "radio"
+      },
+      "e343": {
+        "name": "Oromo",
+        "role": "radio"
+      },
+      "e344": {
+        "name": "Oriya",
+        "role": "radio"
+      },
+      "e345": {
+        "name": "Ossetic",
+        "role": "radio"
+      },
+      "e346": {
+        "name": "Punjabi",
+        "role": "radio"
+      },
+      "e347": {
+        "name": "Pali",
+        "role": "radio"
+      },
+      "e348": {
+        "name": "Polish",
+        "role": "radio"
+      },
+      "e349": {
+        "name": "Pashto",
+        "role": "radio"
+      },
+      "e35": {
+        "name": "",
+        "role": "combobox"
+      },
+      "e350": {
+        "name": "Portuguese",
+        "role": "radio"
+      },
+      "e351": {
+        "name": "Quechua",
+        "role": "radio"
+      },
+      "e352": {
+        "name": "Romansh",
+        "role": "radio"
+      },
+      "e353": {
+        "name": "Rundi",
+        "role": "radio"
+      },
+      "e354": {
+        "name": "Romanian",
+        "role": "radio"
+      },
+      "e355": {
+        "name": "Russian",
+        "role": "radio"
+      },
+      "e356": {
+        "name": "Kinyarwanda",
+        "role": "radio"
+      },
+      "e357": {
+        "name": "Sanskrit",
+        "role": "radio"
+      },
+      "e358": {
+        "name": "Sardinian",
+        "role": "radio"
+      },
+      "e359": {
+        "name": "Sindhi",
+        "role": "radio"
+      },
+      "e36": {
+        "name": "",
+        "role": "combobox"
+      },
+      "e360": {
+        "name": "Northern Sami",
+        "role": "radio"
+      },
+      "e361": {
+        "name": "Sango",
+        "role": "radio"
+      },
+      "e362": {
+        "name": "Sinhala",
+        "role": "radio"
+      },
+      "e363": {
+        "name": "Slovak",
+        "role": "radio"
+      },
+      "e364": {
+        "name": "Slovenian",
+        "role": "radio"
+      },
+      "e365": {
+        "name": "Samoan",
+        "role": "radio"
+      },
+      "e366": {
+        "name": "Shona",
+        "role": "radio"
+      },
+      "e367": {
+        "name": "Somali",
+        "role": "radio"
+      },
+      "e368": {
+        "name": "Albanian",
+        "role": "radio"
+      },
+      "e369": {
+        "name": "Serbian",
+        "role": "radio"
+      },
+      "e37": {
+        "name": "Toggle",
+        "role": "button"
+      },
+      "e370": {
+        "name": "Swati",
+        "role": "radio"
+      },
+      "e371": {
+        "name": "Southern Sotho",
+        "role": "radio"
+      },
+      "e372": {
+        "name": "Sudanese",
+        "role": "radio"
+      },
+      "e373": {
+        "name": "Swedish",
+        "role": "radio"
+      },
+      "e374": {
+        "name": "Swahili",
+        "role": "radio"
+      },
+      "e375": {
+        "name": "Tamil",
+        "role": "radio"
+      },
+      "e376": {
+        "name": "Telugu",
+        "role": "radio"
+      },
+      "e377": {
+        "name": "Tajik",
+        "role": "radio"
+      },
+      "e378": {
+        "name": "Thai",
+        "role": "radio"
+      },
+      "e379": {
+        "name": "Tigrinya",
+        "role": "radio"
+      },
+      "e38": {
+        "name": "Toggle",
+        "role": "button"
+      },
+      "e380": {
+        "name": "Turkmen",
+        "role": "radio"
+      },
+      "e381": {
+        "name": "Tagalog",
+        "role": "radio"
+      },
+      "e382": {
+        "name": "Tswana",
+        "role": "radio"
+      },
+      "e383": {
+        "name": "Tongan",
+        "role": "radio"
+      },
+      "e384": {
+        "name": "Turkish",
+        "role": "radio"
+      },
+      "e385": {
+        "name": "Tsonga",
+        "role": "radio"
+      },
+      "e386": {
+        "name": "Tatar",
+        "role": "radio"
+      },
+      "e387": {
+        "name": "Twi",
+        "role": "radio"
+      },
+      "e388": {
+        "name": "Tahitian",
+        "role": "radio"
+      },
+      "e389": {
+        "name": "Uyghur",
+        "role": "radio"
+      },
+      "e39": {
+        "name": "Select languages",
+        "role": "textbox"
+      },
+      "e390": {
+        "name": "Ukrainian",
+        "role": "radio"
+      },
+      "e391": {
+        "name": "Urdu",
+        "role": "radio"
+      },
+      "e392": {
+        "name": "Uzbek",
+        "role": "radio"
+      },
+      "e393": {
+        "name": "Venda",
+        "role": "radio"
+      },
+      "e394": {
+        "name": "Vietnamese",
+        "role": "radio"
+      },
+      "e395": {
+        "name": "Volapük",
+        "role": "radio"
+      },
+      "e396": {
+        "name": "Walloon",
+        "role": "radio"
+      },
+      "e397": {
+        "name": "Wolof",
+        "role": "radio"
+      },
+      "e398": {
+        "name": "Xhosa",
+        "role": "radio"
+      },
+      "e399": {
+        "name": "Yiddish",
+        "role": "radio"
+      },
+      "e4": {
+        "name": "Enable accessibility for low vision",
+        "role": "button"
+      },
+      "e40": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e400": {
+        "name": "Yoruba",
+        "role": "radio"
+      },
+      "e401": {
+        "name": "Zhuang",
+        "role": "radio"
+      },
+      "e402": {
+        "name": "Chinese",
+        "role": "radio"
+      },
+      "e403": {
+        "name": "Zulu",
+        "role": "radio"
+      },
+      "e41": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e42": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e43": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e44": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e45": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e46": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e47": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e48": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e49": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e5": {
+        "name": "Open the accessibility menu",
+        "role": "button"
+      },
+      "e50": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e51": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e52": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e53": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e54": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e55": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e56": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e57": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e58": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e59": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e6": {
+        "name": "Back",
+        "role": "button"
+      },
+      "e60": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e61": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e62": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e63": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e64": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e65": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e66": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e67": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e68": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e69": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e7": {
+        "name": "Continue",
+        "role": "button"
+      },
+      "e70": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e71": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e72": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e73": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e74": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e75": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e76": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e77": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e78": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e79": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e8": {
+        "name": "",
+        "role": "button"
+      },
+      "e80": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e81": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e82": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e83": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e84": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e85": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e86": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e87": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e88": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e89": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e9": {
+        "name": "Exit",
+        "role": "button"
+      },
+      "e90": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e91": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e92": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e93": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e94": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e95": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e96": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e97": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e98": {
+        "name": "",
+        "role": "listitem"
+      },
+      "e99": {
+        "name": "",
+        "role": "listitem"
+      }
+    },
+    "snapshot": "- generic\n  - region \"Quick Accessibility Options\" [ref=e1]\n    - button \"Skip to main content\" [ref=e3]\n      - StaticText \"Skip to main content\"\n    - button \"Enable accessibility for low vision\" [ref=e4]\n      - StaticText \"Enable accessibility for low vision\"\n    - button \"Open the accessibility menu\" [ref=e5]\n      - StaticText \"Open the accessibility menu\"\n  - generic\n    - generic\n    - generic\n    - generic\n  - generic\n    - generic\n      - button [ref=e8]\n        - link [ref=e17]\n          - image\n      - button \"Exit\" [ref=e9]\n    - heading \"Edit your new profile\" [level=2, ref=e10]\n    - paragraph\n      - StaticText \"You can come back and update your profile anytime.\"\n    - generic\n      - LabelText [ref=e25] clickable [cursor:pointer]\n        - image \"u_cbe4bf124f8c\"\n      - image\n    - generic [ref=e18] clickable [cursor:pointer, onclick]\n      - textbox \"Add display name\" [ref=e26]\n        - StaticText \"Add display name\"\n      - image\n      - paragraph\n        - StaticText \"@u_cbe4bf124f8c\"\n    - generic [ref=e19] clickable [cursor:pointer, onclick]\n      - textbox \"Add title\" [ref=e27]\n      - image\n    - image\n    - paragraph\n      - StaticText \"United States\"\n    - generic\n      - button \"Add languages\" [expanded=true, ref=e28]\n        - generic [ref=e29] clickable [cursor:pointer, onclick]\n          - image\n          - link \"Add languages\" [ref=e34]\n            - paragraph\n      - dialog\n        - alert\n          - image\n          - paragraph\n            - StaticText \"Add the languages you work in and your proficiency level to align expectations with potential clients.\"\n        - generic [ref=e30] clickable [onclick]\n          - combobox [expanded=true, ref=e35]\n            - textbox \"Select languages\" [ref=e39]: English\n            - button \"Toggle\" [ref=e37]\n        - dialog\n          - list\n            - listitem [level=1, ref=e40] clickable [onclick]\n              - radio \"English\" [checked=true, ref=e222] clickable [cursor:pointer]\n            - listitem [level=1, ref=e41] clickable [onclick]\n              - radio \"Spanish\" [checked=false, ref=e223] clickable [cursor:pointer]\n            - listitem [level=1, ref=e42] clickable [onclick]\n              - radio \"French\" [checked=false, ref=e224] clickable [cursor:pointer]\n            - listitem [level=1, ref=e43] clickable [onclick]\n              - radio \"German\" [checked=false, ref=e225] clickable [cursor:pointer]\n            - listitem [level=1, ref=e44] clickable [onclick]\n              - radio \"Italian\" [checked=false, ref=e226] clickable [cursor:pointer]\n            - listitem [level=1, ref=e45] clickable [onclick]\n              - radio \"Afar\" [checked=false, ref=e227] clickable [cursor:pointer]\n            - listitem [level=1, ref=e46] clickable [onclick]\n              - radio \"Abkhazian\" [checked=false, ref=e228] clickable [cursor:pointer]\n            - listitem [level=1, ref=e47] clickable [onclick]\n              - radio \"Avestan\" [checked=false, ref=e229] clickable [cursor:pointer]\n            - listitem [level=1, ref=e48] clickable [onclick]\n              - radio \"Afrikaans\" [checked=false, ref=e230] clickable [cursor:pointer]\n            - listitem [level=1, ref=e49] clickable [onclick]\n              - radio \"Akan\" [checked=false, ref=e231] clickable [cursor:pointer]\n            - listitem [level=1, ref=e50] clickable [onclick]\n              - radio \"Amharic\" [checked=false, ref=e232] clickable [cursor:pointer]\n            - listitem [level=1, ref=e51] clickable [onclick]\n              - radio \"Aragonese\" [checked=false, ref=e233] clickable [cursor:pointer]\n            - listitem [level=1, ref=e52] clickable [onclick]\n              - radio \"Arabic\" [checked=false, ref=e234] clickable [cursor:pointer]\n            - listitem [level=1, ref=e53] clickable [onclick]\n              - radio \"Assamese\" [checked=false, ref=e235] clickable [cursor:pointer]\n            - listitem [level=1, ref=e54] clickable [onclick]\n              - radio \"Avaric\" [checked=false, ref=e236] clickable [cursor:pointer]\n            - listitem [level=1, ref=e55] clickable [onclick]\n              - radio \"Aymara\" [checked=false, ref=e237] clickable [cursor:pointer]\n            - listitem [level=1, ref=e56] clickable [onclick]\n              - radio \"Azerbaijani\" [checked=false, ref=e238] clickable [cursor:pointer]\n            - listitem [level=1, ref=e57] clickable [onclick]\n              - radio \"Bashkir\" [checked=false, ref=e239] clickable [cursor:pointer]\n            - listitem [level=1, ref=e58] clickable [onclick]\n              - radio \"Belarusian\" [checked=false, ref=e240] clickable [cursor:pointer]\n            - listitem [level=1, ref=e59] clickable [onclick]\n              - radio \"Bulgarian\" [checked=false, ref=e241] clickable [cursor:pointer]\n            - listitem [level=1, ref=e60] clickable [onclick]\n              - radio \"Bihari\" [checked=false, ref=e242] clickable [cursor:pointer]\n            - listitem [level=1, ref=e61] clickable [onclick]\n              - radio \"Bislama\" [checked=false, ref=e243] clickable [cursor:pointer]\n            - listitem [level=1, ref=e62] clickable [onclick]\n              - radio \"Bambara\" [checked=false, ref=e244] clickable [cursor:pointer]\n            - listitem [level=1, ref=e63] clickable [onclick]\n              - radio \"Bengali\" [checked=false, ref=e245] clickable [cursor:pointer]\n            - listitem [level=1, ref=e64] clickable [onclick]\n              - radio \"Tibetan\" [checked=false, ref=e246] clickable [cursor:pointer]\n            - listitem [level=1, ref=e65] clickable [onclick]\n              - radio \"Breton\" [checked=false, ref=e247] clickable [cursor:pointer]\n            - listitem [level=1, ref=e66] clickable [onclick]\n              - radio \"Bosnian\" [checked=false, ref=e248] clickable [cursor:pointer]\n            - listitem [level=1, ref=e67] clickable [onclick]\n              - radio \"Catalan\" [checked=false, ref=e249] clickable [cursor:pointer]\n            - listitem [level=1, ref=e68] clickable [onclick]\n              - radio \"Chechen\" [checked=false, ref=e250] clickable [cursor:pointer]\n            - listitem [level=1, ref=e69] clickable [onclick]\n              - radio \"Chamorro\" [checked=false, ref=e251] clickable [cursor:pointer]\n            - listitem [level=1, ref=e70] clickable [onclick]\n              - radio \"Corsican\" [checked=false, ref=e252] clickable [cursor:pointer]\n            - listitem [level=1, ref=e71] clickable [onclick]\n              - radio \"Cree\" [checked=false, ref=e253] clickable [cursor:pointer]\n            - listitem [level=1, ref=e72] clickable [onclick]\n              - radio \"Czech\" [checked=false, ref=e254] clickable [cursor:pointer]\n            - listitem [level=1, ref=e73] clickable [onclick]\n              - radio \"Chuvash\" [checked=false, ref=e255] clickable [cursor:pointer]\n            - listitem [level=1, ref=e74] clickable [onclick]\n              - radio \"Welsh\" [checked=false, ref=e256] clickable [cursor:pointer]\n            - listitem [level=1, ref=e75] clickable [onclick]\n              - radio \"Danish\" [checked=false, ref=e257] clickable [cursor:pointer]\n            - listitem [level=1, ref=e76] clickable [onclick]\n              - radio \"Ewe\" [checked=false, ref=e258] clickable [cursor:pointer]\n            - listitem [level=1, ref=e77] clickable [onclick]\n              - radio \"Greek\" [checked=false, ref=e259] clickable [cursor:pointer]\n            - listitem [level=1, ref=e78] clickable [onclick]\n              - radio \"Esperanto\" [checked=false, ref=e260] clickable [cursor:pointer]\n            - listitem [level=1, ref=e79] clickable [onclick]\n              - radio \"Estonian\" [checked=false, ref=e261] clickable [cursor:pointer]\n            - listitem [level=1, ref=e80] clickable [onclick]\n              - radio \"Basque\" [checked=false, ref=e262] clickable [cursor:pointer]\n            - listitem [level=1, ref=e81] clickable [onclick]\n              - radio \"Persian\" [checked=false, ref=e263] clickable [cursor:pointer]\n            - listitem [level=1, ref=e82] clickable [onclick]\n              - radio \"Fulah\" [checked=false, ref=e264] clickable [cursor:pointer]\n            - listitem [level=1, ref=e83] clickable [onclick]\n              - radio \"Finnish\" [checked=false, ref=e265] clickable [cursor:pointer]\n            - listitem [level=1, ref=e84] clickable [onclick]\n              - radio \"Fijian\" [checked=false, ref=e266] clickable [cursor:pointer]\n            - listitem [level=1, ref=e85] clickable [onclick]\n              - radio \"Faroese\" [checked=false, ref=e267] clickable [cursor:pointer]\n            - listitem [level=1, ref=e86] clickable [onclick]\n              - radio \"Western Frisian\" [checked=false, ref=e268] clickable [cursor:pointer]\n            - listitem [level=1, ref=e87] clickable [onclick]\n              - radio \"Irish\" [checked=false, ref=e269] clickable [cursor:pointer]\n            - listitem [level=1, ref=e88] clickable [onclick]\n              - radio \"Scottish Gaelic\" [checked=false, ref=e270] clickable [cursor:pointer]\n            - listitem [level=1, ref=e89] clickable [onclick]\n              - radio \"Galician\" [checked=false, ref=e271] clickable [cursor:pointer]\n            - listitem [level=1, ref=e90] clickable [onclick]\n              - radio \"Guarani\" [checked=false, ref=e272] clickable [cursor:pointer]\n            - listitem [level=1, ref=e91] clickable [onclick]\n              - radio \"Gujarati\" [checked=false, ref=e273] clickable [cursor:pointer]\n            - listitem [level=1, ref=e92] clickable [onclick]\n              - radio \"Manx\" [checked=false, ref=e274] clickable [cursor:pointer]\n            - listitem [level=1, ref=e93] clickable [onclick]\n              - radio \"Hausa\" [checked=false, ref=e275] clickable [cursor:pointer]\n            - listitem [level=1, ref=e94] clickable [onclick]\n              - radio \"Hebrew\" [checked=false, ref=e276] clickable [cursor:pointer]\n            - listitem [level=1, ref=e95] clickable [onclick]\n              - radio \"Hindi\" [checked=false, ref=e277] clickable [cursor:pointer]\n            - listitem [level=1, ref=e96] clickable [onclick]\n              - radio \"Hiri Motu\" [checked=false, ref=e278] clickable [cursor:pointer]\n            - listitem [level=1, ref=e97] clickable [onclick]\n              - radio \"Croatian\" [checked=false, ref=e279] clickable [cursor:pointer]\n            - listitem [level=1, ref=e98] clickable [onclick]\n              - radio \"Haitian\" [checked=false, ref=e280] clickable [cursor:pointer]\n            - listitem [level=1, ref=e99] clickable [onclick]\n              - radio \"Hungarian\" [checked=false, ref=e281] clickable [cursor:pointer]\n            - listitem [level=1, ref=e100] clickable [onclick]\n              - radio \"Armenian\" [checked=false, ref=e282] clickable [cursor:pointer]\n            - listitem [level=1, ref=e101] clickable [onclick]\n              - radio \"Herero\" [checked=false, ref=e283] clickable [cursor:pointer]\n            - listitem [level=1, ref=e102] clickable [onclick]\n              - radio \"Interlingua\" [checked=false, ref=e284] clickable [cursor:pointer]\n            - listitem [level=1, ref=e103] clickable [onclick]\n              - radio \"Indonesian\" [checked=false, ref=e285] clickable [cursor:pointer]\n            - listitem [level=1, ref=e104] clickable [onclick]\n              - radio \"Igbo\" [checked=false, ref=e286] clickable [cursor:pointer]\n            - listitem [level=1, ref=e105] clickable [onclick]\n              - radio \"Sichuan Yi\" [checked=false, ref=e287] clickable [cursor:pointer]\n            - listitem [level=1, ref=e106] clickable [onclick]\n              - radio \"Inupliaq\" [checked=false, ref=e288] clickable [cursor:pointer]\n            - listitem [level=1, ref=e107] clickable [onclick]\n              - radio \"Ido\" [checked=false, ref=e289] clickable [cursor:pointer]\n            - listitem [level=1, ref=e108] clickable [onclick]\n              - radio \"Icelandic\" [checked=false, ref=e290] clickable [cursor:pointer]\n            - listitem [level=1, ref=e109] clickable [onclick]\n              - radio \"Inuktitut\" [checked=false, ref=e291] clickable [cursor:pointer]\n            - listitem [level=1, ref=e110] clickable [onclick]\n              - radio \"Japanese\" [checked=false, ref=e292] clickable [cursor:pointer]\n            - listitem [level=1, ref=e111] clickable [onclick]\n              - radio [checked=false, ref=e293] clickable [cursor:pointer]\n            - listitem [level=1, ref=e112] clickable [onclick]\n              - radio \"Javanese\" [checked=false, ref=e294] clickable [cursor:pointer]\n            - listitem [level=1, ref=e113] clickable [onclick]\n              - radio \"Javanese\" [checked=false, ref=e295] clickable [cursor:pointer]\n            - listitem [level=1, ref=e114] clickable [onclick]\n              - radio \"Georgian\" [checked=false, ref=e296] clickable [cursor:pointer]\n            - listitem [level=1, ref=e115] clickable [onclick]\n              - radio \"Kongo\" [checked=false, ref=e297] clickable [cursor:pointer]\n            - listitem [level=1, ref=e116] clickable [onclick]\n              - radio \"Kikuyu\" [checked=false, ref=e298] clickable [cursor:pointer]\n            - listitem [level=1, ref=e117] clickable [onclick]\n              - radio \"Kuanyama\" [checked=false, ref=e299] clickable [cursor:pointer]\n            - listitem [level=1, ref=e118] clickable [onclick]\n              - radio \"Kazakh\" [checked=false, ref=e300] clickable [cursor:pointer]\n            - listitem [level=1, ref=e119] clickable [onclick]\n              - radio \"Kalaallisut\" [checked=false, ref=e301] clickable [cursor:pointer]\n            - listitem [level=1, ref=e120] clickable [onclick]\n              - radio \"Khmer\" [checked=false, ref=e302] clickable [cursor:pointer]\n            - listitem [level=1, ref=e121] clickable [onclick]\n              - radio \"Kannada\" [checked=false, ref=e303] clickable [cursor:pointer]\n            - listitem [level=1, ref=e122] clickable [onclick]\n              - radio \"Korean\" [checked=false, ref=e304] clickable [cursor:pointer]\n            - listitem [level=1, ref=e123] clickable [onclick]\n              - radio \"Kanuri\" [checked=false, ref=e305] clickable [cursor:pointer]\n            - listitem [level=1, ref=e124] clickable [onclick]\n              - radio \"Kashmiri\" [checked=false, ref=e306] clickable [cursor:pointer]\n            - listitem [level=1, ref=e125] clickable [onclick]\n              - radio \"Kurdish\" [checked=false, ref=e307] clickable [cursor:pointer]\n            - listitem [level=1, ref=e126] clickable [onclick]\n              - radio \"Komi\" [checked=false, ref=e308] clickable [cursor:pointer]\n            - listitem [level=1, ref=e127] clickable [onclick]\n              - radio \"Cornish\" [checked=false, ref=e309] clickable [cursor:pointer]\n            - listitem [level=1, ref=e128] clickable [onclick]\n              - radio \"Kyrgyz\" [checked=false, ref=e310] clickable [cursor:pointer]\n            - listitem [level=1, ref=e129] clickable [onclick]\n              - radio \"Latin\" [checked=false, ref=e311] clickable [cursor:pointer]\n            - listitem [level=1, ref=e130] clickable [onclick]\n              - radio \"Luxembourgish\" [checked=false, ref=e312] clickable [cursor:pointer]\n            - listitem [level=1, ref=e131] clickable [onclick]\n              - radio \"Ganda\" [checked=false, ref=e313] clickable [cursor:pointer]\n            - listitem [level=1, ref=e132] clickable [onclick]\n              - radio \"Limburgan\" [checked=false, ref=e314] clickable [cursor:pointer]\n            - listitem [level=1, ref=e133] clickable [onclick]\n              - radio \"Lingala\" [checked=false, ref=e315] clickable [cursor:pointer]\n            - listitem [level=1, ref=e134] clickable [onclick]\n              - radio \"Lao\" [checked=false, ref=e316] clickable [cursor:pointer]\n            - listitem [level=1, ref=e135] clickable [onclick]\n              - radio \"Lithuanian\" [checked=false, ref=e317] clickable [cursor:pointer]\n            - listitem [level=1, ref=e136] clickable [onclick]\n              - radio \"Luba-Katanga\" [checked=false, ref=e318] clickable [cursor:pointer]\n            - listitem [level=1, ref=e137] clickable [onclick]\n              - radio \"Latvian\" [checked=false, ref=e319] clickable [cursor:pointer]\n            - listitem [level=1, ref=e138] clickable [onclick]\n              - radio \"Malagasy\" [checked=false, ref=e320] clickable [cursor:pointer]\n            - listitem [level=1, ref=e139] clickable [onclick]\n              - radio \"Marshallese\" [checked=false, ref=e321] clickable [cursor:pointer]\n            - listitem [level=1, ref=e140] clickable [onclick]\n              - radio \"Māori\" [checked=false, ref=e322] clickable [cursor:pointer]\n            - listitem [level=1, ref=e141] clickable [onclick]\n              - radio \"Macedonian\" [checked=false, ref=e323] clickable [cursor:pointer]\n            - listitem [level=1, ref=e142] clickable [onclick]\n              - radio \"Malayalam\" [checked=false, ref=e324] clickable [cursor:pointer]\n            - listitem [level=1, ref=e143] clickable [onclick]\n              - radio \"Mongolian\" [checked=false, ref=e325] clickable [cursor:pointer]\n            - listitem [level=1, ref=e144] clickable [onclick]\n              - radio \"Marathi\" [checked=false, ref=e326] clickable [cursor:pointer]\n            - listitem [level=1, ref=e145] clickable [onclick]\n              - radio \"Malay\" [checked=false, ref=e327] clickable [cursor:pointer]\n            - listitem [level=1, ref=e146] clickable [onclick]\n              - radio \"Maltese\" [checked=false, ref=e328] clickable [cursor:pointer]\n            - listitem [level=1, ref=e147] clickable [onclick]\n              - radio \"Burmese\" [checked=false, ref=e329] clickable [cursor:pointer]\n            - listitem [level=1, ref=e148] clickable [onclick]\n              - radio \"Nauru\" [checked=false, ref=e330] clickable [cursor:pointer]\n            - listitem [level=1, ref=e149] clickable [onclick]\n              - radio \"Norwegian Bokmål\" [checked=false, ref=e331] clickable [cursor:pointer]\n            - listitem [level=1, ref=e150] clickable [onclick]\n              - radio \"North Ndebele\" [checked=false, ref=e332] clickable [cursor:pointer]\n            - listitem [level=1, ref=e151] clickable [onclick]\n              - radio \"Nepali\" [checked=false, ref=e333] clickable [cursor:pointer]\n            - listitem [level=1, ref=e152] clickable [onclick]\n              - radio \"Ndonga\" [checked=false, ref=e334] clickable [cursor:pointer]\n            - listitem [level=1, ref=e153] clickable [onclick]\n              - radio \"Dutch\" [checked=false, ref=e335] clickable [cursor:pointer]\n            - listitem [level=1, ref=e154] clickable [onclick]\n              - radio \"Norwegian Nynorsk\" [checked=false, ref=e336] clickable [cursor:pointer]\n            - listitem [level=1, ref=e155] clickable [onclick]\n              - radio \"Norwegian\" [checked=false, ref=e337] clickable [cursor:pointer]\n            - listitem [level=1, ref=e156] clickable [onclick]\n              - radio \"South Ndebele\" [checked=false, ref=e338] clickable [cursor:pointer]\n            - listitem [level=1, ref=e157] clickable [onclick]\n              - radio \"Navajo\" [checked=false, ref=e339] clickable [cursor:pointer]\n            - listitem [level=1, ref=e158] clickable [onclick]\n              - radio \"Chichewa\" [checked=false, ref=e340] clickable [cursor:pointer]\n            - listitem [level=1, ref=e159] clickable [onclick]\n              - radio \"Occitan\" [checked=false, ref=e341] clickable [cursor:pointer]\n            - listitem [level=1, ref=e160] clickable [onclick]\n              - radio \"Ojibwa\" [checked=false, ref=e342] clickable [cursor:pointer]\n            - listitem [level=1, ref=e161] clickable [onclick]\n              - radio \"Oromo\" [checked=false, ref=e343] clickable [cursor:pointer]\n            - listitem [level=1, ref=e162] clickable [onclick]\n              - radio \"Oriya\" [checked=false, ref=e344] clickable [cursor:pointer]\n            - listitem [level=1, ref=e163] clickable [onclick]\n              - radio \"Ossetic\" [checked=false, ref=e345] clickable [cursor:pointer]\n            - listitem [level=1, ref=e164] clickable [onclick]\n              - radio \"Punjabi\" [checked=false, ref=e346] clickable [cursor:pointer]\n            - listitem [level=1, ref=e165] clickable [onclick]\n              - radio \"Pali\" [checked=false, ref=e347] clickable [cursor:pointer]\n            - listitem [level=1, ref=e166] clickable [onclick]\n              - radio \"Polish\" [checked=false, ref=e348] clickable [cursor:pointer]\n            - listitem [level=1, ref=e167] clickable [onclick]\n              - radio \"Pashto\" [checked=false, ref=e349] clickable [cursor:pointer]\n            - listitem [level=1, ref=e168] clickable [onclick]\n              - radio \"Portuguese\" [checked=false, ref=e350] clickable [cursor:pointer]\n            - listitem [level=1, ref=e169] clickable [onclick]\n              - radio \"Quechua\" [checked=false, ref=e351] clickable [cursor:pointer]\n            - listitem [level=1, ref=e170] clickable [onclick]\n              - radio \"Romansh\" [checked=false, ref=e352] clickable [cursor:pointer]\n            - listitem [level=1, ref=e171] clickable [onclick]\n              - radio \"Rundi\" [checked=false, ref=e353] clickable [cursor:pointer]\n            - listitem [level=1, ref=e172] clickable [onclick]\n              - radio \"Romanian\" [checked=false, ref=e354] clickable [cursor:pointer]\n            - listitem [level=1, ref=e173] clickable [onclick]\n              - radio \"Russian\" [checked=false, ref=e355] clickable [cursor:pointer]\n            - listitem [level=1, ref=e174] clickable [onclick]\n              - radio \"Kinyarwanda\" [checked=false, ref=e356] clickable [cursor:pointer]\n            - listitem [level=1, ref=e175] clickable [onclick]\n              - radio \"Sanskrit\" [checked=false, ref=e357] clickable [cursor:pointer]\n            - listitem [level=1, ref=e176] clickable [onclick]\n              - radio \"Sardinian\" [checked=false, ref=e358] clickable [cursor:pointer]\n            - listitem [level=1, ref=e177] clickable [onclick]\n              - radio \"Sindhi\" [checked=false, ref=e359] clickable [cursor:pointer]\n            - listitem [level=1, ref=e178] clickable [onclick]\n              - radio \"Northern Sami\" [checked=false, ref=e360] clickable [cursor:pointer]\n            - listitem [level=1, ref=e179] clickable [onclick]\n              - radio \"Sango\" [checked=false, ref=e361] clickable [cursor:pointer]\n            - listitem [level=1, ref=e180] clickable [onclick]\n              - radio \"Sinhala\" [checked=false, ref=e362] clickable [cursor:pointer]\n            - listitem [level=1, ref=e181] clickable [onclick]\n              - radio \"Slovak\" [checked=false, ref=e363] clickable [cursor:pointer]\n            - listitem [level=1, ref=e182] clickable [onclick]\n              - radio \"Slovenian\" [checked=false, ref=e364] clickable [cursor:pointer]\n            - listitem [level=1, ref=e183] clickable [onclick]\n              - radio \"Samoan\" [checked=false, ref=e365] clickable [cursor:pointer]\n            - listitem [level=1, ref=e184] clickable [onclick]\n              - radio \"Shona\" [checked=false, ref=e366] clickable [cursor:pointer]\n            - listitem [level=1, ref=e185] clickable [onclick]\n              - radio \"Somali\" [checked=false, ref=e367] clickable [cursor:pointer]\n            - listitem [level=1, ref=e186] clickable [onclick]\n              - radio \"Albanian\" [checked=false, ref=e368] clickable [cursor:pointer]\n            - listitem [level=1, ref=e187] clickable [onclick]\n              - radio \"Serbian\" [checked=false, ref=e369] clickable [cursor:pointer]\n            - listitem [level=1, ref=e188] clickable [onclick]\n              - radio \"Swati\" [checked=false, ref=e370] clickable [cursor:pointer]\n            - listitem [level=1, ref=e189] clickable [onclick]\n              - radio \"Southern Sotho\" [checked=false, ref=e371] clickable [cursor:pointer]\n            - listitem [level=1, ref=e190] clickable [onclick]\n              - radio \"Sudanese\" [checked=false, ref=e372] clickable [cursor:pointer]\n            - listitem [level=1, ref=e191] clickable [onclick]\n              - radio \"Swedish\" [checked=false, ref=e373] clickable [cursor:pointer]\n            - listitem [level=1, ref=e192] clickable [onclick]\n              - radio \"Swahili\" [checked=false, ref=e374] clickable [cursor:pointer]\n            - listitem [level=1, ref=e193] clickable [onclick]\n              - radio \"Tamil\" [checked=false, ref=e375] clickable [cursor:pointer]\n            - listitem [level=1, ref=e194] clickable [onclick]\n              - radio \"Telugu\" [checked=false, ref=e376] clickable [cursor:pointer]\n            - listitem [level=1, ref=e195] clickable [onclick]\n              - radio \"Tajik\" [checked=false, ref=e377] clickable [cursor:pointer]\n            - listitem [level=1, ref=e196] clickable [onclick]\n              - radio \"Thai\" [checked=false, ref=e378] clickable [cursor:pointer]\n            - listitem [level=1, ref=e197] clickable [onclick]\n              - radio \"Tigrinya\" [checked=false, ref=e379] clickable [cursor:pointer]\n            - listitem [level=1, ref=e198] clickable [onclick]\n              - radio \"Turkmen\" [checked=false, ref=e380] clickable [cursor:pointer]\n            - listitem [level=1, ref=e199] clickable [onclick]\n              - radio \"Tagalog\" [checked=false, ref=e381] clickable [cursor:pointer]\n            - listitem [level=1, ref=e200] clickable [onclick]\n              - radio \"Tswana\" [checked=false, ref=e382] clickable [cursor:pointer]\n            - listitem [level=1, ref=e201] clickable [onclick]\n              - radio \"Tongan\" [checked=false, ref=e383] clickable [cursor:pointer]\n            - listitem [level=1, ref=e202] clickable [onclick]\n              - radio \"Turkish\" [checked=false, ref=e384] clickable [cursor:pointer]\n            - listitem [level=1, ref=e203] clickable [onclick]\n              - radio \"Tsonga\" [checked=false, ref=e385] clickable [cursor:pointer]\n            - listitem [level=1, ref=e204] clickable [onclick]\n              - radio \"Tatar\" [checked=false, ref=e386] clickable [cursor:pointer]\n            - listitem [level=1, ref=e205] clickable [onclick]\n              - radio \"Twi\" [checked=false, ref=e387] clickable [cursor:pointer]\n            - listitem [level=1, ref=e206] clickable [onclick]\n              - radio \"Tahitian\" [checked=false, ref=e388] clickable [cursor:pointer]\n            - listitem [level=1, ref=e207] clickable [onclick]\n              - radio \"Uyghur\" [checked=false, ref=e389] clickable [cursor:pointer]\n            - listitem [level=1, ref=e208] clickable [onclick]\n              - radio \"Ukrainian\" [checked=false, ref=e390] clickable [cursor:pointer]\n            - listitem [level=1, ref=e209] clickable [onclick]\n              - radio \"Urdu\" [checked=false, ref=e391] clickable [cursor:pointer]\n            - listitem [level=1, ref=e210] clickable [onclick]\n              - radio \"Uzbek\" [checked=false, ref=e392] clickable [cursor:pointer]\n            - listitem [level=1, ref=e211] clickable [onclick]\n              - radio \"Venda\" [checked=false, ref=e393] clickable [cursor:pointer]\n            - listitem [level=1, ref=e212] clickable [onclick]\n              - radio \"Vietnamese\" [checked=false, ref=e394] clickable [cursor:pointer]\n            - listitem [level=1, ref=e213] clickable [onclick]\n              - radio \"Volapük\" [checked=false, ref=e395] clickable [cursor:pointer]\n            - listitem [level=1, ref=e214] clickable [onclick]\n              - radio \"Walloon\" [checked=false, ref=e396] clickable [cursor:pointer]\n            - listitem [level=1, ref=e215] clickable [onclick]\n              - radio \"Wolof\" [checked=false, ref=e397] clickable [cursor:pointer]\n            - listitem [level=1, ref=e216] clickable [onclick]\n              - radio \"Xhosa\" [checked=false, ref=e398] clickable [cursor:pointer]\n            - listitem [level=1, ref=e217] clickable [onclick]\n              - radio \"Yiddish\" [checked=false, ref=e399] clickable [cursor:pointer]\n            - listitem [level=1, ref=e218] clickable [onclick]\n              - radio \"Yoruba\" [checked=false, ref=e400] clickable [cursor:pointer]\n            - listitem [level=1, ref=e219] clickable [onclick]\n              - radio \"Zhuang\" [checked=false, ref=e401] clickable [cursor:pointer]\n            - listitem [level=1, ref=e220] clickable [onclick]\n              - radio \"Chinese\" [checked=false, ref=e402] clickable [cursor:pointer]\n            - listitem [level=1, ref=e221] clickable [onclick]\n              - radio \"Zulu\" [checked=false, ref=e403] clickable [cursor:pointer]\n        - generic [ref=e31] clickable [onclick]\n          - combobox [expanded=false, ref=e36]\n            - button \"Toggle\" [ref=e38]\n        - button \"Delete\" [disabled, ref=e32]\n        - button \"Add languages\" [ref=e33]\n    - generic [ref=e20] clickable [cursor:pointer, onclick]\n    - heading \"About\" [level=4, ref=e21]\n    - button \"Add details\" [ref=e22]\n    - heading \"Skills and expertise\" [level=4, ref=e23]\n    - button \"Add skills and expertise\" [ref=e24]\n    - heading \"Work experience\" [level=4, ref=e11]\n    - button \"Add work experience\" [ref=e12]\n    - heading \"Education\" [level=4, ref=e13]\n    - button \"Add education\" [ref=e14]\n    - heading \"Certifications\" [level=4, ref=e15]\n    - button \"Add certifications\" [ref=e16]\n    - progressbar: 50\n    - button \"Back\" [ref=e6]\n    - button \"Continue\" [ref=e7]\n  - Iframe \"Virtual Assistant Chat\" [ref=e2]"
+  }
+}
+

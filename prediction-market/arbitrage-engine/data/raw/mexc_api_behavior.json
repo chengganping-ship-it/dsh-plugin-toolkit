@@ -1,0 +1,5 @@
+{
+  "total_symbols": 1093,
+  "note": "MEXC /funding_rate endpoint returns ALL symbols regardless of symbol parameter - it is a current snapshot, not historical",
+  "sample_date": "2026-08-08"
+}

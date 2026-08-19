@@ -1,0 +1,14 @@
+{
+  "name": "dsh-tool-memlink",
+  "version": "0.1.0",
+  "description": "Cross-plugin memory correlation system for DSH - links memories across tools, intelligent recall, memory decay, conflict detection",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

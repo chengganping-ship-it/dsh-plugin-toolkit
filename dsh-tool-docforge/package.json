@@ -1,0 +1,14 @@
+{
+  "name": "dsh-tool-docforge",
+  "version": "0.1.0",
+  "description": "Real-time documentation injection engine for DSH - multi-source aggregation, version diff tracking, quality scoring, auto-sync",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

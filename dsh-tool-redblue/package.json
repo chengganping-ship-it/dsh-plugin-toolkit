@@ -1,0 +1,14 @@
+{
+  "name": "dsh-tool-redblue",
+  "version": "0.1.0",
+  "description": "Red-Blue team security audit for DSH - auto penetration testing, defense verification, compliance mapping, fix prioritization",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

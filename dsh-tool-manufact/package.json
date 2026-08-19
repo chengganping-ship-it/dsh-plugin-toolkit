@@ -1,0 +1,60 @@
+{
+  "name": "dsh-tool-manufact",
+  "version": "0.1.0",
+  "description": "Smart Manufacturing Optimizer for DeepSeek Harness - Predictive maintenance, quality control, production scheduling, IoT sensor analytics, energy optimization, supply chain digitization, OEE calculation, and defect pattern recognition",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/types/**/*.d.ts",
+    "cordis.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "pack": "npm pack",
+    "prepack": "npm run build"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-manufact.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "manufacturing",
+    "predictive-maintenance",
+    "quality-control",
+    "production-scheduling",
+    "iot",
+    "sensor-analytics",
+    "energy-optimization",
+    "supply-chain",
+    "oee",
+    "defect-detection",
+    "smart-manufacturing",
+    "industry-4.0"
+  ],
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dsh": {
+    "bundle": "cordis.yml"
+  }
+}

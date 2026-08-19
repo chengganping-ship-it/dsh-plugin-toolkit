@@ -1,0 +1,55 @@
+
+(function(){
+  var all = document.querySelectorAll("*");
+  for (var i = 0; i < all.length; i++) {
+    var fk = null;
+    var ks = Object.keys(all[i]);
+    for (var j = 0; j < ks.length; j++) {
+      if (ks[j].indexOf("__reactFiber") === 0) {
+        fk = ks[j];
+        break;
+      }
+    }
+    if (!fk) continue;
+    var f = all[i][fk];
+    var t = 0;
+    while (f && t < 60) {
+      t++;
+      if (f.memoizedState) {
+        var curState = f.memoizedState;
+        var d = 0;
+        while (curState && d < 25) {
+          d++;
+          try {
+            var msStr = null;
+            if (typeof curState.memoizedState === "object" && curState.memoizedState !== null) {
+              msStr = JSON.stringify(curState.memoizedState);
+            }
+            if (msStr && (msStr.indexOf("profile_image") >= 0 || msStr.indexOf("isStepValid") >= 0)) {
+              var lrsStr = null;
+              if (curState.queue && curState.queue.lastRenderedState !== undefined) {
+                try {
+                  lrsStr = JSON.stringify(curState.queue.lastRenderedState);
+                } catch(e) {}
+              }
+              return JSON.stringify({
+                found: true,
+                elTag: all[i].tagName,
+                elIndex: i,
+                fiberDepth: t,
+                hookDepth: d,
+                msPreview: msStr.substring(0, 300),
+                hasDispatch: !!(curState.queue && curState.queue.dispatch),
+                hasLastRenderedState: !!(curState.queue && curState.queue.lastRenderedState !== undefined)
+              });
+            }
+          } catch(e) {}
+          if (curState.next) curState = curState.next; else break;
+        }
+      }
+      if (f.return) f = f.return; else break;
+    }
+  }
+  return JSON.stringify({found: false});
+})()
+

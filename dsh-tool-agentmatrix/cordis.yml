@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Multi-Agent Collaboration Matrix v0.1.0
+# Dynamic role assignment, task orchestration, capability matching, progress visualization
+
+- id: dsh-tool-agentmatrix
+  name: dsh-tool-agentmatrix
+  version: 0.1.0
+  description: Multi-agent collaboration - dynamic roles, task orchestration, capability matching, progress viz
+  author: chengganping-ship-it
+  tools:
+    - agent_role_assign
+    - task_orchestrate
+    - capability_match
+    - collaboration_graph
+    - conflict_resolution
+    - workload_balance
+    - progress_dashboard
+    - team_health_check

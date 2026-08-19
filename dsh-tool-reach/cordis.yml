@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Agent Web Intelligence Engine v0.1.0
+# Content extraction, social monitoring, news aggregation, competitor intelligence
+
+- id: dsh-tool-reach
+  name: dsh-tool-reach
+  version: 0.1.0
+  description: Agent Web Intelligence Engine - Content extraction, social media monitoring, news aggregation, competitor intelligence, SEO analysis, forum sentiment tracking, documentation scraping, and trend forecasting
+  author: chengganping-ship-it
+  tools:
+    - content_extractor
+    - social_media_monitor
+    - news_aggregator
+    - competitor_intel_scraper
+    - search_engine_optimizer
+    - forum_sentiment_tracker
+    - documentation_scraper
+    - trend_forecaster
