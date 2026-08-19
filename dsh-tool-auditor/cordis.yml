@@ -1,0 +1,14 @@
+- id: dsh-tool-auditor
+  name: dsh-tool-auditor
+  version: 0.1.0
+  description: Agent audit - action logging, anomaly detection, compliance, forensics
+  author: chengganping-ship-it
+  tools:
+    - action_logger
+    - anomaly_detector
+    - compliance_checker
+    - forensics_analyzer
+    - behavior_profiler
+    - policy_violation_scanner
+    - audit_report_generator
+    - trajectory_replayer

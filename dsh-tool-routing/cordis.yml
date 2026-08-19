@@ -1,0 +1,14 @@
+id: dsh-tool-routing
+name: dsh-tool-routing
+version: 0.1.0
+description: Multi-model routing - intelligent model selection, cost optimization, fallback
+author: chengganping-ship-it
+tools:
+  - model_selector
+  - cost_optimizer
+  - fallback_strategist
+  - load_balancer
+  - capability_mapper
+  - latency_predictor
+  - quality_evaluator
+  - routing_analytics

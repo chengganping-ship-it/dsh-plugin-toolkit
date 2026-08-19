@@ -1,0 +1,14 @@
+id: dsh-tool-vibecoder
+name: dsh-tool-vibecoder
+version: 0.1.0
+description: Vibe Coding design system - tokens, components, style guides, code gen
+author: chengganping-ship-it
+tools:
+  - design_token_generator
+  - component_spec_creator
+  - style_guide_builder
+  - responsive_breakpoint_advisor
+  - accessibility_auditor
+  - design_system_versioner
+  - code_output_generator
+  - design_review_checker

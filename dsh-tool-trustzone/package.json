@@ -1,0 +1,12 @@
+{
+  "name": "dsh-tool-trustzone",
+  "version": "0.1.0",
+  "description": "Agent trust & sandbox management for DSH - permission scoping, risk scoring, execution isolation, policy enforcement",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": { "@deepseek-ai/cordis": "^4.0.1", "@deepseek-ai/dsh-tools": "^0.0.1-rc.1" },
+  "devDependencies": { "typescript": "^5.0.0" },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": { "type": "git", "url": "git+https://github.com/chengganping-ship-it/dsh-tool-trustzone.git" }
+}
