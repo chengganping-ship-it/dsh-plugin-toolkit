@@ -54,5 +54,6 @@
   },
   "dsh": {
     "bundle": "cordis.yml"
-  }
+  },
+  "author": "chengganping-ship-it"
 }

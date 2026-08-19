@@ -10,5 +10,15 @@
   },
   "devDependencies": {
     "typescript": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-memlink.git"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "scripts": {
+    "pack": "npm pack",
+    "build": "tsc"
   }
 }

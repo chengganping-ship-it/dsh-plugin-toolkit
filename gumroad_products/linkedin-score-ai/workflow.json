@@ -1,0 +1,99 @@
+{
+  "name": "LinkedIn Profile AI Scorer",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "={{ $json.profileUrl }}",
+        "options": {}
+      },
+      "id": "fetch-profile",
+      "name": "Fetch Profile",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "operation": "complete",
+        "model": "gpt-4o-mini",
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are a career coach. Score this LinkedIn profile 1-100 for hiring success. Return JSON: {score:number, strengths:string[], weaknesses:string[], suggestions:string[]}"
+            },
+            {
+              "role": "user",
+              "content": "={{ $json.html_content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "openai",
+      "name": "AI Score",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "toEmail": "={{ $json.email }}",
+        "subject": "=Your LinkedIn Profile Score: {{ $json.score }}/100",
+        "text": "=Here's your AI-generated LinkedIn profile score and suggestions:\n\n{{ $json.suggestions }}"
+      },
+      "id": "email",
+      "name": "Send Report",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2,
+      "position": [
+        650,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Fetch Profile": {
+      "main": [
+        [
+          {
+            "node": "AI Score",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Score": {
+      "main": [
+        [
+          {
+            "node": "Send Report",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {},
+  "staticData": null,
+  "tags": [
+    {
+      "name": "HR"
+    },
+    {
+      "name": "automation"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2026-08-19T00:22:25.308242",
+  "versionId": "1"
+}

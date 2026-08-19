@@ -1,0 +1,100 @@
+{
+  "name": "Crypto Funding Rate Monitor \u2192 Google Sheets",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://api.binance.com/fapi/v1/premiumIndex",
+        "options": {}
+      },
+      "id": "binance-api",
+      "name": "Binance API",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "number": [
+            {
+              "value1": "={{ parseFloat($json.lastFundingRate) }}",
+              "operation": "larger",
+              "value2": 0.05
+            }
+          ]
+        }
+      },
+      "id": "high-rate",
+      "name": "High Rate?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "sheetId": "YOUR_SHEET_ID",
+        "columns": {
+          "mappingMode": "defineBelow",
+          "values": {
+            "symbol": "={{ $json.symbol }}",
+            "rate": "={{ $json.lastFundingRate }}",
+            "time": "={{ new Date().toISOString() }}"
+          }
+        }
+      },
+      "id": "sheet",
+      "name": "Log to Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.1,
+      "position": [
+        650,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Binance API": {
+      "main": [
+        [
+          {
+            "node": "High Rate?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "High Rate?": {
+      "main": [
+        [
+          {
+            "node": "Log to Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "settings": {},
+  "staticData": null,
+  "tags": [
+    {
+      "name": "Finance"
+    },
+    {
+      "name": "automation"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2026-08-19T00:22:25.307266",
+  "versionId": "1"
+}
