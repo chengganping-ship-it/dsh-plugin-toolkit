@@ -1,6 +1,6 @@
 # DSH Plugin Toolkit
 
-**56 DeepSeek Harness plugins — 838 tools**
+**61 DeepSeek Harness plugins — 878 tools**
 
 仓库: https://github.com/chengganping-ship-it/dsh-plugin-toolkit
 
@@ -21,6 +21,11 @@
 | Legal AI (YC W26) | dsh-tool-legalpro | 法律研究+案件分析+文书生成 |
 | ERP Agent (Anthropic趋势) | dsh-tool-erpagent | 对账+计提+合规+工作流 |
 | 垂直Agent (35%盈利) | dsh-tool-findebt / insurnaut / manufacturex | 高溢价+85%续费率 |
+| Google数字装配线 | dsh-tool-workflow | 多Agent协作工作流引擎 |
+| A2A开放协议 (Salesforce+Google) | dsh-tool-a2abridge | 跨平台Agent互联 |
+| MCP模型上下文协议 | dsh-tool-mcphub | 工具即插即用标准 |
+| 全员AI副手 (Google Trend #1) | dsh-tool-personalai | 每位员工的数字副手 |
+| Agent安全治理 (Google Trend #5) | dsh-tool-agentguard | 主动防御+零信任 |
 
 ## Wave 开发路线
 
@@ -37,6 +42,7 @@
 | 9 | Voice/ERP/test/contract | 5 | 空白市场填补 |
 | 10 | 旅行/知识/审计 | 5 | 个人生产力 |
 | 11 | 医疗/法律/金融/保险/制造 | 5 | 高溢价垂直领域 |
+| 12 | Google 2026五大趋势全覆盖 | 5 | 数字装配线+A2A+MCP+个人助手+安全治理 |
 
 ## 快速发布
 
@@ -47,7 +53,7 @@ npm login
 npm publish
 ```
 
-## 完整插件列表 (56个)
+## 完整插件列表 (61个)
 
 | # | 插件 | 分类 | 核心能力 |
 |---|------|------|----------|
@@ -107,6 +113,23 @@ npm publish
 | 54 | dsh-tool-findebt | 尽调 | 财务尽调分析 |
 | 55 | dsh-tool-insurnaut | 保险 | 保险Navigator |
 | 56 | dsh-tool-manufacturex | 制造 | 智能制造Agent |
+| 57 | dsh-tool-workflow | 工作流 | 数字装配线引擎 |
+| 58 | dsh-tool-a2abridge | 互联 | 跨平台A2A协议桥 |
+| 59 | dsh-tool-mcphub | 工具 | MCP上下文协议中心 |
+| 60 | dsh-tool-personalai | 生产力 | 个人AI数字副手 |
+| 61 | dsh-tool-agentguard | 安全 | Agent安全治理引擎 |
+
+## Wave 12 — Google AI Agent Trends 2026 全面对标
+
+基于Google Cloud《AI Agent Trends 2026》报告（3466位企业高管调研），本波次5个插件精准覆盖5大核心趋势：
+
+| Google 2026 趋势 | 我们的插件 | 差异化优势 |
+|----------------|-----------|------------|
+| 1. 人人拥有AI Agent (49%客服/46%营销/45%技术) | dsh-tool-personalai | 8大日常场景，用意图代替指令 |
+| 2. 数字装配线 (88%正ROI) | dsh-tool-workflow | 端到端多步工作流，断点续传+SLA |
+| 3. 智能体可发现性 (A2A+MCP) | dsh-tool-a2abridge + mcphub | 跨平台5大框架互联+协议即插即用 |
+| 4. 管家级客户体验 (42h→近实时) | workflow+personalai | 个性化跨渠道实时服务 |
+| 5. 安全主动防御 (46%用于安全) | dsh-tool-agentguard | 行为审计+红队+零信任+合规自动 |
 
 ## License
 

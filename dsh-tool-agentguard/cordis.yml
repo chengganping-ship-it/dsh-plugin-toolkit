@@ -1,0 +1,14 @@
+- id: dsh-tool-agentguard
+  name: dsh-tool-agentguard
+  version: 0.1.0
+  description: 智能体安全治理引擎 - 全生命周期安全管控、主动防御、合规自动化
+  author: chengganping-ship-it
+  tools:
+    - agent_audit
+    - permission_guard
+    - data_lineage
+    - anomaly_detection
+    - compliance_map
+    - red_team_agent
+    - incident_response
+    - trust_score

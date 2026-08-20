@@ -1,0 +1,14 @@
+- id: dsh-tool-mcphub
+  name: dsh-tool-mcphub
+  version: 0.1.0
+  description: MCP模型上下文协议工具中心 - 服务注册、动态调用、Schema验证、成本追踪
+  author: chengganping-ship-it
+  tools:
+    - mcp_registry
+    - mcp_invoker
+    - mcp_composer
+    - mcp_monitor
+    - mcp_security
+    - mcp_schema
+    - mcp_cache
+    - mcp_cost
