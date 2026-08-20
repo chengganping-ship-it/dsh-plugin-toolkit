@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Enterprise Compliance Management AI v0.1.0
+# GDPR/PIPL/等保/HIPAA/ISO compliance toolkit - Contract scanning, policy radar, risk assessment, control testing, training, whistleblower, audit prep, PIA
+
+- id: dsh-tool-complianceai
+  name: dsh-tool-complianceai
+  version: 0.1.0
+  description: Enterprise Compliance Management AI - Contract risk scanning, regulatory change radar, risk assessment engine, compliance control testing, training management, whistleblower management, audit preparation, and privacy impact assessment (PIA/DPIA) toolkit covering GDPR, PIPL, HIPAA, 等保, ISO 27001, SOX
+  author: chengganping-ship-it
+  tools:
+    - contract_scanner
+    - policy_radar
+    - risk_assessor
+    - control_tester
+    - training_manager
+    - whistleblower
+    - audit_preparer
+    - privacy_impact

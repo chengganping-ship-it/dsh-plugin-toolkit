@@ -1,0 +1,35 @@
+{
+  "name": "dsh-tool-supportgenius",
+  "version": "0.1.0",
+  "description": "全渠道智能客服引擎 for DSH - 对标WhatsApp客服自动化趋势+全渠道AI客服 | Omnichannel AI Helpdesk, Chatbot, Sentiment Analytics, Ticket Routing",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-plugin-toolkit.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "customer-support",
+    "omnichannel",
+    "helpdesk",
+    "chatbot",
+    "whatsapp",
+    "ai-agent",
+    "sentiment-analysis",
+    "ticket-routing"
+  ]
+}

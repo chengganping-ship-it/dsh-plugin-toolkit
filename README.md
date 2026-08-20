@@ -1,6 +1,6 @@
 # DSH Plugin Toolkit
 
-**66 DeepSeek Harness plugins — 918 tools**
+**71 DeepSeek Harness plugins — 958 tools**
 
 仓库: https://github.com/chengganping-ship-it/dsh-plugin-toolkit
 
@@ -31,6 +31,11 @@
 | 创意资产管理 (Adobe趋势) | dsh-tool-creativault | 入库+标签+合规+搜索+版本+归档 |
 | 数据治理引擎 (合规刚需) | dsh-tool-datagov | 目录+质量+血缘+隐私+合规+审计 |
 | AI教育引擎 (新职业赛道) | dsh-tool-eduflow | 画像+差距+路径+微学习+认证 |
+| AIOps智能运维 (Gartner MQ) | dsh-tool-opsinsight | 告警融合+根因分析+自愈+混沌工程 |
+| 全渠道客服AI (WhatsApp趋势) | dsh-tool-supportgenius | 全渠道收件箱+意图识别+工单路由+升级 |
+| 智能合规引擎 (合规刚需) | dsh-tool-complianceai | 合同扫描+法规雷达+风险评估+审计准备 |
+| AI测试领航 (测试增强) | dsh-tool-testpilot | 用例生成+数据构造+缺陷预测+契约测试 |
+| 社媒运营Agent (社媒自动化) | dsh-tool-socialagent | 内容日历+A/B测试+危机检测+ROI |
 
 ## Wave 开发路线
 
@@ -49,6 +54,7 @@
 | 11 | 医疗/法律/金融/保险/制造 | 5 | 高溢价垂直领域 |
 | 12 | Google 2026五大趋势全覆盖 | 5 | 数字装配线+A2A+MCP+个人助手+安全治理 |
 | 13 | 高增长市场精准卡位 | 5 | 网红营销+Skills市场+创意资产+数据治理+AI教育 |
+| 14 | 企业核心系统全覆盖 | 5 | AIOps+全渠道客服+合规+测试+社媒 |
 
 ## 快速发布
 
@@ -59,7 +65,7 @@ npm login
 npm publish
 ```
 
-## 完整插件列表 (66个)
+## 完整插件列表 (71个)
 
 | # | 插件 | 分类 | 核心能力 |
 |---|------|------|----------|
@@ -129,6 +135,23 @@ npm publish
 | 64 | dsh-tool-creativault | 创意 | 品牌资产管理系统 |
 | 65 | dsh-tool-datagov | 数据 | 数据治理合规引擎 |
 | 66 | dsh-tool-eduflow | 教育 | AI学习与技能发展 |
+| 67 | dsh-tool-opsinsight | 运维 | AIOps智能运维引擎 |
+| 68 | dsh-tool-supportgenius | 客服 | 全渠道客服AI |
+| 69 | dsh-tool-complianceai | 合规 | 智能合规引擎 |
+| 70 | dsh-tool-testpilot | 测试 | AI测试领航员 |
+| 71 | dsh-tool-socialagent | 社媒 | 社交媒体运营Agent |
+
+## Wave 14 — 企业核心系统全覆盖
+
+本波次5个插件补齐企业运营最后关键系统：
+
+| 系统 | 信号 | 我们的插件 | 核心场景 |
+|------|------|-----------|----------|
+| AIOps智能运维 | Gartner 2026可观测MQ发布，GPT-5.6-Cyber MTTR 4h→22min | dsh-tool-opsinsight | 告警降噪、根因分析、自愈执行 |
+| 全渠道客服AI | 49%企业AI优先用于客服，50+WhatsApp自动化工具 | dsh-tool-supportgenius | 统一收件箱、意图分类、工单路由 |
+| 合规管理 | GDPR/PIPL/等保执法加强，合规科技Spend增长 | dsh-tool-complianceai | 合同扫描、风险评估、审计准备 |
+| 测试增强 | 测试用例生成+缺陷预测成为标配 | dsh-tool-testpilot | 数据构造、覆盖率优化、API契约测试 |
+| 社媒运营 | 社交平台月活超50亿，短视频爆发 | dsh-tool-socialagent | A/B测试、竞品监控、危机检测 |
 
 ## Wave 13 — 高增长市场精准卡位
 

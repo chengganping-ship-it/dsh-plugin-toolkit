@@ -1,0 +1,25 @@
+# DeepSeek Harness Plugin: Social Media Automation & Community Intelligence v0.1.0
+# Content calendar orchestration, A/B testing, community management, competitive monitoring,
+# hashtag optimization, influencer collaboration, crisis detection, and social media ROI analytics
+# Theme: Purple-Blue Social Media | Interactive Dashboard | Content Scheduling Gantt Chart
+
+- id: dsh-tool-socialagent
+  name: dsh-tool-socialagent
+  version: 0.1.0
+  description: >
+    Social Media Automation & Community Intelligence - Content calendar orchestration with best posting time
+    prediction, A/B testing engine with statistical significance & learning effect control, community management
+    with auto-welcome & violation detection, competitive watch radar with strategy shift detection, hashtag
+    optimizer with trending analysis & competition heatmap, influencer collaboration manager with ROI tracking,
+    crisis detector with spread velocity monitoring & playbook activation, and social media ROI dashboard with
+    organic vs paid comparison. Purple-blue theme with interactive engagement dashboard and content Gantt chart.
+  author: chengganping-ship-it
+  tools:
+    - content_calendar
+    - ab_test_runner
+    - community_manager
+    - competitive_watch
+    - hashtag_optimizer
+    - influencer_collab
+    - crisis_detector
+    - roi_dashboard
