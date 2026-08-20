@@ -1,0 +1,14 @@
+id: dsh-tool-promptlab
+name: dsh-tool-promptlab
+version: 0.1.0
+description: Prompt engineering - optimization, templates, quality scoring, A/B testing
+author: chengganping-ship-it
+tools:
+  - prompt_optimizer
+  - template_library
+  - quality_scorer
+  - ab_test_designer
+  - context_engineer
+  - chain_builder
+  - output_validator
+  - prompt_analyzer

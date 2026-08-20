@@ -1,0 +1,12 @@
+{
+  "name": "dsh-tool-promptlab",
+  "version": "0.1.0",
+  "description": "Prompt engineering lab for DSH - prompt optimization, template library, quality scoring, A/B testing",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": { "@deepseek-ai/cordis": "^4.0.1", "@deepseek-ai/dsh-tools": "^0.0.1-rc.1" },
+  "devDependencies": { "typescript": "^5.0.0" },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": { "type": "git", "url": "git+https://github.com/chengganping-ship-it/dsh-tool-promptlab.git" }
+}

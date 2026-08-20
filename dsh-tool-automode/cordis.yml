@@ -1,0 +1,14 @@
+- id: dsh-tool-automode
+  name: dsh-tool-automode
+  version: 0.1.0
+  description: Auto mode safety - command classification, auto-approval, boundary enforcement
+  author: chengganping-ship-it
+  tools:
+    - command_classifier
+    - risk_assessor
+    - boundary_enforcer
+    - approval_recommender
+    - execution_monitor
+    - safety_auditor
+    - policy_tuner
+    - incident_predictor
