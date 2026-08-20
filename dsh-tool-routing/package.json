@@ -16,5 +16,16 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/chengganping-ship-it/dsh-tool-routing.git"
-  }
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "ai-agent",
+    "cordis",
+    "routing"
+  ]
 }

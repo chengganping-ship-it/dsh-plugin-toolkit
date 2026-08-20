@@ -20,5 +20,13 @@
   "scripts": {
     "pack": "npm pack",
     "build": "tsc"
-  }
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "ai-agent",
+    "cordis",
+    "redblue"
+  ]
 }

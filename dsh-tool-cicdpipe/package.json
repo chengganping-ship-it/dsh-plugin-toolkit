@@ -4,9 +4,28 @@
   "description": "CI/CD pipeline agent for DSH - build automation, test orchestration, deployment strategies, pipeline analytics",
   "type": "module",
   "main": "lib/index.js",
-  "dependencies": { "@deepseek-ai/cordis": "^4.0.1", "@deepseek-ai/dsh-tools": "^0.0.1-rc.1" },
-  "devDependencies": { "typescript": "^5.0.0" },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
   "license": "MIT",
   "author": "chengganping-ship-it",
-  "repository": { "type": "git", "url": "git+https://github.com/chengganping-ship-it/dsh-tool-cicdpipe.git" }
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-cicdpipe.git"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "ai-agent",
+    "cordis",
+    "cicdpipe"
+  ]
 }
