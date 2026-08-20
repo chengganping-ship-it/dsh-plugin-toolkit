@@ -1,0 +1,18 @@
+{
+  "name": "dsh-tool-testengineer",
+  "version": "0.1.0",
+  "description": "AI Testing Engineer - Agent testing, evaluation design, reliability scoring, bias detection",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "dependencies": {
+    "typescript": "^5.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0"
+  }
+}

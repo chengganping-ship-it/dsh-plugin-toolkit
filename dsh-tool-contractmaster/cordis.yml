@@ -1,0 +1,14 @@
+- id: dsh-tool-contractmaster
+  name: dsh-tool-contractmaster
+  version: 0.1.0
+  description: Contract lifecycle management - drafting, review, obligation tracking, renewal
+  author: chengganping-ship-it
+  tools:
+    - contract_drafter
+    - clause_analyzer
+    - obligation_tracker
+    - renewal_manager
+    - risk_assessor
+    - compliance_checker
+    - amendment_analyzer
+    - contract_summarizer

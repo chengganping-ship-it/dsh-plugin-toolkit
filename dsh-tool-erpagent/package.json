@@ -1,0 +1,59 @@
+{
+  "name": "dsh-tool-erpagent",
+  "version": "0.1.0",
+  "description": "Enterprise ERP Automation Agent for DeepSeek Harness - Reconciliation, accruals, contract tracking, compliance monitoring, financial reconciliation, workflow automation, data consistency, approval routing",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/types/**/*.d.ts",
+    "cordis.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "pack": "npm pack",
+    "prepack": "npm run build"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-erpagent.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "erp",
+    "enterprise",
+    "reconciliation",
+    "accruals",
+    "contract-tracking",
+    "compliance",
+    "financial-reconciliation",
+    "workflow-automation",
+    "data-consistency",
+    "approval-routing"
+  ],
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dsh": {
+    "bundle": "cordis.yml"
+  },
+  "author": "chengganping-ship-it"
+}

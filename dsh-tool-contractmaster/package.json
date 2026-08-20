@@ -1,0 +1,34 @@
+{
+  "name": "dsh-tool-contractmaster",
+  "version": "0.1.0",
+  "description": "Contract lifecycle management for DSH - drafting, review, obligation tracking, renewal management, risk assessment",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-contractmaster.git"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "scripts": {
+    "pack": "npm pack",
+    "build": "tsc"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "ai-agent",
+    "cordis",
+    "contract",
+    "legal",
+    "contractmaster"
+  ]
+}

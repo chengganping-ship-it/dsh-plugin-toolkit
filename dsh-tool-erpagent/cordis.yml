@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Enterprise ERP Automation Agent v0.1.0
+# Reconciliation, accruals, contract tracking, compliance monitoring
+
+- id: dsh-tool-erpagent
+  name: dsh-tool-erpagent
+  version: 0.1.0
+  description: Enterprise ERP automation - reconciliation, accruals, contract tracking, compliance
+  author: chengganping-ship-it
+  tools:
+    - reconciliation_engine
+    - accrual_calculator
+    - contract_tracker
+    - compliance_monitor
+    - financial_reconciler
+    - workflow_automator
+    - data_consistency_checker
+    - approval_routing

@@ -1,0 +1,14 @@
+id: dsh-tool-voiceforge
+name: dsh-tool-voiceforge
+version: 0.1.0
+description: Voice AI engine - TTS scripting, voice cloning specs, audio analysis, podcast production
+author: chengganping-ship-it
+tools:
+  - tts_script_generator
+  - voice_cloning_spec
+  - audio_analyzer
+  - podcast_producer
+  - subtitle_generator
+  - voice_emotion_advisor
+  - audio_quality_checker
+  - multilingual_voice_mapper

@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Intelligent Travel Planner v0.1.0
+# Multi-source coordination, itinerary optimization, booking strategy, carbon footprint
+
+- id: dsh-tool-travelplanner
+  name: dsh-tool-travelplanner
+  version: 0.1.0
+  description: Intelligent travel planner - multi-source coordination, itinerary optimization, booking strategy
+  author: chengganping-ship-it
+  tools:
+    - itinerary_optimizer
+    - budget_planner
+    - booking_strategist
+    - calendar_coordinator
+    - local_discovery
+    - contingency_planner
+    - travel_document_checker
+    - carbon_footprint_calculator
