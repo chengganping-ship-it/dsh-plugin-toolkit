@@ -1,0 +1,14 @@
+id: dsh-tool-findebt
+name: dsh-tool-findebt
+version: 0.1.0
+description: Financial due diligence - deal analysis, risk scoring, compliance audit, valuation
+author: chengganping-ship-it
+tools:
+  - deal_analyst
+  - financial_risk_scorer
+  - compliance_auditor
+  - valuation_modeler
+  - forensic_accountant
+  - cash_flow_analyzer
+  - red_flag_detector
+  - deal_structurer
