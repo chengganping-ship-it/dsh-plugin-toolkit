@@ -1,0 +1,62 @@
+{
+  "name": "dsh-tool-kgpro",
+  "version": "0.1.0",
+  "description": "Professional Knowledge Graph & Semantic Layer Toolkit for DeepSeek Harness - Ontology modeling, entity resolution, KG crawling, semantic search, reasoning engine, graph visualization, knowledge QA, and quality assessment",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/**/*.d.ts",
+    "cordis.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "pack": "npm pack",
+    "prepack": "npm run build"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-kgpro.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "knowledge-graph",
+    "semantic",
+    "ontology",
+    "linked-data",
+    "entity-resolution",
+    "owl",
+    "rdfs",
+    "reasoning",
+    "graph-visualization",
+    "semantic-search",
+    "knowledge-qa",
+    "quality-assessment",
+    "schema.org"
+  ],
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dsh": {
+    "bundle": "cordis.yml"
+  },
+  "author": "chengganping-ship-it"
+}

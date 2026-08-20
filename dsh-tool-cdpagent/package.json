@@ -1,0 +1,35 @@
+{
+  "name": "dsh-tool-cdpagent",
+  "version": "0.1.0",
+  "description": "Customer Data Platform Agent for DSH - unified profiles, intelligent segmentation, journey orchestration, activation, consent, attribution, audience insights, and data hygiene",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-cdpagent.git"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "ai-agent",
+    "cordis",
+    "cdp",
+    "customer-data",
+    "audience",
+    "segmentation",
+    "personalization"
+  ]
+}

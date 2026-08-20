@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Knowledge Graph Professional Toolkit v0.1.0
+# Ontology modeling, entity resolution, KG crawling, semantic search, reasoning, visualization, QA, quality
+
+- id: dsh-tool-kgpro
+  name: dsh-tool-kgpro
+  version: 0.1.0
+  description: Knowledge Graph & Semantic Layer Professional Toolkit - Ontology modeling with OWL/RDFS, entity disambiguation & alignment, automated KG completion via structured/semi/unstructured extraction, semantic search with vector+keyword hybrid, reasoning engine with OWL+rule+probabilistic inference, graph visualization with force-directed layouts, natural language knowledge QA with multi-hop reasoning, and comprehensive quality assessment
+  author: chengganping-ship-it
+  tools:
+    - ontology_builder
+    - entity_resolver
+    - kg_crawler
+    - semantic_search
+    - reasoning_engine
+    - kg_visualizer
+    - knowledge_qa
+    - kg_quality

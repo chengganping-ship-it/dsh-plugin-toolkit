@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Meeting Intelligence Toolkit v0.1.0
+# AI-powered meeting facilitation, intelligence, and productivity
+
+- id: dsh-tool-meetingmind
+  name: dsh-tool-meetingmind
+  version: 0.1.0
+  description: Meeting Intelligence Toolkit - Agenda designer, realtime facilitator, decision intelligence, action tracker, knowledge harvester, async meeting engine, meeting analytics, and pre/post automator
+  author: chengganping-ship-it
+  tools:
+    - agenda_designer
+    - realtime_facilitator
+    - intelligence_decisions
+    - action_tracker
+    - knowledge_harvesting
+    - async_meeting
+    - meeting_analytics
+    - pre_post_automator

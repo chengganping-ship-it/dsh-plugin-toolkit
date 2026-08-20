@@ -1,6 +1,6 @@
 # DSH Plugin Toolkit
 
-**76 DeepSeek Harness plugins — 998 tools**
+**81 DeepSeek Harness plugins — 1038 tools**
 
 仓库: https://github.com/chengganping-ship-it/dsh-plugin-toolkit
 
@@ -41,6 +41,11 @@
 | 云原生自治运维 (FinOps) | dsh-tool-cloudops | 成本+K8s+可靠性+碳追踪+混沌 |
 | 表格智能体 (57%自动化) | dsh-tool-spreadsheet | 公式EDA透视图表+场景+模板 |
 | B2B销售引擎 (十万亿$) | dsh-tool-salesengine | 线索+外联+商机+竞争+教练+管线 |
+| AI Agent安全 (Check Point) | dsh-tool-cyberagent | Agent防火墙+行为画像+依赖守卫+影子AI检测 |
+| 合同全生命周期 (TermScout) | dsh-tool-clmengine | 起草+谈判+义务+续约+AI条款+签署 |
+| 客户数据Agent (CDP趋势) | dsh-tool-cdpagent | 统一+细分+旅程+激活+同意+归因 |
+| 知识图谱Pro (语义层) | dsh-tool-kgpro | 本体+实体+推理+问答+可视化 |
+| 智能会议助理 | dsh-tool-meetingmind | 议程+引导+决策+追踪+异步+分析 |
 
 ## Wave 开发路线
 
@@ -61,6 +66,7 @@
 | 13 | 高增长市场精准卡位 | 5 | 网红营销+Skills市场+创意资产+数据治理+AI教育 |
 | 14 | 企业核心系统全覆盖 | 5 | AIOps+全渠道客服+合规+测试+社媒 |
 | 15 | 十亿级个人+专业服务 | 5 | Agentic HR+科研+云运营+表格+销售 |
+| 16 | 安全+法务+数据+知识+效率 | 5 | AI Agent安全+CLM+CDP+知识图谱+会议 |
 
 ## 快速发布
 
@@ -71,7 +77,7 @@ npm login
 npm publish
 ```
 
-## 完整插件列表 (76个)
+## 完整插件列表 (81个)
 
 | # | 插件 | 分类 | 核心能力 |
 |---|------|------|----------|
@@ -151,6 +157,21 @@ npm publish
 | 74 | dsh-tool-cloudops | 云运维 | 云原生自治运维 |
 | 75 | dsh-tool-spreadsheet | 表格 | 智能表格Agent |
 | 76 | dsh-tool-salesengine | 销售 | B2B销售引擎 |
+| 77 | dsh-tool-cyberagent | 安全 | AI Agent安全引擎 |
+| 78 | dsh-tool-clmengine | 合同 | 合同全生命周期 |
+| 79 | dsh-tool-cdpagent | 数据 | 客户数据Agent |
+| 80 | dsh-tool-kgpro | 知识 | 知识图谱Pro |
+| 81 | dsh-tool-meetingmind | 效率 | 智能会议助理 |
+
+## Wave 16 — 安全+法务+数据+知识+效率
+
+| 领域 | 规模/信号 | 我们的插件 |
+|------|----------|-----------|
+| AI Agent安全 | Check Point: 300亿￥复合增长100%，94%认为AI是安全最重要驱动力 | dsh-tool-cyberagent |
+| 合同生命周期 | TermScout 2026: 38%NDA含AI条款，AI披露义务年增240% | dsh-tool-clmengine |
+| 客户数据 | CDP市场17.2%增长，68%新项目采用AI Agent+可组合架构 | dsh-tool-cdpagent |
+| 知识图谱 | 语义层成企业AI必备，图谱问答爆发 | dsh-tool-kgpro |
+| 智能会议 | 会议效率是组织效能最大杠杆 | dsh-tool-meetingmind |
 
 ## Wave 15 — 十亿级个人+专业服务
 
