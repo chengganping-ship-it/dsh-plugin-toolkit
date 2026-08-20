@@ -1,6 +1,6 @@
 # DSH Plugin Toolkit
 
-**81 DeepSeek Harness plugins — 1038 tools**
+**86 DeepSeek Harness plugins — 1078 tools**
 
 仓库: https://github.com/chengganping-ship-it/dsh-plugin-toolkit
 
@@ -46,6 +46,11 @@
 | 客户数据Agent (CDP趋势) | dsh-tool-cdpagent | 统一+细分+旅程+激活+同意+归因 |
 | 知识图谱Pro (语义层) | dsh-tool-kgpro | 本体+实体+推理+问答+可视化 |
 | 智能会议助理 | dsh-tool-meetingmind | 议程+引导+决策+追踪+异步+分析 |
+| 财资编排Agent (渣打2026) | dsh-tool-treasuryagent | 现金+流动性+支付+外汇+反欺诈+投资 |
+| ESG Agent (德勤2026) | dsh-tool-esgengine | 碳核算+报告+供应链+绿色金融+气候 |
+| 战略采购Agent (88%ROI) | dsh-tool-procureagent | 支出+供应商+寻源+合同+P2P+尾部 |
+| 外勤服务Agent | dsh-tool-fieldforce | 工单+调度+移动+资产+区域+效能 |
+| 企业预测Agent | dsh-tool-predictagent | 需求+财务+情景+维护+流失+信用 |
 
 ## Wave 开发路线
 
@@ -67,6 +72,7 @@
 | 14 | 企业核心系统全覆盖 | 5 | AIOps+全渠道客服+合规+测试+社媒 |
 | 15 | 十亿级个人+专业服务 | 5 | Agentic HR+科研+云运营+表格+销售 |
 | 16 | 安全+法务+数据+知识+效率 | 5 | AI Agent安全+CLM+CDP+知识图谱+会议 |
+| 17 | 财资+ESG+采购+外勤+预测 | 5 | 财资编排+ESG+采购自动化+外勤+预测 |
 
 ## 快速发布
 
@@ -77,7 +83,7 @@ npm login
 npm publish
 ```
 
-## 完整插件列表 (81个)
+## 完整插件列表 (86个)
 
 | # | 插件 | 分类 | 核心能力 |
 |---|------|------|----------|
@@ -162,6 +168,21 @@ npm publish
 | 79 | dsh-tool-cdpagent | 数据 | 客户数据Agent |
 | 80 | dsh-tool-kgpro | 知识 | 知识图谱Pro |
 | 81 | dsh-tool-meetingmind | 效率 | 智能会议助理 |
+| 82 | dsh-tool-treasuryagent | 财资 | 财资编排Agent |
+| 83 | dsh-tool-esgengine | 可持续 | ESG与可持续发展Agent |
+| 84 | dsh-tool-procureagent | 采购 | 战略采购Agent |
+| 85 | dsh-tool-fieldforce | 外勤 | 外勤服务管理Agent |
+| 86 | dsh-tool-predictagent | 预测 | 企业预测智能Agent |
+
+## Wave 17 — 财资+ESG+采购+外勤+预测
+
+| 领域 | 对标信号 | 我们的插件 |
+|------|----------|----------|
+| 财资编排 | 渣打2026：从数字化到编排化+AI嵌入智能层 | dsh-tool-treasuryagent |
+| ESG可持续 | 德勤2026：ESG从合规成本变营收驱动；微软2026可持续发展 | dsh-tool-esgengine |
+| 战略采购 | AI Agent 88%正向ROI场景；采购是最大可自动化流程 | dsh-tool-procureagent |
+| 外勤服务 | IoT+AI Agent重塑现场服务 | dsh-tool-fieldforce |
+| 企业预测 | 预测性AI从工具变成Agent，行业数字孪生爆发 | dsh-tool-predictagent |
 
 ## Wave 16 — 安全+法务+数据+知识+效率
 

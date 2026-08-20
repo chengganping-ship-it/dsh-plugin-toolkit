@@ -1,0 +1,14 @@
+- id: dsh-tool-procureagent
+  name: dsh-tool-procureagent
+  version: 0.1.0
+  description: AI采购智能体引擎 - 全链路采购数字化、智能决策、合规自动化
+  author: chengganping-ship-it
+  tools:
+    - spend_analyzer
+    - supplier_360
+    - strategic_sourcing
+    - contract_spend_alignment
+    - p2p_automator
+    - supplier_development
+    - tail_spend_optimizer
+    - compliance_monitor

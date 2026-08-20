@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Field Service Management & Optimization Engine v0.1.0
+# AI外勤服务趋势 — 工单全生命周期、智能调度、移动外勤、资产维护、SLA合规、区域优化、客户门户、效能分析
+
+- id: dsh-tool-fieldforce
+  name: dsh-tool-fieldforce
+  version: 0.1.0
+  description: AI外勤服务管理优化引擎 - 工单全生命周期、智能调度派工、移动外勤应用、资产管理维护、SLA合规监控、区域优化、客户自助门户、外勤效能分析
+  author: chengganping-ship-it
+  tools:
+    - work_order_lifecycle
+    - dispatch_scheduler
+    - mobile_workforce_app
+    - asset_maintenance
+    - sla_compliance_monitor
+    - territory_optimizer
+    - customer_portal
+    - workforce_analytics

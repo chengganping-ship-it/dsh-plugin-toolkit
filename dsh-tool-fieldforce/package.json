@@ -1,0 +1,35 @@
+{
+  "name": "dsh-tool-fieldforce",
+  "version": "0.1.0",
+  "description": "AI外勤服务管理优化引擎 for DSH - 工单全生命周期、智能调度、移动外勤、资产维护、SLA合规、区域优化、客户门户、效能分析",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-plugin-toolkit.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "field-service",
+    "dispatching",
+    "asset-maintenance",
+    "mobile-workforce",
+    "work-order",
+    "sla-monitoring",
+    "territory-optimization",
+    "field-force"
+  ]
+}
