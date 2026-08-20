@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Real Estate Pro Investment & Property Management Agent v1.0.0
+# Advanced property valuation, investment analysis, tenant screening, property management
+
+- id: dsh-tool-realestatepro
+  name: dsh-tool-realestatepro
+  version: 1.0.0
+  description: Real Estate Pro - Advanced property valuation (multi-model AVM), investment return analysis with leverage IRR, AI tenant screening, property management orchestration, market trend compass, financing optimizer, location risk assessor, and portfolio builder
+  author: chengganping-ship-it
+  tools:
+    - property_valuation
+    - investment_analyzer
+    - tenant_screening
+    - property_management
+    - market_compass
+    - financing_optimizer
+    - risk_locator
+    - portfolio_builder

@@ -1,6 +1,6 @@
 # DSH Plugin Toolkit
 
-**86 DeepSeek Harness plugins — 1078 tools**
+**91 DeepSeek Harness plugins — 1118 tools**
 
 仓库: https://github.com/chengganping-ship-it/dsh-plugin-toolkit
 
@@ -51,6 +51,11 @@
 | 战略采购Agent (88%ROI) | dsh-tool-procureagent | 支出+供应商+寻源+合同+P2P+尾部 |
 | 外勤服务Agent | dsh-tool-fieldforce | 工单+调度+移动+资产+区域+效能 |
 | 企业预测Agent | dsh-tool-predictagent | 需求+财务+情景+维护+流失+信用 |
+| 房产投资Pro | dsh-tool-realestatepro | 估值+投资+租客+物业+融资+组合 |
+| 保险理赔Agent | dsh-tool-insuranceclaim | 报案+定损+责任+欺诈+理算+代位 |
+| 制造质量AI (质量4.0) | dsh-tool-manufacturingq | SPC+缺陷+来料+CAPA+计量+审核 |
+| 法律电子取证 (eDiscovery) | dsh-tool-legaldiscovery | 收集+审查+聚类+编校+生成+策略 |
+| 医疗收入周期RCM | dsh-tool-healthrcm | 资格+编码+计费+拒付+预授权+分析 |
 
 ## Wave 开发路线
 
@@ -73,6 +78,7 @@
 | 15 | 十亿级个人+专业服务 | 5 | Agentic HR+科研+云运营+表格+销售 |
 | 16 | 安全+法务+数据+知识+效率 | 5 | AI Agent安全+CLM+CDP+知识图谱+会议 |
 | 17 | 财资+ESG+采购+外勤+预测 | 5 | 财资编排+ESG+采购自动化+外勤+预测 |
+| 18 | 房产+保险+制造+法律+医疗 | 5 | 垂直行业深度专业化全覆盖 |
 
 ## 快速发布
 
@@ -83,7 +89,7 @@ npm login
 npm publish
 ```
 
-## 完整插件列表 (86个)
+## 完整插件列表 (91个)
 
 | # | 插件 | 分类 | 核心能力 |
 |---|------|------|----------|
@@ -173,6 +179,21 @@ npm publish
 | 84 | dsh-tool-procureagent | 采购 | 战略采购Agent |
 | 85 | dsh-tool-fieldforce | 外勤 | 外勤服务管理Agent |
 | 86 | dsh-tool-predictagent | 预测 | 企业预测智能Agent |
+| 87 | dsh-tool-realestatepro | 房产 | 房产投资与管理Pro |
+| 88 | dsh-tool-insuranceclaim | 保险 | 保险理赔自动化Agent |
+| 89 | dsh-tool-manufacturingq | 制造 | 智能制造质量AI |
+| 90 | dsh-tool-legaldiscovery | 法律 | 法律电子取证eDiscovery |
+| 91 | dsh-tool-healthrcm | 医疗 | 医疗收入周期管理RCM |
+
+## Wave 18 — 垂直行业深度专业化
+
+| 领域 | 对标信号 | 我们的插件 |
+|------|----------|----------|
+| 房产投资 | 房产投资AI估值+物业管理自动化 | dsh-tool-realestatepro |
+| 保险理赔 | 保险理赔+欺诈检测+代位求偿 | dsh-tool-insuranceclaim |
+| 制造质量 | 质量4.0+SPC+AI缺陷检测 | dsh-tool-manufacturingq |
+| 法律科技 | eDiscovery+特权日志+编校自动化 | dsh-tool-legaldiscovery |
+| 医疗RCM | 收入周期管理+医疗编码+拒付管理 | dsh-tool-healthrcm |
 
 ## Wave 17 — 财资+ESG+采购+外勤+预测
 

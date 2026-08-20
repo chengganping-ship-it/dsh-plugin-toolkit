@@ -1,0 +1,14 @@
+- id: dsh-tool-manufacturingq
+  name: dsh-tool-manufacturingq
+  version: 0.1.0
+  description: AI+智能制造质量4.0引擎 - SPC统计过程控制、AI缺陷分类、来料QC、CAPA管理、质量文档、计量校准、质量审核、客户质量服务
+  author: chengganping-ship-it
+  tools:
+    - spc_monitor
+    - defect_ai_classifier
+    - incoming_qc
+    - capa_manager
+    - quality_documentation
+    - gauge_r_calibration
+    - audit_quality
+    - customer_quality

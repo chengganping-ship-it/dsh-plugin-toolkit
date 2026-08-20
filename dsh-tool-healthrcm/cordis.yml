@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Healthcare Revenue Cycle Management v0.1.0
+# RCM toolkit: eligibility, charge capture, coding, claims, denials, billing, analytics, prior auth
+
+- id: dsh-tool-healthrcm
+  name: dsh-tool-healthrcm
+  version: 0.1.0
+  description: 'Healthcare Revenue Cycle Management (RCM) - Eligibility verification, charge capture, medical coding assistant (ICD-10/CPT/DRG/HCC), claims submission manager, denial management with appeal engine, patient billing & collections, RCM analytics dashboard, and prior authorization engine'
+  author: chengganping-ship-it
+  tools:
+    - eligibility_verifier
+    - charge_capture
+    - coding_assistant
+    - claims_submission_manager
+    - denial_manager
+    - patient_billing_collector
+    - rcm_analytics_dash
+    - prior_authorization_engine
