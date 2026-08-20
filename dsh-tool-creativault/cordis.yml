@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Creative Asset Intelligence & Brand Vault Toolkit v0.1.0
+# AI-powered creative asset management aligned with Adobe 2026 Third Wave Creative Democratization
+
+- id: dsh-tool-creativault
+  name: dsh-tool-creativault
+  version: 0.1.0
+  description: "Creative Vault — AI-powered creative asset management toolkit. Multi-format asset ingestion, AI semantic tagging, brand compliance checking, visual+semantic hybrid search, creative version control with visual diff, asset performance analytics with ROI heatmap, design trend insights with competitor comparison, and smart archiving with storage optimization. Purple creative theme with visual grid and trend visualization."
+  author: chengganping-ship-it
+  tools:
+    - asset_ingestion
+    - smart_tagging
+    - brand_compliance
+    - creative_search
+    - version_control
+    - asset_performance
+    - creative_insights
+    - asset_archive

@@ -1,0 +1,14 @@
+- id: dsh-tool-eduflow
+  name: dsh-tool-eduflow
+  version: 0.1.0
+  description: AI教育/人才培养引擎 — 学习者画像、技能差距分析、个性化学习路径、微学习、认证备考、同伴匹配、职业模拟、学习分析仪表盘
+  author: chengganping-ship-it
+  tools:
+    - learner_profile
+    - skill_gap_analyzer
+    - learning_path_gen
+    - micro_learning
+    - cert_prep
+    - peer_match
+    - career_simulator
+    - learning_analytics

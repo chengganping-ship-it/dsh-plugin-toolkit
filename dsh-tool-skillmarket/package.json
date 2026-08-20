@@ -1,0 +1,43 @@
+{
+  "name": "dsh-tool-skillmarket",
+  "version": "0.1.0",
+  "description": "Golden Skill Marketplace for DSH - skill registry, discovery, transaction, rating, dispute, bundle, analytics, certification",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-skillmarket.git"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "ai-agent",
+    "cordis",
+    "marketplace",
+    "skill",
+    "agent-skills",
+    "skill-marketplace",
+    "skill-registry",
+    "skill-discovery",
+    "skill-transaction",
+    "skill-rating",
+    "skill-bundle",
+    "skill-analytics",
+    "skill-certification",
+    "gold-marketplace",
+    "leaderboard"
+  ]
+}

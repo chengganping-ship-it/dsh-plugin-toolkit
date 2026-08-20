@@ -1,0 +1,14 @@
+id: dsh-tool-skillmarket
+name: dsh-tool-skillmarket
+version: 0.1.0
+description: Golden Skill Marketplace - skill registry, discovery, transaction, rating, dispute, bundle, analytics, certification
+author: chengganping-ship-it
+tools:
+  - skill_registry
+  - skill_discovery
+  - skill_transaction
+  - skill_rating
+  - skill_dispute
+  - skill_bundle
+  - skill_analytics
+  - skill_certification

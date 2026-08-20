@@ -1,6 +1,6 @@
 # DSH Plugin Toolkit
 
-**61 DeepSeek Harness plugins — 878 tools**
+**66 DeepSeek Harness plugins — 918 tools**
 
 仓库: https://github.com/chengganping-ship-it/dsh-plugin-toolkit
 
@@ -26,6 +26,11 @@
 | MCP模型上下文协议 | dsh-tool-mcphub | 工具即插即用标准 |
 | 全员AI副手 (Google Trend #1) | dsh-tool-personalai | 每位员工的数字副手 |
 | Agent安全治理 (Google Trend #5) | dsh-tool-agentguard | 主动防御+零信任 |
+| AI网红营销 (400亿$市场) | dsh-tool-influencerX | 创作者发现+合规+ROI预测+危机预警 |
+| Agent Skills市场 (日增4400⭐) | dsh-tool-skillmarket | 注册+交易+评级+争议仲裁+认证 |
+| 创意资产管理 (Adobe趋势) | dsh-tool-creativault | 入库+标签+合规+搜索+版本+归档 |
+| 数据治理引擎 (合规刚需) | dsh-tool-datagov | 目录+质量+血缘+隐私+合规+审计 |
+| AI教育引擎 (新职业赛道) | dsh-tool-eduflow | 画像+差距+路径+微学习+认证 |
 
 ## Wave 开发路线
 
@@ -43,6 +48,7 @@
 | 10 | 旅行/知识/审计 | 5 | 个人生产力 |
 | 11 | 医疗/法律/金融/保险/制造 | 5 | 高溢价垂直领域 |
 | 12 | Google 2026五大趋势全覆盖 | 5 | 数字装配线+A2A+MCP+个人助手+安全治理 |
+| 13 | 高增长市场精准卡位 | 5 | 网红营销+Skills市场+创意资产+数据治理+AI教育 |
 
 ## 快速发布
 
@@ -53,7 +59,7 @@ npm login
 npm publish
 ```
 
-## 完整插件列表 (61个)
+## 完整插件列表 (66个)
 
 | # | 插件 | 分类 | 核心能力 |
 |---|------|------|----------|
@@ -118,6 +124,23 @@ npm publish
 | 59 | dsh-tool-mcphub | 工具 | MCP上下文协议中心 |
 | 60 | dsh-tool-personalai | 生产力 | 个人AI数字副手 |
 | 61 | dsh-tool-agentguard | 安全 | Agent安全治理引擎 |
+| 62 | dsh-tool-influencerX | 营销 | AI网红营销引擎 |
+| 63 | dsh-tool-skillmarket | 市场 | Agent技能交易平台 |
+| 64 | dsh-tool-creativault | 创意 | 品牌资产管理系统 |
+| 65 | dsh-tool-datagov | 数据 | 数据治理合规引擎 |
+| 66 | dsh-tool-eduflow | 教育 | AI学习与技能发展 |
+
+## Wave 13 — 高增长市场精准卡位
+
+本波次5个插件精准切入400亿$以上高增长、低竞争赛道：
+
+| 市场 | 规模/信号 | 我们的插件 | 时机 |
+|------|----------|-----------|------|
+| AI网红营销 | 2025年325亿$→2026年400亿$，品牌执行效率落差持续扩大 | dsh-tool-influencerX | 平台创作者超1.5亿，传统方式已到极限 |
+| Agent Skills市场 | Google/OpenAI/MS 48h内跟进标准，20天内技能数18.5倍增长 | dsh-tool-skillmarket | Skills范式取代MCP成为新的能力分发层 |
+| 创意资产管理 | "第三波创意民主化"，视频进入盒子时代 | dsh-tool-creativault | 设计爆炸式增长，品牌合规是刚需 |
+| 数据治理 | 数据治理+AI安全评估岗位热度攀升，PIPL/GDPR等保2.0执法加强 | dsh-tool-datagov | 数据资产化+AI监管双轮驱动 |
+| AI教育 | Z世代重塑消费逻辑，新职业赛道爆发 | dsh-tool-eduflow | 终身学习+技能认证是每个职场人的刚需 |
 
 ## Wave 12 — Google AI Agent Trends 2026 全面对标
 
