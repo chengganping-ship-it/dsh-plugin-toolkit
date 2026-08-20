@@ -1,0 +1,31 @@
+{
+  "name": "dsh-tool-spreadsheet",
+  "version": "0.1.0",
+  "description": "电子表格自动化堡垒 for DSH - 智能公式生成/数据清洗/透视分析/图表推荐/场景建模/数据连接/表格审计/模板工厂",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": { "build": "tsc" },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": { "typescript": "^5.9.3" },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": { "type": "git", "url": "git+https://github.com/chengganping-ship-it/dsh-plugin-toolkit.git" },
+  "keywords": [
+    "spreadsheet",
+    "excel",
+    "data-analysis",
+    "formula",
+    "business-intelligence",
+    "pivot-table",
+    "chart",
+    "scenario-modeling",
+    "data-cleaning",
+    "template",
+    "automation",
+    "dsh",
+    "deepseek-harness"
+  ]
+}

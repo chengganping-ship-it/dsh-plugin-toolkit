@@ -1,6 +1,6 @@
 # DSH Plugin Toolkit
 
-**71 DeepSeek Harness plugins — 958 tools**
+**76 DeepSeek Harness plugins — 998 tools**
 
 仓库: https://github.com/chengganping-ship-it/dsh-plugin-toolkit
 
@@ -36,6 +36,11 @@
 | 智能合规引擎 (合规刚需) | dsh-tool-complianceai | 合同扫描+法规雷达+风险评估+审计准备 |
 | AI测试领航 (测试增强) | dsh-tool-testpilot | 用例生成+数据构造+缺陷预测+契约测试 |
 | 社媒运营Agent (社媒自动化) | dsh-tool-socialagent | 内容日历+A/B测试+危机检测+ROI |
+| Agentic HR (Josh Bersin HR 2030) | dsh-tool-peoplex | 技能图谱+预测+Agentic招聘+薪酬AI |
+| AI科研加速 (AI Scientist) | dsh-tool-researchos | 文献综述+假设+实验+论文+评审 |
+| 云原生自治运维 (FinOps) | dsh-tool-cloudops | 成本+K8s+可靠性+碳追踪+混沌 |
+| 表格智能体 (57%自动化) | dsh-tool-spreadsheet | 公式EDA透视图表+场景+模板 |
+| B2B销售引擎 (十万亿$) | dsh-tool-salesengine | 线索+外联+商机+竞争+教练+管线 |
 
 ## Wave 开发路线
 
@@ -55,6 +60,7 @@
 | 12 | Google 2026五大趋势全覆盖 | 5 | 数字装配线+A2A+MCP+个人助手+安全治理 |
 | 13 | 高增长市场精准卡位 | 5 | 网红营销+Skills市场+创意资产+数据治理+AI教育 |
 | 14 | 企业核心系统全覆盖 | 5 | AIOps+全渠道客服+合规+测试+社媒 |
+| 15 | 十亿级个人+专业服务 | 5 | Agentic HR+科研+云运营+表格+销售 |
 
 ## 快速发布
 
@@ -65,7 +71,7 @@ npm login
 npm publish
 ```
 
-## 完整插件列表 (71个)
+## 完整插件列表 (76个)
 
 | # | 插件 | 分类 | 核心能力 |
 |---|------|------|----------|
@@ -140,6 +146,23 @@ npm publish
 | 69 | dsh-tool-complianceai | 合规 | 智能合规引擎 |
 | 70 | dsh-tool-testpilot | 测试 | AI测试领航员 |
 | 71 | dsh-tool-socialagent | 社媒 | 社交媒体运营Agent |
+| 72 | dsh-tool-peoplex | HR | Agentic人力资源引擎 |
+| 73 | dsh-tool-researchos | 科研 | AI科研加速助手 |
+| 74 | dsh-tool-cloudops | 云运维 | 云原生自治运维 |
+| 75 | dsh-tool-spreadsheet | 表格 | 智能表格Agent |
+| 76 | dsh-tool-salesengine | 销售 | B2B销售引擎 |
+
+## Wave 15 — 十亿级个人+专业服务
+
+本波次5个插件覆盖专业服务+个人生产力最后高地：
+
+| 领域 | 规模/信号 | 我们的插件 | 时机 |
+|------|----------|-----------|------|
+| Agentic HR | Josh Bersin HR 2030: HR团队缩减50%，130个Agent | dsh-tool-peoplex | 每家企业都要重构HR |
+| AI科研加速 | AI Scientist、paperdigest爆发 | dsh-tool-researchos | 科研全流程自动化空白 |
+| 云原生运维 | FinOps+K8s自治+碳中和 | dsh-tool-cloudops | 云支出1.5万亿$，浪费30%+ |
+| 表格智能 | 麦肯锡57%工作可自动化，表格是最后堡垒 | dsh-tool-spreadsheet | Excel用户超10亿 |
+| B2B销售 | 十万亿$服务市场，销售效率落差 | dsh-tool-salesengine | AI销售+RevOps是顶层风口 |
 
 ## Wave 14 — 企业核心系统全覆盖
 

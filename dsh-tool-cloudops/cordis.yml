@@ -1,0 +1,14 @@
+- id: dsh-tool-cloudops
+  name: dsh-tool-cloudops
+  version: 0.1.0
+  description: 云原生AI自动化运营平台 for DSH - 对标K8s自治+FinOps趋势 | Cloud Cost Optimization, K8s Guardian, FinOps Dashboard, Config Drift Detection, Reliability Engineering, Security Posture, Chaos Scheduling, Carbon Tracking
+  author: chengganping-ship-it
+  tools:
+    - cost_optimizer
+    - k8s_guardian
+    - finops_reporter
+    - drift_detector
+    - reliability_engineer
+    - security_posture
+    - chaos_scheduler
+    - carbon_tracker
