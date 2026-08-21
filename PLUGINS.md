@@ -175,4 +175,16 @@
 
 ---
 
-**Total: 116 plugins | 928 tools**
+## Wave 24 — AI+农业+政务+零售+自动驾驶+能源 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 117 | agriagentpro | 智慧农业 | precision_planting_advisor, smart_irrigation_controller, crop_health_monitor, livestock_management, agri_supply_chain, farm_financial_planner, climate_risk_assessor, agri_drone_operator |
+| 118 | govagentpro | 数字政务 | smart_service_hall, urban_governance_ai, public_safety_monitor, civil_affairs_service, policy_analytics_engine, digital_identity_manager, emergency_response_coord, gov_data_open_platform |
+| 119 | retailagentpro | 智慧零售 | omnichannel_operations, smart_store_manager, customer_growth_engine, dynamic_pricing_optimizer, product_assortment_planner, supply_chain_retail, live_commerce_agent, retail_data_analytics |
+| 120 | autodriveagent | 自动驾驶 | perception_evaluator, planning_decision_auditor, fleet_management_center, v2x_communication_manager, simulation_test_platform, safety_monitor_oversight, hd_map_updater, regulatory_compliance |
+| 121 | energyagentpro | 智慧能源 | renewable_energy_optimizer, smart_grid_manager, carbon_footprint_tracker, energy_storage_manager, demand_response_coordinator, energy_efficiency_auditor, distributed_energy_planner, energy_trading_advisor |
+
+---
+
+**Total: 121 plugins | 968 tools**
