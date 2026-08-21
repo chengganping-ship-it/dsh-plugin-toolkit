@@ -1,0 +1,11 @@
+{
+  "name": "dsh-tool-creativeagentpro",
+  "version": "1.0.0",
+  "description": "Creative Agent Pro — AI驱动的品牌设计/内容策划/视觉创意/文案优化工具集 (dsh-tool-creativeagentpro)",
+  "main": "src/index.ts",
+  "scripts": { "build": "tsc", "dev": "tsc --watch", "typecheck": "tsc --noEmit" },
+  "dependencies": { "@deepseek-ai/cordis": "^4.0.1", "@deepseek-ai/dsh-tools": "^0.0.1-rc.1" },
+  "devDependencies": { "typescript": "^5.0.0" },
+  "keywords": ["dsh","deepseek-harness","creative","brand","content","design","copywriting","plugin"],
+  "license": "MIT"
+}

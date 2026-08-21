@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: E-commerce Operations AI Agent Pro v0.1.0
+# Product listing SEO, CVR diagnostics, inventory forecasting, review sentiment, dynamic pricing, ads, customer journey, marketplace expansion
+
+- id: dsh-tool-ecomagentpro
+  name: dsh-tool-ecomagentpro
+  version: 0.1.0
+  description: E-commerce Operations AI Agent Pro - Product listing SEO optimization, conversion rate diagnostics, inventory forecasting, review sentiment analysis, dynamic pricing strategy, ad campaign management, customer journey mapping, and marketplace expansion evaluation
+  author: chengganping-ship-it
+  tools:
+    - product_listing_optimizer
+    - conversion_rate_diagnostic
+    - inventory_forecaster
+    - review_sentiment_analyzer
+    - pricing_strategy_advisor
+    - ad_campaign_manager
+    - customer_journey_mapper
+    - marketplace_expansion

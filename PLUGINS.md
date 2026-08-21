@@ -235,4 +235,16 @@
 
 ---
 
-**Total: 141 plugins | 1128 tools**
+## Wave 29 — AI+心理健康+电商运营+智能家居+创意工具+GLP合规 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 142 | mentalhealthagentpro | 心理健康AI | mood_tracker, burnout_detector, mindfulness_guide, sleep_quality_analyzer, stress_pattern_mapper, wellbeing_score_estimator, coping_strategy_recommender, therapy_session_summarizer |
+| 143 | ecomagentpro | 电商运营AI | product_listing_optimizer, conversion_rate_diagnostic, inventory_forecaster, review_sentiment_analyzer, pricing_strategy_advisor, ad_campaign_manager, customer_journey_mapper, marketplace_expansion |
+| 144 | smarthomeagent | 智能家居AI | energy_optimizer, security_monitor, device_health_checker, comfort_zone_manager, routine_automation, occupancy_pattern_analyzer, air_quality_guardian, maintenance_scheduler |
+| 145 | creativeagentpro | 创意工具AI | brand_identity_designer, content_calendar_planner, copy_rewriter, visual_concept_board, storyboard_architect, newsletter_crafter, ux_copy_optimizer, pitch_deck_designer |
+| 146 | glpcomplianceagent | GLP合规AI | sop_compliance_checker, study_audit_trail, data_integrity_validator, equipment_qualification, personnel_training_competency, deviation_capability_advisor, regulatory_submission_readiness, glp_risk_assessment |
+
+---
+
+**Total: 146 plugins | 1168 tools**
