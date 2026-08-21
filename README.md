@@ -1,17 +1,17 @@
 # DSH Plugin Toolkit
 
-> **96 DeepSeek Harness plugins — 1158 AI agent tools**
+> **101 DeepSeek Harness plugins — 808 AI agent tools**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek-Harness-orange.svg)](https://deepseek.com/)
-[![96 Plugins](https://img.shields.io/badge/Plugins-96-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
+[![101 Plugins](https://img.shields.io/badge/Plugins-101-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
 
 ---
 
 ## Overview
 
-A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.com/) — the "Everything is a Plugin" AI Agent framework. 96 domain-specific plugins, each with 8 tools, covering enterprise operations, vertical industries, and personal productivity.
+A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.com/) — the "Everything is a Plugin" AI Agent framework. 101 domain-specific plugins, each with 8 tools, covering enterprise operations, vertical industries, and personal productivity.
 
 ## Categories
 
@@ -19,11 +19,14 @@ A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.c
 |----------|---------|-------|
 | Enterprise Core | 22 | 176 |
 | Finance & Compliance | 16 | 128 |
-| Developer & Engineering | 12 | 96 |
-| Vertical Industries | 18 | 144 |
+| Developer & Engineering | 13 | 104 |
+| Vertical Industries | 19 | 152 |
 | Marketing & Sales | 10 | 80 |
 | Personal Productivity | 8 | 64 |
 | Security & Governance | 10 | 80 |
+| Workforce & HR | 1 | 8 |
+| IP Protection | 1 | 8 |
+| Supply Chain Resilience | 1 | 8 |
 
 ## Quick Start
 
@@ -93,10 +96,10 @@ dsh-tool-name/
 
 ## Repository Stats
 
-- **96 plugins** × **8 tools** each = **768+ tool implementations**
-- **1158 tool definitions** (including indexed/search tools)
+- **101 plugins** × **8 tools** each = **808 tool implementations**
 - **100% TypeScript strict** — zero compilation errors
 - **MIT Licensed**
+- **Wave 20 (2026-08)**: workforcepro + ipguardian + proptechagent + agentbuildercit + supplyriskshield
 
 ## License
 

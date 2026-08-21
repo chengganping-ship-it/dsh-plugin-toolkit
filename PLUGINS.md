@@ -131,6 +131,16 @@
 | 95 | datagov | Data governance |
 | 96 | agentmatrix | Agent coordination |
 
+## Wave 20 — 劳动力管理+知识产权+地产科技+Agent建造师+供应链韧性 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 97 | workforcepro | 劳动力管理 | shift_scheduler, absence_forecaster, time_tracking_analyzer, workforce_demand_forecaster, productivity_optimizer, compliance_checker, shift_swap_matcher, wfm_benchmark |
+| 98 | ipguardian | 知识产权保护 | patent_landscape_mapper, trademark_monitor, infringement_risk_analyzer, licensing_value_estimator, prior_art_searcher, ip_portfolio_auditor, overseas_ip_risk_scanner, freedom_to_operate_analyzer |
+| 99 | proptechagent | 智慧地产 | building_ops_center, tenant_experience_analyzer, energy_optimizer, facility_maintenance_planner, esg_compliance_tracker, lease_portfolio_manager, property_investment_roi, workspace_utilization_optimizer |
+| 100 | agentbuildercit | Agent建造师 | requirements_decomposer, workflow_architect, tool_chain_orchestrator, memory_system_configurator, agent_test_simulator, integration_readiness_checker, developer_suitability_assessment, agent_governance_configurator |
+| 101 | supplyriskshield | 供应链韧性 | multi_tier_visibility, disruption_predictor, supplier_resilience_scorer, scenario_simulator, alternative_sourcing_matcher, geopolitics_risk_scanner, pcrf_health_assessment, logistics_network_optimizer |
+
 ---
 
-**Total: 96 plugins | 1158 tools**
+**Total: 101 plugins | 808 tools**

@@ -1,0 +1,17 @@
+{
+  "name": "dsh-tool-agentbuildercit",
+  "version": "0.1.0",
+  "description": "AI Agent Builder & Assembly Platform - requirements modeling, workflow design, tool orchestration, memory configuration, testing simulation for citizen developers building autonomous agent systems",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": { "build": "tsc" },
+  "keywords": ["dsh", "agent-builder", "citizen-dev", "workflow", "agent"],
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": { "typescript": "^5.0.0" }
+}
