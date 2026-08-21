@@ -1,0 +1,203 @@
+{
+  "name": "dsh-tool-redblue",
+  "description": "Red-Blue security audit - auto pentest, defense verification, compliance mapping, fix prioritization",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-redblue",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-redblue",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "red_team_pentest",
+      "name": "Red Team Pentest",
+      "description": "Simulate red team attack on code/config. Tests for injection flaws, auth bypass, data exposure, crypto weaknesses using OWASP Top 10 attack patterns.",
+      "tags": [
+        "redblue",
+        "red",
+        "team",
+        "pentest"
+      ],
+      "examples": [
+        "Use Red Team Pentest to simulate red team attack on code/config. Tests for injection flaws, auth bypass, data exposure, crypto weaknesses using OWASP Top 10 attack patterns.",
+        "Can you run Red Team Pentest? Target Code is the main input I have.",
+        "Invoke Red Team Pentest with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "blue_team_defense",
+      "name": "Blue Team Defense",
+      "description": "Assess existing security controls. Checks input validation, output encoding, auth mechanisms, encryption, CORS, CSP, rate limiting effectiveness.",
+      "tags": [
+        "redblue",
+        "blue",
+        "team",
+        "defense"
+      ],
+      "examples": [
+        "Use Blue Team Defense to assess existing security controls. Checks input validation, output encoding, auth mechanisms, encryption, CORS, CSP, rate limiting effectiveness.",
+        "Can you run Blue Team Defense? Defense Input is the main input I have.",
+        "Invoke Blue Team Defense with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "audit_compliance_map",
+      "name": "Audit Compliance Map",
+      "description": "Map vulnerabilities to compliance frameworks (OWASP Top 10, CWE, NIST, ISO 27001, SOC2, GDPR). Returns compliance gaps and priority areas.",
+      "tags": [
+        "redblue",
+        "audit",
+        "compliance",
+        "map"
+      ],
+      "examples": [
+        "Use Audit Compliance Map to map vulnerabilities to compliance frameworks (OWASP Top 10, CWE, NIST, ISO 27001, SOC2, GDPR). Returns compliance gaps and priority areas.",
+        "Can you run Audit Compliance Map? Compliance Input is the main input I have.",
+        "Invoke Audit Compliance Map with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "exploit_chain_analysis",
+      "name": "Exploit Chain Analysis",
+      "description": "Analyze whether multiple low-severity vulnerabilities can form high-severity exploit chains. Identifies attack paths and combined severity.",
+      "tags": [
+        "redblue",
+        "exploit",
+        "chain",
+        "analysis"
+      ],
+      "examples": [
+        "Use Exploit Chain Analysis to analyze whether multiple low-severity vulnerabilities can form high-severity exploit chains. Identifies attack paths and combined severity.",
+        "Can you run Exploit Chain Analysis? Chain Input is the main input I have.",
+        "Invoke Exploit Chain Analysis with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "defense_gap_scan",
+      "name": "Defense Gap Scan",
+      "description": "Identify missing security controls in the codebase. Checks for required security measures and returns prioritized gap list with effort estimates.",
+      "tags": [
+        "redblue",
+        "defense",
+        "gap",
+        "scan"
+      ],
+      "examples": [
+        "Use Defense Gap Scan to identify missing security controls in the codebase. Checks for required security measures and returns prioritized gap list with effort estimates.",
+        "Can you run Defense Gap Scan? Gap Input is the main input I have.",
+        "Invoke Defense Gap Scan with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "attack_surface_map",
+      "name": "Attack Surface Map",
+      "description": "Map the application attack surface including endpoints, dependencies, and configurations. Identifies internet-facing components and heat zones.",
+      "tags": [
+        "redblue",
+        "attack",
+        "surface",
+        "map"
+      ],
+      "examples": [
+        "Use Attack Surface Map to map the application attack surface including endpoints, dependencies, and configurations. Identifies internet-facing components and heat zones.",
+        "Can you run Attack Surface Map? Surface Input is the main input I have.",
+        "Invoke Attack Surface Map with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fix_priority_matrix",
+      "name": "Fix Priority Matrix",
+      "description": "Generate fix priority matrix based on CVSS, exploit difficulty, business impact, and fix effort. Categorizes items as quick wins, major projects, fill-in, or reconsider.",
+      "tags": [
+        "redblue",
+        "fix",
+        "priority",
+        "matrix"
+      ],
+      "examples": [
+        "Use Fix Priority Matrix to generate fix priority matrix based on CVSS, exploit difficulty, business impact, and fix effort. Categorizes items as quick wins, major projects, fill-in, or reconsider.",
+        "Can you run Fix Priority Matrix? Priority Input is the main input I have.",
+        "Invoke Fix Priority Matrix with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "threat_model_gen",
+      "name": "Threat Model Gen",
+      "description": "Generate STRIDE threat model for a system. Identifies Spoofing, Tampering, Repudiation, Info Disclosure, DoS, and Elevation of Privilege threats.",
+      "tags": [
+        "redblue",
+        "threat",
+        "model",
+        "gen"
+      ],
+      "examples": [
+        "Use Threat Model Gen to generate STRIDE threat model for a system. Identifies Spoofing, Tampering, Repudiation, Info Disclosure, DoS, and Elevation of Privilege threats.",
+        "Can you run Threat Model Gen? Threat Input is the main input I have.",
+        "Invoke Threat Model Gen with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

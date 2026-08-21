@@ -1,0 +1,201 @@
+{
+  "name": "dsh-tools",
+  "description": "DSH plugin: dsh-tool-agentbuildercit",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tools",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tools",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "requirements_decomposer",
+      "name": "Requirements Decomposer",
+      "description": "需求解构与逻辑建模：将模糊商业目标拆解为Agent可执行的子任务链，自动分配角色与协作关系",
+      "tags": [
+        "agentbuildercit",
+        "requirements",
+        "decomposer"
+      ],
+      "examples": [
+        "Use Requirements Decomposer to 需求解构与逻辑建模：将模糊商业目标拆解为Agent可执行的子任务链，自动分配角色与协作关系.",
+        "I need Requirements Decomposer capabilities for this task in dsh-tools.",
+        "Invoke Requirements Decomposer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "workflow_architect",
+      "name": "Workflow Architect",
+      "description": "工作流编排设计：分析Agent流程完整性，给出Planning/Memory/Self-Review闭环建议",
+      "tags": [
+        "agentbuildercit",
+        "workflow",
+        "architect"
+      ],
+      "examples": [
+        "Use Workflow Architect to 工作流编排设计：分析Agent流程完整性，给出Planning/Memory/Self-Review闭环建议.",
+        "I need Workflow Architect capabilities for this task in dsh-tools.",
+        "Invoke Workflow Architect with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "tool_chain_orchestrator",
+      "name": "Tool Chain Orchestrator",
+      "description": "工具链编排评估：比对所需能力与可用工具，输出覆盖率、缺失项和MCP配置建议",
+      "tags": [
+        "agentbuildercit",
+        "tool",
+        "chain",
+        "orchestrator"
+      ],
+      "examples": [
+        "Use Tool Chain Orchestrator to 工具链编排评估：比对所需能力与可用工具，输出覆盖率、缺失项和MCP配置建议.",
+        "I need Tool Chain Orchestrator capabilities for this task in dsh-tools.",
+        "Invoke Tool Chain Orchestrator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "memory_system_configurator",
+      "name": "Memory System Configurator",
+      "description": "记忆系统配置：分析Agent记忆架构完善度（语义/长期/短期/情景/工作五项），给出升级建议",
+      "tags": [
+        "agentbuildercit",
+        "memory",
+        "system",
+        "configurator"
+      ],
+      "examples": [
+        "Use Memory System Configurator to 记忆系统配置：分析Agent记忆架构完善度（语义/长期/短期/情景/工作五项），给出升级建议.",
+        "I need Memory System Configurator capabilities for this task in dsh-tools.",
+        "Invoke Memory System Configurator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "agent_test_simulator",
+      "name": "Agent Test Simulator",
+      "description": "测试仿真评估：基于测试用例输出通过率、覆盖率、失败用例详情，给出调优建议",
+      "tags": [
+        "agentbuildercit",
+        "agent",
+        "test",
+        "simulator"
+      ],
+      "examples": [
+        "Use Agent Test Simulator to 测试仿真评估：基于测试用例输出通过率、覆盖率、失败用例详情，给出调优建议.",
+        "I need Agent Test Simulator capabilities for this task in dsh-tools.",
+        "Invoke Agent Test Simulator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "integration_readiness_checker",
+      "name": "Integration Readiness Checker",
+      "description": "系统集成就绪核查：检查CRM/ERP/HRM等关键系统连通状态，识别阻塞项",
+      "tags": [
+        "agentbuildercit",
+        "integration",
+        "readiness",
+        "checker"
+      ],
+      "examples": [
+        "Use Integration Readiness Checker to 系统集成就绪核查：检查CRM/ERP/HRM等关键系统连通状态，识别阻塞项.",
+        "I need Integration Readiness Checker capabilities for this task in dsh-tools.",
+        "Invoke Integration Readiness Checker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "developer_suitability_assessment",
+      "name": "Developer Suitability Assessment",
+      "description": "开发者适合度评估：根据编程水平、领域经验、目标推荐最适合的Agent搭建路径（模板/引导/高级）",
+      "tags": [
+        "agentbuildercit",
+        "developer",
+        "suitability",
+        "assessment"
+      ],
+      "examples": [
+        "Use Developer Suitability Assessment to 开发者适合度评估：根据编程水平、领域经验、目标推荐最适合的Agent搭建路径（模板/引导/高级）.",
+        "I need Developer Suitability Assessment capabilities for this task in dsh-tools.",
+        "Invoke Developer Suitability Assessment with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "agent_governance_configurator",
+      "name": "Agent Governance Configurator",
+      "description": "Agent治理框架配置：根据企业规模与行业，自动生成Agent治理策略（权限边界、审计日志、人工介入点、回滚机制）",
+      "tags": [
+        "agentbuildercit",
+        "agent",
+        "governance",
+        "configurator"
+      ],
+      "examples": [
+        "Use Agent Governance Configurator to agent治理框架配置：根据企业规模与行业，自动生成Agent治理策略（权限边界、审计日志、人工介入点、回滚机制）.",
+        "Can you run Agent Governance Configurator? Input Data is the main input I have.",
+        "Invoke Agent Governance Configurator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

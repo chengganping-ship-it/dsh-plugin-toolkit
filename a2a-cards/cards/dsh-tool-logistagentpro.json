@@ -1,0 +1,198 @@
+{
+  "name": "logistagentpro",
+  "description": "DSH plugin: dsh-tool-logistagentpro",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/logistagentpro",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/logistagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "route_optimization",
+      "name": "Route Optimization",
+      "description": "路径优化分析 — 基于距离、时间、成本、碳排放多维度评估并推荐最优运输路线",
+      "tags": [
+        "logistagentpro",
+        "route",
+        "optimization"
+      ],
+      "examples": [
+        "Use Route Optimization to 路径优化分析 — 基于距离、时间、成本、碳排放多维度评估并推荐最优运输路线.",
+        "Can you run Route Optimization? Input Data is the main input I have.",
+        "Invoke Route Optimization with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "warehouse_slotting",
+      "name": "Warehouse Slotting",
+      "description": "库位优化分析 — 基于ABC分类、拣货路径、空间利用率优化仓储布局",
+      "tags": [
+        "logistagentpro",
+        "warehouse",
+        "slotting"
+      ],
+      "examples": [
+        "Use Warehouse Slotting to 库位优化分析 — 基于ABC分类、拣货路径、空间利用率优化仓储布局.",
+        "Can you run Warehouse Slotting? Input Data is the main input I have.",
+        "Invoke Warehouse Slotting with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "cross_border_compliance",
+      "name": "Cross Border Compliance",
+      "description": "跨境合规分析 — HS编码归类、关税估算、单证审核、原产地规则判定",
+      "tags": [
+        "logistagentpro",
+        "cross",
+        "border",
+        "compliance"
+      ],
+      "examples": [
+        "Use Cross Border Compliance to 跨境合规分析 — HS编码归类、关税估算、单证审核、原产地规则判定.",
+        "Can you run Cross Border Compliance? Input Data is the main input I have.",
+        "Invoke Cross Border Compliance with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "lastmile_delivery",
+      "name": "Lastmile Delivery",
+      "description": "末端配送分析 — 即时配送、快递、自提柜等多模式时效与准时率评估",
+      "tags": [
+        "logistagentpro",
+        "lastmile",
+        "delivery"
+      ],
+      "examples": [
+        "Use Lastmile Delivery to 末端配送分析 — 即时配送、快递、自提柜等多模式时效与准时率评估.",
+        "Can you run Lastmile Delivery? Input Data is the main input I have.",
+        "Invoke Lastmile Delivery with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "demand_forecast",
+      "name": "Demand Forecast",
+      "description": "需求预测 — 时序分析、促销因子、新品爬坡、季节性波动预测",
+      "tags": [
+        "logistagentpro",
+        "demand",
+        "forecast"
+      ],
+      "examples": [
+        "Use Demand Forecast to 需求预测 — 时序分析、促销因子、新品爬坡、季节性波动预测.",
+        "Can you run Demand Forecast? Input Data is the main input I have.",
+        "Invoke Demand Forecast with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fleet_telematics",
+      "name": "Fleet Telematics",
+      "description": "车队管理 — 车辆调度、油耗分析、维保提醒、安全评分",
+      "tags": [
+        "logistagentpro",
+        "fleet",
+        "telematics"
+      ],
+      "examples": [
+        "Use Fleet Telematics to 车队管理 — 车辆调度、油耗分析、维保提醒、安全评分.",
+        "Can you run Fleet Telematics? Input Data is the main input I have.",
+        "Invoke Fleet Telematics with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "cold_chain_monitor",
+      "name": "Cold Chain Monitor",
+      "description": "冷链监控 — 温度合规、时效管控、全链路追溯",
+      "tags": [
+        "logistagentpro",
+        "cold",
+        "chain",
+        "monitor"
+      ],
+      "examples": [
+        "Use Cold Chain Monitor to 冷链监控 — 温度合规、时效管控、全链路追溯.",
+        "Can you run Cold Chain Monitor? Input Data is the main input I have.",
+        "Invoke Cold Chain Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "supply_chain_finance",
+      "name": "Supply Chain Finance",
+      "description": "供应链金融 — 应收账款融资、库存融资、风控评估",
+      "tags": [
+        "logistagentpro",
+        "supply",
+        "chain",
+        "finance"
+      ],
+      "examples": [
+        "Use Supply Chain Finance to 供应链金融 — 应收账款融资、库存融资、风控评估.",
+        "Can you run Supply Chain Finance? Input Data is the main input I have.",
+        "Invoke Supply Chain Finance with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

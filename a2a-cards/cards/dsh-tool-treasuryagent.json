@@ -1,0 +1,195 @@
+{
+  "name": "dsh-tool-treasuryagent",
+  "description": "渣打2026财资趋势编排化智能体 - 从数字化到编排化+AI嵌入智能层 | 实时现金头寸·流动性编排·支付编排中心·外汇风险管理·反欺诈AML·银行关系管理·短期投资·财资报告",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-treasuryagent",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-treasuryagent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "cash_position",
+      "name": "Cash Position",
+      "description": "实时现金头寸分析 | 多银行账户聚合+币种换算+在途资金+净头寸+最优配置建议 | Real-time cash position with multi-bank aggregation, FX conversion, in-flight funds, net position, and optimal allocation.",
+      "tags": [
+        "treasuryagent",
+        "cash",
+        "position"
+      ],
+      "examples": [
+        "Use Cash Position to 实时现金头寸分析 | 多银行账户聚合+币种换算+在途资金+净头寸+最优配置建议 | Real-time cash position with multi-bank aggregation, FX conversion, in-flight funds, net position, and optimal allocation.",
+        "Can you run Cash Position? Cash Input is the main input I have.",
+        "Invoke Cash Position with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "liquidity_optimizer",
+      "name": "Liquidity Optimizer",
+      "description": "流动性编排优化 | 多轨多资产+现金流预测+内部资金池+外部融资决策+成本最优化 | Liquidity orchestration with cash flow forecasting, internal pooling, funding decisions, and cost optimization.",
+      "tags": [
+        "treasuryagent",
+        "liquidity",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Liquidity Optimizer to 流动性编排优化 | 多轨多资产+现金流预测+内部资金池+外部融资决策+成本最优化 | Liquidity orchestration with cash flow forecasting, internal pooling, funding decisions, and cost optimization.",
+        "Can you run Liquidity Optimizer? Liquidity Input is the main input I have.",
+        "Invoke Liquidity Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "payment_hub",
+      "name": "Payment Hub",
+      "description": "支付编排中心 | 多格式pain.001/pain.013+合规筛查制裁+重复支付检测+最优路由选择+执行状态追踪 | Payment hub with multi-format support, sanctions screening, duplicate detection, routing optimization, and status tracking.",
+      "tags": [
+        "treasuryagent",
+        "payment",
+        "hub"
+      ],
+      "examples": [
+        "Use Payment Hub to 支付编排中心 | 多格式pain.001/pain.013+合规筛查制裁+重复支付检测+最优路由选择+执行状态追踪 | Payment hub with multi-format support, sanctions screening, duplicate detection, routing optimization, and status tracking.",
+        "Can you run Payment Hub? Payment Input is the main input I have.",
+        "Invoke Payment Hub with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fx_risk_manager",
+      "name": "Fx Risk Manager",
+      "description": "外汇风险管理 | 敞口识别+远期/期权/自然对冲策略+VaR计算+压力测试+套期会计文档 | FX risk management with exposure identification, hedging strategies, VaR calculation, stress testing, and hedge accounting.",
+      "tags": [
+        "treasuryagent",
+        "risk",
+        "manager"
+      ],
+      "examples": [
+        "Use Fx Risk Manager to 外汇风险管理 | 敞口识别+远期/期权/自然对冲策略+VaR计算+压力测试+套期会计文档 | FX risk management with exposure identification, hedging strategies, VaR calculation, stress testing, and hedge accounting.",
+        "Can you run Fx Risk Manager? Fx Input is the main input I have.",
+        "Invoke Fx Risk Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fraud_guardian",
+      "name": "Fraud Guardian",
+      "description": "反欺诈与AML | 可疑交易识别+SAR生成+客户风险评级+制裁名单筛查+交易监控调优 | Anti-fraud & AML with suspicious transaction detection, SAR generation, customer risk rating, sanctions screening, and monitoring optimization.",
+      "tags": [
+        "treasuryagent",
+        "fraud",
+        "guardian"
+      ],
+      "examples": [
+        "Use Fraud Guardian to 反欺诈与AML | 可疑交易识别+SAR生成+客户风险评级+制裁名单筛查+交易监控调优 | Anti-fraud & AML with suspicious transaction detection, SAR generation, customer risk rating, sanctions screening, and monitoring optimization.",
+        "Can you run Fraud Guardian? Fraud Input is the main input I have.",
+        "Invoke Fraud Guardian with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "bank_relationship",
+      "name": "Bank Relationship",
+      "description": "银行关系管理 | 银行服务评级+费用对标+覆盖率分析+最优银行数量+RFI响应效率 | Bank relationship management with service rating, fee benchmarking, coverage analysis, optimal bank count, and RFI efficiency.",
+      "tags": [
+        "treasuryagent",
+        "bank",
+        "relationship"
+      ],
+      "examples": [
+        "Use Bank Relationship to 银行关系管理 | 银行服务评级+费用对标+覆盖率分析+最优银行数量+RFI响应效率 | Bank relationship management with service rating, fee benchmarking, coverage analysis, optimal bank count, and RFI efficiency.",
+        "Can you run Bank Relationship? Bank Input is the main input I have.",
+        "Invoke Bank Relationship with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "investment_shortterm",
+      "name": "Investment Shortterm",
+      "description": "短期投资管理 | 现金池投资+货币市场工具+久期管理+收益率对比+流动性约束 | Short-term investment with cash pool deployment, money market instruments, duration management, yield comparison, and liquidity constraints.",
+      "tags": [
+        "treasuryagent",
+        "investment",
+        "shortterm"
+      ],
+      "examples": [
+        "Use Investment Shortterm to 短期投资管理 | 现金池投资+货币市场工具+久期管理+收益率对比+流动性约束 | Short-term investment with cash pool deployment, money market instruments, duration management, yield comparison, and liquidity constraints.",
+        "Can you run Investment Shortterm? Investment Input is the main input I have.",
+        "Invoke Investment Shortterm with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "treasury_reporter",
+      "name": "Treasury Reporter",
+      "description": "财资报告中心 | 每日现金流量+债务与信贷工具+合规报告+审计追踪+趋势可视化 | Treasury reporting with daily cash flows, debt instruments, compliance reports, audit trail, and trend visualization.",
+      "tags": [
+        "treasuryagent",
+        "treasury",
+        "reporter"
+      ],
+      "examples": [
+        "Use Treasury Reporter to 财资报告中心 | 每日现金流量+债务与信贷工具+合规报告+审计追踪+趋势可视化 | Treasury reporting with daily cash flows, debt instruments, compliance reports, audit trail, and trend visualization.",
+        "Can you run Treasury Reporter? Report Input is the main input I have.",
+        "Invoke Treasury Reporter with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+{
+  "name": "dsh-tool-defiscanner",
+  "description": "DeFi Protocol Security Scanner - Contract vulnerability scanning, flash loan attack detection, oracle risk assessment, governance attack analysis, operational security checking, TVL health monitoring, tokenomics audit, and composability risk scoring",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-defiscanner",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-defiscanner",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "contract_vulnerability_scanner",
+      "name": "Contract Vulnerability Scanner",
+      "description": "Scan smart contract code for vulnerabilities including reentrancy, integer overflow/underflow, access control issues, timestamp dependence, gas optimization, unchecked return values, and MEV/front-running risks. Returns a detailed vulnerability report with severity ratings and remediation guidance.",
+      "tags": [
+        "defiscanner",
+        "contract",
+        "vulnerability",
+        "scanner"
+      ],
+      "examples": [
+        "Use Contract Vulnerability Scanner to scan smart contract code for vulnerabilities including reentrancy, integer overflow/underflow, access control issues, timestamp dependence, gas optimization, unchecked return values, and MEV/front-running risks. Returns a detailed vulnerability report with severity ratings and remediation guidance.",
+        "Can you run Contract Vulnerability Scanner? Contract Code is the main input I have.",
+        "Invoke Contract Vulnerability Scanner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "flash_loan_attack_detector",
+      "name": "Flash Loan Attack Detector",
+      "description": "Analyze protocol mechanisms to detect flash loan attack vectors including price manipulation, oracle manipulation, arbitrage exploitation, governance attacks, and callback re-entrancy. Returns attack vectors with exploitation steps and mitigations.",
+      "tags": [
+        "defiscanner",
+        "flash",
+        "loan",
+        "attack",
+        "detector"
+      ],
+      "examples": [
+        "Use Flash Loan Attack Detector to analyze protocol mechanisms to detect flash loan attack vectors including price manipulation, oracle manipulation, arbitrage exploitation, governance attacks, and callback re-entrancy. Returns attack vectors with exploitation steps and mitigations.",
+        "Can you run Flash Loan Attack Detector? Protocol Mechanisms is the main input I have.",
+        "Invoke Flash Loan Attack Detector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "oracle_risk_assessor",
+      "name": "Oracle Risk Assessor",
+      "description": "Assess oracle manipulation risk based on oracle type, data sources, heartbeat, deviation threshold, and failover configuration. Returns a risk score, manipulation vectors, and recommendations.",
+      "tags": [
+        "defiscanner",
+        "oracle",
+        "risk",
+        "assessor"
+      ],
+      "examples": [
+        "Use Oracle Risk Assessor to assess oracle manipulation risk based on oracle type, data sources, heartbeat, deviation threshold, and failover configuration. Returns a risk score, manipulation vectors, and recommendations.",
+        "Can you run Oracle Risk Assessor? Oracle Config is the main input I have.",
+        "Invoke Oracle Risk Assessor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "governance_attack_analyzer",
+      "name": "Governance Attack Analyzer",
+      "description": "Analyze governance configuration for flash loan governance attacks, quorum manipulation, and timelock bypass risks. Returns attack scenarios and protection recommendations.",
+      "tags": [
+        "defiscanner",
+        "governance",
+        "attack",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Governance Attack Analyzer to analyze governance configuration for flash loan governance attacks, quorum manipulation, and timelock bypass risks. Returns attack scenarios and protection recommendations.",
+        "Can you run Governance Attack Analyzer? Governance Config is the main input I have.",
+        "Invoke Governance Attack Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "operational_security_checker",
+      "name": "Operational Security Checker",
+      "description": "Assess operational security risks including admin key type, multi-sig setup, bridge validator configuration, and deployer key security. CRITICAL for 2026 threat landscape where 78% of major hacks involved operational security failures (Drift $285M, KelpDAO $292M, Wasabi $4.5M).",
+      "tags": [
+        "defiscanner",
+        "operational",
+        "security",
+        "checker"
+      ],
+      "examples": [
+        "Use Operational Security Checker to assess operational security risks including admin key type, multi-sig setup, bridge validator configuration, and deployer key security. CRITICAL for 2026 threat landscape where 78% of major hacks involved operational security failures (Drift $285M, KelpDAO $292M, Wasabi $4.5M).",
+        "Can you run Operational Security Checker? Operational Config is the main input I have.",
+        "Invoke Operational Security Checker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "tvl_health_monitor",
+      "name": "Tvl Health Monitor",
+      "description": "Monitor Total Value Locked (TVL) health with anomaly detection, concentration risk analysis, outflow detection, and historical deviation tracking. Returns status, flags, and recommendations.",
+      "tags": [
+        "defiscanner",
+        "tvl",
+        "health",
+        "monitor"
+      ],
+      "examples": [
+        "Use Tvl Health Monitor to monitor Total Value Locked (TVL) health with anomaly detection, concentration risk analysis, outflow detection, and historical deviation tracking. Returns status, flags, and recommendations.",
+        "Can you run Tvl Health Monitor? Tvl Data is the main input I have.",
+        "Invoke Tvl Health Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "tokenomics_audit",
+      "name": "Tokenomics Audit",
+      "description": "Audit tokenomics for sustainability and manipulation risks. Analyzes supply distribution, inflation rate, utility score, vesting schedules, and concentration. Returns sustainability score, red flags, and recommendations.",
+      "tags": [
+        "defiscanner",
+        "tokenomics",
+        "audit"
+      ],
+      "examples": [
+        "Use Tokenomics Audit to audit tokenomics for sustainability and manipulation risks. Analyzes supply distribution, inflation rate, utility score, vesting schedules, and concentration. Returns sustainability score, red flags, and recommendations.",
+        "Can you run Tokenomics Audit? Tokenomics is the main input I have.",
+        "Invoke Tokenomics Audit with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "composability_risk_scorer",
+      "name": "Composability Risk Scorer",
+      "description": "Score composability risk from protocol integrations. Analyzes integration depth, critical paths, data flow patterns, and generates cascade failure scenarios with estimated losses.",
+      "tags": [
+        "defiscanner",
+        "composability",
+        "risk",
+        "scorer"
+      ],
+      "examples": [
+        "Use Composability Risk Scorer to score composability risk from protocol integrations. Analyzes integration depth, critical paths, data flow patterns, and generates cascade failure scenarios with estimated losses.",
+        "Can you run Composability Risk Scorer? Integrations is the main input I have.",
+        "Invoke Composability Risk Scorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

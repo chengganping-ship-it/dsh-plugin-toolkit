@@ -1,0 +1,201 @@
+{
+  "name": "dsh-tools",
+  "description": "DSH plugin: dsh-tool-ipguardian",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tools",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tools",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "patent_landscape_mapper",
+      "name": "Patent Landscape Mapper",
+      "description": "专利态势分析：分析技术领域专利分布、热点方向、年度趋势，对标WIPO GenAI专利态势报告",
+      "tags": [
+        "ipguardian",
+        "patent",
+        "landscape",
+        "mapper"
+      ],
+      "examples": [
+        "Use Patent Landscape Mapper to 专利态势分析：分析技术领域专利分布、热点方向、年度趋势，对标WIPO GenAI专利态势报告.",
+        "I need Patent Landscape Mapper capabilities for this task in dsh-tools.",
+        "Invoke Patent Landscape Mapper with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "trademark_monitor",
+      "name": "Trademark Monitor",
+      "description": "商标全球监控：检测疑似抢注、近似商标、跨境平台侵权，输出风险清单",
+      "tags": [
+        "ipguardian",
+        "trademark",
+        "monitor"
+      ],
+      "examples": [
+        "Use Trademark Monitor to 商标全球监控：检测疑似抢注、近似商标、跨境平台侵权，输出风险清单.",
+        "I need Trademark Monitor capabilities for this task in dsh-tools.",
+        "Invoke Trademark Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "infringement_risk_analyzer",
+      "name": "Infringement Risk Analyzer",
+      "description": "侵权风险分析：将产品特征与目标专利权利要求比对，评估侵权风险等级与冲突点",
+      "tags": [
+        "ipguardian",
+        "infringement",
+        "risk",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Infringement Risk Analyzer to 侵权风险分析：将产品特征与目标专利权利要求比对，评估侵权风险等级与冲突点.",
+        "I need Infringement Risk Analyzer capabilities for this task in dsh-tools.",
+        "Invoke Infringement Risk Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "licensing_value_estimator",
+      "name": "Licensing Value Estimator",
+      "description": "许可价值评估：评估专利许可费率区间（参考FRAND原则），估算专利组合价值",
+      "tags": [
+        "ipguardian",
+        "licensing",
+        "value",
+        "estimator"
+      ],
+      "examples": [
+        "Use Licensing Value Estimator to 许可价值评估：评估专利许可费率区间（参考FRAND原则），估算专利组合价值.",
+        "I need Licensing Value Estimator capabilities for this task in dsh-tools.",
+        "Invoke Licensing Value Estimator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "prior_art_searcher",
+      "name": "Prior Art Searcher",
+      "description": "新颖性/现有技术检索：分析目标专利与现有技术的相关性，评估新颖性与创造性风险",
+      "tags": [
+        "ipguardian",
+        "prior",
+        "art",
+        "searcher"
+      ],
+      "examples": [
+        "Use Prior Art Searcher to 新颖性/现有技术检索：分析目标专利与现有技术的相关性，评估新颖性与创造性风险.",
+        "I need Prior Art Searcher capabilities for this task in dsh-tools.",
+        "Invoke Prior Art Searcher with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "ip_portfolio_auditor",
+      "name": "Ip Portfolio Auditor",
+      "description": "知识产权资产组合审计：盘点专利/商标资产，按质量分级，覆盖地域分析，给出资产优化建议",
+      "tags": [
+        "ipguardian",
+        "portfolio",
+        "auditor"
+      ],
+      "examples": [
+        "Use Ip Portfolio Auditor to 知识产权资产组合审计：盘点专利/商标资产，按质量分级，覆盖地域分析，给出资产优化建议.",
+        "I need Ip Portfolio Auditor capabilities for this task in dsh-tools.",
+        "Invoke Ip Portfolio Auditor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "overseas_ip_risk_scanner",
+      "name": "Overseas Ip Risk Scanner",
+      "description": "出海知识产权风险扫描：评估目标市场风险，重点检测商标抢注、专利侵权、平台纠纷（参考湘江新区4·26沙龙框架）",
+      "tags": [
+        "ipguardian",
+        "overseas",
+        "risk",
+        "scanner"
+      ],
+      "examples": [
+        "Use Overseas Ip Risk Scanner to 出海知识产权风险扫描：评估目标市场风险，重点检测商标抢注、专利侵权、平台纠纷（参考湘江新区4·26沙龙框架）.",
+        "I need Overseas Ip Risk Scanner capabilities for this task in dsh-tools.",
+        "Invoke Overseas Ip Risk Scanner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "freedom_to_operate_analyzer",
+      "name": "Freedom To Operate Analyzer",
+      "description": "自由实施(FTO)分析：评估产品技术方案在指定地域的专利壁垒，识别是否存在侵权风险，给出规避或授权建议",
+      "tags": [
+        "ipguardian",
+        "freedom",
+        "operate",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Freedom To Operate Analyzer to 自由实施(FTO)分析：评估产品技术方案在指定地域的专利壁垒，识别是否存在侵权风险，给出规避或授权建议.",
+        "Can you run Freedom To Operate Analyzer? Input Data is the main input I have.",
+        "Invoke Freedom To Operate Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,200 @@
+{
+  "name": "autoafteragent",
+  "description": "汽车后市场AI助手 — 二手车估值·AI检测·预测维护·配件定价·保险理赔·车间运营·客户生命周期·电池健康",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/autoafteragent",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/autoafteragent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "used_car_valuation",
+      "name": "Used Car Valuation",
+      "description": "二手车估值 | 多维度车况/市场/残值分析 | Multi-dimensional used car valuation with market comparison and depreciation curve.",
+      "tags": [
+        "autoafteragent",
+        "used",
+        "car",
+        "valuation"
+      ],
+      "examples": [
+        "Use Used Car Valuation to 二手车估值 | 多维度车况/市场/残值分析 | Multi-dimensional used car valuation with market comparison and depreciation curve.",
+        "Can you run Used Car Valuation? Input Data is the main input I have.",
+        "Invoke Used Car Valuation with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "vehicle_inspection_ai",
+      "name": "Vehicle Inspection Ai",
+      "description": "AI车辆检测 | 视觉损伤/机械健康/事故识别 | AI-powered vehicle inspection with damage detection, mechanical health, and accident identification.",
+      "tags": [
+        "autoafteragent",
+        "vehicle",
+        "inspection"
+      ],
+      "examples": [
+        "Use Vehicle Inspection Ai to aI车辆检测 | 视觉损伤/机械健康/事故识别 | AI-powered vehicle inspection with damage detection, mechanical health, and accident identification.",
+        "Can you run Vehicle Inspection Ai? Input Data is the main input I have.",
+        "Invoke Vehicle Inspection Ai with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "predictive_maintenance_after",
+      "name": "Predictive Maintenance After",
+      "description": "预测性维护 | 故障预警/保养周期/寿命预测 | Predictive maintenance with failure forecasting, service scheduling, and component life prediction.",
+      "tags": [
+        "autoafteragent",
+        "predictive",
+        "maintenance",
+        "after"
+      ],
+      "examples": [
+        "Use Predictive Maintenance After to 预测性维护 | 故障预警/保养周期/寿命预测 | Predictive maintenance with failure forecasting, service scheduling, and component life prediction.",
+        "Can you run Predictive Maintenance After? Input Data is the main input I have.",
+        "Invoke Predictive Maintenance After with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "parts_pricing_sourcing",
+      "name": "Parts Pricing Sourcing",
+      "description": "配件定价与采购 | OEM/副厂/二手件比价 | Parts pricing and sourcing with OEM, aftermarket, and salvage comparison.",
+      "tags": [
+        "autoafteragent",
+        "parts",
+        "pricing",
+        "sourcing"
+      ],
+      "examples": [
+        "Use Parts Pricing Sourcing to 配件定价与采购 | OEM/副厂/二手件比价 | Parts pricing and sourcing with OEM, aftermarket, and salvage comparison.",
+        "Can you run Parts Pricing Sourcing? Input Data is the main input I have.",
+        "Invoke Parts Pricing Sourcing with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "insurance_claims_estimator",
+      "name": "Insurance Claims Estimator",
+      "description": "保险理赔估算 | 定损/工时/配件/赔付分析 | Insurance claims estimation with damage assessment, labor hours, parts cost, and payout analysis.",
+      "tags": [
+        "autoafteragent",
+        "insurance",
+        "claims",
+        "estimator"
+      ],
+      "examples": [
+        "Use Insurance Claims Estimator to 保险理赔估算 | 定损/工时/配件/赔付分析 | Insurance claims estimation with damage assessment, labor hours, parts cost, and payout analysis.",
+        "Can you run Insurance Claims Estimator? Input Data is the main input I have.",
+        "Invoke Insurance Claims Estimator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "workshop_operations",
+      "name": "Workshop Operations",
+      "description": "车间运营 | 排程/工位/技师/效率优化 | Workshop operations optimization with scheduling, bay utilization, and technician efficiency.",
+      "tags": [
+        "autoafteragent",
+        "workshop",
+        "operations"
+      ],
+      "examples": [
+        "Use Workshop Operations to 车间运营 | 排程/工位/技师/效率优化 | Workshop operations optimization with scheduling, bay utilization, and technician efficiency.",
+        "Can you run Workshop Operations? Input Data is the main input I have.",
+        "Invoke Workshop Operations with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "customer_lifecycle_after",
+      "name": "Customer Lifecycle After",
+      "description": "客户生命周期 | 获客/留存/增购/LTV | Customer lifecycle management with retention risk, CLV projection, and upsell opportunities.",
+      "tags": [
+        "autoafteragent",
+        "customer",
+        "lifecycle",
+        "after"
+      ],
+      "examples": [
+        "Use Customer Lifecycle After to 客户生命周期 | 获客/留存/增购/LTV | Customer lifecycle management with retention risk, CLV projection, and upsell opportunities.",
+        "Can you run Customer Lifecycle After? Input Data is the main input I have.",
+        "Invoke Customer Lifecycle After with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "ev_battery_health",
+      "name": "Ev Battery Health",
+      "description": "电动车电池健康 | SOH/SOH预测/梯次利用 | EV battery health assessment with SOH analysis, cell balancing, and second-life potential.",
+      "tags": [
+        "autoafteragent",
+        "battery",
+        "health"
+      ],
+      "examples": [
+        "Use Ev Battery Health to 电动车电池健康 | SOH/SOH预测/梯次利用 | EV battery health assessment with SOH analysis, cell balancing, and second-life potential.",
+        "Can you run Ev Battery Health? Input Data is the main input I have.",
+        "Invoke Ev Battery Health with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,198 @@
+{
+  "name": "dsh-tool-medagent",
+  "description": "'Medical AI Agent - Clinical decision support, EHR coding, quality control, drug safety, lab interpretation, treatment pathways, patient risk stratification, and medical documentation'",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-medagent",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-medagent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "clinical_decision_support",
+      "name": "Clinical Decision Support",
+      "description": "Provides evidence-based differential diagnosis, treatment recommendations, and urgency assessment from patient case data. Includes ranked diagnosis with probabilities, treatment plan, and clinical confidence scoring.",
+      "tags": [
+        "medagent",
+        "clinical",
+        "decision",
+        "support"
+      ],
+      "examples": [
+        "Use Clinical Decision Support to provides evidence-based differential diagnosis, treatment recommendations, and urgency assessment from patient case data. Includes ranked diagnosis with probabilities, treatment plan, and clinical confidence scoring.",
+        "Can you run Clinical Decision Support? Patient Case is the main input I have.",
+        "Invoke Clinical Decision Support with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "ehr_coder",
+      "name": "Ehr Coder",
+      "description": "Analyzes clinical notes and suggests appropriate ICD-10, CPT, SNOMED, or DRG codes. Provides documentation gap analysis, specificity suggestions, and compliance flag detection.",
+      "tags": [
+        "medagent",
+        "ehr",
+        "coder"
+      ],
+      "examples": [
+        "Use Ehr Coder to analyzes clinical notes and suggests appropriate ICD-10, CPT, SNOMED, or DRG codes. Provides documentation gap analysis, specificity suggestions, and compliance flag detection.",
+        "Can you run Ehr Coder? Clinical Notes is the main input I have.",
+        "Invoke Ehr Coder with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "quality_controller",
+      "name": "Quality Controller",
+      "description": "Evaluates medical record quality against configurable standards (Joint Commission, Meaningful Use). Scores completeness, medical necessity, timeliness, and clinical content. Generates benchmark comparison and improvement actions.",
+      "tags": [
+        "medagent",
+        "quality",
+        "controller"
+      ],
+      "examples": [
+        "Use Quality Controller to evaluates medical record quality against configurable standards (Joint Commission, Meaningful Use). Scores completeness, medical necessity, timeliness, and clinical content. Generates benchmark comparison and improvement actions.",
+        "Can you run Quality Controller? Medical Record is the main input I have.",
+        "Invoke Quality Controller with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "drug_safety_checker",
+      "name": "Drug Safety Checker",
+      "description": "Checks medication list for drug-drug interactions, dose appropriateness (including renal dosing), allergy cross-reactivity, and generates monitoring recommendations. Returns safety score and risk level.",
+      "tags": [
+        "medagent",
+        "drug",
+        "safety",
+        "checker"
+      ],
+      "examples": [
+        "Use Drug Safety Checker to checks medication list for drug-drug interactions, dose appropriateness (including renal dosing), allergy cross-reactivity, and generates monitoring recommendations. Returns safety score and risk level.",
+        "Can you run Drug Safety Checker? Medications is the main input I have.",
+        "Invoke Drug Safety Checker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "lab_interpreter",
+      "name": "Lab Interpreter",
+      "description": "Interprets laboratory results by flagging abnormal values (including critical values), providing clinical significance analysis, trend comparison with previous values, and suggested follow-up actions.",
+      "tags": [
+        "medagent",
+        "lab",
+        "interpreter"
+      ],
+      "examples": [
+        "Use Lab Interpreter to interprets laboratory results by flagging abnormal values (including critical values), providing clinical significance analysis, trend comparison with previous values, and suggested follow-up actions.",
+        "Can you run Lab Interpreter? Lab Results is the main input I have.",
+        "Invoke Lab Interpreter with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "treatment_pathway",
+      "name": "Treatment Pathway",
+      "description": "Generates personalized evidence-based treatment pathways for common diagnoses (T2DM, hypertension, pneumonia). Provides stage-based milestones, alternative approaches, and expected outcomes with probabilities.",
+      "tags": [
+        "medagent",
+        "treatment",
+        "pathway"
+      ],
+      "examples": [
+        "Use Treatment Pathway to generates personalized evidence-based treatment pathways for common diagnoses (T2DM, hypertension, pneumonia). Provides stage-based milestones, alternative approaches, and expected outcomes with probabilities.",
+        "Can you run Treatment Pathway? Diagnosis is the main input I have.",
+        "Invoke Treatment Pathway with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "patient_risk_stratifier",
+      "name": "Patient Risk Stratifier",
+      "description": "Calculates patient risk scores using validated models (ASCVD Pooled Cohort, Diabetes Risk). Identifies modifiable vs non-modifiable risk factors, provides prevention recommendations, monitoring plans, and referral suggestions.",
+      "tags": [
+        "medagent",
+        "patient",
+        "risk",
+        "stratifier"
+      ],
+      "examples": [
+        "Use Patient Risk Stratifier to calculates patient risk scores using validated models (ASCVD Pooled Cohort, Diabetes Risk). Identifies modifiable vs non-modifiable risk factors, provides prevention recommendations, monitoring plans, and referral suggestions.",
+        "Can you run Patient Risk Stratifier? Patient Data is the main input I have.",
+        "Invoke Patient Risk Stratifier with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "medical_documentation",
+      "name": "Medical Documentation",
+      "description": "Generates structured medical documents from encounter data. Supports SOAP notes, discharge summaries, referral letters, and progress notes with proper medical formatting.",
+      "tags": [
+        "medagent",
+        "medical",
+        "documentation"
+      ],
+      "examples": [
+        "Use Medical Documentation to generates structured medical documents from encounter data. Supports SOAP notes, discharge summaries, referral letters, and progress notes with proper medical formatting.",
+        "Can you run Medical Documentation? Encounter Data is the main input I have.",
+        "Invoke Medical Documentation with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+{
+  "name": "govagentpro",
+  "description": "政务AI助手 — 数字政府与智慧政务智能体",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/govagentpro",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/govagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "smart_service_hall",
+      "name": "Smart Service Hall",
+      "description": "智能服务大厅 — 一网通办、材料审核、智能问答、预约管理、满意度分析",
+      "tags": [
+        "govagentpro",
+        "smart",
+        "service",
+        "hall"
+      ],
+      "examples": [
+        "Use Smart Service Hall to 智能服务大厅 — 一网通办、材料审核、智能问答、预约管理、满意度分析.",
+        "Can you run Smart Service Hall? Input Data is the main input I have.",
+        "Invoke Smart Service Hall with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "urban_governance_ai",
+      "name": "Urban Governance Ai",
+      "description": "城市治理AI — 城管执法、环境监测、交通治理、违建识别、网格管理",
+      "tags": [
+        "govagentpro",
+        "urban",
+        "governance"
+      ],
+      "examples": [
+        "Use Urban Governance Ai to 城市治理AI — 城管执法、环境监测、交通治理、违建识别、网格管理.",
+        "Can you run Urban Governance Ai? Input Data is the main input I have.",
+        "Invoke Urban Governance Ai with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "public_safety_monitor",
+      "name": "Public Safety Monitor",
+      "description": "公共安全监控 — 视频监控、异常检测、人流预警、消防预警、应急响应",
+      "tags": [
+        "govagentpro",
+        "public",
+        "safety",
+        "monitor"
+      ],
+      "examples": [
+        "Use Public Safety Monitor to 公共安全监控 — 视频监控、异常检测、人流预警、消防预警、应急响应.",
+        "Can you run Public Safety Monitor? Input Data is the main input I have.",
+        "Invoke Public Safety Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "civil_affairs_service",
+      "name": "Civil Affairs Service",
+      "description": "民政服务 — 低保审核、养老救助、婚姻登记、社会组织、志愿服务",
+      "tags": [
+        "govagentpro",
+        "civil",
+        "affairs",
+        "service"
+      ],
+      "examples": [
+        "Use Civil Affairs Service to 民政服务 — 低保审核、养老救助、婚姻登记、社会组织、志愿服务.",
+        "Can you run Civil Affairs Service? Input Data is the main input I have.",
+        "Invoke Civil Affairs Service with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "policy_analytics_engine",
+      "name": "Policy Analytics Engine",
+      "description": "政策分析引擎 — 政策匹配、影响评估、执行监控、效果评估、建议生成",
+      "tags": [
+        "govagentpro",
+        "policy",
+        "analytics",
+        "engine"
+      ],
+      "examples": [
+        "Use Policy Analytics Engine to 政策分析引擎 — 政策匹配、影响评估、执行监控、效果评估、建议生成.",
+        "Can you run Policy Analytics Engine? Input Data is the main input I have.",
+        "Invoke Policy Analytics Engine with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "digital_identity_manager",
+      "name": "Digital Identity Manager",
+      "description": "数字身份管理 — 电子证照、实名认证、授权管理、隐私保护、可信验证",
+      "tags": [
+        "govagentpro",
+        "digital",
+        "identity",
+        "manager"
+      ],
+      "examples": [
+        "Use Digital Identity Manager to 数字身份管理 — 电子证照、实名认证、授权管理、隐私保护、可信验证.",
+        "Can you run Digital Identity Manager? Input Data is the main input I have.",
+        "Invoke Digital Identity Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "emergency_response_coord",
+      "name": "Emergency Response Coord",
+      "description": "应急响应协调 — 预警发布、资源调度、指挥协同、灾后评估、预案管理",
+      "tags": [
+        "govagentpro",
+        "emergency",
+        "response",
+        "coord"
+      ],
+      "examples": [
+        "Use Emergency Response Coord to 应急响应协调 — 预警发布、资源调度、指挥协同、灾后评估、预案管理.",
+        "Can you run Emergency Response Coord? Input Data is the main input I have.",
+        "Invoke Emergency Response Coord with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "gov_data_open_platform",
+      "name": "Gov Data Open Platform",
+      "description": "政府数据开放 — 数据目录、开放评估、质量监控、API管理、数据安全",
+      "tags": [
+        "govagentpro",
+        "gov",
+        "data",
+        "open",
+        "platform"
+      ],
+      "examples": [
+        "Use Gov Data Open Platform to 政府数据开放 — 数据目录、开放评估、质量监控、API管理、数据安全.",
+        "Can you run Gov Data Open Platform? Input Data is the main input I have.",
+        "Invoke Gov Data Open Platform with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

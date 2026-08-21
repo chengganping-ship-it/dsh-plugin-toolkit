@@ -1,0 +1,199 @@
+{
+  "name": "dsh-tool-governance",
+  "description": "Agent Security Governance Plugin - Permission Auditing, Compliance Checking, Guardrail Design, Audit Trail Generation, Data Leak Detection, Tool Sandbox Scoring, Prompt Injection Detection, Governance Maturity Assessment",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-governance",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-governance",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "permission_auditor",
+      "name": "Permission Auditor",
+      "description": "Audit agent tool permissions to identify overprivileged access. Analyzes tool configurations, access scopes, and data permissions against least-privilege principles. Returns risk score and actionable recommendations.",
+      "tags": [
+        "governance",
+        "permission",
+        "auditor"
+      ],
+      "examples": [
+        "Use Permission Auditor to audit agent tool permissions to identify overprivileged access. Analyzes tool configurations, access scopes, and data permissions against least-privilege principles. Returns risk score and actionable recommendations.",
+        "Can you run Permission Auditor? Agent Config is the main input I have.",
+        "Invoke Permission Auditor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "compliance_checker",
+      "name": "Compliance Checker",
+      "description": "Check agent actions against regulatory compliance frameworks (GDPR, HIPAA, SOC2, PCI-DSS). Identifies violations, assigns risk levels, and provides remediation steps.",
+      "tags": [
+        "governance",
+        "compliance",
+        "checker"
+      ],
+      "examples": [
+        "Use Compliance Checker to check agent actions against regulatory compliance frameworks (GDPR, HIPAA, SOC2, PCI-DSS). Identifies violations, assigns risk levels, and provides remediation steps.",
+        "Can you run Compliance Checker? Agent Actions is the main input I have.",
+        "Invoke Compliance Checker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "guardrail_designer",
+      "name": "Guardrail Designer",
+      "description": "Design safety guardrails for AI agent deployments. Generates guardrail rules, escalation triggers, and override procedures based on use case, risk tolerance, and agent capabilities.",
+      "tags": [
+        "governance",
+        "guardrail",
+        "designer"
+      ],
+      "examples": [
+        "Use Guardrail Designer to design safety guardrails for AI agent deployments. Generates guardrail rules, escalation triggers, and override procedures based on use case, risk tolerance, and agent capabilities.",
+        "Can you run Guardrail Designer? Use Case is the main input I have.",
+        "Invoke Guardrail Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "audit_trail_generator",
+      "name": "Audit Trail Generator",
+      "description": "Generate tamper-evident audit trails from agent session logs. Produces integrity hashes, detects anomalies, builds timelines, and assesses compliance status.",
+      "tags": [
+        "governance",
+        "audit",
+        "trail",
+        "generator"
+      ],
+      "examples": [
+        "Use Audit Trail Generator to generate tamper-evident audit trails from agent session logs. Produces integrity hashes, detects anomalies, builds timelines, and assesses compliance status.",
+        "Can you run Audit Trail Generator? Session Log is the main input I have.",
+        "Invoke Audit Trail Generator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "data_leak_detector",
+      "name": "Data Leak Detector",
+      "description": "Detect sensitive data leaks in agent output. Scans for PII, credentials, financial data, and custom patterns. Provides risk scoring and masking recommendations.",
+      "tags": [
+        "governance",
+        "data",
+        "leak",
+        "detector"
+      ],
+      "examples": [
+        "Use Data Leak Detector to detect sensitive data leaks in agent output. Scans for PII, credentials, financial data, and custom patterns. Provides risk scoring and masking recommendations.",
+        "Can you run Data Leak Detector? Agent Output is the main input I have.",
+        "Invoke Data Leak Detector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "tool_sandbox_scorer",
+      "name": "Tool Sandbox Scorer",
+      "description": "Score tool security requirements and recommend sandbox isolation levels. Evaluates permissions, network access, and file system access to determine appropriate containment strategies.",
+      "tags": [
+        "governance",
+        "tool",
+        "sandbox",
+        "scorer"
+      ],
+      "examples": [
+        "Use Tool Sandbox Scorer to score tool security requirements and recommend sandbox isolation levels. Evaluates permissions, network access, and file system access to determine appropriate containment strategies.",
+        "Can you run Tool Sandbox Scorer? Tool Manifest is the main input I have.",
+        "Invoke Tool Sandbox Scorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "prompt_injection_detector",
+      "name": "Prompt Injection Detector",
+      "description": "Detect prompt injection attacks in user input. Identifies instruction override, role manipulation, jailbreak attempts, and encoding evasion. Provides sanitization and blocking recommendations.",
+      "tags": [
+        "governance",
+        "prompt",
+        "injection",
+        "detector"
+      ],
+      "examples": [
+        "Use Prompt Injection Detector to detect prompt injection attacks in user input. Identifies instruction override, role manipulation, jailbreak attempts, and encoding evasion. Provides sanitization and blocking recommendations.",
+        "Can you run Prompt Injection Detector? User Input is the main input I have.",
+        "Invoke Prompt Injection Detector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "governance_maturity_assessor",
+      "name": "Governance Maturity Assessor",
+      "description": "Assess organizational AI governance maturity across policies, training, monitoring, and incident response. Provides gap analysis, improvement roadmap, and industry benchmarking.",
+      "tags": [
+        "governance",
+        "maturity",
+        "assessor"
+      ],
+      "examples": [
+        "Use Governance Maturity Assessor to assess organizational AI governance maturity across policies, training, monitoring, and incident response. Provides gap analysis, improvement roadmap, and industry benchmarking.",
+        "Can you run Governance Maturity Assessor? Org Practices is the main input I have.",
+        "Invoke Governance Maturity Assessor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,200 @@
+{
+  "name": "dsh-tool-voiceforge",
+  "description": "Voice AI engine - TTS scripting, voice cloning specs, audio analysis, podcast production",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-voiceforge",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-voiceforge",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "tts_script_generator",
+      "name": "Tts Script Generator",
+      "description": "Generate optimized SSML/TTS scripts from plain text. Applies voice style prosody, emphasis markers, and timing annotations. Supports 6 voice styles.",
+      "tags": [
+        "voiceforge",
+        "tts",
+        "script",
+        "generator"
+      ],
+      "examples": [
+        "Use Tts Script Generator to generate optimized SSML/TTS scripts from plain text. Applies voice style prosody, emphasis markers, and timing annotations. Supports 6 voice styles.",
+        "Can you run Tts Script Generator? Input is the main input I have.",
+        "Invoke Tts Script Generator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "voice_cloning_spec",
+      "name": "Voice Cloning Spec",
+      "description": "Generate a comprehensive voice cloning specification including pipeline stages, hardware requirements, quality gates, and recommendations.",
+      "tags": [
+        "voiceforge",
+        "voice",
+        "cloning",
+        "spec"
+      ],
+      "examples": [
+        "Use Voice Cloning Spec to generate a comprehensive voice cloning specification including pipeline stages, hardware requirements, quality gates, and recommendations.",
+        "Can you run Voice Cloning Spec? Input is the main input I have.",
+        "Invoke Voice Cloning Spec with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "audio_analyzer",
+      "name": "Audio Analyzer",
+      "description": "Analyze audio file metrics for quality, content, speaker, or emotion. Returns findings, benchmark comparisons, and improvement suggestions.",
+      "tags": [
+        "voiceforge",
+        "audio",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Audio Analyzer to analyze audio file metrics for quality, content, speaker, or emotion. Returns findings, benchmark comparisons, and improvement suggestions.",
+        "Can you run Audio Analyzer? Input is the main input I have.",
+        "Invoke Audio Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "podcast_producer",
+      "name": "Podcast Producer",
+      "description": "Generate a complete podcast production plan with segments, timeline, equipment checklist, and guest instructions. Supports interview, solo, and panel formats.",
+      "tags": [
+        "voiceforge",
+        "podcast",
+        "producer"
+      ],
+      "examples": [
+        "Use Podcast Producer to generate a complete podcast production plan with segments, timeline, equipment checklist, and guest instructions. Supports interview, solo, and panel formats.",
+        "Can you run Podcast Producer? Input is the main input I have.",
+        "Invoke Podcast Producer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "subtitle_generator",
+      "name": "Subtitle Generator",
+      "description": "Generate time-aligned subtitles in SRT, VTT, or ASS format from transcription data. Validates reading speed, line length, and timing rules.",
+      "tags": [
+        "voiceforge",
+        "subtitle",
+        "generator"
+      ],
+      "examples": [
+        "Use Subtitle Generator to generate time-aligned subtitles in SRT, VTT, or ASS format from transcription data. Validates reading speed, line length, and timing rules.",
+        "Can you run Subtitle Generator? Input is the main input I have.",
+        "Invoke Subtitle Generator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "voice_emotion_advisor",
+      "name": "Voice Emotion Advisor",
+      "description": "Analyze script text and provide emotion annotations, prosody settings, delivery tips, and practice exercises for target emotion and audience.",
+      "tags": [
+        "voiceforge",
+        "voice",
+        "emotion",
+        "advisor"
+      ],
+      "examples": [
+        "Use Voice Emotion Advisor to analyze script text and provide emotion annotations, prosody settings, delivery tips, and practice exercises for target emotion and audience.",
+        "Can you run Voice Emotion Advisor? Input is the main input I have.",
+        "Invoke Voice Emotion Advisor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "audio_quality_checker",
+      "name": "Audio Quality Checker",
+      "description": "Check audio technical specs against broadcast, podcast, or phone standards. Returns pass/fail/warn per metric with improvement suggestions.",
+      "tags": [
+        "voiceforge",
+        "audio",
+        "quality",
+        "checker"
+      ],
+      "examples": [
+        "Use Audio Quality Checker to check audio technical specs against broadcast, podcast, or phone standards. Returns pass/fail/warn per metric with improvement suggestions.",
+        "Can you run Audio Quality Checker? Input is the main input I have.",
+        "Invoke Audio Quality Checker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "multilingual_voice_mapper",
+      "name": "Multilingual Voice Mapper",
+      "description": "Map a source voice to optimal voice configurations across multiple languages. Includes style matching, cross-language compatibility, and coverage scoring.",
+      "tags": [
+        "voiceforge",
+        "multilingual",
+        "voice",
+        "mapper"
+      ],
+      "examples": [
+        "Use Multilingual Voice Mapper to map a source voice to optimal voice configurations across multiple languages. Includes style matching, cross-language compatibility, and coverage scoring.",
+        "Can you run Multilingual Voice Mapper? Input is the main input I have.",
+        "Invoke Multilingual Voice Mapper with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

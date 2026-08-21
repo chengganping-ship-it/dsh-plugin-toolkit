@@ -1,0 +1,202 @@
+{
+  "name": "eduagentpro",
+  "description": "教育AI助手 — 自适应学习与教学管理智能体",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/eduagentpro",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/eduagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "adaptive_learning_path",
+      "name": "Adaptive Learning Path",
+      "description": "自适应学习路径引擎 | 分析知识点掌握度(0-100)、学习风格(visual/auditory/kinesthetic)、推荐路径、预估提分 | knowledge_gap_analyzer + learning_style_profiler + path_recommendation",
+      "tags": [
+        "eduagentpro",
+        "adaptive",
+        "learning",
+        "path"
+      ],
+      "examples": [
+        "Use Adaptive Learning Path to 自适应学习路径引擎 | 分析知识点掌握度(0-100)、学习风格(visual/auditory/kinesthetic)、推荐路径、预估提分 | knowledge_gap_analyzer + learning_style_profiler + path_recommendation.",
+        "Can you run Adaptive Learning Path? Input Data is the main input I have.",
+        "Invoke Adaptive Learning Path with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "student_performance_predictor",
+      "name": "Student Performance Predictor",
+      "description": "学情预测预警 | 预测考试成绩、辍学风险、薄弱知识点、提升建议 | Predict exam scores, dropout risk, weak knowledge points, and improvement suggestions.",
+      "tags": [
+        "eduagentpro",
+        "student",
+        "performance",
+        "predictor"
+      ],
+      "examples": [
+        "Use Student Performance Predictor to 学情预测预警 | 预测考试成绩、辍学风险、薄弱知识点、提升建议 | Predict exam scores, dropout risk, weak knowledge points, and improvement suggestions.",
+        "Can you run Student Performance Predictor? Input Data is the main input I have.",
+        "Invoke Student Performance Predictor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "auto_grading_engine",
+      "name": "Auto Grading Engine",
+      "description": "智能批改引擎 | 作文/简答题自动批改、语法检测、抄袭检测、批改一致性分析 | Automated essay/short-answer grading with grammar check, plagiarism detection, and consistency analysis.",
+      "tags": [
+        "eduagentpro",
+        "auto",
+        "grading",
+        "engine"
+      ],
+      "examples": [
+        "Use Auto Grading Engine to 智能批改引擎 | 作文/简答题自动批改、语法检测、抄袭检测、批改一致性分析 | Automated essay/short-answer grading with grammar check, plagiarism detection, and consistency analysis.",
+        "Can you run Auto Grading Engine? Input Data is the main input I have.",
+        "Invoke Auto Grading Engine with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "course_quality_evaluator",
+      "name": "Course Quality Evaluator",
+      "description": "课程质量评估 | 课程难度、学生完课率、互动质量、NPS评分、改进建议 | Evaluate course difficulty, completion rate, interaction quality, NPS score, and improvement suggestions.",
+      "tags": [
+        "eduagentpro",
+        "course",
+        "quality",
+        "evaluator"
+      ],
+      "examples": [
+        "Use Course Quality Evaluator to 课程质量评估 | 课程难度、学生完课率、互动质量、NPS评分、改进建议 | Evaluate course difficulty, completion rate, interaction quality, NPS score, and improvement suggestions.",
+        "Can you run Course Quality Evaluator? Input Data is the main input I have.",
+        "Invoke Course Quality Evaluator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "personalized_homework_generator",
+      "name": "Personalized Homework Generator",
+      "description": "个性化作业生成 | 根据学生水平生成差异化题目、难度梯度、题量优化、知识点覆盖 | Generate differentiated homework with difficulty gradients, optimized question count, and knowledge point coverage.",
+      "tags": [
+        "eduagentpro",
+        "personalized",
+        "homework",
+        "generator"
+      ],
+      "examples": [
+        "Use Personalized Homework Generator to 个性化作业生成 | 根据学生水平生成差异化题目、难度梯度、题量优化、知识点覆盖 | Generate differentiated homework with difficulty gradients, optimized question count, and knowledge point coverage.",
+        "Can you run Personalized Homework Generator? Input Data is the main input I have.",
+        "Invoke Personalized Homework Generator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "teaching_effectiveness_analyzer",
+      "name": "Teaching Effectiveness Analyzer",
+      "description": "教师授课效果分析 | 课堂互动率、讲授清晰度、时间利用率、学生注意力曲线 | Analyze classroom interaction rate, teaching clarity, time utilization, and student attention curve.",
+      "tags": [
+        "eduagentpro",
+        "teaching",
+        "effectiveness",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Teaching Effectiveness Analyzer to 教师授课效果分析 | 课堂互动率、讲授清晰度、时间利用率、学生注意力曲线 | Analyze classroom interaction rate, teaching clarity, time utilization, and student attention curve.",
+        "Can you run Teaching Effectiveness Analyzer? Input Data is the main input I have.",
+        "Invoke Teaching Effectiveness Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "competency_assessment",
+      "name": "Competency Assessment",
+      "description": "核心素养评估 | 批判性思维、创造力、协作能力、沟通能力、数字素养五维评估 | Five-dimensional competency assessment: critical thinking, creativity, collaboration, communication, digital literacy.",
+      "tags": [
+        "eduagentpro",
+        "competency",
+        "assessment"
+      ],
+      "examples": [
+        "Use Competency Assessment to 核心素养评估 | 批判性思维、创造力、协作能力、沟通能力、数字素养五维评估 | Five-dimensional competency assessment: critical thinking, creativity, collaboration, communication, digital literacy.",
+        "Can you run Competency Assessment? Input Data is the main input I have.",
+        "Invoke Competency Assessment with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "education_equity_monitor",
+      "name": "Education Equity Monitor",
+      "description": "教育公平监控 | 不同群体(城乡/性别/经济)成绩差距、资源分配公平性、数字鸿沟指数 | Monitor urban-rural/gender/economic achievement gaps, resource allocation fairness, and digital divide index.",
+      "tags": [
+        "eduagentpro",
+        "education",
+        "equity",
+        "monitor"
+      ],
+      "examples": [
+        "Use Education Equity Monitor to 教育公平监控 | 不同群体(城乡/性别/经济)成绩差距、资源分配公平性、数字鸿沟指数 | Monitor urban-rural/gender/economic achievement gaps, resource allocation fairness, and digital divide index.",
+        "Can you run Education Equity Monitor? Input Data is the main input I have.",
+        "Invoke Education Equity Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

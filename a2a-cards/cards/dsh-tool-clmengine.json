@@ -1,0 +1,195 @@
+{
+  "name": "dsh-tool-clmengine",
+  "description": "Contract Lifecycle Management (CLM) Engine for DeepSeek Harness.\nAI-powered contract drafting with template library, negotiation assistance with\nhistorical analysis and strategy recommendations, obligation tracking with Gantt\nvisualization and compliance scoring, renewal management with condition change\ndetection and market benchmarking, contract analysis with full-text search and\nrisk mapping, AI clause negotiation with data processing and IP assignment\nworkflows, signature orchestration with multi-party routing and global compliance\n(eIDAS/ESIGN), and comprehensive compliance verification with FCPA/UKBA and\nsanctions screening. Navy blue contract theme throughout.",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-clmengine",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-clmengine",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": true,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "contract_author",
+      "name": "Contract Author",
+      "description": "AI-powered contract drafting with template library, clause recommendation, variable auto-fill, multi-language support, format standardization, and brand consistency. Navy blue contract theme.",
+      "tags": [
+        "clmengine",
+        "contract",
+        "author"
+      ],
+      "examples": [
+        "Use Contract Author to aI-powered contract drafting with template library, clause recommendation, variable auto-fill, multi-language support, format standardization, and brand consistency. Navy blue contract theme.",
+        "Can you run Contract Author? Author Input is the main input I have.",
+        "Invoke Contract Author with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "negotiation_assistant",
+      "name": "Negotiation Assistant",
+      "description": "Negotiation assistant with historical concession analysis, clause risk assessment, red-line marking, strategy recommendation, multi-round simulation, and negotiation scorecard.",
+      "tags": [
+        "clmengine",
+        "negotiation",
+        "assistant"
+      ],
+      "examples": [
+        "Use Negotiation Assistant to negotiation assistant with historical concession analysis, clause risk assessment, red-line marking, strategy recommendation, multi-round simulation, and negotiation scorecard.",
+        "Can you run Negotiation Assistant? Negotiation Input is the main input I have.",
+        "Invoke Negotiation Assistant with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "obligation_tracker",
+      "name": "Obligation Tracker",
+      "description": "Track contract obligations with key date reminders, fulfillment status monitoring, consequence prediction, auto-reminders, fulfillment score, compliance archive, and Gantt chart visualization.",
+      "tags": [
+        "clmengine",
+        "obligation",
+        "tracker"
+      ],
+      "examples": [
+        "Use Obligation Tracker to track contract obligations with key date reminders, fulfillment status monitoring, consequence prediction, auto-reminders, fulfillment score, compliance archive, and Gantt chart visualization.",
+        "Can you run Obligation Tracker? Obligation Input is the main input I have.",
+        "Invoke Obligation Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "renewal_manager",
+      "name": "Renewal Manager",
+      "description": "Contract renewal management with expiry alerts, condition change detection, market benchmarking, renewal strategy, price renegotiation advice, and alternative evaluation.",
+      "tags": [
+        "clmengine",
+        "renewal",
+        "manager"
+      ],
+      "examples": [
+        "Use Renewal Manager to contract renewal management with expiry alerts, condition change detection, market benchmarking, renewal strategy, price renegotiation advice, and alternative evaluation.",
+        "Can you run Renewal Manager? Renewal Input is the main input I have.",
+        "Invoke Renewal Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "contract_analyzer",
+      "name": "Contract Analyzer",
+      "description": "Contract analysis and insights with full-text search, clause comparison, anomaly detection, aggregated portfolio view, risk map, and value leakage identification.",
+      "tags": [
+        "clmengine",
+        "contract",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Contract Analyzer to contract analysis and insights with full-text search, clause comparison, anomaly detection, aggregated portfolio view, risk map, and value leakage identification.",
+        "Can you run Contract Analyzer? Analyzer Input is the main input I have.",
+        "Invoke Contract Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "ai_clause_negotiator",
+      "name": "Ai Clause Negotiator",
+      "description": "AI clause negotiation for data processing, AI usage restrictions, IP ownership, liability caps, insurance requirements, and regulatory compliance. Informed by TermScout 2026 signals.",
+      "tags": [
+        "clmengine",
+        "clause",
+        "negotiator"
+      ],
+      "examples": [
+        "Use Ai Clause Negotiator to aI clause negotiation for data processing, AI usage restrictions, IP ownership, liability caps, insurance requirements, and regulatory compliance. Informed by TermScout 2026 signals.",
+        "Can you run Ai Clause Negotiator? Ai Clause Input is the main input I have.",
+        "Invoke Ai Clause Negotiator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "signature_orchestrator",
+      "name": "Signature Orchestrator",
+      "description": "Signature orchestration with multi-signer routing, eSignature integration, conditional signing, notarization requirements, and global compliance (EU eIDAS / US ESIGN / UETA).",
+      "tags": [
+        "clmengine",
+        "signature",
+        "orchestrator"
+      ],
+      "examples": [
+        "Use Signature Orchestrator to signature orchestration with multi-signer routing, eSignature integration, conditional signing, notarization requirements, and global compliance (EU eIDAS / US ESIGN / UETA).",
+        "Can you run Signature Orchestrator? Signature Input is the main input I have.",
+        "Invoke Signature Orchestrator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "compliance_verifier",
+      "name": "Compliance Verifier",
+      "description": "Comprehensive compliance verification with internal policy comparison, regulatory mapping, third-party risk assessment, anti-corruption clauses, FCPA/UKBA compliance, and sanctions screening.",
+      "tags": [
+        "clmengine",
+        "compliance",
+        "verifier"
+      ],
+      "examples": [
+        "Use Compliance Verifier to comprehensive compliance verification with internal policy comparison, regulatory mapping, third-party risk assessment, anti-corruption clauses, FCPA/UKBA compliance, and sanctions screening.",
+        "Can you run Compliance Verifier? Compliance Input is the main input I have.",
+        "Invoke Compliance Verifier with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

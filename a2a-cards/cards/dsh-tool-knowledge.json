@@ -1,0 +1,194 @@
+{
+  "name": "dsh-tool-knowledge",
+  "description": "Persistent knowledge - markdown planning, project memory, decision logs",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-knowledge",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-knowledge",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "plan_creator",
+      "name": "Plan Creator",
+      "description": "Create a structured Markdown project plan with task tree, milestones, timeline phases, and dependency mapping. Input project goal, milestones array, and constraints to produce a comprehensive planning document ready for execution.",
+      "tags": [
+        "knowledge",
+        "plan",
+        "creator"
+      ],
+      "examples": [
+        "Use Plan Creator to create a structured Markdown project plan with task tree, milestones, timeline phases, and dependency mapping. Input project goal, milestones array, and constraints to produce a comprehensive planning document ready for execution.",
+        "Can you run Plan Creator? Project Goal is the main input I have.",
+        "Invoke Plan Creator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "memory_journal",
+      "name": "Memory Journal",
+      "description": "Create an append-only memory journal from session events. Records decisions, discoveries, lessons, context snapshots, and milestones. Each journal entry captures the full context of a working session for future reference.",
+      "tags": [
+        "knowledge",
+        "memory",
+        "journal"
+      ],
+      "examples": [
+        "Use Memory Journal to create an append-only memory journal from session events. Records decisions, discoveries, lessons, context snapshots, and milestones. Each journal entry captures the full context of a working session for future reference.",
+        "Can you run Memory Journal? Session Events is the main input I have.",
+        "Invoke Memory Journal with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "decision_logger",
+      "name": "Decision Logger",
+      "description": "Record a structured Architecture Decision Record (ADR). Documents the context, options considered with pros/cons, the chosen path, and rationale. Produces a reference-quality decision document for future audits.",
+      "tags": [
+        "knowledge",
+        "decision",
+        "logger"
+      ],
+      "examples": [
+        "Use Decision Logger to record a structured Architecture Decision Record (ADR). Documents the context, options considered with pros/cons, the chosen path, and rationale. Produces a reference-quality decision document for future audits.",
+        "Can you run Decision Logger? Decision Context is the main input I have.",
+        "Invoke Decision Logger with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "learning_accumulator",
+      "name": "Learning Accumulator",
+      "description": "Accumulate new learnings into a knowledge base with automatic deduplication, topic clustering, and relationship detection. Merges new entries with existing knowledge and reports on dedup statistics and knowledge depth.",
+      "tags": [
+        "knowledge",
+        "learning",
+        "accumulator"
+      ],
+      "examples": [
+        "Use Learning Accumulator to accumulate new learnings into a knowledge base with automatic deduplication, topic clustering, and relationship detection. Merges new entries with existing knowledge and reports on dedup statistics and knowledge depth.",
+        "Can you run Learning Accumulator? New Learnings is the main input I have.",
+        "Invoke Learning Accumulator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "context_restorer",
+      "name": "Context Restorer",
+      "description": "Restore full working context from a checkpoint or session data. Reconstructs project state, pending work, key variables, and open questions. Generates a restoration prompt template and quick reference card for seamless session resumption.",
+      "tags": [
+        "knowledge",
+        "context",
+        "restorer"
+      ],
+      "examples": [
+        "Use Context Restorer to restore full working context from a checkpoint or session data. Reconstructs project state, pending work, key variables, and open questions. Generates a restoration prompt template and quick reference card for seamless session resumption.",
+        "Can you run Context Restorer? Session Id is the main input I have.",
+        "Invoke Context Restorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "knowledge_linker",
+      "name": "Knowledge Linker",
+      "description": "Link a new knowledge entry to existing entries using semantic similarity and structural analysis. Produces link suggestions with strength scores, generates graph updates, identifies orphaned entries, and provides linking insights.",
+      "tags": [
+        "knowledge",
+        "linker"
+      ],
+      "examples": [
+        "Use Knowledge Linker to link a new knowledge entry to existing entries using semantic similarity and structural analysis. Produces link suggestions with strength scores, generates graph updates, identifies orphaned entries, and provides linking insights.",
+        "Can you run Knowledge Linker? New Entry is the main input I have.",
+        "Invoke Knowledge Linker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "progress_tracker",
+      "name": "Progress Tracker",
+      "description": "Track plan progress and generate comprehensive status reports. Analyzes task completion across milestones, estimates remaining workload, identifies bottlenecks, and provides trend analysis with actionable recommendations.",
+      "tags": [
+        "knowledge",
+        "progress",
+        "tracker"
+      ],
+      "examples": [
+        "Use Progress Tracker to track plan progress and generate comprehensive status reports. Analyzes task completion across milestones, estimates remaining workload, identifies bottlenecks, and provides trend analysis with actionable recommendations.",
+        "Can you run Progress Tracker? Plan Id is the main input I have.",
+        "Invoke Progress Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "insight_extractor",
+      "name": "Insight Extractor",
+      "description": "Extract key insights and action items from raw notes using pattern matching. Identifies recurring issues, growth opportunities, efficiency gaps, risk indicators, emerging trends, and blockers. Produces prioritized action items with deadlines.",
+      "tags": [
+        "knowledge",
+        "insight",
+        "extractor"
+      ],
+      "examples": [
+        "Use Insight Extractor to extract key insights and action items from raw notes using pattern matching. Identifies recurring issues, growth opportunities, efficiency gaps, risk indicators, emerging trends, and blockers. Produces prioritized action items with deadlines.",
+        "Can you run Insight Extractor? Raw Notes is the main input I have.",
+        "Invoke Insight Extractor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

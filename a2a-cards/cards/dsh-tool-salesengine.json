@@ -1,0 +1,195 @@
+{
+  "name": "dsh-tool-salesengine",
+  "description": "AI Sales Engine - lead scoring, outreach crafting, deal inspection, competitive intel, sales coaching, pipeline prediction, customer 360, smart playbook",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-salesengine",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-salesengine",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "lead_scorer",
+      "name": "Lead Scorer",
+      "description": "Intelligent lead scoring with ICP matching (40pts), behavioral signal analysis (35pts), purchase intent detection (25pts), signal decay modeling (14-day half-life), and dynamic priority reprioritization. Outputs thermometer visualization and funnel breakdown.",
+      "tags": [
+        "salesengine",
+        "lead",
+        "scorer"
+      ],
+      "examples": [
+        "Use Lead Scorer to intelligent lead scoring with ICP matching (40pts), behavioral signal analysis (35pts), purchase intent detection (25pts), signal decay modeling (14-day half-life), and dynamic priority reprioritization. Outputs thermometer visualization and funnel breakdown.",
+        "Can you run Lead Scorer? Lead Profile is the main input I have.",
+        "Invoke Lead Scorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "outreach_crafter",
+      "name": "Outreach Crafter",
+      "description": "Generate personalized outreach messages with company intelligence integration, contact persona mapping, pain-point alignment, A/B testing suggestions, and multi-channel adaptation (email, LinkedIn, cold call, SMS).",
+      "tags": [
+        "salesengine",
+        "outreach",
+        "crafter"
+      ],
+      "examples": [
+        "Use Outreach Crafter to generate personalized outreach messages with company intelligence integration, contact persona mapping, pain-point alignment, A/B testing suggestions, and multi-channel adaptation (email, LinkedIn, cold call, SMS).",
+        "Can you run Outreach Crafter? Outreach Request is the main input I have.",
+        "Invoke Outreach Crafter with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "deal_inspector",
+      "name": "Deal Inspector",
+      "description": "Comprehensive deal health diagnosis with advancement risk identification, key contact coverage analysis, competitive threat assessment, next-best-action recommendations, and funnel stage visualization.",
+      "tags": [
+        "salesengine",
+        "deal",
+        "inspector"
+      ],
+      "examples": [
+        "Use Deal Inspector to comprehensive deal health diagnosis with advancement risk identification, key contact coverage analysis, competitive threat assessment, next-best-action recommendations, and funnel stage visualization.",
+        "Can you run Deal Inspector? Deal Data is the main input I have.",
+        "Invoke Deal Inspector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "competitive_intel",
+      "name": "Competitive Intel",
+      "description": "Automated competitive intelligence with competitor move monitoring, counter-script battle cards, differentiation advantage mapping (7 dimensions), and competitor strategy inference.",
+      "tags": [
+        "salesengine",
+        "competitive",
+        "intel"
+      ],
+      "examples": [
+        "Use Competitive Intel to automated competitive intelligence with competitor move monitoring, counter-script battle cards, differentiation advantage mapping (7 dimensions), and competitor strategy inference.",
+        "Can you run Competitive Intel? Competitive Request is the main input I have.",
+        "Invoke Competitive Intel with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "sales_coach",
+      "name": "Sales Coach",
+      "description": "AI sales coaching with call analysis, silence detection (strategic vs awkward), questioning technique scoring, objection handling assessment, improvement planning, and top performer benchmarking.",
+      "tags": [
+        "salesengine",
+        "sales",
+        "coach"
+      ],
+      "examples": [
+        "Use Sales Coach to aI sales coaching with call analysis, silence detection (strategic vs awkward), questioning technique scoring, objection handling assessment, improvement planning, and top performer benchmarking.",
+        "Can you run Sales Coach? Sales Call is the main input I have.",
+        "Invoke Sales Coach with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "pipeline_predictor",
+      "name": "Pipeline Predictor",
+      "description": "Pipeline revenue forecasting with historical conversion analysis, stage stall detection, seasonal adjustment factors, revenue prediction (best/commit/worst case), and quota achievement probability.",
+      "tags": [
+        "salesengine",
+        "pipeline",
+        "predictor"
+      ],
+      "examples": [
+        "Use Pipeline Predictor to pipeline revenue forecasting with historical conversion analysis, stage stall detection, seasonal adjustment factors, revenue prediction (best/commit/worst case), and quota achievement probability.",
+        "Can you run Pipeline Predictor? Pipeline Input is the main input I have.",
+        "Invoke Pipeline Predictor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "customer_360",
+      "name": "Customer 360",
+      "description": "Complete customer 360-degree view with org structure mapping, decision chain analysis, sentiment trajectory tracking, interaction history synthesis, risk alert expansion opportunity scoring.",
+      "tags": [
+        "salesengine",
+        "customer",
+        "360"
+      ],
+      "examples": [
+        "Use Customer 360 to complete customer 360-degree view with org structure mapping, decision chain analysis, sentiment trajectory tracking, interaction history synthesis, risk alert expansion opportunity scoring.",
+        "Can you run Customer 360? Customer Input is the main input I have.",
+        "Invoke Customer 360 with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "sales_playbook",
+      "name": "Sales Playbook",
+      "description": "Intelligent sales playbook with stage-triggered actions, best practice cards with do/don\\",
+      "tags": [
+        "salesengine",
+        "sales",
+        "playbook"
+      ],
+      "examples": [
+        "Use Sales Playbook to intelligent sales playbook with stage-triggered actions, best practice cards with do/don\\.",
+        "Can you run Sales Playbook? Playbook Input is the main input I have.",
+        "Invoke Sales Playbook with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

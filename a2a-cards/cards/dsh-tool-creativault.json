@@ -1,0 +1,195 @@
+{
+  "name": "dsh-tool-creativault",
+  "description": "\"Creative Vault — AI-powered creative asset management toolkit. Multi-format asset ingestion, AI semantic tagging, brand compliance checking, visual+semantic hybrid search, creative version control with visual diff, asset performance analytics with ROI heatmap, design trend insights with competitor comparison, and smart archiving with storage optimization. Purple creative theme with visual grid and trend visualization.\"",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-creativault",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-creativault",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "asset_ingestion",
+      "name": "Asset Ingestion",
+      "description": "Ingest multi-format creative assets (PSD/AI/SVG/Figma/PNG/JPG/MP4/MP3/GLB/OBJ/TTF) with automatic metadata extraction. Parses dimensions, color modes, layer counts, durations, codecs, and format-specific properties. Returns structured metadata for each asset and a format breakdown summary.",
+      "tags": [
+        "creativault",
+        "asset",
+        "ingestion"
+      ],
+      "examples": [
+        "Use Asset Ingestion to ingest multi-format creative assets (PSD/AI/SVG/Figma/PNG/JPG/MP4/MP3/GLB/OBJ/TTF) with automatic metadata extraction. Parses dimensions, color modes, layer counts, durations, codecs, and format-specific properties. Returns structured metadata for each asset and a format breakdown summary.",
+        "Can you run Asset Ingestion? Files is the main input I have.",
+        "Invoke Asset Ingestion with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "smart_tagging",
+      "name": "Smart Tagging",
+      "description": "Generate AI-powered semantic tags for creative assets. Performs visual recognition to assign mood (energetic/calm/professional...), scene classification (product-shot/lifestyle/UI-element...), color emotion tagging, accessibility scoring, and format-based categorization. Returns confidence scores and tag taxonomy.",
+      "tags": [
+        "creativault",
+        "smart",
+        "tagging"
+      ],
+      "examples": [
+        "Use Smart Tagging to generate AI-powered semantic tags for creative assets. Performs visual recognition to assign mood (energetic/calm/professional...), scene classification (product-shot/lifestyle/UI-element...), color emotion tagging, accessibility scoring, and format-based categorization. Returns confidence scores and tag taxonomy.",
+        "Can you run Smart Tagging? Assets is the main input I have.",
+        "Invoke Smart Tagging with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "brand_compliance",
+      "name": "Brand Compliance",
+      "description": "Check creative asset compliance against brand guidelines. Scores color usage against brand palette, font compliance, spacing/grid adherence, logo clearspace and minimum size, and brand tone alignment per-approved-keywords. Returns per-dimension scores and actionable recommendations.",
+      "tags": [
+        "creativault",
+        "brand",
+        "compliance"
+      ],
+      "examples": [
+        "Use Brand Compliance to check creative asset compliance against brand guidelines. Scores color usage against brand palette, font compliance, spacing/grid adherence, logo clearspace and minimum size, and brand tone alignment per-approved-keywords. Returns per-dimension scores and actionable recommendations.",
+        "Can you run Brand Compliance? Assets is the main input I have.",
+        "Invoke Brand Compliance with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "creative_search",
+      "name": "Creative Search",
+      "description": "Semantic + visual hybrid search across indexed creative assets. Supports text-to-search, image-to-search (visual similarity), and hybrid modes with format/color/date/author filters. Returns relevance-scored results with match type, matched keywords, and faceted navigation.",
+      "tags": [
+        "creativault",
+        "creative",
+        "search"
+      ],
+      "examples": [
+        "Use Creative Search to semantic + visual hybrid search across indexed creative assets. Supports text-to-search, image-to-search (visual similarity), and hybrid modes with format/color/date/author filters. Returns relevance-scored results with match type, matched keywords, and faceted navigation.",
+        "Can you run Creative Search? Query is the main input I have.",
+        "Invoke Creative Search with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "version_control",
+      "name": "Version Control",
+      "description": "Manage creative asset version history with visual diff summaries, branch tracking, merge analysis with conflict detection, and rollback options. Supports actions: history (full timeline), branch_diff, rollback_preview, merge_analysis. Returns version timeline, branch status, merge recommendations.",
+      "tags": [
+        "creativault",
+        "version",
+        "control"
+      ],
+      "examples": [
+        "Use Version Control to manage creative asset version history with visual diff summaries, branch tracking, merge analysis with conflict detection, and rollback options. Supports actions: history (full timeline), branch_diff, rollback_preview, merge_analysis. Returns version timeline, branch status, merge recommendations.",
+        "Can you run Version Control? Versions is the main input I have.",
+        "Invoke Version Control with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "asset_performance",
+      "name": "Asset Performance",
+      "description": "Analyze creative asset performance metrics including download count, usage frequency, conversion attributions, and ROI estimates. Generates quarterly engagement heatmaps, identifies top performers, calculates ROI distribution, and provides redistribution recommendations.",
+      "tags": [
+        "creativault",
+        "asset",
+        "performance"
+      ],
+      "examples": [
+        "Use Asset Performance to analyze creative asset performance metrics including download count, usage frequency, conversion attributions, and ROI estimates. Generates quarterly engagement heatmaps, identifies top performers, calculates ROI distribution, and provides redistribution recommendations.",
+        "Can you run Asset Performance? Metrics is the main input I have.",
+        "Invoke Asset Performance with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "creative_insights",
+      "name": "Creative Insights",
+      "description": "Generate design trend insights for a given period and industry. Covers trending colors with direction indicators (rising/stable/declining), top layout patterns with scores, animation adoption rates across platforms, competitor palette benchmarking, differentiation scoring, and priority action items.",
+      "tags": [
+        "creativault",
+        "creative",
+        "insights"
+      ],
+      "examples": [
+        "Use Creative Insights to generate design trend insights for a given period and industry. Covers trending colors with direction indicators (rising/stable/declining), top layout patterns with scores, animation adoption rates across platforms, competitor palette benchmarking, differentiation scoring, and priority action items.",
+        "Can you run Creative Insights? Period is the main input I have.",
+        "Invoke Creative Insights with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "asset_archive",
+      "name": "Asset Archive",
+      "description": "Optimize storage costs with intelligent archival planning. Automatically classifies assets into hot/warm/cold tiers based on access frequency and recency, detects duplicate files, recommends compression or cold-store migration, and projects storage savings with percentage breakdowns.",
+      "tags": [
+        "creativault",
+        "asset",
+        "archive"
+      ],
+      "examples": [
+        "Use Asset Archive to optimize storage costs with intelligent archival planning. Automatically classifies assets into hot/warm/cold tiers based on access frequency and recency, detects duplicate files, recommends compression or cold-store migration, and projects storage savings with percentage breakdowns.",
+        "Can you run Asset Archive? Assets is the main input I have.",
+        "Invoke Asset Archive with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

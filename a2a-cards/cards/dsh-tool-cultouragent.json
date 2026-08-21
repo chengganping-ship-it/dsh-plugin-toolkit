@@ -1,0 +1,199 @@
+{
+  "name": "cultouragent",
+  "description": "文化旅游AI助手 — 目的地营销·遗产数字化·收益管理·文化IP·行程定制·智慧校园·演艺管理·节庆策划",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/cultouragent",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/cultouragent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "destination_marketing",
+      "name": "Destination Marketing",
+      "description": "目的地营销 | 品牌定位/渠道策略/客群触达/营销日历/ROI预测",
+      "tags": [
+        "cultouragent",
+        "destination",
+        "marketing"
+      ],
+      "examples": [
+        "Use Destination Marketing to 目的地营销 | 品牌定位/渠道策略/客群触达/营销日历/ROI预测.",
+        "Can you run Destination Marketing? Input Data is the main input I have.",
+        "Invoke Destination Marketing with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "heritage_digitalization",
+      "name": "Heritage Digitalization",
+      "description": "遗产数字化 | 3D采集/数字展陈/活化利用/保护风险评估",
+      "tags": [
+        "cultouragent",
+        "heritage",
+        "digitalization"
+      ],
+      "examples": [
+        "Use Heritage Digitalization to 遗产数字化 | 3D采集/数字展陈/活化利用/保护风险评估.",
+        "Can you run Heritage Digitalization? Input Data is the main input I have.",
+        "Invoke Heritage Digitalization with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "tourism_revenue_mgmt",
+      "name": "Tourism Revenue Mgmt",
+      "description": "旅游收益管理 | 动态定价/渠道优化/二销提升/RevPAR优化",
+      "tags": [
+        "cultouragent",
+        "tourism",
+        "revenue",
+        "mgmt"
+      ],
+      "examples": [
+        "Use Tourism Revenue Mgmt to 旅游收益管理 | 动态定价/渠道优化/二销提升/RevPAR优化.",
+        "Can you run Tourism Revenue Mgmt? Input Data is the main input I have.",
+        "Invoke Tourism Revenue Mgmt with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "cultural_ip_developer",
+      "name": "Cultural Ip Developer",
+      "description": "文化IP开发 | IP挖掘/文创设计/授权策略/收益预测",
+      "tags": [
+        "cultouragent",
+        "cultural",
+        "developer"
+      ],
+      "examples": [
+        "Use Cultural Ip Developer to 文化IP开发 | IP挖掘/文创设计/授权策略/收益预测.",
+        "Can you run Cultural Ip Developer? Input Data is the main input I have.",
+        "Invoke Cultural Ip Developer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "itinerary_personalization",
+      "name": "Itinerary Personalization",
+      "description": "行程定制 | 兴趣画像/路线规划/体验编排/预算分配",
+      "tags": [
+        "cultouragent",
+        "itinerary",
+        "personalization"
+      ],
+      "examples": [
+        "Use Itinerary Personalization to 行程定制 | 兴趣画像/路线规划/体验编排/预算分配.",
+        "Can you run Itinerary Personalization? Input Data is the main input I have.",
+        "Invoke Itinerary Personalization with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "smart_campus_operations",
+      "name": "Smart Campus Operations",
+      "description": "智慧校园运营 | 能耗管理/空间利用/安防调度/自动化路线图",
+      "tags": [
+        "cultouragent",
+        "smart",
+        "campus",
+        "operations"
+      ],
+      "examples": [
+        "Use Smart Campus Operations to 智慧校园运营 | 能耗管理/空间利用/安防调度/自动化路线图.",
+        "Can you run Smart Campus Operations? Input Data is the main input I have.",
+        "Invoke Smart Campus Operations with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "performance_art_management",
+      "name": "Performance Art Management",
+      "description": "演艺管理 | 排期优化/票务分层/观众互动/财务预测",
+      "tags": [
+        "cultouragent",
+        "performance",
+        "art",
+        "management"
+      ],
+      "examples": [
+        "Use Performance Art Management to 演艺管理 | 排期优化/票务分层/观众互动/财务预测.",
+        "Can you run Performance Art Management? Input Data is the main input I have.",
+        "Invoke Performance Art Management with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "event_festival_planner",
+      "name": "Event Festival Planner",
+      "description": "节庆策划 | 主题设计/活动排程/空间布局/传播矩阵/安全清单",
+      "tags": [
+        "cultouragent",
+        "event",
+        "festival",
+        "planner"
+      ],
+      "examples": [
+        "Use Event Festival Planner to 节庆策划 | 主题设计/活动排程/空间布局/传播矩阵/安全清单.",
+        "Can you run Event Festival Planner? Input Data is the main input I have.",
+        "Invoke Event Festival Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

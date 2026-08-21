@@ -1,0 +1,201 @@
+{
+  "name": "dsh-tools",
+  "description": "DSH plugin: dsh-tool-healthagentpro",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tools",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tools",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "rcm_analyzer",
+      "name": "Rcm Analyzer",
+      "description": "收入周期管理分析：一次通过率、拒付率、应收天数",
+      "tags": [
+        "healthagentpro",
+        "rcm",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Rcm Analyzer to 收入周期管理分析：一次通过率、拒付率、应收天数.",
+        "I need Rcm Analyzer capabilities for this task in dsh-tools.",
+        "Invoke Rcm Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "clinical_decision_support",
+      "name": "Clinical Decision Support",
+      "description": "AI辅助诊疗：推荐置信度、辅助诊断准确性",
+      "tags": [
+        "healthagentpro",
+        "clinical",
+        "decision",
+        "support"
+      ],
+      "examples": [
+        "Use Clinical Decision Support to aI辅助诊疗：推荐置信度、辅助诊断准确性.",
+        "I need Clinical Decision Support capabilities for this task in dsh-tools.",
+        "Invoke Clinical Decision Support with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "medical_coding_assistant",
+      "name": "Medical Coding Assistant",
+      "description": "智能医疗编码：自动编码率、准确率、编码体系覆盖",
+      "tags": [
+        "healthagentpro",
+        "medical",
+        "coding",
+        "assistant"
+      ],
+      "examples": [
+        "Use Medical Coding Assistant to 智能医疗编码：自动编码率、准确率、编码体系覆盖.",
+        "I need Medical Coding Assistant capabilities for this task in dsh-tools.",
+        "Invoke Medical Coding Assistant with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "chronic_disease_monitor",
+      "name": "Chronic Disease Monitor",
+      "description": "慢病AI监测：控制率、预警数、患者依从性",
+      "tags": [
+        "healthagentpro",
+        "chronic",
+        "disease",
+        "monitor"
+      ],
+      "examples": [
+        "Use Chronic Disease Monitor to 慢病AI监测：控制率、预警数、患者依从性.",
+        "I need Chronic Disease Monitor capabilities for this task in dsh-tools.",
+        "Invoke Chronic Disease Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "patient_engagement_tracker",
+      "name": "Patient Engagement Tracker",
+      "description": "患者服务参与度：活跃率、满意度、响应时效",
+      "tags": [
+        "healthagentpro",
+        "patient",
+        "engagement",
+        "tracker"
+      ],
+      "examples": [
+        "Use Patient Engagement Tracker to 患者服务参与度：活跃率、满意度、响应时效.",
+        "I need Patient Engagement Tracker capabilities for this task in dsh-tools.",
+        "Invoke Patient Engagement Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "imaging_ai_evaluator",
+      "name": "Imaging Ai Evaluator",
+      "description": "AI医学影像分析：自动化率、敏感性与特异性",
+      "tags": [
+        "healthagentpro",
+        "imaging",
+        "evaluator"
+      ],
+      "examples": [
+        "Use Imaging Ai Evaluator to aI医学影像分析：自动化率、敏感性与特异性.",
+        "I need Imaging Ai Evaluator capabilities for this task in dsh-tools.",
+        "Invoke Imaging Ai Evaluator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "hospital_operations_optimizer",
+      "name": "Hospital Operations Optimizer",
+      "description": "医院运营效率：床位/人员/候诊/成本AI优化评分",
+      "tags": [
+        "healthagentpro",
+        "hospital",
+        "operations",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Hospital Operations Optimizer to 医院运营效率：床位/人员/候诊/成本AI优化评分.",
+        "I need Hospital Operations Optimizer capabilities for this task in dsh-tools.",
+        "Invoke Hospital Operations Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "clinical_trial_matcher",
+      "name": "Clinical Trial Matcher",
+      "description": "临床试验匹配：根据患者特征匹配适合的临床试验项目，提升患者入组效率",
+      "tags": [
+        "healthagentpro",
+        "clinical",
+        "trial",
+        "matcher"
+      ],
+      "examples": [
+        "Use Clinical Trial Matcher to 临床试验匹配：根据患者特征匹配适合的临床试验项目，提升患者入组效率.",
+        "Can you run Clinical Trial Matcher? Input Data is the main input I have.",
+        "Invoke Clinical Trial Matcher with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

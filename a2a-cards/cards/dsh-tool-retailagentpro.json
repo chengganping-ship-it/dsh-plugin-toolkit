@@ -1,0 +1,202 @@
+{
+  "name": "retailagentpro",
+  "description": "智慧零售AI助手 — 全渠道运营与智慧门店智能体",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/retailagentpro",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/retailagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "omnichannel_operations",
+      "name": "Omnichannel Operations",
+      "description": "全渠道运营分析 — 线上线下一体化、库存同步、订单路由、履约优化、渠道分析",
+      "tags": [
+        "retailagentpro",
+        "omnichannel",
+        "operations"
+      ],
+      "examples": [
+        "Use Omnichannel Operations to 全渠道运营分析 — 线上线下一体化、库存同步、订单路由、履约优化、渠道分析.",
+        "Can you run Omnichannel Operations? Input Data is the main input I have.",
+        "Invoke Omnichannel Operations with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "smart_store_manager",
+      "name": "Smart Store Manager",
+      "description": "智慧门店管理 — 客流分析、热力图、陈列优化、智能补货、门店评分",
+      "tags": [
+        "retailagentpro",
+        "smart",
+        "store",
+        "manager"
+      ],
+      "examples": [
+        "Use Smart Store Manager to 智慧门店管理 — 客流分析、热力图、陈列优化、智能补货、门店评分.",
+        "Can you run Smart Store Manager? Input Data is the main input I have.",
+        "Invoke Smart Store Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "customer_growth_engine",
+      "name": "Customer Growth Engine",
+      "description": "用户增长引擎 — 会员运营、精准营销、复购预测、LTV分析、流失预警",
+      "tags": [
+        "retailagentpro",
+        "customer",
+        "growth",
+        "engine"
+      ],
+      "examples": [
+        "Use Customer Growth Engine to 用户增长引擎 — 会员运营、精准营销、复购预测、LTV分析、流失预警.",
+        "Can you run Customer Growth Engine? Input Data is the main input I have.",
+        "Invoke Customer Growth Engine with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "dynamic_pricing_optimizer",
+      "name": "Dynamic Pricing Optimizer",
+      "description": "动态定价优化 — 竞品监控、需求弹性、促销策略、价格弹性、利润最大化",
+      "tags": [
+        "retailagentpro",
+        "dynamic",
+        "pricing",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Dynamic Pricing Optimizer to 动态定价优化 — 竞品监控、需求弹性、促销策略、价格弹性、利润最大化.",
+        "Can you run Dynamic Pricing Optimizer? Input Data is the main input I have.",
+        "Invoke Dynamic Pricing Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "product_assortment_planner",
+      "name": "Product Assortment Planner",
+      "description": "商品企划 — 品类规划、选品推荐、SKU优化、汰换分析、趋势预测",
+      "tags": [
+        "retailagentpro",
+        "product",
+        "assortment",
+        "planner"
+      ],
+      "examples": [
+        "Use Product Assortment Planner to 商品企划 — 品类规划、选品推荐、SKU优化、汰换分析、趋势预测.",
+        "Can you run Product Assortment Planner? Input Data is the main input I have.",
+        "Invoke Product Assortment Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "supply_chain_retail",
+      "name": "Supply Chain Retail",
+      "description": "零售供应链 — 需求预测、自动补货、供应商管理、物流优化、逆向物流",
+      "tags": [
+        "retailagentpro",
+        "supply",
+        "chain",
+        "retail"
+      ],
+      "examples": [
+        "Use Supply Chain Retail to 零售供应链 — 需求预测、自动补货、供应商管理、物流优化、逆向物流.",
+        "Can you run Supply Chain Retail? Input Data is the main input I have.",
+        "Invoke Supply Chain Retail with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "live_commerce_agent",
+      "name": "Live Commerce Agent",
+      "description": "直播电商 — 选品策略、话术生成、互动分析、转化漏斗、达人匹配",
+      "tags": [
+        "retailagentpro",
+        "live",
+        "commerce",
+        "agent"
+      ],
+      "examples": [
+        "Use Live Commerce Agent to 直播电商 — 选品策略、话术生成、互动分析、转化漏斗、达人匹配.",
+        "Can you run Live Commerce Agent? Input Data is the main input I have.",
+        "Invoke Live Commerce Agent with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "retail_data_analytics",
+      "name": "Retail Data Analytics",
+      "description": "零售数据分析 — 销售分析、转化漏斗、客单价、坪效、同比环比",
+      "tags": [
+        "retailagentpro",
+        "retail",
+        "data",
+        "analytics"
+      ],
+      "examples": [
+        "Use Retail Data Analytics to 零售数据分析 — 销售分析、转化漏斗、客单价、坪效、同比环比.",
+        "Can you run Retail Data Analytics? Input Data is the main input I have.",
+        "Invoke Retail Data Analytics with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

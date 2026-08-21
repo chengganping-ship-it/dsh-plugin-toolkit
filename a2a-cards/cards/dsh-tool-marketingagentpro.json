@@ -1,0 +1,196 @@
+{
+  "name": "marketingagentpro",
+  "description": "营销AI助手 — MAGIC方法论智能营销智能体",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/marketingagentpro",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/marketingagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "insight_miner",
+      "name": "Insight Miner",
+      "description": "消费者洞察挖掘与趋势发现 — 基于MAGIC框架，分析消费者行为数据、社交媒体舆情和竞争格局，输出消费者洞察、趋势预测和机会缺口",
+      "tags": [
+        "marketingagentpro",
+        "insight",
+        "miner"
+      ],
+      "examples": [
+        "Use Insight Miner to 消费者洞察挖掘与趋势发现 — 基于MAGIC框架，分析消费者行为数据、社交媒体舆情和竞争格局，输出消费者洞察、趋势预测和机会缺口.",
+        "Can you run Insight Miner? Input Data is the main input I have.",
+        "Invoke Insight Miner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "campaign_architect",
+      "name": "Campaign Architect",
+      "description": "营销活动架构设计与渠道编排 — 基于MAGIC框架，设计营销活动整体架构、渠道策略、预算分配、时间线和KPI框架",
+      "tags": [
+        "marketingagentpro",
+        "campaign",
+        "architect"
+      ],
+      "examples": [
+        "Use Campaign Architect to 营销活动架构设计与渠道编排 — 基于MAGIC框架，设计营销活动整体架构、渠道策略、预算分配、时间线和KPI框架.",
+        "Can you run Campaign Architect? Input Data is the main input I have.",
+        "Invoke Campaign Architect with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "content_generator",
+      "name": "Content Generator",
+      "description": "创意素材自动生成与A/B测试方案 — 基于MAGIC框架，生成多平台创意素材、A/B测试方案、视觉方向和文案变体",
+      "tags": [
+        "marketingagentpro",
+        "content",
+        "generator"
+      ],
+      "examples": [
+        "Use Content Generator to 创意素材自动生成与A/B测试方案 — 基于MAGIC框架，生成多平台创意素材、A/B测试方案、视觉方向和文案变体.",
+        "Can you run Content Generator? Input Data is the main input I have.",
+        "Invoke Content Generator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "engagement_interactor",
+      "name": "Engagement Interactor",
+      "description": "用户互动策略与社群运营自动化 — 基于MAGIC框架，设计互动策略、内容日历、自动化工作流、回复模板和游戏化机制",
+      "tags": [
+        "marketingagentpro",
+        "engagement",
+        "interactor"
+      ],
+      "examples": [
+        "Use Engagement Interactor to 用户互动策略与社群运营自动化 — 基于MAGIC框架，设计互动策略、内容日历、自动化工作流、回复模板和游戏化机制.",
+        "Can you run Engagement Interactor? Input Data is the main input I have.",
+        "Invoke Engagement Interactor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "performance_checker",
+      "name": "Performance Checker",
+      "description": "营销效果核查与归因分析 — 基于MAGIC框架，分析营销活动ROI、渠道表现、归因模型、漏斗转化和异常检测",
+      "tags": [
+        "marketingagentpro",
+        "performance",
+        "checker"
+      ],
+      "examples": [
+        "Use Performance Checker to 营销效果核查与归因分析 — 基于MAGIC框架，分析营销活动ROI、渠道表现、归因模型、漏斗转化和异常检测.",
+        "Can you run Performance Checker? Input Data is the main input I have.",
+        "Invoke Performance Checker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "audience_segmentor",
+      "name": "Audience Segmentor",
+      "description": "人群圈选与Look-alike扩展 — 基于MAGIC框架，分析种子人群画像、细分人群、Look-alike扩展、排除列表和定向建议",
+      "tags": [
+        "marketingagentpro",
+        "audience",
+        "segmentor"
+      ],
+      "examples": [
+        "Use Audience Segmentor to 人群圈选与Look-alike扩展 — 基于MAGIC框架，分析种子人群画像、细分人群、Look-alike扩展、排除列表和定向建议.",
+        "Can you run Audience Segmentor? Input Data is the main input I have.",
+        "Invoke Audience Segmentor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "brand_voice_curator",
+      "name": "Brand Voice Curator",
+      "description": "品牌语音一致性维护与风格校准 — 基于MAGIC框架，分析品牌语音画像、一致性评分、内容审核、品牌指南和校准行动",
+      "tags": [
+        "marketingagentpro",
+        "brand",
+        "voice",
+        "curator"
+      ],
+      "examples": [
+        "Use Brand Voice Curator to 品牌语音一致性维护与风格校准 — 基于MAGIC框架，分析品牌语音画像、一致性评分、内容审核、品牌指南和校准行动.",
+        "Can you run Brand Voice Curator? Input Data is the main input I have.",
+        "Invoke Brand Voice Curator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "marketing_automation",
+      "name": "Marketing Automation",
+      "description": "营销自动化工作流编排与触发器 — 基于MAGIC框架，设计自动化工作流蓝图、触发器矩阵、个性化规则、线索评分和自动化指标",
+      "tags": [
+        "marketingagentpro",
+        "marketing",
+        "automation"
+      ],
+      "examples": [
+        "Use Marketing Automation to 营销自动化工作流编排与触发器 — 基于MAGIC框架，设计自动化工作流蓝图、触发器矩阵、个性化规则、线索评分和自动化指标.",
+        "Can you run Marketing Automation? Input Data is the main input I have.",
+        "Invoke Marketing Automation with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

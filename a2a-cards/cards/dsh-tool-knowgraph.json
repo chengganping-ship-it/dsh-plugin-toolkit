@@ -1,0 +1,197 @@
+{
+  "name": "dsh-tool-knowgraph",
+  "description": "Knowledge Graph Builder - Entity extraction, relationship mapping, graph analysis, knowledge triple generation, entity resolution, semantic search, graph visualization data, and graph centrality analysis",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-knowgraph",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-knowgraph",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "entity_extractor",
+      "name": "Entity Extractor",
+      "description": "Extract named entities from text with type classification, confidence scoring, and position tracking. Supports person, organization, location, date, product, and event entity types.",
+      "tags": [
+        "knowgraph",
+        "entity",
+        "extractor"
+      ],
+      "examples": [
+        "Use Entity Extractor to extract named entities from text with type classification, confidence scoring, and position tracking. Supports person, organization, location, date, product, and event entity types.",
+        "Can you run Entity Extractor? Text is the main input I have.",
+        "Invoke Entity Extractor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "relationship_mapper",
+      "name": "Relationship Mapper",
+      "description": "Map relationships between entities in text, identifying semantic connections with confidence scores and evidence snippets.",
+      "tags": [
+        "knowgraph",
+        "relationship",
+        "mapper"
+      ],
+      "examples": [
+        "Use Relationship Mapper to map relationships between entities in text, identifying semantic connections with confidence scores and evidence snippets.",
+        "Can you run Relationship Mapper? Text is the main input I have.",
+        "Invoke Relationship Mapper with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "graph_builder",
+      "name": "Graph Builder",
+      "description": "Build a knowledge graph structure from entities and relationships, computing communities and centrality metrics.",
+      "tags": [
+        "knowgraph",
+        "graph",
+        "builder"
+      ],
+      "examples": [
+        "Use Graph Builder to build a knowledge graph structure from entities and relationships, computing communities and centrality metrics.",
+        "Can you run Graph Builder? Entities is the main input I have.",
+        "Invoke Graph Builder with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "knowledge_triple_generator",
+      "name": "Knowledge Triple Generator",
+      "description": "Generate subject-predicate-object knowledge triples from text for knowledge graph construction.",
+      "tags": [
+        "knowgraph",
+        "knowledge",
+        "triple",
+        "generator"
+      ],
+      "examples": [
+        "Use Knowledge Triple Generator to generate subject-predicate-object knowledge triples from text for knowledge graph construction.",
+        "Can you run Knowledge Triple Generator? Text is the main input I have.",
+        "Invoke Knowledge Triple Generator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "entity_resolver",
+      "name": "Entity Resolver",
+      "description": "Resolve and disambiguate entities against a knowledge base, finding canonical IDs, aliases, and merge candidates.",
+      "tags": [
+        "knowgraph",
+        "entity",
+        "resolver"
+      ],
+      "examples": [
+        "Use Entity Resolver to resolve and disambiguate entities against a knowledge base, finding canonical IDs, aliases, and merge candidates.",
+        "Can you run Entity Resolver? Entities is the main input I have.",
+        "Invoke Entity Resolver with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "graph_analyzer",
+      "name": "Graph Analyzer",
+      "description": "Analyze a knowledge graph computing centrality scores, community detection, path analysis, density, and clustering coefficients.",
+      "tags": [
+        "knowgraph",
+        "graph",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Graph Analyzer to analyze a knowledge graph computing centrality scores, community detection, path analysis, density, and clustering coefficients.",
+        "Can you run Graph Analyzer? Graph Data is the main input I have.",
+        "Invoke Graph Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "semantic_search",
+      "name": "Semantic Search",
+      "description": "Perform semantic search over a knowledge graph, returning ranked results with relevance scores, paths, and supporting evidence.",
+      "tags": [
+        "knowgraph",
+        "semantic",
+        "search"
+      ],
+      "examples": [
+        "Use Semantic Search to perform semantic search over a knowledge graph, returning ranked results with relevance scores, paths, and supporting evidence.",
+        "Can you run Semantic Search? Query is the main input I have.",
+        "Invoke Semantic Search with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "graph_visualization_data",
+      "name": "Graph Visualization Data",
+      "description": "Generate visualization-ready data for a knowledge graph with positions, colors, sizes, and labels for rendering.",
+      "tags": [
+        "knowgraph",
+        "graph",
+        "visualization",
+        "data"
+      ],
+      "examples": [
+        "Use Graph Visualization Data to generate visualization-ready data for a knowledge graph with positions, colors, sizes, and labels for rendering.",
+        "Can you run Graph Visualization Data? Graph Data is the main input I have.",
+        "Invoke Graph Visualization Data with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

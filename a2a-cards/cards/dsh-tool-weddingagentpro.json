@@ -1,0 +1,200 @@
+{
+  "name": "dsh-tool-weddingagentpro",
+  "description": "婚礼策划AI助手 - 婚庆预算分配与成本控制、婚宴场地筛选与档期协调、婚礼筹备倒计时与任务排期、婚庆四大金刚比价与档期锁定、婚礼主题色系VI设计推荐、宾客名单管理与座位安排、婚纱礼服与搭配建议、蜜月旅行方案与签证建议",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-weddingagentpro",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-weddingagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "wedding_budget_planner",
+      "name": "Wedding Budget Planner",
+      "description": "婚庆预算分配与成本控制 | 根据总预算、宾客人数、婚礼风格生成详细预算分配方案，含成本预警和省钱建议 | Wedding budget allocation with cost control and savings tips.",
+      "tags": [
+        "weddingagentpro",
+        "wedding",
+        "budget",
+        "planner"
+      ],
+      "examples": [
+        "Use Wedding Budget Planner to 婚庆预算分配与成本控制 | 根据总预算、宾客人数、婚礼风格生成详细预算分配方案，含成本预警和省钱建议 | Wedding budget allocation with cost control and savings tips.",
+        "Can you run Wedding Budget Planner? Input Data is the main input I have.",
+        "Invoke Wedding Budget Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "venue_selector",
+      "name": "Venue Selector",
+      "description": "婚宴场地筛选与档期协调 | 搜索比较婚宴场地，含价格、容量、档期、特色信息，提供预订建议 | Wedding venue selection with availability check and booking tips.",
+      "tags": [
+        "weddingagentpro",
+        "venue",
+        "selector"
+      ],
+      "examples": [
+        "Use Venue Selector to 婚宴场地筛选与档期协调 | 搜索比较婚宴场地，含价格、容量、档期、特色信息，提供预订建议 | Wedding venue selection with availability check and booking tips.",
+        "Can you run Venue Selector? Input Data is the main input I have.",
+        "Invoke Venue Selector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "wedding_timeline_scheduler",
+      "name": "Wedding Timeline Scheduler",
+      "description": "婚礼筹备倒计时与任务排期 | 生成婚礼筹备全周期倒计时计划，含阶段任务、里程碑、紧急待办、进度跟踪 | Wedding countdown timeline with task scheduling and milestone tracking.",
+      "tags": [
+        "weddingagentpro",
+        "wedding",
+        "timeline",
+        "scheduler"
+      ],
+      "examples": [
+        "Use Wedding Timeline Scheduler to 婚礼筹备倒计时与任务排期 | 生成婚礼筹备全周期倒计时计划，含阶段任务、里程碑、紧急待办、进度跟踪 | Wedding countdown timeline with task scheduling and milestone tracking.",
+        "Can you run Wedding Timeline Scheduler? Input Data is the main input I have.",
+        "Invoke Wedding Timeline Scheduler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "vendor_comparison",
+      "name": "Vendor Comparison",
+      "description": "婚庆四大金刚比价与档期锁定 | 摄影/化妆/主持/摄像供应商比价，含套餐详情、档期状态、谈判技巧 | Photographer/Makeup/MC/Video vendor comparison with packages and booking.",
+      "tags": [
+        "weddingagentpro",
+        "vendor",
+        "comparison"
+      ],
+      "examples": [
+        "Use Vendor Comparison to 婚庆四大金刚比价与档期锁定 | 摄影/化妆/主持/摄像供应商比价，含套餐详情、档期状态、谈判技巧 | Photographer/Makeup/MC/Video vendor comparison with packages and booking.",
+        "Can you run Vendor Comparison? Input Data is the main input I have.",
+        "Invoke Vendor Comparison with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "wedding_theme_designer",
+      "name": "Wedding Theme Designer",
+      "description": "婚礼主题色系VI设计推荐 | 根据风格偏好、季节、场地推荐主题色系、VI元素、场景布置、花艺灯光 | Wedding theme/color/VI design with decor and floral recommendations.",
+      "tags": [
+        "weddingagentpro",
+        "wedding",
+        "theme",
+        "designer"
+      ],
+      "examples": [
+        "Use Wedding Theme Designer to 婚礼主题色系VI设计推荐 | 根据风格偏好、季节、场地推荐主题色系、VI元素、场景布置、花艺灯光 | Wedding theme/color/VI design with decor and floral recommendations.",
+        "Can you run Wedding Theme Designer? Input Data is the main input I have.",
+        "Invoke Wedding Theme Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "guest_list_manager",
+      "name": "Guest List Manager",
+      "description": "宾客名单管理与座位安排 | 管理宾客名单、RSVP状态、座位分配、饮食偏好统计、缓冲建议 | Guest list management with RSVP tracking and seating arrangements.",
+      "tags": [
+        "weddingagentpro",
+        "guest",
+        "list",
+        "manager"
+      ],
+      "examples": [
+        "Use Guest List Manager to 宾客名单管理与座位安排 | 管理宾客名单、RSVP状态、座位分配、饮食偏好统计、缓冲建议 | Guest list management with RSVP tracking and seating arrangements.",
+        "Can you run Guest List Manager? Input Data is the main input I have.",
+        "Invoke Guest List Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "wedding_attire_advisor",
+      "name": "Wedding Attire Advisor",
+      "description": "婚纱礼服与搭配建议 | 根据角色、身材、婚礼风格推荐服装、配饰、面料、色系搭配、试衣时间表 | Wedding attire advice with outfit matching and fitting timeline.",
+      "tags": [
+        "weddingagentpro",
+        "wedding",
+        "attire",
+        "advisor"
+      ],
+      "examples": [
+        "Use Wedding Attire Advisor to 婚纱礼服与搭配建议 | 根据角色、身材、婚礼风格推荐服装、配饰、面料、色系搭配、试衣时间表 | Wedding attire advice with outfit matching and fitting timeline.",
+        "Can you run Wedding Attire Advisor? Input Data is the main input I have.",
+        "Invoke Wedding Attire Advisor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "honeymoon_planner",
+      "name": "Honeymoon Planner",
+      "description": "蜜月旅行方案与签证建议 | 推荐蜜月目的地、行程规划、预算分配、签证指南、打包清单、浪漫体验 | Honeymoon trip planning with visa guidance and romantic experiences.",
+      "tags": [
+        "weddingagentpro",
+        "honeymoon",
+        "planner"
+      ],
+      "examples": [
+        "Use Honeymoon Planner to 蜜月旅行方案与签证建议 | 推荐蜜月目的地、行程规划、预算分配、签证指南、打包清单、浪漫体验 | Honeymoon trip planning with visa guidance and romantic experiences.",
+        "Can you run Honeymoon Planner? Input Data is the main input I have.",
+        "Invoke Honeymoon Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

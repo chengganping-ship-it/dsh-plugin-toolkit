@@ -1,0 +1,200 @@
+{
+  "name": "dsh-tool-pragent",
+  "description": "AI Public Relations & Media Relations Agent - Media relations management with journalist profiling, press release writing with multi-channel adaptation, crisis communications management, thought leadership engine, award submission manager, social proof amplifier, media measurement & evaluation, and content distribution optimization",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-pragent",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-pragent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "media_relations",
+      "name": "Media Relations",
+      "description": "Media relations management with journalist profiling, pitch matching, relationship scoring, interaction tracking, opportunity identification, and news listing. Comprehensive PR contact and outreach management system.",
+      "tags": [
+        "pragent",
+        "media",
+        "relations"
+      ],
+      "examples": [
+        "Use Media Relations to media relations management with journalist profiling, pitch matching, relationship scoring, interaction tracking, opportunity identification, and news listing. Comprehensive PR contact and outreach management system.",
+        "Can you run Media Relations? Contacts is the main input I have.",
+        "Invoke Media Relations with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "press_release_writer",
+      "name": "Press Release Writer",
+      "description": "AI-powered press release composition with headline generation, lead paragraph writing, body drafting, quote integration, boilerplate inclusion, multi-channel adaptation, and SEO optimization. Produces publication-ready press releases.",
+      "tags": [
+        "pragent",
+        "press",
+        "release",
+        "writer"
+      ],
+      "examples": [
+        "Use Press Release Writer to aI-powered press release composition with headline generation, lead paragraph writing, body drafting, quote integration, boilerplate inclusion, multi-channel adaptation, and SEO optimization. Produces publication-ready press releases.",
+        "Can you run Press Release Writer? Release Input is the main input I have.",
+        "Invoke Press Release Writer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "crisis_comms_manager",
+      "name": "Crisis Comms Manager",
+      "description": "Crisis communications management with media monitoring, response playbook generation, spokesperson readiness assessment, stakeholder communication planning, and reputation recovery roadmapping.",
+      "tags": [
+        "pragent",
+        "crisis",
+        "comms",
+        "manager"
+      ],
+      "examples": [
+        "Use Crisis Comms Manager to crisis communications management with media monitoring, response playbook generation, spokesperson readiness assessment, stakeholder communication planning, and reputation recovery roadmapping.",
+        "Can you run Crisis Comms Manager? Crisis Events is the main input I have.",
+        "Invoke Crisis Comms Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "thought_leadership_engine",
+      "name": "Thought Leadership Engine",
+      "description": "Thought leadership engine with topic trending, article outline generation, publishing strategy, discussion prompt creation, influencer collaboration identification, and SEO keyword tracking.",
+      "tags": [
+        "pragent",
+        "thought",
+        "leadership",
+        "engine"
+      ],
+      "examples": [
+        "Use Thought Leadership Engine to thought leadership engine with topic trending, article outline generation, publishing strategy, discussion prompt creation, influencer collaboration identification, and SEO keyword tracking.",
+        "Can you run Thought Leadership Engine? Industry is the main input I have.",
+        "Invoke Thought Leadership Engine with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "award_submission_manager",
+      "name": "Award Submission Manager",
+      "description": "Award submission management with opportunity discovery, eligibility assessment, submission writing/drafting, progress tracking, and award body relationship maintenance.",
+      "tags": [
+        "pragent",
+        "award",
+        "submission",
+        "manager"
+      ],
+      "examples": [
+        "Use Award Submission Manager to award submission management with opportunity discovery, eligibility assessment, submission writing/drafting, progress tracking, and award body relationship maintenance.",
+        "Can you run Award Submission Manager? Awards is the main input I have.",
+        "Invoke Award Submission Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "social_proof_amplifier",
+      "name": "Social Proof Amplifier",
+      "description": "Social proof amplification with testimonial portfolio management, case study drafting, social media post creation, influencer target identification, and comprehensive social proof strategy.",
+      "tags": [
+        "pragent",
+        "social",
+        "proof",
+        "amplifier"
+      ],
+      "examples": [
+        "Use Social Proof Amplifier to social proof amplification with testimonial portfolio management, case study drafting, social media post creation, influencer target identification, and comprehensive social proof strategy.",
+        "Can you run Social Proof Amplifier? Testimonials is the main input I have.",
+        "Invoke Social Proof Amplifier with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "media_measurement",
+      "name": "Media Measurement",
+      "description": "Comprehensive media measurement and evaluation including AVE (Advertising Value Equivalency), impression analysis, sentiment tracking, share of voice calculation, value metrics, ROI analysis, and competitive benchmarking.",
+      "tags": [
+        "pragent",
+        "media",
+        "measurement"
+      ],
+      "examples": [
+        "Use Media Measurement to comprehensive media measurement and evaluation including AVE (Advertising Value Equivalency), impression analysis, sentiment tracking, share of voice calculation, value metrics, ROI analysis, and competitive benchmarking.",
+        "Can you run Media Measurement? Metrics is the main input I have.",
+        "Invoke Media Measurement with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "content_distribution",
+      "name": "Content Distribution",
+      "description": "Content distribution optimization with timing recommendations, channel selection strategy, format adaptation plans, paid vs organic allocation, engagement analysis, adjustment suggestions, and performance forecasting.",
+      "tags": [
+        "pragent",
+        "content",
+        "distribution"
+      ],
+      "examples": [
+        "Use Content Distribution to content distribution optimization with timing recommendations, channel selection strategy, format adaptation plans, paid vs organic allocation, engagement analysis, adjustment suggestions, and performance forecasting.",
+        "Can you run Content Distribution? Content Pieces is the main input I have.",
+        "Invoke Content Distribution with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

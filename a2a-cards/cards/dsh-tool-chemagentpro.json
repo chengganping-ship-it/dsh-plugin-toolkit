@@ -1,0 +1,198 @@
+{
+  "name": "chemagentpro",
+  "description": "化工材料AI助手 — 化工与材料行业智能体",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/chemagentpro",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/chemagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "formulation_optimizer",
+      "name": "Formulation Optimizer",
+      "description": "配方优化 | DOE实验设计/响应面分析/性能预测/成本优化 | Formulation optimization with DOE, response surface methodology, property prediction.",
+      "tags": [
+        "chemagentpro",
+        "formulation",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Formulation Optimizer to 配方优化 | DOE实验设计/响应面分析/性能预测/成本优化 | Formulation optimization with DOE, response surface methodology, property prediction.",
+        "Can you run Formulation Optimizer? Input Data is the main input I have.",
+        "Invoke Formulation Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "process_scaleup",
+      "name": "Process Scaleup",
+      "description": "工艺放大 | 中试放大/传质传热分析/反应器设计/安全评估 | Process scale-up with mass/heat transfer analysis, reactor sizing, risk assessment.",
+      "tags": [
+        "chemagentpro",
+        "process",
+        "scaleup"
+      ],
+      "examples": [
+        "Use Process Scaleup to 工艺放大 | 中试放大/传质传热分析/反应器设计/安全评估 | Process scale-up with mass/heat transfer analysis, reactor sizing, risk assessment.",
+        "Can you run Process Scaleup? Input Data is the main input I have.",
+        "Invoke Process Scaleup with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "regulatory_compliance_chem",
+      "name": "Regulatory Compliance Chem",
+      "description": "合规评估 | REACH注册/GHS分类/危化品登记/MSDS | Regulatory compliance with REACH, GHS classification, hazchem registration, MSDS.",
+      "tags": [
+        "chemagentpro",
+        "regulatory",
+        "compliance",
+        "chem"
+      ],
+      "examples": [
+        "Use Regulatory Compliance Chem to 合规评估 | REACH注册/GHS分类/危化品登记/MSDS | Regulatory compliance with REACH, GHS classification, hazchem registration, MSDS.",
+        "Can you run Regulatory Compliance Chem? Input Data is the main input I have.",
+        "Invoke Regulatory Compliance Chem with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "catalyst_design",
+      "name": "Catalyst Design",
+      "description": "催化剂设计 | 活性/选择性/失活/再生/优化 | Catalyst design with activity prediction, selectivity analysis, deactivation modeling, regeneration.",
+      "tags": [
+        "chemagentpro",
+        "catalyst",
+        "design"
+      ],
+      "examples": [
+        "Use Catalyst Design to 催化剂设计 | 活性/选择性/失活/再生/优化 | Catalyst design with activity prediction, selectivity analysis, deactivation modeling, regeneration.",
+        "Can you run Catalyst Design? Input Data is the main input I have.",
+        "Invoke Catalyst Design with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "materials_informatics",
+      "name": "Materials Informatics",
+      "description": "材料信息学 | 数据库检索/ML势函数/高通量筛选/主动学习 | Materials informatics with database search, ML potential, high-throughput screening, active learning.",
+      "tags": [
+        "chemagentpro",
+        "materials",
+        "informatics"
+      ],
+      "examples": [
+        "Use Materials Informatics to 材料信息学 | 数据库检索/ML势函数/高通量筛选/主动学习 | Materials informatics with database search, ML potential, high-throughput screening, active learning.",
+        "Can you run Materials Informatics? Input Data is the main input I have.",
+        "Invoke Materials Informatics with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "safety_toxicology",
+      "name": "Safety Toxicology",
+      "description": "安全毒理 | 闪点/爆炸极限/LD50/暴露评估/PPE/应急 | Safety & toxicology with flash point, LD50, exposure assessment, PPE requirements, emergency measures.",
+      "tags": [
+        "chemagentpro",
+        "safety",
+        "toxicology"
+      ],
+      "examples": [
+        "Use Safety Toxicology to 安全毒理 | 闪点/爆炸极限/LD50/暴露评估/PPE/应急 | Safety & toxicology with flash point, LD50, exposure assessment, PPE requirements, emergency measures.",
+        "Can you run Safety Toxicology? Input Data is the main input I have.",
+        "Invoke Safety Toxicology with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "market_pricing_chem",
+      "name": "Market Pricing Chem",
+      "description": "市场定价 | 原油联动/供需平衡/贸易流/库存/价格预测 | Market pricing with crude oil linkage, supply-demand balance, trade flows, inventory, price forecast.",
+      "tags": [
+        "chemagentpro",
+        "market",
+        "pricing",
+        "chem"
+      ],
+      "examples": [
+        "Use Market Pricing Chem to 市场定价 | 原油联动/供需平衡/贸易流/库存/价格预测 | Market pricing with crude oil linkage, supply-demand balance, trade flows, inventory, price forecast.",
+        "Can you run Market Pricing Chem? Input Data is the main input I have.",
+        "Invoke Market Pricing Chem with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "circular_economy_polymer",
+      "name": "Circular Economy Polymer",
+      "description": "聚合物循环经济 | 回收/降解/生物基替代/循环指标/政策激励 | Circular economy for polymers with recycling, degradation, bio-based alternatives, metrics.",
+      "tags": [
+        "chemagentpro",
+        "circular",
+        "economy",
+        "polymer"
+      ],
+      "examples": [
+        "Use Circular Economy Polymer to 聚合物循环经济 | 回收/降解/生物基替代/循环指标/政策激励 | Circular economy for polymers with recycling, degradation, bio-based alternatives, metrics.",
+        "Can you run Circular Economy Polymer? Input Data is the main input I have.",
+        "Invoke Circular Economy Polymer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

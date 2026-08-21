@@ -1,0 +1,203 @@
+{
+  "name": "dsh-tool-elevatorsafetyagent",
+  "description": "Elevator & Special Equipment Safety AI Agent - Fault prediction with entrapment warning, annual inspection and maintenance scheduling, IoT running data with vibration/door motor analysis, special equipment compliance with registration management, old elevator modernization with cost estimation, elevator energy consumption with retrofit analysis, elevator rescue drill with emergency plan, and total lifecycle cost with scrap assessment",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-elevatorsafetyagent",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-elevatorsafetyagent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "elevator_fault_predictor",
+      "name": "Elevator Fault Predictor",
+      "description": "Predict elevator faults and assess entrapment risk based on age, usage, fault history, and component wear. Returns component-level probability rankings, remaining useful life estimates, and entrapment warning levels with actionable recommendations.",
+      "tags": [
+        "elevatorsafetyagent",
+        "elevator",
+        "fault",
+        "predictor"
+      ],
+      "examples": [
+        "Use Elevator Fault Predictor to predict elevator faults and assess entrapment risk based on age, usage, fault history, and component wear. Returns component-level probability rankings, remaining useful life estimates, and entrapment warning levels with actionable recommendations.",
+        "Can you run Elevator Fault Predictor? Input Data is the main input I have.",
+        "Invoke Elevator Fault Predictor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "elevator_inspection_scheduler",
+      "name": "Elevator Inspection Scheduler",
+      "description": "Generate comprehensive inspection and maintenance schedules for elevator fleets. Prioritizes overdue items, calculates compliance rates, and schedules inspections per TSG T7001 / EN 81-20 / ASME A17.1 standards.",
+      "tags": [
+        "elevatorsafetyagent",
+        "elevator",
+        "inspection",
+        "scheduler"
+      ],
+      "examples": [
+        "Use Elevator Inspection Scheduler to generate comprehensive inspection and maintenance schedules for elevator fleets. Prioritizes overdue items, calculates compliance rates, and schedules inspections per TSG T7001 / EN 81-20 / ASME A17.1 standards.",
+        "Can you run Elevator Inspection Scheduler? Input Data is the main input I have.",
+        "Invoke Elevator Inspection Scheduler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "elevator_iot_monitor",
+      "name": "Elevator Iot Monitor",
+      "description": "Analyze real-time IoT sensor data from elevator systems. Performs vibration analysis (ISO 10816), door motor diagnostics, motor current/temperature monitoring, and ride quality assessment with anomaly detection and root cause identification.",
+      "tags": [
+        "elevatorsafetyagent",
+        "elevator",
+        "iot",
+        "monitor"
+      ],
+      "examples": [
+        "Use Elevator Iot Monitor to analyze real-time IoT sensor data from elevator systems. Performs vibration analysis (ISO 10816), door motor diagnostics, motor current/temperature monitoring, and ride quality assessment with anomaly detection and root cause identification.",
+        "Can you run Elevator Iot Monitor? Input Data is the main input I have.",
+        "Invoke Elevator Iot Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "special_equipment_compliance",
+      "name": "Special Equipment Compliance",
+      "description": "Assess regulatory compliance for special equipment (elevators, cranes, boilers, pressure vessels). Checks registration status, inspection validity, operator certification, and documentation per Special Equipment Safety Law and international standards.",
+      "tags": [
+        "elevatorsafetyagent",
+        "special",
+        "equipment",
+        "compliance"
+      ],
+      "examples": [
+        "Use Special Equipment Compliance to assess regulatory compliance for special equipment (elevators, cranes, boilers, pressure vessels). Checks registration status, inspection validity, operator certification, and documentation per Special Equipment Safety Law and international standards.",
+        "Can you run Special Equipment Compliance? Input Data is the main input I have.",
+        "Invoke Special Equipment Compliance with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "elevator_modernization_advisor",
+      "name": "Elevator Modernization Advisor",
+      "description": "Develop modernization plans for aging elevators. Proposes component-level upgrades (controller, door operator, hoist machine, safety systems), estimates costs and downtime, calculates energy savings and payback period, and identifies regulatory compliance gains.",
+      "tags": [
+        "elevatorsafetyagent",
+        "elevator",
+        "modernization",
+        "advisor"
+      ],
+      "examples": [
+        "Use Elevator Modernization Advisor to develop modernization plans for aging elevators. Proposes component-level upgrades (controller, door operator, hoist machine, safety systems), estimates costs and downtime, calculates energy savings and payback period, and identifies regulatory compliance gains.",
+        "Can you run Elevator Modernization Advisor? Input Data is the main input I have.",
+        "Invoke Elevator Modernization Advisor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "elevator_energy_auditor",
+      "name": "Elevator Energy Auditor",
+      "description": "Perform comprehensive energy audits for elevators. Calculates energy per trip, ISO 25745 classification, standby power waste, carbon footprint, and evaluates retrofit options (regenerative drive, LED lighting, PMSM motor, solar PV) with payback analysis.",
+      "tags": [
+        "elevatorsafetyagent",
+        "elevator",
+        "energy",
+        "auditor"
+      ],
+      "examples": [
+        "Use Elevator Energy Auditor to perform comprehensive energy audits for elevators. Calculates energy per trip, ISO 25745 classification, standby power waste, carbon footprint, and evaluates retrofit options (regenerative drive, LED lighting, PMSM motor, solar PV) with payback analysis.",
+        "Can you run Elevator Energy Auditor? Input Data is the main input I have.",
+        "Invoke Elevator Energy Auditor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "elevator_rescue_simulator",
+      "name": "Elevator Rescue Simulator",
+      "description": "Simulate elevator entrapment rescue scenarios and evaluate emergency plans. Models rescue phases, estimates response times, assesses risk factors, generates equipment checklists, and scores drill readiness for power failure, door entrapment, earthquake, fire, overspeed, and free fall scenarios.",
+      "tags": [
+        "elevatorsafetyagent",
+        "elevator",
+        "rescue",
+        "simulator"
+      ],
+      "examples": [
+        "Use Elevator Rescue Simulator to simulate elevator entrapment rescue scenarios and evaluate emergency plans. Models rescue phases, estimates response times, assesses risk factors, generates equipment checklists, and scores drill readiness for power failure, door entrapment, earthquake, fire, overspeed, and free fall scenarios.",
+        "Can you run Elevator Rescue Simulator? Input Data is the main input I have.",
+        "Invoke Elevator Rescue Simulator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "elevator_lifecycle_cost",
+      "name": "Elevator Lifecycle Cost",
+      "description": "Calculate total cost of ownership and lifecycle costs for elevators. Models component replacements, operational costs, NPV analysis over 10 years, and provides scrap/replacement timing assessment with economic justification.",
+      "tags": [
+        "elevatorsafetyagent",
+        "elevator",
+        "lifecycle",
+        "cost"
+      ],
+      "examples": [
+        "Use Elevator Lifecycle Cost to calculate total cost of ownership and lifecycle costs for elevators. Models component replacements, operational costs, NPV analysis over 10 years, and provides scrap/replacement timing assessment with economic justification.",
+        "Can you run Elevator Lifecycle Cost? Input Data is the main input I have.",
+        "Invoke Elevator Lifecycle Cost with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

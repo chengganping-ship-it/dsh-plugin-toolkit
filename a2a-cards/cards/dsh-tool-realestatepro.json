@@ -1,0 +1,195 @@
+{
+  "name": "dsh-tool-realestatepro",
+  "description": "Real Estate Pro - Advanced property valuation (multi-model AVM), investment return analysis with leverage IRR, AI tenant screening, property management orchestration, market trend compass, financing optimizer, location risk assessor, and portfolio builder",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-realestatepro",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-realestatepro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": true,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "property_valuation",
+      "name": "Property Valuation",
+      "description": "Automated Valuation Model (AVM) combining four approaches: comparable sales with adjustments, hedonic price modeling, income approach (cap rate), and cost approach. Returns final estimate with valuation range, confidence interval, and approach weights.",
+      "tags": [
+        "realestatepro",
+        "property",
+        "valuation"
+      ],
+      "examples": [
+        "Use Property Valuation to automated Valuation Model (AVM) combining four approaches: comparable sales with adjustments, hedonic price modeling, income approach (cap rate), and cost approach. Returns final estimate with valuation range, confidence interval, and approach weights.",
+        "Can you run Property Valuation? Property Data is the main input I have.",
+        "Invoke Property Valuation with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "investment_analyzer",
+      "name": "Investment Analyzer",
+      "description": "Comprehensive investment return analysis. Calculates cash-on-cash return, cap rate, leveraged/unleveraged IRR, equity multiple, DSCR, break-even occupancy. Includes exit sensitivity analysis across appreciation scenarios and optimal holding period determination.",
+      "tags": [
+        "realestatepro",
+        "investment",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Investment Analyzer to comprehensive investment return analysis. Calculates cash-on-cash return, cap rate, leveraged/unleveraged IRR, equity multiple, DSCR, break-even occupancy. Includes exit sensitivity analysis across appreciation scenarios and optimal holding period determination.",
+        "Can you run Investment Analyzer? Investment Data is the main input I have.",
+        "Invoke Investment Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "tenant_screening",
+      "name": "Tenant Screening",
+      "description": "AI-powered tenant screening and selection. Scores applicants on credit (30%), income ratio (30%), employment stability (20%), and rental history (20%). Returns risk scores, rankings, lease term suggestions, deposit recommendations, and optimal tenant selection.",
+      "tags": [
+        "realestatepro",
+        "tenant",
+        "screening"
+      ],
+      "examples": [
+        "Use Tenant Screening to aI-powered tenant screening and selection. Scores applicants on credit (30%), income ratio (30%), employment stability (20%), and rental history (20%). Returns risk scores, rankings, lease term suggestions, deposit recommendations, and optimal tenant selection.",
+        "Can you run Tenant Screening? Applicants is the main input I have.",
+        "Invoke Tenant Screening with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "property_management",
+      "name": "Property Management",
+      "description": "Full property management orchestration dashboard. Manages lease tracking, rent collection, maintenance work orders (with SLA monitoring), compliance status, owner financial reports, and vendor scorecards. Returns comprehensive portfolio management overview.",
+      "tags": [
+        "realestatepro",
+        "property",
+        "management"
+      ],
+      "examples": [
+        "Use Property Management to full property management orchestration dashboard. Manages lease tracking, rent collection, maintenance work orders (with SLA monitoring), compliance status, owner financial reports, and vendor scorecards. Returns comprehensive portfolio management overview.",
+        "Can you run Property Management? Leases is the main input I have.",
+        "Invoke Property Management with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "market_compass",
+      "name": "Market Compass",
+      "description": "Market trend analysis with heat map. Analyzes price trends, inventory cycles, days on market, interest rate impact, policy risk, and rental yield trends. Returns market phase, temperature, investment signal, and key metrics dashboard.",
+      "tags": [
+        "realestatepro",
+        "market",
+        "compass"
+      ],
+      "examples": [
+        "Use Market Compass to market trend analysis with heat map. Analyzes price trends, inventory cycles, days on market, interest rate impact, policy risk, and rental yield trends. Returns market phase, temperature, investment signal, and key metrics dashboard.",
+        "Can you run Market Compass? Market Data is the main input I have.",
+        "Invoke Market Compass with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "financing_optimizer",
+      "name": "Financing Optimizer",
+      "description": "Financing optimization including refinance rate analysis, LTV/DCR analysis, multi-scenario comparison, prepayment analysis, and capital structure advice. Returns optimal refinance scenario and borrowing capacity.",
+      "tags": [
+        "realestatepro",
+        "financing",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Financing Optimizer to financing optimization including refinance rate analysis, LTV/DCR analysis, multi-scenario comparison, prepayment analysis, and capital structure advice. Returns optimal refinance scenario and borrowing capacity.",
+        "Can you run Financing Optimizer? Financing Data is the main input I have.",
+        "Invoke Financing Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "risk_locator",
+      "name": "Risk Locator",
+      "description": "Comprehensive location risk assessment covering crime rates, school ratings, natural disaster hazards, environmental factors, and future planning impact. Returns composite risk score, risk map by category, insurance impact, and investment implications.",
+      "tags": [
+        "realestatepro",
+        "risk",
+        "locator"
+      ],
+      "examples": [
+        "Use Risk Locator to comprehensive location risk assessment covering crime rates, school ratings, natural disaster hazards, environmental factors, and future planning impact. Returns composite risk score, risk map by category, insurance impact, and investment implications.",
+        "Can you run Risk Locator? Location Data is the main input I have.",
+        "Invoke Risk Locator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "portfolio_builder",
+      "name": "Portfolio Builder",
+      "description": "Portfolio construction and optimization. Analyzes diversification (geographic/type concentration, correlation matrix, beta), provides rebalancing recommendations, REIT comparison, and after-tax return optimization including 1031 exchange candidates.",
+      "tags": [
+        "realestatepro",
+        "portfolio",
+        "builder"
+      ],
+      "examples": [
+        "Use Portfolio Builder to portfolio construction and optimization. Analyzes diversification (geographic/type concentration, correlation matrix, beta), provides rebalancing recommendations, REIT comparison, and after-tax return optimization including 1031 exchange candidates.",
+        "Can you run Portfolio Builder? Holdings is the main input I have.",
+        "Invoke Portfolio Builder with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

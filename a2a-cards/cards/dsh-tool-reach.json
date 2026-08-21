@@ -1,0 +1,199 @@
+{
+  "name": "dsh-tool-reach",
+  "description": "Agent Web Intelligence Engine - Content extraction, social media monitoring, news aggregation, competitor intelligence, SEO analysis, forum sentiment tracking, documentation scraping, and trend forecasting",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-reach",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-reach",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "content_extractor",
+      "name": "Content Extractor",
+      "description": "Extract structured content from URLs. Supports article extraction, full page content, metadata parsing, and link discovery. Returns title, author, date, main text, word count, and readability score.",
+      "tags": [
+        "reach",
+        "content",
+        "extractor"
+      ],
+      "examples": [
+        "Use Content Extractor to extract structured content from URLs. Supports article extraction, full page content, metadata parsing, and link discovery. Returns title, author, date, main text, word count, and readability score.",
+        "Can you run Content Extractor? Url is the main input I have.",
+        "Invoke Content Extractor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "social_media_monitor",
+      "name": "Social Media Monitor",
+      "description": "Monitor social media platforms for keyword mentions, sentiment analysis, and trending topics. Tracks Twitter, Reddit, HackerNews, and GitHub for real-time intelligence.",
+      "tags": [
+        "reach",
+        "social",
+        "media",
+        "monitor"
+      ],
+      "examples": [
+        "Use Social Media Monitor to monitor social media platforms for keyword mentions, sentiment analysis, and trending topics. Tracks Twitter, Reddit, HackerNews, and GitHub for real-time intelligence.",
+        "Can you run Social Media Monitor? Platforms is the main input I have.",
+        "Invoke Social Media Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "news_aggregator",
+      "name": "News Aggregator",
+      "description": "Aggregate news articles from multiple sources by topic. Provides relevance scoring, entity extraction, and consolidated summaries across tech, business, and industry news.",
+      "tags": [
+        "reach",
+        "news",
+        "aggregator"
+      ],
+      "examples": [
+        "Use News Aggregator to aggregate news articles from multiple sources by topic. Provides relevance scoring, entity extraction, and consolidated summaries across tech, business, and industry news.",
+        "Can you run News Aggregator? Topics is the main input I have.",
+        "Invoke News Aggregator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "competitor_intel_scraper",
+      "name": "Competitor Intel Scraper",
+      "description": "Scrape competitor intelligence including pricing changes, product updates, hiring signals, and technology stack changes. Monitors competitor websites and public signals.",
+      "tags": [
+        "reach",
+        "competitor",
+        "intel",
+        "scraper"
+      ],
+      "examples": [
+        "Use Competitor Intel Scraper to scrape competitor intelligence including pricing changes, product updates, hiring signals, and technology stack changes. Monitors competitor websites and public signals.",
+        "Can you run Competitor Intel Scraper? Competitors is the main input I have.",
+        "Invoke Competitor Intel Scraper with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "search_engine_optimizer",
+      "name": "Search Engine Optimizer",
+      "description": "Execute unified search across multiple engines with deduplication, ranking consensus analysis, and featured snippet extraction. Combines Google, Bing, DuckDuckGo, and Brave results.",
+      "tags": [
+        "reach",
+        "search",
+        "engine",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Search Engine Optimizer to execute unified search across multiple engines with deduplication, ranking consensus analysis, and featured snippet extraction. Combines Google, Bing, DuckDuckGo, and Brave results.",
+        "Can you run Search Engine Optimizer? Query is the main input I have.",
+        "Invoke Search Engine Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "forum_sentiment_tracker",
+      "name": "Forum Sentiment Tracker",
+      "description": "Track brand sentiment across online forums and communities. Identifies top complaints, praised features, and overall community health metrics.",
+      "tags": [
+        "reach",
+        "forum",
+        "sentiment",
+        "tracker"
+      ],
+      "examples": [
+        "Use Forum Sentiment Tracker to track brand sentiment across online forums and communities. Identifies top complaints, praised features, and overall community health metrics.",
+        "Can you run Forum Sentiment Tracker? Forum Urls is the main input I have.",
+        "Invoke Forum Sentiment Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "documentation_scraper",
+      "name": "Documentation Scraper",
+      "description": "Scrape API documentation for changes including new features, breaking changes, deprecated features, and migration guides. Tracks version-to-version differences.",
+      "tags": [
+        "reach",
+        "documentation",
+        "scraper"
+      ],
+      "examples": [
+        "Use Documentation Scraper to scrape API documentation for changes including new features, breaking changes, deprecated features, and migration guides. Tracks version-to-version differences.",
+        "Can you run Documentation Scraper? Doc Urls is the main input I have.",
+        "Invoke Documentation Scraper with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "trend_forecaster",
+      "name": "Trend Forecaster",
+      "description": "Analyze historical data to forecast trends, detect seasonality, identify anomalies, and generate confidence-scored predictions. Supports external signal integration.",
+      "tags": [
+        "reach",
+        "trend",
+        "forecaster"
+      ],
+      "examples": [
+        "Use Trend Forecaster to analyze historical data to forecast trends, detect seasonality, identify anomalies, and generate confidence-scored predictions. Supports external signal integration.",
+        "Can you run Trend Forecaster? Historical Data is the main input I have.",
+        "Invoke Trend Forecaster with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

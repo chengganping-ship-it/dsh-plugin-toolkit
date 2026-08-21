@@ -1,0 +1,198 @@
+{
+  "name": "dsh-tool-fieldforce",
+  "description": "AI外勤服务管理优化引擎 - 工单全生命周期、智能调度派工、移动外勤应用、资产管理维护、SLA合规监控、区域优化、客户自助门户、外勤效能分析",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-fieldforce",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-fieldforce",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "work_order_lifecycle",
+      "name": "Work Order Lifecycle",
+      "description": "工单全生命周期管理 | 创建→分派→抵达→处理→完成→客户签字→关闭→满意度→成本核算 | Full work order lifecycle from creation to cost accounting.",
+      "tags": [
+        "fieldforce",
+        "work",
+        "order",
+        "lifecycle"
+      ],
+      "examples": [
+        "Use Work Order Lifecycle to 工单全生命周期管理 | 创建→分派→抵达→处理→完成→客户签字→关闭→满意度→成本核算 | Full work order lifecycle from creation to cost accounting.",
+        "Can you run Work Order Lifecycle? Work Order Input is the main input I have.",
+        "Invoke Work Order Lifecycle with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "dispatch_scheduler",
+      "name": "Dispatch Scheduler",
+      "description": "智能调度派工 | 技能匹配+地理位置+工时平衡+紧急插入+预测性维护+交通优化 | Smart dispatching with skill matching, geo-optimization, workload balance, and predictive alerts.",
+      "tags": [
+        "fieldforce",
+        "dispatch",
+        "scheduler"
+      ],
+      "examples": [
+        "Use Dispatch Scheduler to 智能调度派工 | 技能匹配+地理位置+工时平衡+紧急插入+预测性维护+交通优化 | Smart dispatching with skill matching, geo-optimization, workload balance, and predictive alerts.",
+        "Can you run Dispatch Scheduler? Dispatch Input is the main input I have.",
+        "Invoke Dispatch Scheduler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "mobile_workforce_app",
+      "name": "Mobile Workforce App",
+      "description": "移动外勤应用 | 离线工单+电子签名+条码扫描+拍照+语音备注+资产查询+知识库 | Mobile workforce app with offline sync, e-signature, barcode scan, and knowledge base.",
+      "tags": [
+        "fieldforce",
+        "mobile",
+        "workforce",
+        "app"
+      ],
+      "examples": [
+        "Use Mobile Workforce App to 移动外勤应用 | 离线工单+电子签名+条码扫描+拍照+语音备注+资产查询+知识库 | Mobile workforce app with offline sync, e-signature, barcode scan, and knowledge base.",
+        "Can you run Mobile Workforce App? Mobile Input is the main input I have.",
+        "Invoke Mobile Workforce App with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "asset_maintenance",
+      "name": "Asset Maintenance",
+      "description": "资产管理维护 | 设备台账+维保计划+故障预测MTBF+备件库存联动+IoT集成+维保成本 | Asset management with MTBF prediction, IoT integration, and spare parts inventory.",
+      "tags": [
+        "fieldforce",
+        "asset",
+        "maintenance"
+      ],
+      "examples": [
+        "Use Asset Maintenance to 资产管理维护 | 设备台账+维保计划+故障预测MTBF+备件库存联动+IoT集成+维保成本 | Asset management with MTBF prediction, IoT integration, and spare parts inventory.",
+        "Can you run Asset Maintenance? Asset Input is the main input I have.",
+        "Invoke Asset Maintenance with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "sla_compliance_monitor",
+      "name": "Sla Compliance Monitor",
+      "description": "SLA合规监控 | 响应时间+解决时间+首次修复率+升级预警+违约成本+趋势分析 | SLA compliance monitoring with response/resolution tracking, first-fix rate, and penalty cost analysis.",
+      "tags": [
+        "fieldforce",
+        "sla",
+        "compliance",
+        "monitor"
+      ],
+      "examples": [
+        "Use Sla Compliance Monitor to sLA合规监控 | 响应时间+解决时间+首次修复率+升级预警+违约成本+趋势分析 | SLA compliance monitoring with response/resolution tracking, first-fix rate, and penalty cost analysis.",
+        "Can you run Sla Compliance Monitor? Sla Input is the main input I have.",
+        "Invoke Sla Compliance Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "territory_optimizer",
+      "name": "Territory Optimizer",
+      "description": "区域优化 | 工作量密度热力图+平衡路线+差旅时间最小化+覆盖效率+区域调整模拟 | Territory optimization with workload heatmap, route balancing, and coverage analysis.",
+      "tags": [
+        "fieldforce",
+        "territory",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Territory Optimizer to 区域优化 | 工作量密度热力图+平衡路线+差旅时间最小化+覆盖效率+区域调整模拟 | Territory optimization with workload heatmap, route balancing, and coverage analysis.",
+        "Can you run Territory Optimizer? Territory Input is the main input I have.",
+        "Invoke Territory Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "customer_portal",
+      "name": "Customer Portal",
+      "description": "客户自助门户 | 工单提交+进度跟踪+评价反馈+电子发票+FAQ推荐+满意度追踪+维护历史 | Customer self-service portal with order submission, progress tracking, and satisfaction survey.",
+      "tags": [
+        "fieldforce",
+        "customer",
+        "portal"
+      ],
+      "examples": [
+        "Use Customer Portal to 客户自助门户 | 工单提交+进度跟踪+评价反馈+电子发票+FAQ推荐+满意度追踪+维护历史 | Customer self-service portal with order submission, progress tracking, and satisfaction survey.",
+        "Can you run Customer Portal? Portal Input is the main input I have.",
+        "Invoke Customer Portal with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "workforce_analytics",
+      "name": "Workforce Analytics",
+      "description": "外勤效能分析 | 人均产出+加班分析+培训缺口+团队协作+协作模式发现+效能改进建议 | Workforce analytics with productivity, overtime, training gaps, and collaboration pattern discovery.",
+      "tags": [
+        "fieldforce",
+        "workforce",
+        "analytics"
+      ],
+      "examples": [
+        "Use Workforce Analytics to 外勤效能分析 | 人均产出+加班分析+培训缺口+团队协作+协作模式发现+效能改进建议 | Workforce analytics with productivity, overtime, training gaps, and collaboration pattern discovery.",
+        "Can you run Workforce Analytics? Analytics Input is the main input I have.",
+        "Invoke Workforce Analytics with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

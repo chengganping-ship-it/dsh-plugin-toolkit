@@ -1,0 +1,203 @@
+{
+  "name": "forestagentpro",
+  "description": "智慧林业AI助手 — 森林资源管理与碳汇核算智能体",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/forestagentpro",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/forestagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "forest_inventory_analyzer",
+      "name": "Forest Inventory Analyzer",
+      "description": "森林资源清查与蓄积量估算 — 基于林分调查数据，提供蓄积量估算、生物量计算、碳储量评估、树种组成分析和生长预测",
+      "tags": [
+        "forestagentpro",
+        "forest",
+        "inventory",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Forest Inventory Analyzer to 森林资源清查与蓄积量估算 — 基于林分调查数据，提供蓄积量估算、生物量计算、碳储量评估、树种组成分析和生长预测.",
+        "Can you run Forest Inventory Analyzer? Input Data is the main input I have.",
+        "Invoke Forest Inventory Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fire_risk_prediction",
+      "name": "Fire Risk Prediction",
+      "description": "森林火险等级预测与热点监测 — 基于气象数据和遥感热点，提供FWI火险指数计算、风险等级评估、蔓延预测和防范措施",
+      "tags": [
+        "forestagentpro",
+        "fire",
+        "risk",
+        "prediction"
+      ],
+      "examples": [
+        "Use Fire Risk Prediction to 森林火险等级预测与热点监测 — 基于气象数据和遥感热点，提供FWI火险指数计算、风险等级评估、蔓延预测和防范措施.",
+        "Can you run Fire Risk Prediction? Input Data is the main input I have.",
+        "Invoke Fire Risk Prediction with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "timber_harvest_scheduler",
+      "name": "Timber Harvest Scheduler",
+      "description": "采伐计划与可持续木材供给 — 基于林分数据和经营目标，提供五年采伐计划、可持续产量分析、经济评估和物流规划",
+      "tags": [
+        "forestagentpro",
+        "timber",
+        "harvest",
+        "scheduler"
+      ],
+      "examples": [
+        "Use Timber Harvest Scheduler to 采伐计划与可持续木材供给 — 基于林分数据和经营目标，提供五年采伐计划、可持续产量分析、经济评估和物流规划.",
+        "Can you run Timber Harvest Scheduler? Input Data is the main input I have.",
+        "Invoke Timber Harvest Scheduler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "reforestation_planner",
+      "name": "Reforestation Planner",
+      "description": "造林方案设计与树种选择 — 基于立地条件和经营目的，提供树种推荐、种植设计、土壤准备、抚育管理和成本估算",
+      "tags": [
+        "forestagentpro",
+        "reforestation",
+        "planner"
+      ],
+      "examples": [
+        "Use Reforestation Planner to 造林方案设计与树种选择 — 基于立地条件和经营目的，提供树种推荐、种植设计、土壤准备、抚育管理和成本估算.",
+        "Can you run Reforestation Planner? Input Data is the main input I have.",
+        "Invoke Reforestation Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "forest_carbon_sink_calculator",
+      "name": "Forest Carbon Sink Calculator",
+      "description": "林业碳汇核算与CCER方法学 — 基于CCER方法学，提供基线碳储量、项目碳储量、核证减排量、财务分析和监测计划",
+      "tags": [
+        "forestagentpro",
+        "forest",
+        "carbon",
+        "sink",
+        "calculator"
+      ],
+      "examples": [
+        "Use Forest Carbon Sink Calculator to 林业碳汇核算与CCER方法学 — 基于CCER方法学，提供基线碳储量、项目碳储量、核证减排量、财务分析和监测计划.",
+        "Can you run Forest Carbon Sink Calculator? Input Data is the main input I have.",
+        "Invoke Forest Carbon Sink Calculator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "pest_disease_detector",
+      "name": "Pest Disease Detector",
+      "description": "林业病虫害遥感检测与预警 — 基于遥感影像和气象数据，提供病虫害识别、扩散模型、防治建议和预警等级",
+      "tags": [
+        "forestagentpro",
+        "pest",
+        "disease",
+        "detector"
+      ],
+      "examples": [
+        "Use Pest Disease Detector to 林业病虫害遥感检测与预警 — 基于遥感影像和气象数据，提供病虫害识别、扩散模型、防治建议和预警等级.",
+        "Can you run Pest Disease Detector? Input Data is the main input I have.",
+        "Invoke Pest Disease Detector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "biodiversity_monitor",
+      "name": "Biodiversity Monitor",
+      "description": "森林生物多样性指标追踪 — 基于调查数据，提供物种丰富度、多样性指数、关键物种、栖息地质量、威胁评估和趋势分析",
+      "tags": [
+        "forestagentpro",
+        "biodiversity",
+        "monitor"
+      ],
+      "examples": [
+        "Use Biodiversity Monitor to 森林生物多样性指标追踪 — 基于调查数据，提供物种丰富度、多样性指数、关键物种、栖息地质量、威胁评估和趋势分析.",
+        "Can you run Biodiversity Monitor? Input Data is the main input I have.",
+        "Invoke Biodiversity Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "forest_rights_cadastral_manager",
+      "name": "Forest Rights Cadastral Manager",
+      "description": "林权不动产登记与流转管理 — 基于权属信息，提供登记信息、宗地详情、权利结构、流转分析、争议处理和合规检查",
+      "tags": [
+        "forestagentpro",
+        "forest",
+        "rights",
+        "cadastral",
+        "manager"
+      ],
+      "examples": [
+        "Use Forest Rights Cadastral Manager to 林权不动产登记与流转管理 — 基于权属信息，提供登记信息、宗地详情、权利结构、流转分析、争议处理和合规检查.",
+        "Can you run Forest Rights Cadastral Manager? Input Data is the main input I have.",
+        "Invoke Forest Rights Cadastral Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

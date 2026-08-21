@@ -1,0 +1,197 @@
+{
+  "name": "dsh-tool-personalfinance",
+  "description": "Personal Finance AI - expense tracking with auto-classification, budget optimization, investment portfolio management, debt reduction planning, retirement planning, tax optimization, goal-based savings, and financial literacy tracking",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-personalfinance",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-personalfinance",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "expense_tracker",
+      "name": "Expense Tracker",
+      "description": "Track and categorize expenses with auto-classification, merchant mapping, cycle detection, tax identification, anomaly detection, and investment correlation analysis.",
+      "tags": [
+        "personalfinance",
+        "expense",
+        "tracker"
+      ],
+      "examples": [
+        "Use Expense Tracker to track and categorize expenses with auto-classification, merchant mapping, cycle detection, tax identification, anomaly detection, and investment correlation analysis.",
+        "Can you run Expense Tracker? Transaction Data is the main input I have.",
+        "Invoke Expense Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "budget_optimizer",
+      "name": "Budget Optimizer",
+      "description": "Optimize monthly budget based on income analysis, expense patterns, savings goals, progress tracking, and actionable adjustment suggestions.",
+      "tags": [
+        "personalfinance",
+        "budget",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Budget Optimizer to optimize monthly budget based on income analysis, expense patterns, savings goals, progress tracking, and actionable adjustment suggestions.",
+        "Can you run Budget Optimizer? Monthly Income is the main input I have.",
+        "Invoke Budget Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "investment_portfolio",
+      "name": "Investment Portfolio",
+      "description": "Analyze investment portfolio with stocks, bonds, funds, ETFs. Includes risk assessment, rebalancing recommendations, tax optimization, and goal tracking.",
+      "tags": [
+        "personalfinance",
+        "investment",
+        "portfolio"
+      ],
+      "examples": [
+        "Use Investment Portfolio to analyze investment portfolio with stocks, bonds, funds, ETFs. Includes risk assessment, rebalancing recommendations, tax optimization, and goal tracking.",
+        "Can you run Investment Portfolio? Holdings Data is the main input I have.",
+        "Invoke Investment Portfolio with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "debt_reduction_planner",
+      "name": "Debt Reduction Planner",
+      "description": "Create debt reduction plans using avalanche or snowball method. Includes priority ranking, extra payment allocation, timeline, interest savings, and milestone tracking.",
+      "tags": [
+        "personalfinance",
+        "debt",
+        "reduction",
+        "planner"
+      ],
+      "examples": [
+        "Use Debt Reduction Planner to create debt reduction plans using avalanche or snowball method. Includes priority ranking, extra payment allocation, timeline, interest savings, and milestone tracking.",
+        "Can you run Debt Reduction Planner? Debts Json is the main input I have.",
+        "Invoke Debt Reduction Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "retirement_planner",
+      "name": "Retirement Planner",
+      "description": "Comprehensive retirement planning with target replacement rate, social security estimates, 401k/IRA projections, medical cost analysis, withdrawal strategy, and gap analysis.",
+      "tags": [
+        "personalfinance",
+        "retirement",
+        "planner"
+      ],
+      "examples": [
+        "Use Retirement Planner to comprehensive retirement planning with target replacement rate, social security estimates, 401k/IRA projections, medical cost analysis, withdrawal strategy, and gap analysis.",
+        "Can you run Retirement Planner? Current Age is the main input I have.",
+        "Invoke Retirement Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "tax_optimizer",
+      "name": "Tax Optimizer",
+      "description": "Tax optimization with deduction analysis, credits identification, capital gains strategy, retirement contribution optimization, entity structure comparison, and tax savings simulation.",
+      "tags": [
+        "personalfinance",
+        "tax",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Tax Optimizer to tax optimization with deduction analysis, credits identification, capital gains strategy, retirement contribution optimization, entity structure comparison, and tax savings simulation.",
+        "Can you run Tax Optimizer? Filing Status is the main input I have.",
+        "Invoke Tax Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "goal_based_savings",
+      "name": "Goal Based Savings",
+      "description": "Create savings plans for multiple goals including emergency fund, education, home, car, travel. Includes funding strategies, automation recommendations, and progress tracking.",
+      "tags": [
+        "personalfinance",
+        "goal",
+        "based",
+        "savings"
+      ],
+      "examples": [
+        "Use Goal Based Savings to create savings plans for multiple goals including emergency fund, education, home, car, travel. Includes funding strategies, automation recommendations, and progress tracking.",
+        "Can you run Goal Based Savings? Monthly Capacity is the main input I have.",
+        "Invoke Goal Based Savings with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "financial_literacy",
+      "name": "Financial Literacy",
+      "description": "Assess financial knowledge with scoring, learning path recommendations, module progress tracking, certification tracking, practice tasks, and community challenges.",
+      "tags": [
+        "personalfinance",
+        "financial",
+        "literacy"
+      ],
+      "examples": [
+        "Use Financial Literacy to assess financial knowledge with scoring, learning path recommendations, module progress tracking, certification tracking, practice tasks, and community challenges.",
+        "Can you run Financial Literacy? Current Knowledge is the main input I have.",
+        "Invoke Financial Literacy with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

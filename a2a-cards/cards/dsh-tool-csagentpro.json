@@ -1,0 +1,198 @@
+{
+  "name": "dsh-tool-csagentpro",
+  "description": "客户成功AI智能体专业版 - 健康度评分、流失预测、增购识别、Onboarding优化、QBR生成、推荐计划、工单分析、生命周期管理",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-csagentpro",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-csagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "health_score_calculator",
+      "name": "Health Score Calculator",
+      "description": "客户健康度评分与预警系统 | 综合NPS、使用率、工单、CSAT等多维度生成健康分、等级、风险预警与改善建议 | Calculate comprehensive customer health score with early warnings and recommendations.",
+      "tags": [
+        "csagentpro",
+        "health",
+        "score",
+        "calculator"
+      ],
+      "examples": [
+        "Use Health Score Calculator to 客户健康度评分与预警系统 | 综合NPS、使用率、工单、CSAT等多维度生成健康分、等级、风险预警与改善建议 | Calculate comprehensive customer health score with early warnings and recommendations.",
+        "Can you run Health Score Calculator? Input Data is the main input I have.",
+        "Invoke Health Score Calculator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "churn_predictor",
+      "name": "Churn Predictor",
+      "description": "流失风险预测与干预策略 | 评估客户流失概率、识别风险驱动因素、推荐挽留策略和干预时间线 | Predict churn risk with drivers, intervention strategies, and retention playbook.",
+      "tags": [
+        "csagentpro",
+        "churn",
+        "predictor"
+      ],
+      "examples": [
+        "Use Churn Predictor to 流失风险预测与干预策略 | 评估客户流失概率、识别风险驱动因素、推荐挽留策略和干预时间线 | Predict churn risk with drivers, intervention strategies, and retention playbook.",
+        "Can you run Churn Predictor? Input Data is the main input I have.",
+        "Invoke Churn Predictor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "expansion_identifier",
+      "name": "Expansion Identifier",
+      "description": "增购/扩展机会识别与推荐 | 分析交叉销售/向上销售机会，估算ARR增量和置信度 | Identify upsell/cross-sell expansion opportunities with confidence scoring.",
+      "tags": [
+        "csagentpro",
+        "expansion",
+        "identifier"
+      ],
+      "examples": [
+        "Use Expansion Identifier to 增购/扩展机会识别与推荐 | 分析交叉销售/向上销售机会，估算ARR增量和置信度 | Identify upsell/cross-sell expansion opportunities with confidence scoring.",
+        "Can you run Expansion Identifier? Input Data is the main input I have.",
+        "Invoke Expansion Identifier with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "onboarding_optimizer",
+      "name": "Onboarding Optimizer",
+      "description": "客户Onboarding流程优化与里程碑追踪 | 追踪里程碑进度、识别瓶颈、优化Onboarding路径 | Optimize customer onboarding with milestone tracking and bottleneck analysis.",
+      "tags": [
+        "csagentpro",
+        "onboarding",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Onboarding Optimizer to 客户Onboarding流程优化与里程碑追踪 | 追踪里程碑进度、识别瓶颈、优化Onboarding路径 | Optimize customer onboarding with milestone tracking and bottleneck analysis.",
+        "Can you run Onboarding Optimizer? Input Data is the main input I have.",
+        "Invoke Onboarding Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "qbr_generator",
+      "name": "Qbr Generator",
+      "description": "QBR季度业务回顾报告自动生成 | 自动产出包含目标回顾、采用分析、ROI、路线图的完整QBR报告 | Auto-generate comprehensive Quarterly Business Review reports.",
+      "tags": [
+        "csagentpro",
+        "qbr",
+        "generator"
+      ],
+      "examples": [
+        "Use Qbr Generator to qBR季度业务回顾报告自动生成 | 自动产出包含目标回顾、采用分析、ROI、路线图的完整QBR报告 | Auto-generate comprehensive Quarterly Business Review reports.",
+        "Can you run Qbr Generator? Input Data is the main input I have.",
+        "Invoke Qbr Generator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "advocacy_program",
+      "name": "Advocacy Program",
+      "description": "客户推荐计划与成功案例挖掘 | 评估推荐潜力、匹配推荐活动、挖掘案例研究机会 | Identify advocacy opportunities, match programs, and mine case study potential.",
+      "tags": [
+        "csagentpro",
+        "advocacy",
+        "program"
+      ],
+      "examples": [
+        "Use Advocacy Program to 客户推荐计划与成功案例挖掘 | 评估推荐潜力、匹配推荐活动、挖掘案例研究机会 | Identify advocacy opportunities, match programs, and mine case study potential.",
+        "Can you run Advocacy Program? Input Data is the main input I have.",
+        "Invoke Advocacy Program with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "ticket_trend_analyzer",
+      "name": "Ticket Trend Analyzer",
+      "description": "工单趋势分析与根因定位 | 分析工单量、分类趋势、严重度分布、根因和改善建议 | Analyze support ticket trends, categorize root causes, and recommend improvements.",
+      "tags": [
+        "csagentpro",
+        "ticket",
+        "trend",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Ticket Trend Analyzer to 工单趋势分析与根因定位 | 分析工单量、分类趋势、严重度分布、根因和改善建议 | Analyze support ticket trends, categorize root causes, and recommend improvements.",
+        "Can you run Ticket Trend Analyzer? Input Data is the main input I have.",
+        "Invoke Ticket Trend Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "lifecycle_stage_manager",
+      "name": "Lifecycle Stage Manager",
+      "description": "客户生命周期阶段管理与转化 | 管理客户生命周期阶段、评估转化准备度、制定跃迁计划 | Manage lifecycle stages, assess conversion readiness, and plan transitions.",
+      "tags": [
+        "csagentpro",
+        "lifecycle",
+        "stage",
+        "manager"
+      ],
+      "examples": [
+        "Use Lifecycle Stage Manager to 客户生命周期阶段管理与转化 | 管理客户生命周期阶段、评估转化准备度、制定跃迁计划 | Manage lifecycle stages, assess conversion readiness, and plan transitions.",
+        "Can you run Lifecycle Stage Manager? Input Data is the main input I have.",
+        "Invoke Lifecycle Stage Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

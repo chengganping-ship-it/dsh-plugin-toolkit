@@ -1,0 +1,199 @@
+{
+  "name": "creativeagentpro",
+  "description": "Creative Agent Pro — AI驱动的品牌设计/内容策划/视觉创意/文案优化工具集",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/creativeagentpro",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/creativeagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "brand_identity_designer",
+      "name": "Brand Identity Designer",
+      "description": "品牌视觉识别系统设计与规范生成 | 色彩/字体/Logo/品牌指南",
+      "tags": [
+        "creativeagentpro",
+        "brand",
+        "identity",
+        "designer"
+      ],
+      "examples": [
+        "Use Brand Identity Designer to 品牌视觉识别系统设计与规范生成 | 色彩/字体/Logo/品牌指南.",
+        "Can you run Brand Identity Designer? Input Data is the main input I have.",
+        "Invoke Brand Identity Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "content_calendar_planner",
+      "name": "Content Calendar Planner",
+      "description": "社交媒体内容日历规划与排期 | 平台/支柱/频率/排期表",
+      "tags": [
+        "creativeagentpro",
+        "content",
+        "calendar",
+        "planner"
+      ],
+      "examples": [
+        "Use Content Calendar Planner to 社交媒体内容日历规划与排期 | 平台/支柱/频率/排期表.",
+        "Can you run Content Calendar Planner? Input Data is the main input I have.",
+        "Invoke Content Calendar Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "copy_rewriter",
+      "name": "Copy Rewriter",
+      "description": "SEO文案重写与多版本A/B生成 | 关键词/语调/变体/CTR预测",
+      "tags": [
+        "creativeagentpro",
+        "copy",
+        "rewriter"
+      ],
+      "examples": [
+        "Use Copy Rewriter to sEO文案重写与多版本A/B生成 | 关键词/语调/变体/CTR预测.",
+        "Can you run Copy Rewriter? Input Data is the main input I have.",
+        "Invoke Copy Rewriter with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "visual_concept_board",
+      "name": "Visual Concept Board",
+      "description": "视觉创意板与配色方案生成 | 色彩/元素/纹理/构图",
+      "tags": [
+        "creativeagentpro",
+        "visual",
+        "concept",
+        "board"
+      ],
+      "examples": [
+        "Use Visual Concept Board to 视觉创意板与配色方案生成 | 色彩/元素/纹理/构图.",
+        "Can you run Visual Concept Board? Input Data is the main input I have.",
+        "Invoke Visual Concept Board with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "storyboard_architect",
+      "name": "Storyboard Architect",
+      "description": "视频脚本分镜与节奏设计 | 帧/镜头/转场/节奏/设备",
+      "tags": [
+        "creativeagentpro",
+        "storyboard",
+        "architect"
+      ],
+      "examples": [
+        "Use Storyboard Architect to 视频脚本分镜与节奏设计 | 帧/镜头/转场/节奏/设备.",
+        "Can you run Storyboard Architect? Input Data is the main input I have.",
+        "Invoke Storyboard Architect with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "newsletter_crafter",
+      "name": "Newsletter Crafter",
+      "description": "邮件Newsletter模板与内容创作 | 主题行/区块/CTA/送达率",
+      "tags": [
+        "creativeagentpro",
+        "newsletter",
+        "crafter"
+      ],
+      "examples": [
+        "Use Newsletter Crafter to 邮件Newsletter模板与内容创作 | 主题行/区块/CTA/送达率.",
+        "Can you run Newsletter Crafter? Input Data is the main input I have.",
+        "Invoke Newsletter Crafter with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "ux_copy_optimizer",
+      "name": "Ux Copy Optimizer",
+      "description": "UX微文案与交互文案优化 | 建议/微文案系统/无障碍/一致性",
+      "tags": [
+        "creativeagentpro",
+        "copy",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Ux Copy Optimizer to uX微文案与交互文案优化 | 建议/微文案系统/无障碍/一致性.",
+        "Can you run Ux Copy Optimizer? Input Data is the main input I have.",
+        "Invoke Ux Copy Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "pitch_deck_designer",
+      "name": "Pitch Deck Designer",
+      "description": "融资Pitch Deck结构与内容建议 | 幻灯片/叙事弧线/设计/常见错误",
+      "tags": [
+        "creativeagentpro",
+        "pitch",
+        "deck",
+        "designer"
+      ],
+      "examples": [
+        "Use Pitch Deck Designer to 融资Pitch Deck结构与内容建议 | 幻灯片/叙事弧线/设计/常见错误.",
+        "Can you run Pitch Deck Designer? Input Data is the main input I have.",
+        "Invoke Pitch Deck Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

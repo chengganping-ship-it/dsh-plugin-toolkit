@@ -1,0 +1,204 @@
+{
+  "name": "dsh-tool-agedcareagent",
+  "description": "智慧养老AI智能体 - 跌倒检测算法评估、用药依从性追踪、认知功能衰退监测、ADL活动识别、社交陪伴干预、生命体征远程监护、营养吞咽安全饮食、养老机构运营调度",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-agedcareagent",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-agedcareagent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "fall_detection_system",
+      "name": "Fall Detection System",
+      "description": "跌倒检测算法评估与响应机制 | 分析传感器数据、评估算法精度、推荐响应协议。输入包含患者信息、传感器类型、算法模型、跌倒史等。",
+      "tags": [
+        "agedcareagent",
+        "fall",
+        "detection",
+        "system"
+      ],
+      "examples": [
+        "Use Fall Detection System to 跌倒检测算法评估与响应机制 | 分析传感器数据、评估算法精度、推荐响应协议。输入包含患者信息、传感器类型、算法模型、跌倒史等。.",
+        "Can you run Fall Detection System? Input Data is the main input I have.",
+        "Invoke Fall Detection System with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "medication_adherence_tracker",
+      "name": "Medication Adherence Tracker",
+      "description": "用药依从性追踪与提醒系统 | 评估用药依从率、识别风险药物、生成个性化提醒方案。输入包含患者用药清单、认知状态、追踪天数、漏服记录等。",
+      "tags": [
+        "agedcareagent",
+        "medication",
+        "adherence",
+        "tracker"
+      ],
+      "examples": [
+        "Use Medication Adherence Tracker to 用药依从性追踪与提醒系统 | 评估用药依从率、识别风险药物、生成个性化提醒方案。输入包含患者用药清单、认知状态、追踪天数、漏服记录等。.",
+        "Can you run Medication Adherence Tracker? Input Data is the main input I have.",
+        "Invoke Medication Adherence Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "cognitive_health_monitor",
+      "name": "Cognitive Health Monitor",
+      "description": "认知功能衰退监测与早期筛查 | 评估认知评分变化、识别预警信号、推荐干预措施。输入包含评估工具类型、基线/当前评分、家族史等。",
+      "tags": [
+        "agedcareagent",
+        "cognitive",
+        "health",
+        "monitor"
+      ],
+      "examples": [
+        "Use Cognitive Health Monitor to 认知功能衰退监测与早期筛查 | 评估认知评分变化、识别预警信号、推荐干预措施。输入包含评估工具类型、基线/当前评分、家族史等。.",
+        "Can you run Cognitive Health Monitor? Input Data is the main input I have.",
+        "Invoke Cognitive Health Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "daily_activity_recognizer",
+      "name": "Daily Activity Recognizer",
+      "description": "日常生活活动(ADL)识别与能力评估 | 分析日常活动能力、评估独立性等级、推荐辅助器具和康复目标。输入包含活动清单、移动辅助、居住安排等。",
+      "tags": [
+        "agedcareagent",
+        "daily",
+        "activity",
+        "recognizer"
+      ],
+      "examples": [
+        "Use Daily Activity Recognizer to 日常生活活动(ADL)识别与能力评估 | 分析日常活动能力、评估独立性等级、推荐辅助器具和康复目标。输入包含活动清单、移动辅助、居住安排等。.",
+        "Can you run Daily Activity Recognizer? Input Data is the main input I have.",
+        "Invoke Daily Activity Recognizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "social_companion_scheduler",
+      "name": "Social Companion Scheduler",
+      "description": "社交活动安排与孤独感干预 | 评估孤独风险等级、生成周活动计划、推荐数字参与方案。输入包含孤独评分、社交联系人、偏好活动、移动能力等。",
+      "tags": [
+        "agedcareagent",
+        "social",
+        "companion",
+        "scheduler"
+      ],
+      "examples": [
+        "Use Social Companion Scheduler to 社交活动安排与孤独感干预 | 评估孤独风险等级、生成周活动计划、推荐数字参与方案。输入包含孤独评分、社交联系人、偏好活动、移动能力等。.",
+        "Can you run Social Companion Scheduler? Input Data is the main input I have.",
+        "Invoke Social Companion Scheduler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "vital_signs_monitor",
+      "name": "Vital Signs Monitor",
+      "description": "生命体征预警与远程监护配置 | 分析生命体征数据、识别异常参数、生成预警建议。输入包含心率、血压、血氧、体温、呼吸等测量数据。",
+      "tags": [
+        "agedcareagent",
+        "vital",
+        "signs",
+        "monitor"
+      ],
+      "examples": [
+        "Use Vital Signs Monitor to 生命体征预警与远程监护配置 | 分析生命体征数据、识别异常参数、生成预警建议。输入包含心率、血压、血氧、体温、呼吸等测量数据。.",
+        "Can you run Vital Signs Monitor? Input Data is the main input I have.",
+        "Invoke Vital Signs Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "nutrition_diet_planner",
+      "name": "Nutrition Diet Planner",
+      "description": "老年人营养方案与吞咽安全饮食 | 计算营养需求、生成餐食计划、提供吞咽安全建议。输入包含体重身高、活动水平、吞咽困难等级、慢性病等。",
+      "tags": [
+        "agedcareagent",
+        "nutrition",
+        "diet",
+        "planner"
+      ],
+      "examples": [
+        "Use Nutrition Diet Planner to 老年人营养方案与吞咽安全饮食 | 计算营养需求、生成餐食计划、提供吞咽安全建议。输入包含体重身高、活动水平、吞咽困难等级、慢性病等。.",
+        "Can you run Nutrition Diet Planner? Input Data is the main input I have.",
+        "Invoke Nutrition Diet Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "elder_care_facility_manager",
+      "name": "Elder Care Facility Manager",
+      "description": "养老机构运营与护理资源调度 | 分析入住率、评估人员配置、优化资源分配、合规检查。输入包含机构基本信息、床位、人员、预算等。",
+      "tags": [
+        "agedcareagent",
+        "elder",
+        "care",
+        "facility",
+        "manager"
+      ],
+      "examples": [
+        "Use Elder Care Facility Manager to 养老机构运营与护理资源调度 | 分析入住率、评估人员配置、优化资源分配、合规检查。输入包含机构基本信息、床位、人员、预算等。.",
+        "Can you run Elder Care Facility Manager? Input Data is the main input I have.",
+        "Invoke Elder Care Facility Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,198 @@
+{
+  "name": "dsh-tool-skills",
+  "description": "Agent Skills Marketplace - Skill discovery, composition, versioning, quality scoring, packaging, trigger optimization, analytics, and template generation for AI agent skills",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-skills",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-skills",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "skill_discoverer",
+      "name": "Skill Discoverer",
+      "description": "Discover and match skills to a task description using semantic analysis. Returns relevance scores, trigger confidence, and composition suggestions for available skills.",
+      "tags": [
+        "skills",
+        "skill",
+        "discoverer"
+      ],
+      "examples": [
+        "Use Skill Discoverer to discover and match skills to a task description using semantic analysis. Returns relevance scores, trigger confidence, and composition suggestions for available skills.",
+        "Can you run Skill Discoverer? Task Description is the main input I have.",
+        "Invoke Skill Discoverer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "skill_composer",
+      "name": "Skill Composer",
+      "description": "Compose multiple skills into a coordinated workflow. Generates dependency graphs, identifies failure points, and provides optimization hints for skill chains.",
+      "tags": [
+        "skills",
+        "skill",
+        "composer"
+      ],
+      "examples": [
+        "Use Skill Composer to compose multiple skills into a coordinated workflow. Generates dependency graphs, identifies failure points, and provides optimization hints for skill chains.",
+        "Can you run Skill Composer? Skills is the main input I have.",
+        "Invoke Skill Composer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "skill_version_manager",
+      "name": "Skill Version Manager",
+      "description": "Manage skill versioning with version trees, breaking change detection, upgrade paths, and rollback readiness assessment.",
+      "tags": [
+        "skills",
+        "skill",
+        "version",
+        "manager"
+      ],
+      "examples": [
+        "Use Skill Version Manager to manage skill versioning with version trees, breaking change detection, upgrade paths, and rollback readiness assessment.",
+        "Can you run Skill Version Manager? Skill History is the main input I have.",
+        "Invoke Skill Version Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "skill_quality_scorer",
+      "name": "Skill Quality Scorer",
+      "description": "Score skill quality across multiple dimensions: completeness, trigger accuracy, instruction clarity, test coverage, and naming conventions. Returns letter grade and improvement suggestions.",
+      "tags": [
+        "skills",
+        "skill",
+        "quality",
+        "scorer"
+      ],
+      "examples": [
+        "Use Skill Quality Scorer to score skill quality across multiple dimensions: completeness, trigger accuracy, instruction clarity, test coverage, and naming conventions. Returns letter grade and improvement suggestions.",
+        "Can you run Skill Quality Scorer? Skill Definition is the main input I have.",
+        "Invoke Skill Quality Scorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "skill_packager",
+      "name": "Skill Packager",
+      "description": "Package skills for distribution in multiple formats (DSH, Claude Code, Cursor). Generates manifests, validates structure, and checks marketplace readiness.",
+      "tags": [
+        "skills",
+        "skill",
+        "packager"
+      ],
+      "examples": [
+        "Use Skill Packager to package skills for distribution in multiple formats (DSH, Claude Code, Cursor). Generates manifests, validates structure, and checks marketplace readiness.",
+        "Can you run Skill Packager? Skill Code is the main input I have.",
+        "Invoke Skill Packager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "trigger_optimizer",
+      "name": "Trigger Optimizer",
+      "description": "Optimize trigger patterns to reduce false positives and false negatives. Provides precision/recall improvements and A/B test recommendations.",
+      "tags": [
+        "skills",
+        "trigger",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Trigger Optimizer to optimize trigger patterns to reduce false positives and false negatives. Provides precision/recall improvements and A/B test recommendations.",
+        "Can you run Trigger Optimizer? Trigger Patterns is the main input I have.",
+        "Invoke Trigger Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "skill_analytics",
+      "name": "Skill Analytics",
+      "description": "Analyze skill usage data to generate popularity rankings, success rates, abandonment points, and improvement priorities.",
+      "tags": [
+        "skills",
+        "skill",
+        "analytics"
+      ],
+      "examples": [
+        "Use Skill Analytics to analyze skill usage data to generate popularity rankings, success rates, abandonment points, and improvement priorities.",
+        "Can you run Skill Analytics? Usage Data is the main input I have.",
+        "Invoke Skill Analytics with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "skill_template_generator",
+      "name": "Skill Template Generator",
+      "description": "Generate skill templates for a given domain and complexity level. Includes test cases, documentation outlines, and publishing checklists.",
+      "tags": [
+        "skills",
+        "skill",
+        "template",
+        "generator"
+      ],
+      "examples": [
+        "Use Skill Template Generator to generate skill templates for a given domain and complexity level. Includes test cases, documentation outlines, and publishing checklists.",
+        "Can you run Skill Template Generator? Domain is the main input I have.",
+        "Invoke Skill Template Generator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,204 @@
+{
+  "name": "dsh-tools",
+  "description": "DSH plugin: dsh-tool-guiagentpro",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tools",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tools",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "screen_understanding_evaluator",
+      "name": "Screen Understanding Evaluator",
+      "description": "屏幕理解能力评估：基准测试分数、测试类型分布，对标Qwen-UI-Agent",
+      "tags": [
+        "guiagentpro",
+        "screen",
+        "understanding",
+        "evaluator"
+      ],
+      "examples": [
+        "Use Screen Understanding Evaluator to 屏幕理解能力评估：基准测试分数、测试类型分布，对标Qwen-UI-Agent.",
+        "I need Screen Understanding Evaluator capabilities for this task in dsh-tools.",
+        "Invoke Screen Understanding Evaluator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "click_automation_tracker",
+      "name": "Click Automation Tracker",
+      "description": "点击自动化执行追踪：成功率、平均步数、任务完成质量",
+      "tags": [
+        "guiagentpro",
+        "click",
+        "automation",
+        "tracker"
+      ],
+      "examples": [
+        "Use Click Automation Tracker to 点击自动化执行追踪：成功率、平均步数、任务完成质量.",
+        "I need Click Automation Tracker capabilities for this task in dsh-tools.",
+        "Invoke Click Automation Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "cross_app_workflow_analyzer",
+      "name": "Cross App Workflow Analyzer",
+      "description": "跨应用工作流分析：跨应用率、平均应用数、工作流复杂度",
+      "tags": [
+        "guiagentpro",
+        "cross",
+        "app",
+        "workflow",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Cross App Workflow Analyzer to 跨应用工作流分析：跨应用率、平均应用数、工作流复杂度.",
+        "I need Cross App Workflow Analyzer capabilities for this task in dsh-tools.",
+        "Invoke Cross App Workflow Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "element_detection_evaluator",
+      "name": "Element Detection Evaluator",
+      "description": "UI元素检测精度评估：检测正确率、元素类型分布",
+      "tags": [
+        "guiagentpro",
+        "element",
+        "detection",
+        "evaluator"
+      ],
+      "examples": [
+        "Use Element Detection Evaluator to uI元素检测精度评估：检测正确率、元素类型分布.",
+        "I need Element Detection Evaluator capabilities for this task in dsh-tools.",
+        "Invoke Element Detection Evaluator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "task_planning_evaluator",
+      "name": "Task Planning Evaluator",
+      "description": "任务规划与分解评估：完成率、平均子任务数、规划质量",
+      "tags": [
+        "guiagentpro",
+        "task",
+        "planning",
+        "evaluator"
+      ],
+      "examples": [
+        "Use Task Planning Evaluator to 任务规划与分解评估：完成率、平均子任务数、规划质量.",
+        "I need Task Planning Evaluator capabilities for this task in dsh-tools.",
+        "Invoke Task Planning Evaluator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "error_recovery_assessor",
+      "name": "Error Recovery Assessor",
+      "description": "错误恢复与自我修复评估：恢复率、错误类型分布、鲁棒性建议",
+      "tags": [
+        "guiagentpro",
+        "error",
+        "recovery",
+        "assessor"
+      ],
+      "examples": [
+        "Use Error Recovery Assessor to 错误恢复与自我修复评估：恢复率、错误类型分布、鲁棒性建议.",
+        "I need Error Recovery Assessor capabilities for this task in dsh-tools.",
+        "Invoke Error Recovery Assessor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "platform_coverage_mapper",
+      "name": "Platform Coverage Mapper",
+      "description": "平台覆盖度映射：Web/Windows/macOS/Android/iOS/Linux六平台支持状态",
+      "tags": [
+        "guiagentpro",
+        "platform",
+        "coverage",
+        "mapper"
+      ],
+      "examples": [
+        "Use Platform Coverage Mapper to 平台覆盖度映射：Web/Windows/macOS/Android/iOS/Linux六平台支持状态.",
+        "I need Platform Coverage Mapper capabilities for this task in dsh-tools.",
+        "Invoke Platform Coverage Mapper with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "visual_grounding_validator",
+      "name": "Visual Grounding Validator",
+      "description": "视觉定位验证：验证Agent能否准确识别和定位屏幕上的UI元素，输出定位精度热力",
+      "tags": [
+        "guiagentpro",
+        "visual",
+        "grounding",
+        "validator"
+      ],
+      "examples": [
+        "Use Visual Grounding Validator to 视觉定位验证：验证Agent能否准确识别和定位屏幕上的UI元素，输出定位精度热力.",
+        "Can you run Visual Grounding Validator? Input Data is the main input I have.",
+        "Invoke Visual Grounding Validator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

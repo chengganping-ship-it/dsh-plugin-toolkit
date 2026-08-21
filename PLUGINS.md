@@ -346,3 +346,19 @@
 ---
 
 **Total: 186 plugins | 1488 tools**
+
+---
+
+## Breakthrough Infrastructure (L1-L5)
+
+The toolkit includes 5 infrastructure layers that elevate plugins from standalone tools to a collaborative multi-agent system:
+
+| Layer | Path | Standard | Files |
+|-------|------|----------|-------|
+| **L1: MCP Bridge** | `mcp-bridge/` | MCP v1.30 (Linux Foundation) | `src/index.ts`, `src/plugin-discovery.ts`, `src/tool-adapter.ts`, `src/cost-tracker.ts`, `.mcp.json` |
+| **L2: A2A Cards** | `a2a-cards/` | Google A2A v1.0 (GA May 2026) | `generate.ts`, `schema.ts`, `cards/*.json` (185 cards) |
+| **L3: Loop Engineering** | `loop-engineering/` | Self-correcting agentic loops | `src/loop-executor.ts`, `src/validators.ts`, `src/self-critique.ts`, `examples/carbon-loop-demo.ts` |
+| **L4: Cost Governance** | `cost-governance/` | Budget enforcement & token tracking | `src/budget-manager.ts`, `src/cost-tracker.ts`, `src/optimizer.ts`, `src/alerting.ts`, `src/dashboard.ts` |
+| **L5: Multi-Agent Demo** | `demos/multi-agent-carbon-neutral/` | 5 agents × 4 phases | `orchestrator.ts`, `agents/*.ts` (5 files), `workflow/*.ts` (4 phases) |
+
+**Zero compilation errors** across all infrastructure packages — `tsc --noEmit` verified.

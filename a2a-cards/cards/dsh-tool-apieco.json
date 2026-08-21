@@ -1,0 +1,201 @@
+{
+  "name": "dsh-tool-apieco",
+  "description": "API Economy & Monetization Engine - API valuation, rate limiting strategy, developer experience scoring, API monetization advisory, analytics dashboard, security auditing, GraphQL optimization, and API portfolio management",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-apieco",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-apieco",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "api_valuator",
+      "name": "Api Valuator",
+      "description": "Estimate API market value and revenue potential based on traffic, developer adoption, uptime, uniqueness, and endpoint diversity. Returns valuation, market position, and monetization options.",
+      "tags": [
+        "apieco",
+        "api",
+        "valuator"
+      ],
+      "examples": [
+        "Use Api Valuator to estimate API market value and revenue potential based on traffic, developer adoption, uptime, uniqueness, and endpoint diversity. Returns valuation, market position, and monetization options.",
+        "Can you run Api Valuator? Api Data is the main input I have.",
+        "Invoke Api Valuator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "rate_limiter_designer",
+      "name": "Rate Limiter Designer",
+      "description": "Design optimal rate limiting strategy based on traffic patterns. Generates tier definitions, throttle rules, and overflow handling recommendations.",
+      "tags": [
+        "apieco",
+        "rate",
+        "limiter",
+        "designer"
+      ],
+      "examples": [
+        "Use Rate Limiter Designer to design optimal rate limiting strategy based on traffic patterns. Generates tier definitions, throttle rules, and overflow handling recommendations.",
+        "Can you run Rate Limiter Designer? Traffic Patterns is the main input I have.",
+        "Invoke Rate Limiter Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "developer_experience_scorer",
+      "name": "Developer Experience Scorer",
+      "description": "Score developer experience (DX) across documentation, SDK support, performance, reliability, and support. Identifies friction points and onboarding improvements.",
+      "tags": [
+        "apieco",
+        "developer",
+        "experience",
+        "scorer"
+      ],
+      "examples": [
+        "Use Developer Experience Scorer to score developer experience (DX) across documentation, SDK support, performance, reliability, and support. Identifies friction points and onboarding improvements.",
+        "Can you run Developer Experience Scorer? Dx Data is the main input I have.",
+        "Invoke Developer Experience Scorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "api_monetization_advisor",
+      "name": "Api Monetization Advisor",
+      "description": "Recommend optimal pricing model and tier structure based on usage data. Projects revenue and assesses churn risk with mitigation strategies.",
+      "tags": [
+        "apieco",
+        "api",
+        "monetization",
+        "advisor"
+      ],
+      "examples": [
+        "Use Api Monetization Advisor to recommend optimal pricing model and tier structure based on usage data. Projects revenue and assesses churn risk with mitigation strategies.",
+        "Can you run Api Monetization Advisor? Usage Data is the main input I have.",
+        "Invoke Api Monetization Advisor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "api_analytics_dashboard",
+      "name": "Api Analytics Dashboard",
+      "description": "Generate API health score, usage trends, anomaly alerts, and capacity planning recommendations from operational metrics.",
+      "tags": [
+        "apieco",
+        "api",
+        "analytics",
+        "dashboard"
+      ],
+      "examples": [
+        "Use Api Analytics Dashboard to generate API health score, usage trends, anomaly alerts, and capacity planning recommendations from operational metrics.",
+        "Can you run Api Analytics Dashboard? Api Metrics is the main input I have.",
+        "Invoke Api Analytics Dashboard with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "api_security_auditor",
+      "name": "Api Security Auditor",
+      "description": "Audit API security configuration against OWASP standards. Identifies vulnerabilities and provides prioritized remediation steps.",
+      "tags": [
+        "apieco",
+        "api",
+        "security",
+        "auditor"
+      ],
+      "examples": [
+        "Use Api Security Auditor to audit API security configuration against OWASP standards. Identifies vulnerabilities and provides prioritized remediation steps.",
+        "Can you run Api Security Auditor? Security Config is the main input I have.",
+        "Invoke Api Security Auditor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "graphql_optimizer",
+      "name": "Graphql Optimizer",
+      "description": "Analyze GraphQL query patterns and recommend optimizations for N+1 issues, batching strategies, caching, and performance gains.",
+      "tags": [
+        "apieco",
+        "graphql",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Graphql Optimizer to analyze GraphQL query patterns and recommend optimizations for N+1 issues, batching strategies, caching, and performance gains.",
+        "Can you run Graphql Optimizer? Graphql Data is the main input I have.",
+        "Invoke Graphql Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "api_portfolio_manager",
+      "name": "Api Portfolio Manager",
+      "description": "Analyze API portfolio lifecycle, identify deprecation candidates, find consolidation opportunities, and generate roadmap recommendations.",
+      "tags": [
+        "apieco",
+        "api",
+        "portfolio",
+        "manager"
+      ],
+      "examples": [
+        "Use Api Portfolio Manager to analyze API portfolio lifecycle, identify deprecation candidates, find consolidation opportunities, and generate roadmap recommendations.",
+        "Can you run Api Portfolio Manager? Apis is the main input I have.",
+        "Invoke Api Portfolio Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

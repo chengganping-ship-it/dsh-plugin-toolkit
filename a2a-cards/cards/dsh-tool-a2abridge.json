@@ -1,0 +1,195 @@
+{
+  "name": "dsh-tool-a2abridge",
+  "description": "跨平台A2A智能体协议桥接 - Agent2Agent开放协议、跨平台协同、协议翻译、技能市场",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-a2abridge",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-a2abridge",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "a2a_registry",
+      "name": "A2a Registry",
+      "description": "注册与发现A2A协议智能体 | 支持技能声明、能力匹配、信誉评分 | Register & discover A2A protocol agents with skill declaration, capability matching, and reputation scoring.",
+      "tags": [
+        "a2abridge",
+        "a2a",
+        "registry"
+      ],
+      "examples": [
+        "Use A2a Registry to 注册与发现A2A协议智能体 | 支持技能声明、能力匹配、信誉评分 | Register & discover A2A protocol agents with skill declaration, capability matching, and reputation scoring.",
+        "Can you run A2a Registry? Registry Input is the main input I have.",
+        "Invoke A2a Registry with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "a2a_router",
+      "name": "A2a Router",
+      "description": "跨平台智能体路由 | DSH↔CrewAI↔LangGraph↔AutoGen↔OpenAI 互转 | Cross-platform agent routing with protocol translation bridge.",
+      "tags": [
+        "a2abridge",
+        "a2a",
+        "router"
+      ],
+      "examples": [
+        "Use A2a Router to 跨平台智能体路由 | DSH↔CrewAI↔LangGraph↔AutoGen↔OpenAI 互转 | Cross-platform agent routing with protocol translation bridge.",
+        "Can you run A2a Router? Route Input is the main input I have.",
+        "Invoke A2a Router with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "a2a_translator",
+      "name": "A2a Translator",
+      "description": "协议格式翻译 | JSON-RPC↔gRPC↔REST↔MessagePack | Protocol format translation across JSON-RPC, gRPC, REST, MessagePack.",
+      "tags": [
+        "a2abridge",
+        "a2a",
+        "translator"
+      ],
+      "examples": [
+        "Use A2a Translator to 协议格式翻译 | JSON-RPC↔gRPC↔REST↔MessagePack | Protocol format translation across JSON-RPC, gRPC, REST, MessagePack.",
+        "Can you run A2a Translator? Translation Input is the main input I have.",
+        "Invoke A2a Translator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "a2a_negotiator",
+      "name": "A2a Negotiator",
+      "description": "智能体间任务协商与合同签订 | 能力报价、SLA承诺、奖惩条款 | Inter-agent task negotiation with capability quotes, SLA commitments, and contract clauses.",
+      "tags": [
+        "a2abridge",
+        "a2a",
+        "negotiator"
+      ],
+      "examples": [
+        "Use A2a Negotiator to 智能体间任务协商与合同签订 | 能力报价、SLA承诺、奖惩条款 | Inter-agent task negotiation with capability quotes, SLA commitments, and contract clauses.",
+        "Can you run A2a Negotiator? Negotiation Input is the main input I have.",
+        "Invoke A2a Negotiator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "a2a_orchestrator",
+      "name": "A2a Orchestrator",
+      "description": "跨编排器协同调度 | 多平台Agent参与同一工作流 | Cross-orchestrator collaborative scheduling with multi-platform agent handoffs.",
+      "tags": [
+        "a2abridge",
+        "a2a",
+        "orchestrator"
+      ],
+      "examples": [
+        "Use A2a Orchestrator to 跨编排器协同调度 | 多平台Agent参与同一工作流 | Cross-orchestrator collaborative scheduling with multi-platform agent handoffs.",
+        "Can you run A2a Orchestrator? Workflow Input is the main input I have.",
+        "Invoke A2a Orchestrator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "a2a_audit",
+      "name": "A2a Audit",
+      "description": "跨链审计日志 | 哪个Agent做了什么、数据流向、合规证明 | Cross-chain audit logs with agent actions, data lineage, and compliance proof.",
+      "tags": [
+        "a2abridge",
+        "a2a",
+        "audit"
+      ],
+      "examples": [
+        "Use A2a Audit to 跨链审计日志 | 哪个Agent做了什么、数据流向、合规证明 | Cross-chain audit logs with agent actions, data lineage, and compliance proof.",
+        "Can you run A2a Audit? Audit Input is the main input I have.",
+        "Invoke A2a Audit with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "a2a_federation",
+      "name": "A2a Federation",
+      "description": "联邦学习/隐私计算协作 | Agent间共享知识不共享数据 | Federated learning with privacy-preserving knowledge sharing between agents.",
+      "tags": [
+        "a2abridge",
+        "a2a",
+        "federation"
+      ],
+      "examples": [
+        "Use A2a Federation to 联邦学习/隐私计算协作 | Agent间共享知识不共享数据 | Federated learning with privacy-preserving knowledge sharing between agents.",
+        "Can you run A2a Federation? Federation Input is the main input I have.",
+        "Invoke A2a Federation with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "a2a_marketplace",
+      "name": "A2a Marketplace",
+      "description": "智能体技能市场 | 发布、订阅、计费、评分、争议仲裁 | Agent skill marketplace with publish, subscribe, billing, rating, and dispute arbitration.",
+      "tags": [
+        "a2abridge",
+        "a2a",
+        "marketplace"
+      ],
+      "examples": [
+        "Use A2a Marketplace to 智能体技能市场 | 发布、订阅、计费、评分、争议仲裁 | Agent skill marketplace with publish, subscribe, billing, rating, and dispute arbitration.",
+        "Can you run A2a Marketplace? Marketplace Input is the main input I have.",
+        "Invoke A2a Marketplace with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

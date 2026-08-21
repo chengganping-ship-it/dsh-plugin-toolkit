@@ -1,0 +1,203 @@
+{
+  "name": "dsh-tool-semiconagentpro",
+  "description": "半导体AI智能体 - 晶圆良率优化、芯片设计验证、设备预测性维护、工艺整合、缺陷分类、光罩数据、供应链、能耗管理",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-semiconagentpro",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-semiconagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "yield_optimization_engine",
+      "name": "Yield Optimization Engine",
+      "description": "Tool provided by the Yield Optimization Engine module.",
+      "tags": [
+        "semiconagentpro",
+        "yield",
+        "optimization",
+        "engine"
+      ],
+      "examples": [
+        "Use Yield Optimization Engine to tool provided by the Yield Optimization Engine module.",
+        "I need Yield Optimization Engine capabilities for this task in dsh-tool-semiconagentpro.",
+        "Invoke Yield Optimization Engine with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "chip_design_verifier",
+      "name": "Chip Design Verifier",
+      "description": "Tool provided by the Chip Design Verifier module.",
+      "tags": [
+        "semiconagentpro",
+        "chip",
+        "design",
+        "verifier"
+      ],
+      "examples": [
+        "Use Chip Design Verifier to tool provided by the Chip Design Verifier module.",
+        "I need Chip Design Verifier capabilities for this task in dsh-tool-semiconagentpro.",
+        "Invoke Chip Design Verifier with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "equipment_predictive_maintenance",
+      "name": "Equipment Predictive Maintenance",
+      "description": "Tool provided by the Equipment Predictive Maintenance module.",
+      "tags": [
+        "semiconagentpro",
+        "equipment",
+        "predictive",
+        "maintenance"
+      ],
+      "examples": [
+        "Use Equipment Predictive Maintenance to tool provided by the Equipment Predictive Maintenance module.",
+        "I need Equipment Predictive Maintenance capabilities for this task in dsh-tool-semiconagentpro.",
+        "Invoke Equipment Predictive Maintenance with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "process_integration_advisor",
+      "name": "Process Integration Advisor",
+      "description": "Tool provided by the Process Integration Advisor module.",
+      "tags": [
+        "semiconagentpro",
+        "process",
+        "integration",
+        "advisor"
+      ],
+      "examples": [
+        "Use Process Integration Advisor to tool provided by the Process Integration Advisor module.",
+        "I need Process Integration Advisor capabilities for this task in dsh-tool-semiconagentpro.",
+        "Invoke Process Integration Advisor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "defect_classification_ai",
+      "name": "Defect Classification Ai",
+      "description": "Tool provided by the Defect Classification Ai module.",
+      "tags": [
+        "semiconagentpro",
+        "defect",
+        "classification"
+      ],
+      "examples": [
+        "Use Defect Classification Ai to tool provided by the Defect Classification Ai module.",
+        "I need Defect Classification Ai capabilities for this task in dsh-tool-semiconagentpro.",
+        "Invoke Defect Classification Ai with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "mask_data_prep_optimizer",
+      "name": "Mask Data Prep Optimizer",
+      "description": "Tool provided by the Mask Data Prep Optimizer module.",
+      "tags": [
+        "semiconagentpro",
+        "mask",
+        "data",
+        "prep",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Mask Data Prep Optimizer to tool provided by the Mask Data Prep Optimizer module.",
+        "I need Mask Data Prep Optimizer capabilities for this task in dsh-tool-semiconagentpro.",
+        "Invoke Mask Data Prep Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "semiconductor_supply_chain",
+      "name": "Semiconductor Supply Chain",
+      "description": "Tool provided by the Semiconductor Supply Chain module.",
+      "tags": [
+        "semiconagentpro",
+        "semiconductor",
+        "supply",
+        "chain"
+      ],
+      "examples": [
+        "Use Semiconductor Supply Chain to tool provided by the Semiconductor Supply Chain module.",
+        "I need Semiconductor Supply Chain capabilities for this task in dsh-tool-semiconagentpro.",
+        "Invoke Semiconductor Supply Chain with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fab_energy_sustainability",
+      "name": "Fab Energy Sustainability",
+      "description": "Tool provided by the Fab Energy Sustainability module.",
+      "tags": [
+        "semiconagentpro",
+        "fab",
+        "energy",
+        "sustainability"
+      ],
+      "examples": [
+        "Use Fab Energy Sustainability to tool provided by the Fab Energy Sustainability module.",
+        "I need Fab Energy Sustainability capabilities for this task in dsh-tool-semiconagentpro.",
+        "Invoke Fab Energy Sustainability with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

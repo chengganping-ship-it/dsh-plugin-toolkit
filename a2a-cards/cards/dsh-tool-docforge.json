@@ -1,0 +1,202 @@
+{
+  "name": "dsh-tool-docforge",
+  "description": "Real-time docs injection - multi-source aggregation, version diff, quality scoring, auto-sync",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-docforge",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-docforge",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "doc_aggregate",
+      "name": "Doc Aggregate",
+      "description": "Aggregate documentation from multiple sources (official docs, GitHub, StackOverflow, changelogs). Returns unified structured documentation for a given library/framework.",
+      "tags": [
+        "docforge",
+        "doc",
+        "aggregate"
+      ],
+      "examples": [
+        "Use Doc Aggregate to aggregate documentation from multiple sources (official docs, GitHub, StackOverflow, changelogs). Returns unified structured documentation for a given library/framework.",
+        "Can you run Doc Aggregate? Target Library is the main input I have.",
+        "Invoke Doc Aggregate with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "doc_version_diff",
+      "name": "Doc Version Diff",
+      "description": "Compare documentation between two versions of a library. Identifies added, removed, modified APIs, breaking changes, and deprecated features.",
+      "tags": [
+        "docforge",
+        "doc",
+        "version",
+        "diff"
+      ],
+      "examples": [
+        "Use Doc Version Diff to compare documentation between two versions of a library. Identifies added, removed, modified APIs, breaking changes, and deprecated features.",
+        "Can you run Doc Version Diff? Diff Input is the main input I have.",
+        "Invoke Doc Version Diff with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "doc_quality_score",
+      "name": "Doc Quality Score",
+      "description": "Evaluate documentation quality across completeness, accuracy, clarity, example coverage, and freshness. Returns A-F grade with detailed dimension scores.",
+      "tags": [
+        "docforge",
+        "doc",
+        "quality",
+        "score"
+      ],
+      "examples": [
+        "Use Doc Quality Score to evaluate documentation quality across completeness, accuracy, clarity, example coverage, and freshness. Returns A-F grade with detailed dimension scores.",
+        "Can you run Doc Quality Score? Quality Input is the main input I have.",
+        "Invoke Doc Quality Score with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "doc_sync_status",
+      "name": "Doc Sync Status",
+      "description": "Check if locally cached documentation is stale. Compares cached versions against upstream and returns list of documents needing updates.",
+      "tags": [
+        "docforge",
+        "doc",
+        "sync",
+        "status"
+      ],
+      "examples": [
+        "Use Doc Sync Status to check if locally cached documentation is stale. Compares cached versions against upstream and returns list of documents needing updates.",
+        "Can you run Doc Sync Status? Sync Input is the main input I have.",
+        "Invoke Doc Sync Status with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "doc_extract_api",
+      "name": "Doc Extract Api",
+      "description": "Extract complete API signatures from documentation. Returns structured API index with function names, parameters, return types, throws, and example code.",
+      "tags": [
+        "docforge",
+        "doc",
+        "extract",
+        "api"
+      ],
+      "examples": [
+        "Use Doc Extract Api to extract complete API signatures from documentation. Returns structured API index with function names, parameters, return types, throws, and example code.",
+        "Can you run Doc Extract Api? Extract Input is the main input I have.",
+        "Invoke Doc Extract Api with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "doc_compare_sources",
+      "name": "Doc Compare Sources",
+      "description": "Compare how different sources describe the same API. Marks inconsistencies and evaluates which source is most reliable.",
+      "tags": [
+        "docforge",
+        "doc",
+        "compare",
+        "sources"
+      ],
+      "examples": [
+        "Use Doc Compare Sources to compare how different sources describe the same API. Marks inconsistencies and evaluates which source is most reliable.",
+        "Can you run Doc Compare Sources? Compare Input is the main input I have.",
+        "Invoke Doc Compare Sources with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "doc_deprecation_track",
+      "name": "Doc Deprecation Track",
+      "description": "Scan documentation for deprecated notices. Builds deprecation timeline, provides migration suggestions and alternative API recommendations.",
+      "tags": [
+        "docforge",
+        "doc",
+        "deprecation",
+        "track"
+      ],
+      "examples": [
+        "Use Doc Deprecation Track to scan documentation for deprecated notices. Builds deprecation timeline, provides migration suggestions and alternative API recommendations.",
+        "Can you run Doc Deprecation Track? Deprecation Input is the main input I have.",
+        "Invoke Doc Deprecation Track with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "doc_injection_plan",
+      "name": "Doc Injection Plan",
+      "description": "Generate optimal documentation injection strategy based on project dependencies and context. Determines preload, lazy-load, on-demand, and skip decisions.",
+      "tags": [
+        "docforge",
+        "doc",
+        "injection",
+        "plan"
+      ],
+      "examples": [
+        "Use Doc Injection Plan to generate optimal documentation injection strategy based on project dependencies and context. Determines preload, lazy-load, on-demand, and skip decisions.",
+        "Can you run Doc Injection Plan? Plan Input is the main input I have.",
+        "Invoke Doc Injection Plan with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

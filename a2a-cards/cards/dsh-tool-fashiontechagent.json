@@ -1,0 +1,201 @@
+{
+  "name": "dsh-tool-fashiontechagent",
+  "description": "Fashion technology AI agent - trend forecasting, style recommendation, virtual try-on, inventory optimization, sustainability audit, dynamic pricing, show planning, influencer matching",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-fashiontechagent",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-fashiontechagent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "trend_forecaster",
+      "name": "Trend Forecaster",
+      "description": "Forecast fashion trends with color and fabric alerts. Analyzes seasonal data, social signals, and historical patterns to predict upcoming color palettes, fabric trends, and silhouette directions with confidence scores and risk alerts.",
+      "tags": [
+        "fashiontechagent",
+        "trend",
+        "forecaster"
+      ],
+      "examples": [
+        "Use Trend Forecaster to forecast fashion trends with color and fabric alerts. Analyzes seasonal data, social signals, and historical patterns to predict upcoming color palettes, fabric trends, and silhouette directions with confidence scores and risk alerts.",
+        "Can you run Trend Forecaster? Input Data is the main input I have.",
+        "Invoke Trend Forecaster with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "style_recommender",
+      "name": "Style Recommender",
+      "description": "Personalized outfit recommendations with style profiling. Generates complete outfit suggestions based on body measurements, style preferences, occasion, and budget. Includes body type analysis and color season matching.",
+      "tags": [
+        "fashiontechagent",
+        "style",
+        "recommender"
+      ],
+      "examples": [
+        "Use Style Recommender to personalized outfit recommendations with style profiling. Generates complete outfit suggestions based on body measurements, style preferences, occasion, and budget. Includes body type analysis and color season matching.",
+        "Can you run Style Recommender? Input Data is the main input I have.",
+        "Invoke Style Recommender with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "virtual_tryon_stylist",
+      "name": "Virtual Tryon Stylist",
+      "description": "Virtual try-on advisor with size matching. Recommends optimal garment size based on body measurements and fit preference. Provides fit analysis by body area, size comparison across available sizes, and styling suggestions.",
+      "tags": [
+        "fashiontechagent",
+        "virtual",
+        "tryon",
+        "stylist"
+      ],
+      "examples": [
+        "Use Virtual Tryon Stylist to virtual try-on advisor with size matching. Recommends optimal garment size based on body measurements and fit preference. Provides fit analysis by body area, size comparison across available sizes, and styling suggestions.",
+        "Can you run Virtual Tryon Stylist? Input Data is the main input I have.",
+        "Invoke Virtual Tryon Stylist with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fashion_inventory_optimizer",
+      "name": "Fashion Inventory Optimizer",
+      "description": "Smart inventory allocation with turnover optimization. Analyzes stock levels, sales velocity, and seasonality to identify overstocked/understocked items. Provides reorder recommendations, transfer suggestions between locations, and revenue impact estimates.",
+      "tags": [
+        "fashiontechagent",
+        "fashion",
+        "inventory",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Fashion Inventory Optimizer to smart inventory allocation with turnover optimization. Analyzes stock levels, sales velocity, and seasonality to identify overstocked/understocked items. Provides reorder recommendations, transfer suggestions between locations, and revenue impact estimates.",
+        "Can you run Fashion Inventory Optimizer? Input Data is the main input I have.",
+        "Invoke Fashion Inventory Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "sustainable_fashion_auditor",
+      "name": "Sustainable Fashion Auditor",
+      "description": "Sustainable fashion compliance and carbon footprint audit. Scores products on sustainability metrics including carbon emissions, water usage, material sustainability, and circularity. Checks compliance with EU Textile Strategy, SBTi, ZDHC, GOTS, and OEKO-TEX standards.",
+      "tags": [
+        "fashiontechagent",
+        "sustainable",
+        "fashion",
+        "auditor"
+      ],
+      "examples": [
+        "Use Sustainable Fashion Auditor to sustainable fashion compliance and carbon footprint audit. Scores products on sustainability metrics including carbon emissions, water usage, material sustainability, and circularity. Checks compliance with EU Textile Strategy, SBTi, ZDHC, GOTS, and OEKO-TEX standards.",
+        "Can you run Sustainable Fashion Auditor? Input Data is the main input I have.",
+        "Invoke Sustainable Fashion Auditor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fashion_pricing_engine",
+      "name": "Fashion Pricing Engine",
+      "description": "Dynamic pricing and promotion strategy optimization. Generates multiple pricing scenarios (status quo, competitive alignment, premium positioning, promotional discount, clearance) with margin projections, volume impact estimates, and confidence scores.",
+      "tags": [
+        "fashiontechagent",
+        "fashion",
+        "pricing",
+        "engine"
+      ],
+      "examples": [
+        "Use Fashion Pricing Engine to dynamic pricing and promotion strategy optimization. Generates multiple pricing scenarios (status quo, competitive alignment, premium positioning, promotional discount, clearance) with margin projections, volume impact estimates, and confidence scores.",
+        "Can you run Fashion Pricing Engine? Input Data is the main input I have.",
+        "Invoke Fashion Pricing Engine with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fashion_show_planner",
+      "name": "Fashion Show Planner",
+      "description": "Fashion show and event planning with scheduling. Creates detailed show plans including segment sequencing, model allocation, budget breakdown, production timeline, media plan, and risk assessment for runway shows, presentations, and trunk shows.",
+      "tags": [
+        "fashiontechagent",
+        "fashion",
+        "show",
+        "planner"
+      ],
+      "examples": [
+        "Use Fashion Show Planner to fashion show and event planning with scheduling. Creates detailed show plans including segment sequencing, model allocation, budget breakdown, production timeline, media plan, and risk assessment for runway shows, presentations, and trunk shows.",
+        "Can you run Fashion Show Planner? Input Data is the main input I have.",
+        "Invoke Fashion Show Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "influencer_collaboration_finder",
+      "name": "Influencer Collaboration Finder",
+      "description": "Match fashion KOLs for collaboration. Scores influencers on relevance, reach, engagement, and cost efficiency. Provides tiered portfolio recommendations (hero/support/emerging), collaboration type suggestions, ROI estimates, and risk assessment.",
+      "tags": [
+        "fashiontechagent",
+        "influencer",
+        "collaboration",
+        "finder"
+      ],
+      "examples": [
+        "Use Influencer Collaboration Finder to match fashion KOLs for collaboration. Scores influencers on relevance, reach, engagement, and cost efficiency. Provides tiered portfolio recommendations (hero/support/emerging), collaboration type suggestions, ROI estimates, and risk assessment.",
+        "Can you run Influencer Collaboration Finder? Input Data is the main input I have.",
+        "Invoke Influencer Collaboration Finder with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

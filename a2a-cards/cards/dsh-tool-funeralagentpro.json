@@ -1,0 +1,204 @@
+{
+  "name": "dsh-tool-funeralagentpro",
+  "description": "殡仪服务AI助手 - 殡仪策划、墓位管理、告别仪式、哀伤辅导、丧葬补助、费用透明、生前契约、习俗指南",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-funeralagentpro",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-funeralagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "funeral_service_planner",
+      "name": "Funeral Service Planner",
+      "description": "殡仪服务方案策划与个性化定制 | 根据逝者信息、宗教信仰、预算范围生成个性化殡仪服务方案，含服务项目、时间线、待办清单 | Personalized funeral service planning with timeline and checklist.",
+      "tags": [
+        "funeralagentpro",
+        "funeral",
+        "service",
+        "planner"
+      ],
+      "examples": [
+        "Use Funeral Service Planner to 殡仪服务方案策划与个性化定制 | 根据逝者信息、宗教信仰、预算范围生成个性化殡仪服务方案，含服务项目、时间线、待办清单 | Personalized funeral service planning with timeline and checklist.",
+        "Can you run Funeral Service Planner? Input Data is the main input I have.",
+        "Invoke Funeral Service Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "cemetery_plot_manager",
+      "name": "Cemetery Plot Manager",
+      "description": "墓位管理与节地生态葬规划 | 搜索比较墓位、规划生态葬法（海葬/树葬/花坛葬等），含价格、法规、补贴信息 | Cemetery plot search, comparison, and eco-burial planning.",
+      "tags": [
+        "funeralagentpro",
+        "cemetery",
+        "plot",
+        "manager"
+      ],
+      "examples": [
+        "Use Cemetery Plot Manager to 墓位管理与节地生态葬规划 | 搜索比较墓位、规划生态葬法（海葬/树葬/花坛葬等），含价格、法规、补贴信息 | Cemetery plot search, comparison, and eco-burial planning.",
+        "Can you run Cemetery Plot Manager? Input Data is the main input I have.",
+        "Invoke Cemetery Plot Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "memorial_ceremony_designer",
+      "name": "Memorial Ceremony Designer",
+      "description": "告别仪式与纪念活动设计 | 设计个性化告别仪式流程，含环节安排、场地布置、音乐花艺、应急预案 | Memorial ceremony design with program, venue, music, and contingency planning.",
+      "tags": [
+        "funeralagentpro",
+        "memorial",
+        "ceremony",
+        "designer"
+      ],
+      "examples": [
+        "Use Memorial Ceremony Designer to 告别仪式与纪念活动设计 | 设计个性化告别仪式流程，含环节安排、场地布置、音乐花艺、应急预案 | Memorial ceremony design with program, venue, music, and contingency planning.",
+        "Can you run Memorial Ceremony Designer? Input Data is the main input I have.",
+        "Invoke Memorial Ceremony Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "grief_counseling_resource",
+      "name": "Grief Counseling Resource",
+      "description": "哀伤辅导资源与心理援助匹配 | 评估哀伤阶段与风险等级，匹配咨询师、支持资源、康复计划 | Grief assessment with counselor matching and psychological support resources.",
+      "tags": [
+        "funeralagentpro",
+        "grief",
+        "counseling",
+        "resource"
+      ],
+      "examples": [
+        "Use Grief Counseling Resource to 哀伤辅导资源与心理援助匹配 | 评估哀伤阶段与风险等级，匹配咨询师、支持资源、康复计划 | Grief assessment with counselor matching and psychological support resources.",
+        "Can you run Grief Counseling Resource? Input Data is the main input I have.",
+        "Invoke Grief Counseling Resource with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "bereavement_benefit_navigator",
+      "name": "Bereavement Benefit Navigator",
+      "description": "丧葬补助与保险理赔申请 | 评估可申请的丧葬补助、保险理赔项目，提供材料清单和办理步骤 | Bereefit benefits and insurance claims assistance with document checklist.",
+      "tags": [
+        "funeralagentpro",
+        "bereavement",
+        "benefit",
+        "navigator"
+      ],
+      "examples": [
+        "Use Bereavement Benefit Navigator to 丧葬补助与保险理赔申请 | 评估可申请的丧葬补助、保险理赔项目，提供材料清单和办理步骤 | Bereefit benefits and insurance claims assistance with document checklist.",
+        "Can you run Bereavement Benefit Navigator? Input Data is the main input I have.",
+        "Invoke Bereavement Benefit Navigator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "funeral_cost_transparency",
+      "name": "Funeral Cost Transparency",
+      "description": "殡仪费用透明化与比价 | 提供殡仪服务价格明细、殡仪馆比价、省钱建议、隐性收费警示、消费者权益 | Funeral cost transparency with price comparison and consumer rights.",
+      "tags": [
+        "funeralagentpro",
+        "funeral",
+        "cost",
+        "transparency"
+      ],
+      "examples": [
+        "Use Funeral Cost Transparency to 殡仪费用透明化与比价 | 提供殡仪服务价格明细、殡仪馆比价、省钱建议、隐性收费警示、消费者权益 | Funeral cost transparency with price comparison and consumer rights.",
+        "Can you run Funeral Cost Transparency? Input Data is the main input I have.",
+        "Invoke Funeral Cost Transparency with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "pre_need_planning_advisor",
+      "name": "Pre Need Planning Advisor",
+      "description": "生前契约与遗嘱规划咨询 | 提供生前契约方案比较、遗嘱要件清单、资产规划、法律资源、行动清单 | Pre-need planning with will preparation advisory and estate planning.",
+      "tags": [
+        "funeralagentpro",
+        "pre",
+        "need",
+        "planning",
+        "advisor"
+      ],
+      "examples": [
+        "Use Pre Need Planning Advisor to 生前契约与遗嘱规划咨询 | 提供生前契约方案比较、遗嘱要件清单、资产规划、法律资源、行动清单 | Pre-need planning with will preparation advisory and estate planning.",
+        "Can you run Pre Need Planning Advisor? Input Data is the main input I have.",
+        "Invoke Pre Need Planning Advisor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "cultural_ritual_guide",
+      "name": "Cultural Ritual Guide",
+      "description": "各地丧葬习俗与宗教仪式指南 | 提供中国传统、佛教、基督教、伊斯兰教、世俗人文主义等多种丧葬习俗、禁忌、现代适应 | Cultural funeral customs with religious ritual guide and modern adaptations.",
+      "tags": [
+        "funeralagentpro",
+        "cultural",
+        "ritual",
+        "guide"
+      ],
+      "examples": [
+        "Use Cultural Ritual Guide to 各地丧葬习俗与宗教仪式指南 | 提供中国传统、佛教、基督教、伊斯兰教、世俗人文主义等多种丧葬习俗、禁忌、现代适应 | Cultural funeral customs with religious ritual guide and modern adaptations.",
+        "Can you run Cultural Ritual Guide? Input Data is the main input I have.",
+        "Invoke Cultural Ritual Guide with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

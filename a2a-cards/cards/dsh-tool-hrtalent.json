@@ -1,0 +1,196 @@
+{
+  "name": "dsh-tool-hrtalent",
+  "description": "HR & Talent Intelligence - Resume screening, salary benchmarking, employee engagement, turnover prediction, workforce planning, performance analysis, diversity analytics, learning recommendations",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-hrtalent",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-hrtalent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "resume_screener",
+      "name": "Resume Screener",
+      "description": "Screen and score resumes against job requirements. Analyzes skill match, experience alignment, identifies gaps and red flags, and provides hiring recommendations.",
+      "tags": [
+        "hrtalent",
+        "resume",
+        "screener"
+      ],
+      "examples": [
+        "Use Resume Screener to screen and score resumes against job requirements. Analyzes skill match, experience alignment, identifies gaps and red flags, and provides hiring recommendations.",
+        "Can you run Resume Screener? Resume Text is the main input I have.",
+        "Invoke Resume Screener with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "salary_benchmarker",
+      "name": "Salary Benchmarker",
+      "description": "Benchmark salary for a position based on title, location, industry, experience level, and company size. Provides salary ranges, percentiles, negotiation ranges, and total compensation estimates.",
+      "tags": [
+        "hrtalent",
+        "salary",
+        "benchmarker"
+      ],
+      "examples": [
+        "Use Salary Benchmarker to benchmark salary for a position based on title, location, industry, experience level, and company size. Provides salary ranges, percentiles, negotiation ranges, and total compensation estimates.",
+        "Can you run Salary Benchmarker? Position Data is the main input I have.",
+        "Invoke Salary Benchmarker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "employee_engagement_scorer",
+      "name": "Employee Engagement Scorer",
+      "description": "Analyze employee engagement survey data. Computes overall engagement score, category-level analysis against benchmarks, identifies strengths and improvement areas, and generates action items.",
+      "tags": [
+        "hrtalent",
+        "employee",
+        "engagement",
+        "scorer"
+      ],
+      "examples": [
+        "Use Employee Engagement Scorer to analyze employee engagement survey data. Computes overall engagement score, category-level analysis against benchmarks, identifies strengths and improvement areas, and generates action items.",
+        "Can you run Employee Engagement Scorer? Survey Data is the main input I have.",
+        "Invoke Employee Engagement Scorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "turnover_predictor",
+      "name": "Turnover Predictor",
+      "description": "Predict employee turnover risk based on tenure, performance, promotions, salary ratio, satisfaction, and commute. Identifies flight-risk employees and provides retention strategies with cost estimates.",
+      "tags": [
+        "hrtalent",
+        "turnover",
+        "predictor"
+      ],
+      "examples": [
+        "Use Turnover Predictor to predict employee turnover risk based on tenure, performance, promotions, salary ratio, satisfaction, and commute. Identifies flight-risk employees and provides retention strategies with cost estimates.",
+        "Can you run Turnover Predictor? Employee Data is the main input I have.",
+        "Invoke Turnover Predictor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "workforce_planner",
+      "name": "Workforce Planner",
+      "description": "Generate workforce hiring plans based on current headcount, attrition rate, growth plans, and skills gaps. Produces quarterly timelines, budget estimates, critical roles, and succession candidates.",
+      "tags": [
+        "hrtalent",
+        "workforce",
+        "planner"
+      ],
+      "examples": [
+        "Use Workforce Planner to generate workforce hiring plans based on current headcount, attrition rate, growth plans, and skills gaps. Produces quarterly timelines, budget estimates, critical roles, and succession candidates.",
+        "Can you run Workforce Planner? Workforce Data is the main input I have.",
+        "Invoke Workforce Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "performance_analyzer",
+      "name": "Performance Analyzer",
+      "description": "Analyze employee performance data across goals, competencies, peer feedback, and manager ratings. Produces performance distribution, top performers, improvement areas, and calibration recommendations.",
+      "tags": [
+        "hrtalent",
+        "performance",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Performance Analyzer to analyze employee performance data across goals, competencies, peer feedback, and manager ratings. Produces performance distribution, top performers, improvement areas, and calibration recommendations.",
+        "Can you run Performance Analyzer? Performance Data is the main input I have.",
+        "Invoke Performance Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "diversity_analyzer",
+      "name": "Diversity Analyzer",
+      "description": "Analyze workforce diversity across gender, ethnicity, age, disability, and leadership representation. Computes diversity index, identifies representation gaps, analyzes pay equity, and provides inclusion recommendations.",
+      "tags": [
+        "hrtalent",
+        "diversity",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Diversity Analyzer to analyze workforce diversity across gender, ethnicity, age, disability, and leadership representation. Computes diversity index, identifies representation gaps, analyzes pay equity, and provides inclusion recommendations.",
+        "Can you run Diversity Analyzer? Demographics is the main input I have.",
+        "Invoke Diversity Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "learning_recommender",
+      "name": "Learning Recommender",
+      "description": "Recommend personalized learning paths based on employee role, skills, career goals, and current level. Provides course recommendations, skill development paths, time estimates, ROI analysis, and certification suggestions.",
+      "tags": [
+        "hrtalent",
+        "learning",
+        "recommender"
+      ],
+      "examples": [
+        "Use Learning Recommender to recommend personalized learning paths based on employee role, skills, career goals, and current level. Provides course recommendations, skill development paths, time estimates, ROI analysis, and certification suggestions.",
+        "Can you run Learning Recommender? Employee Profile is the main input I have.",
+        "Invoke Learning Recommender with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "name": "dsh-tools",
+  "description": "DSH plugin: dsh-tool-supplyriskshield",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tools",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tools",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "multi_tier_visibility",
+      "name": "Multi Tier Visibility",
+      "description": "多层供应商穿透：统计各层供应商数量、可视化率、穿透深度，给出扩展建议",
+      "tags": [
+        "supplyriskshield",
+        "multi",
+        "tier",
+        "visibility"
+      ],
+      "examples": [
+        "Use Multi Tier Visibility to 多层供应商穿透：统计各层供应商数量、可视化率、穿透深度，给出扩展建议.",
+        "I need Multi Tier Visibility capabilities for this task in dsh-tools.",
+        "Invoke Multi Tier Visibility with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "disruption_predictor",
+      "name": "Disruption Predictor",
+      "description": "供应链中断预警：分析风险事件，输出高严重度事件清单和总体风险水位",
+      "tags": [
+        "supplyriskshield",
+        "disruption",
+        "predictor"
+      ],
+      "examples": [
+        "Use Disruption Predictor to 供应链中断预警：分析风险事件，输出高严重度事件清单和总体风险水位.",
+        "I need Disruption Predictor capabilities for this task in dsh-tools.",
+        "Invoke Disruption Predictor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "supplier_resilience_scorer",
+      "name": "Supplier Resilience Scorer",
+      "description": "供应商韧性评估：综合财务稳健、交付可靠、地域多元、库存缓冲四维评分，识别脆弱供应商",
+      "tags": [
+        "supplyriskshield",
+        "supplier",
+        "resilience",
+        "scorer"
+      ],
+      "examples": [
+        "Use Supplier Resilience Scorer to 供应商韧性评估：综合财务稳健、交付可靠、地域多元、库存缓冲四维评分，识别脆弱供应商.",
+        "I need Supplier Resilience Scorer capabilities for this task in dsh-tools.",
+        "Invoke Supplier Resilience Scorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "scenario_simulator",
+      "name": "Scenario Simulator",
+      "description": "情景模拟与压力测试：多风险事件输入，输出缓解前后残余风险、损失估算、场景排序",
+      "tags": [
+        "supplyriskshield",
+        "scenario",
+        "simulator"
+      ],
+      "examples": [
+        "Use Scenario Simulator to 情景模拟与压力测试：多风险事件输入，输出缓解前后残余风险、损失估算、场景排序.",
+        "I need Scenario Simulator capabilities for this task in dsh-tools.",
+        "Invoke Scenario Simulator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "alternative_sourcing_matcher",
+      "name": "Alternative Sourcing Matcher",
+      "description": "备选供应商匹配：根据质量/产能/交期/成本四维度评分排序，推荐最佳替代来源",
+      "tags": [
+        "supplyriskshield",
+        "alternative",
+        "sourcing",
+        "matcher"
+      ],
+      "examples": [
+        "Use Alternative Sourcing Matcher to 备选供应商匹配：根据质量/产能/交期/成本四维度评分排序，推荐最佳替代来源.",
+        "I need Alternative Sourcing Matcher capabilities for this task in dsh-tools.",
+        "Invoke Alternative Sourcing Matcher with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "geopolitics_risk_scanner",
+      "name": "Geopolitics Risk Scanner",
+      "description": "地缘政治风险扫描：综合关税+制裁+政局稳定+物流四维度评估，输出高风险区域清单",
+      "tags": [
+        "supplyriskshield",
+        "geopolitics",
+        "risk",
+        "scanner"
+      ],
+      "examples": [
+        "Use Geopolitics Risk Scanner to 地缘政治风险扫描：综合关税+制裁+政局稳定+物流四维度评估，输出高风险区域清单.",
+        "I need Geopolitics Risk Scanner capabilities for this task in dsh-tools.",
+        "Invoke Geopolitics Risk Scanner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "pcrf_health_assessment",
+      "name": "Pcrf Health Assessment",
+      "description": "PCRF运营健康度评估：APICS SCOR模型四维度（计划/配置/执行/履约）评分，识别最弱环节",
+      "tags": [
+        "supplyriskshield",
+        "pcrf",
+        "health",
+        "assessment"
+      ],
+      "examples": [
+        "Use Pcrf Health Assessment to pCRF运营健康度评估：APICS SCOR模型四维度（计划/配置/执行/履约）评分，识别最弱环节.",
+        "I need Pcrf Health Assessment capabilities for this task in dsh-tools.",
+        "Invoke Pcrf Health Assessment with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "logistics_network_optimizer",
+      "name": "Logistics Network Optimizer",
+      "description": "物流网络优化：分析仓储节点、运输路径、时效与成本，给出网络重构建议（区域仓前置、多式联运等）",
+      "tags": [
+        "supplyriskshield",
+        "logistics",
+        "network",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Logistics Network Optimizer to 物流网络优化：分析仓储节点、运输路径、时效与成本，给出网络重构建议（区域仓前置、多式联运等）.",
+        "Can you run Logistics Network Optimizer? Input Data is the main input I have.",
+        "Invoke Logistics Network Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

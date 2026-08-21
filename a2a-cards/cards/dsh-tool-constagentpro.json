@@ -1,0 +1,201 @@
+{
+  "name": "constagentpro",
+  "description": "建筑工程AI助手 — 建筑工程全生命周期智能体",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/constagentpro",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/constagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "project_schedule_optimizer",
+      "name": "Project Schedule Optimizer",
+      "description": "项目进度优化 — 基于项目参数和资源配置，提供关键路径分析、甘特图概要、资源分配、风险因素识别和工期优化建议",
+      "tags": [
+        "constagentpro",
+        "project",
+        "schedule",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Project Schedule Optimizer to 项目进度优化 — 基于项目参数和资源配置，提供关键路径分析、甘特图概要、资源分配、风险因素识别和工期优化建议.",
+        "Can you run Project Schedule Optimizer? Input Data is the main input I have.",
+        "Invoke Project Schedule Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "bim_model_analyzer",
+      "name": "Bim Model Analyzer",
+      "description": "BIM模型分析 — 基于模型参数，提供碰撞检测、工程量统计、4D施工模拟、模型质量评估和专业协调报告",
+      "tags": [
+        "constagentpro",
+        "bim",
+        "model",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Bim Model Analyzer to bIM模型分析 — 基于模型参数，提供碰撞检测、工程量统计、4D施工模拟、模型质量评估和专业协调报告.",
+        "Can you run Bim Model Analyzer? Input Data is the main input I have.",
+        "Invoke Bim Model Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "construction_safety_monitor",
+      "name": "Construction Safety Monitor",
+      "description": "施工安全监控 — 基于施工阶段和人员配置，提供风险识别、隐患排查、事故预防、安全评分和行动计划",
+      "tags": [
+        "constagentpro",
+        "construction",
+        "safety",
+        "monitor"
+      ],
+      "examples": [
+        "Use Construction Safety Monitor to 施工安全监控 — 基于施工阶段和人员配置，提供风险识别、隐患排查、事故预防、安全评分和行动计划.",
+        "Can you run Construction Safety Monitor? Input Data is the main input I have.",
+        "Invoke Construction Safety Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "cost_estimation_engine",
+      "name": "Cost Estimation Engine",
+      "description": "造价估算引擎 — 基于项目特征和市场数据，提供造价汇总、费用构成、定额分析、市场询价和成本优化建议",
+      "tags": [
+        "constagentpro",
+        "cost",
+        "estimation",
+        "engine"
+      ],
+      "examples": [
+        "Use Cost Estimation Engine to 造价估算引擎 — 基于项目特征和市场数据，提供造价汇总、费用构成、定额分析、市场询价和成本优化建议.",
+        "Can you run Cost Estimation Engine? Input Data is the main input I have.",
+        "Invoke Cost Estimation Engine with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "quality_inspection_ai",
+      "name": "Quality Inspection Ai",
+      "description": "质检验收AI — 基于施工阶段和验收标准，提供实测实量、观感评价、资料归档、质量评分和整改项管理",
+      "tags": [
+        "constagentpro",
+        "quality",
+        "inspection"
+      ],
+      "examples": [
+        "Use Quality Inspection Ai to 质检验收AI — 基于施工阶段和验收标准，提供实测实量、观感评价、资料归档、质量评分和整改项管理.",
+        "Can you run Quality Inspection Ai? Input Data is the main input I have.",
+        "Invoke Quality Inspection Ai with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "subcontractor_manager",
+      "name": "Subcontractor Manager",
+      "description": "分包管理 — 基于分包数据和履约情况，提供资质审查、履约评价、结算分析、风险评估和推荐名单",
+      "tags": [
+        "constagentpro",
+        "subcontractor",
+        "manager"
+      ],
+      "examples": [
+        "Use Subcontractor Manager to 分包管理 — 基于分包数据和履约情况，提供资质审查、履约评价、结算分析、风险评估和推荐名单.",
+        "Can you run Subcontractor Manager? Input Data is the main input I have.",
+        "Invoke Subcontractor Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "green_building_certifier",
+      "name": "Green Building Certifier",
+      "description": "绿建认证分析 — 基于认证目标和建筑参数，提供认证准备度、评分明细、能耗分析、可持续性指标和提升计划",
+      "tags": [
+        "constagentpro",
+        "green",
+        "building",
+        "certifier"
+      ],
+      "examples": [
+        "Use Green Building Certifier to 绿建认证分析 — 基于认证目标和建筑参数，提供认证准备度、评分明细、能耗分析、可持续性指标和提升计划.",
+        "Can you run Green Building Certifier? Input Data is the main input I have.",
+        "Invoke Green Building Certifier with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "site_logistics_planner",
+      "name": "Site Logistics Planner",
+      "description": "现场平面布置规划 — 基于场地条件和施工阶段，提供塔吊布置、道路系统、材料堆场、临时设施和物流效率分析",
+      "tags": [
+        "constagentpro",
+        "site",
+        "logistics",
+        "planner"
+      ],
+      "examples": [
+        "Use Site Logistics Planner to 现场平面布置规划 — 基于场地条件和施工阶段，提供塔吊布置、道路系统、材料堆场、临时设施和物流效率分析.",
+        "Can you run Site Logistics Planner? Input Data is the main input I have.",
+        "Invoke Site Logistics Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

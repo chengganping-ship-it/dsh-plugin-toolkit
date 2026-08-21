@@ -1,0 +1,203 @@
+{
+  "name": "dsh-tools",
+  "description": "DSH plugin: dsh-tool-agentskillsmarket",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tools",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tools",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "skills_inventory_auditor",
+      "name": "Skills Inventory Auditor",
+      "description": "技能市场目录审计：技能总数、类目分布、TOP发布者，给出扩充建议",
+      "tags": [
+        "agentskillsmarket",
+        "skills",
+        "inventory",
+        "auditor"
+      ],
+      "examples": [
+        "Use Skills Inventory Auditor to 技能市场目录审计：技能总数、类目分布、TOP发布者，给出扩充建议.",
+        "I need Skills Inventory Auditor capabilities for this task in dsh-tools.",
+        "Invoke Skills Inventory Auditor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "skill_quality_scorer",
+      "name": "Skill Quality Scorer",
+      "description": "技能质量评分：安装量/评级/认证状态，输出综合质量分与优化建议",
+      "tags": [
+        "agentskillsmarket",
+        "skill",
+        "quality",
+        "scorer"
+      ],
+      "examples": [
+        "Use Skill Quality Scorer to 技能质量评分：安装量/评级/认证状态，输出综合质量分与优化建议.",
+        "I need Skill Quality Scorer capabilities for this task in dsh-tools.",
+        "Invoke Skill Quality Scorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "skill_discovery_engine",
+      "name": "Skill Discovery Engine",
+      "description": "技能发现引擎：基于用户意图匹配相关技能，输出TOP5推荐与匹配度",
+      "tags": [
+        "agentskillsmarket",
+        "skill",
+        "discovery",
+        "engine"
+      ],
+      "examples": [
+        "Use Skill Discovery Engine to 技能发现引擎：基于用户意图匹配相关技能，输出TOP5推荐与匹配度.",
+        "I need Skill Discovery Engine capabilities for this task in dsh-tools.",
+        "Invoke Skill Discovery Engine with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "skill_monetization_planner",
+      "name": "Skill Monetization Planner",
+      "description": "技能变现规划：免费/按次/订阅/企业授权/收入分成五维定价策略评估与多元化建议",
+      "tags": [
+        "agentskillsmarket",
+        "skill",
+        "monetization",
+        "planner"
+      ],
+      "examples": [
+        "Use Skill Monetization Planner to 技能变现规划：免费/按次/订阅/企业授权/收入分成五维定价策略评估与多元化建议.",
+        "I need Skill Monetization Planner capabilities for this task in dsh-tools.",
+        "Invoke Skill Monetization Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "ecosystem_health_tracker",
+      "name": "Ecosystem Health Tracker",
+      "description": "市场经济健康度追踪：增长率/开发者留存/NPS，输出综合健康度评分",
+      "tags": [
+        "agentskillsmarket",
+        "ecosystem",
+        "health",
+        "tracker"
+      ],
+      "examples": [
+        "Use Ecosystem Health Tracker to 市场经济健康度追踪：增长率/开发者留存/NPS，输出综合健康度评分.",
+        "I need Ecosystem Health Tracker capabilities for this task in dsh-tools.",
+        "Invoke Ecosystem Health Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "skill_compatibility_matrix",
+      "name": "Skill Compatibility Matrix",
+      "description": "技能跨框架兼容性矩阵：DeepSeek/AutoGen/LangGraph/CrewAI/OpenAI五框架覆盖度",
+      "tags": [
+        "agentskillsmarket",
+        "skill",
+        "compatibility",
+        "matrix"
+      ],
+      "examples": [
+        "Use Skill Compatibility Matrix to 技能跨框架兼容性矩阵：DeepSeek/AutoGen/LangGraph/CrewAI/OpenAI五框架覆盖度.",
+        "I need Skill Compatibility Matrix capabilities for this task in dsh-tools.",
+        "Invoke Skill Compatibility Matrix with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "trending_skills_tracker",
+      "name": "Trending Skills Tracker",
+      "description": "热门技能趋势追踪：增长率排行、驱动信号，给出市场时机建议",
+      "tags": [
+        "agentskillsmarket",
+        "trending",
+        "skills",
+        "tracker"
+      ],
+      "examples": [
+        "Use Trending Skills Tracker to 热门技能趋势追踪：增长率排行、驱动信号，给出市场时机建议.",
+        "I need Trending Skills Tracker capabilities for this task in dsh-tools.",
+        "Invoke Trending Skills Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "skill_security_scanner",
+      "name": "Skill Security Scanner",
+      "description": "技能安全扫描：检测Skill代码中的恶意行为/数据泄露/权限滥用，输出安全评分与风险项",
+      "tags": [
+        "agentskillsmarket",
+        "skill",
+        "security",
+        "scanner"
+      ],
+      "examples": [
+        "Use Skill Security Scanner to 技能安全扫描：检测Skill代码中的恶意行为/数据泄露/权限滥用，输出安全评分与风险项.",
+        "Can you run Skill Security Scanner? Input Data is the main input I have.",
+        "Invoke Skill Security Scanner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

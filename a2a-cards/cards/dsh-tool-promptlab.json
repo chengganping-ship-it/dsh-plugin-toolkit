@@ -1,0 +1,195 @@
+{
+  "name": "dsh-tool-promptlab",
+  "description": "Prompt engineering - optimization, templates, quality scoring, A/B testing",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-promptlab",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-promptlab",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "prompt_optimizer",
+      "name": "Prompt Optimizer",
+      "description": "Tool provided by the Prompt Optimizer module.",
+      "tags": [
+        "promptlab",
+        "prompt",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Prompt Optimizer to tool provided by the Prompt Optimizer module.",
+        "I need Prompt Optimizer capabilities for this task in dsh-tool-promptlab.",
+        "Invoke Prompt Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "template_library",
+      "name": "Template Library",
+      "description": "Tool provided by the Template Library module.",
+      "tags": [
+        "promptlab",
+        "template",
+        "library"
+      ],
+      "examples": [
+        "Use Template Library to tool provided by the Template Library module.",
+        "I need Template Library capabilities for this task in dsh-tool-promptlab.",
+        "Invoke Template Library with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "quality_scorer",
+      "name": "Quality Scorer",
+      "description": "Tool provided by the Quality Scorer module.",
+      "tags": [
+        "promptlab",
+        "quality",
+        "scorer"
+      ],
+      "examples": [
+        "Use Quality Scorer to tool provided by the Quality Scorer module.",
+        "I need Quality Scorer capabilities for this task in dsh-tool-promptlab.",
+        "Invoke Quality Scorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "ab_test_designer",
+      "name": "Ab Test Designer",
+      "description": "Tool provided by the Ab Test Designer module.",
+      "tags": [
+        "promptlab",
+        "test",
+        "designer"
+      ],
+      "examples": [
+        "Use Ab Test Designer to tool provided by the Ab Test Designer module.",
+        "I need Ab Test Designer capabilities for this task in dsh-tool-promptlab.",
+        "Invoke Ab Test Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "context_engineer",
+      "name": "Context Engineer",
+      "description": "Tool provided by the Context Engineer module.",
+      "tags": [
+        "promptlab",
+        "context",
+        "engineer"
+      ],
+      "examples": [
+        "Use Context Engineer to tool provided by the Context Engineer module.",
+        "I need Context Engineer capabilities for this task in dsh-tool-promptlab.",
+        "Invoke Context Engineer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "chain_builder",
+      "name": "Chain Builder",
+      "description": "Tool provided by the Chain Builder module.",
+      "tags": [
+        "promptlab",
+        "chain",
+        "builder"
+      ],
+      "examples": [
+        "Use Chain Builder to tool provided by the Chain Builder module.",
+        "I need Chain Builder capabilities for this task in dsh-tool-promptlab.",
+        "Invoke Chain Builder with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "output_validator",
+      "name": "Output Validator",
+      "description": "Tool provided by the Output Validator module.",
+      "tags": [
+        "promptlab",
+        "output",
+        "validator"
+      ],
+      "examples": [
+        "Use Output Validator to tool provided by the Output Validator module.",
+        "I need Output Validator capabilities for this task in dsh-tool-promptlab.",
+        "Invoke Output Validator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "prompt_analyzer",
+      "name": "Prompt Analyzer",
+      "description": "Tool provided by the Prompt Analyzer module.",
+      "tags": [
+        "promptlab",
+        "prompt",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Prompt Analyzer to tool provided by the Prompt Analyzer module.",
+        "I need Prompt Analyzer capabilities for this task in dsh-tool-promptlab.",
+        "Invoke Prompt Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

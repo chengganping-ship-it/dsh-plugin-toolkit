@@ -1,0 +1,196 @@
+{
+  "name": "pharmaaiagent",
+  "description": "AI制药助手 — 8 tools for drug discovery & clinical development",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/pharmaaiagent",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/pharmaaiagent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "target_identification",
+      "name": "Target Identification",
+      "description": "AI驱动的靶点发现分析：基于多组学数据评估靶点新颖性、成药性和置信度",
+      "tags": [
+        "pharmaaiagent",
+        "target",
+        "identification"
+      ],
+      "examples": [
+        "Use Target Identification to aI驱动的靶点发现分析：基于多组学数据评估靶点新颖性、成药性和置信度.",
+        "Can you run Target Identification? Input Data is the main input I have.",
+        "Invoke Target Identification with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "lead_optimization",
+      "name": "Lead Optimization",
+      "description": "先导化合物优化分析：ADMET性质评估、构效关系总结与优化优先级排序",
+      "tags": [
+        "pharmaaiagent",
+        "lead",
+        "optimization"
+      ],
+      "examples": [
+        "Use Lead Optimization to 先导化合物优化分析：ADMET性质评估、构效关系总结与优化优先级排序.",
+        "Can you run Lead Optimization? Input Data is the main input I have.",
+        "Invoke Lead Optimization with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "clinical_trial_designer",
+      "name": "Clinical Trial Designer",
+      "description": "临床试验方案设计：样本量估算、终点选择、入排标准与中心数量建议",
+      "tags": [
+        "pharmaaiagent",
+        "clinical",
+        "trial",
+        "designer"
+      ],
+      "examples": [
+        "Use Clinical Trial Designer to 临床试验方案设计：样本量估算、终点选择、入排标准与中心数量建议.",
+        "Can you run Clinical Trial Designer? Input Data is the main input I have.",
+        "Invoke Clinical Trial Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "regulatory_pathway_advisor",
+      "name": "Regulatory Pathway Advisor",
+      "description": "注册路径建议：NMPA/FDA/EMA申报策略、特殊资格认定与时间线规划",
+      "tags": [
+        "pharmaaiagent",
+        "regulatory",
+        "pathway",
+        "advisor"
+      ],
+      "examples": [
+        "Use Regulatory Pathway Advisor to 注册路径建议：NMPA/FDA/EMA申报策略、特殊资格认定与时间线规划.",
+        "Can you run Regulatory Pathway Advisor? Input Data is the main input I have.",
+        "Invoke Regulatory Pathway Advisor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "biomarker_discovery",
+      "name": "Biomarker Discovery",
+      "description": "生物标志物发现：预测价值评估、检测方法推荐与临床用途分析",
+      "tags": [
+        "pharmaaiagent",
+        "biomarker",
+        "discovery"
+      ],
+      "examples": [
+        "Use Biomarker Discovery to 生物标志物发现：预测价值评估、检测方法推荐与临床用途分析.",
+        "Can you run Biomarker Discovery? Input Data is the main input I have.",
+        "Invoke Biomarker Discovery with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "formulation_development",
+      "name": "Formulation Development",
+      "description": "制剂开发分析：剂型选择、辅料筛选、工艺确定与放大可行性评估",
+      "tags": [
+        "pharmaaiagent",
+        "formulation",
+        "development"
+      ],
+      "examples": [
+        "Use Formulation Development to 制剂开发分析：剂型选择、辅料筛选、工艺确定与放大可行性评估.",
+        "Can you run Formulation Development? Input Data is the main input I have.",
+        "Invoke Formulation Development with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "pharmacovigilance_ai",
+      "name": "Pharmacovigilance Ai",
+      "description": "药物警戒AI信号检测：不良事件信号挖掘、ROR/PRR计算与监管报告建议",
+      "tags": [
+        "pharmaaiagent",
+        "pharmacovigilance"
+      ],
+      "examples": [
+        "Use Pharmacovigilance Ai to 药物警戒AI信号检测：不良事件信号挖掘、ROR/PRR计算与监管报告建议.",
+        "Can you run Pharmacovigilance Ai? Input Data is the main input I have.",
+        "Invoke Pharmacovigilance Ai with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "competitive_landscape",
+      "name": "Competitive Landscape",
+      "description": "竞争格局分析：竞品数量统计、阶段分布、差异化机会与威胁评估",
+      "tags": [
+        "pharmaaiagent",
+        "competitive",
+        "landscape"
+      ],
+      "examples": [
+        "Use Competitive Landscape to 竞争格局分析：竞品数量统计、阶段分布、差异化机会与威胁评估.",
+        "Can you run Competitive Landscape? Input Data is the main input I have.",
+        "Invoke Competitive Landscape with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

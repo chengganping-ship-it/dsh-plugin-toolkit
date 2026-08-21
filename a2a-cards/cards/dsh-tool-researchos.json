@@ -1,0 +1,196 @@
+{
+  "name": "dsh-tool-researchos",
+  "description": "ResearchOS - AI Scientist toolkit for academic research acceleration. Intelligent literature review, hypothesis generation, experiment design, data pipeline, paper outlining, peer review simulation, research radar, and collaboration funding recommendations.",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-researchos",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-researchos",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "lit_reviewer",
+      "name": "Lit Reviewer",
+      "description": "Intelligent literature review tool. Expands keywords, ranks papers by relevance, identifies research gaps, and generates timeline visualization. Citation network analysis included.",
+      "tags": [
+        "researchos",
+        "lit",
+        "reviewer"
+      ],
+      "examples": [
+        "Use Lit Reviewer to intelligent literature review tool. Expands keywords, ranks papers by relevance, identifies research gaps, and generates timeline visualization. Citation network analysis included.",
+        "Can you run Lit Reviewer? Query is the main input I have.",
+        "Invoke Lit Reviewer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "hypothesis_gen",
+      "name": "Hypothesis Gen",
+      "description": "Generate scientific hypotheses through problem space exploration, counterfactual reasoning, and risk assessment. Returns ranked hypotheses with testability scores and implications.",
+      "tags": [
+        "researchos",
+        "hypothesis",
+        "gen"
+      ],
+      "examples": [
+        "Use Hypothesis Gen to generate scientific hypotheses through problem space exploration, counterfactual reasoning, and risk assessment. Returns ranked hypotheses with testability scores and implications.",
+        "Can you run Hypothesis Gen? Research Question is the main input I have.",
+        "Invoke Hypothesis Gen with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "experiment_designer",
+      "name": "Experiment Designer",
+      "description": "Design controlled experiments with power analysis, randomization, blinding protocols, and threat assessment. Includes sample size calculation and experimental workflow.",
+      "tags": [
+        "researchos",
+        "experiment",
+        "designer"
+      ],
+      "examples": [
+        "Use Experiment Designer to design controlled experiments with power analysis, randomization, blinding protocols, and threat assessment. Includes sample size calculation and experimental workflow.",
+        "Can you run Experiment Designer? Hypothesis is the main input I have.",
+        "Invoke Experiment Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "data_pipeline",
+      "name": "Data Pipeline",
+      "description": "Manage research data with automated cleaning plans, feature engineering, quality assessment, version control, and data card generation for reproducibility.",
+      "tags": [
+        "researchos",
+        "data",
+        "pipeline"
+      ],
+      "examples": [
+        "Use Data Pipeline to manage research data with automated cleaning plans, feature engineering, quality assessment, version control, and data card generation for reproducibility.",
+        "Can you run Data Pipeline? Dataset Name is the main input I have.",
+        "Invoke Data Pipeline with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "paper_outliner",
+      "name": "Paper Outliner",
+      "description": "Generate paper outline with IMRAD template, figure placement, citation annotation, and target journal matching. Supports multiple submission types.",
+      "tags": [
+        "researchos",
+        "paper",
+        "outliner"
+      ],
+      "examples": [
+        "Use Paper Outliner to generate paper outline with IMRAD template, figure placement, citation annotation, and target journal matching. Supports multiple submission types.",
+        "Can you run Paper Outliner? Title is the main input I have.",
+        "Invoke Paper Outliner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "peer_review_sim",
+      "name": "Peer Review Sim",
+      "description": "Simulate peer review with methodology checking, statistical review, reproducibility assessment, and strengths/weaknesses report. Provides overall score and recommendation.",
+      "tags": [
+        "researchos",
+        "peer",
+        "review",
+        "sim"
+      ],
+      "examples": [
+        "Use Peer Review Sim to simulate peer review with methodology checking, statistical review, reproducibility assessment, and strengths/weaknesses report. Provides overall score and recommendation.",
+        "Can you run Peer Review Sim? Title is the main input I have.",
+        "Invoke Peer Review Sim with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "research_radar",
+      "name": "Research Radar",
+      "description": "Analyze research trends with emerging topic identification, key researcher positioning, funding direction analysis, and strategic recommendations.",
+      "tags": [
+        "researchos",
+        "research",
+        "radar"
+      ],
+      "examples": [
+        "Use Research Radar to analyze research trends with emerging topic identification, key researcher positioning, funding direction analysis, and strategic recommendations.",
+        "Can you run Research Radar? Domain is the main input I have.",
+        "Invoke Research Radar with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "collaboration_funder",
+      "name": "Collaboration Funder",
+      "description": "Find collaborators by expertise complementarity, assess team gaps, and match funding opportunities. Includes synergy potential scoring and strategic recommendations.",
+      "tags": [
+        "researchos",
+        "collaboration",
+        "funder"
+      ],
+      "examples": [
+        "Use Collaboration Funder to find collaborators by expertise complementarity, assess team gaps, and match funding opportunities. Includes synergy potential scoring and strategic recommendations.",
+        "Can you run Collaboration Funder? Researcher is the main input I have.",
+        "Invoke Collaboration Funder with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

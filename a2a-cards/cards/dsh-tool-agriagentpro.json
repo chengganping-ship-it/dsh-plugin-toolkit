@@ -1,0 +1,202 @@
+{
+  "name": "agriagentpro",
+  "description": "智慧农业AI助手 — 精准种植与智慧养殖智能体",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/agriagentpro",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/agriagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "precision_planting_advisor",
+      "name": "Precision Planting Advisor",
+      "description": "精准种植顾问 — 基于土壤数据、气候条件和区域特征，提供土壤分析、作物推荐、播种密度、灌溉方案和施肥计划",
+      "tags": [
+        "agriagentpro",
+        "precision",
+        "planting",
+        "advisor"
+      ],
+      "examples": [
+        "Use Precision Planting Advisor to 精准种植顾问 — 基于土壤数据、气候条件和区域特征，提供土壤分析、作物推荐、播种密度、灌溉方案和施肥计划.",
+        "Can you run Precision Planting Advisor? Input Data is the main input I have.",
+        "Invoke Precision Planting Advisor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "smart_irrigation_controller",
+      "name": "Smart Irrigation Controller",
+      "description": "智能灌溉控制 — 基于土壤湿度、气象数据和作物需水规律，提供灌溉调度、用水效率分析和节水优化方案",
+      "tags": [
+        "agriagentpro",
+        "smart",
+        "irrigation",
+        "controller"
+      ],
+      "examples": [
+        "Use Smart Irrigation Controller to 智能灌溉控制 — 基于土壤湿度、气象数据和作物需水规律，提供灌溉调度、用水效率分析和节水优化方案.",
+        "Can you run Smart Irrigation Controller? Input Data is the main input I have.",
+        "Invoke Smart Irrigation Controller with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "crop_health_monitor",
+      "name": "Crop Health Monitor",
+      "description": "作物健康监测 — 基于遥感影像、气象数据和症状描述，提供病虫害识别、营养缺乏诊断、长势评估和预警",
+      "tags": [
+        "agriagentpro",
+        "crop",
+        "health",
+        "monitor"
+      ],
+      "examples": [
+        "Use Crop Health Monitor to 作物健康监测 — 基于遥感影像、气象数据和症状描述，提供病虫害识别、营养缺乏诊断、长势评估和预警.",
+        "Can you run Crop Health Monitor? Input Data is the main input I have.",
+        "Invoke Crop Health Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "livestock_management",
+      "name": "Livestock Management",
+      "description": "智慧养殖管理 — 基于养殖数据和环境参数，提供饲料优化、疫病预警、生长监测、环境控制和繁殖管理方案",
+      "tags": [
+        "agriagentpro",
+        "livestock",
+        "management"
+      ],
+      "examples": [
+        "Use Livestock Management to 智慧养殖管理 — 基于养殖数据和环境参数，提供饲料优化、疫病预警、生长监测、环境控制和繁殖管理方案.",
+        "Can you run Livestock Management? Input Data is the main input I have.",
+        "Invoke Livestock Management with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "agri_supply_chain",
+      "name": "Agri Supply Chain",
+      "description": "农业供应链 — 基于产品特性和市场数据，提供采收预测、冷链物流、库存管理、价格预测和渠道优化方案",
+      "tags": [
+        "agriagentpro",
+        "agri",
+        "supply",
+        "chain"
+      ],
+      "examples": [
+        "Use Agri Supply Chain to 农业供应链 — 基于产品特性和市场数据，提供采收预测、冷链物流、库存管理、价格预测和渠道优化方案.",
+        "Can you run Agri Supply Chain? Input Data is the main input I have.",
+        "Invoke Agri Supply Chain with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "farm_financial_planner",
+      "name": "Farm Financial Planner",
+      "description": "农场财务规划 — 基于经营数据和成本结构，提供成本分析、收益预测、补贴申请、保险方案和投资回报分析",
+      "tags": [
+        "agriagentpro",
+        "farm",
+        "financial",
+        "planner"
+      ],
+      "examples": [
+        "Use Farm Financial Planner to 农场财务规划 — 基于经营数据和成本结构，提供成本分析、收益预测、补贴申请、保险方案和投资回报分析.",
+        "Can you run Farm Financial Planner? Input Data is the main input I have.",
+        "Invoke Farm Financial Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "climate_risk_assessor",
+      "name": "Climate Risk Assessor",
+      "description": "气候风险评估 — 基于地理位置和历史气候数据，提供极端天气风险、干旱评估、洪涝预警、气候适应策略和碳汇评估",
+      "tags": [
+        "agriagentpro",
+        "climate",
+        "risk",
+        "assessor"
+      ],
+      "examples": [
+        "Use Climate Risk Assessor to 气候风险评估 — 基于地理位置和历史气候数据，提供极端天气风险、干旱评估、洪涝预警、气候适应策略和碳汇评估.",
+        "Can you run Climate Risk Assessor? Input Data is the main input I have.",
+        "Invoke Climate Risk Assessor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "agri_drone_operator",
+      "name": "Agri Drone Operator",
+      "description": "农业无人机 — 基于作业需求和地形条件，提供植保喷洒、航拍测绘、变量施肥、作业规划和效果评估方案",
+      "tags": [
+        "agriagentpro",
+        "agri",
+        "drone",
+        "operator"
+      ],
+      "examples": [
+        "Use Agri Drone Operator to 农业无人机 — 基于作业需求和地形条件，提供植保喷洒、航拍测绘、变量施肥、作业规划和效果评估方案.",
+        "Can you run Agri Drone Operator? Input Data is the main input I have.",
+        "Invoke Agri Drone Operator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

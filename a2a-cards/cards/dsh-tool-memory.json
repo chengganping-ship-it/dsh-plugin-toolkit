@@ -1,0 +1,192 @@
+{
+  "name": "dsh-tool-memory",
+  "description": "Agent Memory Management System - Memory storage, recall, compression, decay analysis, context assembly, knowledge graph building, conflict resolution, and audit reporting",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-memory",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-memory",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "memory_store",
+      "name": "Memory Store",
+      "description": "Store a memory entry with key, content, category, importance, and tags. Returns storage confirmation with token cost, deduplication status, and index update confirmation.",
+      "tags": [
+        "memory",
+        "store"
+      ],
+      "examples": [
+        "Use Memory Store to store a memory entry with key, content, category, importance, and tags. Returns storage confirmation with token cost, deduplication status, and index update confirmation.",
+        "Can you run Memory Store? Memory Entry is the main input I have.",
+        "Invoke Memory Store with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "memory_recall",
+      "name": "Memory Recall",
+      "description": "Recall relevant memories using semantic search. Returns ranked memories with relevance scores, context snippets, and retrieval confidence.",
+      "tags": [
+        "memory",
+        "recall"
+      ],
+      "examples": [
+        "Use Memory Recall to recall relevant memories using semantic search. Returns ranked memories with relevance scores, context snippets, and retrieval confidence.",
+        "Can you run Memory Recall? Query is the main input I have.",
+        "Invoke Memory Recall with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "memory_compress",
+      "name": "Memory Compress",
+      "description": "Compress session context (conversation history + goals) into a compact summary. Returns compressed summary, key facts preserved, token savings percentage, and compression ratio.",
+      "tags": [
+        "memory",
+        "compress"
+      ],
+      "examples": [
+        "Use Memory Compress to compress session context (conversation history + goals) into a compact summary. Returns compressed summary, key facts preserved, token savings percentage, and compression ratio.",
+        "Can you run Memory Compress? Session Context is the main input I have.",
+        "Invoke Memory Compress with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "memory_decay_analyzer",
+      "name": "Memory Decay Analyzer",
+      "description": "Analyze memory decay patterns to identify stale memories, archive candidates, and generate cleanup recommendations. Returns decay scores and importance decay curves.",
+      "tags": [
+        "memory",
+        "decay",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Memory Decay Analyzer to analyze memory decay patterns to identify stale memories, archive candidates, and generate cleanup recommendations. Returns decay scores and importance decay curves.",
+        "Can you run Memory Decay Analyzer? Memory Inventory is the main input I have.",
+        "Invoke Memory Decay Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "context_assembler",
+      "name": "Context Assembler",
+      "description": "Assemble optimal context for a task from available memories within a token budget. Returns selected memories, token budget usage, and expected relevance score.",
+      "tags": [
+        "memory",
+        "context",
+        "assembler"
+      ],
+      "examples": [
+        "Use Context Assembler to assemble optimal context for a task from available memories within a token budget. Returns selected memories, token budget usage, and expected relevance score.",
+        "Can you run Context Assembler? Task Description is the main input I have.",
+        "Invoke Context Assembler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "memory_graph_builder",
+      "name": "Memory Graph Builder",
+      "description": "Build a knowledge graph from memories showing nodes, edges, clusters, central concepts, and gap analysis. Identifies connectivity gaps and suggests new memories.",
+      "tags": [
+        "memory",
+        "graph",
+        "builder"
+      ],
+      "examples": [
+        "Use Memory Graph Builder to build a knowledge graph from memories showing nodes, edges, clusters, central concepts, and gap analysis. Identifies connectivity gaps and suggests new memories.",
+        "Can you run Memory Graph Builder? Memories is the main input I have.",
+        "Invoke Memory Graph Builder with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "memory_conflict_resolver",
+      "name": "Memory Conflict Resolver",
+      "description": "Resolve conflicts between contradictory memories. Returns resolution strategy, merged fact, confidence score, and list of superseded entries.",
+      "tags": [
+        "memory",
+        "conflict",
+        "resolver"
+      ],
+      "examples": [
+        "Use Memory Conflict Resolver to resolve conflicts between contradictory memories. Returns resolution strategy, merged fact, confidence score, and list of superseded entries.",
+        "Can you run Memory Conflict Resolver? Conflicting Memories is the main input I have.",
+        "Invoke Memory Conflict Resolver with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "memory_audit_report",
+      "name": "Memory Audit Report",
+      "description": "Generate a comprehensive audit report of the memory system. Returns health score, fragmentation index, quality metrics, and optimization suggestions.",
+      "tags": [
+        "memory",
+        "audit",
+        "report"
+      ],
+      "examples": [
+        "Use Memory Audit Report to generate a comprehensive audit report of the memory system. Returns health score, fragmentation index, quality metrics, and optimization suggestions.",
+        "Can you run Memory Audit Report? Memory Stats is the main input I have.",
+        "Invoke Memory Audit Report with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

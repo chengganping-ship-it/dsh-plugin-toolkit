@@ -1,0 +1,202 @@
+{
+  "name": "dsh-tool-glpcomplianceagent",
+  "description": "GLP (Good Laboratory Practice) Compliance AI Agent for Pharma/Biotech Labs - SOP compliance review, study audit trail validation, ALCOA+ data integrity verification, equipment qualification tracking, personnel training matrix, deviation/CAPA advisory, regulatory submission readiness assessment, GLP risk assessment matrix",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-glpcomplianceagent",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-glpcomplianceagent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "sop_compliance_checker",
+      "name": "Sop Compliance Checker",
+      "description": "SOP合规性审查与偏差识别 | Check SOP compliance and identify deviations. Reviews SOP adherence against study protocols, identifies major/minor deviations, and provides regulatory reference mapping. Supports review, deviation_check, version_audit, and gap_analysis actions.",
+      "tags": [
+        "glpcomplianceagent",
+        "sop",
+        "compliance",
+        "checker"
+      ],
+      "examples": [
+        "Use Sop Compliance Checker to sOP合规性审查与偏差识别 | Check SOP compliance and identify deviations. Reviews SOP adherence against study protocols, identifies major/minor deviations, and provides regulatory reference mapping. Supports review, deviation_check, version_audit, and gap_analysis actions.",
+        "Can you run Sop Compliance Checker? Input Data is the main input I have.",
+        "Invoke Sop Compliance Checker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "study_audit_trail",
+      "name": "Study Audit Trail",
+      "description": "研究项目审计追踪完整性验证 | Validate study audit trail completeness. Checks chain of custody, entry integrity, signature completeness, and regulatory compliance of electronic records per 21 CFR Part 11 and OECD GLP.",
+      "tags": [
+        "glpcomplianceagent",
+        "study",
+        "audit",
+        "trail"
+      ],
+      "examples": [
+        "Use Study Audit Trail to 研究项目审计追踪完整性验证 | Validate study audit trail completeness. Checks chain of custody, entry integrity, signature completeness, and regulatory compliance of electronic records per 21 CFR Part 11 and OECD GLP.",
+        "Can you run Study Audit Trail? Input Data is the main input I have.",
+        "Invoke Study Audit Trail with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "data_integrity_validator",
+      "name": "Data Integrity Validator",
+      "description": "ALCOA+数据完整性原则验证 | Validate data integrity per ALCOA+ principles (Attributable, Legible, Contemporaneous, Original, Accurate, Complete, Consistent, Enduring, Available). Assesses compliance and identifies gaps.",
+      "tags": [
+        "glpcomplianceagent",
+        "data",
+        "integrity",
+        "validator"
+      ],
+      "examples": [
+        "Use Data Integrity Validator to aLCOA+数据完整性原则验证 | Validate data integrity per ALCOA+ principles (Attributable, Legible, Contemporaneous, Original, Accurate, Complete, Consistent, Enduring, Available). Assesses compliance and identifies gaps.",
+        "Can you run Data Integrity Validator? Input Data is the main input I have.",
+        "Invoke Data Integrity Validator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "equipment_qualification",
+      "name": "Equipment Qualification",
+      "description": "实验室设备 qualification/OQ/PQ 追踪 | Track equipment qualification status including IQ/OQ/PQ, calibration schedules, and compliance gaps. Supports status_check, schedule_review, gap_analysis, and out_of_service actions.",
+      "tags": [
+        "glpcomplianceagent",
+        "equipment",
+        "qualification"
+      ],
+      "examples": [
+        "Use Equipment Qualification to 实验室设备 qualification/OQ/PQ 追踪 | Track equipment qualification status including IQ/OQ/PQ, calibration schedules, and compliance gaps. Supports status_check, schedule_review, gap_analysis, and out_of_service actions.",
+        "Can you run Equipment Qualification? Input Data is the main input I have.",
+        "Invoke Equipment Qualification with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "personnel_training_competency",
+      "name": "Personnel Training Competency",
+      "description": "人员资质与培训矩阵管理 | Manage personnel training matrix and competency verification. Reviews training compliance, identifies gaps, tracks competency verification status, and generates training plans.",
+      "tags": [
+        "glpcomplianceagent",
+        "personnel",
+        "training",
+        "competency"
+      ],
+      "examples": [
+        "Use Personnel Training Competency to 人员资质与培训矩阵管理 | Manage personnel training matrix and competency verification. Reviews training compliance, identifies gaps, tracks competency verification status, and generates training plans.",
+        "Can you run Personnel Training Competency? Input Data is the main input I have.",
+        "Invoke Personnel Training Competency with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "deviation_capability_advisor",
+      "name": "Deviation Capability Advisor",
+      "description": "偏差处理能力与CAPA建议 | Advise on deviation handling and CAPA effectiveness. Assesses deviation trends, CAPA implementation status, root cause patterns, and provides regulatory-compliant recommendations.",
+      "tags": [
+        "glpcomplianceagent",
+        "deviation",
+        "capability",
+        "advisor"
+      ],
+      "examples": [
+        "Use Deviation Capability Advisor to 偏差处理能力与CAPA建议 | Advise on deviation handling and CAPA effectiveness. Assesses deviation trends, CAPA implementation status, root cause patterns, and provides regulatory-compliant recommendations.",
+        "Can you run Deviation Capability Advisor? Input Data is the main input I have.",
+        "Invoke Deviation Capability Advisor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "regulatory_submission_readiness",
+      "name": "Regulatory Submission Readiness",
+      "description": "监管机构提交材料准备度评估 | Assess regulatory submission readiness for FDA, EMA, NMPA. Evaluates module completeness, study report status, QA approval, and identifies critical path items.",
+      "tags": [
+        "glpcomplianceagent",
+        "regulatory",
+        "submission",
+        "readiness"
+      ],
+      "examples": [
+        "Use Regulatory Submission Readiness to 监管机构提交材料准备度评估 | Assess regulatory submission readiness for FDA, EMA, NMPA. Evaluates module completeness, study report status, QA approval, and identifies critical path items.",
+        "Can you run Regulatory Submission Readiness? Input Data is the main input I have.",
+        "Invoke Regulatory Submission Readiness with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "glp_risk_assessment",
+      "name": "Glp Risk Assessment",
+      "description": "GLP风险评估矩阵与缓解措施 | GLP risk assessment matrix with mitigations. Uses L x S x D (RPN) methodology to evaluate risks, prioritize mitigations, and generate risk register with residual risk tracking.",
+      "tags": [
+        "glpcomplianceagent",
+        "glp",
+        "risk",
+        "assessment"
+      ],
+      "examples": [
+        "Use Glp Risk Assessment to gLP风险评估矩阵与缓解措施 | GLP risk assessment matrix with mitigations. Uses L x S x D (RPN) methodology to evaluate risks, prioritize mitigations, and generate risk register with residual risk tracking.",
+        "Can you run Glp Risk Assessment? Input Data is the main input I have.",
+        "Invoke Glp Risk Assessment with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

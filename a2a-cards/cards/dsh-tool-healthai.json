@@ -1,0 +1,200 @@
+{
+  "name": "dsh-tool-healthai",
+  "description": "Healthcare Diagnostics Support - Symptom analysis, drug interaction checking, medical coding (ICD-10/CPT/SNOMED), lab result interpretation, clinical pathway recommendation, medical literature summarization, patient risk stratification, and medication reconciliation",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-healthai",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-healthai",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "symptom_analyzer",
+      "name": "Symptom Analyzer",
+      "description": "Analyze patient symptoms to generate differential diagnosis, assess urgency level, identify red flags, and recommend diagnostic tests. Accepts structured symptom data with severity and duration.",
+      "tags": [
+        "healthai",
+        "symptom",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Symptom Analyzer to analyze patient symptoms to generate differential diagnosis, assess urgency level, identify red flags, and recommend diagnostic tests. Accepts structured symptom data with severity and duration.",
+        "Can you run Symptom Analyzer? Symptoms is the main input I have.",
+        "Invoke Symptom Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "drug_interaction_checker",
+      "name": "Drug Interaction Checker",
+      "description": "Check for drug-drug interactions between current medications and a new medication. Provides severity rating, mechanism, clinical consequences, management strategies, and alternative suggestions.",
+      "tags": [
+        "healthai",
+        "drug",
+        "interaction",
+        "checker"
+      ],
+      "examples": [
+        "Use Drug Interaction Checker to check for drug-drug interactions between current medications and a new medication. Provides severity rating, mechanism, clinical consequences, management strategies, and alternative suggestions.",
+        "Can you run Drug Interaction Checker? Medications is the main input I have.",
+        "Invoke Drug Interaction Checker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "medical_coder",
+      "name": "Medical Coder",
+      "description": "Suggest medical codes (ICD-10, CPT, or SNOMED CT) based on clinical documentation. Provides code descriptions, confidence levels, and documentation requirements for accurate coding.",
+      "tags": [
+        "healthai",
+        "medical",
+        "coder"
+      ],
+      "examples": [
+        "Use Medical Coder to suggest medical codes (ICD-10, CPT, or SNOMED CT) based on clinical documentation. Provides code descriptions, confidence levels, and documentation requirements for accurate coding.",
+        "Can you run Medical Coder? Clinical Notes is the main input I have.",
+        "Invoke Medical Coder with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "lab_result_interpreter",
+      "name": "Lab Result Interpreter",
+      "description": "Interpret laboratory results by flagging abnormal values, recognizing clinical patterns, and providing follow-up recommendations. Supports CBC, metabolic panel, liver function, lipids, thyroid, and more.",
+      "tags": [
+        "healthai",
+        "lab",
+        "result",
+        "interpreter"
+      ],
+      "examples": [
+        "Use Lab Result Interpreter to interpret laboratory results by flagging abnormal values, recognizing clinical patterns, and providing follow-up recommendations. Supports CBC, metabolic panel, liver function, lipids, thyroid, and more.",
+        "Can you run Lab Result Interpreter? Lab Results is the main input I have.",
+        "Invoke Lab Result Interpreter with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "clinical_pathway_recommender",
+      "name": "Clinical Pathway Recommender",
+      "description": "Recommend evidence-based clinical pathways for specific diagnoses. Provides treatment steps with evidence levels, monitoring plans, and alternative pathway options.",
+      "tags": [
+        "healthai",
+        "clinical",
+        "pathway",
+        "recommender"
+      ],
+      "examples": [
+        "Use Clinical Pathway Recommender to recommend evidence-based clinical pathways for specific diagnoses. Provides treatment steps with evidence levels, monitoring plans, and alternative pathway options.",
+        "Can you run Clinical Pathway Recommender? Diagnosis is the main input I have.",
+        "Invoke Clinical Pathway Recommender with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "medical_literature_summarizer",
+      "name": "Medical Literature Summarizer",
+      "description": "Summarize medical literature for a given clinical query. Provides evidence quality assessment, key findings from relevant studies, clinical implications, and search strategy.",
+      "tags": [
+        "healthai",
+        "medical",
+        "literature",
+        "summarizer"
+      ],
+      "examples": [
+        "Use Medical Literature Summarizer to summarize medical literature for a given clinical query. Provides evidence quality assessment, key findings from relevant studies, clinical implications, and search strategy.",
+        "Can you run Medical Literature Summarizer? Query is the main input I have.",
+        "Invoke Medical Literature Summarizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "patient_risk_stratifier",
+      "name": "Patient Risk Stratifier",
+      "description": "Stratify patient risk across cardiovascular, diabetes, and readmission domains. Calculates risk scores, categorizes overall risk, and recommends targeted interventions.",
+      "tags": [
+        "healthai",
+        "patient",
+        "risk",
+        "stratifier"
+      ],
+      "examples": [
+        "Use Patient Risk Stratifier to stratify patient risk across cardiovascular, diabetes, and readmission domains. Calculates risk scores, categorizes overall risk, and recommends targeted interventions.",
+        "Can you run Patient Risk Stratifier? Patient Data is the main input I have.",
+        "Invoke Patient Risk Stratifier with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "medication_reconciliation",
+      "name": "Medication Reconciliation",
+      "description": "Perform medication reconciliation by comparing current medications with new prescriptions and discharge medications. Identifies discrepancies, duplications, omissions, and interactions.",
+      "tags": [
+        "healthai",
+        "medication",
+        "reconciliation"
+      ],
+      "examples": [
+        "Use Medication Reconciliation to perform medication reconciliation by comparing current medications with new prescriptions and discharge medications. Identifies discrepancies, duplications, omissions, and interactions.",
+        "Can you run Medication Reconciliation? Current Medications is the main input I have.",
+        "Invoke Medication Reconciliation with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,201 @@
+{
+  "name": "dsh-tool-sportagentpro",
+  "description": "Sports Intelligence AI Agent — performance analysis, injury prediction, training optimization, match tactics, talent scouting, nutrition recovery, referee auditing, sports business analytics",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-sportagentpro",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-sportagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "performance_analyzer",
+      "name": "Performance Analyzer",
+      "description": "运动员表现分析与技术统计 | Analyze athlete performance metrics and technical stats. Aggregates match data, calculates trends, identifies strengths/weaknesses, and provides overall performance scoring.",
+      "tags": [
+        "sportagentpro",
+        "performance",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Performance Analyzer to 运动员表现分析与技术统计 | Analyze athlete performance metrics and technical stats. Aggregates match data, calculates trends, identifies strengths/weaknesses, and provides overall performance scoring.",
+        "Can you run Performance Analyzer? Input Data is the main input I have.",
+        "Invoke Performance Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "injury_risk_predictor",
+      "name": "Injury Risk Predictor",
+      "description": "运动损伤风险预测与预防方案 | Predict injury risk with prevention plans. Analyzes training load ratios, biomechanics, injury history, and current symptoms to project injury risks and prescribe prevention protocols.",
+      "tags": [
+        "sportagentpro",
+        "injury",
+        "risk",
+        "predictor"
+      ],
+      "examples": [
+        "Use Injury Risk Predictor to 运动损伤风险预测与预防方案 | Predict injury risk with prevention plans. Analyzes training load ratios, biomechanics, injury history, and current symptoms to project injury risks and prescribe prevention protocols.",
+        "Can you run Injury Risk Predictor? Input Data is the main input I have.",
+        "Invoke Injury Risk Predictor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "training_load_optimizer",
+      "name": "Training Load Optimizer",
+      "description": "训练负荷管理与周期化安排 | Optimize training load with periodization. Creates weekly training plans, calculates ACWR, prescribes periodization blocks, and provides peaking strategies for competition.",
+      "tags": [
+        "sportagentpro",
+        "training",
+        "load",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Training Load Optimizer to 训练负荷管理与周期化安排 | Optimize training load with periodization. Creates weekly training plans, calculates ACWR, prescribes periodization blocks, and provides peaking strategies for competition.",
+        "Can you run Training Load Optimizer? Input Data is the main input I have.",
+        "Invoke Training Load Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "match_tactic_planner",
+      "name": "Match Tactic Planner",
+      "description": "比赛战术布置与对手分析 | Plan match tactics with opponent scouting. Generates tactical instructions, set-piece plans, player matchups, and formation recommendations based on opponent analysis.",
+      "tags": [
+        "sportagentpro",
+        "match",
+        "tactic",
+        "planner"
+      ],
+      "examples": [
+        "Use Match Tactic Planner to 比赛战术布置与对手分析 | Plan match tactics with opponent scouting. Generates tactical instructions, set-piece plans, player matchups, and formation recommendations based on opponent analysis.",
+        "Can you run Match Tactic Planner? Input Data is the main input I have.",
+        "Invoke Match Tactic Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "talent_scouting_ai",
+      "name": "Talent Scouting Ai",
+      "description": "青少年球探与潜力评估 | Youth talent scouting with potential assessment. Evaluates technical skills, physical attributes, cognitive ability, and projects future development with comparable player templates.",
+      "tags": [
+        "sportagentpro",
+        "talent",
+        "scouting"
+      ],
+      "examples": [
+        "Use Talent Scouting Ai to 青少年球探与潜力评估 | Youth talent scouting with potential assessment. Evaluates technical skills, physical attributes, cognitive ability, and projects future development with comparable player templates.",
+        "Can you run Talent Scouting Ai? Input Data is the main input I have.",
+        "Invoke Talent Scouting Ai with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "nutrition_recovery_planner",
+      "name": "Nutrition Recovery Planner",
+      "description": "运动员营养与恢复方案 | Athlete nutrition and recovery planning. Creates personalized daily nutrition plans, hydration protocols, supplement recommendations, and recovery strategies.",
+      "tags": [
+        "sportagentpro",
+        "nutrition",
+        "recovery",
+        "planner"
+      ],
+      "examples": [
+        "Use Nutrition Recovery Planner to 运动员营养与恢复方案 | Athlete nutrition and recovery planning. Creates personalized daily nutrition plans, hydration protocols, supplement recommendations, and recovery strategies.",
+        "Can you run Nutrition Recovery Planner? Input Data is the main input I have.",
+        "Invoke Nutrition Recovery Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "referee_decision_auditor",
+      "name": "Referee Decision Auditor",
+      "description": "裁判判罚合规性审查与VAR模拟 | Audit referee decisions and simulate VAR. Evaluates referee decisions against correct outcomes, provides rule references, suggests VAR interventions, and generates performance grades.",
+      "tags": [
+        "sportagentpro",
+        "referee",
+        "decision",
+        "auditor"
+      ],
+      "examples": [
+        "Use Referee Decision Auditor to 裁判判罚合规性审查与VAR模拟 | Audit referee decisions and simulate VAR. Evaluates referee decisions against correct outcomes, provides rule references, suggests VAR interventions, and generates performance grades.",
+        "Can you run Referee Decision Auditor? Input Data is the main input I have.",
+        "Invoke Referee Decision Auditor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "sports_business_analytics",
+      "name": "Sports Business Analytics",
+      "description": "体育赛事商业分析与上座率预测 | Sports business analytics and attendance forecasting. Predicts attendance, projects revenue across streams, optimizes pricing, and provides ROI analysis and commercial recommendations.",
+      "tags": [
+        "sportagentpro",
+        "sports",
+        "business",
+        "analytics"
+      ],
+      "examples": [
+        "Use Sports Business Analytics to 体育赛事商业分析与上座率预测 | Sports business analytics and attendance forecasting. Predicts attendance, projects revenue across streams, optimizes pricing, and provides ROI analysis and commercial recommendations.",
+        "Can you run Sports Business Analytics? Input Data is the main input I have.",
+        "Invoke Sports Business Analytics with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

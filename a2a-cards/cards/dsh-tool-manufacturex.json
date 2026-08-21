@@ -1,0 +1,197 @@
+{
+  "name": "dsh-tool-manufacturex",
+  "description": "Smart manufacturing - predictive maintenance, quality inspection, production optimization",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-manufacturex",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-manufacturex",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "predictive_maintenance",
+      "name": "Predictive Maintenance",
+      "description": "Tool provided by the Predictive Maintenance module.",
+      "tags": [
+        "manufacturex",
+        "predictive",
+        "maintenance"
+      ],
+      "examples": [
+        "Use Predictive Maintenance to tool provided by the Predictive Maintenance module.",
+        "I need Predictive Maintenance capabilities for this task in dsh-tool-manufacturex.",
+        "Invoke Predictive Maintenance with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "quality_inspector",
+      "name": "Quality Inspector",
+      "description": "Tool provided by the Quality Inspector module.",
+      "tags": [
+        "manufacturex",
+        "quality",
+        "inspector"
+      ],
+      "examples": [
+        "Use Quality Inspector to tool provided by the Quality Inspector module.",
+        "I need Quality Inspector capabilities for this task in dsh-tool-manufacturex.",
+        "Invoke Quality Inspector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "production_optimizer",
+      "name": "Production Optimizer",
+      "description": "Tool provided by the Production Optimizer module.",
+      "tags": [
+        "manufacturex",
+        "production",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Production Optimizer to tool provided by the Production Optimizer module.",
+        "I need Production Optimizer capabilities for this task in dsh-tool-manufacturex.",
+        "Invoke Production Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "energy_optimizer",
+      "name": "Energy Optimizer",
+      "description": "Tool provided by the Energy Optimizer module.",
+      "tags": [
+        "manufacturex",
+        "energy",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Energy Optimizer to tool provided by the Energy Optimizer module.",
+        "I need Energy Optimizer capabilities for this task in dsh-tool-manufacturex.",
+        "Invoke Energy Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "supply_chain_optimizer",
+      "name": "Supply Chain Optimizer",
+      "description": "Tool provided by the Supply Chain Optimizer module.",
+      "tags": [
+        "manufacturex",
+        "supply",
+        "chain",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Supply Chain Optimizer to tool provided by the Supply Chain Optimizer module.",
+        "I need Supply Chain Optimizer capabilities for this task in dsh-tool-manufacturex.",
+        "Invoke Supply Chain Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "defect_analyzer",
+      "name": "Defect Analyzer",
+      "description": "Tool provided by the Defect Analyzer module.",
+      "tags": [
+        "manufacturex",
+        "defect",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Defect Analyzer to tool provided by the Defect Analyzer module.",
+        "I need Defect Analyzer capabilities for this task in dsh-tool-manufacturex.",
+        "Invoke Defect Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "oee_calculator",
+      "name": "Oee Calculator",
+      "description": "Tool provided by the Oee Calculator module.",
+      "tags": [
+        "manufacturex",
+        "oee",
+        "calculator"
+      ],
+      "examples": [
+        "Use Oee Calculator to tool provided by the Oee Calculator module.",
+        "I need Oee Calculator capabilities for this task in dsh-tool-manufacturex.",
+        "Invoke Oee Calculator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "digital_twin_modeler",
+      "name": "Digital Twin Modeler",
+      "description": "Tool provided by the Digital Twin Modeler module.",
+      "tags": [
+        "manufacturex",
+        "digital",
+        "twin",
+        "modeler"
+      ],
+      "examples": [
+        "Use Digital Twin Modeler to tool provided by the Digital Twin Modeler module.",
+        "I need Digital Twin Modeler capabilities for this task in dsh-tool-manufacturex.",
+        "Invoke Digital Twin Modeler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,198 @@
+{
+  "name": "dsh-tool-realestate",
+  "description": "Real Estate Investment Analyzer - Property valuation, rental yield calculation, market timing, flip analysis, portfolio optimization, mortgage analysis, location scoring, and tax benefit calculation",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-realestate",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-realestate",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "property_valuator",
+      "name": "Property Valuator",
+      "description": "Estimate property value using comparative market analysis (CMA). Applies adjustments for age, condition, bedrooms, and comparable sales. Returns estimated value with confidence range.",
+      "tags": [
+        "realestate",
+        "property",
+        "valuator"
+      ],
+      "examples": [
+        "Use Property Valuator to estimate property value using comparative market analysis (CMA). Applies adjustments for age, condition, bedrooms, and comparable sales. Returns estimated value with confidence range.",
+        "Can you run Property Valuator? Property Data is the main input I have.",
+        "Invoke Property Valuator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "rental_yield_calculator",
+      "name": "Rental Yield Calculator",
+      "description": "Calculate rental yield metrics including gross yield, net yield, cash-on-cash return, and cap rate. Provides expense breakdown and yield grading.",
+      "tags": [
+        "realestate",
+        "rental",
+        "yield",
+        "calculator"
+      ],
+      "examples": [
+        "Use Rental Yield Calculator to calculate rental yield metrics including gross yield, net yield, cash-on-cash return, and cap rate. Provides expense breakdown and yield grading.",
+        "Can you run Rental Yield Calculator? Purchase Price is the main input I have.",
+        "Invoke Rental Yield Calculator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "market_timing_analyzer",
+      "name": "Market Timing Analyzer",
+      "description": "Analyze real estate market conditions to determine optimal buy/hold/sell timing. Evaluates price momentum, inventory trends, days on market, mortgage rates, and employment data.",
+      "tags": [
+        "realestate",
+        "market",
+        "timing",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Market Timing Analyzer to analyze real estate market conditions to determine optimal buy/hold/sell timing. Evaluates price momentum, inventory trends, days on market, mortgage rates, and employment data.",
+        "Can you run Market Timing Analyzer? Market Data is the main input I have.",
+        "Invoke Market Timing Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "flip_analyzer",
+      "name": "Flip Analyzer",
+      "description": "Analyze fix-and-flip investment opportunities. Calculates profit margin, ROI, break-even point, risk factors, and recommends maximum offer price using the 70% rule.",
+      "tags": [
+        "realestate",
+        "flip",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Flip Analyzer to analyze fix-and-flip investment opportunities. Calculates profit margin, ROI, break-even point, risk factors, and recommends maximum offer price using the 70% rule.",
+        "Can you run Flip Analyzer? Purchase Price is the main input I have.",
+        "Invoke Flip Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "portfolio_optimizer",
+      "name": "Portfolio Optimizer",
+      "description": "Optimize real estate portfolio allocation. Analyzes diversification across locations and property types, identifies concentration risks, and provides rebalancing recommendations.",
+      "tags": [
+        "realestate",
+        "portfolio",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Portfolio Optimizer to optimize real estate portfolio allocation. Analyzes diversification across locations and property types, identifies concentration risks, and provides rebalancing recommendations.",
+        "Can you run Portfolio Optimizer? Properties is the main input I have.",
+        "Invoke Portfolio Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "mortgage_analyzer",
+      "name": "Mortgage Analyzer",
+      "description": "Calculate mortgage payments, total interest, amortization schedule, and break-even analysis versus renting. Includes equity projections and loan-to-value metrics.",
+      "tags": [
+        "realestate",
+        "mortgage",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Mortgage Analyzer to calculate mortgage payments, total interest, amortization schedule, and break-even analysis versus renting. Includes equity projections and loan-to-value metrics.",
+        "Can you run Mortgage Analyzer? Loan Amount is the main input I have.",
+        "Invoke Mortgage Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "location_scorer",
+      "name": "Location Scorer",
+      "description": "Score a location for real estate investment potential. Evaluates school ratings, crime rate, walkability, transit access, amenities, employment growth, and population trends.",
+      "tags": [
+        "realestate",
+        "location",
+        "scorer"
+      ],
+      "examples": [
+        "Use Location Scorer to score a location for real estate investment potential. Evaluates school ratings, crime rate, walkability, transit access, amenities, employment growth, and population trends.",
+        "Can you run Location Scorer? Location Data is the main input I have.",
+        "Invoke Location Scorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "tax_benefit_calculator",
+      "name": "Tax Benefit Calculator",
+      "description": "Calculate real estate tax benefits including depreciation deductions, operating expense deductions, capital gains estimates, and 1031 exchange benefits.",
+      "tags": [
+        "realestate",
+        "tax",
+        "benefit",
+        "calculator"
+      ],
+      "examples": [
+        "Use Tax Benefit Calculator to calculate real estate tax benefits including depreciation deductions, operating expense deductions, capital gains estimates, and 1031 exchange benefits.",
+        "Can you run Tax Benefit Calculator? Property Data is the main input I have.",
+        "Invoke Tax Benefit Calculator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

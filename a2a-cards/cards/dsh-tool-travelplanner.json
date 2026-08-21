@@ -1,0 +1,197 @@
+{
+  "name": "dsh-tool-travelplanner",
+  "description": "Intelligent travel planner - multi-source coordination, itinerary optimization, booking strategy",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-travelplanner",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-travelplanner",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": true,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "itinerary_optimizer",
+      "name": "Itinerary Optimizer",
+      "description": "Optimize travel itinerary with route planning, day-by-day scheduling, and preference matching. Takes destinations, duration, preferences, and constraints to produce an optimized travel plan with cost estimates and warnings.",
+      "tags": [
+        "travelplanner",
+        "itinerary",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Itinerary Optimizer to optimize travel itinerary with route planning, day-by-day scheduling, and preference matching. Takes destinations, duration, preferences, and constraints to produce an optimized travel plan with cost estimates and warnings.",
+        "Can you run Itinerary Optimizer? Itinerary Input is the main input I have.",
+        "Invoke Itinerary Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "budget_planner",
+      "name": "Budget Planner",
+      "description": "Create comprehensive travel budget with category breakdown, savings strategies, and per-person/per-day cost analysis. Supports multiple travel styles and currencies.",
+      "tags": [
+        "travelplanner",
+        "budget",
+        "planner"
+      ],
+      "examples": [
+        "Use Budget Planner to create comprehensive travel budget with category breakdown, savings strategies, and per-person/per-day cost analysis. Supports multiple travel styles and currencies.",
+        "Can you run Budget Planner? Budget Input is the main input I have.",
+        "Invoke Budget Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "booking_strategist",
+      "name": "Booking Strategist",
+      "description": "Develop optimal booking strategy with timing recommendations, channel suggestions, loyalty program optimization, and price trend analysis for flights, accommodation, and activities.",
+      "tags": [
+        "travelplanner",
+        "booking",
+        "strategist"
+      ],
+      "examples": [
+        "Use Booking Strategist to develop optimal booking strategy with timing recommendations, channel suggestions, loyalty program optimization, and price trend analysis for flights, accommodation, and activities.",
+        "Can you run Booking Strategist? Booking Input is the main input I have.",
+        "Invoke Booking Strategist with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "calendar_coordinator",
+      "name": "Calendar Coordinator",
+      "description": "Coordinate travel dates with work and family calendars. Detects conflicts, identifies reschedulable/delegable items, generates preparation checklist, and creates auto-reply templates.",
+      "tags": [
+        "travelplanner",
+        "calendar",
+        "coordinator"
+      ],
+      "examples": [
+        "Use Calendar Coordinator to coordinate travel dates with work and family calendars. Detects conflicts, identifies reschedulable/delegable items, generates preparation checklist, and creates auto-reply templates.",
+        "Can you run Calendar Coordinator? Calendar Input is the main input I have.",
+        "Invoke Calendar Coordinator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "local_discovery",
+      "name": "Local Discovery",
+      "description": "Generate personalized local recommendations including food spots, hidden gems, cultural experiences, and day trips. Considers interests, dietary restrictions, budget level, and mobility needs.",
+      "tags": [
+        "travelplanner",
+        "local",
+        "discovery"
+      ],
+      "examples": [
+        "Use Local Discovery to generate personalized local recommendations including food spots, hidden gems, cultural experiences, and day trips. Considers interests, dietary restrictions, budget level, and mobility needs.",
+        "Can you run Local Discovery? Discovery Input is the main input I have.",
+        "Invoke Local Discovery with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "contingency_planner",
+      "name": "Contingency Planner",
+      "description": "Create comprehensive contingency plans for travel risks. Includes emergency contacts, scenario-specific response plans, insurance coverage notes, document backup checklist, and communication plans.",
+      "tags": [
+        "travelplanner",
+        "contingency",
+        "planner"
+      ],
+      "examples": [
+        "Use Contingency Planner to create comprehensive contingency plans for travel risks. Includes emergency contacts, scenario-specific response plans, insurance coverage notes, document backup checklist, and communication plans.",
+        "Can you run Contingency Planner? Contingency Input is the main input I have.",
+        "Invoke Contingency Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "travel_document_checker",
+      "name": "Travel Document Checker",
+      "description": "Check travel document requirements including passport validity, visa requirements by destination, processing timelines, and special circumstance handling. Provides action items and renewal recommendations.",
+      "tags": [
+        "travelplanner",
+        "travel",
+        "document",
+        "checker"
+      ],
+      "examples": [
+        "Use Travel Document Checker to check travel document requirements including passport validity, visa requirements by destination, processing timelines, and special circumstance handling. Provides action items and renewal recommendations.",
+        "Can you run Travel Document Checker? Document Input is the main input I have.",
+        "Invoke Travel Document Checker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "carbon_footprint_calculator",
+      "name": "Carbon Footprint Calculator",
+      "description": "Calculate travel carbon footprint from transport, accommodation, and activities. Provides emissions breakdown, offset options, reduction tips, and comparison benchmarks.",
+      "tags": [
+        "travelplanner",
+        "carbon",
+        "footprint",
+        "calculator"
+      ],
+      "examples": [
+        "Use Carbon Footprint Calculator to calculate travel carbon footprint from transport, accommodation, and activities. Provides emissions breakdown, offset options, reduction tips, and comparison benchmarks.",
+        "Can you run Carbon Footprint Calculator? Carbon Input is the main input I have.",
+        "Invoke Carbon Footprint Calculator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

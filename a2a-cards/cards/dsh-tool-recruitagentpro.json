@@ -1,0 +1,197 @@
+{
+  "name": "dsh-tool-recruitagentpro",
+  "description": "Recruitment AI - resume parsing, candidate matching, interview scheduling, talent pool, JD optimization, offer comparison, sourcing strategy, diversity metrics",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-recruitagentpro",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-recruitagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "resume_parser",
+      "name": "Resume Parser",
+      "description": "Parse resume JSON to extract structured candidate profile including skills categorization, seniority level, career trajectory, strengths, gaps, and employability score.",
+      "tags": [
+        "recruitagentpro",
+        "resume",
+        "parser"
+      ],
+      "examples": [
+        "Use Resume Parser to parse resume JSON to extract structured candidate profile including skills categorization, seniority level, career trajectory, strengths, gaps, and employability score.",
+        "Can you run Resume Parser? Input Data is the main input I have.",
+        "Invoke Resume Parser with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "candidate_matcher",
+      "name": "Candidate Matcher",
+      "description": "Match candidate skills, experience, education, and industry background against a job description. Returns overall match percentage, skill gap analysis, and recommendations.",
+      "tags": [
+        "recruitagentpro",
+        "candidate",
+        "matcher"
+      ],
+      "examples": [
+        "Use Candidate Matcher to match candidate skills, experience, education, and industry background against a job description. Returns overall match percentage, skill gap analysis, and recommendations.",
+        "Can you run Candidate Matcher? Input Data is the main input I have.",
+        "Invoke Candidate Matcher with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "interview_scheduler",
+      "name": "Interview Scheduler",
+      "description": "Schedule interviews with conflict detection across multiple interviewers and dates. Returns proposed schedule, identified conflicts, and recommendations.",
+      "tags": [
+        "recruitagentpro",
+        "interview",
+        "scheduler"
+      ],
+      "examples": [
+        "Use Interview Scheduler to schedule interviews with conflict detection across multiple interviewers and dates. Returns proposed schedule, identified conflicts, and recommendations.",
+        "Can you run Interview Scheduler? Input Data is the main input I have.",
+        "Invoke Interview Scheduler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "talent_pool_analyzer",
+      "name": "Talent Pool Analyzer",
+      "description": "Analyze talent pool composition, health, and availability. Returns status breakdown, skills distribution, stale candidate identification, and actionable recommendations.",
+      "tags": [
+        "recruitagentpro",
+        "talent",
+        "pool",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Talent Pool Analyzer to analyze talent pool composition, health, and availability. Returns status breakdown, skills distribution, stale candidate identification, and actionable recommendations.",
+        "Can you run Talent Pool Analyzer? Input Data is the main input I have.",
+        "Invoke Talent Pool Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "job_description_optimizer",
+      "name": "Job Description Optimizer",
+      "description": "Optimize job descriptions for ATS algorithms. Returns ATS score, keyword gaps, bias detection, readability analysis, and optimized section suggestions.",
+      "tags": [
+        "recruitagentpro",
+        "job",
+        "description",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Job Description Optimizer to optimize job descriptions for ATS algorithms. Returns ATS score, keyword gaps, bias detection, readability analysis, and optimized section suggestions.",
+        "Can you run Job Description Optimizer? Input Data is the main input I have.",
+        "Invoke Job Description Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "offer_comparator",
+      "name": "Offer Comparator",
+      "description": "Compare salary offers across multiple dimensions including total compensation, growth potential, and work-life balance. Returns ranked offers, negotiation leverage, and market position analysis.",
+      "tags": [
+        "recruitagentpro",
+        "offer",
+        "comparator"
+      ],
+      "examples": [
+        "Use Offer Comparator to compare salary offers across multiple dimensions including total compensation, growth potential, and work-life balance. Returns ranked offers, negotiation leverage, and market position analysis.",
+        "Can you run Offer Comparator? Input Data is the main input I have.",
+        "Invoke Offer Comparator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "sourcing_strategy",
+      "name": "Sourcing Strategy",
+      "description": "Develop recruitment sourcing channel strategy with ROI analysis. Returns recommended channels, channel mix percentages, cost estimates, and diversity sourcing options.",
+      "tags": [
+        "recruitagentpro",
+        "sourcing",
+        "strategy"
+      ],
+      "examples": [
+        "Use Sourcing Strategy to develop recruitment sourcing channel strategy with ROI analysis. Returns recommended channels, channel mix percentages, cost estimates, and diversity sourcing options.",
+        "Can you run Sourcing Strategy? Input Data is the main input I have.",
+        "Invoke Sourcing Strategy with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "diversity_metrics",
+      "name": "Diversity Metrics",
+      "description": "Track diversity hiring metrics across the recruitment pipeline. Returns gender/ethnicity distribution, funnel diversity index, benchmark comparison, and DEI recommendations.",
+      "tags": [
+        "recruitagentpro",
+        "diversity",
+        "metrics"
+      ],
+      "examples": [
+        "Use Diversity Metrics to track diversity hiring metrics across the recruitment pipeline. Returns gender/ethnicity distribution, funnel diversity index, benchmark comparison, and DEI recommendations.",
+        "Can you run Diversity Metrics? Input Data is the main input I have.",
+        "Invoke Diversity Metrics with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

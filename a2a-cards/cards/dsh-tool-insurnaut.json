@@ -1,0 +1,195 @@
+{
+  "name": "dsh-tool-insurnaut",
+  "description": "Insurance Navigator - claims analysis, underwriting advisor, coverage optimizer, risk assessor",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-insurnaut",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-insurnaut",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "claims_analyst",
+      "name": "Claims Analyst",
+      "description": "Analyze insurance claims for coverage validity, estimated payout, and fraud indicators. Validates claim against policy terms, checks exclusions, and provides processing recommendations.",
+      "tags": [
+        "insurnaut",
+        "claims",
+        "analyst"
+      ],
+      "examples": [
+        "Use Claims Analyst to analyze insurance claims for coverage validity, estimated payout, and fraud indicators. Validates claim against policy terms, checks exclusions, and provides processing recommendations.",
+        "Can you run Claims Analyst? Claim Details is the main input I have.",
+        "Invoke Claims Analyst with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "underwriting_advisor",
+      "name": "Underwriting Advisor",
+      "description": "Provide underwriting decisions and rate recommendations based on risk profiles. Evaluates applicant risk factors, applies underwriting guidelines, and suggests policy terms.",
+      "tags": [
+        "insurnaut",
+        "underwriting",
+        "advisor"
+      ],
+      "examples": [
+        "Use Underwriting Advisor to provide underwriting decisions and rate recommendations based on risk profiles. Evaluates applicant risk factors, applies underwriting guidelines, and suggests policy terms.",
+        "Can you run Underwriting Advisor? Risk Profile is the main input I have.",
+        "Invoke Underwriting Advisor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "coverage_optimizer",
+      "name": "Coverage Optimizer",
+      "description": "Analyze existing insurance coverage and identify gaps based on life changes and预算. Recommends optimization actions, identifies overlaps, and calculates financial impact.",
+      "tags": [
+        "insurnaut",
+        "coverage",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Coverage Optimizer to analyze existing insurance coverage and identify gaps based on life changes and预算. Recommends optimization actions, identifies overlaps, and calculates financial impact.",
+        "Can you run Coverage Optimizer? Existing Policies is the main input I have.",
+        "Invoke Coverage Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "risk_assessor",
+      "name": "Risk Assessor",
+      "description": "Assess composite risk for insured objects. Produces risk scores, grades, rate multipliers, and loss probability based on asset characteristics, location, and usage.",
+      "tags": [
+        "insurnaut",
+        "risk",
+        "assessor"
+      ],
+      "examples": [
+        "Use Risk Assessor to assess composite risk for insured objects. Produces risk scores, grades, rate multipliers, and loss probability based on asset characteristics, location, and usage.",
+        "Can you run Risk Assessor? Insured Object is the main input I have.",
+        "Invoke Risk Assessor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "policy_comparator",
+      "name": "Policy Comparator",
+      "description": "Compare multiple insurance policies side-by-side. Generates comparison matrix, cost-benefit analysis, and identifies the best overall, best value, and best coverage options.",
+      "tags": [
+        "insurnaut",
+        "policy",
+        "comparator"
+      ],
+      "examples": [
+        "Use Policy Comparator to compare multiple insurance policies side-by-side. Generates comparison matrix, cost-benefit analysis, and identifies the best overall, best value, and best coverage options.",
+        "Can you run Policy Comparator? Policies To Compare is the main input I have.",
+        "Invoke Policy Comparator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "premium_calculator",
+      "name": "Premium Calculator",
+      "description": "Calculate insurance premium with detailed breakdown. Applies base rates, risk factor adjustments, and discounts. Provides savings opportunities and monthly payment estimates.",
+      "tags": [
+        "insurnaut",
+        "premium",
+        "calculator"
+      ],
+      "examples": [
+        "Use Premium Calculator to calculate insurance premium with detailed breakdown. Applies base rates, risk factor adjustments, and discounts. Provides savings opportunities and monthly payment estimates.",
+        "Can you run Premium Calculator? Coverage Amount is the main input I have.",
+        "Invoke Premium Calculator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fraud_detector",
+      "name": "Fraud Detector",
+      "description": "Detect potential insurance fraud through behavioral analysis, network analysis, and pattern matching. Generates fraud scores, red flags, and investigation recommendations.",
+      "tags": [
+        "insurnaut",
+        "fraud",
+        "detector"
+      ],
+      "examples": [
+        "Use Fraud Detector to detect potential insurance fraud through behavioral analysis, network analysis, and pattern matching. Generates fraud scores, red flags, and investigation recommendations.",
+        "Can you run Fraud Detector? Claim Data is the main input I have.",
+        "Invoke Fraud Detector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "regulatory_compliance",
+      "name": "Regulatory Compliance",
+      "description": "Check insurance operations against regulatory frameworks. Identifies compliance gaps, generates remediation plans, and calculates potential penalties avoided.",
+      "tags": [
+        "insurnaut",
+        "regulatory",
+        "compliance"
+      ],
+      "examples": [
+        "Use Regulatory Compliance to check insurance operations against regulatory frameworks. Identifies compliance gaps, generates remediation plans, and calculates potential penalties avoided.",
+        "Can you run Regulatory Compliance? Insurance Operations is the main input I have.",
+        "Invoke Regulatory Compliance with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

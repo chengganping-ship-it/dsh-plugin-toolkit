@@ -1,0 +1,201 @@
+{
+  "name": "dsh-tool-cryptosignal",
+  "description": "Crypto Arbitrage Signal Engine - Funding rate arbitrage, cross-exchange spreads, whale tracking, liquidation heatmaps, volatility regime, basis spread, opportunity scoring",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-cryptosignal",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-cryptosignal",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "funding_rate_analyzer",
+      "name": "Funding Rate Analyzer",
+      "description": "Analyze funding rates across centralized exchanges to identify arbitrage opportunities. Compares rates between exchanges, calculates APR, assesses risk, and provides actionable trade recommendations.",
+      "tags": [
+        "cryptosignal",
+        "funding",
+        "rate",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Funding Rate Analyzer to analyze funding rates across centralized exchanges to identify arbitrage opportunities. Compares rates between exchanges, calculates APR, assesses risk, and provides actionable trade recommendations.",
+        "Can you run Funding Rate Analyzer? Exchange Data is the main input I have.",
+        "Invoke Funding Rate Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "cross_exchange_spread",
+      "name": "Cross Exchange Spread",
+      "description": "Monitor price spreads between exchanges to detect cross-exchange arbitrage opportunities. Calculates profitability after fees and identifies actionable spreads.",
+      "tags": [
+        "cryptosignal",
+        "cross",
+        "exchange",
+        "spread"
+      ],
+      "examples": [
+        "Use Cross Exchange Spread to monitor price spreads between exchanges to detect cross-exchange arbitrage opportunities. Calculates profitability after fees and identifies actionable spreads.",
+        "Can you run Cross Exchange Spread? Spread Data is the main input I have.",
+        "Invoke Cross Exchange Spread with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "whale_movement_tracker",
+      "name": "Whale Movement Tracker",
+      "description": "Track large cryptocurrency transactions and exchange flows. Identifies accumulation/distribution patterns and generates bullish/bearish signals based on whale behavior.",
+      "tags": [
+        "cryptosignal",
+        "whale",
+        "movement",
+        "tracker"
+      ],
+      "examples": [
+        "Use Whale Movement Tracker to track large cryptocurrency transactions and exchange flows. Identifies accumulation/distribution patterns and generates bullish/bearish signals based on whale behavior.",
+        "Can you run Whale Movement Tracker? Transactions is the main input I have.",
+        "Invoke Whale Movement Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "liquidation_heatmap",
+      "name": "Liquidation Heatmap",
+      "description": "Analyze liquidation levels to identify price magnets and cluster zones. Maps liquidation density and generates a heatmap of potential price targets where cascades may occur.",
+      "tags": [
+        "cryptosignal",
+        "liquidation",
+        "heatmap"
+      ],
+      "examples": [
+        "Use Liquidation Heatmap to analyze liquidation levels to identify price magnets and cluster zones. Maps liquidation density and generates a heatmap of potential price targets where cascades may occur.",
+        "Can you run Liquidation Heatmap? Liquidation Levels is the main input I have.",
+        "Invoke Liquidation Heatmap with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "volatility_regime",
+      "name": "Volatility Regime",
+      "description": "Classify current market volatility regime using IV rank, IV percentile, realized vol, term structure, and skew. Recommends optimal options strategies for the current regime.",
+      "tags": [
+        "cryptosignal",
+        "volatility",
+        "regime"
+      ],
+      "examples": [
+        "Use Volatility Regime to classify current market volatility regime using IV rank, IV percentile, realized vol, term structure, and skew. Recommends optimal options strategies for the current regime.",
+        "Can you run Volatility Regime? Metrics is the main input I have.",
+        "Invoke Volatility Regime with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "basis_spread_monitor",
+      "name": "Basis Spread Monitor",
+      "description": "Monitor basis spreads (futures premium/discount to spot) for cash-and-carry arbitrage opportunities. Calculates annualized yields, z-scores, and trade recommendations.",
+      "tags": [
+        "cryptosignal",
+        "basis",
+        "spread",
+        "monitor"
+      ],
+      "examples": [
+        "Use Basis Spread Monitor to monitor basis spreads (futures premium/discount to spot) for cash-and-carry arbitrage opportunities. Calculates annualized yields, z-scores, and trade recommendations.",
+        "Can you run Basis Spread Monitor? Basis Data is the main input I have.",
+        "Invoke Basis Spread Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "arbitrage_opportunity_scorer",
+      "name": "Arbitrage Opportunity Scorer",
+      "description": "Score and rank arbitrage opportunities across multiple dimensions (spread, volume, stability, funding, competition). Returns composite scores and ranked recommendations.",
+      "tags": [
+        "cryptosignal",
+        "arbitrage",
+        "opportunity",
+        "scorer"
+      ],
+      "examples": [
+        "Use Arbitrage Opportunity Scorer to score and rank arbitrage opportunities across multiple dimensions (spread, volume, stability, funding, competition). Returns composite scores and ranked recommendations.",
+        "Can you run Arbitrage Opportunity Scorer? Opportunities is the main input I have.",
+        "Invoke Arbitrage Opportunity Scorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "historical_funding_backtest",
+      "name": "Historical Funding Backtest",
+      "description": "Backtest funding rate strategies using historical data. Calculates Sharpe ratio, max drawdown, win rate, and generates P&L series with actionable recommendations.",
+      "tags": [
+        "cryptosignal",
+        "historical",
+        "funding",
+        "backtest"
+      ],
+      "examples": [
+        "Use Historical Funding Backtest to backtest funding rate strategies using historical data. Calculates Sharpe ratio, max drawdown, win rate, and generates P&L series with actionable recommendations.",
+        "Can you run Historical Funding Backtest? Funding History is the main input I have.",
+        "Invoke Historical Funding Backtest with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

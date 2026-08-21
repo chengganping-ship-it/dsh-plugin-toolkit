@@ -1,0 +1,199 @@
+{
+  "name": "dsh-tool-cybersec",
+  "description": "Cybersecurity Threat Intelligence - Threat intel analysis, vulnerability scanning, attack surface mapping, security posture scoring, incident classification, phishing detection, firewall rule auditing, compliance mapping",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-cybersec",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-cybersec",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "threat_intel_analyzer",
+      "name": "Threat Intel Analyzer",
+      "description": "Analyze threat indicators (IOCs) for actor attribution, campaign linking, MITRE ATT&CK mapping, and severity assessment. Accepts JSON array of indicators with type, value, source, and confidence fields.",
+      "tags": [
+        "cybersec",
+        "threat",
+        "intel",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Threat Intel Analyzer to analyze threat indicators (IOCs) for actor attribution, campaign linking, MITRE ATT&CK mapping, and severity assessment. Accepts JSON array of indicators with type, value, source, and confidence fields.",
+        "Can you run Threat Intel Analyzer? Indicators is the main input I have.",
+        "Invoke Threat Intel Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "vulnerability_scanner",
+      "name": "Vulnerability Scanner",
+      "description": "Scan target system information (OS, services, versions, ports) against known CVE database. Returns vulnerability matches with CVSS scores, exploitability levels, and patch availability.",
+      "tags": [
+        "cybersec",
+        "vulnerability",
+        "scanner"
+      ],
+      "examples": [
+        "Use Vulnerability Scanner to scan target system information (OS, services, versions, ports) against known CVE database. Returns vulnerability matches with CVSS scores, exploitability levels, and patch availability.",
+        "Can you run Vulnerability Scanner? Target Info is the main input I have.",
+        "Invoke Vulnerability Scanner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "attack_surface_mapper",
+      "name": "Attack Surface Mapper",
+      "description": "Map attack surface from asset inventory. Identifies exposed entry points, shadow IT findings, and generates risk prioritization. Accepts JSON array of assets with type, domain, ip, and technology.",
+      "tags": [
+        "cybersec",
+        "attack",
+        "surface",
+        "mapper"
+      ],
+      "examples": [
+        "Use Attack Surface Mapper to map attack surface from asset inventory. Identifies exposed entry points, shadow IT findings, and generates risk prioritization. Accepts JSON array of assets with type, domain, ip, and technology.",
+        "Can you run Attack Surface Mapper? Assets is the main input I have.",
+        "Invoke Attack Surface Mapper with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "security_posture_scorer",
+      "name": "Security Posture Scorer",
+      "description": "Score overall security posture based on implemented controls. Evaluates firewall, EDR, MFA, patching, backup, and encryption maturity. Returns overall score, maturity level, gaps, and improvement roadmap.",
+      "tags": [
+        "cybersec",
+        "security",
+        "posture",
+        "scorer"
+      ],
+      "examples": [
+        "Use Security Posture Scorer to score overall security posture based on implemented controls. Evaluates firewall, EDR, MFA, patching, backup, and encryption maturity. Returns overall score, maturity level, gaps, and improvement roadmap.",
+        "Can you run Security Posture Scorer? Security Controls is the main input I have.",
+        "Invoke Security Posture Scorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "incident_classifier",
+      "name": "Incident Classifier",
+      "description": "Classify security incidents by type (ransomware, credential compromise, phishing, DoS, data breach, malware, insider threat). Returns severity level, response priority (P1-P5), and recommended containment actions.",
+      "tags": [
+        "cybersec",
+        "incident",
+        "classifier"
+      ],
+      "examples": [
+        "Use Incident Classifier to classify security incidents by type (ransomware, credential compromise, phishing, DoS, data breach, malware, insider threat). Returns severity level, response priority (P1-P5), and recommended containment actions.",
+        "Can you run Incident Classifier? Incident Data is the main input I have.",
+        "Invoke Incident Classifier with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "phishing_detector",
+      "name": "Phishing Detector",
+      "description": "Analyze email data for phishing indicators. Detects suspicious sender patterns, urgency language, malicious links, dangerous attachments, and brand impersonation. Returns phishing score, red flags, impersonation type, and recommended action.",
+      "tags": [
+        "cybersec",
+        "phishing",
+        "detector"
+      ],
+      "examples": [
+        "Use Phishing Detector to analyze email data for phishing indicators. Detects suspicious sender patterns, urgency language, malicious links, dangerous attachments, and brand impersonation. Returns phishing score, red flags, impersonation type, and recommended action.",
+        "Can you run Phishing Detector? Email Data is the main input I have.",
+        "Invoke Phishing Detector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "firewall_rule_auditor",
+      "name": "Firewall Rule Auditor",
+      "description": "Audit firewall rules for shadow rules, redundant rules, overly permissive rules, compliance violations (Telnet, FTP, RDP exposure), and optimization recommendations. Accepts JSON array of rule objects.",
+      "tags": [
+        "cybersec",
+        "firewall",
+        "rule",
+        "auditor"
+      ],
+      "examples": [
+        "Use Firewall Rule Auditor to audit firewall rules for shadow rules, redundant rules, overly permissive rules, compliance violations (Telnet, FTP, RDP exposure), and optimization recommendations. Accepts JSON array of rule objects.",
+        "Can you run Firewall Rule Auditor? Rules is the main input I have.",
+        "Invoke Firewall Rule Auditor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "compliance_mapper",
+      "name": "Compliance Mapper",
+      "description": "Map implemented controls to compliance frameworks (SOC2, ISO27001, PCI-DSS, HIPAA). Identifies coverage gaps, generates control mapping, lists evidence requirements, and provides remediation steps.",
+      "tags": [
+        "cybersec",
+        "compliance",
+        "mapper"
+      ],
+      "examples": [
+        "Use Compliance Mapper to map implemented controls to compliance frameworks (SOC2, ISO27001, PCI-DSS, HIPAA). Identifies coverage gaps, generates control mapping, lists evidence requirements, and provides remediation steps.",
+        "Can you run Compliance Mapper? Controls is the main input I have.",
+        "Invoke Compliance Mapper with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

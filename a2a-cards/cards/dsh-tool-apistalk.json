@@ -1,0 +1,202 @@
+{
+  "name": "dsh-tool-apistalk",
+  "description": "API drift detection - schema monitoring, breaking change detection, migration impact analysis",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-apistalk",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-apistalk",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "schema_diff_detect",
+      "name": "Schema Diff Detect",
+      "description": "Detect schema changes between two versions of an API specification (OpenAPI/GraphQL). Identifies added/removed/modified endpoints, fields, types, and parameters.",
+      "tags": [
+        "apistalk",
+        "schema",
+        "diff",
+        "detect"
+      ],
+      "examples": [
+        "Use Schema Diff Detect to detect schema changes between two versions of an API specification (OpenAPI/GraphQL). Identifies added/removed/modified endpoints, fields, types, and parameters.",
+        "Can you run Schema Diff Detect? Schema Comparison is the main input I have.",
+        "Invoke Schema Diff Detect with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "breaking_change_analysis",
+      "name": "Breaking Change Analysis",
+      "description": "Analyze schema changes to identify breaking changes including endpoint removal, required field modifications, and type changes. Evaluates severity and affected areas.",
+      "tags": [
+        "apistalk",
+        "breaking",
+        "change",
+        "analysis"
+      ],
+      "examples": [
+        "Use Breaking Change Analysis to analyze schema changes to identify breaking changes including endpoint removal, required field modifications, and type changes. Evaluates severity and affected areas.",
+        "Can you run Breaking Change Analysis? Schema Diff Input is the main input I have.",
+        "Invoke Breaking Change Analysis with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "migration_impact_map",
+      "name": "Migration Impact Map",
+      "description": "Based on schema changes, map out client code locations that need modification, estimate migration effort in person-days, and identify high-risk migration points.",
+      "tags": [
+        "apistalk",
+        "migration",
+        "impact",
+        "map"
+      ],
+      "examples": [
+        "Use Migration Impact Map to based on schema changes, map out client code locations that need modification, estimate migration effort in person-days, and identify high-risk migration points.",
+        "Can you run Migration Impact Map? Migration Input is the main input I have.",
+        "Invoke Migration Impact Map with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "compatibility_score",
+      "name": "Compatibility Score",
+      "description": "Calculate a compatibility score (0-100) between old and new API versions, including backward compatibility rate, feature coverage, behavioral consistency, and a letter grade.",
+      "tags": [
+        "apistalk",
+        "compatibility",
+        "score"
+      ],
+      "examples": [
+        "Use Compatibility Score to calculate a compatibility score (0-100) between old and new API versions, including backward compatibility rate, feature coverage, behavioral consistency, and a letter grade.",
+        "Can you run Compatibility Score? Score Input is the main input I have.",
+        "Invoke Compatibility Score with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "api_deprecation_alert",
+      "name": "Api Deprecation Alert",
+      "description": "Scan API schema for deprecated markers, build a deprecation timeline, calculate days until removal, and provide replacement suggestions.",
+      "tags": [
+        "apistalk",
+        "api",
+        "deprecation",
+        "alert"
+      ],
+      "examples": [
+        "Use Api Deprecation Alert to scan API schema for deprecated markers, build a deprecation timeline, calculate days until removal, and provide replacement suggestions.",
+        "Can you run Api Deprecation Alert? Deprecation Input is the main input I have.",
+        "Invoke Api Deprecation Alert with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "version_upgrade_advisor",
+      "name": "Version Upgrade Advisor",
+      "description": "Generate an optimal upgrade path from current to target API version, including intermediate version checks, breaking change listings, and step-by-step migration plan.",
+      "tags": [
+        "apistalk",
+        "version",
+        "upgrade",
+        "advisor"
+      ],
+      "examples": [
+        "Use Version Upgrade Advisor to generate an optimal upgrade path from current to target API version, including intermediate version checks, breaking change listings, and step-by-step migration plan.",
+        "Can you run Version Upgrade Advisor? Upgrade Input is the main input I have.",
+        "Invoke Version Upgrade Advisor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "client_compatibility_check",
+      "name": "Client Compatibility Check",
+      "description": "Analyze existing client code for compatibility with a new API version. Identifies incompatible call points, removed endpoint usage, and provides specific modification suggestions.",
+      "tags": [
+        "apistalk",
+        "client",
+        "compatibility",
+        "check"
+      ],
+      "examples": [
+        "Use Client Compatibility Check to analyze existing client code for compatibility with a new API version. Identifies incompatible call points, removed endpoint usage, and provides specific modification suggestions.",
+        "Can you run Client Compatibility Check? Compat Input is the main input I have.",
+        "Invoke Client Compatibility Check with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "api_changelog_gen",
+      "name": "Api Changelog Gen",
+      "description": "Automatically generate a developer-friendly changelog from schema diff. Classifies changes by type (Added/Changed/Deprecated/Fixed/Removed) and supports markdown, JSON, and plain text output formats.",
+      "tags": [
+        "apistalk",
+        "api",
+        "changelog",
+        "gen"
+      ],
+      "examples": [
+        "Use Api Changelog Gen to automatically generate a developer-friendly changelog from schema diff. Classifies changes by type (Added/Changed/Deprecated/Fixed/Removed) and supports markdown, JSON, and plain text output formats.",
+        "Can you run Api Changelog Gen? Changelog Input is the main input I have.",
+        "Invoke Api Changelog Gen with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

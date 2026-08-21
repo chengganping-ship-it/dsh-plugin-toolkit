@@ -1,0 +1,204 @@
+{
+  "name": "dsh-tool-hrcompagent",
+  "description": "HR Compensation & Benefits AI - salary benchmarking, total rewards statement, pay equity analysis, incentive plan simulation, compensation banding, benefits optimization, executive compensation advisory, global payroll compliance",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-hrcompagent",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-hrcompagent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "salary_benchmarking_engine",
+      "name": "Salary Benchmarking Engine",
+      "description": "Perform salary market benchmarking analysis with percentile calculation (P10/P25/P50/P75/P90). Returns market positioning, compa-ratio, and recommendations for salary adjustments.",
+      "tags": [
+        "hrcompagent",
+        "salary",
+        "benchmarking",
+        "engine"
+      ],
+      "examples": [
+        "Use Salary Benchmarking Engine to perform salary market benchmarking analysis with percentile calculation (P10/P25/P50/P75/P90). Returns market positioning, compa-ratio, and recommendations for salary adjustments.",
+        "Can you run Salary Benchmarking Engine? Input Data is the main input I have.",
+        "Invoke Salary Benchmarking Engine with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "total_rewards_statement_generator",
+      "name": "Total Rewards Statement Generator",
+      "description": "Generate a personalized total rewards statement with visual breakdown of all compensation components including base salary, bonus, equity, benefits, retirement, and perks.",
+      "tags": [
+        "hrcompagent",
+        "total",
+        "rewards",
+        "statement",
+        "generator"
+      ],
+      "examples": [
+        "Use Total Rewards Statement Generator to generate a personalized total rewards statement with visual breakdown of all compensation components including base salary, bonus, equity, benefits, retirement, and perks.",
+        "Can you run Total Rewards Statement Generator? Input Data is the main input I have.",
+        "Invoke Total Rewards Statement Generator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "pay_equity_analyzer",
+      "name": "Pay Equity Analyzer",
+      "description": "Analyze pay equity across gender, ethnicity, and department dimensions. Returns unadjusted pay gaps, risk level assessment, statistical significance, and remediation recommendations.",
+      "tags": [
+        "hrcompagent",
+        "pay",
+        "equity",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Pay Equity Analyzer to analyze pay equity across gender, ethnicity, and department dimensions. Returns unadjusted pay gaps, risk level assessment, statistical significance, and remediation recommendations.",
+        "Can you run Pay Equity Analyzer? Input Data is the main input I have.",
+        "Invoke Pay Equity Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "incentive_plan_simulator",
+      "name": "Incentive Plan Simulator",
+      "description": "Simulate bonus or equity incentive plan payouts across multiple performance scenarios. Returns cost projections, per-participant payouts, ROI estimates, and accounting impact.",
+      "tags": [
+        "hrcompagent",
+        "incentive",
+        "plan",
+        "simulator"
+      ],
+      "examples": [
+        "Use Incentive Plan Simulator to simulate bonus or equity incentive plan payouts across multiple performance scenarios. Returns cost projections, per-participant payouts, ROI estimates, and accounting impact.",
+        "Can you run Incentive Plan Simulator? Input Data is the main input I have.",
+        "Invoke Incentive Plan Simulator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "compensation_banding_designer",
+      "name": "Compensation Banding Designer",
+      "description": "Design salary grade structure with compensation bands. Returns salary grade matrix with minimum/midpoint/maximum for each level, overlap analysis, and visual band structure.",
+      "tags": [
+        "hrcompagent",
+        "compensation",
+        "banding",
+        "designer"
+      ],
+      "examples": [
+        "Use Compensation Banding Designer to design salary grade structure with compensation bands. Returns salary grade matrix with minimum/midpoint/maximum for each level, overlap analysis, and visual band structure.",
+        "Can you run Compensation Banding Designer? Input Data is the main input I have.",
+        "Invoke Compensation Banding Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "benefits_portfolio_optimizer",
+      "name": "Benefits Portfolio Optimizer",
+      "description": "Optimize benefits portfolio for cost efficiency and employee satisfaction. Returns optimized benefit lineup with cost analysis, utilization projections, and satisfaction scores.",
+      "tags": [
+        "hrcompagent",
+        "benefits",
+        "portfolio",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Benefits Portfolio Optimizer to optimize benefits portfolio for cost efficiency and employee satisfaction. Returns optimized benefit lineup with cost analysis, utilization projections, and satisfaction scores.",
+        "Can you run Benefits Portfolio Optimizer? Input Data is the main input I have.",
+        "Invoke Benefits Portfolio Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "executive_compensation_advisor",
+      "name": "Executive Compensation Advisor",
+      "description": "Design executive compensation packages with peer benchmarking, pay mix optimization, Say-on-Pay forecasting, and clawback policy recommendations.",
+      "tags": [
+        "hrcompagent",
+        "executive",
+        "compensation",
+        "advisor"
+      ],
+      "examples": [
+        "Use Executive Compensation Advisor to design executive compensation packages with peer benchmarking, pay mix optimization, Say-on-Pay forecasting, and clawback policy recommendations.",
+        "Can you run Executive Compensation Advisor? Input Data is the main input I have.",
+        "Invoke Executive Compensation Advisor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "global_payroll_compliance",
+      "name": "Global Payroll Compliance",
+      "description": "Analyze cross-border payroll compliance including tax treaty benefits, social security totalization, shadow payroll requirements, and permanent establishment risk.",
+      "tags": [
+        "hrcompagent",
+        "global",
+        "payroll",
+        "compliance"
+      ],
+      "examples": [
+        "Use Global Payroll Compliance to analyze cross-border payroll compliance including tax treaty benefits, social security totalization, shadow payroll requirements, and permanent establishment risk.",
+        "Can you run Global Payroll Compliance? Input Data is the main input I have.",
+        "Invoke Global Payroll Compliance with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,204 @@
+{
+  "name": "dsh-tool-supplyrisk",
+  "description": "Supply Chain Risk Early Warning System - Supplier health scoring, geopolitical risk mapping, disruption early warning, alternative supplier finding, logistics bottleneck detection, cost volatility tracking, single-source detection, and resilience scoring",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-supplyrisk",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-supplyrisk",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "supplier_health_scorer",
+      "name": "Supplier Health Scorer",
+      "description": "Score supplier financial and operational health based on revenue, profit margin, debt ratio, delivery performance, quality score, and business history. Returns health scores with risk flags and recommendations.",
+      "tags": [
+        "supplyrisk",
+        "supplier",
+        "health",
+        "scorer"
+      ],
+      "examples": [
+        "Use Supplier Health Scorer to score supplier financial and operational health based on revenue, profit margin, debt ratio, delivery performance, quality score, and business history. Returns health scores with risk flags and recommendations.",
+        "Can you run Supplier Health Scorer? Suppliers is the main input I have.",
+        "Invoke Supplier Health Scorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "geopolitical_risk_mapper",
+      "name": "Geopolitical Risk Mapper",
+      "description": "Map geopolitical risks by region based on political stability, trade restrictions, sanctions exposure, and labor risk. Generates a risk heat map with mitigation strategies.",
+      "tags": [
+        "supplyrisk",
+        "geopolitical",
+        "risk",
+        "mapper"
+      ],
+      "examples": [
+        "Use Geopolitical Risk Mapper to map geopolitical risks by region based on political stability, trade restrictions, sanctions exposure, and labor risk. Generates a risk heat map with mitigation strategies.",
+        "Can you run Geopolitical Risk Mapper? Regions is the main input I have.",
+        "Invoke Geopolitical Risk Mapper with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "disruption_early_warning",
+      "name": "Disruption Early Warning",
+      "description": "Generate early warnings for potential supply disruptions based on indicators. Returns warning levels (green/yellow/orange/red) with recommended actions and timeline assessment.",
+      "tags": [
+        "supplyrisk",
+        "disruption",
+        "early",
+        "warning"
+      ],
+      "examples": [
+        "Use Disruption Early Warning to generate early warnings for potential supply disruptions based on indicators. Returns warning levels (green/yellow/orange/red) with recommended actions and timeline assessment.",
+        "Can you run Disruption Early Warning? Indicators is the main input I have.",
+        "Invoke Disruption Early Warning with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "alternative_supplier_finder",
+      "name": "Alternative Supplier Finder",
+      "description": "Find alternative suppliers for risk mitigation. Matches product requirements against potential suppliers and returns ranked alternatives with switching cost estimates.",
+      "tags": [
+        "supplyrisk",
+        "alternative",
+        "supplier",
+        "finder"
+      ],
+      "examples": [
+        "Use Alternative Supplier Finder to find alternative suppliers for risk mitigation. Matches product requirements against potential suppliers and returns ranked alternatives with switching cost estimates.",
+        "Can you run Alternative Supplier Finder? Requirements is the main input I have.",
+        "Invoke Alternative Supplier Finder with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "logistics_bottleneck_detector",
+      "name": "Logistics Bottleneck Detector",
+      "description": "Detect logistics bottlenecks by analyzing transit time changes and cost variations. Identifies bottleneck severity and suggests alternative routes with recommended actions.",
+      "tags": [
+        "supplyrisk",
+        "logistics",
+        "bottleneck",
+        "detector"
+      ],
+      "examples": [
+        "Use Logistics Bottleneck Detector to detect logistics bottlenecks by analyzing transit time changes and cost variations. Identifies bottleneck severity and suggests alternative routes with recommended actions.",
+        "Can you run Logistics Bottleneck Detector? Logistics Data is the main input I have.",
+        "Invoke Logistics Bottleneck Detector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "cost_volatility_tracker",
+      "name": "Cost Volatility Tracker",
+      "description": "Track cost volatility of key inputs using historical price data. Calculates volatility indices, identifies trends, and provides hedging recommendations.",
+      "tags": [
+        "supplyrisk",
+        "cost",
+        "volatility",
+        "tracker"
+      ],
+      "examples": [
+        "Use Cost Volatility Tracker to track cost volatility of key inputs using historical price data. Calculates volatility indices, identifies trends, and provides hedging recommendations.",
+        "Can you run Cost Volatility Tracker? Cost Data is the main input I have.",
+        "Invoke Cost Volatility Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "single_source_detector",
+      "name": "Single Source Detector",
+      "description": "Detect single-source dependencies across the supply base. Calculates exposure scores, identifies critical dependencies, and generates diversification plans.",
+      "tags": [
+        "supplyrisk",
+        "single",
+        "source",
+        "detector"
+      ],
+      "examples": [
+        "Use Single Source Detector to detect single-source dependencies across the supply base. Calculates exposure scores, identifies critical dependencies, and generates diversification plans.",
+        "Can you run Single Source Detector? Sourcing Data is the main input I have.",
+        "Invoke Single Source Detector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "supply_chain_resilience_scorer",
+      "name": "Supply Chain Resilience Scorer",
+      "description": "Score overall supply chain resilience across five dimensions: redundancy, flexibility, visibility, collaboration, and recovery. Generates an improvement roadmap with prioritized initiatives.",
+      "tags": [
+        "supplyrisk",
+        "supply",
+        "chain",
+        "resilience",
+        "scorer"
+      ],
+      "examples": [
+        "Use Supply Chain Resilience Scorer to score overall supply chain resilience across five dimensions: redundancy, flexibility, visibility, collaboration, and recovery. Generates an improvement roadmap with prioritized initiatives.",
+        "Can you run Supply Chain Resilience Scorer? Resilience Data is the main input I have.",
+        "Invoke Supply Chain Resilience Scorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

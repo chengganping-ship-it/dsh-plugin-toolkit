@@ -1,0 +1,195 @@
+{
+  "name": "dsh-tool-datagov",
+  "description": "数据治理引擎 - 全生命周期数据管理、隐私保护、合规自动化、质量管控",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-datagov",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-datagov",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "data_catalog",
+      "name": "Data Catalog",
+      "description": "自动化数据目录工具：自动发现元数据、生成业务术语表和数据字典。输入数据资产列表JSON，输出目录报告含覆盖率分析、PII标记和改进建议。",
+      "tags": [
+        "datagov",
+        "data",
+        "catalog"
+      ],
+      "examples": [
+        "Use Data Catalog to 自动化数据目录工具：自动发现元数据、生成业务术语表和数据字典。输入数据资产列表JSON，输出目录报告含覆盖率分析、PII标记和改进建议。.",
+        "Can you run Data Catalog? Assets is the main input I have.",
+        "Invoke Data Catalog with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "quality_scorecard",
+      "name": "Quality Scorecard",
+      "description": "数据质量评分工具：基于完整性、一致性、准确性、时效性、唯一性、有效性6维度评估数据质量。输入质量检查JSON，输出评分卡含等级和改进计划。",
+      "tags": [
+        "datagov",
+        "quality",
+        "scorecard"
+      ],
+      "examples": [
+        "Use Quality Scorecard to 数据质量评分工具：基于完整性、一致性、准确性、时效性、唯一性、有效性6维度评估数据质量。输入质量检查JSON，输出评分卡含等级和改进计划。.",
+        "Can you run Quality Scorecard? Checks is the main input I have.",
+        "Invoke Quality Scorecard with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "lineage_tracker",
+      "name": "Lineage Tracker",
+      "description": "数据血缘追踪工具：追踪字段级上下游依赖、执行影响分析和变更传播模拟。输入血缘节点列表JSON，输出血缘报告含全链路图和孤儿节点检测。",
+      "tags": [
+        "datagov",
+        "lineage",
+        "tracker"
+      ],
+      "examples": [
+        "Use Lineage Tracker to 数据血缘追踪工具：追踪字段级上下游依赖、执行影响分析和变更传播模拟。输入血缘节点列表JSON，输出血缘报告含全链路图和孤儿节点检测。.",
+        "Can you run Lineage Tracker? Nodes is the main input I have.",
+        "Invoke Lineage Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "access_governance",
+      "name": "Access Governance",
+      "description": "数据访问治理工具：支持RBAC/ABAC策略评估、最小权限审查和定期审阅。输入用户/资源/权限/策略JSON，输出权限矩阵和审阅建议。",
+      "tags": [
+        "datagov",
+        "access",
+        "governance"
+      ],
+      "examples": [
+        "Use Access Governance to 数据访问治理工具：支持RBAC/ABAC策略评估、最小权限审查和定期审阅。输入用户/资源/权限/策略JSON，输出权限矩阵和审阅建议。.",
+        "Can you run Access Governance? Policy Input is the main input I have.",
+        "Invoke Access Governance with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "privacy_engine",
+      "name": "Privacy Engine",
+      "description": "隐私保护引擎工具：PII自动检测、差分隐私计算、K-匿名性评估和脱敏规则自动应用。输入数据集列信息JSON，输出隐私报告和脱敏方案。",
+      "tags": [
+        "datagov",
+        "privacy",
+        "engine"
+      ],
+      "examples": [
+        "Use Privacy Engine to 隐私保护引擎工具：PII自动检测、差分隐私计算、K-匿名性评估和脱敏规则自动应用。输入数据集列信息JSON，输出隐私报告和脱敏方案。.",
+        "Can you run Privacy Engine? Dataset is the main input I have.",
+        "Invoke Privacy Engine with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "compliance_mapper",
+      "name": "Compliance Mapper",
+      "description": "合规映射引擎工具：GDPR/PIPL/等保2.0/ISO27001控制点自动对账和差距分析。输入框架和控制点JSON，输出合规面板和跨框架映射。",
+      "tags": [
+        "datagov",
+        "compliance",
+        "mapper"
+      ],
+      "examples": [
+        "Use Compliance Mapper to 合规映射引擎工具：GDPR/PIPL/等保2.0/ISO27001控制点自动对账和差距分析。输入框架和控制点JSON，输出合规面板和跨框架映射。.",
+        "Can you run Compliance Mapper? Compliance Input is the main input I have.",
+        "Invoke Compliance Mapper with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "retention_optimizer",
+      "name": "Retention Optimizer",
+      "description": "保留策略优化工具：热温冷数据分层、成本分析和过期自动清理建议。输入数据资产列表和成本因子JSON，输出分层报告和优化建议。",
+      "tags": [
+        "datagov",
+        "retention",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Retention Optimizer to 保留策略优化工具：热温冷数据分层、成本分析和过期自动清理建议。输入数据资产列表和成本因子JSON，输出分层报告和优化建议。.",
+        "Can you run Retention Optimizer? Retention Input is the main input I have.",
+        "Invoke Retention Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "audit_trail",
+      "name": "Audit Trail",
+      "description": "不可篡改审计日志工具：操作记录分析、数据变更历史追踪、异常检测和合规证明报告生成。输入审计日志条目JSON，输出审计报告。",
+      "tags": [
+        "datagov",
+        "audit",
+        "trail"
+      ],
+      "examples": [
+        "Use Audit Trail to 不可篡改审计日志工具：操作记录分析、数据变更历史追踪、异常检测和合规证明报告生成。输入审计日志条目JSON，输出审计报告。.",
+        "Can you run Audit Trail? Entries is the main input I have.",
+        "Invoke Audit Trail with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

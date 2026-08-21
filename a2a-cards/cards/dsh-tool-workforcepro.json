@@ -1,0 +1,198 @@
+{
+  "name": "dsh-tools",
+  "description": "DSH plugin: dsh-tool-workforcepro",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tools",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tools",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "shift_scheduler",
+      "name": "Shift Scheduler",
+      "description": "智能排班优化器：输入员工列表+时段需求+约束，输出最优排班方案，支持公平性、合规性和成本三维度优化",
+      "tags": [
+        "workforcepro",
+        "shift",
+        "scheduler"
+      ],
+      "examples": [
+        "Use Shift Scheduler to 智能排班优化器：输入员工列表+时段需求+约束，输出最优排班方案，支持公平性、合规性和成本三维度优化.",
+        "I need Shift Scheduler capabilities for this task in dsh-tools.",
+        "Invoke Shift Scheduler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "absence_forecaster",
+      "name": "Absence Forecaster",
+      "description": "缺勤预测与出勤分析：基于历史数据和外部因素预测缺勤率，识别高风险人员和时段",
+      "tags": [
+        "workforcepro",
+        "absence",
+        "forecaster"
+      ],
+      "examples": [
+        "Use Absence Forecaster to 缺勤预测与出勤分析：基于历史数据和外部因素预测缺勤率，识别高风险人员和时段.",
+        "I need Absence Forecaster capabilities for this task in dsh-tools.",
+        "Invoke Absence Forecaster with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "time_tracking_analyzer",
+      "name": "Time Tracking Analyzer",
+      "description": "工时追踪与加班分析：分析出勤时长、加班分布，检查是否符合劳动法加班限制",
+      "tags": [
+        "workforcepro",
+        "time",
+        "tracking",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Time Tracking Analyzer to 工时追踪与加班分析：分析出勤时长、加班分布，检查是否符合劳动法加班限制.",
+        "I need Time Tracking Analyzer capabilities for this task in dsh-tools.",
+        "Invoke Time Tracking Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "workforce_demand_forecaster",
+      "name": "Workforce Demand Forecaster",
+      "description": "劳动力需求预测：基于历史业务量、季节性、节假日等因子预测人力需求，给出编制建议",
+      "tags": [
+        "workforcepro",
+        "workforce",
+        "demand",
+        "forecaster"
+      ],
+      "examples": [
+        "Use Workforce Demand Forecaster to 劳动力需求预测：基于历史业务量、季节性、节假日等因子预测人力需求，给出编制建议.",
+        "I need Workforce Demand Forecaster capabilities for this task in dsh-tools.",
+        "Invoke Workforce Demand Forecaster with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "productivity_optimizer",
+      "name": "Productivity Optimizer",
+      "description": "人机协同生产力方案：识别可自动化岗位，给出组织重构建议（释放编制vs保留核心岗位），须遵守劳动法",
+      "tags": [
+        "workforcepro",
+        "productivity",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Productivity Optimizer to 人机协同生产力方案：识别可自动化岗位，给出组织重构建议（释放编制vs保留核心岗位），须遵守劳动法.",
+        "I need Productivity Optimizer capabilities for this task in dsh-tools.",
+        "Invoke Productivity Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "compliance_checker",
+      "name": "Compliance Checker",
+      "description": "劳动法合规检查：检查排班、加班、休息间隔、特殊群体保护（未成年/孕妇等）是否合规，输出违规清单与修正建议",
+      "tags": [
+        "workforcepro",
+        "compliance",
+        "checker"
+      ],
+      "examples": [
+        "Use Compliance Checker to 劳动法合规检查：检查排班、加班、休息间隔、特殊群体保护（未成年/孕妇等）是否合规，输出违规清单与修正建议.",
+        "I need Compliance Checker capabilities for this task in dsh-tools.",
+        "Invoke Compliance Checker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "shift_swap_matcher",
+      "name": "Shift Swap Matcher",
+      "description": "智能换班撮合：分析换班请求与替代候选人，自动匹配最佳换班对象，平衡公平与合规",
+      "tags": [
+        "workforcepro",
+        "shift",
+        "swap",
+        "matcher"
+      ],
+      "examples": [
+        "Use Shift Swap Matcher to 智能换班撮合：分析换班请求与替代候选人，自动匹配最佳换班对象，平衡公平与合规.",
+        "I need Shift Swap Matcher capabilities for this task in dsh-tools.",
+        "Invoke Shift Swap Matcher with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "wfm_benchmark",
+      "name": "Wfm Benchmark",
+      "description": "WFM成熟度对标：与Oracle/Kronos/SAP等头部产品对比，给出能力差距与升级路线图",
+      "tags": [
+        "workforcepro",
+        "wfm",
+        "benchmark"
+      ],
+      "examples": [
+        "Use Wfm Benchmark to wFM成熟度对标：与Oracle/Kronos/SAP等头部产品对比，给出能力差距与升级路线图.",
+        "I need Wfm Benchmark capabilities for this task in dsh-tools.",
+        "Invoke Wfm Benchmark with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

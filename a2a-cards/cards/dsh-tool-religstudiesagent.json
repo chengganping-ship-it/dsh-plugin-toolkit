@@ -1,0 +1,203 @@
+{
+  "name": "religstudiesagent",
+  "description": "宗教研究AI助手 — Religious Studies & Interfaith Analysis Plugin",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/religstudiesagent",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/religstudiesagent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "scripture_comparative_analyzer",
+      "name": "Scripture Comparative Analyzer",
+      "description": "跨宗教经典文本比较分析 | Comparative scripture analysis across religions",
+      "tags": [
+        "religstudiesagent",
+        "scripture",
+        "comparative",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Scripture Comparative Analyzer to 跨宗教经典文本比较分析 | Comparative scripture analysis across religions.",
+        "Can you run Scripture Comparative Analyzer? Input Data is the main input I have.",
+        "Invoke Scripture Comparative Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "religious_history_timeline",
+      "name": "Religious History Timeline",
+      "description": "宗教历史时间线与事件关联 | Religious history timeline with event correlation",
+      "tags": [
+        "religstudiesagent",
+        "religious",
+        "history",
+        "timeline"
+      ],
+      "examples": [
+        "Use Religious History Timeline to 宗教历史时间线与事件关联 | Religious history timeline with event correlation.",
+        "Can you run Religious History Timeline? Input Data is the main input I have.",
+        "Invoke Religious History Timeline with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "interfaith_dialogue_facilitator",
+      "name": "Interfaith Dialogue Facilitator",
+      "description": "跨宗教对话议题与共同价值发现 | Interfaith dialogue topics with shared value discovery",
+      "tags": [
+        "religstudiesagent",
+        "interfaith",
+        "dialogue",
+        "facilitator"
+      ],
+      "examples": [
+        "Use Interfaith Dialogue Facilitator to 跨宗教对话议题与共同价值发现 | Interfaith dialogue topics with shared value discovery.",
+        "Can you run Interfaith Dialogue Facilitator? Input Data is the main input I have.",
+        "Invoke Interfaith Dialogue Facilitator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "ritual_practice_guide",
+      "name": "Ritual Practice Guide",
+      "description": "宗教仪式流程与文化背景说明 | Ritual practice guide with cultural context",
+      "tags": [
+        "religstudiesagent",
+        "ritual",
+        "practice",
+        "guide"
+      ],
+      "examples": [
+        "Use Ritual Practice Guide to 宗教仪式流程与文化背景说明 | Ritual practice guide with cultural context.",
+        "Can you run Ritual Practice Guide? Input Data is the main input I have.",
+        "Invoke Ritual Practice Guide with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "religious_geography_mapper",
+      "name": "Religious Geography Mapper",
+      "description": "宗教地理分布与圣地分析 | Religious geography mapping with sacred site analysis",
+      "tags": [
+        "religstudiesagent",
+        "religious",
+        "geography",
+        "mapper"
+      ],
+      "examples": [
+        "Use Religious Geography Mapper to 宗教地理分布与圣地分析 | Religious geography mapping with sacred site analysis.",
+        "Can you run Religious Geography Mapper? Input Data is the main input I have.",
+        "Invoke Religious Geography Mapper with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "theology_concept_explainer",
+      "name": "Theology Concept Explainer",
+      "description": "神学术语与哲学概念解析 | Theology terms and philosophical concept explanations",
+      "tags": [
+        "religstudiesagent",
+        "theology",
+        "concept",
+        "explainer"
+      ],
+      "examples": [
+        "Use Theology Concept Explainer to 神学术语与哲学概念解析 | Theology terms and philosophical concept explanations.",
+        "Can you run Theology Concept Explainer? Input Data is the main input I have.",
+        "Invoke Theology Concept Explainer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "religious_text_translator",
+      "name": "Religious Text Translator",
+      "description": "宗教文本翻译辅助与古语处理 | Religious text translation with ancient language support",
+      "tags": [
+        "religstudiesagent",
+        "religious",
+        "text",
+        "translator"
+      ],
+      "examples": [
+        "Use Religious Text Translator to 宗教文本翻译辅助与古语处理 | Religious text translation with ancient language support.",
+        "Can you run Religious Text Translator? Input Data is the main input I have.",
+        "Invoke Religious Text Translator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "religious_freedom_monitor",
+      "name": "Religious Freedom Monitor",
+      "description": "宗教自由指数追踪与政策分析 | Religious freedom index tracking with policy analysis",
+      "tags": [
+        "religstudiesagent",
+        "religious",
+        "freedom",
+        "monitor"
+      ],
+      "examples": [
+        "Use Religious Freedom Monitor to 宗教自由指数追踪与政策分析 | Religious freedom index tracking with policy analysis.",
+        "Can you run Religious Freedom Monitor? Input Data is the main input I have.",
+        "Invoke Religious Freedom Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

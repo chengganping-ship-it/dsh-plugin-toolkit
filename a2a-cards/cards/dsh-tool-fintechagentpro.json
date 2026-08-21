@@ -1,0 +1,202 @@
+{
+  "name": "fintechagentpro",
+  "description": "金融科技AI助手 — 智能风控与量化投顾智能体",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/fintechagentpro",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/fintechagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "credit_risk_scorer",
+      "name": "Credit Risk Scorer",
+      "description": "信用风险评估 | 评分/违约概率/额度/利率",
+      "tags": [
+        "fintechagentpro",
+        "credit",
+        "risk",
+        "scorer"
+      ],
+      "examples": [
+        "Use Credit Risk Scorer to 信用风险评估 | 评分/违约概率/额度/利率.",
+        "I need Credit Risk Scorer capabilities for this task in fintechagentpro.",
+        "Invoke Credit Risk Scorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fraud_detection_engine",
+      "name": "Fraud Detection Engine",
+      "description": "反欺诈引擎 | 异常检测/模式识别",
+      "tags": [
+        "fintechagentpro",
+        "fraud",
+        "detection",
+        "engine"
+      ],
+      "examples": [
+        "Use Fraud Detection Engine to 反欺诈引擎 | 异常检测/模式识别.",
+        "I need Fraud Detection Engine capabilities for this task in fintechagentpro.",
+        "Invoke Fraud Detection Engine with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "algorithmic_trading_advisor",
+      "name": "Algorithmic Trading Advisor",
+      "description": "量化交易 | 回测/夏普/回撤/因子",
+      "tags": [
+        "fintechagentpro",
+        "algorithmic",
+        "trading",
+        "advisor"
+      ],
+      "examples": [
+        "Use Algorithmic Trading Advisor to 量化交易 | 回测/夏普/回撤/因子.",
+        "I need Algorithmic Trading Advisor capabilities for this task in fintechagentpro.",
+        "Invoke Algorithmic Trading Advisor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "regtech_compliance_checker",
+      "name": "Regtech Compliance Checker",
+      "description": "合规检查 | AML/KYC/监管报告",
+      "tags": [
+        "fintechagentpro",
+        "regtech",
+        "compliance",
+        "checker"
+      ],
+      "examples": [
+        "Use Regtech Compliance Checker to 合规检查 | AML/KYC/监管报告.",
+        "I need Regtech Compliance Checker capabilities for this task in fintechagentpro.",
+        "Invoke Regtech Compliance Checker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "wealth_management_robo",
+      "name": "Wealth Management Robo",
+      "description": "智能投顾 | 风险偏好/资产配置",
+      "tags": [
+        "fintechagentpro",
+        "wealth",
+        "management",
+        "robo"
+      ],
+      "examples": [
+        "Use Wealth Management Robo to 智能投顾 | 风险偏好/资产配置.",
+        "I need Wealth Management Robo capabilities for this task in fintechagentpro.",
+        "Invoke Wealth Management Robo with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "market_risk_var",
+      "name": "Market Risk Var",
+      "description": "市场风险 | VaR/压力测试/流动性",
+      "tags": [
+        "fintechagentpro",
+        "market",
+        "risk",
+        "var"
+      ],
+      "examples": [
+        "Use Market Risk Var to 市场风险 | VaR/压力测试/流动性.",
+        "I need Market Risk Var capabilities for this task in fintechagentpro.",
+        "Invoke Market Risk Var with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "insurance_actuarial_ai",
+      "name": "Insurance Actuarial Ai",
+      "description": "保险精算 | 损失分布/费率厘定",
+      "tags": [
+        "fintechagentpro",
+        "insurance",
+        "actuarial"
+      ],
+      "examples": [
+        "Use Insurance Actuarial Ai to 保险精算 | 损失分布/费率厘定.",
+        "I need Insurance Actuarial Ai capabilities for this task in fintechagentpro.",
+        "Invoke Insurance Actuarial Ai with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fintech_product_designer",
+      "name": "Fintech Product Designer",
+      "description": "金融产品设计 | 定价/风控/合规",
+      "tags": [
+        "fintechagentpro",
+        "fintech",
+        "product",
+        "designer"
+      ],
+      "examples": [
+        "Use Fintech Product Designer to 金融产品设计 | 定价/风控/合规.",
+        "I need Fintech Product Designer capabilities for this task in fintechagentpro.",
+        "Invoke Fintech Product Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

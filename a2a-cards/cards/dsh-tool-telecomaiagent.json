@@ -1,0 +1,201 @@
+{
+  "name": "dsh-tools",
+  "description": "DSH plugin: dsh-tool-telecomaiagent",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tools",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tools",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "network_optimization",
+      "name": "Network Optimization",
+      "description": "网络优化分析: 小区覆盖/容量/切换成功率/RSRP/SINR/吞吐评估",
+      "tags": [
+        "telecomaiagent",
+        "network",
+        "optimization"
+      ],
+      "examples": [
+        "Use Network Optimization to 网络优化分析: 小区覆盖/容量/切换成功率/RSRP/SINR/吞吐评估.",
+        "I need Network Optimization capabilities for this task in dsh-tools.",
+        "Invoke Network Optimization with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fault_diagnosis_ai",
+      "name": "Fault Diagnosis Ai",
+      "description": "故障诊断AI: 告警关联/根因分析/MTTR/严重等级分布",
+      "tags": [
+        "telecomaiagent",
+        "fault",
+        "diagnosis"
+      ],
+      "examples": [
+        "Use Fault Diagnosis Ai to 故障诊断AI: 告警关联/根因分析/MTTR/严重等级分布.",
+        "I need Fault Diagnosis Ai capabilities for this task in dsh-tools.",
+        "Invoke Fault Diagnosis Ai with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "spectrum_management",
+      "name": "Spectrum Management",
+      "description": "频谱管理: 频率分配/干扰检测/频谱效率/运营商分布",
+      "tags": [
+        "telecomaiagent",
+        "spectrum",
+        "management"
+      ],
+      "examples": [
+        "Use Spectrum Management to 频谱管理: 频率分配/干扰检测/频谱效率/运营商分布.",
+        "I need Spectrum Management capabilities for this task in dsh-tools.",
+        "Invoke Spectrum Management with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "customer_experience_mgmt",
+      "name": "Customer Experience Mgmt",
+      "description": "客户体验管理: MOS/QoE/NPS/投诉率/业务类型分析",
+      "tags": [
+        "telecomaiagent",
+        "customer",
+        "experience",
+        "mgmt"
+      ],
+      "examples": [
+        "Use Customer Experience Mgmt to 客户体验管理: MOS/QoE/NPS/投诉率/业务类型分析.",
+        "I need Customer Experience Mgmt capabilities for this task in dsh-tools.",
+        "Invoke Customer Experience Mgmt with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "smart_billing_assurance",
+      "name": "Smart Billing Assurance",
+      "description": "智能计费保障: 计费准确性/收入泄漏/欺诈检测/话单分析",
+      "tags": [
+        "telecomaiagent",
+        "smart",
+        "billing",
+        "assurance"
+      ],
+      "examples": [
+        "Use Smart Billing Assurance to 智能计费保障: 计费准确性/收入泄漏/欺诈检测/话单分析.",
+        "I need Smart Billing Assurance capabilities for this task in dsh-tools.",
+        "Invoke Smart Billing Assurance with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "energy_efficiency_network",
+      "name": "Energy Efficiency Network",
+      "description": "节能网络: 站点能耗/PUE/可再生能源/CO2减排/能效分级",
+      "tags": [
+        "telecomaiagent",
+        "energy",
+        "efficiency",
+        "network"
+      ],
+      "examples": [
+        "Use Energy Efficiency Network to 节能网络: 站点能耗/PUE/可再生能源/CO2减排/能效分级.",
+        "I need Energy Efficiency Network capabilities for this task in dsh-tools.",
+        "Invoke Energy Efficiency Network with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "sla_performance_monitor",
+      "name": "Sla Performance Monitor",
+      "description": "SLA性能监控: 可用性/时延/吞吐/合规率/违规项分析",
+      "tags": [
+        "telecomaiagent",
+        "sla",
+        "performance",
+        "monitor"
+      ],
+      "examples": [
+        "Use Sla Performance Monitor to sLA性能监控: 可用性/时延/吞吐/合规率/违规项分析.",
+        "I need Sla Performance Monitor capabilities for this task in dsh-tools.",
+        "Invoke Sla Performance Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "new_gulf_service_designer",
+      "name": "New Gulf Service Designer",
+      "description": "新业务服务设计: 新业务规划/上市状态/收入预测/海湾地区聚焦",
+      "tags": [
+        "telecomaiagent",
+        "new",
+        "gulf",
+        "service",
+        "designer"
+      ],
+      "examples": [
+        "Use New Gulf Service Designer to 新业务服务设计: 新业务规划/上市状态/收入预测/海湾地区聚焦.",
+        "I need New Gulf Service Designer capabilities for this task in dsh-tools.",
+        "Invoke New Gulf Service Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

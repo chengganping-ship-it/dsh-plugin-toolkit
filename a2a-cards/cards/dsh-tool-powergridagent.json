@@ -1,0 +1,203 @@
+{
+  "name": "dsh-tool-powergridagent",
+  "description": "智能电网AI Agent - 电力负荷预测与峰谷调节、电网稳定分析与谐波评估、分布式光伏/储能并网管理、故障定位隔离与自愈重构、电能质量监测与无功补偿、需求响应调度与虚拟电厂、输变电设备健康管理、电力市场交易与现货价格预测",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-powergridagent",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-powergridagent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "load_forecasting_engine",
+      "name": "Load Forecasting Engine",
+      "description": "电力负荷预测与峰谷调节 | 基于气象数据和历史负荷的短期负荷预测，提供峰谷分析与调度建议 | Power load forecasting with peak-valley regulation based on weather and historical data.",
+      "tags": [
+        "powergridagent",
+        "load",
+        "forecasting",
+        "engine"
+      ],
+      "examples": [
+        "Use Load Forecasting Engine to 电力负荷预测与峰谷调节 | 基于气象数据和历史负荷的短期负荷预测，提供峰谷分析与调度建议 | Power load forecasting with peak-valley regulation based on weather and historical data.",
+        "Can you run Load Forecasting Engine? Input Data is the main input I have.",
+        "Invoke Load Forecasting Engine with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "grid_stability_analyzer",
+      "name": "Grid Stability Analyzer",
+      "description": "电网稳定分析与谐波评估 | 电压稳定、暂态稳定、谐波THD评估与风险分级 | Grid stability analysis with voltage, transient, and harmonic THD assessment.",
+      "tags": [
+        "powergridagent",
+        "grid",
+        "stability",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Grid Stability Analyzer to 电网稳定分析与谐波评估 | 电压稳定、暂态稳定、谐波THD评估与风险分级 | Grid stability analysis with voltage, transient, and harmonic THD assessment.",
+        "Can you run Grid Stability Analyzer? Input Data is the main input I have.",
+        "Invoke Grid Stability Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "distributed_energy_manager",
+      "name": "Distributed Energy Manager",
+      "description": "分布式光伏/储能并网管理 | 光伏出力预测、储能充放电管理、并网同步检测 | Distributed PV/storage grid integration with forecasting and sync detection.",
+      "tags": [
+        "powergridagent",
+        "distributed",
+        "energy",
+        "manager"
+      ],
+      "examples": [
+        "Use Distributed Energy Manager to 分布式光伏/储能并网管理 | 光伏出力预测、储能充放电管理、并网同步检测 | Distributed PV/storage grid integration with forecasting and sync detection.",
+        "Can you run Distributed Energy Manager? Input Data is the main input I have.",
+        "Invoke Distributed Energy Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fault_location_isolation",
+      "name": "Fault Location Isolation",
+      "description": "故障定位隔离与自愈重构 | 馈线故障区段定位、开关隔离方案、自愈转供策略 | Fault location/isolation with self-healing reconfiguration for distribution feeders.",
+      "tags": [
+        "powergridagent",
+        "fault",
+        "location",
+        "isolation"
+      ],
+      "examples": [
+        "Use Fault Location Isolation to 故障定位隔离与自愈重构 | 馈线故障区段定位、开关隔离方案、自愈转供策略 | Fault location/isolation with self-healing reconfiguration for distribution feeders.",
+        "Can you run Fault Location Isolation? Input Data is the main input I have.",
+        "Invoke Fault Location Isolation with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "power_quality_monitor",
+      "name": "Power Quality Monitor",
+      "description": "电能质量监测与无功补偿 | 电压偏差、三相不平衡、谐波THD、功率因数与补偿策略 | Power quality monitoring with voltage, unbalance, harmonics, and reactive compensation.",
+      "tags": [
+        "powergridagent",
+        "power",
+        "quality",
+        "monitor"
+      ],
+      "examples": [
+        "Use Power Quality Monitor to 电能质量监测与无功补偿 | 电压偏差、三相不平衡、谐波THD、功率因数与补偿策略 | Power quality monitoring with voltage, unbalance, harmonics, and reactive compensation.",
+        "Can you run Power Quality Monitor? Input Data is the main input I have.",
+        "Invoke Power Quality Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "demand_response_coordinator",
+      "name": "Demand Response Coordinator",
+      "description": "需求响应调度与虚拟电厂 | VPP资源调度、需求响应执行、现货价格预测 | Demand response dispatch with virtual power plant resource coordination.",
+      "tags": [
+        "powergridagent",
+        "demand",
+        "response",
+        "coordinator"
+      ],
+      "examples": [
+        "Use Demand Response Coordinator to 需求响应调度与虚拟电厂 | VPP资源调度、需求响应执行、现货价格预测 | Demand response dispatch with virtual power plant resource coordination.",
+        "Can you run Demand Response Coordinator? Input Data is the main input I have.",
+        "Invoke Demand Response Coordinator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "grid_asset_management",
+      "name": "Grid Asset Management",
+      "description": "输变电设备健康管理 | 健康指数评估、绝缘劣化分析、检修策略推荐 | Transmission/substation asset health management with degradation analysis.",
+      "tags": [
+        "powergridagent",
+        "grid",
+        "asset",
+        "management"
+      ],
+      "examples": [
+        "Use Grid Asset Management to 输变电设备健康管理 | 健康指数评估、绝缘劣化分析、检修策略推荐 | Transmission/substation asset health management with degradation analysis.",
+        "Can you run Grid Asset Management? Input Data is the main input I have.",
+        "Invoke Grid Asset Management with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "electricity_market_trader",
+      "name": "Electricity Market Trader",
+      "description": "电力市场交易与现货价格预测 | 24小时价格预测、交易信号生成、风险指标计算 | Electricity market trading with 24h price prediction and risk analytics.",
+      "tags": [
+        "powergridagent",
+        "electricity",
+        "market",
+        "trader"
+      ],
+      "examples": [
+        "Use Electricity Market Trader to 电力市场交易与现货价格预测 | 24小时价格预测、交易信号生成、风险指标计算 | Electricity market trading with 24h price prediction and risk analytics.",
+        "Can you run Electricity Market Trader? Input Data is the main input I have.",
+        "Invoke Electricity Market Trader with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

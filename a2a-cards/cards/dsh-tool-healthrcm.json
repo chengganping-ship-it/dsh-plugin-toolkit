@@ -1,0 +1,199 @@
+{
+  "name": "dsh-tool-healthrcm",
+  "description": "'Healthcare Revenue Cycle Management (RCM) - Eligibility verification, charge capture, medical coding assistant (ICD-10/CPT/DRG/HCC), claims submission manager, denial management with appeal engine, patient billing & collections, RCM analytics dashboard, and prior authorization engine'",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-healthrcm",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-healthrcm",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "eligibility_verifier",
+      "name": "Eligibility Verifier",
+      "description": "Verify insurance eligibility in real-time. Checks member enrollment status, insurance plan details, benefit limits, deductibles/out-of-pocket status, pre-authorization requirements, network status, and calculates patient responsibility. Supports X12 270/271 EDI verification.",
+      "tags": [
+        "healthrcm",
+        "eligibility",
+        "verifier"
+      ],
+      "examples": [
+        "Use Eligibility Verifier to verify insurance eligibility in real-time. Checks member enrollment status, insurance plan details, benefit limits, deductibles/out-of-pocket status, pre-authorization requirements, network status, and calculates patient responsibility. Supports X12 270/271 EDI verification.",
+        "Can you run Eligibility Verifier? Member Id is the main input I have.",
+        "Invoke Eligibility Verifier with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "charge_capture",
+      "name": "Charge Capture",
+      "description": "Analyze and capture charges for a clinical encounter. Identifies billable services from CPT codes, matches against fee schedules, detects duplicate charges, flags missed charges, performs reconciliation, validates compliance coding, and generates charge reports.",
+      "tags": [
+        "healthrcm",
+        "charge",
+        "capture"
+      ],
+      "examples": [
+        "Use Charge Capture to analyze and capture charges for a clinical encounter. Identifies billable services from CPT codes, matches against fee schedules, detects duplicate charges, flags missed charges, performs reconciliation, validates compliance coding, and generates charge reports.",
+        "Can you run Charge Capture? Encounter Id is the main input I have.",
+        "Invoke Charge Capture with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "coding_assistant",
+      "name": "Coding Assistant",
+      "description": "Medical coding assistant for ICD-10, CPT, DRG, and HCC risk adjustment. Provides coding suggestions from clinical documentation, calculates coding accuracy scores, determines DRG/APC grouping, identifies CC/MCC capture opportunities, calculates HCC risk scores, and performs coding audit.",
+      "tags": [
+        "healthrcm",
+        "coding",
+        "assistant"
+      ],
+      "examples": [
+        "Use Coding Assistant to medical coding assistant for ICD-10, CPT, DRG, and HCC risk adjustment. Provides coding suggestions from clinical documentation, calculates coding accuracy scores, determines DRG/APC grouping, identifies CC/MCC capture opportunities, calculates HCC risk scores, and performs coding audit.",
+        "Can you run Coding Assistant? Clinical Notes is the main input I have.",
+        "Invoke Coding Assistant with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "claims_submission_manager",
+      "name": "Claims Submission Manager",
+      "description": "Manage the complete claims submission workflow. Performs claim scrubbing, validates CLIA/CMS format compliance, tracks EDI and paper submissions, monitors acceptance/rejection status, manages resubmission workflows, and calculates net collection rates.",
+      "tags": [
+        "healthrcm",
+        "claims",
+        "submission",
+        "manager"
+      ],
+      "examples": [
+        "Use Claims Submission Manager to manage the complete claims submission workflow. Performs claim scrubbing, validates CLIA/CMS format compliance, tracks EDI and paper submissions, monitors acceptance/rejection status, manages resubmission workflows, and calculates net collection rates.",
+        "Can you run Claims Submission Manager? Claim Ids is the main input I have.",
+        "Invoke Claims Submission Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "denial_manager",
+      "name": "Denial Manager",
+      "description": "Comprehensive denial management with analysis, prediction, and appeal engine. Analyzes denial reasons (CO codes), predicts denial risk, generates appeal letters, tracks appeals at all levels, performs denial root cause analysis, recommends preventive measures, calculates win rates, and generates denial waterfall visualizations.",
+      "tags": [
+        "healthrcm",
+        "denial",
+        "manager"
+      ],
+      "examples": [
+        "Use Denial Manager to comprehensive denial management with analysis, prediction, and appeal engine. Analyzes denial reasons (CO codes), predicts denial risk, generates appeal letters, tracks appeals at all levels, performs denial root cause analysis, recommends preventive measures, calculates win rates, and generates denial waterfall visualizations.",
+        "Can you run Denial Manager? Claim Id is the main input I have.",
+        "Invoke Denial Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "patient_billing_collector",
+      "name": "Patient Billing Collector",
+      "description": "Patient billing and collections management. Generates patient statements, offers payment plan options, manages payment portals, tracks collection aging, predicts bad debt, processes HSA/FSA payments, and provides price transparency tools.",
+      "tags": [
+        "healthrcm",
+        "patient",
+        "billing",
+        "collector"
+      ],
+      "examples": [
+        "Use Patient Billing Collector to patient billing and collections management. Generates patient statements, offers payment plan options, manages payment portals, tracks collection aging, predicts bad debt, processes HSA/FSA payments, and provides price transparency tools.",
+        "Can you run Patient Billing Collector? Patient Id is the main input I have.",
+        "Invoke Patient Billing Collector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "rcm_analytics_dash",
+      "name": "Rcm Analytics Dash",
+      "description": "RCM analytics dashboard with comprehensive KPIs. Displays days in A/R, claim pass rates, cost to collect, first pass rates, denial rates, net collection rates, performance benchmarking, revenue forecasting, and KPI trend visualizations.",
+      "tags": [
+        "healthrcm",
+        "rcm",
+        "analytics",
+        "dash"
+      ],
+      "examples": [
+        "Use Rcm Analytics Dash to rCM analytics dashboard with comprehensive KPIs. Displays days in A/R, claim pass rates, cost to collect, first pass rates, denial rates, net collection rates, performance benchmarking, revenue forecasting, and KPI trend visualizations.",
+        "Can you run Rcm Analytics Dash? Date Range is the main input I have.",
+        "Invoke Rcm Analytics Dash with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "prior_authorization_engine",
+      "name": "Prior Authorization Engine",
+      "description": "Prior authorization determination and management engine. Determines if prior authorization is required, assembles required documentation packages, tracks submission status, manages authorization validity periods, validates medical necessity, and matches clinical criteria against payer requirements.",
+      "tags": [
+        "healthrcm",
+        "prior",
+        "authorization",
+        "engine"
+      ],
+      "examples": [
+        "Use Prior Authorization Engine to prior authorization determination and management engine. Determines if prior authorization is required, assembles required documentation packages, tracks submission status, manages authorization validity periods, validates medical necessity, and matches clinical criteria against payer requirements.",
+        "Can you run Prior Authorization Engine? Patient Id is the main input I have.",
+        "Invoke Prior Authorization Engine with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

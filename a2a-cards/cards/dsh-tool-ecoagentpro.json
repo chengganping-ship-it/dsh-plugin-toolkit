@@ -1,0 +1,200 @@
+{
+  "name": "ecoagentpro",
+  "description": "DSH plugin: dsh-tool-ecoagentpro",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/ecoagentpro",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/ecoagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "environmental_monitoring",
+      "name": "Environmental Monitoring",
+      "description": "环境监测分析工具 — 对水质、大气、土壤、噪声等环境介质进行参数分析与达标评估，提供综合评级和改进建议。",
+      "tags": [
+        "ecoagentpro",
+        "environmental",
+        "monitoring"
+      ],
+      "examples": [
+        "Use Environmental Monitoring to 环境监测分析工具 — 对水质、大气、土壤、噪声等环境介质进行参数分析与达标评估，提供综合评级和改进建议。.",
+        "Can you run Environmental Monitoring? Input Data is the main input I have.",
+        "Invoke Environmental Monitoring with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "carbon_neutrality_planner",
+      "name": "Carbon Neutrality Planner",
+      "description": "碳中和规划工具 — 核算碳排放、制定减排路径、评估CCER开发潜力与碳汇方案，助力实现双碳目标。",
+      "tags": [
+        "ecoagentpro",
+        "carbon",
+        "neutrality",
+        "planner"
+      ],
+      "examples": [
+        "Use Carbon Neutrality Planner to 碳中和规划工具 — 核算碳排放、制定减排路径、评估CCER开发潜力与碳汇方案，助力实现双碳目标。.",
+        "Can you run Carbon Neutrality Planner? Input Data is the main input I have.",
+        "Invoke Carbon Neutrality Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "green_building_optimizer",
+      "name": "Green Building Optimizer",
+      "description": "绿色建筑优化工具 — 分析建筑能耗、采光、通风与材料性能，提供绿色建筑认证路径和优化建议。",
+      "tags": [
+        "ecoagentpro",
+        "green",
+        "building",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Green Building Optimizer to 绿色建筑优化工具 — 分析建筑能耗、采光、通风与材料性能，提供绿色建筑认证路径和优化建议。.",
+        "Can you run Green Building Optimizer? Input Data is the main input I have.",
+        "Invoke Green Building Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "circular_economy_advisor",
+      "name": "Circular Economy Advisor",
+      "description": "循环经济咨询工具 — 评估物料循环利用水平，制定再利用/再制造/回收体系方案，挖掘循环经济价值。",
+      "tags": [
+        "ecoagentpro",
+        "circular",
+        "economy",
+        "advisor"
+      ],
+      "examples": [
+        "Use Circular Economy Advisor to 循环经济咨询工具 — 评估物料循环利用水平，制定再利用/再制造/回收体系方案，挖掘循环经济价值。.",
+        "Can you run Circular Economy Advisor? Input Data is the main input I have.",
+        "Invoke Circular Economy Advisor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "biodiversity_assessment",
+      "name": "Biodiversity Assessment",
+      "description": "生物多样性评估工具 — 评估物种多样性、栖息地质量和生态廊道需求，制定生物多样性保护策略。",
+      "tags": [
+        "ecoagentpro",
+        "biodiversity",
+        "assessment"
+      ],
+      "examples": [
+        "Use Biodiversity Assessment to 生物多样性评估工具 — 评估物种多样性、栖息地质量和生态廊道需求，制定生物多样性保护策略。.",
+        "Can you run Biodiversity Assessment? Input Data is the main input I have.",
+        "Invoke Biodiversity Assessment with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "renewable_energy_siting",
+      "name": "Renewable Energy Siting",
+      "description": "新能源选址评估工具 — 评估风光资源潜力、电网接入条件、用地需求和消纳方案，为新能源项目选址提供决策支持。",
+      "tags": [
+        "ecoagentpro",
+        "renewable",
+        "energy",
+        "siting"
+      ],
+      "examples": [
+        "Use Renewable Energy Siting to 新能源选址评估工具 — 评估风光资源潜力、电网接入条件、用地需求和消纳方案，为新能源项目选址提供决策支持。.",
+        "Can you run Renewable Energy Siting? Input Data is the main input I have.",
+        "Invoke Renewable Energy Siting with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "waste_management_ai",
+      "name": "Waste Management Ai",
+      "description": "固废管理AI工具 — 分析固废分类方案、处理工艺和危废管理要求，提供合规监管建议。",
+      "tags": [
+        "ecoagentpro",
+        "waste",
+        "management"
+      ],
+      "examples": [
+        "Use Waste Management Ai to 固废管理AI工具 — 分析固废分类方案、处理工艺和危废管理要求，提供合规监管建议。.",
+        "Can you run Waste Management Ai? Input Data is the main input I have.",
+        "Invoke Waste Management Ai with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "water_resource_manager",
+      "name": "Water Resource Manager",
+      "description": "水资源管理工具 — 分析流域供需平衡、优化配置方案、制定节水措施和生态保护策略。",
+      "tags": [
+        "ecoagentpro",
+        "water",
+        "resource",
+        "manager"
+      ],
+      "examples": [
+        "Use Water Resource Manager to 水资源管理工具 — 分析流域供需平衡、优化配置方案、制定节水措施和生态保护策略。.",
+        "Can you run Water Resource Manager? Input Data is the main input I have.",
+        "Invoke Water Resource Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

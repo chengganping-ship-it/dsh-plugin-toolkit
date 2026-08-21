@@ -1,0 +1,204 @@
+{
+  "name": "petcareagentpro",
+  "description": "宠物护理与兽医AI助手 — 症状自查、营养方案、疫苗计划、行为分析、保险顾问、医院管理、口腔健康、老年护理",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/petcareagentpro",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/petcareagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "pet_symptom_checker",
+      "name": "Pet Symptom Checker",
+      "description": "宠物症状自查与就医建议 — 基于症状描述和宠物信息，提供可能疾病分析、紧急程度评估、就医建议和居家护理指导",
+      "tags": [
+        "petcareagentpro",
+        "pet",
+        "symptom",
+        "checker"
+      ],
+      "examples": [
+        "Use Pet Symptom Checker to 宠物症状自查与就医建议 — 基于症状描述和宠物信息，提供可能疾病分析、紧急程度评估、就医建议和居家护理指导.",
+        "Can you run Pet Symptom Checker? Input Data is the main input I have.",
+        "Invoke Pet Symptom Checker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "pet_nutrition_planner",
+      "name": "Pet Nutrition Planner",
+      "description": "宠物营养方案与体重管理 — 基于宠物信息和体况评估，提供热量需求计算、营养配比、喂食计划和体重管理方案",
+      "tags": [
+        "petcareagentpro",
+        "pet",
+        "nutrition",
+        "planner"
+      ],
+      "examples": [
+        "Use Pet Nutrition Planner to 宠物营养方案与体重管理 — 基于宠物信息和体况评估，提供热量需求计算、营养配比、喂食计划和体重管理方案.",
+        "Can you run Pet Nutrition Planner? Input Data is the main input I have.",
+        "Invoke Pet Nutrition Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "vaccination_scheduler",
+      "name": "Vaccination Scheduler",
+      "description": "疫苗计划与驱虫提醒 — 基于宠物年龄和免疫史，提供核心/非核心疫苗接种计划、驱虫安排和年度免疫日历",
+      "tags": [
+        "petcareagentpro",
+        "vaccination",
+        "scheduler"
+      ],
+      "examples": [
+        "Use Vaccination Scheduler to 疫苗计划与驱虫提醒 — 基于宠物年龄和免疫史，提供核心/非核心疫苗接种计划、驱虫安排和年度免疫日历.",
+        "Can you run Vaccination Scheduler? Input Data is the main input I have.",
+        "Invoke Vaccination Scheduler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "pet_behavior_analyzer",
+      "name": "Pet Behavior Analyzer",
+      "description": "宠物行为问题识别与训练方案 — 基于行为问题描述，提供行为分析、训练计划、环境改造和丰富化活动建议",
+      "tags": [
+        "petcareagentpro",
+        "pet",
+        "behavior",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Pet Behavior Analyzer to 宠物行为问题识别与训练方案 — 基于行为问题描述，提供行为分析、训练计划、环境改造和丰富化活动建议.",
+        "Can you run Pet Behavior Analyzer? Input Data is the main input I have.",
+        "Invoke Pet Behavior Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "pet_insurance_advisor",
+      "name": "Pet Insurance Advisor",
+      "description": "宠物保险方案对比与理赔 — 基于宠物信息和预算，提供保险方案对比、理赔估算、保险公司排名和投保建议",
+      "tags": [
+        "petcareagentpro",
+        "pet",
+        "insurance",
+        "advisor"
+      ],
+      "examples": [
+        "Use Pet Insurance Advisor to 宠物保险方案对比与理赔 — 基于宠物信息和预算，提供保险方案对比、理赔估算、保险公司排名和投保建议.",
+        "Can you run Pet Insurance Advisor? Input Data is the main input I have.",
+        "Invoke Pet Insurance Advisor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "veterinary_clinic_manager",
+      "name": "Veterinary Clinic Manager",
+      "description": "动物医院运营与预约管理 — 基于诊所运营数据，提供预约优化、人员配置、库存预警、财务分析和服务拓展建议",
+      "tags": [
+        "petcareagentpro",
+        "veterinary",
+        "clinic",
+        "manager"
+      ],
+      "examples": [
+        "Use Veterinary Clinic Manager to 动物医院运营与预约管理 — 基于诊所运营数据，提供预约优化、人员配置、库存预警、财务分析和服务拓展建议.",
+        "Can you run Veterinary Clinic Manager? Input Data is the main input I have.",
+        "Invoke Veterinary Clinic Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "pet_dental_health_tracker",
+      "name": "Pet Dental Health Tracker",
+      "description": "宠物口腔健康追踪与牙病预防 — 基于口腔评估数据，提供疾病风险分析、洁牙计划、饮食建议和费用预估",
+      "tags": [
+        "petcareagentpro",
+        "pet",
+        "dental",
+        "health",
+        "tracker"
+      ],
+      "examples": [
+        "Use Pet Dental Health Tracker to 宠物口腔健康追踪与牙病预防 — 基于口腔评估数据，提供疾病风险分析、洁牙计划、饮食建议和费用预估.",
+        "Can you run Pet Dental Health Tracker? Input Data is the main input I have.",
+        "Invoke Pet Dental Health Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "senior_pet_care_planner",
+      "name": "Senior Pet Care Planner",
+      "description": "老年宠物护理与安宁疗护 — 基于老年宠物健康数据，提供衰老评估、慢性病管理、疼痛控制、生活质量评估和临终规划",
+      "tags": [
+        "petcareagentpro",
+        "senior",
+        "pet",
+        "care",
+        "planner"
+      ],
+      "examples": [
+        "Use Senior Pet Care Planner to 老年宠物护理与安宁疗护 — 基于老年宠物健康数据，提供衰老评估、慢性病管理、疼痛控制、生活质量评估和临终规划.",
+        "Can you run Senior Pet Care Planner? Input Data is the main input I have.",
+        "Invoke Senior Pet Care Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

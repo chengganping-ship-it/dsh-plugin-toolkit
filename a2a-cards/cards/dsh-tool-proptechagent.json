@@ -1,0 +1,202 @@
+{
+  "name": "dsh-tools",
+  "description": "DSH plugin: dsh-tool-proptechagent",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tools",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tools",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "building_ops_center",
+      "name": "Building Ops Center",
+      "description": "智慧楼宇运营中心：资产分布、传感器覆盖、告警监控、楼宇类型分析，对标ProptechOS",
+      "tags": [
+        "proptechagent",
+        "building",
+        "ops",
+        "center"
+      ],
+      "examples": [
+        "Use Building Ops Center to 智慧楼宇运营中心：资产分布、传感器覆盖、告警监控、楼宇类型分析，对标ProptechOS.",
+        "I need Building Ops Center capabilities for this task in dsh-tools.",
+        "Invoke Building Ops Center with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "tenant_experience_analyzer",
+      "name": "Tenant Experience Analyzer",
+      "description": "租户体验分析：满意度评分、NPS推荐率、投诉热点，输出改善建议",
+      "tags": [
+        "proptechagent",
+        "tenant",
+        "experience",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Tenant Experience Analyzer to 租户体验分析：满意度评分、NPS推荐率、投诉热点，输出改善建议.",
+        "I need Tenant Experience Analyzer capabilities for this task in dsh-tools.",
+        "Invoke Tenant Experience Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "energy_optimizer",
+      "name": "Energy Optimizer",
+      "description": "能耗优化分析：水电气消耗分析、节能潜力估算、ESG减排目标对标（参考ProptechOS 25%节能目标）",
+      "tags": [
+        "proptechagent",
+        "energy",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Energy Optimizer to 能耗优化分析：水电气消耗分析、节能潜力估算、ESG减排目标对标（参考ProptechOS 25%节能目标）.",
+        "I need Energy Optimizer capabilities for this task in dsh-tools.",
+        "Invoke Energy Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "facility_maintenance_planner",
+      "name": "Facility Maintenance Planner",
+      "description": "设施设备维护计划：资产台账、状态分布、近期保养提醒、预测性维护建议",
+      "tags": [
+        "proptechagent",
+        "facility",
+        "maintenance",
+        "planner"
+      ],
+      "examples": [
+        "Use Facility Maintenance Planner to 设施设备维护计划：资产台账、状态分布、近期保养提醒、预测性维护建议.",
+        "I need Facility Maintenance Planner capabilities for this task in dsh-tools.",
+        "Invoke Facility Maintenance Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "esg_compliance_tracker",
+      "name": "Esg Compliance Tracker",
+      "description": "ESG合规跟踪：环境/社会/治理三维度评分、合规差距、整改建议",
+      "tags": [
+        "proptechagent",
+        "esg",
+        "compliance",
+        "tracker"
+      ],
+      "examples": [
+        "Use Esg Compliance Tracker to eSG合规跟踪：环境/社会/治理三维度评分、合规差距、整改建议.",
+        "I need Esg Compliance Tracker capabilities for this task in dsh-tools.",
+        "Invoke Esg Compliance Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "lease_portfolio_manager",
+      "name": "Lease Portfolio Manager",
+      "description": "租赁资产组合管理：租约状态、到期预警、空置率分析、租金收入测算",
+      "tags": [
+        "proptechagent",
+        "lease",
+        "portfolio",
+        "manager"
+      ],
+      "examples": [
+        "Use Lease Portfolio Manager to 租赁资产组合管理：租约状态、到期预警、空置率分析、租金收入测算.",
+        "I need Lease Portfolio Manager capabilities for this task in dsh-tools.",
+        "Invoke Lease Portfolio Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "property_investment_roi",
+      "name": "Property Investment Roi",
+      "description": "房产投资回报分析：投资总额、年净收益率、回本周期、投资建议",
+      "tags": [
+        "proptechagent",
+        "property",
+        "investment",
+        "roi"
+      ],
+      "examples": [
+        "Use Property Investment Roi to 房产投资回报分析：投资总额、年净收益率、回本周期、投资建议.",
+        "I need Property Investment Roi capabilities for this task in dsh-tools.",
+        "Invoke Property Investment Roi with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "workspace_utilization_optimizer",
+      "name": "Workspace Utilization Optimizer",
+      "description": "办公空间利用优化：分析面积使用率、工位布局效率、会议室利用率，给出空间规划与节约建议",
+      "tags": [
+        "proptechagent",
+        "workspace",
+        "utilization",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Workspace Utilization Optimizer to 办公空间利用优化：分析面积使用率、工位布局效率、会议室利用率，给出空间规划与节约建议.",
+        "Can you run Workspace Utilization Optimizer? Input Data is the main input I have.",
+        "Invoke Workspace Utilization Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

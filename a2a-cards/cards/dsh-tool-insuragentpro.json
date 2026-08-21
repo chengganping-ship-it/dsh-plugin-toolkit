@@ -1,0 +1,198 @@
+{
+  "name": "insuragentpro",
+  "description": "保险AI助手 — 核保·理赔·精算·产品·再保·反欺诈·保单管理·渠道分销",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/insuragentpro",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/insuragentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "underwriting_analyzer",
+      "name": "Underwriting Analyzer",
+      "description": "核保分析 | 风险评估/费率/免赔/限额",
+      "tags": [
+        "insuragentpro",
+        "underwriting",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Underwriting Analyzer to 核保分析 | 风险评估/费率/免赔/限额.",
+        "Can you run Underwriting Analyzer? Input Data is the main input I have.",
+        "Invoke Underwriting Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "claims_processor",
+      "name": "Claims Processor",
+      "description": "理赔处理 | 初审/调查/定损/拒赔分析",
+      "tags": [
+        "insuragentpro",
+        "claims",
+        "processor"
+      ],
+      "examples": [
+        "Use Claims Processor to 理赔处理 | 初审/调查/定损/拒赔分析.",
+        "Can you run Claims Processor? Input Data is the main input I have.",
+        "Invoke Claims Processor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "actuarial_pricer",
+      "name": "Actuarial Pricer",
+      "description": "精算定价 | 纯保费/费率因子/利润测试",
+      "tags": [
+        "insuragentpro",
+        "actuarial",
+        "pricer"
+      ],
+      "examples": [
+        "Use Actuarial Pricer to 精算定价 | 纯保费/费率因子/利润测试.",
+        "Can you run Actuarial Pricer? Input Data is the main input I have.",
+        "Invoke Actuarial Pricer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "insurance_product_designer",
+      "name": "Insurance Product Designer",
+      "description": "产品设计 | 条款/费率表/组合方案",
+      "tags": [
+        "insuragentpro",
+        "insurance",
+        "product",
+        "designer"
+      ],
+      "examples": [
+        "Use Insurance Product Designer to 产品设计 | 条款/费率表/组合方案.",
+        "Can you run Insurance Product Designer? Input Data is the main input I have.",
+        "Invoke Insurance Product Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "reinsurance_strategist",
+      "name": "Reinsurance Strategist",
+      "description": "再保险策略 | 比例/非比例/自留额",
+      "tags": [
+        "insuragentpro",
+        "reinsurance",
+        "strategist"
+      ],
+      "examples": [
+        "Use Reinsurance Strategist to 再保险策略 | 比例/非比例/自留额.",
+        "Can you run Reinsurance Strategist? Input Data is the main input I have.",
+        "Invoke Reinsurance Strategist with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "insurance_fraud_detector",
+      "name": "Insurance Fraud Detector",
+      "description": "反欺诈检测 | 关联交易/模式识别",
+      "tags": [
+        "insuragentpro",
+        "insurance",
+        "fraud",
+        "detector"
+      ],
+      "examples": [
+        "Use Insurance Fraud Detector to 反欺诈检测 | 关联交易/模式识别.",
+        "Can you run Insurance Fraud Detector? Input Data is the main input I have.",
+        "Invoke Insurance Fraud Detector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "policy_lifecycle_manager",
+      "name": "Policy Lifecycle Manager",
+      "description": "保单管理 | 续保/批改/退保",
+      "tags": [
+        "insuragentpro",
+        "policy",
+        "lifecycle",
+        "manager"
+      ],
+      "examples": [
+        "Use Policy Lifecycle Manager to 保单管理 | 续保/批改/退保.",
+        "Can you run Policy Lifecycle Manager? Input Data is the main input I have.",
+        "Invoke Policy Lifecycle Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "insurance_distribution",
+      "name": "Insurance Distribution",
+      "description": "渠道分销 | 代理人/银保/互联网",
+      "tags": [
+        "insuragentpro",
+        "insurance",
+        "distribution"
+      ],
+      "examples": [
+        "Use Insurance Distribution to 渠道分销 | 代理人/银保/互联网.",
+        "Can you run Insurance Distribution? Input Data is the main input I have.",
+        "Invoke Insurance Distribution with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

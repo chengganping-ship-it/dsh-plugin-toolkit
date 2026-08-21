@@ -1,0 +1,197 @@
+{
+  "name": "dsh-tool-predict",
+  "description": "Predictive Analytics Engine - Time series forecasting, trend prediction, anomaly detection, demand forecasting, churn prediction, revenue projection, risk scoring, and scenario simulation",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-predict",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-predict",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "time_series_forecaster",
+      "name": "Time Series Forecaster",
+      "description": "Forecast future values from historical time series data. Supports moving average, exponential smoothing, and linear regression methods. Returns forecasts with confidence intervals and accuracy metrics (MAPE, RMSE, MAE, R-squared).",
+      "tags": [
+        "predict",
+        "time",
+        "series",
+        "forecaster"
+      ],
+      "examples": [
+        "Use Time Series Forecaster to forecast future values from historical time series data. Supports moving average, exponential smoothing, and linear regression methods. Returns forecasts with confidence intervals and accuracy metrics (MAPE, RMSE, MAE, R-squared).",
+        "Can you run Time Series Forecaster? Series is the main input I have.",
+        "Invoke Time Series Forecaster with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "trend_predictor",
+      "name": "Trend Predictor",
+      "description": "Predict trend direction and strength from time series data. Provides momentum indicators (short/medium/long-term), acceleration metrics, support/resistance levels, and reversal signal detection.",
+      "tags": [
+        "predict",
+        "trend",
+        "predictor"
+      ],
+      "examples": [
+        "Use Trend Predictor to predict trend direction and strength from time series data. Provides momentum indicators (short/medium/long-term), acceleration metrics, support/resistance levels, and reversal signal detection.",
+        "Can you run Trend Predictor? Data is the main input I have.",
+        "Invoke Trend Predictor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "anomaly_detector",
+      "name": "Anomaly Detector",
+      "description": "Detect anomalies in data series using statistical methods. Identifies outliers with z-scores, deviation metrics, and pattern classification (spike, drop, positive/negative outlier). Configurable sensitivity.",
+      "tags": [
+        "predict",
+        "anomaly",
+        "detector"
+      ],
+      "examples": [
+        "Use Anomaly Detector to detect anomalies in data series using statistical methods. Identifies outliers with z-scores, deviation metrics, and pattern classification (spike, drop, positive/negative outlier). Configurable sensitivity.",
+        "Can you run Anomaly Detector? Data is the main input I have.",
+        "Invoke Anomaly Detector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "demand_forecaster",
+      "name": "Demand Forecaster",
+      "description": "Forecast product or service demand with seasonality decomposition and promotion lift estimates. Detects seasonal patterns, identifies peak/trough periods, and quantifies external factor impacts.",
+      "tags": [
+        "predict",
+        "demand",
+        "forecaster"
+      ],
+      "examples": [
+        "Use Demand Forecaster to forecast product or service demand with seasonality decomposition and promotion lift estimates. Detects seasonal patterns, identifies peak/trough periods, and quantifies external factor impacts.",
+        "Can you run Demand Forecaster? Demand History is the main input I have.",
+        "Invoke Demand Forecaster with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "churn_predictor",
+      "name": "Churn Predictor",
+      "description": "Predict customer churn probability using behavioral features (tenure, usage, support tickets, payment delays). Returns risk tiers, contributing factors, retention recommendations, and estimated lifetime value.",
+      "tags": [
+        "predict",
+        "churn",
+        "predictor"
+      ],
+      "examples": [
+        "Use Churn Predictor to predict customer churn probability using behavioral features (tenure, usage, support tickets, payment delays). Returns risk tiers, contributing factors, retention recommendations, and estimated lifetime value.",
+        "Can you run Churn Predictor? Customer Data is the main input I have.",
+        "Invoke Churn Predictor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "revenue_projector",
+      "name": "Revenue Projector",
+      "description": "Project future revenue across multiple scenarios (best/base/worst case). Calculates growth rates, NPV, and peak revenue periods. Supports custom growth assumptions and market expansion factors.",
+      "tags": [
+        "predict",
+        "revenue",
+        "projector"
+      ],
+      "examples": [
+        "Use Revenue Projector to project future revenue across multiple scenarios (best/base/worst case). Calculates growth rates, NPV, and peak revenue periods. Supports custom growth assumptions and market expansion factors.",
+        "Can you run Revenue Projector? Revenue History is the main input I have.",
+        "Invoke Revenue Projector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "risk_propensity_scorer",
+      "name": "Risk Propensity Scorer",
+      "description": "Score risk propensity for decision options. Evaluates expected value, risk-adjusted returns, Sharpe ratio, and maximum drawdown. Provides optimal choice recommendation and risk budget utilization.",
+      "tags": [
+        "predict",
+        "risk",
+        "propensity",
+        "scorer"
+      ],
+      "examples": [
+        "Use Risk Propensity Scorer to score risk propensity for decision options. Evaluates expected value, risk-adjusted returns, Sharpe ratio, and maximum drawdown. Provides optimal choice recommendation and risk budget utilization.",
+        "Can you run Risk Propensity Scorer? Decision Context is the main input I have.",
+        "Invoke Risk Propensity Scorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "scenario_simulator",
+      "name": "Scenario Simulator",
+      "description": "Run Monte Carlo simulation with multiple variables and distributions. Returns probability distributions, sensitivity analysis, value at risk (VaR), and success probability. Supports uniform, normal, triangular, and lognormal distributions.",
+      "tags": [
+        "predict",
+        "scenario",
+        "simulator"
+      ],
+      "examples": [
+        "Use Scenario Simulator to run Monte Carlo simulation with multiple variables and distributions. Returns probability distributions, sensitivity analysis, value at risk (VaR), and success probability. Supports uniform, normal, triangular, and lognormal distributions.",
+        "Can you run Scenario Simulator? Base Case is the main input I have.",
+        "Invoke Scenario Simulator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

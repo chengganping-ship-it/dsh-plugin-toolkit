@@ -1,0 +1,204 @@
+{
+  "name": "dsh-tool-aquafishagent",
+  "description": "Aquaculture & Fishery AI Agent - Water quality monitoring with hypoxia alerts, fish/shrimp disease AI diagnosis, feed formulation optimization with FCR improvement, stocking density planning with carrying capacity assessment, IoT aerator and feeding automation, optimal harvest timing prediction with market price linkage, typhoon/red tide/disease risk assessment, fisheries supply chain traceability with cold chain monitoring",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-aquafishagent",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-aquafishagent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "water_quality_monitor",
+      "name": "Water Quality Monitor",
+      "description": "养殖水质参数监测与缺氧预警 — 分析水温、pH、溶解氧、氨氮、亚硝酸盐等参数，评估缺氧风险等级，输出预警信息和紧急措施",
+      "tags": [
+        "aquafishagent",
+        "water",
+        "quality",
+        "monitor"
+      ],
+      "examples": [
+        "Use Water Quality Monitor to 养殖水质参数监测与缺氧预警 — 分析水温、pH、溶解氧、氨氮、亚硝酸盐等参数，评估缺氧风险等级，输出预警信息和紧急措施.",
+        "Can you run Water Quality Monitor? Input Data is the main input I have.",
+        "Invoke Water Quality Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fish_health_diagnostician",
+      "name": "Fish Health Diagnostician",
+      "description": "鱼虾病害AI诊断与用药建议 — 基于症状描述进行鉴别诊断，提供治疗方案、预防措施和紧急程度评估",
+      "tags": [
+        "aquafishagent",
+        "fish",
+        "health",
+        "diagnostician"
+      ],
+      "examples": [
+        "Use Fish Health Diagnostician to 鱼虾病害AI诊断与用药建议 — 基于症状描述进行鉴别诊断，提供治疗方案、预防措施和紧急程度评估.",
+        "Can you run Fish Health Diagnostician? Input Data is the main input I have.",
+        "Invoke Fish Health Diagnostician with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "feed_optimization_engine",
+      "name": "Feed Optimization Engine",
+      "description": "饲料配方优化与FCR转化率提升 — 基于养殖品种和生长阶段推荐饲料配方、营养指标、投喂计划和成本优化方案",
+      "tags": [
+        "aquafishagent",
+        "feed",
+        "optimization",
+        "engine"
+      ],
+      "examples": [
+        "Use Feed Optimization Engine to 饲料配方优化与FCR转化率提升 — 基于养殖品种和生长阶段推荐饲料配方、营养指标、投喂计划和成本优化方案.",
+        "Can you run Feed Optimization Engine? Input Data is the main input I have.",
+        "Invoke Feed Optimization Engine with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "stocking_density_calculator",
+      "name": "Stocking Density Calculator",
+      "description": "养殖密度规划与生物负载评估 — 计算最大和推荐养殖密度，评估承载能力利用率，输出风险因素和管理建议",
+      "tags": [
+        "aquafishagent",
+        "stocking",
+        "density",
+        "calculator"
+      ],
+      "examples": [
+        "Use Stocking Density Calculator to 养殖密度规划与生物负载评估 — 计算最大和推荐养殖密度，评估承载能力利用率，输出风险因素和管理建议.",
+        "Can you run Stocking Density Calculator? Input Data is the main input I have.",
+        "Invoke Stocking Density Calculator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "aquaculture_iot_manager",
+      "name": "Aquaculture Iot Manager",
+      "description": "物联网增氧机/投饲机自动化控制 — 生成设备运行计划、自动化规则、能耗估算和优化建议",
+      "tags": [
+        "aquafishagent",
+        "aquaculture",
+        "iot",
+        "manager"
+      ],
+      "examples": [
+        "Use Aquaculture Iot Manager to 物联网增氧机/投饲机自动化控制 — 生成设备运行计划、自动化规则、能耗估算和优化建议.",
+        "Can you run Aquaculture Iot Manager? Input Data is the main input I have.",
+        "Invoke Aquaculture Iot Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "harvest_timing_predictor",
+      "name": "Harvest Timing Predictor",
+      "description": "最佳捕捞时间预测与市场价格联动 — 基于生长模型预测捕捞日期，分析经济效益和市场时机，输出决策建议",
+      "tags": [
+        "aquafishagent",
+        "harvest",
+        "timing",
+        "predictor"
+      ],
+      "examples": [
+        "Use Harvest Timing Predictor to 最佳捕捞时间预测与市场价格联动 — 基于生长模型预测捕捞日期，分析经济效益和市场时机，输出决策建议.",
+        "Can you run Harvest Timing Predictor? Input Data is the main input I have.",
+        "Invoke Harvest Timing Predictor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "aquaculture_risk_assessor",
+      "name": "Aquaculture Risk Assessor",
+      "description": "台风暴雨/赤潮/病害风险评估 — 综合评估自然灾害、环境变化和病害风险，输出缓解措施、保险建议和监测计划",
+      "tags": [
+        "aquafishagent",
+        "aquaculture",
+        "risk",
+        "assessor"
+      ],
+      "examples": [
+        "Use Aquaculture Risk Assessor to 台风暴雨/赤潮/病害风险评估 — 综合评估自然灾害、环境变化和病害风险，输出缓解措施、保险建议和监测计划.",
+        "Can you run Aquaculture Risk Assessor? Input Data is the main input I have.",
+        "Invoke Aquaculture Risk Assessor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fisheries_supply_chain_trace",
+      "name": "Fisheries Supply Chain Trace",
+      "description": "水产供应链溯源与冷链监控 — 追踪从捕捞到消费者的全链条，评估冷链完整性、温度合规性和溯源等级",
+      "tags": [
+        "aquafishagent",
+        "fisheries",
+        "supply",
+        "chain",
+        "trace"
+      ],
+      "examples": [
+        "Use Fisheries Supply Chain Trace to 水产供应链溯源与冷链监控 — 追踪从捕捞到消费者的全链条，评估冷链完整性、温度合规性和溯源等级.",
+        "Can you run Fisheries Supply Chain Trace? Input Data is the main input I have.",
+        "Invoke Fisheries Supply Chain Trace with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

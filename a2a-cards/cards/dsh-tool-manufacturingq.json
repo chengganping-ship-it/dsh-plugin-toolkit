@@ -1,0 +1,194 @@
+{
+  "name": "dsh-tool-manufacturingq",
+  "description": "AI+智能制造质量4.0引擎 - SPC统计过程控制、AI缺陷分类、来料QC、CAPA管理、质量文档、计量校准、质量审核、客户质量服务",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-manufacturingq",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-manufacturingq",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "spc_monitor",
+      "name": "Spc Monitor",
+      "description": "SPC statistical process control with X-bar R charts, Cp/Cpk/Ppk capability analysis, anomaly detection (Western Electric rules), OOC alerts, and trend analysis. Input measurement data and specification limits to generate full SPC charts and process capability assessment.",
+      "tags": [
+        "manufacturingq",
+        "spc",
+        "monitor"
+      ],
+      "examples": [
+        "Use Spc Monitor to sPC statistical process control with X-bar R charts, Cp/Cpk/Ppk capability analysis, anomaly detection (Western Electric rules), OOC alerts, and trend analysis. Input measurement data and specification limits to generate full SPC charts and process capability assessment.",
+        "Can you run Spc Monitor? Measurements is the main input I have.",
+        "Invoke Spc Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "defect_ai_classifier",
+      "name": "Defect Ai Classifier",
+      "description": "AI-powered defect classification and root cause correlation. Analyzes defect data by type, severity, and zone. Generates Pareto charts, defect heatmaps, identifies root causes via pattern correlation, calculates scrap rate, and provides improvement recommendations.",
+      "tags": [
+        "manufacturingq",
+        "defect",
+        "classifier"
+      ],
+      "examples": [
+        "Use Defect Ai Classifier to aI-powered defect classification and root cause correlation. Analyzes defect data by type, severity, and zone. Generates Pareto charts, defect heatmaps, identifies root causes via pattern correlation, calculates scrap rate, and provides improvement recommendations.",
+        "Can you run Defect Ai Classifier? Defects is the main input I have.",
+        "Invoke Defect Ai Classifier with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "incoming_qc",
+      "name": "Incoming Qc",
+      "description": "Incoming quality control with AQL sampling per ISO 2859-1. Processes incoming inspection records, generates sampling plans (sample size, Ac, Re), evaluates lot verdicts, calculates supplier PPM rankings, determines disposal actions, and triggers SCAR when critical defects are found.",
+      "tags": [
+        "manufacturingq",
+        "incoming"
+      ],
+      "examples": [
+        "Use Incoming Qc to incoming quality control with AQL sampling per ISO 2859-1. Processes incoming inspection records, generates sampling plans (sample size, Ac, Re), evaluates lot verdicts, calculates supplier PPM rankings, determines disposal actions, and triggers SCAR when critical defects are found.",
+        "Can you run Incoming Qc? Records is the main input I have.",
+        "Invoke Incoming Qc with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "capa_manager",
+      "name": "Capa Manager",
+      "description": "Corrective and Preventive Action (CAPA) manager using full 8D problem-solving methodology. Generates complete 8D reports, performs 5-Why root cause analysis, builds action matrices with ownership/deadlines, and assesses effectiveness per AIAG/VDA standards.",
+      "tags": [
+        "manufacturingq",
+        "capa",
+        "manager"
+      ],
+      "examples": [
+        "Use Capa Manager to corrective and Preventive Action (CAPA) manager using full 8D problem-solving methodology. Generates complete 8D reports, performs 5-Why root cause analysis, builds action matrices with ownership/deadlines, and assesses effectiveness per AIAG/VDA standards.",
+        "Can you run Capa Manager? Capa Record is the main input I have.",
+        "Invoke Capa Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "quality_documentation",
+      "name": "Quality Documentation",
+      "description": "Quality documentation management system. Tracks control plans, inspection guides, PPAP files, FAI reports, quality monthly reports, and audit evidence. Monitors approval status, generates compliance scores, and issues alerts for expired or pending documents.",
+      "tags": [
+        "manufacturingq",
+        "quality",
+        "documentation"
+      ],
+      "examples": [
+        "Use Quality Documentation to quality documentation management system. Tracks control plans, inspection guides, PPAP files, FAI reports, quality monthly reports, and audit evidence. Monitors approval status, generates compliance scores, and issues alerts for expired or pending documents.",
+        "Can you run Quality Documentation? Documents is the main input I have.",
+        "Invoke Quality Documentation with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "gauge_r_calibration",
+      "name": "Gauge R Calibration",
+      "description": "Gauge R&R measurement system analysis and calibration management. Calculates %R&R, ndc (distinct categories), measurement uncertainty per MSA 4th Ed. Manages calibration schedules, identifies overdue gauges, and evaluates acceptability criteria.",
+      "tags": [
+        "manufacturingq",
+        "gauge",
+        "calibration"
+      ],
+      "examples": [
+        "Use Gauge R Calibration to gauge R&R measurement system analysis and calibration management. Calculates %R&R, ndc (distinct categories), measurement uncertainty per MSA 4th Ed. Manages calibration schedules, identifies overdue gauges, and evaluates acceptability criteria.",
+        "Can you run Gauge R Calibration? Gauges is the main input I have.",
+        "Invoke Gauge R Calibration with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "audit_quality",
+      "name": "Audit Quality",
+      "description": "Quality audit management system supporting VDA6.3 process audits, ISO 9001/IATF 16949 system audits, and customer audits. Tracks findings (major/minor/OFI), NC closure status, certification health, and maintains audit calendar.",
+      "tags": [
+        "manufacturingq",
+        "audit",
+        "quality"
+      ],
+      "examples": [
+        "Use Audit Quality to quality audit management system supporting VDA6.3 process audits, ISO 9001/IATF 16949 system audits, and customer audits. Tracks findings (major/minor/OFI), NC closure status, certification health, and maintains audit calendar.",
+        "Can you run Audit Quality? Audits is the main input I have.",
+        "Invoke Audit Quality with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "customer_quality",
+      "name": "Customer Quality",
+      "description": "Customer quality service management with 8D report generation, complaint handling, PPM trend tracking, warranty cost analysis, and customer satisfaction scoring. Auto-generates 8D reports for critical/high-priority complaints per AIAG guidelines.",
+      "tags": [
+        "manufacturingq",
+        "customer",
+        "quality"
+      ],
+      "examples": [
+        "Use Customer Quality to customer quality service management with 8D report generation, complaint handling, PPM trend tracking, warranty cost analysis, and customer satisfaction scoring. Auto-generates 8D reports for critical/high-priority complaints per AIAG guidelines.",
+        "Can you run Customer Quality? Complaints is the main input I have.",
+        "Invoke Customer Quality with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

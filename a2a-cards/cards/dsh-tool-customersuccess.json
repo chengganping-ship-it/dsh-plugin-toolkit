@@ -1,0 +1,198 @@
+{
+  "name": "dsh-tool-customersuccess",
+  "description": "AI-powered Customer Success (CSM) management toolkit - health scorecard, onboarding guide, renewal manager, advocacy program, cross-sell expansion, churn prediction, CSM workload balancer, success plan generator",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-customersuccess",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-customersuccess",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "health_scorecard",
+      "name": "Health Scorecard",
+      "description": "Multi-dimensional customer health scorecard with product usage, support, relationship, and commercial scoring. Generates risk assessment, alerts, improvement paths, and trend analysis with ocean blue dashboard visualization.",
+      "tags": [
+        "customersuccess",
+        "health",
+        "scorecard"
+      ],
+      "examples": [
+        "Use Health Scorecard to multi-dimensional customer health scorecard with product usage, support, relationship, and commercial scoring. Generates risk assessment, alerts, improvement paths, and trend analysis with ocean blue dashboard visualization.",
+        "Can you run Health Scorecard? Scorecard Input is the main input I have.",
+        "Invoke Health Scorecard with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "onboarding_guide",
+      "name": "Onboarding Guide",
+      "description": "Customer success onboarding guide with journey mapping, milestone tracking, task checklists, resource planning, measurement framework, and best practices. Tracks progress and identifies risks.",
+      "tags": [
+        "customersuccess",
+        "onboarding",
+        "guide"
+      ],
+      "examples": [
+        "Use Onboarding Guide to customer success onboarding guide with journey mapping, milestone tracking, task checklists, resource planning, measurement framework, and best practices. Tracks progress and identifies risks.",
+        "Can you run Onboarding Guide? Onboarding Input is the main input I have.",
+        "Invoke Onboarding Guide with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "renewal_manager",
+      "name": "Renewal Manager",
+      "description": "Comprehensive renewal management with renewal prediction, risk identification, renewal plans, discount strategy, coordination matrix, tracking, and ROI reporting with funnel visualization.",
+      "tags": [
+        "customersuccess",
+        "renewal",
+        "manager"
+      ],
+      "examples": [
+        "Use Renewal Manager to comprehensive renewal management with renewal prediction, risk identification, renewal plans, discount strategy, coordination matrix, tracking, and ROI reporting with funnel visualization.",
+        "Can you run Renewal Manager? Renewal Input is the main input I have.",
+        "Invoke Renewal Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "advocacy_program",
+      "name": "Advocacy Program",
+      "description": "Customer advocacy program management with advocate roster, event calendar, incentive analysis, story pipeline, community health tracking, NPS impact measurement, and ROI calculation.",
+      "tags": [
+        "customersuccess",
+        "advocacy",
+        "program"
+      ],
+      "examples": [
+        "Use Advocacy Program to customer advocacy program management with advocate roster, event calendar, incentive analysis, story pipeline, community health tracking, NPS impact measurement, and ROI calculation.",
+        "Can you run Advocacy Program? Advocacy Input is the main input I have.",
+        "Invoke Advocacy Program with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "cross_sell_expansion",
+      "name": "Cross Sell Expansion",
+      "description": "Cross-sell and expansion opportunity analysis with usage gap identification, similar customer matching, timing assessment, quote generation, tracking plan, and revenue forecasting.",
+      "tags": [
+        "customersuccess",
+        "cross",
+        "sell",
+        "expansion"
+      ],
+      "examples": [
+        "Use Cross Sell Expansion to cross-sell and expansion opportunity analysis with usage gap identification, similar customer matching, timing assessment, quote generation, tracking plan, and revenue forecasting.",
+        "Can you run Cross Sell Expansion? Cross Sell Input is the main input I have.",
+        "Invoke Cross Sell Expansion with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "churn_prediction",
+      "name": "Churn Prediction",
+      "description": "Churn prediction model with behavioral feature analysis, risk segmentation, intervention strategies, effectiveness prediction, success metrics, and monitoring plan.",
+      "tags": [
+        "customersuccess",
+        "churn",
+        "prediction"
+      ],
+      "examples": [
+        "Use Churn Prediction to churn prediction model with behavioral feature analysis, risk segmentation, intervention strategies, effectiveness prediction, success metrics, and monitoring plan.",
+        "Can you run Churn Prediction? Churn Input is the main input I have.",
+        "Invoke Churn Prediction with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "csm_workload_balancer",
+      "name": "Csm Workload Balancer",
+      "description": "CSM workload balancing with customer distribution optimization, skill matching, priority assignment, rotation planning, cost modeling, and efficiency metrics.",
+      "tags": [
+        "customersuccess",
+        "csm",
+        "workload",
+        "balancer"
+      ],
+      "examples": [
+        "Use Csm Workload Balancer to cSM workload balancing with customer distribution optimization, skill matching, priority assignment, rotation planning, cost modeling, and efficiency metrics.",
+        "Can you run Csm Workload Balancer? Workload Input is the main input I have.",
+        "Invoke Csm Workload Balancer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "success_plan_generator",
+      "name": "Success Plan Generator",
+      "description": "Success plan generator with goal tracking, milestone management, risk register, action planning, metrics dashboard, automation triggers, collaboration mapping, and version control.",
+      "tags": [
+        "customersuccess",
+        "success",
+        "plan",
+        "generator"
+      ],
+      "examples": [
+        "Use Success Plan Generator to success plan generator with goal tracking, milestone management, risk register, action planning, metrics dashboard, automation triggers, collaboration mapping, and version control.",
+        "Can you run Success Plan Generator? Plan Input is the main input I have.",
+        "Invoke Success Plan Generator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

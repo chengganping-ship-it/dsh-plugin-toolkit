@@ -1,0 +1,205 @@
+{
+  "name": "hydrogenenergyagent",
+  "description": "氢能AI智能体 — 绿氢全产业链分析与安全合规工具集",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/hydrogenenergyagent",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/hydrogenenergyagent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "electrolyzer_efficiency_optimizer",
+      "name": "Electrolyzer Efficiency Optimizer",
+      "description": "优化电解槽（碱式/PEM/SOEC）效率并分析能耗与衰减，提供电堆效率、法拉第效率、比能耗、衰减速率及催化剂/膜健康评估，支持电流密度与温度敏感性分析。",
+      "tags": [
+        "hydrogenenergyagent",
+        "electrolyzer",
+        "efficiency",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Electrolyzer Efficiency Optimizer to 优化电解槽（碱式/PEM/SOEC）效率并分析能耗与衰减，提供电堆效率、法拉第效率、比能耗、衰减速率及催化剂/膜健康评估，支持电流密度与温度敏感性分析。.",
+        "Can you run Electrolyzer Efficiency Optimizer? Input Data is the main input I have.",
+        "Invoke Electrolyzer Efficiency Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "hydrogen_storage_designer",
+      "name": "Hydrogen Storage Designer",
+      "description": "设计氢气储存方案（高压气态/液态/LOHC/金属氢化物），根据需求场景、容量、压力、纯度推荐最佳储氢方式并输出容器规格与材料选型建议，包含氢脆缓解策略。",
+      "tags": [
+        "hydrogenenergyagent",
+        "hydrogen",
+        "storage",
+        "designer"
+      ],
+      "examples": [
+        "Use Hydrogen Storage Designer to 设计氢气储存方案（高压气态/液态/LOHC/金属氢化物），根据需求场景、容量、压力、纯度推荐最佳储氢方式并输出容器规格与材料选型建议，包含氢脆缓解策略。.",
+        "Can you run Hydrogen Storage Designer? Input Data is the main input I have.",
+        "Invoke Hydrogen Storage Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fuel_cell_performance_monitor",
+      "name": "Fuel Cell Performance Monitor",
+      "description": "监测燃料电池（PEMFC/SOFC）性能衰减状况并预测剩余寿命，分析催化剂熟化、膜降解、GDL腐蚀等退化机制，识别关键维护部件并提供操作优化建议。",
+      "tags": [
+        "hydrogenenergyagent",
+        "fuel",
+        "cell",
+        "performance",
+        "monitor"
+      ],
+      "examples": [
+        "Use Fuel Cell Performance Monitor to 监测燃料电池（PEMFC/SOFC）性能衰减状况并预测剩余寿命，分析催化剂熟化、膜降解、GDL腐蚀等退化机制，识别关键维护部件并提供操作优化建议。.",
+        "Can you run Fuel Cell Performance Monitor? Input Data is the main input I have.",
+        "Invoke Fuel Cell Performance Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "hydrogen_logistics_planner",
+      "name": "Hydrogen Logistics Planner",
+      "description": "规划氢气物流方案（长管拖车/液氢/管道/LOHC/氨载体），根据运输距离、日需求量、道路等级推荐最优运输方式，对比各路径成本并分析管道替代可行性。",
+      "tags": [
+        "hydrogenenergyagent",
+        "hydrogen",
+        "logistics",
+        "planner"
+      ],
+      "examples": [
+        "Use Hydrogen Logistics Planner to 规划氢气物流方案（长管拖车/液氢/管道/LOHC/氨载体），根据运输距离、日需求量、道路等级推荐最优运输方式，对比各路径成本并分析管道替代可行性。.",
+        "Can you run Hydrogen Logistics Planner? Input Data is the main input I have.",
+        "Invoke Hydrogen Logistics Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "green_hydrogen_economics",
+      "name": "Green Hydrogen Economics",
+      "description": "计算绿氢平准化生产成本LCOH并进行项目财务分析，分解电力、CAPEX、OPEX、水费等成本构成，输出NPV/IRR/回收期及敏感性分析，对比灰氢并给出优化路径。",
+      "tags": [
+        "hydrogenenergyagent",
+        "green",
+        "hydrogen",
+        "economics"
+      ],
+      "examples": [
+        "Use Green Hydrogen Economics to 计算绿氢平准化生产成本LCOH并进行项目财务分析，分解电力、CAPEX、OPEX、水费等成本构成，输出NPV/IRR/回收期及敏感性分析，对比灰氢并给出优化路径。.",
+        "Can you run Green Hydrogen Economics? Input Data is the main input I have.",
+        "Invoke Green Hydrogen Economics with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "hydrogen_safety_compliance",
+      "name": "Hydrogen Safety Compliance",
+      "description": "氢安全合规评估基于ISO/TR 15916、NFPA 2、GB 50177、IEC 60079和ISO 19880标准，输出合规状态检查、定量风险评估(QRA)、个人/社会风险评估、危害距离计算及安全整改优先级清单。",
+      "tags": [
+        "hydrogenenergyagent",
+        "hydrogen",
+        "safety",
+        "compliance"
+      ],
+      "examples": [
+        "Use Hydrogen Safety Compliance to 氢安全合规评估基于ISO/TR 15916、NFPA 2、GB 50177、IEC 60079和ISO 19880标准，输出合规状态检查、定量风险评估(QRA)、个人/社会风险评估、危害距离计算及安全整改优先级清单。.",
+        "Can you run Hydrogen Safety Compliance? Input Data is the main input I have.",
+        "Invoke Hydrogen Safety Compliance with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "hydrogen_refueling_station",
+      "name": "Hydrogen Refueling Station",
+      "description": "加氢站（固定式/撬装式/移动式）布局设计，优化35MPa/70MPa双压级储氢与加注配置，计算压缩机/预冷器/加氢机参数，输出站场布局面积、运营指标、投资估算和安全合规检查清单。",
+      "tags": [
+        "hydrogenenergyagent",
+        "hydrogen",
+        "refueling",
+        "station"
+      ],
+      "examples": [
+        "Use Hydrogen Refueling Station to 加氢站（固定式/撬装式/移动式）布局设计，优化35MPa/70MPa双压级储氢与加注配置，计算压缩机/预冷器/加氢机参数，输出站场布局面积、运营指标、投资估算和安全合规检查清单。.",
+        "Can you run Hydrogen Refueling Station? Input Data is the main input I have.",
+        "Invoke Hydrogen Refueling Station with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "hydrogen_value_chain_mapper",
+      "name": "Hydrogen Value Chain Mapper",
+      "description": "绘制氢能产业链全景与工业园区耦合映射，覆盖可再生能源发电、电解制氢、储氢、燃料电池交通、工业利用（绿醇/DRI/合成氨）等环节，分析供需平衡、规模协同、CO₂减排及经济效益。",
+      "tags": [
+        "hydrogenenergyagent",
+        "hydrogen",
+        "value",
+        "chain",
+        "mapper"
+      ],
+      "examples": [
+        "Use Hydrogen Value Chain Mapper to 绘制氢能产业链全景与工业园区耦合映射，覆盖可再生能源发电、电解制氢、储氢、燃料电池交通、工业利用（绿醇/DRI/合成氨）等环节，分析供需平衡、规模协同、CO₂减排及经济效益。.",
+        "Can you run Hydrogen Value Chain Mapper? Input Data is the main input I have.",
+        "Invoke Hydrogen Value Chain Mapper with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

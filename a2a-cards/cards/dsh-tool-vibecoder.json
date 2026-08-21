@@ -1,0 +1,202 @@
+{
+  "name": "dsh-tool-vibecoder",
+  "description": "Vibe Coding design system - tokens, components, style guides, code gen",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-vibecoder",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-vibecoder",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "design_token_generator",
+      "name": "Design Token Generator",
+      "description": "Generate design tokens (colors, typography, spacing, shadows, breakpoints, border radius) from a theme description. Returns structured token set ready for CSS/SCSS/Tailwind.",
+      "tags": [
+        "vibecoder",
+        "design",
+        "token",
+        "generator"
+      ],
+      "examples": [
+        "Use Design Token Generator to generate design tokens (colors, typography, spacing, shadows, breakpoints, border radius) from a theme description. Returns structured token set ready for CSS/SCSS/Tailwind.",
+        "Can you run Design Token Generator? Theme Input is the main input I have.",
+        "Invoke Design Token Generator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "component_spec_creator",
+      "name": "Component Spec Creator",
+      "description": "Create a component specification document with variants, props interface, states, and usage examples.",
+      "tags": [
+        "vibecoder",
+        "component",
+        "spec",
+        "creator"
+      ],
+      "examples": [
+        "Use Component Spec Creator to create a component specification document with variants, props interface, states, and usage examples.",
+        "Can you run Component Spec Creator? Input is the main input I have.",
+        "Invoke Component Spec Creator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "style_guide_builder",
+      "name": "Style Guide Builder",
+      "description": "Build a complete style guide with color system, type scale, spacing rules, and elevation system.",
+      "tags": [
+        "vibecoder",
+        "style",
+        "guide",
+        "builder"
+      ],
+      "examples": [
+        "Use Style Guide Builder to build a complete style guide with color system, type scale, spacing rules, and elevation system.",
+        "Can you run Style Guide Builder? Input is the main input I have.",
+        "Invoke Style Guide Builder with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "responsive_breakpoint_advisor",
+      "name": "Responsive Breakpoint Advisor",
+      "description": "Get optimal responsive breakpoint configuration and layout strategy for target devices and content type.",
+      "tags": [
+        "vibecoder",
+        "responsive",
+        "breakpoint",
+        "advisor"
+      ],
+      "examples": [
+        "Use Responsive Breakpoint Advisor to get optimal responsive breakpoint configuration and layout strategy for target devices and content type.",
+        "Can you run Responsive Breakpoint Advisor? Input is the main input I have.",
+        "Invoke Responsive Breakpoint Advisor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "accessibility_auditor",
+      "name": "Accessibility Auditor",
+      "description": "Audit design for WCAG 2.1 AA/AAA compliance. Checks color contrast, font sizes, and interactive element accessibility.",
+      "tags": [
+        "vibecoder",
+        "accessibility",
+        "auditor"
+      ],
+      "examples": [
+        "Use Accessibility Auditor to audit design for WCAG 2.1 AA/AAA compliance. Checks color contrast, font sizes, and interactive element accessibility.",
+        "Can you run Accessibility Auditor? Input is the main input I have.",
+        "Invoke Accessibility Auditor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "design_system_versioner",
+      "name": "Design System Versioner",
+      "description": "Manage design system versioning. Determines semver bump, generates changelog and migration guide.",
+      "tags": [
+        "vibecoder",
+        "design",
+        "system",
+        "versioner"
+      ],
+      "examples": [
+        "Use Design System Versioner to manage design system versioning. Determines semver bump, generates changelog and migration guide.",
+        "Can you run Design System Versioner? Input is the main input I have.",
+        "Invoke Design System Versioner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "code_output_generator",
+      "name": "Code Output Generator",
+      "description": "Generate production-ready component code from design tokens for React, Vue, Svelte, or HTML+CSS.",
+      "tags": [
+        "vibecoder",
+        "code",
+        "output",
+        "generator"
+      ],
+      "examples": [
+        "Use Code Output Generator to generate production-ready component code from design tokens for React, Vue, Svelte, or HTML+CSS.",
+        "Can you run Code Output Generator? Input is the main input I have.",
+        "Invoke Code Output Generator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "design_review_checker",
+      "name": "Design Review Checker",
+      "description": "Run a structured design review against a checklist. Returns pass/fail/warning for each item with improvement suggestions.",
+      "tags": [
+        "vibecoder",
+        "design",
+        "review",
+        "checker"
+      ],
+      "examples": [
+        "Use Design Review Checker to run a structured design review against a checklist. Returns pass/fail/warning for each item with improvement suggestions.",
+        "Can you run Design Review Checker? Input is the main input I have.",
+        "Invoke Design Review Checker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

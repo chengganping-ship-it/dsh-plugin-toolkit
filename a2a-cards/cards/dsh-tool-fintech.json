@@ -1,0 +1,200 @@
+{
+  "name": "dsh-tool-fintech",
+  "description": "Financial Risk & Fraud Detection Toolkit - Transaction monitoring, credit scoring, anti-money laundering detection, merchant risk assessment, identity verification, payment fraud detection, KYC compliance checking, and behavior biometrics analysis",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-fintech",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-fintech",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "transaction_monitor",
+      "name": "Transaction Monitor",
+      "description": "Analyze transaction data to detect suspicious patterns, assign risk scores, and generate alert levels. Flags high-amount, high-frequency, and anomalous transaction behavior with recommended actions.",
+      "tags": [
+        "fintech",
+        "transaction",
+        "monitor"
+      ],
+      "examples": [
+        "Use Transaction Monitor to analyze transaction data to detect suspicious patterns, assign risk scores, and generate alert levels. Flags high-amount, high-frequency, and anomalous transaction behavior with recommended actions.",
+        "Can you run Transaction Monitor? Transactions is the main input I have.",
+        "Invoke Transaction Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "credit_scorer",
+      "name": "Credit Scorer",
+      "description": "Assess creditworthiness of an applicant using income, debt, payment history, credit age, and recent inquiries. Returns credit score, risk grade, approval recommendation, credit limit, and probability of default.",
+      "tags": [
+        "fintech",
+        "credit",
+        "scorer"
+      ],
+      "examples": [
+        "Use Credit Scorer to assess creditworthiness of an applicant using income, debt, payment history, credit age, and recent inquiries. Returns credit score, risk grade, approval recommendation, credit limit, and probability of default.",
+        "Can you run Credit Scorer? Applicant Data is the main input I have.",
+        "Invoke Credit Scorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "aml_detector",
+      "name": "Aml Detector",
+      "description": "Detect anti-money laundering patterns including structuring, layering, and integration risks. Analyzes transaction frequency, amounts, jurisdictions, and counterparties to identify suspicious activity.",
+      "tags": [
+        "fintech",
+        "aml",
+        "detector"
+      ],
+      "examples": [
+        "Use Aml Detector to detect anti-money laundering patterns including structuring, layering, and integration risks. Analyzes transaction frequency, amounts, jurisdictions, and counterparties to identify suspicious activity.",
+        "Can you run Aml Detector? Customer Transactions is the main input I have.",
+        "Invoke Aml Detector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "merchant_risk_scorer",
+      "name": "Merchant Risk Scorer",
+      "description": "Evaluate merchant account risk based on business type, transaction volume, chargeback ratio, and processing history. Provides risk rating, reserve requirements, and monitoring level recommendations.",
+      "tags": [
+        "fintech",
+        "merchant",
+        "risk",
+        "scorer"
+      ],
+      "examples": [
+        "Use Merchant Risk Scorer to evaluate merchant account risk based on business type, transaction volume, chargeback ratio, and processing history. Provides risk rating, reserve requirements, and monitoring level recommendations.",
+        "Can you run Merchant Risk Scorer? Merchant Data is the main input I have.",
+        "Invoke Merchant Risk Scorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "identity_verification_scorer",
+      "name": "Identity Verification Scorer",
+      "description": "Score identity verification strength using document type, biometric match, address verification, device fingerprint, and behavior patterns. Detects fraud indicators and recommends authentication steps.",
+      "tags": [
+        "fintech",
+        "identity",
+        "verification",
+        "scorer"
+      ],
+      "examples": [
+        "Use Identity Verification Scorer to score identity verification strength using document type, biometric match, address verification, device fingerprint, and behavior patterns. Detects fraud indicators and recommends authentication steps.",
+        "Can you run Identity Verification Scorer? Identity Data is the main input I have.",
+        "Invoke Identity Verification Scorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "payment_fraud_detector",
+      "name": "Payment Fraud Detector",
+      "description": "Analyze payment transactions for fraud indicators including amount anomalies, velocity checks, device risk, cross-border patterns, and network analysis. Returns fraud score and actionable recommendations.",
+      "tags": [
+        "fintech",
+        "payment",
+        "fraud",
+        "detector"
+      ],
+      "examples": [
+        "Use Payment Fraud Detector to analyze payment transactions for fraud indicators including amount anomalies, velocity checks, device risk, cross-border patterns, and network analysis. Returns fraud score and actionable recommendations.",
+        "Can you run Payment Fraud Detector? Payment Data is the main input I have.",
+        "Invoke Payment Fraud Detector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "kyc_compliance_checker",
+      "name": "Kyc Compliance Checker",
+      "description": "Validate KYC/AML compliance status using provided documents, PEP status, sanctions watchlist, adverse media, and source of wealth. Returns compliance score, missing documents, and EDD requirements.",
+      "tags": [
+        "fintech",
+        "kyc",
+        "compliance",
+        "checker"
+      ],
+      "examples": [
+        "Use Kyc Compliance Checker to validate KYC/AML compliance status using provided documents, PEP status, sanctions watchlist, adverse media, and source of wealth. Returns compliance score, missing documents, and EDD requirements.",
+        "Can you run Kyc Compliance Checker? Kyc Data is the main input I have.",
+        "Invoke Kyc Compliance Checker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "behavior_biometrics_analyzer",
+      "name": "Behavior Biometrics Analyzer",
+      "description": "Analyze session behavior biometrics to detect bots, account takeover attempts, and anomalous user activity. Uses typing speed, mouse movements, touch pressure, session duration, and navigation patterns.",
+      "tags": [
+        "fintech",
+        "behavior",
+        "biometrics",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Behavior Biometrics Analyzer to analyze session behavior biometrics to detect bots, account takeover attempts, and anomalous user activity. Uses typing speed, mouse movements, touch pressure, session duration, and navigation patterns.",
+        "Can you run Behavior Biometrics Analyzer? Session Data is the main input I have.",
+        "Invoke Behavior Biometrics Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

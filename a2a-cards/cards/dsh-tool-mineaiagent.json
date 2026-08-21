@@ -1,0 +1,202 @@
+{
+  "name": "dsh-tool-mineaiagent",
+  "description": "Smart Mining AI Agent — mineral exploration targeting, mine safety monitoring, equipment predictive maintenance, production scheduling, environmental compliance, processing optimization, cost analysis, smart ventilation control",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-mineaiagent",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-mineaiagent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "mineral_exploration_ai",
+      "name": "Mineral Exploration Ai",
+      "description": "Mineral exploration targeting with grade estimation | Predicts prospective target zones, estimates ore grades from drilling and geochemical data, and provides multi-criteria analysis for deposit types.",
+      "tags": [
+        "mineaiagent",
+        "mineral",
+        "exploration"
+      ],
+      "examples": [
+        "Use Mineral Exploration Ai to mineral exploration targeting with grade estimation | Predicts prospective target zones, estimates ore grades from drilling and geochemical data, and provides multi-criteria analysis for deposit types.",
+        "I need Mineral Exploration Ai capabilities for this task in dsh-tool-mineaiagent.",
+        "Invoke Mineral Exploration Ai with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "mine_safety_monitor",
+      "name": "Mine Safety Monitor",
+      "description": "Mine safety monitoring with tailings dam risk alerts | Monitors gas levels, tailings dam stability, seismic events, and provides comprehensive safety assessments and recommendations.",
+      "tags": [
+        "mineaiagent",
+        "mine",
+        "safety",
+        "monitor"
+      ],
+      "examples": [
+        "Use Mine Safety Monitor to mine safety monitoring with tailings dam risk alerts | Monitors gas levels, tailings dam stability, seismic events, and provides comprehensive safety assessments and recommendations.",
+        "I need Mine Safety Monitor capabilities for this task in dsh-tool-mineaiagent.",
+        "Invoke Mine Safety Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "mining_equipment_health",
+      "name": "Mining Equipment Health",
+      "description": "Mining equipment predictive maintenance with OEE analysis | Calculates fleet OEE, equipment availability/performance/quality metrics, provides maintenance scheduling and spare parts recommendations.",
+      "tags": [
+        "mineaiagent",
+        "mining",
+        "equipment",
+        "health"
+      ],
+      "examples": [
+        "Use Mining Equipment Health to mining equipment predictive maintenance with OEE analysis | Calculates fleet OEE, equipment availability/performance/quality metrics, provides maintenance scheduling and spare parts recommendations.",
+        "I need Mining Equipment Health capabilities for this task in dsh-tool-mineaiagent.",
+        "Invoke Mining Equipment Health with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "mine_production_scheduler",
+      "name": "Mine Production Scheduler",
+      "description": "Mine production scheduling with ore blending optimization | Generates monthly production plans, optimizes ore blending ratios by grade and lithology, forecasts revenue, and tracks KPIs.",
+      "tags": [
+        "mineaiagent",
+        "mine",
+        "production",
+        "scheduler"
+      ],
+      "examples": [
+        "Use Mine Production Scheduler to mine production scheduling with ore blending optimization | Generates monthly production plans, optimizes ore blending ratios by grade and lithology, forecasts revenue, and tracks KPIs.",
+        "I need Mine Production Scheduler capabilities for this task in dsh-tool-mineaiagent.",
+        "Invoke Mine Production Scheduler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "mine_environmental_compliance",
+      "name": "Mine Environmental Compliance",
+      "description": "Mining environmental compliance with reclamation planning | Monitors water/air/noise quality against permit limits, tracks reclamation progress, assesses waste rock risk and biodiversity offsets.",
+      "tags": [
+        "mineaiagent",
+        "mine",
+        "environmental",
+        "compliance"
+      ],
+      "examples": [
+        "Use Mine Environmental Compliance to mining environmental compliance with reclamation planning | Monitors water/air/noise quality against permit limits, tracks reclamation progress, assesses waste rock risk and biodiversity offsets.",
+        "I need Mine Environmental Compliance capabilities for this task in dsh-tool-mineaiagent.",
+        "Invoke Mine Environmental Compliance with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "mineral_processing_optimizer",
+      "name": "Mineral Processing Optimizer",
+      "description": "Mineral processing recovery optimization with reagent control | Analyzes flotation performance, recommends reagent dose optimization, blending, throughput maximization, and energy reduction strategies.",
+      "tags": [
+        "mineaiagent",
+        "mineral",
+        "processing",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Mineral Processing Optimizer to mineral processing recovery optimization with reagent control | Analyzes flotation performance, recommends reagent dose optimization, blending, throughput maximization, and energy reduction strategies.",
+        "I need Mineral Processing Optimizer capabilities for this task in dsh-tool-mineaiagent.",
+        "Invoke Mineral Processing Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "mining_cost_analyzer",
+      "name": "Mining Cost Analyzer",
+      "description": "Mining cost analysis with strip ratio optimization | Calculates unit costs, benchmarks against industry averages, identifies optimization opportunities, and forecasts cost savings.",
+      "tags": [
+        "mineaiagent",
+        "mining",
+        "cost",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Mining Cost Analyzer to mining cost analysis with strip ratio optimization | Calculates unit costs, benchmarks against industry averages, identifies optimization opportunities, and forecasts cost savings.",
+        "I need Mining Cost Analyzer capabilities for this task in dsh-tool-mineaiagent.",
+        "Invoke Mining Cost Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "smart_ventilation_controller",
+      "name": "Smart Ventilation Controller",
+      "description": "Mine ventilation network optimization with energy savings | Analyzes fan performance, VFD energy savings, airflow distribution, and provides smart control strategies.",
+      "tags": [
+        "mineaiagent",
+        "smart",
+        "ventilation",
+        "controller"
+      ],
+      "examples": [
+        "Use Smart Ventilation Controller to mine ventilation network optimization with energy savings | Analyzes fan performance, VFD energy savings, airflow distribution, and provides smart control strategies.",
+        "I need Smart Ventilation Controller capabilities for this task in dsh-tool-mineaiagent.",
+        "Invoke Smart Ventilation Controller with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

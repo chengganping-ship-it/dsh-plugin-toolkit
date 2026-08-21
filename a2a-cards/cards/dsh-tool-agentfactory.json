@@ -1,0 +1,202 @@
+{
+  "name": "dsh-tools",
+  "description": "DSH plugin: dsh-tool-agentfactory",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tools",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tools",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "template_library_manager",
+      "name": "Template Library Manager",
+      "description": "智能体模板库管理：类目分布、热门模板、复用率分析",
+      "tags": [
+        "agentfactory",
+        "template",
+        "library",
+        "manager"
+      ],
+      "examples": [
+        "Use Template Library Manager to 智能体模板库管理：类目分布、热门模板、复用率分析.",
+        "I need Template Library Manager capabilities for this task in dsh-tools.",
+        "Invoke Template Library Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "build_pipeline_orchestrator",
+      "name": "Build Pipeline Orchestrator",
+      "description": "构建流水线编排：需求/模板/知识库/工具链/测试/部署六阶段覆盖率",
+      "tags": [
+        "agentfactory",
+        "build",
+        "pipeline",
+        "orchestrator"
+      ],
+      "examples": [
+        "Use Build Pipeline Orchestrator to 构建流水线编排：需求/模板/知识库/工具链/测试/部署六阶段覆盖率.",
+        "I need Build Pipeline Orchestrator capabilities for this task in dsh-tools.",
+        "Invoke Build Pipeline Orchestrator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "testing_framework_evaluator",
+      "name": "Testing Framework Evaluator",
+      "description": "测试框架评估：通过率、自动化率、用例质量",
+      "tags": [
+        "agentfactory",
+        "testing",
+        "framework",
+        "evaluator"
+      ],
+      "examples": [
+        "Use Testing Framework Evaluator to 测试框架评估：通过率、自动化率、用例质量.",
+        "I need Testing Framework Evaluator capabilities for this task in dsh-tools.",
+        "Invoke Testing Framework Evaluator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "deployment_scale_monitor",
+      "name": "Deployment Scale Monitor",
+      "description": "部署规模监控：实例数、可用率、环境分布",
+      "tags": [
+        "agentfactory",
+        "deployment",
+        "scale",
+        "monitor"
+      ],
+      "examples": [
+        "Use Deployment Scale Monitor to 部署规模监控：实例数、可用率、环境分布.",
+        "I need Deployment Scale Monitor capabilities for this task in dsh-tools.",
+        "Invoke Deployment Scale Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "cost_optimizer",
+      "name": "Cost Optimizer",
+      "description": "运营成本优化：Token消耗、费用分析、浪费率、节省潜力",
+      "tags": [
+        "agentfactory",
+        "cost",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Cost Optimizer to 运营成本优化：Token消耗、费用分析、浪费率、节省潜力.",
+        "I need Cost Optimizer capabilities for this task in dsh-tools.",
+        "Invoke Cost Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "quality_metrics_tracker",
+      "name": "Quality Metrics Tracker",
+      "description": "服务质量追踪：满意度/解决率/响应时间/升级率综合评分",
+      "tags": [
+        "agentfactory",
+        "quality",
+        "metrics",
+        "tracker"
+      ],
+      "examples": [
+        "Use Quality Metrics Tracker to 服务质量追踪：满意度/解决率/响应时间/升级率综合评分.",
+        "I need Quality Metrics Tracker capabilities for this task in dsh-tools.",
+        "Invoke Quality Metrics Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "governance_compliance_checker",
+      "name": "Governance Compliance Checker",
+      "description": "治理合规检查：备案/内容安全/数据合规/算法透明/用户告知/退出机制六维评估",
+      "tags": [
+        "agentfactory",
+        "governance",
+        "compliance",
+        "checker"
+      ],
+      "examples": [
+        "Use Governance Compliance Checker to 治理合规检查：备案/内容安全/数据合规/算法透明/用户告知/退出机制六维评估.",
+        "I need Governance Compliance Checker capabilities for this task in dsh-tools.",
+        "Invoke Governance Compliance Checker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "roi_calculator_tool",
+      "name": "Roi Calculator Tool",
+      "description": "Agent投资回报率计算器：投入/产出/节省人力/效率提升综合ROI分析",
+      "tags": [
+        "agentfactory",
+        "roi",
+        "calculator",
+        "tool"
+      ],
+      "examples": [
+        "Use Roi Calculator Tool to agent投资回报率计算器：投入/产出/节省人力/效率提升综合ROI分析.",
+        "Can you run Roi Calculator Tool? Input Data is the main input I have.",
+        "Invoke Roi Calculator Tool with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

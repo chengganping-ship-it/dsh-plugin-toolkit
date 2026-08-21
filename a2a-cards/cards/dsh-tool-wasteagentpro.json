@@ -1,0 +1,204 @@
+{
+  "name": "dsh-tool-wasteagentpro",
+  "description": "Solid Waste Management AI Agent - Waste composition analyzer with reduction pathways, recycling route optimizer with logistics, landfill operation manager with leachate/biogas control, waste-to-energy planner with emission control, hazardous waste lifecycle tracker with manifest management, circular economy mapper with resource recovery matching, smart bin monitor with collection scheduling, waste carbon credit accounting per CCER",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-wasteagentpro",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-wasteagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "waste_composition_analyzer",
+      "name": "Waste Composition Analyzer",
+      "description": "Analyze municipal solid waste composition with detailed category breakdown (organics, recyclables, hazardous, other), calculate per-capita generation rates, assess current diversion potential, and generate prioritized reduction pathways with annual tonnage targets.",
+      "tags": [
+        "wasteagentpro",
+        "waste",
+        "composition",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Waste Composition Analyzer to analyze municipal solid waste composition with detailed category breakdown (organics, recyclables, hazardous, other), calculate per-capita generation rates, assess current diversion potential, and generate prioritized reduction pathways with annual tonnage targets.",
+        "Can you run Waste Composition Analyzer? Input Data is the main input I have.",
+        "Invoke Waste Composition Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "recycling_route_optimizer",
+      "name": "Recycling Route Optimizer",
+      "description": "Optimize recycling collection routes using sweep algorithm with haversine distance calculation. Assign collection points to vehicles by capacity constraints, calculate fuel costs and revenue from material sales, and estimate CO2 savings from recycling activities.",
+      "tags": [
+        "wasteagentpro",
+        "recycling",
+        "route",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Recycling Route Optimizer to optimize recycling collection routes using sweep algorithm with haversine distance calculation. Assign collection points to vehicles by capacity constraints, calculate fuel costs and revenue from material sales, and estimate CO2 savings from recycling activities.",
+        "Can you run Recycling Route Optimizer? Input Data is the main input I have.",
+        "Invoke Recycling Route Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "landfill_operation_manager",
+      "name": "Landfill Operation Manager",
+      "description": "Manage landfill operations including remaining life assessment, leachate level monitoring with treatment capacity analysis, biogas/methane flow evaluation for energy recovery potential, compaction quality assessment, and environmental compliance checking (liner integrity, groundwater monitoring, cover soil).",
+      "tags": [
+        "wasteagentpro",
+        "landfill",
+        "operation",
+        "manager"
+      ],
+      "examples": [
+        "Use Landfill Operation Manager to manage landfill operations including remaining life assessment, leachate level monitoring with treatment capacity analysis, biogas/methane flow evaluation for energy recovery potential, compaction quality assessment, and environmental compliance checking (liner integrity, groundwater monitoring, cover soil).",
+        "Can you run Landfill Operation Manager? Input Data is the main input I have.",
+        "Invoke Landfill Operation Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "waste_to_energy_planner",
+      "name": "Waste To Energy Planner",
+      "description": "Plan waste-to-energy incineration plant operations including power generation efficiency (thermal, gross, net), emission compliance assessment for NOx/SO2/dioxin/CO/particulate per GB 18485, ash management (bottom ash utilization and fly ash treatment), mass balance calculation, and carbon displacement estimation.",
+      "tags": [
+        "wasteagentpro",
+        "waste",
+        "energy",
+        "planner"
+      ],
+      "examples": [
+        "Use Waste To Energy Planner to plan waste-to-energy incineration plant operations including power generation efficiency (thermal, gross, net), emission compliance assessment for NOx/SO2/dioxin/CO/particulate per GB 18485, ash management (bottom ash utilization and fly ash treatment), mass balance calculation, and carbon displacement estimation.",
+        "Can you run Waste To Energy Planner? Input Data is the main input I have.",
+        "Invoke Waste To Energy Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "hazardous_waste_tracker",
+      "name": "Hazardous Waste Tracker",
+      "description": "Track hazardous waste lifecycle from generation through transport to disposal with manifest management. Verify disposal compatibility by waste code, check chain of custody compliance (generator/transporter/facility licenses), identify risk alerts, and provide regulatory notes per national hazardous waste regulations.",
+      "tags": [
+        "wasteagentpro",
+        "hazardous",
+        "waste",
+        "tracker"
+      ],
+      "examples": [
+        "Use Hazardous Waste Tracker to track hazardous waste lifecycle from generation through transport to disposal with manifest management. Verify disposal compatibility by waste code, check chain of custody compliance (generator/transporter/facility licenses), identify risk alerts, and provide regulatory notes per national hazardous waste regulations.",
+        "Can you run Hazardous Waste Tracker? Input Data is the main input I have.",
+        "Invoke Hazardous Waste Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "circular_economy_mapper",
+      "name": "Circular Economy Mapper",
+      "description": "Map circular economy industrial symbiosis by matching waste streams with industry demands based on material type, quality grade, and transport distance. Calculate economic value creation, CO2 avoidance, utilization rate, and industrial symbiosis score with actionable recommendations.",
+      "tags": [
+        "wasteagentpro",
+        "circular",
+        "economy",
+        "mapper"
+      ],
+      "examples": [
+        "Use Circular Economy Mapper to map circular economy industrial symbiosis by matching waste streams with industry demands based on material type, quality grade, and transport distance. Calculate economic value creation, CO2 avoidance, utilization rate, and industrial symbiosis score with actionable recommendations.",
+        "Can you run Circular Economy Mapper? Input Data is the main input I have.",
+        "Invoke Circular Economy Mapper with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "smart_bin_monitor",
+      "name": "Smart Bin Monitor",
+      "description": "Monitor smart bin fill levels with overflow detection, fire risk alerts (temperature), tilt detection, and low battery warnings. Generate prioritized collection schedules by vehicle capacity constraints, calculate route distances and fuel costs, and provide optimization recommendations.",
+      "tags": [
+        "wasteagentpro",
+        "smart",
+        "bin",
+        "monitor"
+      ],
+      "examples": [
+        "Use Smart Bin Monitor to monitor smart bin fill levels with overflow detection, fire risk alerts (temperature), tilt detection, and low battery warnings. Generate prioritized collection schedules by vehicle capacity constraints, calculate route distances and fuel costs, and provide optimization recommendations.",
+        "Can you run Smart Bin Monitor? Input Data is the main input I have.",
+        "Invoke Smart Bin Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "carbon_credit_from_waste",
+      "name": "Carbon Credit From Waste",
+      "description": "Calculate carbon emission reductions from waste management projects per CCER methodology. Assess landfill gas recovery, composting, recycling, waste-to-energy, and anaerobic digestion projects. Evaluate methodology eligibility, additionality, baseline establishment, and estimate CCER credit value.",
+      "tags": [
+        "wasteagentpro",
+        "carbon",
+        "credit",
+        "from",
+        "waste"
+      ],
+      "examples": [
+        "Use Carbon Credit From Waste to calculate carbon emission reductions from waste management projects per CCER methodology. Assess landfill gas recovery, composting, recycling, waste-to-energy, and anaerobic digestion projects. Evaluate methodology eligibility, additionality, baseline establishment, and estimate CCER credit value.",
+        "Can you run Carbon Credit From Waste? Input Data is the main input I have.",
+        "Invoke Carbon Credit From Waste with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

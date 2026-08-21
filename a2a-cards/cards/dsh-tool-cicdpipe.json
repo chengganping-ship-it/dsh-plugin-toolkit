@@ -1,0 +1,195 @@
+{
+  "name": "dsh-tool-cicdpipe",
+  "description": "CI/CD pipeline - build, test, deploy automation and analytics",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-cicdpipe",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-cicdpipe",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "pipeline_designer",
+      "name": "Pipeline Designer",
+      "description": "Design CI/CD pipelines with stages, parallel groups, triggers, env config, and duration estimates.",
+      "tags": [
+        "cicdpipe",
+        "pipeline",
+        "designer"
+      ],
+      "examples": [
+        "Use Pipeline Designer to design CI/CD pipelines with stages, parallel groups, triggers, env config, and duration estimates.",
+        "Can you run Pipeline Designer? Pipeline Input is the main input I have.",
+        "Invoke Pipeline Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "test_orchestrator",
+      "name": "Test Orchestrator",
+      "description": "Orchestrate tests with parallel workers, priority ordering, coverage estimation, and critical path.",
+      "tags": [
+        "cicdpipe",
+        "test",
+        "orchestrator"
+      ],
+      "examples": [
+        "Use Test Orchestrator to orchestrate tests with parallel workers, priority ordering, coverage estimation, and critical path.",
+        "Can you run Test Orchestrator? Orchestration Input is the main input I have.",
+        "Invoke Test Orchestrator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "deployment_strategist",
+      "name": "Deployment Strategist",
+      "description": "Generate deployment plans (blue-green, canary, rolling, recreate) with rollback procedures and risk assessment.",
+      "tags": [
+        "cicdpipe",
+        "deployment",
+        "strategist"
+      ],
+      "examples": [
+        "Use Deployment Strategist to generate deployment plans (blue-green, canary, rolling, recreate) with rollback procedures and risk assessment.",
+        "Can you run Deployment Strategist? Deployment Input is the main input I have.",
+        "Invoke Deployment Strategist with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "build_optimizer",
+      "name": "Build Optimizer",
+      "description": "Analyze build history for cache, dependency, and parallelization optimizations with improvement estimates.",
+      "tags": [
+        "cicdpipe",
+        "build",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Build Optimizer to analyze build history for cache, dependency, and parallelization optimizations with improvement estimates.",
+        "Can you run Build Optimizer? Build Input is the main input I have.",
+        "Invoke Build Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "release_manager",
+      "name": "Release Manager",
+      "description": "Manage release lifecycle with semantic versioning, changelog generation, and release checklists. Supports conventional commits format, auto-version bumping, and breaking change detection.",
+      "tags": [
+        "cicdpipe",
+        "release",
+        "manager"
+      ],
+      "examples": [
+        "Use Release Manager to manage release lifecycle with semantic versioning, changelog generation, and release checklists. Supports conventional commits format, auto-version bumping, and breaking change detection.",
+        "Can you run Release Manager? Current Version is the main input I have.",
+        "Invoke Release Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "pipeline_analyzer",
+      "name": "Pipeline Analyzer",
+      "description": "Analyze pipeline run metrics to identify bottlenecks, detect trends, and generate improvement recommendations. Provides success rate, duration stats, and health assessment.",
+      "tags": [
+        "cicdpipe",
+        "pipeline",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Pipeline Analyzer to analyze pipeline run metrics to identify bottlenecks, detect trends, and generate improvement recommendations. Provides success rate, duration stats, and health assessment.",
+        "Can you run Pipeline Analyzer? Analysis Input is the main input I have.",
+        "Invoke Pipeline Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "environment_manager",
+      "name": "Environment Manager",
+      "description": "Analyze environment configurations for drift detection, missing secrets, and resource violations. Provides parity recommendations and overall health assessment across environments.",
+      "tags": [
+        "cicdpipe",
+        "environment",
+        "manager"
+      ],
+      "examples": [
+        "Use Environment Manager to analyze environment configurations for drift detection, missing secrets, and resource violations. Provides parity recommendations and overall health assessment across environments.",
+        "Can you run Environment Manager? Env Input is the main input I have.",
+        "Invoke Environment Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "rollback_planner",
+      "name": "Rollback Planner",
+      "description": "Generate detailed rollback plans with step-by-step procedures, verification points, data backup strategies, and risk assessment. Handles application, configuration, and data migration rollbacks.",
+      "tags": [
+        "cicdpipe",
+        "rollback",
+        "planner"
+      ],
+      "examples": [
+        "Use Rollback Planner to generate detailed rollback plans with step-by-step procedures, verification points, data backup strategies, and risk assessment. Handles application, configuration, and data migration rollbacks.",
+        "Can you run Rollback Planner? Rollback Input is the main input I have.",
+        "Invoke Rollback Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

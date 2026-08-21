@@ -1,0 +1,195 @@
+{
+  "name": "dsh-tool-mcphub",
+  "description": "MCP模型上下文协议工具中心 - 服务注册、动态调用、Schema验证、成本追踪",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-mcphub",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-mcphub",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "mcp_registry",
+      "name": "Mcp Registry",
+      "description": "MCP服务器注册与发现 - 按能力分类、健康检查、版本管理（中文：注册中心、服务发现）",
+      "tags": [
+        "mcphub",
+        "mcp",
+        "registry"
+      ],
+      "examples": [
+        "Use Mcp Registry to mCP服务器注册与发现 - 按能力分类、健康检查、版本管理（中文：注册中心、服务发现）.",
+        "Can you run Mcp Registry? Registry Input is the main input I have.",
+        "Invoke Mcp Registry with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "mcp_invoker",
+      "name": "Mcp Invoker",
+      "description": "动态调用MCP工具 - 参数校验、流式响应、错误处理（中文：远程调用、动态执行）",
+      "tags": [
+        "mcphub",
+        "mcp",
+        "invoker"
+      ],
+      "examples": [
+        "Use Mcp Invoker to 动态调用MCP工具 - 参数校验、流式响应、错误处理（中文：远程调用、动态执行）.",
+        "Can you run Mcp Invoker? Invoker Input is the main input I have.",
+        "Invoke Mcp Invoker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "mcp_composer",
+      "name": "Mcp Composer",
+      "description": "多MCP工具串联 - A的输出转B的输入、类型适配、容错（中文：工具编排、链式调用）",
+      "tags": [
+        "mcphub",
+        "mcp",
+        "composer"
+      ],
+      "examples": [
+        "Use Mcp Composer to 多MCP工具串联 - A的输出转B的输入、类型适配、容错（中文：工具编排、链式调用）.",
+        "Can you run Mcp Composer? Composer Input is the main input I have.",
+        "Invoke Mcp Composer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "mcp_monitor",
+      "name": "Mcp Monitor",
+      "description": "MCP服务质量监控 - 延迟P99、可用率、调用配额（中文：监控告警、SLA检测）",
+      "tags": [
+        "mcphub",
+        "mcp",
+        "monitor"
+      ],
+      "examples": [
+        "Use Mcp Monitor to mCP服务质量监控 - 延迟P99、可用率、调用配额（中文：监控告警、SLA检测）.",
+        "Can you run Mcp Monitor? Monitor Input is the main input I have.",
+        "Invoke Mcp Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "mcp_security",
+      "name": "Mcp Security",
+      "description": "MCP安全沙箱 - 权限控制、输入过滤、敏感数据脱敏（中文：访问控制、数据保护）",
+      "tags": [
+        "mcphub",
+        "mcp",
+        "security"
+      ],
+      "examples": [
+        "Use Mcp Security to mCP安全沙箱 - 权限控制、输入过滤、敏感数据脱敏（中文：访问控制、数据保护）.",
+        "Can you run Mcp Security? Security Input is the main input I have.",
+        "Invoke Mcp Security with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "mcp_schema",
+      "name": "Mcp Schema",
+      "description": "工具Schema自动生成/验证 - JSON Schema与TypeScript类型互转（中文：协议校验、类型安全）",
+      "tags": [
+        "mcphub",
+        "mcp",
+        "schema"
+      ],
+      "examples": [
+        "Use Mcp Schema to 工具Schema自动生成/验证 - JSON Schema与TypeScript类型互转（中文：协议校验、类型安全）.",
+        "Can you run Mcp Schema? Schema Input is the main input I have.",
+        "Invoke Mcp Schema with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "mcp_cache",
+      "name": "Mcp Cache",
+      "description": "MCP响应缓存策略 - TTL、失效策略、分布式一致性（中文：缓存管理、性能优化）",
+      "tags": [
+        "mcphub",
+        "mcp",
+        "cache"
+      ],
+      "examples": [
+        "Use Mcp Cache to mCP响应缓存策略 - TTL、失效策略、分布式一致性（中文：缓存管理、性能优化）.",
+        "Can you run Mcp Cache? Cache Input is the main input I have.",
+        "Invoke Mcp Cache with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "mcp_cost",
+      "name": "Mcp Cost",
+      "description": "MCP调用成本追踪 - 按工具/模型/用户维度的Token消耗分析（中文：成本核算、用量分析）",
+      "tags": [
+        "mcphub",
+        "mcp",
+        "cost"
+      ],
+      "examples": [
+        "Use Mcp Cost to mCP调用成本追踪 - 按工具/模型/用户维度的Token消耗分析（中文：成本核算、用量分析）.",
+        "Can you run Mcp Cost? Cost Input is the main input I have.",
+        "Invoke Mcp Cost with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+{
+  "name": "dsh-tool-seedbreedingagent",
+  "description": "Seed Breeding AI Agent - Genomic selection with GBLUP breeding value prediction, hybrid combination heterosis prediction with general and specific combining ability analysis, field trial design with randomized complete block and alpha lattice designs with BLUP analysis, phenotyping data GWAS with QTL mapping for marker-trait association, seed quality testing with germination rate prediction and vigor indexing, disease resistance MAS screening with marker-assisted selection for resistance genes, breeding pipeline management with generation tracking and selection history, variety registration with DUS testing guide for distinctness uniformity stability evaluation",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-seedbreedingagent",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-seedbreedingagent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "genomic_selection_predictor",
+      "name": "Genomic Selection Predictor",
+      "description": "基因组选择与GBLUP育种值预测 — 基于基因组标记数据计算基因组估计育种值(GEBV)，评估选择准确性和遗传增益，输出选择指数排名和育种建议",
+      "tags": [
+        "seedbreedingagent",
+        "genomic",
+        "selection",
+        "predictor"
+      ],
+      "examples": [
+        "Use Genomic Selection Predictor to 基因组选择与GBLUP育种值预测 — 基于基因组标记数据计算基因组估计育种值(GEBV)，评估选择准确性和遗传增益，输出选择指数排名和育种建议.",
+        "Can you run Genomic Selection Predictor? Input Data is the main input I have.",
+        "Invoke Genomic Selection Predictor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "hybrid_combination_optimizer",
+      "name": "Hybrid Combination Optimizer",
+      "description": "杂交组合优势预测与配合力分析 — 基于双列杂交设计评估一般配合力(GCA)和特殊配合力(SCA)，预测杂种优势，输出最优杂交组合推荐",
+      "tags": [
+        "seedbreedingagent",
+        "hybrid",
+        "combination",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Hybrid Combination Optimizer to 杂交组合优势预测与配合力分析 — 基于双列杂交设计评估一般配合力(GCA)和特殊配合力(SCA)，预测杂种优势，输出最优杂交组合推荐.",
+        "Can you run Hybrid Combination Optimizer? Input Data is the main input I have.",
+        "Invoke Hybrid Combination Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "field_trial_designer",
+      "name": "Field Trial Designer",
+      "description": "田间试验设计与BLUP分析 — 生成随机完全区组(RCBD)或Alpha格子设计，计算统计功效，输出BLUP分析方案和区组布局",
+      "tags": [
+        "seedbreedingagent",
+        "field",
+        "trial",
+        "designer"
+      ],
+      "examples": [
+        "Use Field Trial Designer to 田间试验设计与BLUP分析 — 生成随机完全区组(RCBD)或Alpha格子设计，计算统计功效，输出BLUP分析方案和区组布局.",
+        "Can you run Field Trial Designer? Input Data is the main input I have.",
+        "Invoke Field Trial Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "phenotyping_data_analyzer",
+      "name": "Phenotyping Data Analyzer",
+      "description": "表型数据GWAS与QTL定位 — 基于混合线性模型(MLM)进行全基因组关联分析，检测显著SNP位点，定位QTL区域，输出曼哈顿图和QQ图诊断",
+      "tags": [
+        "seedbreedingagent",
+        "phenotyping",
+        "data",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Phenotyping Data Analyzer to 表型数据GWAS与QTL定位 — 基于混合线性模型(MLM)进行全基因组关联分析，检测显著SNP位点，定位QTL区域，输出曼哈顿图和QQ图诊断.",
+        "Can you run Phenotyping Data Analyzer? Input Data is the main input I have.",
+        "Invoke Phenotyping Data Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "seed_quality_tester",
+      "name": "Seed Quality Tester",
+      "description": "种子质量检测与发芽率预测 — 基于种子批参数(含水量、纯度、储存条件)预测发芽率和活力指数，输出质量等级和田间出苗率估算",
+      "tags": [
+        "seedbreedingagent",
+        "seed",
+        "quality",
+        "tester"
+      ],
+      "examples": [
+        "Use Seed Quality Tester to 种子质量检测与发芽率预测 — 基于种子批参数(含水量、纯度、储存条件)预测发芽率和活力指数，输出质量等级和田间出苗率估算.",
+        "Can you run Seed Quality Tester? Input Data is the main input I have.",
+        "Invoke Seed Quality Tester with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "disease_resistance_screener",
+      "name": "Disease Resistance Screener",
+      "description": "抗病性分子标记辅助选择 — 基于分子标记检测抗病基因，评估品种抗病水平，输出基因聚合建议和回交育种策略",
+      "tags": [
+        "seedbreedingagent",
+        "disease",
+        "resistance",
+        "screener"
+      ],
+      "examples": [
+        "Use Disease Resistance Screener to 抗病性分子标记辅助选择 — 基于分子标记检测抗病基因，评估品种抗病水平，输出基因聚合建议和回交育种策略.",
+        "Can you run Disease Resistance Screener? Input Data is the main input I have.",
+        "Invoke Disease Resistance Screener with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "breeding_pipeline_manager",
+      "name": "Breeding Pipeline Manager",
+      "description": "育种管线管理与世代跟踪 — 跟踪育种世代进展，管理种子库存，规划里程碑，输出选择增益评估和品种释放时间预测",
+      "tags": [
+        "seedbreedingagent",
+        "breeding",
+        "pipeline",
+        "manager"
+      ],
+      "examples": [
+        "Use Breeding Pipeline Manager to 育种管线管理与世代跟踪 — 跟踪育种世代进展，管理种子库存，规划里程碑，输出选择增益评估和品种释放时间预测.",
+        "Can you run Breeding Pipeline Manager? Input Data is the main input I have.",
+        "Invoke Breeding Pipeline Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "variety_registration_advisor",
+      "name": "Variety Registration Advisor",
+      "description": "品种审定与DUS测试指南 — 评估品种的特异性(D)、一致性(U)和稳定性(S)，输出DUS测试结果、SSR指纹比较和注册准备度评分",
+      "tags": [
+        "seedbreedingagent",
+        "variety",
+        "registration",
+        "advisor"
+      ],
+      "examples": [
+        "Use Variety Registration Advisor to 品种审定与DUS测试指南 — 评估品种的特异性(D)、一致性(U)和稳定性(S)，输出DUS测试结果、SSR指纹比较和注册准备度评分.",
+        "Can you run Variety Registration Advisor? Input Data is the main input I have.",
+        "Invoke Variety Registration Advisor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

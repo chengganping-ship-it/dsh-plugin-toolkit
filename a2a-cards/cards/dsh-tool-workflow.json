@@ -1,0 +1,188 @@
+{
+  "name": "dsh-tool-workflow",
+  "description": "数字装配线工作流引擎 - 多Agent协作编排、断点续传执行、实时监控、SLA保障",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-workflow",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-workflow",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "workflow_designer",
+      "name": "Workflow Designer",
+      "description": "根据业务需求设计多步骤工作流蓝图，支持并行分支、条件路由、超时和错误处理策略",
+      "tags": [
+        "workflow",
+        "designer"
+      ],
+      "examples": [
+        "Use Workflow Designer to 根据业务需求设计多步骤工作流蓝图，支持并行分支、条件路由、超时和错误处理策略.",
+        "Can you run Workflow Designer? Input Data is the main input I have.",
+        "Invoke Workflow Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "workflow_executor",
+      "name": "Workflow Executor",
+      "description": "执行工作流实例，支持断点续传、超时控制、重试策略，返回完整执行轨迹",
+      "tags": [
+        "workflow",
+        "executor"
+      ],
+      "examples": [
+        "Use Workflow Executor to 执行工作流实例，支持断点续传、超时控制、重试策略，返回完整执行轨迹.",
+        "Can you run Workflow Executor? Input Data is the main input I have.",
+        "Invoke Workflow Executor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "workflow_monitor",
+      "name": "Workflow Monitor",
+      "description": "实时监控工作流运行状态，提供甘特图式进度、瓶颈检测和SLA告警",
+      "tags": [
+        "workflow",
+        "monitor"
+      ],
+      "examples": [
+        "Use Workflow Monitor to 实时监控工作流运行状态，提供甘特图式进度、瓶颈检测和SLA告警.",
+        "Can you run Workflow Monitor? Input Data is the main input I have.",
+        "Invoke Workflow Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "workflow_optimizer",
+      "name": "Workflow Optimizer",
+      "description": "分析历史执行数据，发现瓶颈、识别低效步骤，提供可落地的优化建议",
+      "tags": [
+        "workflow",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Workflow Optimizer to 分析历史执行数据，发现瓶颈、识别低效步骤，提供可落地的优化建议.",
+        "Can you run Workflow Optimizer? Input Data is the main input I have.",
+        "Invoke Workflow Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "workflow_template",
+      "name": "Workflow Template",
+      "description": "提供行业模板库：采购审批链、客户Onboarding、发票处理流水线、员工入职、客户投诉处理",
+      "tags": [
+        "workflow",
+        "template"
+      ],
+      "examples": [
+        "Use Workflow Template to 提供行业模板库：采购审批链、客户Onboarding、发票处理流水线、员工入职、客户投诉处理.",
+        "Can you run Workflow Template? Input Data is the main input I have.",
+        "Invoke Workflow Template with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "workflow_integration",
+      "name": "Workflow Integration",
+      "description": "适配常见业务系统：ERP/CRM/OA/HR系统的Webhook和API对接配置",
+      "tags": [
+        "workflow",
+        "integration"
+      ],
+      "examples": [
+        "Use Workflow Integration to 适配常见业务系统：ERP/CRM/OA/HR系统的Webhook和API对接配置.",
+        "Can you run Workflow Integration? Input Data is the main input I have.",
+        "Invoke Workflow Integration with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "workflow_compliance",
+      "name": "Workflow Compliance",
+      "description": "合规检查：审批链完整性验证、职责分离SOD检查、审计日志断档检测",
+      "tags": [
+        "workflow",
+        "compliance"
+      ],
+      "examples": [
+        "Use Workflow Compliance to 合规检查：审批链完整性验证、职责分离SOD检查、审计日志断档检测.",
+        "Can you run Workflow Compliance? Input Data is the main input I have.",
+        "Invoke Workflow Compliance with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "workflow_roi_calculator",
+      "name": "Workflow Roi Calculator",
+      "description": "计算工作流自动化的投资回报率ROI：节省工时、错误率降低、吞吐量提升",
+      "tags": [
+        "workflow",
+        "roi",
+        "calculator"
+      ],
+      "examples": [
+        "Use Workflow Roi Calculator to 计算工作流自动化的投资回报率ROI：节省工时、错误率降低、吞吐量提升.",
+        "Can you run Workflow Roi Calculator? Input Data is the main input I have.",
+        "Invoke Workflow Roi Calculator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

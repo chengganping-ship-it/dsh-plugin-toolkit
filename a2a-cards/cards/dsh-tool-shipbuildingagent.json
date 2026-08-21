@@ -1,0 +1,202 @@
+{
+  "name": "dsh-tool-shipbuildingagent",
+  "description": "船体结构设计与型线优化、造船生产计划与分段舾装、焊接工艺评定与NDT检测、舾装材料统计与托盘管理、下水计算与坞门调度、船级社审图与规范验证、干船坞维修与特检管理、拆船合规与有害物质清单",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-shipbuildingagent",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-shipbuildingagent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "hull_design_analyzer",
+      "name": "Hull Design Analyzer",
+      "description": "船体结构设计与型线优化 | 主尺度/船型系数/水动力/结构强度",
+      "tags": [
+        "shipbuildingagent",
+        "hull",
+        "design",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Hull Design Analyzer to 船体结构设计与型线优化 | 主尺度/船型系数/水动力/结构强度.",
+        "I need Hull Design Analyzer capabilities for this task in dsh-tool-shipbuildingagent.",
+        "Invoke Hull Design Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "ship_production_scheduler",
+      "name": "Ship Production Scheduler",
+      "description": "造船生产计划与分段舾装 | 分段数/月产量/工效/进度风险",
+      "tags": [
+        "shipbuildingagent",
+        "ship",
+        "production",
+        "scheduler"
+      ],
+      "examples": [
+        "Use Ship Production Scheduler to 造船生产计划与分段舾装 | 分段数/月产量/工效/进度风险.",
+        "I need Ship Production Scheduler capabilities for this task in dsh-tool-shipbuildingagent.",
+        "Invoke Ship Production Scheduler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "welding_quality_ai",
+      "name": "Welding Quality Ai",
+      "description": "焊接工艺评定与NDT检测 | RT/UT/MT/焊缝性能/返修率",
+      "tags": [
+        "shipbuildingagent",
+        "welding",
+        "quality"
+      ],
+      "examples": [
+        "Use Welding Quality Ai to 焊接工艺评定与NDT检测 | RT/UT/MT/焊缝性能/返修率.",
+        "I need Welding Quality Ai capabilities for this task in dsh-tool-shipbuildingagent.",
+        "Invoke Welding Quality Ai with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "outfitting_material_estimator",
+      "name": "Outfitting Material Estimator",
+      "description": "舾装材料统计与托盘管理 | 管路/电缆/绝缘/托盘/缺料",
+      "tags": [
+        "shipbuildingagent",
+        "outfitting",
+        "material",
+        "estimator"
+      ],
+      "examples": [
+        "Use Outfitting Material Estimator to 舾装材料统计与托盘管理 | 管路/电缆/绝缘/托盘/缺料.",
+        "I need Outfitting Material Estimator capabilities for this task in dsh-tool-shipbuildingagent.",
+        "Invoke Outfitting Material Estimator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "ship_launch_calculation",
+      "name": "Ship Launch Calculation",
+      "description": "下水计算与坞门调度 | 水深/潮高/坞门/下水参数",
+      "tags": [
+        "shipbuildingagent",
+        "ship",
+        "launch",
+        "calculation"
+      ],
+      "examples": [
+        "Use Ship Launch Calculation to 下水计算与坞门调度 | 水深/潮高/坞门/下水参数.",
+        "I need Ship Launch Calculation capabilities for this task in dsh-tool-shipbuildingagent.",
+        "Invoke Ship Launch Calculation with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "classification_plan_approval",
+      "name": "Classification Plan Approval",
+      "description": "船级社审图与规范验证 | CCS/DNV/LR/审图进度/意见分类",
+      "tags": [
+        "shipbuildingagent",
+        "classification",
+        "plan",
+        "approval"
+      ],
+      "examples": [
+        "Use Classification Plan Approval to 船级社审图与规范验证 | CCS/DNV/LR/审图进度/意见分类.",
+        "I need Classification Plan Approval capabilities for this task in dsh-tool-shipbuildingagent.",
+        "Invoke Classification Plan Approval with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "dry_dock_maintenance",
+      "name": "Dry Dock Maintenance",
+      "description": "干船坞维修与特检管理 | 坞期/船壳处理/修理项目/检验",
+      "tags": [
+        "shipbuildingagent",
+        "dry",
+        "dock",
+        "maintenance"
+      ],
+      "examples": [
+        "Use Dry Dock Maintenance to 干船坞维修与特检管理 | 坞期/船壳处理/修理项目/检验.",
+        "I need Dry Dock Maintenance capabilities for this task in dsh-tool-shipbuildingagent.",
+        "Invoke Dry Dock Maintenance with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "ship_recycling_compliance",
+      "name": "Ship Recycling Compliance",
+      "description": "拆船合规与有害物质清单 | IHM/有害物质/HKC/EU SRR/可回收",
+      "tags": [
+        "shipbuildingagent",
+        "ship",
+        "recycling",
+        "compliance"
+      ],
+      "examples": [
+        "Use Ship Recycling Compliance to 拆船合规与有害物质清单 | IHM/有害物质/HKC/EU SRR/可回收.",
+        "I need Ship Recycling Compliance capabilities for this task in dsh-tool-shipbuildingagent.",
+        "Invoke Ship Recycling Compliance with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

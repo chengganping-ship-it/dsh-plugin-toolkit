@@ -1,0 +1,202 @@
+{
+  "name": "dsh-tool-dairyfarmagent",
+  "description": "Smart Dairy Farming AI Agent - Cow health monitoring with estrus detection, milk quality analysis with somatic cell count, feed ration optimization with TMR management, reproduction management with conception rate improvement, barn environment control with heat stress mitigation, calf growth tracking with weaning management, dairy economics with cost-per-kg-milk analysis, manure management with biogas/return-to-field",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-dairyfarmagent",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-dairyfarmagent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "cow_health_monitor",
+      "name": "Cow Health Monitor",
+      "description": "奶牛健康监测与发情检测 — 基于体温、反刍、活动量、产奶量和酮体等参数进行综合健康评估，检测发情状态和适配配种窗口，输出健康评分和紧急措施",
+      "tags": [
+        "dairyfarmagent",
+        "cow",
+        "health",
+        "monitor"
+      ],
+      "examples": [
+        "Use Cow Health Monitor to 奶牛健康监测与发情检测 — 基于体温、反刍、活动量、产奶量和酮体等参数进行综合健康评估，检测发情状态和适配配种窗口，输出健康评分和紧急措施.",
+        "Can you run Cow Health Monitor? Input Data is the main input I have.",
+        "Invoke Cow Health Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "milk_quality_analyzer",
+      "name": "Milk Quality Analyzer",
+      "description": "牛奶品质分析与体细胞计数 — 分析乳脂、乳蛋白、乳糖、体细胞数(SCC)、冰点、电导率等指标，评估乳房炎风险，给出奶质等级和经济效益分析",
+      "tags": [
+        "dairyfarmagent",
+        "milk",
+        "quality",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Milk Quality Analyzer to 牛奶品质分析与体细胞计数 — 分析乳脂、乳蛋白、乳糖、体细胞数(SCC)、冰点、电导率等指标，评估乳房炎风险，给出奶质等级和经济效益分析.",
+        "Can you run Milk Quality Analyzer? Input Data is the main input I have.",
+        "Invoke Milk Quality Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "feed_rations_optimizer",
+      "name": "Feed Rations Optimizer",
+      "description": "日粮配方优化与TMR管理 — 基于NRC模型按泌乳阶段推荐日粮成分、营养指标、TMR搅拌步骤和成本分析",
+      "tags": [
+        "dairyfarmagent",
+        "feed",
+        "rations",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Feed Rations Optimizer to 日粮配方优化与TMR管理 — 基于NRC模型按泌乳阶段推荐日粮成分、营养指标、TMR搅拌步骤和成本分析.",
+        "Can you run Feed Rations Optimizer? Input Data is the main input I have.",
+        "Invoke Feed Rations Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "reproduction_management",
+      "name": "Reproduction Management",
+      "description": "繁殖管理与受胎率提升 — 评估发情周期状态、受胎概率、给出适配配种窗口和激素处理方案",
+      "tags": [
+        "dairyfarmagent",
+        "reproduction",
+        "management"
+      ],
+      "examples": [
+        "Use Reproduction Management to 繁殖管理与受胎率提升 — 评估发情周期状态、受胎概率、给出适配配种窗口和激素处理方案.",
+        "Can you run Reproduction Management? Input Data is the main input I have.",
+        "Invoke Reproduction Management with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "barn_environment_controller",
+      "name": "Barn Environment Controller",
+      "description": "畜舍环境控制与热应激缓解 — 基于温湿指数(THI)评估热应激级别，输出通风、降温、光照管理方案和气体安全评估",
+      "tags": [
+        "dairyfarmagent",
+        "barn",
+        "environment",
+        "controller"
+      ],
+      "examples": [
+        "Use Barn Environment Controller to 畜舍环境控制与热应激缓解 — 基于温湿指数(THI)评估热应激级别，输出通风、降温、光照管理方案和气体安全评估.",
+        "Can you run Barn Environment Controller? Input Data is the main input I have.",
+        "Invoke Barn Environment Controller with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "calf_growth_tracker",
+      "name": "Calf Growth Tracker",
+      "description": "犊牛生长追踪与断奶管理 — 基于日龄、体重、日增重和开食料摄入评估生长状态和断奶时机",
+      "tags": [
+        "dairyfarmagent",
+        "calf",
+        "growth",
+        "tracker"
+      ],
+      "examples": [
+        "Use Calf Growth Tracker to 犊牛生长追踪与断奶管理 — 基于日龄、体重、日增重和开食料摄入评估生长状态和断奶时机.",
+        "Can you run Calf Growth Tracker? Input Data is the main input I have.",
+        "Invoke Calf Growth Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "dairy_economics_dashboard",
+      "name": "Dairy Economics Dashboard",
+      "description": "牧场经济效益与公斤奶成本 — 综合分析公斤奶成本、饲料成本占比、盈亏状态、IOFC和成本收入构成，输出改善建议",
+      "tags": [
+        "dairyfarmagent",
+        "dairy",
+        "economics",
+        "dashboard"
+      ],
+      "examples": [
+        "Use Dairy Economics Dashboard to 牧场经济效益与公斤奶成本 — 综合分析公斤奶成本、饲料成本占比、盈亏状态、IOFC和成本收入构成，输出改善建议.",
+        "Can you run Dairy Economics Dashboard? Input Data is the main input I have.",
+        "Invoke Dairy Economics Dashboard with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "manure_management_processor",
+      "name": "Manure Management Processor",
+      "description": "粪污处理与沼液还田 — 分析固液分离、厌氧发酵产气、好氧堆肥和还田方案，给出环境合规建议和可持续性评分",
+      "tags": [
+        "dairyfarmagent",
+        "manure",
+        "management",
+        "processor"
+      ],
+      "examples": [
+        "Use Manure Management Processor to 粪污处理与沼液还田 — 分析固液分离、厌氧发酵产气、好氧堆肥和还田方案，给出环境合规建议和可持续性评分.",
+        "Can you run Manure Management Processor? Input Data is the main input I have.",
+        "Invoke Manure Management Processor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

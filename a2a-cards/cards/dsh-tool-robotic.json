@@ -1,0 +1,200 @@
+{
+  "name": "dsh-tool-robotic",
+  "description": "RPA Plugin - Process Mining, Automation Assessment, Bot Design, Cognitive Document Processing, Program Governance, Exception Handling, Citizen Development, Intelligent Orchestration",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-robotic",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-robotic",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": true,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "process_miner",
+      "name": "Process Miner",
+      "description": "Analyze event logs to discover process models, identify bottlenecks, detect variants, check conformance, and flag automation candidates from raw operational data.",
+      "tags": [
+        "robotic",
+        "process",
+        "miner"
+      ],
+      "examples": [
+        "Use Process Miner to analyze event logs to discover process models, identify bottlenecks, detect variants, check conformance, and flag automation candidates from raw operational data.",
+        "Can you run Process Miner? Event Log is the main input I have.",
+        "Invoke Process Miner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "automation_opportunity_assessor",
+      "name": "Automation Opportunity Assessor",
+      "description": "Score and rank processes by automation potential. Evaluates ROI, complexity-ease matrix, and generates prioritized recommendations for automation investment.",
+      "tags": [
+        "robotic",
+        "automation",
+        "opportunity",
+        "assessor"
+      ],
+      "examples": [
+        "Use Automation Opportunity Assessor to score and rank processes by automation potential. Evaluates ROI, complexity-ease matrix, and generates prioritized recommendations for automation investment.",
+        "Can you run Automation Opportunity Assessor? Process Catalog is the main input I have.",
+        "Invoke Automation Opportunity Assessor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "bot_designer",
+      "name": "Bot Designer",
+      "description": "Generate a complete bot architecture and workflow design specification from a process definition. Includes error handling strategies, logging, and deployment checklist.",
+      "tags": [
+        "robotic",
+        "bot",
+        "designer"
+      ],
+      "examples": [
+        "Use Bot Designer to generate a complete bot architecture and workflow design specification from a process definition. Includes error handling strategies, logging, and deployment checklist.",
+        "Can you run Bot Designer? Process Definition is the main input I have.",
+        "Invoke Bot Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "cognitive_document_processor",
+      "name": "Cognitive Document Processor",
+      "description": "Design an ML-powered document extraction pipeline. Recommends models, validation rules, and human-in-the-loop triggers for intelligent document processing.",
+      "tags": [
+        "robotic",
+        "cognitive",
+        "document",
+        "processor"
+      ],
+      "examples": [
+        "Use Cognitive Document Processor to design an ML-powered document extraction pipeline. Recommends models, validation rules, and human-in-the-loop triggers for intelligent document processing.",
+        "Can you run Cognitive Document Processor? Document Data is the main input I have.",
+        "Invoke Cognitive Document Processor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "rpa_program_governor",
+      "name": "Rpa Program Governor",
+      "description": "Assess RPA program maturity, scaling readiness, and center of excellence health. Generates improvement roadmap with phased initiatives.",
+      "tags": [
+        "robotic",
+        "rpa",
+        "program",
+        "governor"
+      ],
+      "examples": [
+        "Use Rpa Program Governor to assess RPA program maturity, scaling readiness, and center of excellence health. Generates improvement roadmap with phased initiatives.",
+        "Can you run Rpa Program Governor? Program Metrics is the main input I have.",
+        "Invoke Rpa Program Governor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "exception_handler_designer",
+      "name": "Exception Handler Designer",
+      "description": "Design comprehensive exception handling with automated resolution paths, escalation matrix, self-healing rules, and fallback strategies.",
+      "tags": [
+        "robotic",
+        "exception",
+        "handler",
+        "designer"
+      ],
+      "examples": [
+        "Use Exception Handler Designer to design comprehensive exception handling with automated resolution paths, escalation matrix, self-healing rules, and fallback strategies.",
+        "Can you run Exception Handler Designer? Exception Patterns is the main input I have.",
+        "Invoke Exception Handler Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "citizen_developer_enabler",
+      "name": "Citizen Developer Enabler",
+      "description": "Assess citizen developer readiness and provide guardrails, training plans, platform fit, and governance frameworks for low-code/no-code automation.",
+      "tags": [
+        "robotic",
+        "citizen",
+        "developer",
+        "enabler"
+      ],
+      "examples": [
+        "Use Citizen Developer Enabler to assess citizen developer readiness and provide guardrails, training plans, platform fit, and governance frameworks for low-code/no-code automation.",
+        "Can you run Citizen Developer Enabler? No Code Analysis is the main input I have.",
+        "Invoke Citizen Developer Enabler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "intelligent_orchestrator",
+      "name": "Intelligent Orchestrator",
+      "description": "Optimize bot fleet operations with load balancing, scheduling optimization, failover strategies, and capacity planning recommendations.",
+      "tags": [
+        "robotic",
+        "intelligent",
+        "orchestrator"
+      ],
+      "examples": [
+        "Use Intelligent Orchestrator to optimize bot fleet operations with load balancing, scheduling optimization, failover strategies, and capacity planning recommendations.",
+        "Can you run Intelligent Orchestrator? Bot Fleet Data is the main input I have.",
+        "Invoke Intelligent Orchestrator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

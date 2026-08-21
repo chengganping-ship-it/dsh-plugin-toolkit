@@ -1,0 +1,195 @@
+{
+  "name": "dsh-tool-cyberagent",
+  "description": "AI Agent网络安全防御体系 — Agent防火墙、行为画像、机密扫描、依赖守卫、运行时沙箱、MCP安全、影子AI检测、网络靶场",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-cyberagent",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-cyberagent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "ai_agent_firewall",
+      "name": "Ai Agent Firewall",
+      "description": "AI Agent防火墙 | Prompt注入检测+敏感操作拦截+输入净化+权限动态校验+上下文消毒 | AI Agent Firewall with injection detection, action interception, input sanitization, dynamic permission checks and context disinfection.",
+      "tags": [
+        "cyberagent",
+        "agent",
+        "firewall"
+      ],
+      "examples": [
+        "Use Ai Agent Firewall to aI Agent防火墙 | Prompt注入检测+敏感操作拦截+输入净化+权限动态校验+上下文消毒 | AI Agent Firewall with injection detection, action interception, input sanitization, dynamic permission checks and context disinfection.",
+        "Can you run Ai Agent Firewall? Firewall Input is the main input I have.",
+        "Invoke Ai Agent Firewall with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "behavior_profiler",
+      "name": "Behavior Profiler",
+      "description": "Agent行为画像 | 行为基线学习+偏离检测+意图推断+滥用识别+信任评分+跨Agent行为追踪 | Agent behavior profiling with baseline learning, deviation detection, intent inference, abuse identification, trust scoring and cross-agent tracking.",
+      "tags": [
+        "cyberagent",
+        "behavior",
+        "profiler"
+      ],
+      "examples": [
+        "Use Behavior Profiler to agent行为画像 | 行为基线学习+偏离检测+意图推断+滥用识别+信任评分+跨Agent行为追踪 | Agent behavior profiling with baseline learning, deviation detection, intent inference, abuse identification, trust scoring and cross-agent tracking.",
+        "Can you run Behavior Profiler? Behavior Input is the main input I have.",
+        "Invoke Behavior Profiler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "secret_scanner",
+      "name": "Secret Scanner",
+      "description": "机密泄露扫描 | API Key/PII/源码泄露检测+环境变量审计+Git提交扫描+第三方依赖检查 | Secret leak scanning for API keys, PII, source code exposure, environment variable auditing, git history scanning and third-party dependency checking.",
+      "tags": [
+        "cyberagent",
+        "secret",
+        "scanner"
+      ],
+      "examples": [
+        "Use Secret Scanner to 机密泄露扫描 | API Key/PII/源码泄露检测+环境变量审计+Git提交扫描+第三方依赖检查 | Secret leak scanning for API keys, PII, source code exposure, environment variable auditing, git history scanning and third-party dependency checking.",
+        "Can you run Secret Scanner? Scan Input is the main input I have.",
+        "Invoke Secret Scanner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "dependency_guardian",
+      "name": "Dependency Guardian",
+      "description": "依赖包安全守卫 | 恶意内容检测+供应链SBOM分析+版本风险评估+CVE自动告警 | Dependency security guardian with malicious content detection, supply chain SBOM analysis, version risk assessment and CVE auto-alerting.",
+      "tags": [
+        "cyberagent",
+        "dependency",
+        "guardian"
+      ],
+      "examples": [
+        "Use Dependency Guardian to 依赖包安全守卫 | 恶意内容检测+供应链SBOM分析+版本风险评估+CVE自动告警 | Dependency security guardian with malicious content detection, supply chain SBOM analysis, version risk assessment and CVE auto-alerting.",
+        "Can you run Dependency Guardian? Dep Input is the main input I have.",
+        "Invoke Dependency Guardian with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "runtime_sandbox",
+      "name": "Runtime Sandbox",
+      "description": "运行时沙箱控制 | 危险系统调用拦截+网络访问白名单+文件系统隔离+资源配额+逃逸检测 | Runtime sandbox with dangerous syscall interception, network whitelist, filesystem isolation, resource quotas and escape detection.",
+      "tags": [
+        "cyberagent",
+        "runtime",
+        "sandbox"
+      ],
+      "examples": [
+        "Use Runtime Sandbox to 运行时沙箱控制 | 危险系统调用拦截+网络访问白名单+文件系统隔离+资源配额+逃逸检测 | Runtime sandbox with dangerous syscall interception, network whitelist, filesystem isolation, resource quotas and escape detection.",
+        "Can you run Runtime Sandbox? Sandbox Input is the main input I have.",
+        "Invoke Runtime Sandbox with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "mcp_security",
+      "name": "Mcp Security",
+      "description": "MCP/A2A协议安全 | 传输加密验证+身份认证+权限最小化+调用审计+异常流量检测 | MCP/A2A protocol security with transport encryption, authentication, least privilege, call auditing and anomaly detection.",
+      "tags": [
+        "cyberagent",
+        "mcp",
+        "security"
+      ],
+      "examples": [
+        "Use Mcp Security to mCP/A2A协议安全 | 传输加密验证+身份认证+权限最小化+调用审计+异常流量检测 | MCP/A2A protocol security with transport encryption, authentication, least privilege, call auditing and anomaly detection.",
+        "Can you run Mcp Security? Mcp Input is the main input I have.",
+        "Invoke Mcp Security with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "shadow_ai_detector",
+      "name": "Shadow Ai Detector",
+      "description": "影子AI/Agent检测 | 未授权AI Agent发现+数据外传通道识别+接入点测绘+治理建议+合规报告 | Shadow AI/Agent detection with unauthorized agent discovery, exfiltration channel identification, access point mapping, governance recommendations and compliance reporting.",
+      "tags": [
+        "cyberagent",
+        "shadow",
+        "detector"
+      ],
+      "examples": [
+        "Use Shadow Ai Detector to 影子AI/Agent检测 | 未授权AI Agent发现+数据外传通道识别+接入点测绘+治理建议+合规报告 | Shadow AI/Agent detection with unauthorized agent discovery, exfiltration channel identification, access point mapping, governance recommendations and compliance reporting.",
+        "Can you run Shadow Ai Detector? Shadow Input is the main input I have.",
+        "Invoke Shadow Ai Detector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "cyber_range",
+      "name": "Cyber Range",
+      "description": "网络靶场 | 对抗演练剧本+红队模拟+防御强化建议+CTF式挑战+团队安全效能评分 | Cyber range with drill scenarios, red team simulation, defense recommendations, CTF challenges and team security effectiveness scoring.",
+      "tags": [
+        "cyberagent",
+        "cyber",
+        "range"
+      ],
+      "examples": [
+        "Use Cyber Range to 网络靶场 | 对抗演练剧本+红队模拟+防御强化建议+CTF式挑战+团队安全效能评分 | Cyber range with drill scenarios, red team simulation, defense recommendations, CTF challenges and team security effectiveness scoring.",
+        "Can you run Cyber Range? Range Input is the main input I have.",
+        "Invoke Cyber Range with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

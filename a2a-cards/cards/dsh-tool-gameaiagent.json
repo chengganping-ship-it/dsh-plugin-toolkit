@@ -1,0 +1,200 @@
+{
+  "name": "gameaiagent",
+  "description": "DSH plugin: dsh-tool-gameaiagent",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/gameaiagent",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/gameaiagent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "intelligent_npc_designer",
+      "name": "Intelligent Npc Designer",
+      "description": "智能NPC设计 — 基于行为树、对话风格与情感模型生成NPC完整设计方案，支持RPG/FPS/MOBA/沙盒等多类型。",
+      "tags": [
+        "gameaiagent",
+        "intelligent",
+        "npc",
+        "designer"
+      ],
+      "examples": [
+        "Use Intelligent Npc Designer to 智能NPC设计 — 基于行为树、对话风格与情感模型生成NPC完整设计方案，支持RPG/FPS/MOBA/沙盒等多类型。.",
+        "Can you run Intelligent Npc Designer? Input Data is the main input I have.",
+        "Invoke Intelligent Npc Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "gameplay_balancer",
+      "name": "Gameplay Balancer",
+      "description": "数值平衡分析 — 对经济系统、PVP对战、难度曲线、成长体系进行平衡评估并给出调参建议。",
+      "tags": [
+        "gameaiagent",
+        "gameplay",
+        "balancer"
+      ],
+      "examples": [
+        "Use Gameplay Balancer to 数值平衡分析 — 对经济系统、PVP对战、难度曲线、成长体系进行平衡评估并给出调参建议。.",
+        "Can you run Gameplay Balancer? Input Data is the main input I have.",
+        "Invoke Gameplay Balancer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "player_behavior_analytics",
+      "name": "Player Behavior Analytics",
+      "description": "玩家行为分析 — 分析留存率、付费转化、流失预测、参与度等核心指标并给出可执行建议。",
+      "tags": [
+        "gameaiagent",
+        "player",
+        "behavior",
+        "analytics"
+      ],
+      "examples": [
+        "Use Player Behavior Analytics to 玩家行为分析 — 分析留存率、付费转化、流失预测、参与度等核心指标并给出可执行建议。.",
+        "Can you run Player Behavior Analytics? Input Data is the main input I have.",
+        "Invoke Player Behavior Analytics with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "procedural_content_gen",
+      "name": "Procedural Content Gen",
+      "description": "程序化内容生成 — 提供关卡/道具/剧情/地牢/地形的自动生成算法方案与质量门控机制。",
+      "tags": [
+        "gameaiagent",
+        "procedural",
+        "content",
+        "gen"
+      ],
+      "examples": [
+        "Use Procedural Content Gen to 程序化内容生成 — 提供关卡/道具/剧情/地牢/地形的自动生成算法方案与质量门控机制。.",
+        "Can you run Procedural Content Gen? Input Data is the main input I have.",
+        "Invoke Procedural Content Gen with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "anti_cheat_system",
+      "name": "Anti Cheat System",
+      "description": "反作弊系统 — 针对加速/自瞄/透视/脚本/共享账号等作弊手段提供检测方法、规则引擎与升级流程。",
+      "tags": [
+        "gameaiagent",
+        "anti",
+        "cheat",
+        "system"
+      ],
+      "examples": [
+        "Use Anti Cheat System to 反作弊系统 — 针对加速/自瞄/透视/脚本/共享账号等作弊手段提供检测方法、规则引擎与升级流程。.",
+        "Can you run Anti Cheat System? Input Data is the main input I have.",
+        "Invoke Anti Cheat System with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "game_qa_automation",
+      "name": "Game Qa Automation",
+      "description": "游戏测试自动化 — 制定功能/性能/兼容/安全/回归测试计划，评估覆盖率与风险区域。",
+      "tags": [
+        "gameaiagent",
+        "game",
+        "automation"
+      ],
+      "examples": [
+        "Use Game Qa Automation to 游戏测试自动化 — 制定功能/性能/兼容/安全/回归测试计划，评估覆盖率与风险区域。.",
+        "Can you run Game Qa Automation? Input Data is the main input I have.",
+        "Invoke Game Qa Automation with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "esports_analytics",
+      "name": "Esports Analytics",
+      "description": "电竞数据分析 — 分析BP选人、团战模式、经济曲线、视野控制等电竞核心维度。",
+      "tags": [
+        "gameaiagent",
+        "esports",
+        "analytics"
+      ],
+      "examples": [
+        "Use Esports Analytics to 电竞数据分析 — 分析BP选人、团战模式、经济曲线、视野控制等电竞核心维度。.",
+        "Can you run Esports Analytics? Input Data is the main input I have.",
+        "Invoke Esports Analytics with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "ugc_platform_manager",
+      "name": "Ugc Platform Manager",
+      "description": "UGC平台管理 — 提供内容审核管线、推荐算法、创作者激励结构与风险管控方案。",
+      "tags": [
+        "gameaiagent",
+        "ugc",
+        "platform",
+        "manager"
+      ],
+      "examples": [
+        "Use Ugc Platform Manager to uGC平台管理 — 提供内容审核管线、推荐算法、创作者激励结构与风险管控方案。.",
+        "Can you run Ugc Platform Manager? Input Data is the main input I have.",
+        "Invoke Ugc Platform Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

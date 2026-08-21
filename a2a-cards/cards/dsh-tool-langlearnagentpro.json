@@ -1,0 +1,199 @@
+{
+  "name": "langlearnagentpro",
+  "description": "语言学习AI助手 — 智能语言学习与教学辅导智能体",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/langlearnagentpro",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/langlearnagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "proficiency_assessment",
+      "name": "Proficiency Assessment",
+      "description": "语言水平CEFR评估与弱项诊断 | 六维能力评估(听力/阅读/写作/口语/语法/词汇)、综合CEFR等级、弱项分析与学习建议 | Six-dimensional CEFR proficiency assessment with weakness diagnosis and personalized learning recommendations",
+      "tags": [
+        "langlearnagentpro",
+        "proficiency",
+        "assessment"
+      ],
+      "examples": [
+        "Use Proficiency Assessment to 语言水平CEFR评估与弱项诊断 | 六维能力评估(听力/阅读/写作/口语/语法/词汇)、综合CEFR等级、弱项分析与学习建议 | Six-dimensional CEFR proficiency assessment with weakness diagnosis and personalized learning recommendations.",
+        "Can you run Proficiency Assessment? Input Data is the main input I have.",
+        "Invoke Proficiency Assessment with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "spaced_repetition_scheduler",
+      "name": "Spaced Repetition Scheduler",
+      "description": "Anki式间隔重复与记忆曲线 | 词汇间隔调度、易遗忘点预测、记忆曲线绘制、复习计划生成 | Spaced repetition vocabulary scheduling with memory curve prediction and optimized review planning",
+      "tags": [
+        "langlearnagentpro",
+        "spaced",
+        "repetition",
+        "scheduler"
+      ],
+      "examples": [
+        "Use Spaced Repetition Scheduler to anki式间隔重复与记忆曲线 | 词汇间隔调度、易遗忘点预测、记忆曲线绘制、复习计划生成 | Spaced repetition vocabulary scheduling with memory curve prediction and optimized review planning.",
+        "Can you run Spaced Repetition Scheduler? Input Data is the main input I have.",
+        "Invoke Spaced Repetition Scheduler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "conversation_simulator",
+      "name": "Conversation Simulator",
+      "description": "沉浸式对话模拟与纠错反馈 | 情景对话模拟、实时纠错、语用评估、文化提示、对话延续 | Immersive conversation simulation with real-time error correction, pragmatic assessment, cultural notes, and guided continuation",
+      "tags": [
+        "langlearnagentpro",
+        "conversation",
+        "simulator"
+      ],
+      "examples": [
+        "Use Conversation Simulator to 沉浸式对话模拟与纠错反馈 | 情景对话模拟、实时纠错、语用评估、文化提示、对话延续 | Immersive conversation simulation with real-time error correction, pragmatic assessment, cultural notes, and guided continuation.",
+        "Can you run Conversation Simulator? Input Data is the main input I have.",
+        "Invoke Conversation Simulator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "grammar_pattern_driller",
+      "name": "Grammar Pattern Driller",
+      "description": "语法模式训练与母語干扰纠正 | 语法点练习、错误分析、L1母语干扰检测、进阶结构推荐 | Grammar pattern drilling with error analysis, L1 interference detection, and progressive structure recommendations",
+      "tags": [
+        "langlearnagentpro",
+        "grammar",
+        "pattern",
+        "driller"
+      ],
+      "examples": [
+        "Use Grammar Pattern Driller to 语法模式训练与母語干扰纠正 | 语法点练习、错误分析、L1母语干扰检测、进阶结构推荐 | Grammar pattern drilling with error analysis, L1 interference detection, and progressive structure recommendations.",
+        "Can you run Grammar Pattern Driller? Input Data is the main input I have.",
+        "Invoke Grammar Pattern Driller with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "vocabulary_contextualizer",
+      "name": "Vocabulary Contextualizer",
+      "description": "词汇语境化学习与搭配网络 | 多义词辨析、搭配网络分析、语境例句、分层练习设计、记忆技巧推荐 | Vocabulary contextual learning with collocation network analysis, contextual examples, and memory technique recommendations",
+      "tags": [
+        "langlearnagentpro",
+        "vocabulary",
+        "contextualizer"
+      ],
+      "examples": [
+        "Use Vocabulary Contextualizer to 词汇语境化学习与搭配网络 | 多义词辨析、搭配网络分析、语境例句、分层练习设计、记忆技巧推荐 | Vocabulary contextual learning with collocation network analysis, contextual examples, and memory technique recommendations.",
+        "Can you run Vocabulary Contextualizer? Input Data is the main input I have.",
+        "Invoke Vocabulary Contextualizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "pronunciation_coach",
+      "name": "Pronunciation Coach",
+      "description": "发音评估与音素纠音 | 音素逐一评分、韵律综合分析、优先纠音建议、对比练习设计、文化发音提示 | Pronunciation assessment with phoneme-level scoring, prosody analysis, prioritized correction, and cultural speaking notes",
+      "tags": [
+        "langlearnagentpro",
+        "pronunciation",
+        "coach"
+      ],
+      "examples": [
+        "Use Pronunciation Coach to 发音评估与音素纠音 | 音素逐一评分、韵律综合分析、优先纠音建议、对比练习设计、文化发音提示 | Pronunciation assessment with phoneme-level scoring, prosody analysis, prioritized correction, and cultural speaking notes.",
+        "Can you run Pronunciation Coach? Input Data is the main input I have.",
+        "Invoke Pronunciation Coach with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "reading_comprehension_scaffolder",
+      "name": "Reading Comprehension Scaffolder",
+      "description": "分级阅读与阅读理解支架 | 词汇注释、分阶问题(读前/读中/读后)、语法聚焦、阅读策略指导 | Graded reading with staged comprehension scaffolding: vocabulary annotation, pre/during/post-reading questions, and strategy guidance",
+      "tags": [
+        "langlearnagentpro",
+        "reading",
+        "comprehension",
+        "scaffolder"
+      ],
+      "examples": [
+        "Use Reading Comprehension Scaffolder to 分级阅读与阅读理解支架 | 词汇注释、分阶问题(读前/读中/读后)、语法聚焦、阅读策略指导 | Graded reading with staged comprehension scaffolding: vocabulary annotation, pre/during/post-reading questions, and strategy guidance.",
+        "Can you run Reading Comprehension Scaffolder? Input Data is the main input I have.",
+        "Invoke Reading Comprehension Scaffolder with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "writing_feedback_generator",
+      "name": "Writing Feedback Generator",
+      "description": "AI写作批改与风格提升 | 多维度评分(语法/词汇/连贯/风格/任务)、逐项反馈与修改建议、风格分析、修改范文参考 | AI-powered writing feedback with multi-dimensional scoring, line-by-line correction, style analysis, and revised model text",
+      "tags": [
+        "langlearnagentpro",
+        "writing",
+        "feedback",
+        "generator"
+      ],
+      "examples": [
+        "Use Writing Feedback Generator to aI写作批改与风格提升 | 多维度评分(语法/词汇/连贯/风格/任务)、逐项反馈与修改建议、风格分析、修改范文参考 | AI-powered writing feedback with multi-dimensional scoring, line-by-line correction, style analysis, and revised model text.",
+        "Can you run Writing Feedback Generator? Input Data is the main input I have.",
+        "Invoke Writing Feedback Generator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

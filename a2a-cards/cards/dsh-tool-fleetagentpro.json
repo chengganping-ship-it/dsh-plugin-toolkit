@@ -1,0 +1,203 @@
+{
+  "name": "dsh-tool-fleetagentpro",
+  "description": "DSH plugin: dsh-tool-fleetagentpro",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-fleetagentpro",
+  "version": "1.0.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-fleetagentpro",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "fleet_telematics_analyzer",
+      "name": "Fleet Telematics Analyzer",
+      "description": "车辆远程信息处理与驾驶行为分析：安全评分、效率评分、合规评分、风险等级、行业对标",
+      "tags": [
+        "fleetagentpro",
+        "fleet",
+        "telematics",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Fleet Telematics Analyzer to 车辆远程信息处理与驾驶行为分析：安全评分、效率评分、合规评分、风险等级、行业对标.",
+        "I need Fleet Telematics Analyzer capabilities for this task in dsh-tool-fleetagentpro.",
+        "Invoke Fleet Telematics Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "route_optimization_engine",
+      "name": "Route Optimization Engine",
+      "description": "多目标路径优化与实时调度：路线规划、装载率优化、燃油成本、CO₂排放、优化节省率",
+      "tags": [
+        "fleetagentpro",
+        "route",
+        "optimization",
+        "engine"
+      ],
+      "examples": [
+        "Use Route Optimization Engine to 多目标路径优化与实时调度：路线规划、装载率优化、燃油成本、CO₂排放、优化节省率.",
+        "I need Route Optimization Engine capabilities for this task in dsh-tool-fleetagentpro.",
+        "Invoke Route Optimization Engine with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fuel_consumption_optimizer",
+      "name": "Fuel Consumption Optimizer",
+      "description": "油耗分析与节油驾驶策略：平均油耗、浪费因素、节油潜力、CO₂减排、新能源转型",
+      "tags": [
+        "fleetagentpro",
+        "fuel",
+        "consumption",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Fuel Consumption Optimizer to 油耗分析与节油驾驶策略：平均油耗、浪费因素、节油潜力、CO₂减排、新能源转型.",
+        "I need Fuel Consumption Optimizer capabilities for this task in dsh-tool-fleetagentpro.",
+        "Invoke Fuel Consumption Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "vehicle_maintenance_scheduler",
+      "name": "Vehicle Maintenance Scheduler",
+      "description": "车队维保计划与零部件生命周期：超期预警、维保排程、零部件磨损、成本预测",
+      "tags": [
+        "fleetagentpro",
+        "vehicle",
+        "maintenance",
+        "scheduler"
+      ],
+      "examples": [
+        "Use Vehicle Maintenance Scheduler to 车队维保计划与零部件生命周期：超期预警、维保排程、零部件磨损、成本预测.",
+        "I need Vehicle Maintenance Scheduler capabilities for this task in dsh-tool-fleetagentpro.",
+        "Invoke Vehicle Maintenance Scheduler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "driver_safety_scorecard",
+      "name": "Driver Safety Scorecard",
+      "description": "驾驶员安全评分与激励方案：安全评分、分级排名、激励分配、培训缺口",
+      "tags": [
+        "fleetagentpro",
+        "driver",
+        "safety",
+        "scorecard"
+      ],
+      "examples": [
+        "Use Driver Safety Scorecard to 驾驶员安全评分与激励方案：安全评分、分级排名、激励分配、培训缺口.",
+        "I need Driver Safety Scorecard capabilities for this task in dsh-tool-fleetagentpro.",
+        "Invoke Driver Safety Scorecard with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fleet_utilization_tracker",
+      "name": "Fleet Utilization Tracker",
+      "description": "车辆利用率分析与闲置预警：利用率、装载率、闲置预警、峰谷比、优化建议",
+      "tags": [
+        "fleetagentpro",
+        "fleet",
+        "utilization",
+        "tracker"
+      ],
+      "examples": [
+        "Use Fleet Utilization Tracker to 车辆利用率分析与闲置预警：利用率、装载率、闲置预警、峰谷比、优化建议.",
+        "I need Fleet Utilization Tracker capabilities for this task in dsh-tool-fleetagentpro.",
+        "Invoke Fleet Utilization Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "compliance_regulation_monitor",
+      "name": "Compliance Regulation Monitor",
+      "description": "道路运输合规与法规追踪：DOT年检、驾驶时长、排放标准、ELD合规、审计准备度",
+      "tags": [
+        "fleetagentpro",
+        "compliance",
+        "regulation",
+        "monitor"
+      ],
+      "examples": [
+        "Use Compliance Regulation Monitor to 道路运输合规与法规追踪：DOT年检、驾驶时长、排放标准、ELD合规、审计准备度.",
+        "I need Compliance Regulation Monitor capabilities for this task in dsh-tool-fleetagentpro.",
+        "Invoke Compliance Regulation Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fleet_electrification_planner",
+      "name": "Fleet Electrification Planner",
+      "description": "车队电动化转型与充电规划：替换计划、投资估算、充电设施布局、分阶段路线、CO₂减排",
+      "tags": [
+        "fleetagentpro",
+        "fleet",
+        "electrification",
+        "planner"
+      ],
+      "examples": [
+        "Use Fleet Electrification Planner to 车队电动化转型与充电规划：替换计划、投资估算、充电设施布局、分阶段路线、CO₂减排.",
+        "I need Fleet Electrification Planner capabilities for this task in dsh-tool-fleetagentpro.",
+        "Invoke Fleet Electrification Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

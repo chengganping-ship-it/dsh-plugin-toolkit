@@ -1,0 +1,197 @@
+{
+  "name": "dsh-tool-legaldiscovery",
+  "description": "eDiscovery Pro - electronic evidence collection, document review, concept clustering, privilege log analysis, redaction engine, production setter, review workflow monitor, dispute strategy",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-legaldiscovery",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-legaldiscovery",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "ediscovery_collection",
+      "name": "Ediscovery Collection",
+      "description": "Multi-source electronic evidence collection (email, IM, cloud, mobile) with chain of custody, hash verification, and collection certificate.",
+      "tags": [
+        "legaldiscovery",
+        "ediscovery",
+        "collection"
+      ],
+      "examples": [
+        "Use Ediscovery Collection to multi-source electronic evidence collection (email, IM, cloud, mobile) with chain of custody, hash verification, and collection certificate.",
+        "Can you run Ediscovery Collection? Matter Name is the main input I have.",
+        "Invoke Ediscovery Collection with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "document_review",
+      "name": "Document Review",
+      "description": "AI-assisted document review with relevance judgment, privilege identification, annotations, summary generation, and QC sampling.",
+      "tags": [
+        "legaldiscovery",
+        "document",
+        "review"
+      ],
+      "examples": [
+        "Use Document Review to aI-assisted document review with relevance judgment, privilege identification, annotations, summary generation, and QC sampling.",
+        "Can you run Document Review? Matter Name is the main input I have.",
+        "Invoke Document Review with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "concept_clustering",
+      "name": "Concept Clustering",
+      "description": "Document relationship graph and topic clustering. Produces theme clusters, similarity groups, key document identification, timeline, and recommendations.",
+      "tags": [
+        "legaldiscovery",
+        "concept",
+        "clustering"
+      ],
+      "examples": [
+        "Use Concept Clustering to document relationship graph and topic clustering. Produces theme clusters, similarity groups, key document identification, timeline, and recommendations.",
+        "Can you run Concept Clustering? Matter Name is the main input I have.",
+        "Invoke Concept Clustering with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "privilege_log_reader",
+      "name": "Privilege Log Reader",
+      "description": "Privilege log analysis with type statistics, waiver analysis, common interest agreement tracking, and waiver decisions.",
+      "tags": [
+        "legaldiscovery",
+        "privilege",
+        "log",
+        "reader"
+      ],
+      "examples": [
+        "Use Privilege Log Reader to privilege log analysis with type statistics, waiver analysis, common interest agreement tracking, and waiver decisions.",
+        "Can you run Privilege Log Reader? Matter Name is the main input I have.",
+        "Invoke Privilege Log Reader with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "redaction_engine",
+      "name": "Redaction Engine",
+      "description": "Automated redaction tool for PII, privileged content, sensitive terms, visual masking with redaction certificate and batch processing log.",
+      "tags": [
+        "legaldiscovery",
+        "redaction",
+        "engine"
+      ],
+      "examples": [
+        "Use Redaction Engine to automated redaction tool for PII, privileged content, sensitive terms, visual masking with redaction certificate and batch processing log.",
+        "Can you run Redaction Engine? Matter Name is the main input I have.",
+        "Invoke Redaction Engine with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "production_setter",
+      "name": "Production Setter",
+      "description": "Production packaging with Bates numbering, production logs, recipient confirmation, incremental production, capacity planning, and certificates.",
+      "tags": [
+        "legaldiscovery",
+        "production",
+        "setter"
+      ],
+      "examples": [
+        "Use Production Setter to production packaging with Bates numbering, production logs, recipient confirmation, incremental production, capacity planning, and certificates.",
+        "Can you run Production Setter? Matter Name is the main input I have.",
+        "Invoke Production Setter with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "review_workflow_monitor",
+      "name": "Review Workflow Monitor",
+      "description": "Monitor review progress, QC consistency, reviewer performance, priority backlog, cost tracking, and contractor management.",
+      "tags": [
+        "legaldiscovery",
+        "review",
+        "workflow",
+        "monitor"
+      ],
+      "examples": [
+        "Use Review Workflow Monitor to monitor review progress, QC consistency, reviewer performance, priority backlog, cost tracking, and contractor management.",
+        "Can you run Review Workflow Monitor? Matter Name is the main input I have.",
+        "Invoke Review Workflow Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "dispute_strategy",
+      "name": "Dispute Strategy",
+      "description": "Litigation strategy tool with key fact mapping, favorable/unfavorable evidence assessment, strength scoring, opponent prediction, and cost-benefit analysis.",
+      "tags": [
+        "legaldiscovery",
+        "dispute",
+        "strategy"
+      ],
+      "examples": [
+        "Use Dispute Strategy to litigation strategy tool with key fact mapping, favorable/unfavorable evidence assessment, strength scoring, opponent prediction, and cost-benefit analysis.",
+        "Can you run Dispute Strategy? Matter Name is the main input I have.",
+        "Invoke Dispute Strategy with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

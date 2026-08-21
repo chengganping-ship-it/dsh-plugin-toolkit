@@ -1,0 +1,36 @@
+{
+  "name": "dsh-loop-engineering",
+  "version": "1.0.0",
+  "description": "Loop Engineering Self-Verification Layer for DSH Plugin Toolkit - self-correcting agentic loops with retry logic, output validation, and self-critique",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    }
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/**/*.d.ts"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "demo": "tsx examples/carbon-loop-demo.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "loop-engineering",
+    "self-verification",
+    "agentic-loops",
+    "retry-logic",
+    "output-validation",
+    "dsh",
+    "deepseek-harness"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "typescript": "^5.9.0"
+  }
+}

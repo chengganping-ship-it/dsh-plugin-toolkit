@@ -1,0 +1,201 @@
+{
+  "name": "dsh-tool-ecomintel",
+  "description": "E-commerce Competitor Intelligence - Pricing analysis, review sentiment, keyword rankings, listing quality, trend forecasting, ad spend estimation, market share, pricing strategy",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-ecomintel",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-ecomintel",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "competitor_price_tracker",
+      "name": "Competitor Price Tracker",
+      "description": "Track and analyze competitor pricing changes across products. Detects price movements, identifies trends (aggressive/moderate/stable), and generates alerts for potential price wars or positioning shifts.",
+      "tags": [
+        "ecomintel",
+        "competitor",
+        "price",
+        "tracker"
+      ],
+      "examples": [
+        "Use Competitor Price Tracker to track and analyze competitor pricing changes across products. Detects price movements, identifies trends (aggressive/moderate/stable), and generates alerts for potential price wars or positioning shifts.",
+        "Can you run Competitor Price Tracker? Price Data is the main input I have.",
+        "Invoke Competitor Price Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "product_review_analyzer",
+      "name": "Product Review Analyzer",
+      "description": "Analyze product reviews for sentiment and key themes. Calculates sentiment scores, identifies common complaints and feature requests, and provides per-product breakdowns with actionable recommendations.",
+      "tags": [
+        "ecomintel",
+        "product",
+        "review",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Product Review Analyzer to analyze product reviews for sentiment and key themes. Calculates sentiment scores, identifies common complaints and feature requests, and provides per-product breakdowns with actionable recommendations.",
+        "Can you run Product Review Analyzer? Reviews is the main input I have.",
+        "Invoke Product Review Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "keyword_ranking_monitor",
+      "name": "Keyword Ranking Monitor",
+      "description": "Monitor keyword search rankings across platforms. Tracks rank changes, identifies high-opportunity keywords, and provides actionable SEO insights for improved visibility.",
+      "tags": [
+        "ecomintel",
+        "keyword",
+        "ranking",
+        "monitor"
+      ],
+      "examples": [
+        "Use Keyword Ranking Monitor to monitor keyword search rankings across platforms. Tracks rank changes, identifies high-opportunity keywords, and provides actionable SEO insights for improved visibility.",
+        "Can you run Keyword Ranking Monitor? Rankings is the main input I have.",
+        "Invoke Keyword Ranking Monitor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "listing_quality_scorer",
+      "name": "Listing Quality Scorer",
+      "description": "Score product listing quality based on title length, bullet points, images, video, description, and A+ content. Returns grades (A-F) with specific improvement recommendations for each listing.",
+      "tags": [
+        "ecomintel",
+        "listing",
+        "quality",
+        "scorer"
+      ],
+      "examples": [
+        "Use Listing Quality Scorer to score product listing quality based on title length, bullet points, images, video, description, and A+ content. Returns grades (A-F) with specific improvement recommendations for each listing.",
+        "Can you run Listing Quality Scorer? Listings is the main input I have.",
+        "Invoke Listing Quality Scorer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "trend_forecaster",
+      "name": "Trend Forecaster",
+      "description": "Forecast product category trends using sales data, search volume, and seasonality. Predicts 3-month and 6-month trajectories with confidence scores and seasonal peak identification.",
+      "tags": [
+        "ecomintel",
+        "trend",
+        "forecaster"
+      ],
+      "examples": [
+        "Use Trend Forecaster to forecast product category trends using sales data, search volume, and seasonality. Predicts 3-month and 6-month trajectories with confidence scores and seasonal peak identification.",
+        "Can you run Trend Forecaster? Trend Data is the main input I have.",
+        "Invoke Trend Forecaster with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "ad_spend_estimator",
+      "name": "Ad Spend Estimator",
+      "description": "Estimate competitor advertising spend based on impressions, clicks, and CPC data. Provides spend levels, platform breakdowns, and strategic insights into competitor ad strategies.",
+      "tags": [
+        "ecomintel",
+        "spend",
+        "estimator"
+      ],
+      "examples": [
+        "Use Ad Spend Estimator to estimate competitor advertising spend based on impressions, clicks, and CPC data. Provides spend levels, platform breakdowns, and strategic insights into competitor ad strategies.",
+        "Can you run Ad Spend Estimator? Ad Data is the main input I have.",
+        "Invoke Ad Spend Estimator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "market_share_analyzer",
+      "name": "Market Share Analyzer",
+      "description": "Analyze market share distribution across brands. Calculates revenue and unit shares, identifies market leaders and challengers, and assesses market concentration with competitive positioning insights.",
+      "tags": [
+        "ecomintel",
+        "market",
+        "share",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Market Share Analyzer to analyze market share distribution across brands. Calculates revenue and unit shares, identifies market leaders and challengers, and assesses market concentration with competitive positioning insights.",
+        "Can you run Market Share Analyzer? Market Data is the main input I have.",
+        "Invoke Market Share Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "pricing_strategy_advisor",
+      "name": "Pricing Strategy Advisor",
+      "description": "Advise on optimal pricing strategy based on product cost, competitor prices, target margin, demand elasticity, and brand positioning. Returns optimal price, scenario analysis, and risk assessment.",
+      "tags": [
+        "ecomintel",
+        "pricing",
+        "strategy",
+        "advisor"
+      ],
+      "examples": [
+        "Use Pricing Strategy Advisor to advise on optimal pricing strategy based on product cost, competitor prices, target margin, demand elasticity, and brand positioning. Returns optimal price, scenario analysis, and risk assessment.",
+        "Can you run Pricing Strategy Advisor? Strategy Input is the main input I have.",
+        "Invoke Pricing Strategy Advisor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

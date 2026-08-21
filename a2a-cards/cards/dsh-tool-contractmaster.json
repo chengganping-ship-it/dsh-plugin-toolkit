@@ -1,0 +1,195 @@
+{
+  "name": "dsh-tool-contractmaster",
+  "description": "Contract lifecycle management - drafting, review, obligation tracking, renewal",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-contractmaster",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-contractmaster",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "contract_drafter",
+      "name": "Contract Drafter",
+      "description": "Generate contract drafts based on contract type, party information, key terms, and jurisdiction. Produces structured contract sections with clause suggestions.",
+      "tags": [
+        "contractmaster",
+        "contract",
+        "drafter"
+      ],
+      "examples": [
+        "Use Contract Drafter to generate contract drafts based on contract type, party information, key terms, and jurisdiction. Produces structured contract sections with clause suggestions.",
+        "Can you run Contract Drafter? Draft Data is the main input I have.",
+        "Invoke Contract Drafter with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "clause_analyzer",
+      "name": "Clause Analyzer",
+      "description": "Analyze contract clauses by extracting, categorizing, annotating risks, and suggesting modifications. Supports focused analysis on specific areas.",
+      "tags": [
+        "contractmaster",
+        "clause",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Clause Analyzer to analyze contract clauses by extracting, categorizing, annotating risks, and suggesting modifications. Supports focused analysis on specific areas.",
+        "Can you run Clause Analyzer? Analysis Input is the main input I have.",
+        "Invoke Clause Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "obligation_tracker",
+      "name": "Obligation Tracker",
+      "description": "Track contract obligations across counterparties with deadline monitoring, status updates, and compliance rate calculations.",
+      "tags": [
+        "contractmaster",
+        "obligation",
+        "tracker"
+      ],
+      "examples": [
+        "Use Obligation Tracker to track contract obligations across counterparties with deadline monitoring, status updates, and compliance rate calculations.",
+        "Can you run Obligation Tracker? Tracker Data is the main input I have.",
+        "Invoke Obligation Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "renewal_manager",
+      "name": "Renewal Manager",
+      "description": "Manage contract renewals with scheduling, priority actions, negotiation point identification, and cost projections.",
+      "tags": [
+        "contractmaster",
+        "renewal",
+        "manager"
+      ],
+      "examples": [
+        "Use Renewal Manager to manage contract renewals with scheduling, priority actions, negotiation point identification, and cost projections.",
+        "Can you run Renewal Manager? Renewal Data is the main input I have.",
+        "Invoke Renewal Manager with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "risk_assessor",
+      "name": "Risk Assessor",
+      "description": "Assess contract risk across liability, financial, operational, and legal categories. Provides risk scoring and mitigation recommendations.",
+      "tags": [
+        "contractmaster",
+        "risk",
+        "assessor"
+      ],
+      "examples": [
+        "Use Risk Assessor to assess contract risk across liability, financial, operational, and legal categories. Provides risk scoring and mitigation recommendations.",
+        "Can you run Risk Assessor? Risk Data is the main input I have.",
+        "Invoke Risk Assessor with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "compliance_checker",
+      "name": "Compliance Checker",
+      "description": "Check contract clauses against regulatory requirements. Identifies compliance gaps, required revisions, and framework coverage.",
+      "tags": [
+        "contractmaster",
+        "compliance",
+        "checker"
+      ],
+      "examples": [
+        "Use Compliance Checker to check contract clauses against regulatory requirements. Identifies compliance gaps, required revisions, and framework coverage.",
+        "Can you run Compliance Checker? Compliance Data is the main input I have.",
+        "Invoke Compliance Checker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "amendment_analyzer",
+      "name": "Amendment Analyzer",
+      "description": "Analyze proposed amendments to a contract. Assesses impact, detects conflicts between changes, and provides recommendations.",
+      "tags": [
+        "contractmaster",
+        "amendment",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Amendment Analyzer to analyze proposed amendments to a contract. Assesses impact, detects conflicts between changes, and provides recommendations.",
+        "Can you run Amendment Analyzer? Amendment Data is the main input I have.",
+        "Invoke Amendment Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "contract_summarizer",
+      "name": "Contract Summarizer",
+      "description": "Generate structured summaries of contracts with focus areas including financial terms, obligations, risks, key dates, and termination conditions.",
+      "tags": [
+        "contractmaster",
+        "contract",
+        "summarizer"
+      ],
+      "examples": [
+        "Use Contract Summarizer to generate structured summaries of contracts with focus areas including financial terms, obligations, risks, key dates, and termination conditions.",
+        "Can you run Contract Summarizer? Summary Data is the main input I have.",
+        "Invoke Contract Summarizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+{
+  "name": "dsh-tool-manufact",
+  "description": "Smart Manufacturing Optimizer - Predictive maintenance scheduling, quality control analysis, production scheduling, IoT anomaly detection, energy optimization, supply chain digitization, OEE calculation, defect pattern recognition",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-manufact",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-manufact",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "predictive_maintenance_scheduler",
+      "name": "Predictive Maintenance Scheduler",
+      "description": "Analyze equipment sensor data to predict failures, estimate remaining useful life, and prioritize maintenance actions. Uses vibration, temperature, pressure, runtime, and maintenance history to generate a prioritized maintenance schedule.",
+      "tags": [
+        "manufact",
+        "predictive",
+        "maintenance",
+        "scheduler"
+      ],
+      "examples": [
+        "Use Predictive Maintenance Scheduler to analyze equipment sensor data to predict failures, estimate remaining useful life, and prioritize maintenance actions. Uses vibration, temperature, pressure, runtime, and maintenance history to generate a prioritized maintenance schedule.",
+        "Can you run Predictive Maintenance Scheduler? Equipment Data is the main input I have.",
+        "Invoke Predictive Maintenance Scheduler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "quality_control_analyzer",
+      "name": "Quality Control Analyzer",
+      "description": "Analyze quality inspection data to calculate defect rates, process capability indices, identify root causes, and recommend corrective actions for manufacturing quality improvement.",
+      "tags": [
+        "manufact",
+        "quality",
+        "control",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Quality Control Analyzer to analyze quality inspection data to calculate defect rates, process capability indices, identify root causes, and recommend corrective actions for manufacturing quality improvement.",
+        "Can you run Quality Control Analyzer? Inspection Data is the main input I have.",
+        "Invoke Quality Control Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "production_scheduler",
+      "name": "Production Scheduler",
+      "description": "Optimize production scheduling based on order priorities, deadlines, and machine capacity constraints. Identifies bottlenecks, calculates overtime requirements, and maximizes on-time delivery rate.",
+      "tags": [
+        "manufact",
+        "production",
+        "scheduler"
+      ],
+      "examples": [
+        "Use Production Scheduler to optimize production scheduling based on order priorities, deadlines, and machine capacity constraints. Identifies bottlenecks, calculates overtime requirements, and maximizes on-time delivery rate.",
+        "Can you run Production Scheduler? Orders is the main input I have.",
+        "Invoke Production Scheduler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "iot_sensor_anomaly_detector",
+      "name": "Iot Sensor Anomaly Detector",
+      "description": "Detect anomalies in IoT sensor readings, assess sensor health, identify drift trends, and flag sensors requiring calibration. Processes time-series sensor data with configurable normal ranges.",
+      "tags": [
+        "manufact",
+        "iot",
+        "sensor",
+        "anomaly",
+        "detector"
+      ],
+      "examples": [
+        "Use Iot Sensor Anomaly Detector to detect anomalies in IoT sensor readings, assess sensor health, identify drift trends, and flag sensors requiring calibration. Processes time-series sensor data with configurable normal ranges.",
+        "Can you run Iot Sensor Anomaly Detector? Sensor Readings is the main input I have.",
+        "Invoke Iot Sensor Anomaly Detector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "energy_consumption_optimizer",
+      "name": "Energy Consumption Optimizer",
+      "description": "Analyze energy consumption patterns across machines, identify waste sources, recommend optimal load scheduling, and calculate cost savings potential from peak-hour shifting.",
+      "tags": [
+        "manufact",
+        "energy",
+        "consumption",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Energy Consumption Optimizer to analyze energy consumption patterns across machines, identify waste sources, recommend optimal load scheduling, and calculate cost savings potential from peak-hour shifting.",
+        "Can you run Energy Consumption Optimizer? Energy Data is the main input I have.",
+        "Invoke Energy Consumption Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "supply_chain_digitizer",
+      "name": "Supply Chain Digitizer",
+      "description": "Assess supply chain digital twin readiness, identify integration gaps, calculate visibility scores, and recommend automation opportunities for supply chain transformation.",
+      "tags": [
+        "manufact",
+        "supply",
+        "chain",
+        "digitizer"
+      ],
+      "examples": [
+        "Use Supply Chain Digitizer to assess supply chain digital twin readiness, identify integration gaps, calculate visibility scores, and recommend automation opportunities for supply chain transformation.",
+        "Can you run Supply Chain Digitizer? Supply Chain Data is the main input I have.",
+        "Invoke Supply Chain Digitizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "oee_calculator",
+      "name": "Oee Calculator",
+      "description": "Calculate Overall Equipment Effectiveness (OEE) from production data. Breaks down into availability, performance, and quality components with loss analysis and improvement targets.",
+      "tags": [
+        "manufact",
+        "oee",
+        "calculator"
+      ],
+      "examples": [
+        "Use Oee Calculator to calculate Overall Equipment Effectiveness (OEE) from production data. Breaks down into availability, performance, and quality components with loss analysis and improvement targets.",
+        "Can you run Oee Calculator? Production Data is the main input I have.",
+        "Invoke Oee Calculator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "defect_pattern_recognizer",
+      "name": "Defect Pattern Recognizer",
+      "description": "Analyze defect image metadata to classify defects, cluster similar patterns, correlate with production parameters, and generate early warning rules for proactive quality management.",
+      "tags": [
+        "manufact",
+        "defect",
+        "pattern",
+        "recognizer"
+      ],
+      "examples": [
+        "Use Defect Pattern Recognizer to analyze defect image metadata to classify defects, cluster similar patterns, correlate with production parameters, and generate early warning rules for proactive quality management.",
+        "Can you run Defect Pattern Recognizer? Defect Images Metadata is the main input I have.",
+        "Invoke Defect Pattern Recognizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

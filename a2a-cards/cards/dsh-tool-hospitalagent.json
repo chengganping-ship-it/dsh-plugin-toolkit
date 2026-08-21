@@ -1,0 +1,197 @@
+{
+  "name": "dsh-tool-hospitalagent",
+  "description": "酒店旅游AI助手 for DSH - 收益管理/宾客体验/酒店运营/营销分销/旅游产品/宴会会务/客房保洁/声誉管理 | Revenue Management, Guest Experience, Hotel Operations, Marketing Distribution, Tourism Product Design, Event Management, Housekeeping Optimizer, Reputation Management",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-hospitalagent",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-hospitalagent",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "revenue_management",
+      "name": "Revenue Management",
+      "description": "酒店收益管理: 动态定价分析、ADR/RevPAR/OCC核心KPI追踪、房型定价建议、每日收益预测、季节性趋势分析、竞品价格对标",
+      "tags": [
+        "hospitalagent",
+        "revenue",
+        "management"
+      ],
+      "examples": [
+        "Use Revenue Management to 酒店收益管理: 动态定价分析、ADR/RevPAR/OCC核心KPI追踪、房型定价建议、每日收益预测、季节性趋势分析、竞品价格对标.",
+        "Can you run Revenue Management? Total Rooms is the main input I have.",
+        "Invoke Revenue Management with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "guest_experience_tracker",
+      "name": "Guest Experience Tracker",
+      "description": "宾客体验追踪: NPS净推荐值分析、OTA平台点评监控(携程/美团/飞猪等)、投诉分类与处理时长分析、改善行动计划生成",
+      "tags": [
+        "hospitalagent",
+        "guest",
+        "experience",
+        "tracker"
+      ],
+      "examples": [
+        "Use Guest Experience Tracker to 宾客体验追踪: NPS净推荐值分析、OTA平台点评监控(携程/美团/飞猪等)、投诉分类与处理时长分析、改善行动计划生成.",
+        "Can you run Guest Experience Tracker? Current Nps is the main input I have.",
+        "Invoke Guest Experience Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "hotel_operations",
+      "name": "Hotel Operations",
+      "description": "酒店运营分析: 前台运营指标(入住/退房/转化率)、餐饮运营(翻台/人均/损耗)、能耗分析(空调/照明/热水)、综合运营评分",
+      "tags": [
+        "hospitalagent",
+        "hotel",
+        "operations"
+      ],
+      "examples": [
+        "Use Hotel Operations to 酒店运营分析: 前台运营指标(入住/退房/转化率)、餐饮运营(翻台/人均/损耗)、能耗分析(空调/照明/热水)、综合运营评分.",
+        "Can you run Hotel Operations? Total Rooms is the main input I have.",
+        "Invoke Hotel Operations with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "marketing_distribution",
+      "name": "Marketing Distribution",
+      "description": "营销分销分析: 渠道表现(官网/OTA/企业协议)、会员体系分析(等级/留存/升级)、企业协议客户管理、营销ROI评估",
+      "tags": [
+        "hospitalagent",
+        "marketing",
+        "distribution"
+      ],
+      "examples": [
+        "Use Marketing Distribution to 营销分销分析: 渠道表现(官网/OTA/企业协议)、会员体系分析(等级/留存/升级)、企业协议客户管理、营销ROI评估.",
+        "Can you run Marketing Distribution? Total Revenue is the main input I have.",
+        "Invoke Marketing Distribution with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "tourism_product_designer",
+      "name": "Tourism Product Designer",
+      "description": "旅游产品设计: 精品线路推荐、主题产品分析(亲子/蜜月/摄影等)、定制行程规划、定价策略建议",
+      "tags": [
+        "hospitalagent",
+        "tourism",
+        "product",
+        "designer"
+      ],
+      "examples": [
+        "Use Tourism Product Designer to 旅游产品设计: 精品线路推荐、主题产品分析(亲子/蜜月/摄影等)、定制行程规划、定价策略建议.",
+        "Can you run Tourism Product Designer? Route Count is the main input I have.",
+        "Invoke Tourism Product Designer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "event_management",
+      "name": "Event Management",
+      "description": "宴会会务管理: 场地资源管理、餐饮套餐设计、AV设备清单、活动方案报价、宴会运营建议",
+      "tags": [
+        "hospitalagent",
+        "event",
+        "management"
+      ],
+      "examples": [
+        "Use Event Management to 宴会会务管理: 场地资源管理、餐饮套餐设计、AV设备清单、活动方案报价、宴会运营建议.",
+        "Can you run Event Management? Venue Count is the main input I have.",
+        "Invoke Event Management with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "housekeeping_optimizer",
+      "name": "Housekeeping Optimizer",
+      "description": "客房保洁优化: 排班管理(三班效率/加班风险)、查房质量分析、布草库存管理、客房用品消耗分析、优化评分",
+      "tags": [
+        "hospitalagent",
+        "housekeeping",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Housekeeping Optimizer to 客房保洁优化: 排班管理(三班效率/加班风险)、查房质量分析、布草库存管理、客房用品消耗分析、优化评分.",
+        "Can you run Housekeeping Optimizer? Total Rooms is the main input I have.",
+        "Invoke Housekeeping Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "reputation_management",
+      "name": "Reputation Management",
+      "description": "声誉管理: 多平台评分排名监控、竞品对标分析、点评回复模板(好评/差评SLA)、声誉提升行动计划",
+      "tags": [
+        "hospitalagent",
+        "reputation",
+        "management"
+      ],
+      "examples": [
+        "Use Reputation Management to 声誉管理: 多平台评分排名监控、竞品对标分析、点评回复模板(好评/差评SLA)、声誉提升行动计划.",
+        "Can you run Reputation Management? Current Score is the main input I have.",
+        "Invoke Reputation Management with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

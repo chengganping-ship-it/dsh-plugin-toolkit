@@ -1,0 +1,199 @@
+{
+  "name": "dsh-tool-logistics",
+  "description": "Logistics & Route Optimization Engine - Route optimization, warehouse allocation, last-mile delivery planning, freight cost analysis, inventory positioning, cross-dock scheduling, fleet utilization tracking, and carbon logistics emissions calculator",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-logistics",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-logistics",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "route_optimizer",
+      "name": "Route Optimizer",
+      "description": "Optimize multi-stop delivery routes with time windows and capacity constraints. Calculates optimal stop sequence, total distance, fuel cost, and savings versus baseline routing.",
+      "tags": [
+        "logistics",
+        "route",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Route Optimizer to optimize multi-stop delivery routes with time windows and capacity constraints. Calculates optimal stop sequence, total distance, fuel cost, and savings versus baseline routing.",
+        "Can you run Route Optimizer? Stops is the main input I have.",
+        "Invoke Route Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "warehouse_optimizer",
+      "name": "Warehouse Optimizer",
+      "description": "Optimize warehouse capacity allocation across demand points. Assigns demand to warehouses minimizing total cost while respecting capacity constraints and maximizing service level.",
+      "tags": [
+        "logistics",
+        "warehouse",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Warehouse Optimizer to optimize warehouse capacity allocation across demand points. Assigns demand to warehouses minimizing total cost while respecting capacity constraints and maximizing service level.",
+        "Can you run Warehouse Optimizer? Warehouse Data is the main input I have.",
+        "Invoke Warehouse Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "last_mile_planner",
+      "name": "Last Mile Planner",
+      "description": "Plan last-mile delivery sequences based on priority, package size, and time preferences. Assigns vehicles, estimates completion time, and calculates customer satisfaction scores.",
+      "tags": [
+        "logistics",
+        "last",
+        "mile",
+        "planner"
+      ],
+      "examples": [
+        "Use Last Mile Planner to plan last-mile delivery sequences based on priority, package size, and time preferences. Assigns vehicles, estimates completion time, and calculates customer satisfaction scores.",
+        "Can you run Last Mile Planner? Deliveries is the main input I have.",
+        "Invoke Last Mile Planner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "freight_cost_analyzer",
+      "name": "Freight Cost Analyzer",
+      "description": "Analyze freight costs across shipping modes and routes. Compares costs per kg, identifies consolidation opportunities, and benchmarks against market rates.",
+      "tags": [
+        "logistics",
+        "freight",
+        "cost",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Freight Cost Analyzer to analyze freight costs across shipping modes and routes. Compares costs per kg, identifies consolidation opportunities, and benchmarks against market rates.",
+        "Can you run Freight Cost Analyzer? Shipments is the main input I have.",
+        "Invoke Freight Cost Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "inventory_positioning",
+      "name": "Inventory Positioning",
+      "description": "Calculate optimal inventory levels including safety stock, reorder points, and economic order quantities. Assesses stockout risk and provides replenishment recommendations.",
+      "tags": [
+        "logistics",
+        "inventory",
+        "positioning"
+      ],
+      "examples": [
+        "Use Inventory Positioning to calculate optimal inventory levels including safety stock, reorder points, and economic order quantities. Assesses stockout risk and provides replenishment recommendations.",
+        "Can you run Inventory Positioning? Sku Data is the main input I have.",
+        "Invoke Inventory Positioning with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "cross_dock_scheduler",
+      "name": "Cross Dock Scheduler",
+      "description": "Schedule inbound and outbound shipments at cross-dock facilities. Optimizes dock door allocation, identifies bottlenecks, and calculates labor requirements.",
+      "tags": [
+        "logistics",
+        "cross",
+        "dock",
+        "scheduler"
+      ],
+      "examples": [
+        "Use Cross Dock Scheduler to schedule inbound and outbound shipments at cross-dock facilities. Optimizes dock door allocation, identifies bottlenecks, and calculates labor requirements.",
+        "Can you run Cross Dock Scheduler? Inbound is the main input I have.",
+        "Invoke Cross Dock Scheduler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "fleet_utilization_tracker",
+      "name": "Fleet Utilization Tracker",
+      "description": "Track fleet utilization rates, identify idle vehicles, monitor maintenance status, and generate replacement recommendations based on mileage and condition.",
+      "tags": [
+        "logistics",
+        "fleet",
+        "utilization",
+        "tracker"
+      ],
+      "examples": [
+        "Use Fleet Utilization Tracker to track fleet utilization rates, identify idle vehicles, monitor maintenance status, and generate replacement recommendations based on mileage and condition.",
+        "Can you run Fleet Utilization Tracker? Fleet Data is the main input I have.",
+        "Invoke Fleet Utilization Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "carbon_logistics_calculator",
+      "name": "Carbon Logistics Calculator",
+      "description": "Calculate carbon emissions for logistics operations. Provides emissions per kg-km, offset costs, and recommends greener transport alternatives.",
+      "tags": [
+        "logistics",
+        "carbon",
+        "calculator"
+      ],
+      "examples": [
+        "Use Carbon Logistics Calculator to calculate carbon emissions for logistics operations. Provides emissions per kg-km, offset costs, and recommends greener transport alternatives.",
+        "Can you run Carbon Logistics Calculator? Logistics Data is the main input I have.",
+        "Invoke Carbon Logistics Calculator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,195 @@
+{
+  "name": "dsh-tool-cloudops",
+  "description": "云原生AI自动化运营平台 for DSH - 对标K8s自治+FinOps趋势 | Cloud Cost Optimization, K8s Guardian, FinOps Dashboard, Config Drift Detection, Reliability Engineering, Security Posture, Chaos Scheduling, Carbon Tracking",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-cloudops",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-cloudops",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "cost_optimizer",
+      "name": "Cost Optimizer",
+      "description": "Cloud cost optimization: identifies waste, recommends Reserved Instances/Savings Plans, performs cross-cloud price comparison (AWS vs Azure vs GCP), tracks savings trends, generates cost allocation reports with Mermaid Sankey diagrams",
+      "tags": [
+        "cloudops",
+        "cost",
+        "optimizer"
+      ],
+      "examples": [
+        "Use Cost Optimizer to cloud cost optimization: identifies waste, recommends Reserved Instances/Savings Plans, performs cross-cloud price comparison (AWS vs Azure vs GCP), tracks savings trends, generates cost allocation reports with Mermaid Sankey diagrams.",
+        "Can you run Cost Optimizer? Spend is the main input I have.",
+        "Invoke Cost Optimizer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "k8s_guardian",
+      "name": "K8s Guardian",
+      "description": "Kubernetes cluster guardian: anomaly detection (OOMKilled, CrashLoopBackOff, NodeNotReady), auto-horizontal pod scaling recommendations, chaos experiment results, compliance checks against CIS benchmarks, and best practice audits",
+      "tags": [
+        "cloudops",
+        "k8s",
+        "guardian"
+      ],
+      "examples": [
+        "Use K8s Guardian to kubernetes cluster guardian: anomaly detection (OOMKilled, CrashLoopBackOff, NodeNotReady), auto-horizontal pod scaling recommendations, chaos experiment results, compliance checks against CIS benchmarks, and best practice audits.",
+        "Can you run K8s Guardian? Anomaly Count is the main input I have.",
+        "Invoke K8s Guardian with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "finops_reporter",
+      "name": "Finops Reporter",
+      "description": "FinOps dashboard: unit economics analysis (cost per API call, per user, per transaction), budget execution rates per team, anomaly consumption detection, 6-month spend forecasting, and optimization action tracking",
+      "tags": [
+        "cloudops",
+        "finops",
+        "reporter"
+      ],
+      "examples": [
+        "Use Finops Reporter to finOps dashboard: unit economics analysis (cost per API call, per user, per transaction), budget execution rates per team, anomaly consumption detection, 6-month spend forecasting, and optimization action tracking.",
+        "Can you run Finops Reporter? Total Spend is the main input I have.",
+        "Invoke Finops Reporter with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "drift_detector",
+      "name": "Drift Detector",
+      "description": "Configuration drift detection: compares IaC definitions (Terraform, CloudFormation) with live infrastructure, analyzes drift patterns, triggers self-healing remediation, and assesses change impact with blast radius estimation",
+      "tags": [
+        "cloudops",
+        "drift",
+        "detector"
+      ],
+      "examples": [
+        "Use Drift Detector to configuration drift detection: compares IaC definitions (Terraform, CloudFormation) with live infrastructure, analyzes drift patterns, triggers self-healing remediation, and assesses change impact with blast radius estimation.",
+        "Can you run Drift Detector? Resource Count is the main input I have.",
+        "Invoke Drift Detector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "reliability_engineer",
+      "name": "Reliability Engineer",
+      "description": "Site Reliability engineering: SLO management with error budgets, fault tree analysis (Mermaid diagram), MTBF/MTTR trend tracking across months, and reliability improvement recommendations with priority/effort scoring",
+      "tags": [
+        "cloudops",
+        "reliability",
+        "engineer"
+      ],
+      "examples": [
+        "Use Reliability Engineer to site Reliability engineering: SLO management with error budgets, fault tree analysis (Mermaid diagram), MTBF/MTTR trend tracking across months, and reliability improvement recommendations with priority/effort scoring.",
+        "Can you run Reliability Engineer? Slo Count is the main input I have.",
+        "Invoke Reliability Engineer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "security_posture",
+      "name": "Security Posture",
+      "description": "Security posture management (CSPM): multi-framework compliance baseline scanning (CIS, NIST, PCI-DSS, SOC2), exposure surface assessment, risk scoring by category, and remediation prioritization with CVSS/SLA deadlines",
+      "tags": [
+        "cloudops",
+        "security",
+        "posture"
+      ],
+      "examples": [
+        "Use Security Posture to security posture management (CSPM): multi-framework compliance baseline scanning (CIS, NIST, PCI-DSS, SOC2), exposure surface assessment, risk scoring by category, and remediation prioritization with CVSS/SLA deadlines.",
+        "Can you run Security Posture? Finding Count is the main input I have.",
+        "Invoke Security Posture with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "chaos_scheduler",
+      "name": "Chaos Scheduler",
+      "description": "Chaos engineering scheduler: experiment templates (pod-kill, network-latency, CPU-stress, disk-fill, DNS chaos), blast radius controls with containment metrics, safety gates, resilience scoring, and continuous verification workflows",
+      "tags": [
+        "cloudops",
+        "chaos",
+        "scheduler"
+      ],
+      "examples": [
+        "Use Chaos Scheduler to chaos engineering scheduler: experiment templates (pod-kill, network-latency, CPU-stress, disk-fill, DNS chaos), blast radius controls with containment metrics, safety gates, resilience scoring, and continuous verification workflows.",
+        "Can you run Chaos Scheduler? Experiment Count is the main input I have.",
+        "Invoke Chaos Scheduler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "carbon_tracker",
+      "name": "Carbon Tracker",
+      "description": "Carbon emission tracking: cloud carbon footprint analysis per service/region, regional carbon intensity comparison, optimization recommendations, ESG report metrics (Scope 2, PUE, WUE), and carbon neutral pathway projection",
+      "tags": [
+        "cloudops",
+        "carbon",
+        "tracker"
+      ],
+      "examples": [
+        "Use Carbon Tracker to carbon emission tracking: cloud carbon footprint analysis per service/region, regional carbon intensity comparison, optimization recommendations, ESG report metrics (Scope 2, PUE, WUE), and carbon neutral pathway projection.",
+        "Can you run Carbon Tracker? Total Energy Kwh is the main input I have.",
+        "Invoke Carbon Tracker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}

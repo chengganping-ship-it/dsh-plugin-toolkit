@@ -1,0 +1,197 @@
+{
+  "name": "dsh-tool-auditor",
+  "description": "Agent audit - action logging, anomaly detection, compliance, forensics",
+  "url": "https://dsh-plugin-toolkit.dev/.well-known/agent.json/dsh-tool-auditor",
+  "version": "0.1.0",
+  "documentationUrl": "https://github.com/dsh-plugins/dsh-tool-auditor",
+  "capabilities": {
+    "streaming": true,
+    "pushNotifications": false,
+    "stateTransitionHistory": true,
+    "delegation": false,
+    "skillDiscovery": true
+  },
+  "authentication": {
+    "schemes": [
+      "bearer"
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "action_logger",
+      "name": "Action Logger",
+      "description": "Create structured audit log entries for agent actions. Classifies severity (info/warning/critical), determines compliance relevance, assigns retention policies, and generates hash chain integrity markers.",
+      "tags": [
+        "auditor",
+        "action",
+        "logger"
+      ],
+      "examples": [
+        "Use Action Logger to create structured audit log entries for agent actions. Classifies severity (info/warning/critical), determines compliance relevance, assigns retention policies, and generates hash chain integrity markers.",
+        "Can you run Action Logger? Log Input is the main input I have.",
+        "Invoke Action Logger with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "anomaly_detector",
+      "name": "Anomaly Detector",
+      "description": "Detect anomalous agent behavior by comparing action history against a baseline profile. Identifies frequency spikes, duration anomalies, success rate drops, and unfamiliar action patterns with deviation scoring.",
+      "tags": [
+        "auditor",
+        "anomaly",
+        "detector"
+      ],
+      "examples": [
+        "Use Anomaly Detector to detect anomalous agent behavior by comparing action history against a baseline profile. Identifies frequency spikes, duration anomalies, success rate drops, and unfamiliar action patterns with deviation scoring.",
+        "Can you run Anomaly Detector? Action History is the main input I have.",
+        "Invoke Anomaly Detector with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "compliance_checker",
+      "name": "Compliance Checker",
+      "description": "Validate agent actions against compliance policies. Checks for forbidden actions/targets, excessive data access, and missing approvals. Returns detailed violation report with severity classification.",
+      "tags": [
+        "auditor",
+        "compliance",
+        "checker"
+      ],
+      "examples": [
+        "Use Compliance Checker to validate agent actions against compliance policies. Checks for forbidden actions/targets, excessive data access, and missing approvals. Returns detailed violation report with severity classification.",
+        "Can you run Compliance Checker? Actions is the main input I have.",
+        "Invoke Compliance Checker with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "forensics_analyzer",
+      "name": "Forensics Analyzer",
+      "description": "Perform digital forensics analysis on incidents. Reconstructs event timelines, identifies root causes, assesses impact, and provides remediation recommendations with confidence scoring.",
+      "tags": [
+        "auditor",
+        "forensics",
+        "analyzer"
+      ],
+      "examples": [
+        "Use Forensics Analyzer to perform digital forensics analysis on incidents. Reconstructs event timelines, identifies root causes, assesses impact, and provides remediation recommendations with confidence scoring.",
+        "Can you run Forensics Analyzer? Incident Id is the main input I have.",
+        "Invoke Forensics Analyzer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "behavior_profiler",
+      "name": "Behavior Profiler",
+      "description": "Build comprehensive behavior profiles for AI agents. Identifies action preferences, risk appetite, peak activity patterns, automation tendencies, and classifies agents into behavioral archetypes.",
+      "tags": [
+        "auditor",
+        "behavior",
+        "profiler"
+      ],
+      "examples": [
+        "Use Behavior Profiler to build comprehensive behavior profiles for AI agents. Identifies action preferences, risk appetite, peak activity patterns, automation tendencies, and classifies agents into behavioral archetypes.",
+        "Can you run Behavior Profiler? Agent Id is the main input I have.",
+        "Invoke Behavior Profiler with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "policy_violation_scanner",
+      "name": "Policy Violation Scanner",
+      "description": "Scan recent agent actions against active enforcement policies. Supports multiple rule matching strategies (contains, metadata, negation) with risk scoring and prioritization.",
+      "tags": [
+        "auditor",
+        "policy",
+        "violation",
+        "scanner"
+      ],
+      "examples": [
+        "Use Policy Violation Scanner to scan recent agent actions against active enforcement policies. Supports multiple rule matching strategies (contains, metadata, negation) with risk scoring and prioritization.",
+        "Can you run Policy Violation Scanner? Recent Actions is the main input I have.",
+        "Invoke Policy Violation Scanner with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "audit_report_generator",
+      "name": "Audit Report Generator",
+      "description": "Generate comprehensive audit reports with executive summary, severity-graded findings, category breakdown, compliance scoring (0-100), and prioritized recommendations with letter-grade assessment.",
+      "tags": [
+        "auditor",
+        "audit",
+        "report",
+        "generator"
+      ],
+      "examples": [
+        "Use Audit Report Generator to generate comprehensive audit reports with executive summary, severity-graded findings, category breakdown, compliance scoring (0-100), and prioritized recommendations with letter-grade assessment.",
+        "Can you run Audit Report Generator? Audit Scope is the main input I have.",
+        "Invoke Audit Report Generator with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    },
+    {
+      "id": "trajectory_replayer",
+      "name": "Trajectory Replayer",
+      "description": "Replay and analyze agent execution trajectories. Identifies decision points, evaluates alternatives considered, flags critical decisions, and provides optimization suggestions for execution paths.",
+      "tags": [
+        "auditor",
+        "trajectory",
+        "replayer"
+      ],
+      "examples": [
+        "Use Trajectory Replayer to replay and analyze agent execution trajectories. Identifies decision points, evaluates alternatives considered, flags critical decisions, and provides optimization suggestions for execution paths.",
+        "Can you run Trajectory Replayer? Session Id is the main input I have.",
+        "Invoke Trajectory Replayer with the relevant data and return the formatted result."
+      ],
+      "inputModes": [
+        "text/plain"
+      ],
+      "outputModes": [
+        "text/plain"
+      ]
+    }
+  ]
+}
