@@ -1,0 +1,14 @@
+- id: dsh-tool-datacenteragent
+  name: dsh-tool-datacenteragent
+  version: 0.1.0
+  description: 数据中心管理AI Agent工具集 — PUE能效优化、容量规划、冷却系统、配电监测、IT资产、网络拓扑、碳排放、灾备演练
+  author: chengganping-ship-it
+  tools:
+    - pue_optimization_engine
+    - capacity_planning_forecaster
+    - cooling_system_optimizer
+    - power_distribution_monitor
+    - it_asset_lifecycle
+    - network_topology_mapper
+    - datacenter_carbon_tracker
+    - disaster_recovery_planner

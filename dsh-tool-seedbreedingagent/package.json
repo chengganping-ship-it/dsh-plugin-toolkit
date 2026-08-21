@@ -1,0 +1,56 @@
+{
+  "name": "dsh-tool-seedbreedingagent",
+  "version": "1.0.0",
+  "description": "Seed Breeding AI Agent for DeepSeek Harness - Genomic selection with GBLUP, hybrid combination heterosis, field trial BLUP analysis, GWAS QTL mapping, seed quality testing, disease resistance MAS, breeding pipeline management, variety DUS testing",
+  "type": "commonjs",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    "cordis.yml"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "license": "MIT",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "seed-breeding",
+    "genomic-selection",
+    "gblup",
+    "gwas",
+    "qtl",
+    "mas",
+    "field-trial",
+    "blup",
+    "hybrid-combination",
+    "heterosis",
+    "combining-ability",
+    "seed-quality",
+    "disease-resistance",
+    "breeding-pipeline",
+    "dus-testing",
+    "variety-registration"
+  ],
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dsh": {
+    "bundle": "cordis.yml"
+  },
+  "author": "seedbreedingagent"
+}

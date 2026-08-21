@@ -333,4 +333,16 @@
 
 ---
 
-**Total: 181 plugins | 1448 tools**
+## Wave 37 — AI+种子育种+市政管网+船舶制造+数据中心+PCB设计 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 182 | seedbreedingagent | 种子育种 | genomic_selection_predictor, hybrid_combination_optimizer, field_trial_designer, phenotyping_data_analyzer, seed_quality_tester, disease_resistance_screener, breeding_pipeline_manager, variety_registration_advisor |
+| 183 | undergroundutilityagent | 市政管网 | utility_locating_gis, pipe_condition_assessor, leak_detection_gas_water, excavation_risk_mapper, utility_records_digitizer, cathodic_protection_monitor, smart_manhole_monitor, utility_compliance_auditor |
+| 184 | shipbuildingagent | 船舶制造 | hull_design_analyzer, ship_production_scheduler, welding_quality_ai, outfitting_material_estimator, ship_launch_calculation, classification_plan_approval, dry_dock_maintenance, ship_recycling_compliance |
+| 185 | datacenteragent | 数据中心 | pue_optimization_engine, capacity_planning_forecaster, cooling_system_optimizer, power_distribution_monitor, it_asset_lifecycle, network_topology_mapper, datacenter_carbon_tracker, disaster_recovery_planner |
+| 186 | pcbdesignagent | PCB设计 | schematic_drc_checker, pcb_layout_optimizer, thermal_simulation_preview, emi_emc_compliance, dfm_dfx_analysis, component_library_manager, high_speed_design_rules, pcb_stackup_designer |
+
+---
+
+**Total: 186 plugins | 1488 tools**

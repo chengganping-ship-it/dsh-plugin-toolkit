@@ -1,0 +1,16 @@
+{
+  "name": "dsh-tool-undergroundutilityagent",
+  "version": "0.1.0",
+  "description": "Underground Utility Agent - utility locating with GIS, pipe CCTV inspection, leak detection, excavation risk mapping, records digitization, cathodic protection monitoring, smart manhole monitoring, and safety compliance auditing",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": { "build": "tsc" },
+  "keywords": ["dsh", "underground-utility", "pipe-inspection", "leak-detection", "excavation-risk", "cathodic-protection", "manhole-monitor", "compliance", "agent"],
+  "license": "MIT",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": { "typescript": "^5.0.0" }
+}

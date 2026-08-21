@@ -1,0 +1,14 @@
+- id: dsh-tool-shipbuildingagent
+  name: dsh-tool-shipbuildingagent
+  version: 0.1.0
+  description: 船体结构设计与型线优化、造船生产计划与分段舾装、焊接工艺评定与NDT检测、舾装材料统计与托盘管理、下水计算与坞门调度、船级社审图与规范验证、干船坞维修与特检管理、拆船合规与有害物质清单
+  author: shipbuildingagent-dev
+  tools:
+    - hull_design_analyzer
+    - ship_production_scheduler
+    - welding_quality_ai
+    - outfitting_material_estimator
+    - ship_launch_calculation
+    - classification_plan_approval
+    - dry_dock_maintenance
+    - ship_recycling_compliance

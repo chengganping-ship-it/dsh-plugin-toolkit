@@ -1,0 +1,14 @@
+- id: dsh-tool-seedbreedingagent
+  name: dsh-tool-seedbreedingagent
+  version: 1.0.0
+  description: Seed Breeding AI Agent - Genomic selection with GBLUP breeding value prediction, hybrid combination heterosis prediction with general and specific combining ability analysis, field trial design with randomized complete block and alpha lattice designs with BLUP analysis, phenotyping data GWAS with QTL mapping for marker-trait association, seed quality testing with germination rate prediction and vigor indexing, disease resistance MAS screening with marker-assisted selection for resistance genes, breeding pipeline management with generation tracking and selection history, variety registration with DUS testing guide for distinctness uniformity stability evaluation
+  author: seedbreedingagent
+  tools:
+    - genomic_selection_predictor
+    - hybrid_combination_optimizer
+    - field_trial_designer
+    - phenotyping_data_analyzer
+    - seed_quality_tester
+    - disease_resistance_screener
+    - breeding_pipeline_manager
+    - variety_registration_advisor
