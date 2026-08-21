@@ -1,0 +1,5 @@
+name: agentharnessagent
+version: 1.0.0
+description: AI Agent治理工程工具包 — Harness设计/权限审计/编排/失败诊断/输出验证/合规/成本优化/沙箱安全
+author: dsh-plugin-toolkit
+tools: 8

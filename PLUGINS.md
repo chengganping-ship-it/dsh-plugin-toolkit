@@ -295,4 +295,16 @@
 
 ---
 
-**Total: 166 plugins | 1328 tools**
+## Wave 34 — AI+化妆品+Agent治理+无人机配送+殡葬服务+视光眼科 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 167 | cosmeticagentpro | 化妆品研发 | formulation_developer_ai, claim_substantiation_checker, stability_testing_predictor, regulatory_compliance_safety, consumer_sensory_panel_analyzer, packaging_compatibility_tester, preservative_efficacy_predictor, market_trend_ingredient_scanner |
+| 168 | agentharnessagent | Agent治理工程 | agent_harness_designer, agent_permission_auditor, multi_agent_orchestrator, agent_failure_diagnoser, agent_output_validator, agent_governance_policy_writer, agent_cost_optimizer, agent_sandbox_security |
+| 169 | dronedeliveryagent | 无人机配送 | delivery_route_planner, payload_weight_optimizer, weather_go_no_go, battery_range_calculator, airspace_compliance_checker, drone_fleet_dispatcher, noise_impact_assessor, delivery_station_sitter |
+| 170 | funeralagentpro | 殡葬服务 | funeral_service_planner, cemetery_plot_manager, memorial_ceremony_designer, grief_counseling_resource, bereavement_benefit_navigator, funeral_cost_transparency, pre_need_planning_advisor, cultural_ritual_guide |
+| 171 | optometryagentpro | 视光眼科 | prescription_accuracy_checker, frame_fitting_advisor, lens_material_selector, myopia_progression_tracker, contact_lens_fitting, optical_store_inventory, low_vision_rehabilitation, blue_light_protection_advisor |
+
+---
+
+**Total: 171 plugins | 1368 tools**

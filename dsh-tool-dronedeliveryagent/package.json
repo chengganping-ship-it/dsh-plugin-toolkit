@@ -1,0 +1,57 @@
+{
+  "name": "dsh-tool-dronedeliveryagent",
+  "version": "0.1.0",
+  "description": "Drone Delivery AI Agent for DeepSeek Harness - Delivery route planning with BVLOS corridors, payload weight optimization, weather go/no-go decisions, battery range calculation, airspace compliance checking, drone fleet dispatch, noise impact assessment, delivery station planning with visual positioning",
+  "type": "commonjs",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/types/**/*.d.ts",
+    "cordis.yml",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "pack": "npm pack",
+    "prepack": "npm run build"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dronedeliveryagent/dsh-tool-dronedeliveryagent.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "drone",
+    "delivery",
+    "uav",
+    "bvlos",
+    "utm",
+    "fleet-dispatch",
+    "route-planning",
+    "noise-assessment",
+    "delivery-station"
+  ],
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dsh": {
+    "bundle": "cordis.yml"
+  },
+  "author": "dronedeliveryagent"
+}
