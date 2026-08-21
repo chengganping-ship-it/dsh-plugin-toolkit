@@ -151,6 +151,16 @@
 | 105 | agentgovernance | Agent治理安全 | permission_controller, audit_trail_checker, compliance_checker, risk_assessor, data_protection_evaluator, governance_maturity_assessor, incident_response_evaluator, human_oversight_configurator |
 | 106 | agentskillsmarket | Agent技能市场 | skills_inventory_auditor, skill_quality_scorer, skill_discovery_engine, skill_monetization_planner, ecosystem_health_tracker, skill_compatibility_matrix, trending_skills_tracker, skill_security_scanner |
 
+## Wave 22 — 物理AI+GUI Agent+智能体工厂+法律AI+医疗AI (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 107 | physicalaiagent | 物理AI/具身智能 | robot_fleet_manager, digital_twin_monitor, sensor_fusion_analyzer, simulation_environment_evaluator, motion_planning_optimizer, world_model_configurator, physical_deploy_readiness, predictive_maintenance_engine |
+| 108 | guiagentpro | GUI/UI智能体 | screen_understanding_evaluator, click_automation_tracker, cross_app_workflow_analyzer, element_detection_evaluator, task_planning_evaluator, error_recovery_assessor, platform_coverage_mapper, visual_grounding_validator |
+| 109 | agentfactory | 智能体工厂 | template_library_manager, build_pipeline_orchestrator, testing_framework_evaluator, deployment_scale_monitor, cost_optimizer, quality_metrics_tracker, governance_compliance_checker, roi_calculator_tool |
+| 110 | legalagentpro | 法律AI | contract_reviewer, case_prediction_engine, legal_compliance_checker, legal_research_assistant, dispute_resolution_advisor, ip_portfolio_manager_tool, litigation_budget_analyzer, regulatory_change_tracker |
+| 111 | healthagentpro | 医疗AI | rcm_analyzer, clinical_decision_support, medical_coding_assistant, chronic_disease_monitor, patient_engagement_tracker, imaging_ai_evaluator, hospital_operations_optimizer, clinical_trial_matcher |
+
 ---
 
-**Total: 106 plugins | 848 tools**
+**Total: 111 plugins | 888 tools**

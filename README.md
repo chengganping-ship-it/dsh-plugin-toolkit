@@ -1,17 +1,17 @@
 # DSH Plugin Toolkit
 
-> **106 DeepSeek Harness plugins — 848 AI agent tools**
+> **111 DeepSeek Harness plugins — 888 AI agent tools**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek-Harness-orange.svg)](https://deepseek.com/)
-[![106 Plugins](https://img.shields.io/badge/Plugins-106-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
+[![111 Plugins](https://img.shields.io/badge/Plugins-111-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
 
 ---
 
 ## Overview
 
-A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.com/) — the "Everything is a Plugin" AI Agent framework. 106 domain-specific plugins, each with 8 tools, covering enterprise operations, vertical industries, and personal productivity.
+A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.com/) — the "Everything is a Plugin" AI Agent framework. 111 domain-specific plugins, each with 8 tools, covering enterprise operations, vertical industries, and personal productivity.
 
 ## Categories
 
@@ -32,6 +32,11 @@ A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.c
 | Agent Commerce | 1 | 8 |
 | Governance & Security | 1 | 8 |
 | Skills Marketplace | 1 | 8 |
+| Physical AI / Robotics | 1 | 8 |
+| GUI / UI Agent | 1 | 8 |
+| Agent Factory | 1 | 8 |
+| Legal AI | 1 | 8 |
+| Healthcare AI | 1 | 8 |
 
 ## Quick Start
 
@@ -101,10 +106,10 @@ dsh-tool-name/
 
 ## Repository Stats
 
-- **106 plugins** × **8 tools** each = **848 tool implementations**
+- **111 plugins** × **8 tools** each = **888 tool implementations**
 - **100% TypeScript strict** — zero compilation errors
 - **MIT Licensed**
-- **Wave 21 (2026-08)**: agentorch + agentmemory + agentcommerce + agentgovernance + agentskillsmarket
+- **Wave 22 (2026-08)**: physicalaiagent + guiagentpro + agentfactory + legalagentpro + healthagentpro
 
 ## License
 

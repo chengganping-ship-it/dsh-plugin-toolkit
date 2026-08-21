@@ -1,17 +1,26 @@
 {
   "name": "dsh-tool-agentskillsmarket",
-  "version": "0.1.0",
-  "description": "Agent Skills Marketplace - skill listing, discovery, quality scoring, monetization for the 2026 skills economy",
-  "type": "module",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
-  "scripts": { "build": "tsc" },
-  "keywords": ["dsh", "skills-market", "agent", "plugin"],
-  "license": "MIT",
-  "author": "chengganping-ship-it",
+  "version": "1.0.0",
+  "description": "Agent技能市场与Skill经济平台 (dsh-tool-agentskillsmarket)",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit"
+  },
   "dependencies": {
     "@deepseek-ai/cordis": "^4.0.1",
     "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
   },
-  "devDependencies": { "typescript": "^5.0.0" }
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "skills-market",
+    "agent",
+    "plugin"
+  ],
+  "license": "MIT"
 }
