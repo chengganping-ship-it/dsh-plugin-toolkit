@@ -1,6 +1,6 @@
 # DSH Plugin Toolkit
 
-**91 DeepSeek Harness plugins — 1118 tools**
+**96 DeepSeek Harness plugins — 1158 tools**
 
 仓库: https://github.com/chengganping-ship-it/dsh-plugin-toolkit
 
@@ -56,6 +56,11 @@
 | 制造质量AI (质量4.0) | dsh-tool-manufacturingq | SPC+缺陷+来料+CAPA+计量+审核 |
 | 法律电子取证 (eDiscovery) | dsh-tool-legaldiscovery | 收集+审查+聚类+编校+生成+策略 |
 | 医疗收入周期RCM | dsh-tool-healthrcm | 资格+编码+计费+拒付+预授权+分析 |
+| AI翻译本地化 | dsh-tool-linguamaster | 翻译+本地化+文化适配+术语+质量评估 |
+| 客户成功Agent | dsh-tool-customersuccess | 健康度+续约+扩展+倡导+流失+工作负载 |
+| AI公关Agent | dsh-tool-pragent | 媒体+新闻稿+危机+思想领导力+奖项+传播 |
+| 活动策划Agent | dsh-tool-eventorchestrator | 策划+场地+预算+嘉宾+旅程+现场+分析 |
+| 个人财务Agent | dsh-tool-personalfinance | 记账+预算+投资+债务+退休+税务+目标 |
 
 ## Wave 开发路线
 
@@ -79,6 +84,7 @@
 | 16 | 安全+法务+数据+知识+效率 | 5 | AI Agent安全+CLM+CDP+知识图谱+会议 |
 | 17 | 财资+ESG+采购+外勤+预测 | 5 | 财资编排+ESG+采购自动化+外勤+预测 |
 | 18 | 房产+保险+制造+法律+医疗 | 5 | 垂直行业深度专业化全覆盖 |
+| 19 | 翻译+CS+PR+活动+个人财务 | 5 | 个人生产力+企业传播全覆盖 |
 
 ## 快速发布
 
@@ -89,7 +95,7 @@ npm login
 npm publish
 ```
 
-## 完整插件列表 (91个)
+## 完整插件列表 (96个)
 
 | # | 插件 | 分类 | 核心能力 |
 |---|------|------|----------|
@@ -184,6 +190,21 @@ npm publish
 | 89 | dsh-tool-manufacturingq | 制造 | 智能制造质量AI |
 | 90 | dsh-tool-legaldiscovery | 法律 | 法律电子取证eDiscovery |
 | 91 | dsh-tool-healthrcm | 医疗 | 医疗收入周期管理RCM |
+| 92 | dsh-tool-linguamaster | 翻译 | AI翻译与本地化Agent |
+| 93 | dsh-tool-customersuccess | CS | 客户成功管理Agent |
+| 94 | dsh-tool-pragent | 公关 | AI公共关系Agent |
+| 95 | dsh-tool-eventorchestrator | 活动 | 智能活动策划Agent |
+| 96 | dsh-tool-personalfinance | 财务 | 个人财务规划Agent |
+
+## Wave 19 — 个人生产力+企业传播全覆盖
+
+| 领域 | 对标信号 | 我们的插件 |
+|------|----------|----------|
+| 翻译本地化 | AI翻译质量逼近专业译者，本地化需求爆发 | dsh-tool-linguamaster |
+| 客户成功 | CS是SaaS核心指标，健康度+续约+扩展自动化 | dsh-tool-customersuccess |
+| AI公关 | 传播自动化+危机预警+内容生成 | dsh-tool-pragent |
+| 活动策划 | 活动管理AI化+端到端编排 | dsh-tool-eventorchestrator |
+| 个人财务 | 57%可自动化+个人财务规划刚需 | dsh-tool-personalfinance |
 
 ## Wave 18 — 垂直行业深度专业化
 
