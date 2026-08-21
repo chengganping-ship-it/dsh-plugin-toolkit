@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: HRCompAgent v0.1.0
+# HR compensation & benefits AI agent plugin - salary benchmarking, total rewards, pay equity, incentive simulation, compensation banding, benefits optimization, executive comp, global payroll compliance
+
+- id: dsh-tool-hrcompagent
+  name: dsh-tool-hrcompagent
+  version: 0.1.0
+  description: HR Compensation & Benefits AI - salary benchmarking, total rewards statement, pay equity analysis, incentive plan simulation, compensation banding, benefits optimization, executive compensation advisory, global payroll compliance
+  author: chengganping-ship-it
+  tools:
+    - salary_benchmarking_engine
+    - total_rewards_statement_generator
+    - pay_equity_analyzer
+    - incentive_plan_simulator
+    - compensation_banding_designer
+    - benefits_portfolio_optimizer
+    - executive_compensation_advisor
+    - global_payroll_compliance

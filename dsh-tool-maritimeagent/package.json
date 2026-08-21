@@ -1,0 +1,35 @@
+{
+  "name": "dsh-tool-maritimeagent",
+  "version": "0.1.0",
+  "description": "DSH Maritime Agent Plugin for DeepSeek Harness - 船舶能效、航线规划、港口靠泊、碳排放、配载稳性、船员排班、PSC检査、船级社检验",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "maritimeagent-dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maritimeagent-dev/dsh-plugin-toolkit.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "maritime",
+    "shipping",
+    "vessel",
+    "port",
+    "navigation",
+    "IMO",
+    "STCW",
+    "PSC"
+  ]
+}

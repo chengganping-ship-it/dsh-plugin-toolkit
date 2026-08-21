@@ -259,4 +259,16 @@
 
 ---
 
-**Total: 151 plugins | 1208 tools**
+## Wave 31 — AI+车队+矿业+航运+HR薪酬+林业 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 152 | fleetagentpro | 车队管理 | fleet_telematics_analyzer, route_optimization_engine, fuel_consumption_optimizer, vehicle_maintenance_scheduler, driver_safety_scorecard, fleet_utilization_tracker, compliance_regulation_monitor, fleet_electrification_planner |
+| 153 | mineaiagent | 智慧矿业 | mineral_exploration_ai, mine_safety_monitor, mining_equipment_health, mine_production_scheduler, mine_environmental_compliance, mineral_processing_optimizer, mining_cost_analyzer, smart_ventilation_controller |
+| 154 | maritimeagent | 航运海事 | vessel_performance_monitor, maritime_route_planner, port_call_optimizer, maritime_emission_tracker, cargo_loading_planner, crew_management_scheduler, maritime_safety_inspector, ship_maintenance_planner |
+| 155 | hrcompagent | HR薪酬 | salary_benchmarking_engine, total_rewards_statement_generator, pay_equity_analyzer, incentive_plan_simulator, compensation_banding_designer, benefits_portfolio_optimizer, executive_compensation_advisor, global_payroll_compliance |
+| 156 | forestagentpro | 智慧林业 | forest_inventory_analyzer, fire_risk_prediction, timber_harvest_scheduler, reforestation_planner, forest_carbon_sink_calculator, pest_disease_detector, biodiversity_monitor, forest_rights_cadastral_manager |
+
+---
+
+**Total: 156 plugins | 1248 tools**
