@@ -1,0 +1,11 @@
+{
+  "name": "dsh-tool-chemagentpro",
+  "version": "1.0.0",
+  "description": "化工材料AI助手 — 配方优化/工艺放大/合规/催化剂设计/材料信息学/安全毒理/市场定价/聚合物循环经济 (dsh-tool-chemagentpro)",
+  "main": "src/index.ts",
+  "scripts": { "build": "tsc", "dev": "tsc --watch", "typecheck": "tsc --noEmit" },
+  "dependencies": { "@deepseek-ai/cordis": "^4.0.1", "@deepseek-ai/dsh-tools": "^0.0.1-rc.1" },
+  "devDependencies": { "typescript": "^5.0.0" },
+  "keywords": ["dsh","deepseek-harness","chemical","materials","formulation","catalyst","polymer","safety","plugin"],
+  "license": "MIT"
+}

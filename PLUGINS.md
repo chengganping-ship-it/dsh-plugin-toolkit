@@ -199,4 +199,16 @@
 
 ---
 
-**Total: 126 plugins | 1008 tools**
+## Wave 26 — AI+保险+传媒+建筑+酒旅+化工 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 127 | insuragentpro | 保险AI | underwriting_analyzer, claims_processor, actuarial_pricer, insurance_product_designer, reinsurance_strategist, insurance_fraud_detector, policy_lifecycle_manager, insurance_distribution |
+| 128 | mediagentpro | 传媒内容 | content_strategy_planner, audience_growth_analytics, social_media_manager, video_production_optimizer, content_monetization, kols_matchmaker, content_compliance_checker, cross_platform_distribution |
+| 129 | constagentpro | 建筑工程 | project_schedule_optimizer, bim_model_analyzer, construction_safety_monitor, cost_estimation_engine, quality_inspection_ai, subcontractor_manager, green_building_certifier, site_logistics_planner |
+| 130 | hospitalagent | 酒店旅游 | revenue_management, guest_experience_tracker, hotel_operations, marketing_distribution, tourism_product_designer, event_management, housekeeping_optimizer, reputation_management |
+| 131 | chemagentpro | 化工材料 | formulation_optimizer, process_scaleup, regulatory_compliance_chem, catalyst_design, materials_informatics, safety_toxicology, market_pricing_chem, circular_economy_polymer |
+
+---
+
+**Total: 131 plugins | 1048 tools**

@@ -1,0 +1,39 @@
+{
+  "name": "dsh-tool-hospitalagent",
+  "version": "0.1.0",
+  "description": "酒店旅游AI助手 for DeepSeek Harness - 收益管理/宾客体验/酒店运营/营销分销/旅游产品/宴会会务/客房保洁/声誉管理 | Revenue Management, Guest Experience, Hotel Operations, Marketing Distribution, Tourism Product Design, Event Management, Housekeeping Optimizer, Reputation Management",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-plugin-toolkit.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "hotel",
+    "hospitality",
+    "tourism",
+    "revenue-management",
+    "guest-experience",
+    "hotel-operations",
+    "marketing",
+    "tourism-product",
+    "event-management",
+    "housekeeping",
+    "reputation-management",
+    "ai-automation"
+  ]
+}

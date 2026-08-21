@@ -1,0 +1,11 @@
+{
+  "name": "dsh-tool-mediagentpro",
+  "version": "1.0.0",
+  "description": "传媒内容AI助手 — 内容策略/用户增长/社媒运营/视频产能/商业化/达人匹配/合规检查/跨平台分发 (dsh-tool-mediagentpro)",
+  "main": "src/index.ts",
+  "scripts": { "build": "tsc", "dev": "tsc --watch", "typecheck": "tsc --noEmit" },
+  "dependencies": { "@deepseek-ai/cordis": "^4.0.1", "@deepseek-ai/dsh-tools": "^0.0.1-rc.1" },
+  "devDependencies": { "typescript": "^5.0.0" },
+  "keywords": ["dsh","deepseek-harness","media","content","social-media","kol","influencer","plugin"],
+  "license": "MIT"
+}

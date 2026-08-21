@@ -1,0 +1,11 @@
+{
+  "name": "dsh-tool-constagentpro",
+  "version": "1.0.0",
+  "description": "建筑工程AI助手 — 建筑工程全生命周期智能体 (dsh-tool-constagentpro)",
+  "main": "src/index.ts",
+  "scripts": { "build": "tsc", "dev": "tsc --watch", "typecheck": "tsc --noEmit" },
+  "dependencies": { "@deepseek-ai/cordis": "^4.0.1", "@deepseek-ai/dsh-tools": "^0.0.1-rc.1" },
+  "devDependencies": { "typescript": "^5.0.0" },
+  "keywords": ["dsh","deepseek-harness","construction","building","engineering","plugin"],
+  "license": "MIT"
+}
