@@ -283,4 +283,16 @@
 
 ---
 
-**Total: 161 plugins | 1288 tools**
+## Wave 33 — AI+半导体+宠物医疗+音乐制作+宗教文化+纺织服装 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 162 | semiconagentpro | 半导体AI | yield_optimization_engine, chip_design_verifier, equipment_predictive_maintenance, process_integration_advisor, defect_classification_ai, mask_data_prep_optimizer, semiconductor_supply_chain, fab_energy_sustainability |
+| 163 | petcareagentpro | 宠物医疗 | pet_symptom_checker, pet_nutrition_planner, vaccination_scheduler, pet_behavior_analyzer, pet_insurance_advisor, veterinary_clinic_manager, pet_dental_health_tracker, senior_pet_care_planner |
+| 164 | musicprodagent | 音乐制作 | chord_progression_generator, melody_composer_ai, mixing_engine_advisor, mastering_chain_designer, sample_library_organizer, music_copyright_checker, arrangement_structurer, ai_music_generator_prompt |
+| 165 | religstudiesagent | 宗教文化 | scripture_comparative_analyzer, religious_history_timeline, interfaith_dialogue_facilitator, ritual_practice_guide, religious_geography_mapper, theology_concept_explainer, religious_text_translator, religious_freedom_monitor |
+| 166 | textileagentpro | 纺织服装 | fabric_quality_inspector, dyeing_process_optimizer, textile_machine_scheduler, yarn_strength_predictor, textile_waste_reducer, sustainable_textile_auditor, textile_cost_calculator, smart_warehouse_textile |
+
+---
+
+**Total: 166 plugins | 1328 tools**

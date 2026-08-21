@@ -1,0 +1,14 @@
+- id: dsh-tool-semiconagentpro
+  name: dsh-tool-semiconagentpro
+  version: 0.1.0
+  description: 半导体AI智能体 - 晶圆良率优化、芯片设计验证、设备预测性维护、工艺整合、缺陷分类、光罩数据、供应链、能耗管理
+  author: semiconagentpro-dev
+  tools:
+    - yield_optimization_engine
+    - chip_design_verifier
+    - equipment_predictive_maintenance
+    - process_integration_advisor
+    - defect_classification_ai
+    - mask_data_prep_optimizer
+    - semiconductor_supply_chain
+    - fab_energy_sustainability

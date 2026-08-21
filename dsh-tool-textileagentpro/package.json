@@ -1,0 +1,11 @@
+{
+  "name": "dsh-tool-textileagentpro",
+  "version": "1.0.0",
+  "description": "纺织制造AI助手 — 面料质检、染色优化、织机排产、纱线预测、排料优化、可持续认证、成本核算、智能仓储智能体 (dsh-tool-textileagentpro)",
+  "main": "src/index.ts",
+  "scripts": { "build": "tsc", "dev": "tsc --watch", "typecheck": "tsc --noEmit" },
+  "dependencies": { "@deepseek-ai/cordis": "^4.0.1", "@deepseek-ai/dsh-tools": "^0.0.1-rc.1" },
+  "devDependencies": { "typescript": "^5.0.0" },
+  "keywords": ["dsh","deepseek-harness","textile","manufacturing","fabric","dyeing","loom","plugin"],
+  "license": "MIT"
+}

@@ -1,11 +1,11 @@
 # DSH Plugin Toolkit
 
-> **161 DeepSeek Harness plugins — 1288 AI agent tools**
+> **166 DeepSeek Harness plugins — 1328 AI agent tools**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek-Harness-orange.svg)](https://deepseek.com/)
-[![161 Plugins](https://img.shields.io/badge/Plugins-161-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
+[![166 Plugins](https://img.shields.io/badge/Plugins-166-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
 
 ---
 
@@ -87,6 +87,11 @@ A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.c
 | Translation & Localization | 1 | 8 |
 | Museum & Archive | 1 | 8 |
 | Water Utility | 1 | 8 |
+| Semiconductor AI | 1 | 8 |
+| Pet Care & Veterinary | 1 | 8 |
+| Music Production | 1 | 8 |
+| Religious Studies | 1 | 8 |
+| Textile Manufacturing | 1 | 8 |
 
 ## Quick Start
 
@@ -156,9 +161,10 @@ dsh-tool-name/
 
 ## Repository Stats
 
-- **161 plugins** × **8 tools** each = **1288 tool implementations**
+- **166 plugins** × **8 tools** each = **1328 tool implementations**
 - **100% TypeScript strict** — zero compilation errors
 - **MIT Licensed**
+- **Wave 33 (2026-08)**: semiconagentpro + petcareagentpro + musicprodagent + religstudiesagent + textileagentpro
 - **Wave 32 (2026-08)**: patentagentpro + wasteagentpro + translocaleagent + museumagentpro + waterutilityagent
 - **Wave 31 (2026-08)**: fleetagentpro + mineaiagent + maritimeagent + hrcompagent + forestagentpro
 - **Wave 30 (2026-08)**: sportagentpro + fashiontechagent + carbontradingagent + agedcareagent + aquafishagent
