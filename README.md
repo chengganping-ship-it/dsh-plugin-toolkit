@@ -1,11 +1,11 @@
 # DSH Plugin Toolkit
 
-> **171 DeepSeek Harness plugins — 1368 AI agent tools**
+> **176 DeepSeek Harness plugins — 1408 AI agent tools**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek-Harness-orange.svg)](https://deepseek.com/)
-[![171 Plugins](https://img.shields.io/badge/Plugins-171-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
+[![176 Plugins](https://img.shields.io/badge/Plugins-176-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
 
 ---
 
@@ -97,6 +97,11 @@ A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.c
 | Drone Delivery | 1 | 8 |
 | Funeral Services | 1 | 8 |
 | Optometry & Eye Care | 1 | 8 |
+| Wealth Management | 1 | 8 |
+| Wedding Planning | 1 | 8 |
+| Disaster Response | 1 | 8 |
+| Elevator Safety | 1 | 8 |
+| Smart Power Grid | 1 | 8 |
 
 ## Quick Start
 
@@ -166,9 +171,10 @@ dsh-tool-name/
 
 ## Repository Stats
 
-- **171 plugins** × **8 tools** each = **1368 tool implementations**
+- **176 plugins** × **8 tools** each = **1408 tool implementations**
 - **100% TypeScript strict** — zero compilation errors
 - **MIT Licensed**
+- **Wave 35 (2026-08)**: wealthagentpro + weddingagentpro + disasterresponseagent + elevatorsafetyagent + powergridagent
 - **Wave 34 (2026-08)**: cosmeticagentpro + agentharnessagent + dronedeliveryagent + funeralagentpro + optometryagentpro
 - **Wave 33 (2026-08)**: semiconagentpro + petcareagentpro + musicprodagent + religstudiesagent + textileagentpro
 - **Wave 32 (2026-08)**: patentagentpro + wasteagentpro + translocaleagent + museumagentpro + waterutilityagent

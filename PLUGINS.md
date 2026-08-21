@@ -307,4 +307,16 @@
 
 ---
 
-**Total: 171 plugins | 1368 tools**
+## Wave 35 — AI+财富管理+婚庆策划+灾害响应+电梯安全+智能电网 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 172 | wealthagentpro | 财富管理 | portfolio_analyzer, risk_tolerance_assessor, tax_loss_harvester, retirement_planner, fund_screener, insurance_gap_analyzer, goal_based_investing, behavioral_finance_coach |
+| 173 | weddingagentpro | 婚庆策划 | wedding_budget_planner, venue_selector, wedding_timeline_scheduler, vendor_comparison, wedding_theme_designer, guest_list_manager, wedding_attire_advisor, honeymoon_planner |
+| 174 | disasterresponseagent | 灾害应急响应 | earthquake_impact_estimator, evacuation_route_planner, relief_supply_dispatch, shelter_capacity_manager, early_warning_correlator, casualty_triage_advisor, infrastructure_damage_mapper, recovery_rebuild_planner |
+| 175 | elevatorsafetyagent | 电梯/特种设备 | elevator_fault_predictor, elevator_inspection_scheduler, elevator_iot_monitor, special_equipment_compliance, elevator_modernization_advisor, elevator_energy_auditor, elevator_rescue_simulator, elevator_lifecycle_cost |
+| 176 | powergridagent | 智能电网 | load_forecasting_engine, grid_stability_analyzer, distributed_energy_manager, fault_location_isolation, power_quality_monitor, demand_response_coordinator, grid_asset_management, electricity_market_trader |
+
+---
+
+**Total: 176 plugins | 1408 tools**

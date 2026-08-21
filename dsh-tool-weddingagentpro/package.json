@@ -1,0 +1,34 @@
+{
+  "name": "dsh-tool-weddingagentpro",
+  "version": "0.1.0",
+  "description": "婚礼策划AI助手 for DSH - 婚庆预算分配、婚宴场地筛选、婚礼筹备排期、四大金刚比价、主题色系设计、宾客名单管理、婚纱礼服建议、蜜月旅行规划",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-plugin-toolkit.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "wedding",
+    "wedding-planner",
+    "venue",
+    "vendor",
+    "honeymoon",
+    "bridal",
+    "event-planning"
+  ]
+}

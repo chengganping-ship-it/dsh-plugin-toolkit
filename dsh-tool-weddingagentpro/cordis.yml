@@ -1,0 +1,14 @@
+- id: dsh-tool-weddingagentpro
+  name: dsh-tool-weddingagentpro
+  version: 0.1.0
+  description: 婚礼策划AI助手 - 婚庆预算分配与成本控制、婚宴场地筛选与档期协调、婚礼筹备倒计时与任务排期、婚庆四大金刚比价与档期锁定、婚礼主题色系VI设计推荐、宾客名单管理与座位安排、婚纱礼服与搭配建议、蜜月旅行方案与签证建议
+  author: chengganping-ship-it
+  tools:
+    - wedding_budget_planner
+    - venue_selector
+    - wedding_timeline_scheduler
+    - vendor_comparison
+    - wedding_theme_designer
+    - guest_list_manager
+    - wedding_attire_advisor
+    - honeymoon_planner

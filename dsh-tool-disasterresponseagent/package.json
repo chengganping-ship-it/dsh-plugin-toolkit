@@ -1,0 +1,32 @@
+{
+  "name": "dsh-tool-disasterresponseagent",
+  "version": "0.1.0",
+  "description": "灾害应急响应AI智能体 for DSH - 地震评估、疏散规划、物资调度、避难管理、预警关联、伤员分拣、损毁遥感、灾后重建",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "dsh-disasterresponse-agent",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsh-plugin-toolkit/dsh-tool-disasterresponseagent.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "disaster-response",
+    "emergency-management",
+    "earthquake",
+    "evacuation",
+    "relief",
+    "humanitarian"
+  ]
+}

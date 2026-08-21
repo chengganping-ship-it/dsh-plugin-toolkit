@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Elevator & Special Equipment Safety AI Agent v0.1.0
+# Fault prediction, inspection scheduling, IoT monitoring, compliance, modernization, energy audit, rescue simulation, lifecycle cost
+
+- id: dsh-tool-elevatorsafetyagent
+  name: dsh-tool-elevatorsafetyagent
+  version: 0.1.0
+  description: Elevator & Special Equipment Safety AI Agent - Fault prediction with entrapment warning, annual inspection and maintenance scheduling, IoT running data with vibration/door motor analysis, special equipment compliance with registration management, old elevator modernization with cost estimation, elevator energy consumption with retrofit analysis, elevator rescue drill with emergency plan, and total lifecycle cost with scrap assessment
+  author: chengganping-ship-it
+  tools:
+    - elevator_fault_predictor
+    - elevator_inspection_scheduler
+    - elevator_iot_monitor
+    - special_equipment_compliance
+    - elevator_modernization_advisor
+    - elevator_energy_auditor
+    - elevator_rescue_simulator
+    - elevator_lifecycle_cost
