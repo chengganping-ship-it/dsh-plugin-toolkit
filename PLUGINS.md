@@ -223,4 +223,16 @@
 
 ---
 
-**Total: 136 plugins | 1088 tools**
+## Wave 28 — AI+招聘+公关+营销+客户成功+食品饮料 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 137 | recruitagentpro | AI招聘 | resume_parser, candidate_matcher, interview_scheduler, talent_pool_analyzer, job_description_optimizer, offer_comparator, sourcing_strategy, diversity_metrics |
+| 138 | pragentpro | 媒介宣发 | press_release_distributor, media_relations_tracker, kol_strategy_manager, brand_sentiment_monitor, content_amplifier, campaign_effectiveness, editorial_calendar_editor, influencer_roi_calculator |
+| 139 | marketingagentpro | 营销AI(MAGIC) | insight_miner, campaign_architect, content_generator, engagement_interactor, performance_checker, audience_segmentor, brand_voice_curator, marketing_automation |
+| 140 | csagentpro | 客户成功 | health_score_calculator, churn_predictor, expansion_identifier, onboarding_optimizer, qbr_generator, advocacy_program, ticket_trend_analyzer, lifecycle_stage_manager |
+| 141 | foodagentpro | 食品饮料 | recipe_innovator, quality_control_ai, supply_chain_food, menu_optimizer, food_safety_auditor, consumer_taste_analyzer, cold_chain_monitor, regulatory_compliance |
+
+---
+
+**Total: 141 plugins | 1128 tools**

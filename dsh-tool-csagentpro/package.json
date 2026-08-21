@@ -1,0 +1,37 @@
+{
+  "name": "dsh-tool-csagentpro",
+  "version": "0.1.0",
+  "description": "客户成功AI智能体专业版 for DSH - 健康度评分、流失预测、增购识别、Onboarding优化、QBR生成、推荐计划、工单分析、生命周期管理",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-plugin-toolkit.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "customer-success",
+    "cs",
+    "health-score",
+    "churn",
+    "expansion",
+    "onboarding",
+    "qbr",
+    "advocacy",
+    "ticket-analysis",
+    "lifecycle"
+  ]
+}

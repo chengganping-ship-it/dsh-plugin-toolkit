@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: AI Media Publicity & PR Pro Agent v0.1.0
+# AI-powered media publicity and public relations toolkit - Press release distribution, media relations, KOL strategy, sentiment monitoring, content amplification, campaign ROI, editorial calendar, influencer management
+
+- id: dsh-tool-pragentpro
+  name: dsh-tool-pragentpro
+  version: 0.1.0
+  description: AI Media Publicity & PR Pro Agent - Press release auto-distribution with media matching, media relations tracking with journalist profiling, KOL collaboration strategy and performance tracking, brand sentiment monitoring and crisis alerts, content amplification and SEO optimization, campaign effectiveness attribution and ROI analysis, editorial calendar planning and content pipeline management, influencer marketing ROI calculator and scheduling
+  author: chengganping-ship-it
+  tools:
+    - press_release_distributor
+    - media_relations_tracker
+    - kol_strategy_manager
+    - brand_sentiment_monitor
+    - content_amplifier
+    - campaign_effectiveness
+    - editorial_calendar_editor
+    - influencer_roi_calculator

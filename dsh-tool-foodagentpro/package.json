@@ -1,0 +1,11 @@
+{
+  "name": "dsh-tool-foodagentpro",
+  "version": "1.0.0",
+  "description": "Food & Beverage Industry AI Agent — recipe innovation, quality control, supply chain, menu optimization, food safety, consumer taste, cold chain, regulatory compliance (dsh-tool-foodagentpro)",
+  "main": "src/index.ts",
+  "scripts": { "build": "tsc", "dev": "tsc --watch", "typecheck": "tsc --noEmit" },
+  "dependencies": { "@deepseek-ai/cordis": "^4.0.1", "@deepseek-ai/dsh-tools": "^0.0.1-rc.1" },
+  "devDependencies": { "typescript": "^5.0.0" },
+  "keywords": ["dsh","deepseek-harness","food","beverage","recipe","quality","supply-chain","food-safety","plugin"],
+  "license": "MIT"
+}
