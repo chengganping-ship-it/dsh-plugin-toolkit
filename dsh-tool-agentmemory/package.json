@@ -1,0 +1,13 @@
+{
+  "name": "dsh-tool-agentmemory",
+  "version": "1.0.0",
+  "description": "Agent记忆管理与知识检索系统",
+  "main": "src/index.ts",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

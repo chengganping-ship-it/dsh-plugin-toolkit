@@ -141,6 +141,16 @@
 | 100 | agentbuildercit | Agent建造师 | requirements_decomposer, workflow_architect, tool_chain_orchestrator, memory_system_configurator, agent_test_simulator, integration_readiness_checker, developer_suitability_assessment, agent_governance_configurator |
 | 101 | supplyriskshield | 供应链韧性 | multi_tier_visibility, disruption_predictor, supplier_resilience_scorer, scenario_simulator, alternative_sourcing_matcher, geopolitics_risk_scanner, pcrf_health_assessment, logistics_network_optimizer |
 
+## Wave 21 — 多Agent协同+记忆系统+Agent商业化+治理安全+Skills经济 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 102 | agentorch | 多Agent编排(A2A) | a2a_protocol_analyzer, task_router, shared_memory_configurator, agent_team_architect, cross_platform_interop_checker, agent_identity_registry, collaboration_effectiveness_tracker, agent_lifecycle_manager |
+| 103 | agentmemory | Agent记忆管理 | memory_architecture_auditor, working_memory_analyzer, long_term_memory_evaluator, memory_compression_advisor, knowledge_graph_analyzer, retrieval_quality_assessor, memory_lifecycle_manager, memory_migration_planner |
+| 104 | agentcommerce | Agent商业化平台 | service_integration_readiness, transaction_routing_monitor, merchant_onboarding_assessor, consumer_intent_matcher, agent_storefront_evaluator, cross_industry_potential_scanner, revenue_model_optimizer, agent_payment_routing |
+| 105 | agentgovernance | Agent治理安全 | permission_controller, audit_trail_checker, compliance_checker, risk_assessor, data_protection_evaluator, governance_maturity_assessor, incident_response_evaluator, human_oversight_configurator |
+| 106 | agentskillsmarket | Agent技能市场 | skills_inventory_auditor, skill_quality_scorer, skill_discovery_engine, skill_monetization_planner, ecosystem_health_tracker, skill_compatibility_matrix, trending_skills_tracker, skill_security_scanner |
+
 ---
 
-**Total: 101 plugins | 808 tools**
+**Total: 106 plugins | 848 tools**

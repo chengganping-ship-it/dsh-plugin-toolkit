@@ -1,0 +1,19 @@
+{
+  "name": "dsh-tool-agentcommerce",
+  "version": "0.1.0",
+  "description": "Agent商业化与智能体电商平台：服务接入就绪度、交易路由、商户评估、意图匹配、店铺组件、跨行业扫描、收入模型",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@deepseek-ai/dsh-tools": "latest",
+    "@deepseek-ai/cordis": "latest"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  },
+  "license": "MIT"
+}

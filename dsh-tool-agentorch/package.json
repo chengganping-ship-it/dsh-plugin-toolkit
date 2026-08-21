@@ -1,0 +1,17 @@
+{
+  "name": "dsh-tool-agentorch",
+  "version": "0.1.0",
+  "description": "Multi-Agent Orchestration Platform - A2A protocol, agent team coordination, task routing, shared memory, cross-platform interoperability for enterprise agent ecosystems",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": { "build": "tsc" },
+  "keywords": ["dsh", "multi-agent", "a2a", "orchestration", "agent"],
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": { "typescript": "^5.0.0" }
+}
