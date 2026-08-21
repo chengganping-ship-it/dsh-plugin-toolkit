@@ -1,0 +1,58 @@
+{
+  "name": "dsh-tool-carbontradingagent",
+  "version": "0.1.0",
+  "description": "Carbon Trading AI Agent for DeepSeek Harness - Carbon price prediction, offset portfolio optimization, compliance gap analysis, carbon footprint calculation, ETS market analysis, carbon neutrality roadmap, international carbon credit mechanisms, and carbon disclosure reporting",
+  "type": "commonjs",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/**/*.d.ts",
+    "cordis.yml"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "pack": "npm pack",
+    "prepack": "npm run build"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-carbontradingagent.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "carbon-trading",
+    "carbon-market",
+    "ets",
+    "carbon-credit",
+    "ccer",
+    "cdm",
+    "carbon-neutrality",
+    "tcfd",
+    "cdp",
+    "carbon-disclosure",
+    "iso-14064"
+  ],
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dsh": {
+    "bundle": "cordis.yml"
+  },
+  "author": "chengganping-ship-it"
+}

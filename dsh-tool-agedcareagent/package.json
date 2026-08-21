@@ -1,0 +1,34 @@
+{
+  "name": "dsh-tool-agedcareagent",
+  "version": "0.1.0",
+  "description": "智慧养老AI智能体插件 - 跌倒检测、用药管理、认知监测、ADL评估、社交陪伴、生命体征、营养膳食、机构运营",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "agedcareagent-dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agedcareagent-dev/dsh-plugin-toolkit.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "elderly-care",
+    "aged-care",
+    "healthcare",
+    "fall-detection",
+    "medication",
+    "cognitive-health",
+    "ai-agent"
+  ]
+}

@@ -1,11 +1,11 @@
 # DSH Plugin Toolkit
 
-> **146 DeepSeek Harness plugins — 1168 AI agent tools**
+> **151 DeepSeek Harness plugins — 1208 AI agent tools**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek-Harness-orange.svg)](https://deepseek.com/)
-[![146 Plugins](https://img.shields.io/badge/Plugins-146-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
+[![151 Plugins](https://img.shields.io/badge/Plugins-151-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
 
 ---
 
@@ -72,6 +72,11 @@ A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.c
 | Smart Home | 1 | 8 |
 | Creative Tools | 1 | 8 |
 | GLP Compliance | 1 | 8 |
+| Sports Intelligence | 1 | 8 |
+| Fashion Tech | 1 | 8 |
+| Carbon Trading | 1 | 8 |
+| Smart Elderly Care | 1 | 8 |
+| Aquaculture & Fisheries | 1 | 8 |
 
 ## Quick Start
 
@@ -141,9 +146,10 @@ dsh-tool-name/
 
 ## Repository Stats
 
-- **146 plugins** × **8 tools** each = **1168 tool implementations**
+- **151 plugins** × **8 tools** each = **1208 tool implementations**
 - **100% TypeScript strict** — zero compilation errors
 - **MIT Licensed**
+- **Wave 30 (2026-08)**: sportagentpro + fashiontechagent + carbontradingagent + agedcareagent + aquafishagent
 - **Wave 29 (2026-08)**: mentalhealthagentpro + ecomagentpro + smarthomeagent + creativeagentpro + glpcomplianceagent
 - **Wave 28 (2026-08)**: recruitagentpro + pragentpro + marketingagentpro + csagentpro + foodagentpro
 - **Wave 27 (2026-08)**: pharmaaiagent + telecomaiagent + autoafteragent + safetyagentpro + cultouragent

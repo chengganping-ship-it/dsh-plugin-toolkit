@@ -1,0 +1,14 @@
+- id: dsh-tool-agedcareagent
+  name: dsh-tool-agedcareagent
+  version: 0.1.0
+  description: 智慧养老AI智能体 - 跌倒检测算法评估、用药依从性追踪、认知功能衰退监测、ADL活动识别、社交陪伴干预、生命体征远程监护、营养吞咽安全饮食、养老机构运营调度
+  author: agedcareagent-dev
+  tools:
+    - fall_detection_system
+    - medication_adherence_tracker
+    - cognitive_health_monitor
+    - daily_activity_recognizer
+    - social_companion_scheduler
+    - vital_signs_monitor
+    - nutrition_diet_planner
+    - elder_care_facility_manager

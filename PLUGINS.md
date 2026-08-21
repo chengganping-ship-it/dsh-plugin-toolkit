@@ -247,4 +247,16 @@
 
 ---
 
-**Total: 146 plugins | 1168 tools**
+## Wave 30 — AI+体育+时尚+碳交易+智慧养老+水产 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 147 | sportagentpro | 体育AI | performance_analyzer, injury_risk_predictor, training_load_optimizer, match_tactic_planner, talent_scouting_ai, nutrition_recovery_planner, referee_decision_auditor, sports_business_analytics |
+| 148 | fashiontechagent | 时尚科技 | trend_forecaster, style_recommender, virtual_tryon_stylist, fashion_inventory_optimizer, sustainable_fashion_auditor, fashion_pricing_engine, fashion_show_planner, influencer_collaboration_finder |
+| 149 | carbontradingagent | 碳交易 | carbon_price_predictor, offset_portfolio_optimizer, compliance_gap_analyzer, carbon_footprint_calculator, ets_market_analyzer, carbon_neutrality_roadmap, ccrd_international_mechanism, carbon_disclosure_reporter |
+| 150 | agedcareagent | 智慧养老 | fall_detection_system, medication_adherence_tracker, cognitive_health_monitor, daily_activity_recognizer, social_companion_scheduler, vital_signs_monitor, nutrition_diet_planner, elder_care_facility_manager |
+| 151 | aquafishagent | 水产/渔业 | water_quality_monitor, fish_health_diagnostician, feed_optimization_engine, stocking_density_calculator, aquaculture_iot_manager, harvest_timing_predictor, aquaculture_risk_assessor, fisheries_supply_chain_trace |
+
+---
+
+**Total: 151 plugins | 1208 tools**

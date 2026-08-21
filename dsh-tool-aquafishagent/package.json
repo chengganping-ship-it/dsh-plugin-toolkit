@@ -1,0 +1,58 @@
+{
+  "name": "dsh-tool-aquafishagent",
+  "version": "0.1.0",
+  "description": "Aquaculture & Fishery AI Agent for DeepSeek Harness - Water quality monitoring, fish disease diagnosis, feed optimization, stocking density, IoT management, harvest prediction, risk assessment, supply chain traceability",
+  "type": "commonjs",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/types/**/*.d.ts",
+    "cordis.yml",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "pack": "npm pack",
+    "prepack": "npm run build"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aquafishagent/dsh-tool-aquafishagent.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "aquaculture",
+    "fishery",
+    "fish-farming",
+    "shrimp",
+    "water-quality",
+    "feed-optimization",
+    "iot",
+    "harvest",
+    "risk-assessment",
+    "supply-chain"
+  ],
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dsh": {
+    "bundle": "cordis.yml"
+  },
+  "author": "aquafishagent"
+}
