@@ -1,0 +1,11 @@
+{
+  "name": "dsh-tool-patentagentpro",
+  "version": "1.0.0",
+  "description": "专利分析AI助手 — 专利地图、现有技术检索、价值评估、FTO分析、组合管理、撰写辅助、竞品监控、许可优化 (dsh-tool-patentagentpro)",
+  "main": "src/index.ts",
+  "scripts": { "build": "tsc", "dev": "tsc --watch", "typecheck": "tsc --noEmit" },
+  "dependencies": { "@deepseek-ai/cordis": "^4.0.1", "@deepseek-ai/dsh-tools": "^0.0.1-rc.1" },
+  "devDependencies": { "typescript": "^5.0.0" },
+  "keywords": ["dsh","deepseek-harness","patent","ip","intellectual-property","analytics","plugin"],
+  "license": "MIT"
+}

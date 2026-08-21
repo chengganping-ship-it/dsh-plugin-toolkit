@@ -1,0 +1,17 @@
+{
+  "name": "dsh-tool-waterutilityagent",
+  "version": "0.1.0",
+  "description": "Water Utility Agent - water quality monitoring, leak detection, pump optimization, demand forecasting, pipe aging assessment, wastewater treatment, billing analytics, and flood prevention for urban water utilities",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": { "build": "tsc" },
+  "keywords": ["dsh", "water-utility", "water-quality", "leak-detection", "pump-optimization", "wastewater", "flood-prevention", "agent"],
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": { "typescript": "^5.0.0" }
+}

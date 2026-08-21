@@ -1,0 +1,14 @@
+- id: dsh-tool-translocaleagent
+  name: dsh-tool-translocaleagent
+  version: 0.1.0
+  description: 翻译与本地化智能体引擎 - 翻译质量评估、术语管理、本地化就绪审查、MT译后编辑、文化适配、多语言SEO、字幕生成、成本估算
+  author: chengganping-ship-it
+  tools:
+    - translation_quality_evaluator
+    - terminology_manager
+    - localization_readiness_auditor
+    - machine_translation_post_edit
+    - cultural_adaptation_advisor
+    - multilingual_seo_optimizer
+    - subtitle_sync_generator
+    - localization_cost_estimator

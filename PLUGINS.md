@@ -271,4 +271,16 @@
 
 ---
 
-**Total: 156 plugins | 1248 tools**
+## Wave 32 — AI+专利+固废+翻译+博物馆+水务 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 157 | patentagentpro | 专利分析 | patent_landscape_mapper, prior_art_searcher, patent_valuation_engine, infringement_risk_analyzer, ip_portfolio_strategist, patent_drafting_assistant, competitor_ip_tracker, licensing_revenue_optimizer |
+| 158 | wasteagentpro | 固废处理 | waste_composition_analyzer, recycling_route_optimizer, landfill_operation_manager, waste_to_energy_planner, hazardous_waste_tracker, circular_economy_mapper, smart_bin_monitor, carbon_credit_from_waste |
+| 159 | translocaleagent | 翻译本地化 | translation_quality_evaluator, terminology_manager, localization_readiness_auditor, machine_translation_post_edit, cultural_adaptation_advisor, multilingual_seo_optimizer, subtitle_sync_generator, localization_cost_estimator |
+| 160 | museumagentpro | 博物馆档案 | collection_digitization_planner, exhibition_curator_ai, artifact_conservation_monitor, visitor_flow_analyzer, collection_cataloging_assistant, cultural_heritage_research, museum_accessibility_auditor, museum_revenue_optimizer |
+| 161 | waterutilityagent | 水务管理 | water_quality_monitor, leak_detection_locator, pump_station_optimizer, water_demand_forecaster, pipe_network_aging_assessor, wastewater_treatment_monitor, water_billing_analytics, flood_prevention_early_warning |
+
+---
+
+**Total: 161 plugins | 1288 tools**

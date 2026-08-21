@@ -1,0 +1,17 @@
+{
+  "name": "dsh-tool-translocaleagent",
+  "version": "0.1.0",
+  "description": "翻译与本地化智能体引擎 for DSH - 翻译质量评估、术语管理、本地化就绪审查、MT译后编辑、文化适配、多语言SEO、字幕生成、成本估算",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": { "build": "tsc" },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": { "typescript": "^5.0.0" },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": { "type": "git", "url": "git+https://github.com/chengganping-ship-it/dsh-plugin-toolkit.git" },
+  "keywords": ["dsh", "deepseek-harness", "translation", "localization", "i18n", "l10n", "mtpe", "seo", "subtitle", "ai-agent"]
+}
