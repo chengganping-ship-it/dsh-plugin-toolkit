@@ -211,4 +211,16 @@
 
 ---
 
-**Total: 131 plugins | 1048 tools**
+## Wave 27 — AI+制药+通信+汽车后市场+公共安全+文旅 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 132 | pharmaaiagent | AI制药 | target_identification, lead_optimization, clinical_trial_designer, regulatory_pathway_advisor, biomarker_discovery, formulation_development, pharmacovigilance_ai, competitive_landscape |
+| 133 | telecomaiagent | 通信AI | network_optimization, fault_diagnosis_ai, spectrum_management, customer_experience_mgmt, smart_billing_assurance, energy_efficiency_network, sla_performance_monitor, new_gulf_service_designer |
+| 134 | autoafteragent | 汽车后市场 | used_car_valuation, vehicle_inspection_ai, predictive_maintenance_after, parts_pricing_sourcing, insurance_claims_estimator, workshop_operations, customer_lifecycle_after, ev_battery_health |
+| 135 | safetyagentpro | 公共安全 | crime_hotspot_analysis, emergency_dispatch_optimizer, disaster_loss_estimation, crowd_safety_monitor, fire_safety_inspection, traffic_safety_analytics, food_drug_safety, resilience_planning |
+| 136 | cultouragent | 文化旅游 | destination_marketing, heritage_digitalization, tourism_revenue_mgmt, cultural_ip_developer, itinerary_personalization, smart_campus_operations, performance_art_management, event_festival_planner |
+
+---
+
+**Total: 136 plugins | 1088 tools**

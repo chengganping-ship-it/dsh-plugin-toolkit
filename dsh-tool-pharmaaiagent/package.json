@@ -1,0 +1,12 @@
+{
+  "name": "dsh-tool-pharmaaiagent",
+  "version": "0.1.0",
+  "description": "DSH plugin: AI制药助手 — 8 tools for drug discovery & clinical development",
+  "main": "index.ts",
+  "keywords": ["dsh", "deepseek", "pharma", "drug-discovery", "cordis"],
+  "license": "MIT",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  }
+}

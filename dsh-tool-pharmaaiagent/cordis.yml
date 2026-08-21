@@ -1,0 +1,8 @@
+name: pharmaaiagent
+version: 0.1.0
+description: AI制药助手 — 8 tools for drug discovery & clinical development
+main: index.ts
+author: DSH Plugin Toolkit
+license: MIT
+inject:
+  - tools

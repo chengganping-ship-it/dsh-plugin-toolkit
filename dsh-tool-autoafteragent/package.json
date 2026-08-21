@@ -1,0 +1,11 @@
+{
+  "name": "dsh-tool-autoafteragent",
+  "version": "1.0.0",
+  "description": "汽车后市场AI助手 — 二手车估值·AI检测·预测维护·配件定价·保险理赔·车间运营·客户生命周期·电池健康 (dsh-tool-autoafteragent)",
+  "main": "src/index.ts",
+  "scripts": { "build": "tsc", "dev": "tsc --watch", "typecheck": "tsc --noEmit" },
+  "dependencies": { "@deepseek-ai/cordis": "^4.0.1", "@deepseek-ai/dsh-tools": "^0.0.1-rc.1" },
+  "devDependencies": { "typescript": "^5.0.0" },
+  "keywords": ["dsh","deepseek-harness","auto","aftermarket","used-cars","ev-battery","workshop","plugin"],
+  "license": "MIT"
+}
