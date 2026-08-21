@@ -1,4 +1,0 @@
-"coin","wrong_annual","actual_rate","wrong_rate","actual_annual","reason"
-"ADA","-21.9","3.1E-05","-0.0002","3.3","MEXC API returns ALL coins regardless of symbol filter"
-"ETH","-21.9","-5E-06","-0.0002","-0.5","MEXC API returns ALL coins regardless of symbol filter"
-"XRP","-21.9","-7E-06","-0.0002","-0.8","MEXC API returns ALL coins regardless of symbol filter"

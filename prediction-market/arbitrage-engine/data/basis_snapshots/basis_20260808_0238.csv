@@ -1,1 +1,0 @@
-timestamp,datetime_utc,coin,delivery_contract,dte_days,spot_bid,spot_ask,spot_ask_vwap,spot_ask_depth_usd,futures_bid,futures_ask,futures_bid_vwap,futures_bid_depth_usd,gross_basis_pct,annualized_gross_pct,total_cost_pct,net_basis_pct,annualized_net_pct,breakeven_days,verdict

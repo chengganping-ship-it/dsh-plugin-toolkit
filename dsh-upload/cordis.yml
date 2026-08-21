@@ -1,5 +1,0 @@
-# DeepSeek Harness Plugin: Code Review Assistant
-# Provides code quality analysis and structured review reports
-
-- id: dsh-tool-codereview
-  name: dsh-tool-codereview
