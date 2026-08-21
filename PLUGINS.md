@@ -102,6 +102,7 @@
 | 76 | skillmarket | Agent skills marketplace |
 | 77 | eventorchestrator | Event planning agent |
 | 78 | cdpagent | Customer data agent |
+| 79 | virtualinfluenceragent | Virtual influencer full-stack operations |
 
 ## Personal Productivity (8)
 
@@ -243,7 +244,8 @@
 | 143 | ecomagentpro | 电商运营AI | product_listing_optimizer, conversion_rate_diagnostic, inventory_forecaster, review_sentiment_analyzer, pricing_strategy_advisor, ad_campaign_manager, customer_journey_mapper, marketplace_expansion |
 | 144 | smarthomeagent | 智能家居AI | energy_optimizer, security_monitor, device_health_checker, comfort_zone_manager, routine_automation, occupancy_pattern_analyzer, air_quality_guardian, maintenance_scheduler |
 | 145 | creativeagentpro | 创意工具AI | brand_identity_designer, content_calendar_planner, copy_rewriter, visual_concept_board, storyboard_architect, newsletter_crafter, ux_copy_optimizer, pitch_deck_designer |
-| 146 | glpcomplianceagent | GLP合规AI | sop_compliance_checker, study_audit_trail, data_integrity_validator, equipment_qualification, personnel_training_competency, deviation_capability_advisor, regulatory_submission_readiness, glp_risk_assessment |
+| 146 | virtualinfluenceragent | 虚拟人运营AI | digital_human_designer, content_calendar_analytics, fandom_community_manager, virtual_live_streamer, brand_collab_matcher, persona_consistency_checker, deepfake_ethics_guard, virtual_economy_strategist |
+| 147 | glpcomplianceagent | GLP合规AI | sop_compliance_checker, study_audit_trail, data_integrity_validator, equipment_qualification, personnel_training_competency, deviation_capability_advisor, regulatory_submission_readiness, glp_risk_assessment |
 
 ---
 
@@ -319,4 +321,16 @@
 
 ---
 
-**Total: 176 plugins | 1408 tools**
+## Wave 36 — AI+职业规划+语言学习+数字人+智慧乳业+氢能源 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 177 | careercoachagent | 职业规划 | career_path_simulator, skill_gap_analyzer, resume_career_optimizer, interview_prep_simulator, salary_negotiation_coach, professional_brand_builder, pivot_strategy_advisor, networking_strategy_planner |
+| 178 | langlearnagentpro | 语言学习 | proficiency_assessment, spaced_repetition_scheduler, conversation_simulator, grammar_pattern_driller, vocabulary_contextualizer, pronunciation_coach, reading_comprehension_scaffolder, writing_feedback_generator |
+| 179 | virtualinfluenceragent | 数字人/虚拟网红 | digital_human_designer, content_calendar_analytics, fandom_community_manager, virtual_live_streamer, brand_collab_matcher, persona_consistency_checker, deepfake_ethics_guard, virtual_economy_strategist |
+| 180 | dairyfarmagent | 智慧乳业 | cow_health_monitor, milk_quality_analyzer, feed_rations_optimizer, reproduction_management, barn_environment_controller, calf_growth_tracker, dairy_economics_dashboard, manure_management_processor |
+| 181 | hydrogenenergyagent | 氢能源 | electrolyzer_efficiency_optimizer, hydrogen_storage_designer, fuel_cell_performance_monitor, hydrogen_logistics_planner, green_hydrogen_economics, hydrogen_safety_compliance, hydrogen_refueling_station, hydrogen_value_chain_mapper |
+
+---
+
+**Total: 181 plugins | 1448 tools**

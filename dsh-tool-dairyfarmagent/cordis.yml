@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Smart Dairy Farming AI Agent v0.1.0
+# Cow health monitoring, milk quality analysis, feed optimization, reproduction management
+
+- id: dsh-tool-dairyfarmagent
+  name: dsh-tool-dairyfarmagent
+  version: 0.1.0
+  description: Smart Dairy Farming AI Agent - Cow health monitoring with estrus detection, milk quality analysis with somatic cell count, feed ration optimization with TMR management, reproduction management with conception rate improvement, barn environment control with heat stress mitigation, calf growth tracking with weaning management, dairy economics with cost-per-kg-milk analysis, manure management with biogas/return-to-field
+  author: dairyfarmagent
+  tools:
+    - cow_health_monitor
+    - milk_quality_analyzer
+    - feed_rations_optimizer
+    - reproduction_management
+    - barn_environment_controller
+    - calf_growth_tracker
+    - dairy_economics_dashboard
+    - manure_management_processor

@@ -1,0 +1,11 @@
+{
+  "name": "dsh-tool-hydrogenenergyagent",
+  "version": "1.0.0",
+  "description": "氢能AI智能体 — 电解槽/储氢/燃料电池/物流/经济学/安全/加氢站/产业链 (dsh-tool-hydrogenenergyagent)",
+  "main": "src/index.ts",
+  "scripts": { "build": "tsc", "dev": "tsc --watch", "typecheck": "tsc --noEmit" },
+  "dependencies": { "@deepseek-ai/cordis": "^4.0.1", "@deepseek-ai/dsh-tools": "^0.0.1-rc.1" },
+  "devDependencies": { "typescript": "^5.0.0" },
+  "keywords": ["dsh","deepseek-harness","hydrogen","fuelcell","electrolyzer","green-hydrogen","energy","plugin"],
+  "license": "MIT"
+}

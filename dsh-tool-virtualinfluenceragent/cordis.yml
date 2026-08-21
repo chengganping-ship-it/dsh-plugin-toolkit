@@ -1,0 +1,14 @@
+- id: dsh-tool-virtualinfluenceragent
+  name: dsh-tool-virtualinfluenceragent
+  version: 0.1.0
+  description: 虚拟人KOL全栈运营工具集 - 形象设计/内容日历/粉丝社群/虚拟直播/品牌联名/人设一致性/深度伪造伦理/虚拟经济
+  author: dsh-plugin-toolkit
+  tools:
+    - digital_human_designer
+    - content_calendar_analytics
+    - fandom_community_manager
+    - virtual_live_streamer
+    - brand_collab_matcher
+    - persona_consistency_checker
+    - deepfake_ethics_guard
+    - virtual_economy_strategist

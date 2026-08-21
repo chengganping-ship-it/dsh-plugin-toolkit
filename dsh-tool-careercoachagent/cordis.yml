@@ -1,0 +1,14 @@
+- id: dsh-tool-careercoachagent
+  name: dsh-tool-careercoachagent
+  version: 0.1.0
+  description: 职业教练AI智能体 - 职业路径模拟、技能差距分析、简历优化、面试准备、薪资谈判、个人品牌、职业转型、社交策略
+  author: chengganping-ship-it
+  tools:
+    - career_path_simulator
+    - skill_gap_analyzer
+    - resume_career_optimizer
+    - interview_prep_simulator
+    - salary_negotiation_coach
+    - professional_brand_builder
+    - pivot_strategy_advisor
+    - networking_strategy_planner
