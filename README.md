@@ -1,11 +1,11 @@
 # DSH Plugin Toolkit
 
-> **111 DeepSeek Harness plugins — 888 AI agent tools**
+> **116 DeepSeek Harness plugins — 928 AI agent tools**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek-Harness-orange.svg)](https://deepseek.com/)
-[![111 Plugins](https://img.shields.io/badge/Plugins-111-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
+[![116 Plugins](https://img.shields.io/badge/Plugins-116-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
 
 ---
 
@@ -37,6 +37,11 @@ A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.c
 | Agent Factory | 1 | 8 |
 | Legal AI | 1 | 8 |
 | Healthcare AI | 1 | 8 |
+| AI Education | 1 | 8 |
+| FinTech AI | 1 | 8 |
+| Smart Manufacturing | 1 | 8 |
+| AI for Science | 1 | 8 |
+| Vibe Coding | 1 | 8 |
 
 ## Quick Start
 
@@ -106,10 +111,10 @@ dsh-tool-name/
 
 ## Repository Stats
 
-- **111 plugins** × **8 tools** each = **888 tool implementations**
+- **116 plugins** × **8 tools** each = **928 tool implementations**
 - **100% TypeScript strict** — zero compilation errors
 - **MIT Licensed**
-- **Wave 22 (2026-08)**: physicalaiagent + guiagentpro + agentfactory + legalagentpro + healthagentpro
+- **Wave 23 (2026-08)**: eduagentpro + fintechagentpro + manufacturingagent + a4sagent + vibecodingagent
 
 ## License
 

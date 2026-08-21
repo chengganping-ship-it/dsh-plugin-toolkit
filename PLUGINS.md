@@ -163,4 +163,16 @@
 
 ---
 
-**Total: 111 plugins | 888 tools**
+## Wave 23 — AI+教育+金融+制造+科学智能+Vibe Coding (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 112 | eduagentpro | AI教育 | adaptive_learning_path, student_performance_predictor, auto_grading_engine, course_quality_evaluator, personalized_homework_generator, teaching_effectiveness_analyzer, competency_assessment, education_equity_monitor |
+| 113 | fintechagentpro | 金融科技 | credit_risk_scorer, fraud_detection_engine, algorithmic_trading_advisor, regtech_compliance_checker, wealth_management_robo, market_risk_var, insurance_actuarial_ai, fintech_product_designer |
+| 114 | manufacturingagent | 智能制造 | digital_twin_factory, predictive_quality_control, smart_predictive_maintenance, production_scheduling_optimizer, energy_sustainability_manager, supply_chain_digitalization, robot_process_automation, smart_inspection_ai |
+| 115 | a4sagent | AI科学智能 | literature_review_engine, hypothesis_generator, experiment_designer, scientific_writing_assistant, research_data_analyzer, grant_proposal_writer, research_collaboration_network, ethical_review_assistant |
+| 116 | vibecodingagent | Vibe Coding | requirement_to_code_pipeline, code_quality_coach, ai_debugging_assistant, vibe_prototyper, codebase_knowledge_graph, deployment_automation_advisor, developer_productivity_tracker, technical_debt_quantifier |
+
+---
+
+**Total: 116 plugins | 928 tools**
