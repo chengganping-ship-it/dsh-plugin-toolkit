@@ -187,4 +187,16 @@
 
 ---
 
-**Total: 121 plugins | 968 tools**
+## Wave 25 — AI+物流+网络安全+游戏+空天+环保 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 122 | logistagentpro | 智慧物流 | route_optimization, warehouse_slotting, cross_border_compliance, lastmile_delivery, demand_forecast, fleet_telematics, cold_chain_monitor, supply_chain_finance |
+| 123 | cyberagentpro | 网络安全 | threat_intelligence, vulnerability_management, soc_analytics, zero_trust_enforcer, data_protection, incident_response_automation, compliance_checker_sec, red_team_ai |
+| 124 | gameaiagent | 游戏AI | intelligent_npc_designer, gameplay_balancer, player_behavior_analytics, procedural_content_gen, anti_cheat_system, game_qa_automation, esports_analytics, ugc_platform_manager |
+| 125 | spaceaeroagent | 空天科技 | satellite_operators, uav_swarm_coordinator, launch_mission_planner, earth_observation_analytics, air_traffic_ai, space_debris_monitor, aerospace_manufacturing, space_economy_tracker |
+| 126 | ecoagentpro | 生态环保 | environmental_monitoring, carbon_neutrality_planner, green_building_optimizer, circular_economy_advisor, biodiversity_assessment, renewable_energy_siting, waste_management_ai, water_resource_manager |
+
+---
+
+**Total: 126 plugins | 1008 tools**

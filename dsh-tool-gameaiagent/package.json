@@ -1,0 +1,20 @@
+{
+  "name": "dsh-tool-gameaiagent",
+  "version": "1.0.0",
+  "description": "游戏AI助手 — 智能NPC与游戏运营智能体 (dsh-tool-gameaiagent)",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "keywords": ["dsh","deepseek-harness","gaming","npc","plugin"],
+  "license": "MIT"
+}

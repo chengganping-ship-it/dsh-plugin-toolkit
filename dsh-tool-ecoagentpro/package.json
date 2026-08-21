@@ -1,0 +1,11 @@
+{
+  "name": "dsh-tool-ecoagentpro",
+  "version": "1.0.0",
+  "description": "生态环保AI助手 — 环境监测与双碳管理智能体 (dsh-tool-ecoagentpro)",
+  "main": "src/index.ts",
+  "scripts": { "build": "tsc", "dev": "tsc --watch", "typecheck": "tsc --noEmit" },
+  "dependencies": { "@deepseek-ai/cordis": "^4.0.1", "@deepseek-ai/dsh-tools": "^0.0.1-rc.1" },
+  "devDependencies": { "typescript": "^5.0.0" },
+  "keywords": ["dsh","deepseek-harness","environment","carbon","green","plugin"],
+  "license": "MIT"
+}

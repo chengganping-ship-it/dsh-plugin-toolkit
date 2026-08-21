@@ -1,11 +1,11 @@
 # DSH Plugin Toolkit
 
-> **121 DeepSeek Harness plugins — 968 AI agent tools**
+> **126 DeepSeek Harness plugins — 1008 AI agent tools**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek-Harness-orange.svg)](https://deepseek.com/)
-[![121 Plugins](https://img.shields.io/badge/Plugins-121-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
+[![126 Plugins](https://img.shields.io/badge/Plugins-126-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
 
 ---
 
@@ -47,6 +47,11 @@ A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.c
 | Smart Retail | 1 | 8 |
 | Autonomous Driving | 1 | 8 |
 | Smart Energy | 1 | 8 |
+| Smart Logistics | 1 | 8 |
+| Cybersecurity | 1 | 8 |
+| Gaming AI | 1 | 8 |
+| Aerospace | 1 | 8 |
+| Environmental | 1 | 8 |
 
 ## Quick Start
 
@@ -116,10 +121,10 @@ dsh-tool-name/
 
 ## Repository Stats
 
-- **121 plugins** × **8 tools** each = **968 tool implementations**
+- **126 plugins** × **8 tools** each = **1008 tool implementations**
 - **100% TypeScript strict** — zero compilation errors
 - **MIT Licensed**
-- **Wave 24 (2026-08)**: agriagentpro + govagentpro + retailagentpro + autodriveagent + energyagentpro
+- **Wave 25 (2026-08)**: logistagentpro + cyberagentpro + gameaiagent + spaceaeroagent + ecoagentpro
 
 ## License
 
