@@ -1,0 +1,40 @@
+{
+  "name": "dsh-tool-cybersecdev",
+  "version": "1.0.0",
+  "description": "AI Cybersecurity Development Toolkit - threat detection engine, incident response orchestration, vulnerability prioritization, SOC automation, AI phishing analysis, zero-day threat hunting, security policy generation, and compliance audit automation",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-cybersecdev.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "cybersecurity",
+    "threat-detection",
+    "incident-response",
+    "vulnerability-management",
+    "soc-automation",
+    "phishing-analysis",
+    "zero-day",
+    "security-policy",
+    "compliance-audit",
+    "cordis"
+  ]
+}

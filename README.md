@@ -1,11 +1,11 @@
 # DSH Plugin Toolkit
 
-> **216 DeepSeek Harness plugins — 1728 AI agent tools**
+> **221 DeepSeek Harness plugins — 1768 AI agent tools**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek-Harness-orange.svg)](https://deepseek.com/)
-[![216 Plugins](https://img.shields.io/badge/Plugins-216-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
+[![221 Plugins](https://img.shields.io/badge/Plugins-221-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
 
 ---
 
@@ -208,10 +208,11 @@ dsh-tool-name/
 
 ## Repository Stats
 
-- **216 plugins** × **8 tools** each = **1728 tool implementations**
+- **221 plugins** × **8 tools** each = **1768 tool implementations**
 - **6 breakthrough infrastructure layers** (MCP Bridge + A2A Cards + Loop Engineering + Cost Governance + Multi-Agent Demo + L6 Meta-Engine)
 - **100% TypeScript strict** — zero compilation errors across all packages
 - **MIT Licensed**
+- **Wave 44 (2026-08)**: cybersecdev + insurtechai + realestateai + hospitalityai + aigovernance
 - **Wave 43 (2026-08)**: legaltechai + fintechrisk + supplychainai + retailai + constructionai
 - **Wave 42 (2026-08)**: blockchaindev + edtechpro + climatech + telecompro + metaforge
 - **Wave 41 (2026-08)**: minimalist + musicip + web3data + creativeip + robofounder

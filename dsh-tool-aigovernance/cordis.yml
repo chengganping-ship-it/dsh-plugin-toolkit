@@ -1,0 +1,14 @@
+- id: dsh-tool-aigovernance
+  name: dsh-tool-aigovernance
+  version: 0.1.0
+  description: "AI Governance & Compliance - EU AI Act Article 50 enforcement, bias detection, model audit, AI ethics. 2026: EU AI Act transparency deadline, California AI Transparency Act"
+  author: chengganping-ship-it
+  tools:
+    - eu_ai_act_compliance_checker
+    - bias_detection_auditor
+    - model_cards_generator
+    - ai_risk_classification
+    - data_governance_policy_engine
+    - ai_ethics_review_board
+    - transparency_report_generator
+    - algorithmic_impact_assessment

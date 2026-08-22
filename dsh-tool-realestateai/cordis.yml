@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: AI Real Estate Agent v0.1.0
+# Property valuation, investment analysis, market forecasting, property management
+
+- id: dsh-tool-realestateai
+  name: dsh-tool-realestateai
+  version: 0.1.0
+  description: AI Real Estate Agent - Automated property valuation with comparable sales analysis, investment ROI calculator with cash-on-cash return and cap rate, market trend forecaster with price trajectory modeling, mortgage eligibility assessor with DTI/LTV ratios and loan product recommendation, property management automator with maintenance scheduling and tenant screening, rental yield optimizer with occupancy and pricing strategy, neighborhood scoring AI with school/transit/safety composite index, ESG compliance real estate assessor with green certification and energy rating
+  author: realestateai
+  tools:
+    - property_valuation_engine
+    - investment_roi_calculator
+    - market_trend_forecaster
+    - mortgage_eligibility_assessor
+    - property_management_automator
+    - rental_yield_optimizer
+    - neighborhood_scoring_ai
+    - esg_compliance_realestate

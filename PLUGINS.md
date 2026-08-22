@@ -417,7 +417,19 @@
 
 ---
 
-**Total: 216 plugins | 1728 tools**
+## Wave 44 — AI网络安全+保险科技+房地产+酒店旅游+AI治理 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 217 | cybersecdev | AI网络安全 | threat_detection_engine, incident_response_orchestrator, vulnerability_prioritizer, soc_automation_config, phishing_analyzer_ai, zero_day_threat_hunter, security_policy_generator, compliance_audit_automator |
+| 218 | insurtechai | 保险科技 | ai_underwriting_engine, claims_processing_automator, insurance_fraud_detector, risk_assessment_modeler, policy_recommendation_engine, actuarial_pricing_optimizer, customer_lifetime_value_predictor, regulatory_compliance_checker |
+| 219 | realestateai | AI房地产 | property_valuation_engine, investment_roi_calculator, market_trend_forecaster, mortgage_eligibility_assessor, property_management_automator, rental_yield_optimizer, neighborhood_scoring_ai, esg_compliance_realestate |
+| 220 | hospitalityai | 酒店旅游 | hotel_revenue_optimizer, guest_experience_personalizer, travel_itinerary_planner, dynamic_pricing_hospitality, review_sentiment_analyzer, housekeeping_scheduler_ai, restaurant_menu_optimizer, events_conference_planner |
+| 221 | aigovernance | AI治理 | eu_ai_act_compliance_checker, bias_detection_auditor, model_cards_generator, ai_risk_classification, data_governance_policy_engine, ai_ethics_review_board, transparency_report_generator, algorithmic_impact_assessment |
+
+---
+
+**Total: 221 plugins | 1768 tools**
 
 ---
 
