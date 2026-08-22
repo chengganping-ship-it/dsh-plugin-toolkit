@@ -1,0 +1,13 @@
+name: dsh-tool-spaceexplorer
+version: 1.0.0
+description: Space Exploration AI toolkit - tools for satellite operations, orbital mechanics, mission planning, space debris tracking, launch window calculation, ground station scheduling, space economics, and constellation design
+author: chengganping-ship-it
+tools:
+  - orbital_mechanics_calculator
+  - satellite_pass_predictor
+  - launch_window_calculator
+  - space_debris_tracker
+  - ground_station_scheduler
+  - mission_trajectory_designer
+  - space_economics_analyzer
+  - constellation_designer

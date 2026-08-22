@@ -1,0 +1,6 @@
+- id: dsh-tool-agrivertical
+  name: dsh-tool-agrivertical
+  version: 1.0.0
+  description: AI Agriculture Vertical - smart agriculture tools covering greenhouse management, precision irrigation, pest/disease detection, soil analysis, crop rotation, yield prediction, farm economics, and supply chain optimization
+  author: chengganping-ship-it
+  tools: 8

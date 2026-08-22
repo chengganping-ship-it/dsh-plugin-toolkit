@@ -1,0 +1,39 @@
+{
+  "name": "dsh-tool-healthcoach",
+  "version": "1.0.0",
+  "description": "AI Health Coach - personalized health coaching tools for chronic disease management, nutrition planning, exercise prescription, sleep optimization, and mental wellness. Digital health coaching toolkit powered by wearable data, habit science, and evidence-based protocols.",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-healthcoach.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "health-coach",
+    "wellness",
+    "chronic-disease",
+    "nutrition",
+    "exercise",
+    "sleep",
+    "mental-health",
+    "wearable",
+    "cordis"
+  ]
+}

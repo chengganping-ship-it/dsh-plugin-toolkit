@@ -369,7 +369,19 @@
 
 ---
 
-**Total: 196 plugins | 1568 tools**
+## Wave 40 — GraphRAG+AI农业+太空探索+AI音乐+健康教练 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 197 | graphrag | 知识图谱RAG | entity_extractor_pipeline, multi_hop_reasoner, ontology_designer, graph_rag_query_engine, hallucination_detector, knowledge_graph_merger, community_detection_analyzer, graph_version_manager |
+| 198 | agrivertical | AI农业 | greenhouse_climate_controller, precision_irrigation_optimizer, pest_disease_detector, soil_health_analyzer, crop_rotation_planner, yield_predictor, farm_economics_calculator, agri_supply_chain_optimizer |
+| 199 | spaceexplorer | 太空探索 | orbital_mechanics_calculator, satellite_pass_predictor, launch_window_calculator, space_debris_tracker, ground_station_scheduler, mission_trajectory_designer, space_economics_analyzer, constellation_designer |
+| 200 | musicproducer | AI音乐 | composition_assistant, arrangement_optimizer, mixing_engineer_ai, mastering_chain_designer, sample_generator_config, music_copyclear_advisor, playlist_curator_ai, music_business_analyzer |
+| 201 | healthcoach | AI健康教练 | chronic_disease_coach, nutrition_planner, exercise_prescription_engine, sleep_optimizer, stress_resilience_coach, wearable_data_interpreter, health_risk_assessor, behavior_change_planner |
+
+---
+
+**Total: 201 plugins | 1608 tools**
 
 ---
 

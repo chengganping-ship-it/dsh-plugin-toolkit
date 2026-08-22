@@ -1,0 +1,35 @@
+{
+  "name": "dsh-tool-agrivertical",
+  "version": "1.0.0",
+  "description": "AI Agriculture Vertical toolkit - smart agriculture tools covering greenhouse management, precision irrigation, pest/disease detection, soil analysis, crop rotation, yield prediction, farm economics, and supply chain optimization",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-agrivertical.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "agriculture",
+    "smart-farming",
+    "precision-agriculture",
+    "ai-agriculture",
+    "cordis"
+  ]
+}

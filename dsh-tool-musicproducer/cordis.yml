@@ -1,0 +1,6 @@
+- id: dsh-tool-musicproducer
+  name: dsh-tool-musicproducer
+  version: 1.0.0
+  description: AI Music Production toolkit - AI-assisted composition, arrangement, mixing, mastering, sample generation, copyright advisory, playlist curation, and music business analysis for the modern AI-powered producer leveraging Suno, Udio, Stable Audio, and more
+  author: chengganping-ship-it
+  tools: 8

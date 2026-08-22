@@ -1,0 +1,6 @@
+- id: dsh-tool-healthcoach
+  name: dsh-tool-healthcoach
+  version: 1.0.0
+  description: AI Health Coach - personalized health coaching tools for chronic disease management, nutrition planning, exercise prescription, sleep optimization, stress resilience, wearable data interpretation, health risk assessment, and behavior change planning
+  author: chengganping-ship-it
+  tools: 8

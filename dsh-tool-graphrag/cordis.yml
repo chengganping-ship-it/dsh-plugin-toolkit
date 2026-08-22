@@ -1,0 +1,6 @@
+- id: dsh-tool-graphrag
+  name: dsh-tool-graphrag
+  version: 1.0.0
+  description: GraphRAG / Knowledge Graph Enhanced RAG - entity extraction pipeline, multi-hop graph reasoning, ontology design, graph-augmented query engine, hallucination detection, knowledge graph merging, community detection analyzer, and graph version management for enterprise AI knowledge graphs (Neo4j, Microsoft GraphRAG, NebulaGraph)
+  author: chengganping-ship-it
+  tools: 8

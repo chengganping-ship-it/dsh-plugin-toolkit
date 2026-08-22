@@ -1,0 +1,38 @@
+{
+  "name": "dsh-tool-spaceexplorer",
+  "version": "1.0.0",
+  "description": "Space Exploration AI toolkit - orbital mechanics, satellite pass prediction, launch windows, debris tracking, ground station scheduling, mission trajectory design, space economics, and constellation design",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-spaceexplorer.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "space-exploration",
+    "orbital-mechanics",
+    "satellite",
+    "launch-window",
+    "space-debris",
+    "mission-planning",
+    "constellation-design",
+    "cordis"
+  ]
+}
