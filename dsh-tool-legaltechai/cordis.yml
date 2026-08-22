@@ -1,0 +1,14 @@
+- id: dsh-tool-legaltechai
+  name: dsh-tool-legaltechai
+  version: 0.1.0
+  description: AI Legal Tech - Contract review, legal research, compliance, e-discovery, litigation prediction, patent analysis, regulatory tracking, document automation
+  author: chengganping-ship-it
+  tools:
+    - contract_review_ai
+    - legal_research_assistant
+    - compliance_checker_ai
+    - ediscovery_processor
+    - litigation_risk_predictor
+    - ip_patent_analyzer
+    - regulatory_change_tracker
+    - document_automation_engineer

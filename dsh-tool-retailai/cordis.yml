@@ -1,0 +1,14 @@
+- id: dsh-tool-retailai
+  name: dsh-tool-retailai
+  version: 0.1.0
+  description: Retail AI — Personalization, Dynamic Pricing, Inventory Management, Customer Analytics. 2026: 52% retail industry AI Agent adoption rate.
+  author: chengganping-ship-it
+  tools:
+    - product_recommendation_engine
+    - dynamic_pricing_optimizer
+    - customer_segmentation_ai
+    - visual_search_engine
+    - churn_prediction_model
+    - store_layout_optimizer
+    - assortment_planner
+    - returns_fraud_detector

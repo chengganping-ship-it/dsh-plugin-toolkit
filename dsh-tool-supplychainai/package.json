@@ -1,0 +1,32 @@
+{
+  "name": "dsh-tool-supplychainai",
+  "version": "0.1.0",
+  "description": "Supply Chain AI for DSH - demand forecasting, inventory optimization, logistics routing, supplier risk",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-plugin-toolkit.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "supply-chain",
+    "logistics",
+    "inventory",
+    "procurement",
+    "ai-agent"
+  ]
+}

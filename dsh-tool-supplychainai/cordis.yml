@@ -1,0 +1,14 @@
+- id: dsh-tool-supplychainai
+  name: dsh-tool-supplychainai
+  version: 0.1.0
+  description: Supply Chain AI - demand forecasting, inventory optimization, logistics routing, supplier risk
+  author: chengganping-ship-it
+  tools:
+    - demand_forecast_engine
+    - inventory_optimizer_ai
+    - logistics_route_planner
+    - supplier_risk_assessor
+    - warehouse_automation_planner
+    - procurement_sourcing_ai
+    - cold_chain_monitor
+    - circular_logistics_designer

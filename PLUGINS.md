@@ -405,7 +405,19 @@
 
 ---
 
-**Total: 211 plugins | 1688 tools**
+## Wave 43 — AI法律+金融风控+供应链+零售+建筑 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 212 | legaltechai | AI法律 | contract_review_ai, legal_research_assistant, compliance_checker_ai, ediscovery_processor, litigation_risk_predictor, ip_patent_analyzer, regulatory_change_tracker, document_automation_engineer |
+| 213 | fintechrisk | 金融风控 | credit_risk_scorer, fraud_detection_engine, aml_kyc_monitor, market_risk_var_calc, regulatory_capital_calculator, stress_test_scenario_gen, transaction_monitoring_ai, DeFi_protocol_risk_auditor |
+| 214 | supplychainai | 供应链AI | demand_forecast_engine, inventory_optimizer_ai, logistics_route_planner, supplier_risk_assessor, warehouse_automation_planner, procurement_sourcing_ai, cold_chain_monitor, circular_logistics_designer |
+| 215 | retailai | 零售AI | product_recommendation_engine, dynamic_pricing_optimizer, customer_segmentation_ai, visual_search_engine, churn_prediction_model, store_layout_optimizer, assortment_planner, returns_fraud_detector |
+| 216 | constructionai | AI建筑 | project_schedule_optimizer, cost_estimation_ai, safety_monitor_ai, field_coordination_planner, bim_model_validator, subcontractor_performance_tracker, material_procurement_scheduler, progress_digital_twin |
+
+---
+
+**Total: 216 plugins | 1728 tools**
 
 ---
 
