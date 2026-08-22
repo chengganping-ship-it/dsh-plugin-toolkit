@@ -1,0 +1,17 @@
+{
+  "name": "dsh-tool-govtech",
+  "version": "0.1.0",
+  "description": "Government Tech & Digital Governance Toolkit for DSH - policy impact analysis, public service automation, tax compliance, citizen engagement, urban planning, emergency response, social benefits, open data portals",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": { "build": "tsc" },
+  "keywords": ["dsh", "govtech", "digital-governance", "public-services", "policy", "tax-compliance", "urban-planning", "open-data"],
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": { "typescript": "^5.0.0" }
+}

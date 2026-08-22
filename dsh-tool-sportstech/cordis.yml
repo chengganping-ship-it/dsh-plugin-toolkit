@@ -1,0 +1,14 @@
+- id: dsh-tool-sportstech
+  name: dsh-tool-sportstech
+  version: 0.1.0
+  description: Sports Tech & Analytics - player performance analysis, injury risk prediction, game strategy optimization, talent scouting AI, fan engagement analytics, sports betting analytics, training load optimization, match simulation engine
+  author: chengganping-ship-it
+  tools:
+    - player_performance_analyzer
+    - injury_risk_predictor
+    - game_strategy_optimizer
+    - talent_scouting_ai
+    - fan_engagement_analyzer
+    - sports_betting_analytics
+    - training_load_optimizer
+    - match_simulation_engine

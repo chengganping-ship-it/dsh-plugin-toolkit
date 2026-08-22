@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Smart Grid & Energy Management v0.1.0
+# Demand forecasting, grid optimization, energy trading, renewable integration, battery management
+
+- id: dsh-tool-energygrid
+  name: dsh-tool-energygrid
+  version: 0.1.0
+  description: Smart Grid & Energy Management - Grid demand forecaster, renewable integration optimizer, energy trading strategy, battery management scheduler, carbon capture optimizer, power quality monitor, microgrid islanding controller, energy storage sizing
+  author: dsh
+  tools:
+    - grid_demand_forecaster
+    - renewable_integration_optimizer
+    - energy_trading_strategy
+    - battery_management_scheduler
+    - carbon_capture_optimizer
+    - power_quality_monitor
+    - microgrid_islanding_controller
+    - energy_storage_sizing

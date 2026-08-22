@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: AI Pharma & Drug Discovery v0.1.0
+# Target identification, molecular design, clinical trial optimization, drug safety
+
+- id: dsh-tool-pharmatechai
+  name: dsh-tool-pharmatechai
+  version: 0.1.0
+  description: AI Pharma & Drug Discovery - Target identification, molecular design, clinical trial optimization, drug safety prediction, biomarker discovery, formulation optimization, regulatory submission advisory, and drug repositioning scout
+  author: chengganping-ship-it
+  tools:
+    - drug_target_identifier
+    - molecular_design_ai
+    - clinical_trial_optimizer
+    - drug_safety_predictor
+    - biomarker_discovery_engine
+    - formulation_optimizer
+    - regulatory_submission_advisor
+    - drug_repositioning_scout

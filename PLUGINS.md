@@ -429,7 +429,19 @@
 
 ---
 
-**Total: 221 plugins | 1768 tools**
+## Wave 45 — AI制药+生物信息+智能电网+政务AI+体育科技 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 222 | pharmatechai | AI制药 | drug_target_identifier, molecular_design_ai, clinical_trial_optimizer, drug_safety_predictor, biomarker_discovery_engine, formulation_optimizer, regulatory_submission_advisor, drug_repositioning_scout |
+| 223 | bioinformatics | 生物信息 | sequence_alignment_analyzer, genome_annotation_pipeline, protein_structure_predictor, crispr_guide_designer, single_cell_rnaseq_analyzer, phylogenetics_tree_builder, metagenomics_profiler, synthetic_biology_circuit_designer |
+| 224 | energygrid | 智能电网 | grid_demand_forecaster, renewable_integration_optimizer, energy_trading_strategy, battery_management_scheduler, carbon_capture_optimizer, power_quality_monitor, microgrid_islanding_controller, energy_storage_sizing |
+| 225 | govtech | 政务AI | policy_impact_analyzer, public_service_automator, tax_compliance_checker, citizen_engagement_analyzer, urban_planning_simulator, emergency_response_coordinator, social_benefit_optimizer, open_data_portal_manager |
+| 226 | sportstech | 体育科技 | player_performance_analyzer, injury_risk_predictor, game_strategy_optimizer, talent_scouting_ai, fan_engagement_analyzer, sports_betting_analytics, training_load_optimizer, match_simulation_engine |
+
+---
+
+**Total: 226 plugins | 1808 tools**
 
 ---
 
