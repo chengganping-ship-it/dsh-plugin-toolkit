@@ -1,0 +1,6 @@
+- id: dsh-tool-telecompro
+  name: dsh-tool-telecompro
+  version: 1.0.0
+  description: Telecom and Network Engineering - 5G/6G network planning, spectrum allocation, network optimization, edge computing infrastructure, IoT connectivity, and telecom operations
+  author: chengganping-ship-it
+  tools: 8

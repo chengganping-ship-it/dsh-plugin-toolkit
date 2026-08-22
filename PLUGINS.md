@@ -393,7 +393,19 @@
 
 ---
 
-**Total: 206 plugins | 1648 tools**
+## Wave 42 — 区块链开发+AI教育+绿色科技+电信网络+元引擎L6 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 207 | blockchaindev | 区块链开发 | smart_contract_scaffolder, defi_protocol_analyzer, nft_standard_advisor, bridge_security_auditor, gas_optimizer, rwa_tokenization_designer, account_abstraction_designer, solidity_security_scanner |
+| 208 | edtechpro | AI教育 | adaptive_learning_path_designer, assessment_generator, learning_analytics_dashboard, ai_tutoring_session_planner, course_content_generator, knowledge_gap_analyzer, peer_learning_optimizer, engagement_predictor |
+| 209 | climatech | 绿色科技 | carbon_footprint_calculator, renewable_energy_optimizer, climate_risk_assessor, esg_reporting_generator, sustainable_supply_chain_mapper, green_finance_advisor, circular_economy_designer, carbon_credit_valuator |
+| 210 | telecompro | 电信网络 | spectrum_allocation_optimizer, network_slicing_designer, ran_intelligence_controller, edge_computing_planner, iot_connectivity_advisor, fiber_network_designer, qos_policy_designer, telecom_roi_calculator |
+| 211 | metaforge | 元引擎L6 | plugin_scaffolder, ts_compile_validator, cordis_yml_generator, package_json_generator, docs_block_generator, commit_message_generator, quality_scorer, batch_generator_config |
+
+---
+
+**Total: 211 plugins | 1688 tools**
 
 ---
 

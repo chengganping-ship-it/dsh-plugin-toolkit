@@ -1,0 +1,37 @@
+{
+  "name": "dsh-tool-edtechpro",
+  "version": "1.0.0",
+  "description": "EdTech / AI Education toolkit - personalized learning path design, assessment generation, learning analytics, AI tutoring session planning, course content generation, knowledge gap analysis, peer learning optimization, and engagement prediction",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-edtechpro.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "edtech",
+    "ai-education",
+    "adaptive-learning",
+    "ai-tutoring",
+    "learning-analytics",
+    "course-creation",
+    "cordis"
+  ]
+}

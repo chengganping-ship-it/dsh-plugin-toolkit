@@ -1,0 +1,38 @@
+{
+  "name": "dsh-tool-telecompro",
+  "version": "1.0.0",
+  "description": "Telecom and Network Engineering toolkit - 5G/6G network planning, spectrum allocation, network optimization, edge computing infrastructure, IoT connectivity, and telecom operations with AI-driven transformation capabilities",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-telecompro.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "telecom",
+    "5g",
+    "6g",
+    "network-planning",
+    "spectrum",
+    "edge-computing",
+    "iot",
+    "cordis"
+  ]
+}

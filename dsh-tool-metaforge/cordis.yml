@@ -1,0 +1,6 @@
+- id: dsh-tool-metaforge
+  name: dsh-tool-metaforge
+  version: 1.0.0
+  description: DSH MetaForge - self-generating plugin factory with scaffolding, TS validation, manifest generation, docs blocks, commit messages, quality scoring, and batch configuration
+  author: chengganping-ship-it
+  tools: 8

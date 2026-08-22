@@ -1,0 +1,37 @@
+{
+  "name": "dsh-tool-metaforge",
+  "version": "1.0.0",
+  "description": "DSH MetaForge - self-generating plugin factory. Auto-generates scaffolding, validates TypeScript, generates cordis.yml/package.json/tsconfig.json from templates, produces documentation blocks, creates conventional commit messages, scores plugin quality, and configures batch generation runs. The L6 autonomous layer that makes the entire DSH plugin toolkit self-sustaining.",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-metaforge.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "metaforge",
+    "scaffolder",
+    "code-generator",
+    "typescript",
+    "automation",
+    "cordis",
+    "self-generating"
+  ]
+}
