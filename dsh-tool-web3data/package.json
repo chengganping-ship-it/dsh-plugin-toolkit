@@ -1,0 +1,40 @@
+{
+  "name": "dsh-tool-web3data",
+  "version": "1.0.0",
+  "description": "Web3 Decentralized Data Infrastructure toolkit - decentralized storage economics (Filecoin, Arweave, Walrus), data availability layers (Celestia), decentralized indexing (The Graph), and Web3 data economics",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-web3data.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "web3",
+    "decentralized-storage",
+    "filecoin",
+    "arweave",
+    "walrus",
+    "celestia",
+    "the-graph",
+    "data-availability",
+    "decentralized-indexing",
+    "cordis"
+  ]
+}

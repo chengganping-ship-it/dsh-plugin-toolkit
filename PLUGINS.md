@@ -381,7 +381,19 @@
 
 ---
 
-**Total: 201 plugins | 1608 tools**
+## Wave 41 — 小而美创业+音乐IP+Web3数据+创意IP+机器人创始人 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 202 | minimalist | 小而美创业 | community_first_validator, profit_first_planner, lean_validation_framework, scope_killer, community_builder_strategy, pricing_psychology_advisor, sustainability_calculator, pivot_or_persevere_decider |
+| 203 | musicip | 音乐IP管理 | music_ip_valuator, licensing_deal_advisor, royalty_split_calculator, ai_music_copyright_advisor, ip_infringement_detector, playlist_pitching_strategist, music_ip_portfolio_optimizer, sync_licensing_matcher |
+| 204 | web3data | Web3数据基础设施 | storage_economics_calculator, data_availability_sampler, thegraph_subgraph_designer, decentralized_storage_architect, filecoin_deal_negotiator, web3_infra_cost_optimizer, data_persistence_strategy, decentralized_compute_planner |
+| 205 | creativeip | 创意IP运营 | ip_registration_advisor, derivative_works_strategist, cross_media_adaptation_planner, ip_valuation_creative, anti_piracy_monitor_designer, licensing_deal_structurer, creator_brand_builder, ip_portfolio_diversifier |
+| 206 | robofounder | AI创始人自动化 | company_formation_automator, ai_cfo_dashboard, legal_compliance_scanner, contract_generator_ai, hr_automation_planner, tax_optimization_advisor, investor_ready_score, runway_extension_planner |
+
+---
+
+**Total: 206 plugins | 1648 tools**
 
 ---
 

@@ -1,0 +1,6 @@
+- id: dsh-tool-web3data
+  name: dsh-tool-web3data
+  version: 1.0.0
+  description: "Web3 Decentralized Data Infrastructure - tools for building on decentralized storage (Filecoin, Arweave, Walrus), data availability layers (Celestia), decentralized indexing (The Graph), and Web3 data economics"
+  author: chengganping-ship-it
+  tools: 8

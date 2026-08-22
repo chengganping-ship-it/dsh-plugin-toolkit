@@ -1,0 +1,40 @@
+{
+  "name": "dsh-tool-robofounder",
+  "version": "1.0.0",
+  "description": "AI Robo-Founder / Company Automation - AI-assisted company formation, legal compliance, financial operations, HR automation, and running a company with minimal human intervention. AI agents as co-founders, CFOs, CLOs, and COOs for solo entrepreneurs and micro-teams.",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-robofounder.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "robofounder",
+    "company-automation",
+    "ai-cfo",
+    "ai-coo",
+    "ai-clo",
+    "company-formation",
+    "startup",
+    "solopreneur",
+    "ai-agents",
+    "cordis"
+  ]
+}

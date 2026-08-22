@@ -1,11 +1,11 @@
 # DSH Plugin Toolkit
 
-> **201 DeepSeek Harness plugins — 1608 AI agent tools**
+> **206 DeepSeek Harness plugins — 1648 AI agent tools**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek-Harness-orange.svg)](https://deepseek.com/)
-[![201 Plugins](https://img.shields.io/badge/Plugins-201-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
+[![206 Plugins](https://img.shields.io/badge/Plugins-206-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
 
 ---
 
@@ -208,10 +208,11 @@ dsh-tool-name/
 
 ## Repository Stats
 
-- **201 plugins** × **8 tools** each = **1608 tool implementations**
+- **206 plugins** × **8 tools** each = **1648 tool implementations**
 - **5 breakthrough infrastructure layers** (MCP Bridge + A2A Cards + Loop Engineering + Cost Governance + Multi-Agent Demo)
 - **100% TypeScript strict** — zero compilation errors across all packages
 - **MIT Licensed**
+- **Wave 41 (2026-08)**: minimalist + musicip + web3data + creativeip + robofounder
 - **Wave 40 (2026-08)**: graphrag + agrivertical + spaceexplorer + musicproducer + healthcoach
 - **Wave 39 (2026-08)**: harnesseng + opcstudio + codeevolver + nocodeengine + agentmarket
 - **Wave 38 (2026-08)**: videogenaiagent + agentsecskills + cliagentify + opcenter + virtualinfluencer
