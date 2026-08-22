@@ -1,0 +1,14 @@
+- id: dsh-tool-nocodeengine
+  name: dsh-tool-nocodeengine
+  version: 1.0.0
+  description: No-Code/Low-Code Engine toolkit - app blueprint generation, workflow automation design, data model design, UI component selection, API integration planning, deployment configuration, permission modeling, and analytics dashboard planning for OPC founders building products solo
+  author: chengganping-ship-it
+  tools:
+    - app_blueprint_generator
+    - workflow_automator_designer
+    - data_model_designer
+    - ui_component_selector
+    - api_integration_planner
+    - deployment_configurator
+    - permission_model_designer
+    - analytics_dashboard_planner

@@ -1,0 +1,6 @@
+- id: dsh-tool-codeevolver
+  name: dsh-tool-codeevolver
+  version: 1.0.0
+  description: AI Code Evolution - recursive self-improvement planning, codebase health analysis, refactoring strategy, test coverage optimization, dependency modernization, code review simulation, architecture evolution mapping, and autonomous debugging configuration
+  author: chengganping-ship-it
+  tools: 8

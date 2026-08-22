@@ -1,0 +1,38 @@
+{
+  "name": "dsh-tool-nocodeengine",
+  "version": "1.0.0",
+  "description": "No-Code/Low-Code Engine toolkit for DSH - app blueprint generation, workflow automation design, data model design, UI component selection, API integration planning, deployment configuration, permission modeling, and analytics dashboard planning. Inspired by platforms like BaiDu MiaoDa (33.4% market share, 35M users, 3.5M apps), Dify, n8n, and the broader no-code movement enabling OPC founders to build products solo.",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-nocodeengine.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "no-code",
+    "low-code",
+    "nocode-engine",
+    "opc",
+    "solopreneur",
+    "ai-agents",
+    "workflow-automation",
+    "cordis"
+  ]
+}

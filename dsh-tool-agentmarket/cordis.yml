@@ -1,0 +1,6 @@
+- id: dsh-tool-agentmarket
+  name: dsh-tool-agentmarket
+  version: 1.0.0
+  description: Agent Marketplace & A2A Economy - AgentCard generation, service listing, pricing optimization, reputation scoring, discovery optimization, transaction escrow design, SLA monitoring, and cross-agent protocol adaptation for Google's A2A protocol (150+ supporting orgs)
+  author: chengganping-ship-it
+  tools: 8
