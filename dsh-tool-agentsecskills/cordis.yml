@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Agent Security Governance v0.1.0
+# Agent security governance, MITRE ATT&CK mapping, NIST CSF assessment, threat modeling
+
+- id: dsh-tool-agentsecskills
+  name: dsh-tool-agentsecskills
+  version: 0.1.0
+  description: Agent Security Governance - MITRE ATT&CK mapper, NIST CSF assessor, skill gap analyzer, STRIDE threat model generator, incident response planner, compliance mapper (SOC2/ISO27001/GDPR), red team scenario generator, security scorecard calculator
+  author: dsh-plugins
+  tools:
+    - mitre_attack_mapper
+    - nist_csf_assessor
+    - skill_gap_analyzer
+    - threat_model_generator
+    - incident_response_planner
+    - compliance_mapper
+    - red_team_scenario_gen
+    - security_scorecard

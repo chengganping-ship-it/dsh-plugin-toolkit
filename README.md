@@ -1,11 +1,11 @@
 # DSH Plugin Toolkit
 
-> **186 DeepSeek Harness plugins — 1488 AI agent tools**
+> **191 DeepSeek Harness plugins — 1528 AI agent tools**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek-Harness-orange.svg)](https://deepseek.com/)
-[![186 Plugins](https://img.shields.io/badge/Plugins-186-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
+[![191 Plugins](https://img.shields.io/badge/Plugins-191-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
 
 ---
 
@@ -112,6 +112,11 @@ A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.c
 | Shipbuilding | 1 | 8 |
 | Data Center | 1 | 8 |
 | PCB Design | 1 | 8 |
+| AI Video Generation | 1 | 8 |
+| Agent Security | 1 | 8 |
+| CLI-Agentify | 1 | 8 |
+| OPC One-Person Company | 1 | 8 |
+| Virtual Influencer | 1 | 8 |
 
 ## Breakthrough Infrastructure (2026)
 
@@ -203,10 +208,11 @@ dsh-tool-name/
 
 ## Repository Stats
 
-- **186 plugins** × **8 tools** each = **1488 tool implementations**
+- **191 plugins** × **8 tools** each = **1528 tool implementations**
 - **5 breakthrough infrastructure layers** (MCP Bridge + A2A Cards + Loop Engineering + Cost Governance + Multi-Agent Demo)
 - **100% TypeScript strict** — zero compilation errors across all packages
 - **MIT Licensed**
+- **Wave 38 (2026-08)**: videogenaiagent + agentsecskills + cliagentify + opcenter + virtualinfluencer
 - **Wave 37 (2026-08)**: seedbreedingagent + undergroundutilityagent + shipbuildingagent + datacenteragent + pcbdesignagent
 - **Wave 36 (2026-08)**: careercoachagent + langlearnagentpro + virtualinfluenceragent + dairyfarmagent + hydrogenenergyagent
 - **Wave 35 (2026-08)**: wealthagentpro + weddingagentpro + disasterresponseagent + elevatorsafetyagent + powergridagent

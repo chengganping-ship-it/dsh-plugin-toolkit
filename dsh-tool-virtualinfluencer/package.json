@@ -1,0 +1,36 @@
+{
+  "name": "dsh-tool-virtualinfluencer",
+  "version": "0.1.0",
+  "description": "Virtual Influencer & Digital Human Live Streaming Operations Toolkit - persona design, content strategy, voice cloning, live stream automation, audience engagement, multi-language localization, brand deals, persona consistency (dsh-tool-virtualinfluencer)",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "dev": "tsx src/index.ts"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "dsh-plugin-toolkit",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "virtual-influencer",
+    "digital-human",
+    "live-streaming",
+    "live-commerce",
+    "voice-cloning",
+    "avatar",
+    "ai-influencer",
+    "content-strategy",
+    "brand-deal",
+    "multi-language"
+  ]
+}

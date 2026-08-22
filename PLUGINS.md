@@ -345,7 +345,19 @@
 
 ---
 
-**Total: 186 plugins | 1488 tools**
+## Wave 38 — AI视频生成+Agent安全+CLI-Anything+OPC一人公司+数字人直播 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 187 | videogenaiagent | AI视频生成 | video_script_generator, voiceover_optimizer, auto_caption_generator, thumbnail_ai_designer, engagement_predictor, content_calendar_planner, viral_hook_optimizer, cross_platform_adapter |
+| 188 | agentsecskills | Agent安全治理 | mitre_attack_mapper, nist_csf_assessor, skill_gap_analyzer, threat_model_generator, incident_response_planner, compliance_mapper, red_team_scenario_gen, security_scorecard |
+| 189 | cliagentify | CLI-Anything智能体 | cli_to_agent_converter, command_risk_classifier, auto_wrapper_generator, interactive_explorer, pipeline_orchestrator, error_recovery_advisor, permission_analyzer, agent_native_scorer |
+| 190 | opcenter | OPC一人公司 | opc_viability_scorer, ai_team_architect, revenue_model_optimizer, automation_audit, time_budget_planner, moat_analyzer, legal_compliance_checker, growth_catalyst_finder |
+| 191 | virtualinfluencer | 数字人直播 | persona_designer, content_strategy_planner, voice_cloning_advisor, live_stream_automator, audience_engagement_bot, multi_language_localizer, brand_deal_evaluator, persona_consistency_checker |
+
+---
+
+**Total: 191 plugins | 1528 tools**
 
 ---
 

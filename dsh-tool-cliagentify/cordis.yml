@@ -1,0 +1,14 @@
+- id: dsh-tool-cliagentify
+  name: dsh-tool-cliagentify
+  version: 0.1.0
+  description: CLI-Anything Agent-Native CLI Transformation - Convert any CLI tool into an AI-native agent interface
+  author: chengganping-ship-it
+  tools:
+    - cli_to_agent_converter
+    - command_risk_classifier
+    - auto_wrapper_generator
+    - interactive_explorer
+    - pipeline_orchestrator
+    - error_recovery_advisor
+    - permission_analyzer
+    - agent_native_scorer

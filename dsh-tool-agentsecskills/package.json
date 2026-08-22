@@ -1,0 +1,59 @@
+{
+  "name": "dsh-tool-agentsecskills",
+  "version": "0.1.0",
+  "description": "Agent Security Governance Plugin for DeepSeek Harness - MITRE ATT&CK mapping, NIST CSF assessment, skill gap analysis, threat modeling, incident response planning, compliance mapping, red team scenarios, and security scorecards",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/types/**/*.d.ts",
+    "cordis.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "pack": "npm pack",
+    "prepack": "npm run build"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsh-plugins/dsh-tool-agentsecskills.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "agent-security",
+    "governance",
+    "mitre-attack",
+    "nist-csf",
+    "threat-model",
+    "incident-response",
+    "compliance",
+    "red-team",
+    "security-scorecard"
+  ],
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "tsx": "^4.0.0"
+  },
+  "dsh": {
+    "bundle": "cordis.yml"
+  },
+  "author": "dsh-plugins"
+}

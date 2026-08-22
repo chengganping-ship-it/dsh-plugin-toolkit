@@ -1,0 +1,14 @@
+- id: dsh-tool-virtualinfluencer
+  name: dsh-tool-virtualinfluencer
+  version: 0.1.0
+  description: Virtual influencer / digital human live streaming operations toolkit - persona design, content strategy, voice cloning, live stream automation, audience engagement, multi-language localization, brand deals, persona consistency
+  author: dsh-plugin-toolkit
+  tools:
+    - persona_designer
+    - content_strategy_planner
+    - voice_cloning_advisor
+    - live_stream_automator
+    - audience_engagement_bot
+    - multi_language_localizer
+    - brand_deal_evaluator
+    - persona_consistency_checker
