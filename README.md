@@ -1,11 +1,11 @@
 # DSH Plugin Toolkit
 
-> **236 DeepSeek Harness plugins — 1888 AI agent tools**
+> **237 DeepSeek Harness plugins — 1896 AI agent tools**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek-Harness-orange.svg)](https://deepseek.com/)
-[![236 Plugins](https://img.shields.io/badge/Plugins-236-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
+[![237 Plugins](https://img.shields.io/badge/Plugins-237-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
 
 ---
 
@@ -118,9 +118,9 @@ A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.c
 | OPC One-Person Company | 1 | 8 |
 | Virtual Influencer | 1 | 8 |
 
-## Breakthrough Infrastructure (L1-L7)
+## Breakthrough Infrastructure (L1-L8)
 
-7 infrastructure layers elevate this toolkit from L2 (process automation) to **L7 (autonomous self-orchestration)**:
+8 infrastructure layers elevate this toolkit from L2 (process automation) to **L8 (Tool-to-Skill dimension breakthrough)**:
 
 | Layer | Directory/Plugin | Standards | Purpose |
 |-------|------------------|-----------|---------|
@@ -131,6 +131,7 @@ A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.c
 | **L5: Multi-Agent Demo** | `demos/multi-agent-carbon-neutral/` | DAG-based orchestration | 5 plugin agents collaborate on carbon neutrality via 4-phase workflow. |
 | **L6: Meta-Engine** | `dsh-tool-metaforge/` | Self-generating plugin factory | Auto-scaffold, auto-validate, auto-document, auto-commit. The toolkit generates itself. |
 | **L7: AutoWave** | `dsh-tool-autowave/` | Full-cycle autonomous orchestration | **Self-orchestrating wave runner: trend→gen→validate→fix→doc→commit→push without human.** |
+| **L8: SkillsForge** | `dsh-tool-skillsforge/` | Skill evolution engine | **DIMENSION BREAKTHROUGH: Tools(hand) → Skills(brain cortex). Procedural SOP + verification + error recovery + marketplace monetization.** |
 
 **Integration Architecture:**
 ```
@@ -210,11 +211,12 @@ dsh-tool-name/
 
 ## Repository Stats
 
-- **236 plugins** × **8 tools** each = **1888 tool implementations**
-- **7 breakthrough infrastructure layers** (MCP Bridge + A2A Cards + Loop Engineering + Cost Governance + Multi-Agent Demo + L6 Meta-Engine + L7 AutoWave)
+- **237 plugins** × **8 tools** each = **1896 tool implementations**
+- **8 breakthrough infrastructure layers** (MCP Bridge + A2A Cards + Loop Engineering + Cost Governance + Multi-Agent Demo + L6 Meta-Engine + L7 AutoWave + L8 SkillsForge)
 - **Wave 47: Real market demand plugins** (customs 70% cost reduction, invoice automation, CDP 53% efficiency, logistics optimization, Agent Skills packaging)
 - **100% TypeScript strict** — zero compilation errors across all packages
 - **MIT Licensed**
+- **Wave 48 (2026-08)**: skillsforge [L8 BREAKTHROUGH: Tools→Skills]
 - **Wave 47 (2026-08)**: tradecompliance + invoiceai + cdpagent + logisticspro + skillpackager [REAL DEMAND]
 - **Wave 46 (2026-08)**: manufacturingai + cyberinsur + autonomousvehicle + foodtechai + autowave
 - **Wave 45 (2026-08)**: pharmatechai + bioinformatics + energygrid + govtech + sportstech

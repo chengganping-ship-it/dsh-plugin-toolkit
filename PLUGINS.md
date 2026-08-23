@@ -465,7 +465,15 @@
 
 ---
 
-**Total: 236 plugins | 1888 tools**
+## Wave 48 — L8 SkillsForge: 从Tools→Skills维度突破
+
+| # | Plugin | Category | Key Tools | Breakthrough |
+|---|--------|----------|-----------|--------------|
+| 237 | skillsforge | L8 技能引擎 | skill_architect, sop_generator, verification_engine_designer, error_recovery_proceduralizer, knowledge_graph_embedder, prompt_craft_optimizer, context_window_manager, marketplace_monetization_scorer | **维度突破**: Tool(手) → Skill(大脑皮层) — 过程性知识+SOP+验证+纠错+商业化 |
+
+---
+
+**Total: 237 plugins | 1896 tools**
 
 ---
 
