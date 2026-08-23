@@ -1,0 +1,39 @@
+{
+  "name": "dsh-tool-foodtechai",
+  "version": "1.0.0",
+  "description": "Food Tech & Safety AI toolkit for DeepSeek Harness -- supply chain traceability, quality inspection, recipe optimization, food safety compliance, alternative proteins, shelf life prediction, allergen detection, cold chain integrity, and menu engineering. Vertical AI in food is a growing 2026 market.",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-foodtechai.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "foodtech",
+    "food-safety",
+    "supply-chain",
+    "recipe-optimization",
+    "alternative-proteins",
+    "allergen-detection",
+    "cold-chain",
+    "menu-engineering",
+    "cordis"
+  ]
+}

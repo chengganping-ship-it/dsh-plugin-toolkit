@@ -1,11 +1,11 @@
 # DSH Plugin Toolkit
 
-> **226 DeepSeek Harness plugins — 1808 AI agent tools**
+> **231 DeepSeek Harness plugins — 1848 AI agent tools**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek-Harness-orange.svg)](https://deepseek.com/)
-[![226 Plugins](https://img.shields.io/badge/Plugins-226-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
+[![231 Plugins](https://img.shields.io/badge/Plugins-231-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
 
 ---
 
@@ -118,24 +118,26 @@ A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.c
 | OPC One-Person Company | 1 | 8 |
 | Virtual Influencer | 1 | 8 |
 
-## Breakthrough Infrastructure (2026)
+## Breakthrough Infrastructure (L1-L7)
 
-Beyond plugin quantity, 5 infrastructure layers elevate this toolkit from L2 (process automation) to L4 (multi-agent collaborative intelligence):
+7 infrastructure layers elevate this toolkit from L2 (process automation) to **L7 (autonomous self-orchestration)**:
 
-| Layer | Directory | Standards | Purpose |
-|-------|-----------|-----------|---------|
-| **L1: MCP Bridge** | `mcp-bridge/` | MCP v1.30 (Linux Foundation, 97M monthly downloads) | Stateless MCP server exposing 186 plugins to any MCP-compatible AI client. One-click `.mcp.json` config for Claude Desktop. |
-| **L2: A2A Cards** | `a2a-cards/` | Google A2A v1.0 (150+ orgs, GA May 2026) | 185 auto-generated AgentCard JSON descriptors enabling cross-platform inter-agent task delegation. |
-| **L3: Loop Engineering** | `loop-engineering/` | 2026 discipline: execute→verify→retry→escalate | Self-correcting agentic loop library with 6 built-in validators and AI-powered self-critique. Reduces agent failure rates by adding automatic retry with verification. |
-| **L4: Cost Governance** | `cost-governance/` | Gartner: 40% AI projects cancelled due to cost | Token tracking, budget enforcement, threshold alerts, and LLM cost optimizer. Per-agent cost breakdown with automatic budget exhaustion protection. |
-| **L5: Multi-Agent Demo** | `demos/multi-agent-carbon-neutral/` | DAG-based orchestration | Flagship L4 demo: 5 plugin agents collaborate to produce a carbon neutrality strategic plan via 4-phase sequential workflow (Assessment → Strategy → Trading → Roadmap). |
+| Layer | Directory/Plugin | Standards | Purpose |
+|-------|------------------|-----------|---------|
+| **L1: MCP Bridge** | `mcp-bridge/` | MCP v1.30 (Linux Foundation, 97M monthly downloads) | Stateless MCP server exposing plugins to any MCP-compatible AI client. |
+| **L2: A2A Cards** | `a2a-cards/` | Google A2A v1.0 (150+ orgs, GA May 2026) | Auto-generated AgentCard descriptors for cross-platform inter-agent delegation. |
+| **L3: Loop Engineering** | `loop-engineering/` | 2026 discipline: execute→verify→retry→escalate | Self-correcting agentic loop library with validators and AI self-critique. |
+| **L4: Cost Governance** | `cost-governance/` | Gartner: 40% AI projects cancelled due to cost | Token tracking, budget enforcement, threshold alerts, cost optimizer. |
+| **L5: Multi-Agent Demo** | `demos/multi-agent-carbon-neutral/` | DAG-based orchestration | 5 plugin agents collaborate on carbon neutrality via 4-phase workflow. |
+| **L6: Meta-Engine** | `dsh-tool-metaforge/` | Self-generating plugin factory | Auto-scaffold, auto-validate, auto-document, auto-commit. The toolkit generates itself. |
+| **L7: AutoWave** | `dsh-tool-autowave/` | Full-cycle autonomous orchestration | **Self-orchestrating wave runner: trend→gen→validate→fix→doc→commit→push without human.** |
 
 **Integration Architecture:**
 ```
-MCP Bridge (L1) → A2A Cards (L2) → Loop Engineering (L3) → Cost Governance (L4) → Multi-Agent Orchestration (L5)
-     ↑                    ↑                   ↑                     ↑                        ↑
-Stateless server    Inter-agent        Self-correcting       Token & budget         Cross-domain
-exposing tools      delegation         retry loops           enforcement            agent collaboration
+L1 MCP Bridge → L2 A2A Cards → L3 Loop Engineering → L4 Cost Governance → L5 Multi-Agent (L6 Meta-Engine) → L7 AutoWave (self-orchestration)
+     ↑               ↑               ↑                    ↑                     ↑                          ↑
+  Tool exposure  Inter-agent    Self-correcting      Budget control       Cross plugin             Full autonomous
+                 delegation     retry loops                                   collaboration            wave pipeline
 ```
 
 Each layer is independently reusable — drop `loop-engineering` into any agent project to add self-correcting behavior, or drop `cost-governance` into any LLM pipeline for automatic budget enforcement.
@@ -208,10 +210,11 @@ dsh-tool-name/
 
 ## Repository Stats
 
-- **226 plugins** × **8 tools** each = **1808 tool implementations**
-- **6 breakthrough infrastructure layers** (MCP Bridge + A2A Cards + Loop Engineering + Cost Governance + Multi-Agent Demo + L6 Meta-Engine)
+- **231 plugins** × **8 tools** each = **1848 tool implementations**
+- **7 breakthrough infrastructure layers** (MCP Bridge + A2A Cards + Loop Engineering + Cost Governance + Multi-Agent Demo + L6 Meta-Engine + L7 AutoWave)
 - **100% TypeScript strict** — zero compilation errors across all packages
 - **MIT Licensed**
+- **Wave 46 (2026-08)**: manufacturingai + cyberinsur + autonomousvehicle + foodtechai + autowave
 - **Wave 45 (2026-08)**: pharmatechai + bioinformatics + energygrid + govtech + sportstech
 - **Wave 44 (2026-08)**: cybersecdev + insurtechai + realestateai + hospitalityai + aigovernance
 - **Wave 43 (2026-08)**: legaltechai + fintechrisk + supplychainai + retailai + constructionai

@@ -441,7 +441,19 @@
 
 ---
 
-**Total: 226 plugins | 1808 tools**
+## Wave 46 — AI制造+ Cyber保险+自动驾驶+食品科技+ L7 AutoWave引擎 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 227 | manufacturingai | AI制造 | predictive_maintenance_scheduler, quality_control_ai, production_schedule_optimizer, digital_twin_factory, defect_detection_vision, oee_calculator, supply_chain_resilience_scorer, energy_efficiency_auditor |
+| 228 | cyberinsur | Cyber保险 | cyber_risk_quantifier, policy_coverage_designer, breach_cost_estimator, incident_response_planner, vendor_risk_assessor, regulatory_fine_calculator, business_impact_analyzer, security_maturity_scorer |
+| 229 | autonomousvehicle | 自动驾驶 | sensor_fusion_optimizer, path_planning_engine, v2x_communication_manager, fleet_dispatch_optimizer, adas_validation_scenario_gen, lidar_pipeline_tuner, traffic_flow_simulator, ota_update_manager |
+| 230 | foodtechai | 食品科技 | supply_chain_traceability_engine, food_safety_compliance_checker, recipe_optimization_ai, alternative_protein_analyzer, shelf_life_predictor, allergen_detection_scanner, cold_chain_integrity_monitor, menu_engineering_optimizer |
+| 231 | autowave | L7 AutoWave引擎 | wave_orchestrator, trend_detector, batch_launcher, compile_fix_loop, doc_sync_engine, quality_gate_enforcer, changelog_auto_generator, health_checker |
+
+---
+
+**Total: 231 plugins | 1848 tools**
 
 ---
 

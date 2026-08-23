@@ -1,0 +1,14 @@
+- id: dsh-tool-autowave
+  name: dsh-tool-autowave
+  version: 0.1.0
+  description: AUTO-WAVE ENGINE - self-orchestrating wave runner for autonomous plugin generation lifecycle
+  author: chengganping-ship-it
+  tools:
+    - wave_orchestrator
+    - trend_detector
+    - batch_launcher
+    - compile_fix_loop
+    - doc_sync_engine
+    - quality_gate_enforcer
+    - changelog_auto_generator
+    - health_checker

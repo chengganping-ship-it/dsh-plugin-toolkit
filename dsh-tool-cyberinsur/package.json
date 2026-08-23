@@ -1,0 +1,37 @@
+{
+  "name": "dsh-tool-cyberinsur",
+  "version": "1.0.0",
+  "description": "Cyber Insurance & Risk Transfer Toolkit - cyber risk quantification, policy design, incident response planning, breach cost estimation, vendor risk assessment, regulatory fine calculation, business impact analysis, and security maturity scoring",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-cyberinsur.git"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "cyber-insurance",
+    "risk-transfer",
+    "breach-cost",
+    "incident-response",
+    "vendor-risk",
+    "compliance",
+    "cordis"
+  ]
+}

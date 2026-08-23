@@ -1,0 +1,32 @@
+{
+  "name": "dsh-tool-autowave",
+  "version": "0.1.0",
+  "description": "AUTO-WAVE ENGINE - self-orchestrating wave runner managing the full lifecycle of autonomous plugin generation (trend -> gen -> validate -> doc -> push)",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-autowave.git"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "ai-agent",
+    "cordis",
+    "autowave",
+    "meta-pipeline"
+  ]
+}
