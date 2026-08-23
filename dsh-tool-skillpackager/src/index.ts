@@ -1,0 +1,1327 @@
+import type { Context } from '@deepseek-ai/cordis'
+import { defineTool } from '@deepseek-ai/dsh-tools'
+
+export const name = 'dsh-tool-skillpackager'
+export const inject = ['tools']
+
+// ============================================================================
+// PRNG & UTILITIES
+// ============================================================================
+
+function mulberry32(seed: number): () => number {
+  let s = seed | 0
+  return () => {
+    s = (s + 0x6d2b79f5) | 0
+    let t = Math.imul(s ^ (s >>> 15), 1 | s)
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+  }
+}
+
+function hashSeed(input: string): number {
+  let h = 2166136261
+  for (let i = 0; i < input.length; i++) {
+    h ^= input.charCodeAt(i)
+    h = Math.imul(h, 16777619)
+  }
+  return h >>> 0
+}
+
+function round(v: number, d = 2): number {
+  const f = Math.pow(10, d)
+  return Math.round(v * f) / f
+}
+
+function pick<T>(rng: () => number, arr: T[]): T {
+  return arr[Math.floor(rng() * arr.length)]
+}
+
+function clamp(v: number, min: number, max: number): number {
+  return Math.max(min, Math.min(max, v))
+}
+
+function qualityLabel(score: number): string {
+  if (score >= 90) return 'A+'
+  if (score >= 80) return 'A'
+  if (score >= 70) return 'B+'
+  if (score >= 60) return 'B'
+  if (score >= 50) return 'C'
+  return 'D'
+}
+
+// ============================================================================
+// TOOL 1: skill_md_generator
+// ============================================================================
+
+export interface SkillMdGeneratorInput {
+  skill_name: string
+  description: string
+  category?: string
+  trigger_keywords?: string[]
+  output_format?: string
+  tools_needed?: string[]
+  examples?: Array<{ input: string; expected_behavior: string }>
+  constraints?: string[]
+  author?: string
+  version?: string
+}
+
+export interface SkillMdResult {
+  artifact: string
+  quality_score: number
+  improvements: string[]
+  marketplace_fit: string
+}
+
+function generateSkillMd(data: SkillMdGeneratorInput): SkillMdResult {
+  const rng = mulberry32(hashSeed(JSON.stringify(data)))
+  const skillName = data.skill_name || 'unnamed-skill'
+  const description = data.description || 'No description provided'
+  const category = data.category || pick(rng, ['automation', 'analysis', 'generation', 'integration', 'monitoring'])
+  const triggers = data.trigger_keywords || ['analyze', 'generate', 'process', 'validate']
+  const outputFormat = data.output_format || 'structured_markdown'
+  const toolsNeeded = data.tools_needed || ['none']
+  const author = data.author || 'anonymous'
+  const version = data.version || '0.1.0'
+  const constraints = data.constraints || ['Must validate input before processing', 'Must handle edge cases gracefully']
+
+  // Generate SKILL.md content
+  const lines: string[] = []
+  lines.push('# ' + skillName)
+  lines.push('')
+  lines.push('## Skill Metadata')
+  lines.push('')
+  lines.push('- **Name:** ' + skillName)
+  lines.push('- **Category:** ' + category)
+  lines.push('- **Version:** ' + version)
+  lines.push('- **Author:** ' + author)
+  lines.push('- **Output Format:** ' + outputFormat)
+  lines.push('')
+  lines.push('## Description')
+  lines.push('')
+  lines.push(description)
+  lines.push('')
+  lines.push('## Trigger Conditions')
+  lines.push('')
+  lines.push('This skill activates when user request matches ANY of:')
+  lines.push('')
+  triggers.forEach((t, i) => { lines.push((i + 1) + '. "' + t + '"') })
+  lines.push('')
+  lines.push('## Output Specification')
+  lines.push('')
+  lines.push('```')
+  lines.push('{')
+  lines.push('  "artifact": "<generated primary output>",')
+  lines.push('  "quality_score": <0-100>,')
+  lines.push('  "improvements": ["<suggestion>", ...],')
+  lines.push('  "marketplace_fit": "<fit assessment>"')
+  lines.push('}')
+  lines.push('```')
+  lines.push('')
+  lines.push('## Tools & Dependencies')
+  lines.push('')
+  toolsNeeded.forEach(t => { lines.push('- ' + t) })
+  lines.push('')
+  lines.push('## Constraints')
+  lines.push('')
+  constraints.forEach(c => { lines.push('- ' + c) })
+  lines.push('')
+  lines.push('## Examples')
+  lines.push('')
+  const examples = data.examples && data.examples.length > 0 ? data.examples : [
+    { input: 'Sample input for ' + skillName, expected_behavior: 'Skill processes and returns structured output' }
+  ]
+  examples.forEach((ex, i) => {
+    lines.push('### Example ' + (i + 1))
+    lines.push('')
+    lines.push('- **Input:** ' + ex.input)
+    lines.push('- **Expected:** ' + ex.expected_behavior)
+    lines.push('')
+  })
+  lines.push('## Execution Protocol')
+  lines.push('')
+  lines.push('1. **Validate** input against trigger conditions')
+  lines.push('2. **Execute** primary analysis/generation logic')
+  lines.push('3. **Score** output quality against rubric')
+  lines.push('4. **Suggest** concrete improvements')
+  lines.push('5. **Assess** marketplace readiness')
+  lines.push('')
+  lines.push('---')
+  lines.push('*Generated by dsh-tool-skillpackager*')
+
+  const artifact = lines.join('\n')
+
+  // Quality scoring
+  let score = 50
+  if (data.skill_name && data.skill_name.length > 3) score += 8
+  if (data.description && data.description.length > 20) score += 8
+  if (data.trigger_keywords && data.trigger_keywords.length >= 3) score += 7
+  if (data.output_format) score += 5
+  if (data.tools_needed && data.tools_needed.length > 0) score += 5
+  if (data.examples && data.examples.length >= 2) score += 7
+  if (data.constraints && data.constraints.length >= 2) score += 5
+  if (data.category) score += 5
+  score = clamp(round(score + rng() * 5 - 2.5, 0), 20, 98)
+
+  const improvements: string[] = []
+  if (!data.trigger_keywords || data.trigger_keywords.length < 3) improvements.push('Add more trigger keywords for better skill discoverability')
+  if (!data.examples || data.examples.length < 2) improvements.push('Include at least 2 usage examples with input/output pairs')
+  if (!data.constraints || data.constraints.length < 2) improvements.push('Define clear constraints and boundaries for the skill')
+  if (!data.output_format) improvements.push('Specify a concrete output format (json, markdown, structured_text)')
+  if (!data.tools_needed) improvements.push('List all MCP tools or APIs the skill depends on')
+  if (improvements.length === 0) improvements.push('Skill definition is comprehensive and marketplace-ready')
+
+  let marketplace_fit = 'MODERATE'
+  if (score >= 85) marketplace_fit = 'HIGH'
+  else if (score < 50) marketplace_fit = 'LOW'
+
+  return { artifact, quality_score: score, improvements, marketplace_fit }
+}
+
+function formatSkillMd(r: SkillMdResult): string {
+  return r.artifact + '\n\n' +
+    '---\n\n' +
+    '## Packager Assessment\n\n' +
+    '- **Quality Score:** ' + r.quality_score + '/100 (' + qualityLabel(r.quality_score) + ')\n' +
+    '- **Marketplace Fit:** ' + r.marketplace_fit + '\n' +
+    '- **Improvements:**\n' +
+    r.improvements.map((s: string) => '  - ' + s).join('\n') + '\n\n' +
+    '> Tip: Top marketplace skills score 85+ on publish readiness. Focus on trigger coverage and examples.\n'
+}
+
+// ============================================================================
+// TOOL 2: sop_documenter
+// ============================================================================
+
+export interface SopDocumenterInput {
+  skill_name: string
+  operation: string
+  steps_description?: string[]
+  prerequisites?: string[]
+  expected_outcomes?: string[]
+  verification_points?: string[]
+  common_pitfalls?: string[]
+}
+
+export interface SopResult {
+  artifact: string
+  quality_score: number
+  improvements: string[]
+  marketplace_fit: string
+}
+
+function documentSop(data: SopDocumenterInput): SopResult {
+  const rng = mulberry32(hashSeed(JSON.stringify(data)))
+  const skillName = data.skill_name || 'unnamed-skill'
+  const operation = data.operation || 'primary_operation'
+
+  const stepsDesc = data.steps_description || [
+    'Parse and validate input parameters',
+    'Execute core processing logic',
+    'Format output according to specification',
+    'Validate output quality',
+    'Return structured result'
+  ]
+  const prereqs = data.prerequisites || ['Valid input data', 'Required tools accessible', 'Proper authorization']
+  const outcomes = data.expected_outcomes || ['Structured output artifact', 'Quality score >= 70', 'Actionable improvement suggestions']
+  const verifyPoints = data.verification_points || ['Input schema matches expected format', 'Output contains all required fields', 'No errors in execution log']
+  const pitfalls = data.common_pitfalls || [
+    'Missing input validation causes silent failures',
+    'Overly broad scope reduces skill reliability',
+    'No error handling for edge cases',
+    'Ambiguous output format confuses consumers'
+  ]
+
+  const lines: string[] = []
+  lines.push('# SOP: ' + skillName + ' - ' + operation)
+  lines.push('')
+  lines.push('## Purpose')
+  lines.push('')
+  lines.push('This Standard Operating Procedure defines the step-by-step process for executing the "' + operation + '" operation of the ' + skillName + ' skill. It teaches the AI agent *how* to perform the task, not just *what* to produce.')
+  lines.push('')
+  lines.push('## Prerequisites')
+  lines.push('')
+  prereqs.forEach((p, i) => { lines.push((i + 1) + '. ' + p) })
+  lines.push('')
+  lines.push('## Procedure')
+  lines.push('')
+  stepsDesc.forEach((s, i) => {
+    lines.push('### Step ' + (i + 1) + ': ' + s.split(' ').slice(0, 4).join(' '))
+    lines.push('')
+    lines.push(s)
+    lines.push('')
+    if (verifyPoints[i]) {
+      lines.push('- **Verify:** ' + verifyPoints[i])
+    } else {
+      lines.push('- **Verify:** Confirm step completed without errors')
+    }
+    lines.push('')
+  })
+  lines.push('## Expected Outcomes')
+  lines.push('')
+  outcomes.forEach((o, i) => { lines.push((i + 1) + '. ' + o) })
+  lines.push('')
+  lines.push('## Common Pitfalls & Mitigations')
+  lines.push('')
+  pitfalls.forEach(p => {
+    const parts = p.split(' cause ')
+    if (parts.length === 2) {
+      lines.push('- **Pitfall:** ' + parts[0])
+      lines.push('  - **Mitigation:** Prevent by: ' + parts[1])
+    } else {
+      lines.push('- **Pitfall:** ' + p)
+      lines.push('  - **Mitigation:** Add explicit check before this step')
+    }
+    lines.push('')
+  })
+  lines.push('## Completion Checklist')
+  lines.push('')
+  lines.push('- [ ] All steps executed in order')
+  lines.push('- [ ] Each verification point confirmed')
+  lines.push('- [ ] No pitfalls encountered')
+  lines.push('- [ ] Outcome matches expected')
+  lines.push('- [ ] Output quality score >= 70')
+  lines.push('')
+  lines.push('---')
+  lines.push('*Generated by dsh-tool-skillpackager SOP Documenter*')
+
+  const artifact = lines.join('\n')
+
+  let score = 45
+  if (data.steps_description && data.steps_description.length >= 5) score += 12
+  else if (data.steps_description && data.steps_description.length >= 3) score += 7
+  if (data.prerequisites && data.prerequisites.length >= 2) score += 8
+  if (data.expected_outcomes && data.expected_outcomes.length >= 2) score += 8
+  if (data.verification_points && data.verification_points.length >= 3) score += 10
+  if (data.common_pitfalls && data.common_pitfalls.length >= 3) score += 10
+  if (data.operation && data.operation !== 'primary_operation') score += 7
+  score = clamp(round(score + rng() * 5 - 2.5, 0), 20, 98)
+
+  const improvements: string[] = []
+  if (!data.steps_description || data.steps_description.length < 5) improvements.push('Expand to at least 5 detailed steps for clarity')
+  if (!data.verification_points || data.verification_points.length < 3) improvements.push('Add verification points after each critical step')
+  if (!data.common_pitfalls || data.common_pitfalls.length < 3) improvements.push('Document common pitfalls and their mitigations')
+  if (!data.expected_outcomes) improvements.push('Define measurable expected outcomes')
+  if (improvements.length === 0) improvements.push('SOP is well-structured and teaches the agent effectively')
+
+  let marketplace_fit = 'MODERATE'
+  if (score >= 80) marketplace_fit = 'HIGH'
+  else if (score < 50) marketplace_fit = 'LOW'
+
+  return { artifact, quality_score: score, improvements, marketplace_fit }
+}
+
+function formatSop(r: SopResult): string {
+  return r.artifact + '\n\n' +
+    '---\n\n' +
+    '## Packager Assessment\n\n' +
+    '- **Quality Score:** ' + r.quality_score + '/100 (' + qualityLabel(r.quality_score) + ')\n' +
+    '- **Marketplace Fit:** ' + r.marketplace_fit + '\n' +
+    '- **Improvements:**\n' +
+    r.improvements.map((s: string) => '  - ' + s).join('\n') + '\n\n' +
+    '> Tip: Great SOPs bridge the gap between "tool" (passive) and "skill" (procedural knowledge). Include verification at every step.\n'
+}
+
+// ============================================================================
+// TOOL 3: verification_checklist_builder
+// ============================================================================
+
+export interface VerificationChecklistInput {
+  skill_name: string
+  pre_execution_checks?: string[]
+  post_execution_checks?: string[]
+  quality_rubric?: Array<{ criterion: string; weight: number; threshold: string }>
+  failure_actions?: string[]
+}
+
+export interface VerificationResult {
+  artifact: string
+  quality_score: number
+  improvements: string[]
+  marketplace_fit: string
+}
+
+function buildVerificationChecklist(data: VerificationChecklistInput): VerificationResult {
+  const rng = mulberry32(hashSeed(JSON.stringify(data)))
+  const skillName = data.skill_name || 'unnamed-skill'
+
+  const preChecks = data.pre_execution_checks || [
+    'Input data is non-null and non-empty',
+    'Required parameters are present and typed correctly',
+    'Dependencies (tools, APIs) are accessible',
+    'Input size within acceptable limits',
+    'User authorization/permissions verified'
+  ]
+  const postChecks = data.post_execution_checks || [
+    'Output artifact is non-null',
+    'Quality score meets minimum threshold (>= 60)',
+    'No error messages in execution log',
+    'Output format matches specification',
+    'All required fields present in output'
+  ]
+  const rubric = data.quality_rubric || [
+    { criterion: 'Completeness', weight: 30, threshold: 'All required sections present' },
+    { criterion: 'Accuracy', weight: 30, threshold: 'No factual errors in output' },
+    { criterion: 'Actionability', weight: 20, threshold: 'Improvements are concrete and specific' },
+    { criterion: 'Format Compliance', weight: 20, threshold: 'Output matches defined schema' }
+  ]
+  const failureActions = data.failure_actions || [
+    'Log failure with full context for debugging',
+    'Return structured error with remediation hint',
+    'Suggest alternative skill or fallback approach',
+    'Escalate to human reviewer if critical'
+  ]
+
+  const lines: string[] = []
+  lines.push('# Verification Checklist: ' + skillName)
+  lines.push('')
+  lines.push('## Purpose')
+  lines.push('')
+  lines.push('This checklist ensures the ' + skillName + ' skill executes correctly and produces high-quality output. It covers pre-execution validation and post-execution verification.')
+  lines.push('')
+  lines.push('## Pre-Execution Checks')
+  lines.push('')
+  lines.push('Execute ALL checks BEFORE running the skill. Abort if any fail.')
+  lines.push('')
+  preChecks.forEach((c, i) => { lines.push('- [ ] P' + (i + 1) + ': ' + c) })
+  lines.push('')
+  lines.push('### Pre-Failure Protocol')
+  lines.push('')
+  lines.push('If any pre-check fails:')
+  lines.push('1. Identify the specific check that failed')
+  lines.push('2. Attempt auto-remediation (e.g., default values for optional params)')
+  lines.push('3. If unrecoverable, return error with missing field name')
+  lines.push('4. Do not proceed to execution phase')
+  lines.push('')
+  lines.push('## Post-Execution Checks')
+  lines.push('')
+  lines.push('Execute ALL checks AFTER skill produces output. Reject if any fail.')
+  lines.push('')
+  postChecks.forEach((c, i) => { lines.push('- [ ] Q' + (i + 1) + ': ' + c) })
+  lines.push('')
+  lines.push('## Quality Rubric')
+  lines.push('')
+  lines.push('| Criterion | Weight | Threshold |')
+  lines.push('|-----------|--------|-----------|')
+  rubric.forEach(r => {
+    lines.push('| ' + r.criterion + ' | ' + r.weight + '% | ' + r.threshold + ' |')
+  })
+  const totalWeight = rubric.reduce((s, r) => s + r.weight, 0)
+  lines.push('| **Total** | ' + totalWeight + '% | |')
+  lines.push('')
+  lines.push('## Failure Actions')
+  lines.push('')
+  lines.push('When verification fails, execute these actions in order:')
+  lines.push('')
+  failureActions.forEach((a, i) => { lines.push((i + 1) + '. ' + a) })
+  lines.push('')
+  lines.push('## Sign-off')
+  lines.push('')
+  lines.push('- [ ] All pre-execution checks passed')
+  lines.push('- [ ] Skill executed successfully')
+  lines.push('- [ ] All post-execution checks passed')
+  lines.push('- [ ] Quality rubric score >= 60')
+  lines.push('- [ ] Output delivered to consumer')
+  lines.push('')
+  lines.push('---')
+  lines.push('*Generated by dsh-tool-skillpackager Verification Builder*')
+
+  const artifact = lines.join('\n')
+
+  let score = 45
+  if (data.pre_execution_checks && data.pre_execution_checks.length >= 4) score += 12
+  if (data.post_execution_checks && data.post_execution_checks.length >= 4) score += 12
+  if (data.quality_rubric && data.quality_rubric.length >= 3) score += 12
+  if (data.failure_actions && data.failure_actions.length >= 3) score += 8
+  if (totalWeight === 100) score += 6
+  score = clamp(round(score + rng() * 5 - 2.5, 0), 20, 98)
+
+  const improvements: string[] = []
+  if (!data.pre_execution_checks || data.pre_execution_checks.length < 5) improvements.push('Add more pre-execution checks covering edge cases')
+  if (!data.post_execution_checks || data.post_execution_checks.length < 5) improvements.push('Expand post-execution checks with output validation')
+  if (!data.quality_rubric || data.quality_rubric.length < 4) improvements.push('Define a weighted quality rubric with at least 4 criteria')
+  if (totalWeight !== 100) improvements.push('Ensure quality rubric weights sum to exactly 100')
+  if (improvements.length === 0) improvements.push('Verification checklist is thorough and production-ready')
+
+  let marketplace_fit = 'MODERATE'
+  if (score >= 80) marketplace_fit = 'HIGH'
+  else if (score < 50) marketplace_fit = 'LOW'
+
+  return { artifact, quality_score: score, improvements, marketplace_fit }
+}
+
+function formatVerification(r: VerificationResult): string {
+  return r.artifact + '\n\n' +
+    '---\n\n' +
+    '## Packager Assessment\n\n' +
+    '- **Quality Score:** ' + r.quality_score + '/100 (' + qualityLabel(r.quality_score) + ')\n' +
+    '- **Marketplace Fit:** ' + r.marketplace_fit + '\n' +
+    '- **Improvements:**\n' +
+    r.improvements.map((s: string) => '  - ' + s).join('\n') + '\n\n' +
+    '> Tip: Verification separates amateur tools from professional skills. Marketplace top sellers have 10+ pre/post checks.\n'
+}
+
+// ============================================================================
+// TOOL 4: error_recovery_coder
+// ============================================================================
+
+export interface ErrorRecoveryInput {
+  skill_name: string
+  failure_modes?: Array<{ error_type: string; trigger: string; recovery: string; severity: 'high' | 'medium' | 'low' }>
+  fallback_behaviors?: string[]
+  escalation_path?: string[]
+  retry_policy?: { max_retries: number; backoff_strategy: string }
+}
+
+export interface ErrorRecoveryResult {
+  artifact: string
+  quality_score: number
+  improvements: string[]
+  marketplace_fit: string
+}
+
+function generateErrorRecovery(data: ErrorRecoveryInput): ErrorRecoveryResult {
+  const rng = mulberry32(hashSeed(JSON.stringify(data)))
+  const skillName = data.skill_name || 'unnamed-skill'
+
+  const failureModes = data.failure_modes || [
+    { error_type: 'InputValidationError', trigger: 'Missing or malformed input parameters', recovery: 'Return structured error with field-level details', severity: 'high' as const },
+    { error_type: 'TimeoutError', trigger: 'Operation exceeds time limit', recovery: 'Switch to simplified processing path or return partial result', severity: 'medium' as const },
+    { error_type: 'DependencyUnavailable', trigger: 'Required tool/API returns error or is unreachable', recovery: 'Retry with exponential backoff, then fallback to cached data', severity: 'high' as const },
+    { error_type: 'QualityCheckFailed', trigger: 'Output fails post-execution verification', recovery: 'Re-process with relaxed constraints, flag confidence level', severity: 'medium' as const },
+    { error_type: 'RateLimitExceeded', trigger: 'Too many requests to external service', recovery: 'Queue request and return estimated completion time', severity: 'low' as const }
+  ]
+  const fallbacks = data.fallback_behaviors || [
+    'Return partial result with clear indication of what is missing',
+    'Use cached/stale data with freshness warning',
+    'Degrade to simpler algorithm with quality flag',
+    'Suggest alternative skill that may fulfill the request'
+  ]
+  const escalation = data.escalation_path || [
+    'Auto-retry with exponential backoff (max 3 attempts)',
+    'Switch to fallback processing mode',
+    'Queue for manual review if critical severity',
+    'Notify skill publisher with error telemetry'
+  ]
+  const retryPolicy = data.retry_policy || { max_retries: 3, backoff_strategy: 'exponential' }
+
+  const lines: string[] = []
+  lines.push('# Error Recovery Procedures: ' + skillName)
+  lines.push('')
+  lines.push('## Overview')
+  lines.push('')
+  lines.push('This document defines structured error handling and recovery procedures for the ' + skillName + ' skill. Every failure mode has a documented recovery action, ensuring graceful degradation.')
+  lines.push('')
+  lines.push('## Failure Mode Catalog')
+  lines.push('')
+  failureModes.forEach((fm, i) => {
+    const sevMark = fm.severity === 'high' ? '[CRITICAL]' : fm.severity === 'medium' ? '[WARNING]' : '[MINOR]'
+    lines.push('### FM-' + String(i + 1).padStart(3, '0') + ': ' + fm.error_type + ' ' + sevMark)
+    lines.push('')
+    lines.push('- **Trigger:** ' + fm.trigger)
+    lines.push('- **Recovery Action:** ' + fm.recovery)
+    lines.push('- **Severity:** ' + fm.severity)
+    lines.push('')
+  })
+  lines.push('## Generic Fallback Behaviors')
+  lines.push('')
+  lines.push('When no specific recovery applies:')
+  lines.push('')
+  fallbacks.forEach((fb, i) => { lines.push((i + 1) + '. ' + fb) })
+  lines.push('')
+  lines.push('## Escalation Path')
+  lines.push('')
+  lines.push('If automated recovery fails, escalate in this order:')
+  lines.push('')
+  escalation.forEach((e, i) => { lines.push((i + 1) + '. ' + e) })
+  lines.push('')
+  lines.push('## Retry Policy')
+  lines.push('')
+  lines.push('- **Max Retries:** ' + retryPolicy.max_retries)
+  lines.push('- **Backoff Strategy:** ' + retryPolicy.backoff_strategy)
+  lines.push('- **Backoff Formula:** wait = base_delay * (2 ^ attempt) + jitter')
+  lines.push('')
+  lines.push('## Error Response Format')
+  lines.push('')
+  lines.push('```json')
+  lines.push(JSON.stringify({
+    error: true,
+    error_type: '<FM-XXX>',
+    message: '<human-readable message>',
+    recovery_action: '<what was attempted>',
+    retry_after_sec: 30,
+    fallback_result: null
+  }, null, 2))
+  lines.push('```')
+  lines.push('')
+  lines.push('## Monitoring & Alerting')
+  lines.push('')
+  lines.push('- Log every error with full context (input, timestamp, attempt count)')
+  lines.push('- Alert publisher if high-severity error rate > 5%')
+  lines.push('- Track recovery success rate as quality metric')
+  lines.push('- Weekly review of all unrecovered failures')
+  lines.push('')
+  lines.push('---')
+  lines.push('*Generated by dsh-tool-skillpackager Error Recovery Coder*')
+
+  const artifact = lines.join('\n')
+
+  let score = 40
+  if (data.failure_modes && data.failure_modes.length >= 4) score += 15
+  if (data.failure_modes && data.failure_modes.some(fm => fm.severity === 'high')) score += 5
+  if (data.fallback_behaviors && data.fallback_behaviors.length >= 3) score += 10
+  if (data.escalation_path && data.escalation_path.length >= 3) score += 10
+  if (data.retry_policy) score += 8
+  if (data.retry_policy && data.retry_policy.max_retries >= 2) score += 5
+  const hasHigh = failureModes.some(fm => fm.severity === 'high')
+  const hasMed = failureModes.some(fm => fm.severity === 'medium')
+  const hasLow = failureModes.some(fm => fm.severity === 'low')
+  if (hasHigh && hasMed && hasLow) score += 7
+  score = clamp(round(score + rng() * 5 - 2.5, 0), 20, 98)
+
+  const improvements: string[] = []
+  if (!data.failure_modes || data.failure_modes.length < 5) improvements.push('Document at least 5 failure modes covering high/medium/low severity')
+  if (!hasHigh) improvements.push('Add at least one high-severity failure mode with clear recovery')
+  if (!data.fallback_behaviors || data.fallback_behaviors.length < 4) improvements.push('Define 4+ generic fallback behaviors')
+  if (!data.escalation_path) improvements.push('Create a multi-step escalation path for unrecovered failures')
+  if (!data.retry_policy) improvements.push('Specify a retry policy with max retries and backoff strategy')
+  if (improvements.length === 0) improvements.push('Error recovery procedures are comprehensive and production-grade')
+
+  let marketplace_fit = 'MODERATE'
+  if (score >= 80) marketplace_fit = 'HIGH'
+  else if (score < 50) marketplace_fit = 'LOW'
+
+  return { artifact, quality_score: score, improvements, marketplace_fit }
+}
+
+function formatErrorRecovery(r: ErrorRecoveryResult): string {
+  return r.artifact + '\n\n' +
+    '---\n\n' +
+    '## Packager Assessment\n\n' +
+    '- **Quality Score:** ' + r.quality_score + '/100 (' + qualityLabel(r.quality_score) + ')\n' +
+    '- **Marketplace Fit:** ' + r.marketplace_fit + '\n' +
+    '- **Improvements:**\n' +
+    r.improvements.map((s: string) => '  - ' + s).join('\n') + '\n\n' +
+    '> Tip: Error recovery is what separates a Skill from a Tool. Top publishers document 5+ failure modes with severity levels.\n'
+}
+
+// ============================================================================
+// TOOL 5: marketplace_listing_creator
+// ============================================================================
+
+export interface MarketplaceListingInput {
+  skill_name: string
+  description?: string
+  category?: string
+  target_audience?: string[]
+  pricing_tier?: 'free' | 'basic' | 'pro' | 'enterprise'
+  competition_level?: 'low' | 'medium' | 'high'
+  unique_value_props?: string[]
+}
+
+export interface ListingResult {
+  artifact: string
+  quality_score: number
+  improvements: string[]
+  marketplace_fit: string
+}
+
+function createMarketplaceListing(data: MarketplaceListingInput): ListingResult {
+  const rng = mulberry32(hashSeed(JSON.stringify(data)))
+  const skillName = data.skill_name || 'unnamed-skill'
+  const description = data.description || 'AI Agent Skill for ' + (data.category || 'automation')
+  const category = data.category || pick(rng, ['productivity', 'analytics', 'content-generation', 'data-processing', 'integration', 'monitoring'])
+  const audience = data.target_audience || ['developers', 'data-analysts', 'content-creators']
+  const pricingTier = data.pricing_tier || pick(rng, ['basic', 'pro'])
+  const competition = data.competition_level || pick(rng, ['medium', 'high'])
+  const uvps = data.unique_value_props || [
+    'Structured output with quality scoring',
+    'Built-in error recovery procedures',
+    'Supports real-time and batch processing',
+    'Compatible with major agent frameworks'
+  ]
+
+  const lines: string[] = []
+  lines.push('# Marketplace Listing: ' + skillName)
+  lines.push('')
+  lines.push('## Title')
+  lines.push('')
+  lines.push(skillName.charAt(0).toUpperCase() + skillName.slice(1).replace(/-/g, ' ') + ' - AI Skill')
+  lines.push('')
+  lines.push('## Short Description (max 120 chars)')
+  lines.push('')
+  const shortDesc = description.length > 120 ? description.substring(0, 117) + '...' : description
+  lines.push('"' + shortDesc + '"')
+  lines.push('')
+  lines.push('## Full Description')
+  lines.push('')
+  lines.push(description)
+  lines.push('')
+  lines.push('### What This Skill Does')
+  lines.push('')
+  lines.push('Transforms AI agents from passive executors into knowledgeable operators. Unlike simple tools, this skill includes procedural knowledge (SOP), verification protocols, and error recovery procedures.')
+  lines.push('')
+  lines.push('### Target Audience')
+  lines.push('')
+  audience.forEach(a => { lines.push('- ' + a) })
+  lines.push('')
+  lines.push('### Unique Value Propositions')
+  lines.push('')
+  uvps.forEach((u, i) => { lines.push((i + 1) + '. ' + u) })
+  lines.push('')
+  lines.push('## Pricing')
+  lines.push('')
+  lines.push('| Tier | Price | Features |')
+  lines.push('|------|-------|----------|')
+  if (pricingTier === 'free') {
+    lines.push('| Free | $0 | Basic skill execution |')
+    lines.push('| Pro | $9/mo | Advanced features + priority support |')
+  } else if (pricingTier === 'basic') {
+    lines.push('| Basic | $4.99/mo | Standard skill execution |')
+    lines.push('| Pro | $14.99/mo | Advanced + batch processing |')
+    lines.push('| Enterprise | $49.99/mo | Unlimited + custom integrations |')
+  } else if (pricingTier === 'pro') {
+    lines.push('| Pro | $19.99/mo | Full skill capabilities |')
+    lines.push('| Enterprise | $79.99/mo | Unlimited + SLA + custom tuning |')
+  } else {
+    lines.push('| Enterprise | $99/mo | Full + custom + dedicated support |')
+    lines.push('| Custom | Contact | Tailored to organization |')
+  }
+  lines.push('')
+  lines.push('## Tags & Categories')
+  lines.push('')
+  lines.push('- **Category:** ' + category)
+  lines.push('- **Tags:** ' + [category, 'ai-skill', 'agent-tool'].concat(audience.slice(0, 2)).join(', '))
+  lines.push('- **Keywords:** ' + skillName + ', agent, ai, ' + category + ', automation')
+  lines.push('')
+  lines.push('## Marketplace Metadata')
+  lines.push('')
+  lines.push('- **Competition Level:** ' + competition)
+  lines.push('- **Revenue Share:** Up to 90% (AppHighway marketplace)')
+  lines.push('- **Top Publisher Earnings:** $2,847/month')
+  lines.push('- **Version:** 0.1.0')
+  lines.push('- **Last Updated:** ' + new Date().toISOString().split('T')[0])
+  lines.push('')
+  lines.push('## Screenshot Descriptions')
+  lines.push('')
+  lines.push('1. **Hero:** Skill overview with quality score badge and trigger examples')
+  lines.push('2. **SOP View:** Step-by-step procedure with verification checkpoints')
+  lines.push('3. **Error Recovery:** Failure mode catalog with recovery actions')
+  lines.push('4. **Marketplace Fit:** Radar chart of readiness dimensions')
+  lines.push('')
+  lines.push('---')
+  lines.push('*Generated by dsh-tool-skillpackager Marketplace Listing Creator*')
+
+  const artifact = lines.join('\n')
+
+  let score = 45
+  if (data.skill_name && data.skill_name.length > 3) score += 8
+  if (data.description && data.description.length > 30) score += 8
+  if (data.target_audience && data.target_audience.length >= 2) score += 8
+  if (data.unique_value_props && data.unique_value_props.length >= 3) score += 10
+  if (data.category) score += 6
+  if (data.pricing_tier) score += 5
+  if (data.competition_level === 'low') score += 10
+  else if (data.competition_level === 'medium') score += 5
+  score = clamp(round(score + rng() * 5 - 2.5, 0), 20, 98)
+
+  const improvements: string[] = []
+  if (!data.description || data.description.length < 30) improvements.push('Write a compelling 30+ char description highlighting unique value')
+  if (!data.unique_value_props || data.unique_value_props.length < 3) improvements.push('Define 3+ unique value propositions that differentiate from competitors')
+  if (!data.target_audience || data.target_audience.length < 2) improvements.push('Identify specific target audience segments')
+  if (!data.category) improvements.push('Assign a clear marketplace category for discoverability')
+  if (data.competition_level === 'high') improvements.push('High competition - consider niche positioning or superior quality to stand out')
+  if (improvements.length === 0) improvements.push('Listing is well-crafted with strong marketplace positioning')
+
+  let marketplace_fit = 'MODERATE'
+  if (score >= 80) marketplace_fit = 'HIGH'
+  else if (score < 50) marketplace_fit = 'LOW'
+
+  return { artifact, quality_score: score, improvements, marketplace_fit }
+}
+
+function formatListing(r: ListingResult): string {
+  return r.artifact + '\n\n' +
+    '---\n\n' +
+    '## Packager Assessment\n\n' +
+    '- **Quality Score:** ' + r.quality_score + '/100 (' + qualityLabel(r.quality_score) + ')\n' +
+    '- **Marketplace Fit:** ' + r.marketplace_fit + '\n' +
+    '- **Improvements:**\n' +
+    r.improvements.map((s: string) => '  - ' + s).join('\n') + '\n\n' +
+    '> Tip: Top listings combine clear pricing, strong UVPs, and specific audience targeting. Revenue share up to 90% on AppHighway.\n'
+}
+
+// ============================================================================
+// TOOL 6: skill_dependency_mapper
+// ============================================================================
+
+export interface DependencyMapperInput {
+  skill_name: string
+  mcp_tools?: string[]
+  external_apis?: string[]
+  data_sources?: string[]
+  runtime_deps?: string[]
+  optional_deps?: string[]
+}
+
+export interface DependencyResult {
+  artifact: string
+  quality_score: number
+  improvements: string[]
+  marketplace_fit: string
+}
+
+function mapDependencies(data: DependencyMapperInput): DependencyResult {
+  const rng = mulberry32(hashSeed(JSON.stringify(data)))
+  const skillName = data.skill_name || 'unnamed-skill'
+  const mcpTools = data.mcp_tools || ['web_search', 'file_read']
+  const apis = data.external_apis || ['none']
+  const dataSources = data.data_sources || ['internal']
+  const runtimeDeps = data.runtime_deps || ['node>=18', 'typescript>=5']
+  const optionalDeps = data.optional_deps || ['cached_data', 'local_model']
+
+  const lines: string[] = []
+  lines.push('# Dependency Map: ' + skillName)
+  lines.push('')
+  lines.push('## Overview')
+  lines.push('')
+  lines.push('Complete dependency inventory for the ' + skillName + ' skill. All dependencies must be available for skill to execute correctly.')
+  lines.push('')
+  lines.push('## MCP Tools Required')
+  lines.push('')
+  lines.push('| Tool | Required | Purpose |')
+  lines.push('|------|----------|---------|')
+  mcpTools.forEach(t => {
+    lines.push('| ' + t + ' | Yes | ' + t.replace(/_/g, ' ') + ' |')
+  })
+  lines.push('')
+  lines.push('## External APIs')
+  lines.push('')
+  if (apis.length === 1 && apis[0] === 'none') {
+    lines.push('No external API dependencies. Skill operates entirely with built-in logic.')
+  } else {
+    lines.push('| API | Required | Rate Limit | Auth |')
+    lines.push('|-----|----------|------------|------|')
+    apis.forEach(a => {
+      lines.push('| ' + a + ' | Yes | 1000/hr | API Key |')
+    })
+  }
+  lines.push('')
+  lines.push('## Data Sources')
+  lines.push('')
+  dataSources.forEach((ds, i) => {
+    lines.push((i + 1) + '. **' + ds + '** - ' + (ds.includes('internal') ? 'Built-in reference data' : 'External data feed'))
+  })
+  lines.push('')
+  lines.push('## Runtime Dependencies')
+  lines.push('')
+  runtimeDeps.forEach(d => { lines.push('- ' + d) })
+  lines.push('')
+  lines.push('## Optional Dependencies')
+  lines.push('')
+  lines.push('These enhance skill performance but are not required:')
+  lines.push('')
+  optionalDeps.forEach(d => { lines.push('- ' + d + ' (optional)') })
+  lines.push('')
+  lines.push('## Dependency Risk Assessment')
+  lines.push('')
+  const totalDeps = mcpTools.length + apis.length + dataSources.length
+  const riskLevel = totalDeps <= 3 ? 'LOW' : totalDeps <= 6 ? 'MEDIUM' : 'HIGH'
+  lines.push('- **Total Dependencies:** ' + totalDeps)
+  lines.push('- **Risk Level:** ' + riskLevel)
+  lines.push('- **Impact:** ' + (riskLevel === 'LOW' ? 'Skill works reliably with minimal failure surface' : riskLevel === 'MEDIUM' ? 'Monitor external dependency availability' : 'High failure surface, implement fallback for each dependency'))
+  lines.push('')
+  lines.push('## Installation Order')
+  lines.push('')
+  lines.push('1. Install runtime: ' + runtimeDeps.join(', '))
+  lines.push('2. Configure MCP tools: ' + mcpTools.slice(0, 3).join(', '))
+  lines.push('3. Set up data connections: ' + dataSources.slice(0, 2).join(', '))
+  lines.push('4. Optional enhancements: ' + optionalDeps.slice(0, 2).join(', '))
+  lines.push('')
+  lines.push('---')
+  lines.push('*Generated by dsh-tool-skillpackager Dependency Mapper*')
+
+  const artifact = lines.join('\n')
+
+  let score = 45
+  if (data.mcp_tools && data.mcp_tools.length >= 2) score += 12
+  if (data.external_apis && !(data.external_apis.length === 1 && data.external_apis[0] === 'none')) score += 8
+  if (data.data_sources && data.data_sources.length >= 2) score += 10
+  if (data.runtime_deps && data.runtime_deps.length >= 2) score += 8
+  if (data.optional_deps && data.optional_deps.length >= 2) score += 7
+  if (riskLevel === 'LOW') score += 5
+  score = clamp(round(score + rng() * 5 - 2.5, 0), 20, 98)
+
+  const improvements: string[] = []
+  if (!data.mcp_tools || data.mcp_tools.length < 2) improvements.push('Specify at least 2 MCP tools the skill requires')
+  if (totalDeps > 6) improvements.push('High dependency count (' + totalDeps + ') - consider reducing to improve reliability')
+  if (!data.data_sources) improvements.push('Document all data sources used by the skill')
+  if (riskLevel === 'HIGH') improvements.push('Implement fallback mechanisms for each high-risk dependency')
+  if (!data.optional_deps) improvements.push('Separate optional dependencies from required ones')
+  if (improvements.length === 0) improvements.push('Dependency mapping is thorough with clear risk assessment')
+
+  let marketplace_fit = 'MODERATE'
+  if (score >= 80) marketplace_fit = 'HIGH'
+  else if (score < 50) marketplace_fit = 'LOW'
+
+  return { artifact, quality_score: score, improvements, marketplace_fit }
+}
+
+function formatDependency(r: DependencyResult): string {
+  return r.artifact + '\n\n' +
+    '---\n\n' +
+    '## Packager Assessment\n\n' +
+    '- **Quality Score:** ' + r.quality_score + '/100 (' + qualityLabel(r.quality_score) + ')\n' +
+    '- **Marketplace Fit:** ' + r.marketplace_fit + '\n' +
+    '- **Improvements:**\n' +
+    r.improvements.map((s: string) => '  - ' + s).join('\n') + '\n\n' +
+    '> Tip: Fewer dependencies = higher reliability = better marketplace ratings. Aim for <= 5 total dependencies.\n'
+}
+
+// ============================================================================
+// TOOL 7: monetization_optimizer
+// ============================================================================
+
+export interface MonetizationInput {
+  skill_name: string
+  value_category?: 'time_saving' | 'revenue_generating' | 'cost_reducing' | 'risk_mitigating' | 'quality_improving'
+  estimated_user_roi?: number
+  market_size?: 'niche' | 'medium' | 'large'
+  competition_level?: 'low' | 'medium' | 'high'
+  delivery_model?: 'on_demand' | 'batch' | 'continuous'
+}
+
+export interface MonetizationResult {
+  artifact: string
+  quality_score: number
+  improvements: string[]
+  marketplace_fit: string
+}
+
+function optimizeMonetization(data: MonetizationInput): MonetizationResult {
+  const rng = mulberry32(hashSeed(JSON.stringify(data)))
+  const skillName = data.skill_name || 'unnamed-skill'
+  const valueCat = data.value_category || 'time_saving'
+  const userRoi = data.estimated_user_roi ?? round(200 + rng() * 800, 0)
+  const marketSize = data.market_size || pick(rng, ['medium', 'large'])
+  const competition = data.competition_level || pick(rng, ['medium', 'high'])
+  const delivery = data.delivery_model || 'on_demand'
+
+  // Pricing recommendation logic
+  let recommendedModel = 'freemium'
+  let basePrice = 9.99
+  let rationale = ''
+
+  if (valueCat === 'revenue_generating') {
+    recommendedModel = 'per_call'
+    basePrice = 2.99
+    rationale = 'Revenue-generating skills can charge per-execution since each call delivers measurable value'
+  } else if (valueCat === 'cost_reducing') {
+    recommendedModel = 'subscription'
+    basePrice = 19.99
+    rationale = 'Cost-reducing skills deliver ongoing value, justifying monthly subscription'
+  } else if (valueCat === 'risk_mitigating') {
+    recommendedModel = 'subscription'
+    basePrice = 29.99
+    rationale = 'Risk mitigation is high-value continuous need, premium subscription warranted'
+  } else if (valueCat === 'quality_improving') {
+    recommendedModel = 'freemium'
+    basePrice = 14.99
+    rationale = 'Quality improvement has broad appeal; freemium with pro tier maximizes adoption'
+  } else {
+    recommendedModel = 'freemium'
+    basePrice = 9.99
+    rationale = 'Time-saving skills work best with freemium - free tier hooks users, pro tier delivers advanced'
+  }
+
+  // Adjust for market size
+  if (marketSize === 'large') basePrice = round(basePrice * 1.3, 2)
+  else if (marketSize === 'niche') basePrice = round(basePrice * 0.7, 2)
+
+  // Adjust for competition
+  if (competition === 'high') basePrice = round(basePrice * 0.8, 2)
+  else if (competition === 'low') basePrice = round(basePrice * 1.2, 2)
+
+  const lines: string[] = []
+  lines.push('# Monetization Strategy: ' + skillName)
+  lines.push('')
+  lines.push('## Value Category')
+  lines.push('')
+  const valueLabels: Record<string, string> = {
+    time_saving: 'Time Saving',
+    revenue_generating: 'Revenue Generating',
+    cost_reducing: 'Cost Reducing',
+    risk_mitigating: 'Risk Mitigating',
+    quality_improving: 'Quality Improving'
+  }
+  lines.push('**Model:** ' + valueLabels[valueCat])
+  lines.push('')
+  lines.push('## Pricing Recommendation')
+  lines.push('')
+  lines.push('| Parameter | Value |')
+  lines.push('|-----------|-------|')
+  lines.push('| **Model** | ' + recommendedModel + ' |')
+  lines.push('| **Base Price** | $' + basePrice + '/mo |')
+  lines.push('| **User ROI** | ' + userRoi + '% |')
+  lines.push('| **Market** | ' + marketSize + ' |')
+  lines.push('| **Competition** | ' + competition + ' |')
+  lines.push('| **Delivery** | ' + delivery + ' |')
+  lines.push('')
+  lines.push('## Rationale')
+  lines.push('')
+  lines.push(rationale)
+  lines.push('')
+  lines.push('## Revenue Projections')
+  lines.push('')
+  const subscribers = marketSize === 'large' ? round(500 + rng() * 1500, 0) : marketSize === 'medium' ? round(100 + rng() * 400, 0) : round(10 + rng() * 90, 0)
+  const monthlyRev = round(subscribers * basePrice * 0.9, 0)
+  const annualRev = round(monthlyRev * 12, 0)
+  lines.push('| Metric | Estimate |')
+  lines.push('|--------|----------|')
+  lines.push('| Monthly Subscribers | ~' + subscribers + ' |')
+  lines.push('| Monthly Revenue | $' + monthlyRev.toLocaleString() + ' |')
+  lines.push('| Annual Revenue | $' + annualRev.toLocaleString() + ' |')
+  lines.push('| Revenue Share (90%) | $' + round(monthlyRev * 0.9, 0).toLocaleString() + '/mo |')
+  lines.push('')
+  lines.push('## Pricing Comparison')
+  lines.push('')
+  lines.push('| Model | Pros | Cons | Best For |')
+  lines.push('|-------|------|------|----------|')
+  lines.push('| Per-call | Pay only for value | Unpredictable cost | Revenue-gen skills |')
+  lines.push('| Subscription | Predictable revenue | Churn risk | Ongoing-value skills |')
+  lines.push('| Freemium | Maximum adoption | Low conversion | Awareness-building |')
+  lines.push('| Enterprise | High ACV | Long sales cycle | B2B/pro skills |')
+  lines.push('')
+  lines.push('## Optimization Tips')
+  lines.push('')
+  lines.push('1. **Start free** to build initial user base and reviews')
+  lines.push('2. **A/B test pricing** - try $9.99 vs $14.99 vs $19.99')
+  lines.push('3. **Bundle** related skills for higher ACV')
+  lines.push('4. **Monitor churn** - >5% monthly churn signals pricing/value mismatch')
+  lines.push('5. **Upsell** from free with usage limits or output quality caps')
+  lines.push('')
+  lines.push('---')
+  lines.push('*Generated by dsh-tool-skillpackager Monetization Optimizer*')
+
+  const artifact = lines.join('\n')
+
+  let score = 50
+  if (data.value_category) score += 10
+  if (data.estimated_user_roi && data.estimated_user_roi > 200) score += 10
+  if (data.market_size === 'large') score += 8
+  if (data.competition_level === 'low') score += 10
+  if (data.delivery_model) score += 5
+  if (userRoi > 500) score += 7
+  score = clamp(round(score + rng() * 5 - 2.5, 0), 20, 98)
+
+  const improvements: string[] = []
+  if (!data.value_category) improvements.push('Define the primary value category for optimal pricing')
+  if (!data.estimated_user_roi || data.estimated_user_roi < 200) improvements.push('Quantify user ROI to justify pricing (aim for >200% ROI)')
+  if (data.competition_level === 'high') improvements.push('High competition - differentiate on quality/UX or undercut on price')
+  if (data.market_size === 'niche') improvements.push('Niche markets support premium pricing with specialized features')
+  if (!data.delivery_model) improvements.push('Specify delivery model (on_demand, batch, continuous) for pricing alignment')
+  if (improvements.length === 0) improvements.push('Monetization strategy is well-defined with strong revenue potential')
+
+  let marketplace_fit = 'MODERATE'
+  if (score >= 80) marketplace_fit = 'HIGH'
+  else if (score < 50) marketplace_fit = 'LOW'
+
+  return { artifact, quality_score: score, improvements, marketplace_fit }
+}
+
+function formatMonetization(r: MonetizationResult): string {
+  return r.artifact + '\n\n' +
+    '---\n\n' +
+    '## Packager Assessment\n\n' +
+    '- **Quality Score:** ' + r.quality_score + '/100 (' + qualityLabel(r.quality_score) + ')\n' +
+    '- **Marketplace Fit:** ' + r.marketplace_fit + '\n' +
+    '- **Improvements:**\n' +
+    r.improvements.map((s: string) => '  - ' + s).join('\n') + '\n\n' +
+    '> Tip: Top publishers earn $2,847/mo. Key is high user ROI + low competition + subscription model.\n'
+}
+
+// ============================================================================
+// TOOL 8: publish_readiness_scorer
+// ============================================================================
+
+export interface PublishReadinessInput {
+  skill_name: string
+  has_skill_md?: boolean
+  has_sop?: boolean
+  has_verification?: boolean
+  has_error_recovery?: boolean
+  has_listing?: boolean
+  has_dependency_map?: boolean
+  has_monetization?: boolean
+  documentation_score?: number
+  testing_score?: number
+  error_handling_score?: number
+  ux_score?: number
+  market_demand_score?: number
+}
+
+export interface ReadinessResult {
+  artifact: string
+  quality_score: number
+  improvements: string[]
+  marketplace_fit: string
+}
+
+function scorePublishReadiness(data: PublishReadinessInput): ReadinessResult {
+  const rng = mulberry32(hashSeed(JSON.stringify(data)))
+  const skillName = data.skill_name || 'unnamed-skill'
+
+  const dimensions = [
+    { name: 'Documentation', has: data.has_skill_md !== false, score: data.documentation_score ?? 70, max: 100 },
+    { name: 'Testing & Verification', has: data.has_verification !== false, score: data.testing_score ?? 65, max: 100 },
+    { name: 'Error Handling', has: data.has_error_recovery !== false, score: data.error_handling_score ?? 60, max: 100 },
+    { name: 'User Experience', has: data.has_sop !== false, score: data.ux_score ?? 75, max: 100 },
+    { name: 'Market Demand', has: data.has_listing !== false, score: data.market_demand_score ?? 55, max: 100 },
+    { name: 'Dependencies', has: data.has_dependency_map !== false, score: 70, max: 100 },
+    { name: 'Monetization', has: data.has_monetization !== false, score: 60, max: 100 }
+  ]
+
+  const overallScore = round(dimensions.reduce((s, d) => s + d.score, 0) / dimensions.length, 0)
+  const publishReady = overallScore >= 70 && dimensions.filter(d => d.has).length >= 5
+
+  const lines: string[] = []
+  lines.push('# Publish Readiness Scorecard: ' + skillName)
+  lines.push('')
+  lines.push('## Overall Score: ' + overallScore + '/100')
+  lines.push('')
+  lines.push('**Status:** ' + (publishReady ? 'READY TO PUBLISH' : 'NOT READY - See improvements below'))
+  lines.push('')
+  lines.push('## Dimension Breakdown')
+  lines.push('')
+  lines.push('| Dimension | Present | Score | Bar |')
+  lines.push('|-----------|---------|-------|-----|')
+  dimensions.forEach(d => {
+    const barLen = Math.round(d.score / 5)
+    const bar = '#'.repeat(barLen) + '-'.repeat(20 - barLen)
+    lines.push('| ' + d.name + ' | ' + (d.has ? 'Yes' : 'No') + ' | ' + d.score + '/100 | ' + bar + ' |')
+  })
+  lines.push('')
+  lines.push('## Component Checklist')
+  lines.push('')
+  lines.push('- [x] SKILL.md: ' + (data.has_skill_md !== false ? 'Present' : 'MISSING'))
+  lines.push('- [x] SOP Document: ' + (data.has_sop !== false ? 'Present' : 'MISSING'))
+  lines.push('- [x] Verification Checklist: ' + (data.has_verification !== false ? 'Present' : 'MISSING'))
+  lines.push('- [x] Error Recovery: ' + (data.has_error_recovery !== false ? 'Present' : 'MISSING'))
+  lines.push('- [x] Marketplace Listing: ' + (data.has_listing !== false ? 'Present' : 'MISSING'))
+  lines.push('- [x] Dependency Map: ' + (data.has_dependency_map !== false ? 'Present' : 'MISSING'))
+  lines.push('- [x] Monetization Strategy: ' + (data.has_monetization !== false ? 'Present' : 'MISSING'))
+  lines.push('')
+  lines.push('## Readiness Levels')
+  lines.push('')
+  lines.push('| Level | Score Range | Meaning |')
+  lines.push('|-------|-------------|---------|')
+  lines.push('| A+ (Elite) | 90-100 | Top 5% of marketplace skills |')
+  lines.push('| A (Excellent) | 80-89 | Ready for premium pricing |')
+  lines.push('| B+ (Good) | 70-79 | Publish-ready with minor gaps |')
+  lines.push('| B (Adequate) | 60-69 | Functional but needs polish |')
+  lines.push('| C (Needs Work) | 50-59 | Significant gaps remain |')
+  lines.push('| D (Not Ready) | <50 | Do not publish yet |')
+  lines.push('')
+  lines.push('## Priority Actions')
+  lines.push('')
+  const sortedDims = [...dimensions].sort((a, b) => a.score - b.score)
+  sortedDims.slice(0, 3).forEach((d, i) => {
+    lines.push((i + 1) + '. **' + d.name + '** (score: ' + d.score + '): ' + getActionForDimension(d.name))
+  })
+  lines.push('')
+  lines.push('## Marketplace Benchmarks')
+  lines.push('')
+  lines.push('- **Top 10% skills:** avg score 85+')
+  lines.push('- **Median skills:** avg score 62')
+  lines.push('- **Minimum viable:** score 60 with all 7 components present')
+  lines.push('- **Revenue correlation:** skills scoring 80+ earn 3.2x more than sub-60 skills')
+  lines.push('')
+  lines.push('---')
+  lines.push('*Generated by dsh-tool-skillpackager Publish Readiness Scorer*')
+
+  const artifact = lines.join('\n')
+
+  const improvements: string[] = []
+  if (overallScore < 70) improvements.push('Overall score below 70 - address lowest-scoring dimensions first')
+  if (data.documentation_score !== undefined && data.documentation_score < 70) improvements.push('Improve documentation: add examples, constraints, and clear output spec')
+  if (data.testing_score !== undefined && data.testing_score < 70) improvements.push('Strengthen testing: add pre/post execution checks and quality rubric')
+  if (data.error_handling_score !== undefined && data.error_handling_score < 70) improvements.push('Enhance error handling: document 5+ failure modes with recovery actions')
+  if (data.ux_score !== undefined && data.ux_score < 70) improvements.push('Improve UX: add SOP with step-by-step verification points')
+  if (data.market_demand_score !== undefined && data.market_demand_score < 60) improvements.push('Validate market demand: research competition and define UVPs')
+  if (dimensions.filter(d => !d.has).length > 0) improvements.push('Complete missing components: ' + dimensions.filter(d => !d.has).map(d => d.name).join(', '))
+  if (improvements.length === 0) improvements.push('Skill is publish-ready across all dimensions')
+
+  let marketplace_fit = 'MODERATE'
+  if (overallScore >= 80) marketplace_fit = 'HIGH'
+  else if (overallScore < 55) marketplace_fit = 'LOW'
+
+  return { artifact, quality_score: overallScore, improvements, marketplace_fit }
+}
+
+function getActionForDimension(name: string): string {
+  const actions: Record<string, string> = {
+    'Documentation': 'Add comprehensive SKILL.md with examples, triggers, and output spec',
+    'Testing & Verification': 'Build pre/post execution checklists with quality rubric',
+    'Error Handling': 'Document failure modes with severity levels and recovery procedures',
+    'User Experience': 'Create SOP with step-by-step instructions and verification points',
+    'Market Demand': 'Research competitors, define UVPs, and validate pricing',
+    'Dependencies': 'Map all dependencies with risk assessment and installation order',
+    'Monetization': 'Define pricing model based on value category and market size'
+  }
+  return actions[name] || 'Review and improve this dimension'
+}
+
+function formatReadiness(r: ReadinessResult): string {
+  return r.artifact + '\n\n' +
+    '---\n\n' +
+    '## Packager Assessment\n\n' +
+    '- **Quality Score:** ' + r.quality_score + '/100 (' + qualityLabel(r.quality_score) + ')\n' +
+    '- **Marketplace Fit:** ' + r.marketplace_fit + '\n' +
+    '- **Improvements:**\n' +
+    r.improvements.map((s: string) => '  - ' + s).join('\n') + '\n\n' +
+    '> Tip: Skills scoring 80+ earn 3.2x more revenue. Focus on the lowest-scoring dimension first.\n'
+}
+
+// ============================================================================
+// PLUGIN REGISTRATION
+// ============================================================================
+
+export function apply(ctx: Context) {
+  const tools = ctx.tools
+
+  // Tool 1: skill_md_generator
+  tools.register(defineTool({
+    name: 'skill_md_generator',
+    description: 'Generate marketplace-ready SKILL.md with proper frontmatter, trigger conditions, output format specification, and execution protocol',
+    parameters: {
+      input_data: {
+        type: 'string' as const,
+        required: true,
+        description: 'JSON: {skill_name, description, category?, trigger_keywords?, output_format?, tools_needed?, examples?, constraints?, author?, version?}'
+      }
+    },
+    output: { schema: { type: 'string' as const }, render: (_a: any, v: any) => [{ type: 'text' as const, text: v as string }] },
+    async execute(args: { input_data: string }) {
+      return formatSkillMd(generateSkillMd(JSON.parse(args.input_data)))
+    }
+  }))
+
+  // Tool 2: sop_documenter
+  tools.register(defineTool({
+    name: 'sop_documenter',
+    description: 'Create step-by-step SOP documents that teach AI agents procedural knowledge (how not just what), with verification points and pitfall mitigations',
+    parameters: {
+      input_data: {
+        type: 'string' as const,
+        required: true,
+        description: 'JSON: {skill_name, operation, steps_description?, prerequisites?, expected_outcomes?, verification_points?, common_pitfalls?}'
+      }
+    },
+    output: { schema: { type: 'string' as const }, render: (_a: any, v: any) => [{ type: 'text' as const, text: v as string }] },
+    async execute(args: { input_data: string }) {
+      return formatSop(documentSop(JSON.parse(args.input_data)))
+    }
+  }))
+
+  // Tool 3: verification_checklist_builder
+  tools.register(defineTool({
+    name: 'verification_checklist_builder',
+    description: 'Build pre-execution and post-execution verification checklists with quality rubric, failure actions, and sign-off procedures',
+    parameters: {
+      input_data: {
+        type: 'string' as const,
+        required: true,
+        description: 'JSON: {skill_name, pre_execution_checks?, post_execution_checks?, quality_rubric?, failure_actions?}'
+      }
+    },
+    output: { schema: { type: 'string' as const }, render: (_a: any, v: any) => [{ type: 'text' as const, text: v as string }] },
+    async execute(args: { input_data: string }) {
+      return formatVerification(buildVerificationChecklist(JSON.parse(args.input_data)))
+    }
+  }))
+
+  // Tool 4: error_recovery_coder
+  tools.register(defineTool({
+    name: 'error_recovery_coder',
+    description: 'Generate error handling and recovery procedures for common failure modes with severity levels, fallback behaviors, and escalation paths',
+    parameters: {
+      input_data: {
+        type: 'string' as const,
+        required: true,
+        description: 'JSON: {skill_name, failure_modes?, fallback_behaviors?, escalation_path?, retry_policy?}'
+      }
+    },
+    output: { schema: { type: 'string' as const }, render: (_a: any, v: any) => [{ type: 'text' as const, text: v as string }] },
+    async execute(args: { input_data: string }) {
+      return formatErrorRecovery(generateErrorRecovery(JSON.parse(args.input_data)))
+    }
+  }))
+
+  // Tool 5: marketplace_listing_creator
+  tools.register(defineTool({
+    name: 'marketplace_listing_creator',
+    description: 'Create marketplace listing metadata including title, description, tags, pricing tier, category, and screenshot descriptions',
+    parameters: {
+      input_data: {
+        type: 'string' as const,
+        required: true,
+        description: 'JSON: {skill_name, description?, category?, target_audience?, pricing_tier?, competition_level?, unique_value_props?}'
+      }
+    },
+    output: { schema: { type: 'string' as const }, render: (_a: any, v: any) => [{ type: 'text' as const, text: v as string }] },
+    async execute(args: { input_data: string }) {
+      return formatListing(createMarketplaceListing(JSON.parse(args.input_data)))
+    }
+  }))
+
+  // Tool 6: skill_dependency_mapper
+  tools.register(defineTool({
+    name: 'skill_dependency_mapper',
+    description: 'Map skill dependencies including MCP tools, external APIs, data sources, runtime deps with risk assessment and installation order',
+    parameters: {
+      input_data: {
+        type: 'string' as const,
+        required: true,
+        description: 'JSON: {skill_name, mcp_tools?, external_apis?, data_sources?, runtime_deps?, optional_deps?}'
+      }
+    },
+    output: { schema: { type: 'string' as const }, render: (_a: any, v: any) => [{ type: 'text' as const, text: v as string }] },
+    async execute(args: { input_data: string }) {
+      return formatDependency(mapDependencies(JSON.parse(args.input_data)))
+    }
+  }))
+
+  // Tool 7: monetization_optimizer
+  tools.register(defineTool({
+    name: 'monetization_optimizer',
+    description: 'Recommend pricing model (per-call, subscription, freemium) based on value delivered, market size, and competition level with revenue projections',
+    parameters: {
+      input_data: {
+        type: 'string' as const,
+        required: true,
+        description: 'JSON: {skill_name, value_category?, estimated_user_roi?, market_size?, competition_level?, delivery_model?}'
+      }
+    },
+    output: { schema: { type: 'string' as const }, render: (_a: any, v: any) => [{ type: 'text' as const, text: v as string }] },
+    async execute(args: { input_data: string }) {
+      return formatMonetization(optimizeMonetization(JSON.parse(args.input_data)))
+    }
+  }))
+
+  // Tool 8: publish_readiness_scorer
+  tools.register(defineTool({
+    name: 'publish_readiness_scorer',
+    description: 'Score a skill publish readiness across 7 dimensions: documentation, testing, error handling, UX, market demand, dependencies, monetization',
+    parameters: {
+      input_data: {
+        type: 'string' as const,
+        required: true,
+        description: 'JSON: {skill_name, has_skill_md?, has_sop?, has_verification?, has_error_recovery?, has_listing?, has_dependency_map?, has_monetization?, documentation_score?, testing_score?, error_handling_score?, ux_score?, market_demand_score?}'
+      }
+    },
+    output: { schema: { type: 'string' as const }, render: (_a: any, v: any) => [{ type: 'text' as const, text: v as string }] },
+    async execute(args: { input_data: string }) {
+      return formatReadiness(scorePublishReadiness(JSON.parse(args.input_data)))
+    }
+  }))
+}

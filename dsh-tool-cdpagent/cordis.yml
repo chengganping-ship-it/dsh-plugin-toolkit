@@ -1,17 +1,14 @@
-# DeepSeek Harness Plugin: Customer Data Platform Agent v0.1.0
-# CDP toolkit for unified profiles, segmentation, journey orchestration, activation, consent, attribution, insights, hygiene
-
 - id: dsh-tool-cdpagent
   name: dsh-tool-cdpagent
   version: 0.1.0
-  description: Customer Data Platform Agent - profiles, segmentation, journeys, activation, consent, attribution, insights, hygiene
-  author: chengganping-ship-it
+  description: Customer Data Platform AI Agent - customer 360 profiler, intelligent segmentation, churn prediction, personalization engine, campaign orchestration, data hygiene monitor, privacy consent manager, attribution analyzer
+  author: cdpagent-dev
   tools:
-    - profile_unifier
-    - segment_builder
-    - journey_orchestrator
-    - activation_hub
-    - consent_manager
-    - attribution_engine
-    - audience_insight
-    - data_hygiene
+    - customer_360_profiler
+    - intelligent_segmentation_engine
+    - churn_prediction_automator
+    - personalization_recommendation_engine
+    - campaign_orchestration_planner
+    - data_hygiene_monitor
+    - privacy_consent_manager
+    - attribution_analyzer

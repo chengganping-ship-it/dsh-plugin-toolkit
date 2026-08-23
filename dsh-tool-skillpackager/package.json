@@ -1,0 +1,17 @@
+{
+  "name": "dsh-tool-skillpackager",
+  "version": "0.1.0",
+  "description": "Agent Skill Packager - packaging AI tools as monetizable marketplace-ready Agent Skills with SKILL.md, SOP docs, verification checklists, error recovery, and marketplace metadata",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": { "build": "tsc" },
+  "keywords": ["dsh", "skill-packager", "agent-skill", "marketplace", "monetization", "skill-definition", "sop"],
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": { "typescript": "^5.0.0" }
+}

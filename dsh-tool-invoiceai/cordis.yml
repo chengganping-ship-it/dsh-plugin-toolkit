@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Invoice AI Agent v0.1.0
+# Invoice extraction, compliance validation, fraud detection, payment optimization, AP automation, tax reconciliation, supplier onboarding, expense audit
+
+- id: dsh-tool-invoiceai
+  name: dsh-tool-invoiceai
+  version: 0.1.0
+  description: Invoice AI Agent - Invoice data extraction with confidence scoring, compliance validation against tax rules and regulatory requirements, fraud detection with anomaly and duplicate scanning, payment terms optimization with cash flow analysis, end-to-end accounts payable automation, tax reconciliation across VAT/GST/sales tax periods, supplier onboarding document validation, and expense report auditing with policy compliance.
+  author: chengganping-ship-it
+  tools:
+    - invoice_data_extractor
+    - invoice_compliance_validator
+    - fraud_detection_scanner
+    - payment_terms_optimizer
+    - accounts_payable_automator
+    - tax_reconciliation_engine
+    - supplier_onboarding_doc_validator
+    - expense_report_auditor

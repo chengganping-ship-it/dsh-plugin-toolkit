@@ -453,7 +453,19 @@
 
 ---
 
-**Total: 231 plugins | 1848 tools**
+## Wave 47 — 真实市场需求驱动 (5个已验证付费场景)
+
+| # | Plugin | Category | Key Tools | Market Validation |
+|---|--------|----------|-----------|-------------------|
+| 232 | tradecompliance | 报关贸易合规 | hs_code_classifier, customs_duty_calculator, restricted_party_screening, trade_document_automator, compliance_audit_checker, free_trade_agreement_optimizer, customs_broker_workflow, trade_regulation_monitor | iCustoms.ai验证: 企业节省70%时间成本，真实的进出口商/报关行付费 |
+| 233 | invoiceai | 发票合规自动化 | invoice_data_extractor, invoice_compliance_validator, fraud_detection_scanner, payment_terms_optimizer, accounts_payable_automator, tax_reconciliation_engine, supplier_onboarding_doc_validator, expense_report_auditor | Oracle验证: 企业AI发票工作流，扫描数据/检测欺诈/合规标记 |
+| 234 | cdpagent | 客户数据平台AI | customer_360_profiler, intelligent_segmentation_engine, churn_prediction_automator, personalization_recommendation_engine, campaign_orchestration_planner, data_hygiene_monitor, privacy_consent_manager, attribution_analyzer | 市场数据: CDP AI模块减少53%人工数据操作，客户分群时效提升70% |
+| 235 | logisticspro | 物流优化 | last_mile_route_optimizer, warehouse_slotting_optimizer, demand_forecasting_planner, carrier_selection_engine, reverse_logistics_automator, cross_border_shipping_advisor, fleet_maintenance_predictor, logistics_cost_analyzer | DHL验证: 每节省1分钟/1英寸空间=显著成本节约，B2C从10%→40% |
+| 236 | skillpackager | Agent Skills包装器 | skill_md_generator, sop_documenter, verification_checklist_builder, error_recovery_coder, marketplace_listing_creator, skill_dependency_mapper, monetization_optimizer, publish_readiness_scorer | AppHighway验证: 90%收入分成，顶级发布者月入$2,847 |
+
+---
+
+**Total: 236 plugins | 1888 tools**
 
 ---
 

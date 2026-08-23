@@ -1,0 +1,56 @@
+{
+  "name": "dsh-tool-invoiceai",
+  "version": "0.1.0",
+  "description": "Invoice AI Agent for DeepSeek Harness - Invoice data extraction with confidence scoring, compliance validation against tax rules and regulatory requirements, fraud detection with anomaly and duplicate scanning, payment terms optimization with cash flow analysis, end-to-end accounts payable automation, tax reconciliation across VAT/GST/sales tax periods, supplier onboarding document validation, and expense report auditing with policy compliance.",
+  "type": "commonjs",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/**/*.d.ts",
+    "cordis.yml"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "pack": "npm pack",
+    "prepack": "npm run build"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-invoiceai.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "invoice",
+    "invoice-automation",
+    "compliance",
+    "fraud-detection",
+    "accounts-payable",
+    "tax-reconciliation",
+    "expense-audit",
+    "payment-optimization",
+    "supplier-onboarding"
+  ],
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dsh": {
+    "bundle": "cordis.yml"
+  },
+  "author": "chengganping-ship-it"
+}

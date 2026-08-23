@@ -1,11 +1,11 @@
 # DSH Plugin Toolkit
 
-> **231 DeepSeek Harness plugins — 1848 AI agent tools**
+> **236 DeepSeek Harness plugins — 1888 AI agent tools**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek-Harness-orange.svg)](https://deepseek.com/)
-[![231 Plugins](https://img.shields.io/badge/Plugins-231-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
+[![236 Plugins](https://img.shields.io/badge/Plugins-236-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
 
 ---
 
@@ -210,10 +210,12 @@ dsh-tool-name/
 
 ## Repository Stats
 
-- **231 plugins** × **8 tools** each = **1848 tool implementations**
+- **236 plugins** × **8 tools** each = **1888 tool implementations**
 - **7 breakthrough infrastructure layers** (MCP Bridge + A2A Cards + Loop Engineering + Cost Governance + Multi-Agent Demo + L6 Meta-Engine + L7 AutoWave)
+- **Wave 47: Real market demand plugins** (customs 70% cost reduction, invoice automation, CDP 53% efficiency, logistics optimization, Agent Skills packaging)
 - **100% TypeScript strict** — zero compilation errors across all packages
 - **MIT Licensed**
+- **Wave 47 (2026-08)**: tradecompliance + invoiceai + cdpagent + logisticspro + skillpackager [REAL DEMAND]
 - **Wave 46 (2026-08)**: manufacturingai + cyberinsur + autonomousvehicle + foodtechai + autowave
 - **Wave 45 (2026-08)**: pharmatechai + bioinformatics + energygrid + govtech + sportstech
 - **Wave 44 (2026-08)**: cybersecdev + insurtechai + realestateai + hospitalityai + aigovernance
