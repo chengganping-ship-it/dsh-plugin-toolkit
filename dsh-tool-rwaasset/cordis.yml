@@ -1,0 +1,6 @@
+- id: dsh-tool-rwaasset
+  name: dsh-tool-rwaasset
+  version: 1.0.0
+  description: "AI RWA (Real World Asset) Tokenization - asset tokenization architecture design, on-chain custody solutions, yield distribution engineering, compliance wrapper generation, token economics modeling, cross-chain bridge analysis, investor KYC automation, and AI-powered asset valuation"
+  author: chengganping-ship-it
+  tools: 8

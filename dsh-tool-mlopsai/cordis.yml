@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: AI MLOps & AgentOps v0.1.0
+# Model lifecycle management, experiment tracking, pipeline orchestration, model monitoring, drift detection
+
+- id: dsh-tool-mlopsai
+  name: dsh-tool-mlopsai
+  version: 0.1.0
+  description: AI MLOps & AgentOps - Model lifecycle management, experiment tracking, pipeline orchestration, model monitoring, drift detection, feature store configuration, data quality gating, and model card completion toolkit
+  author: chengganping-ship-it
+  tools:
+    - experiment_tracker_designer
+    - model_version_manager
+    - feature_store_configurator
+    - model_monitoring_dashboard
+    - drift_detect_engine
+    - pipeline_orchestrator
+    - data_quality_gate_checker
+    - model_card_completer

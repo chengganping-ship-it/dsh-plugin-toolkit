@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: AI Fintech API Toolkit v0.1.0
+# Market data, trading algorithms, risk analytics, financial APIs
+
+- id: dsh-tool-fintechapi
+  name: dsh-tool-fintechapi
+  version: 0.1.0
+  description: AI Fintech API Toolkit - Market data feed simulation, algorithmic trading signal generation, portfolio risk analytics, crypto market monitoring, forex rate prediction, options pricing calculator, financial news sentiment analysis, and regulatory filing analysis
+  author: chengganping-ship-it
+  tools:
+    - market_data_feed_simulator
+    - algorithmic_trading_signal_gen
+    - portfolio_risk_analyzer
+    - crypto_market_monitor
+    - forex_rate_predictor
+    - options_pricing_calculator
+    - financial_news_sentiment
+    - regulatory_filing_analyzer

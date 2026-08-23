@@ -1,0 +1,14 @@
+- id: dsh-tool-apigatewayai
+  name: dsh-tool-apigatewayai
+  version: 0.1.0
+  description: AI API Gateway & Monetization - API design, rate limiting, usage analytics, monetization strategies, developer portal
+  author: chengganping-ship-it
+  tools:
+    - api_design_reviewer
+    - rate_limit_optimizer
+    - usage_analytics_dashboard
+    - api_monetization_planner
+    - developer_portal_scorer
+    - api_versioning_manager
+    - webhook_reliability_engineer
+    - api_security_auditor
