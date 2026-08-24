@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 319 plugins | 2552 tools (319 × 8)**
+**Total: 323 plugins | 2584 tools (323 × 8)**
 
 ---
 
@@ -688,6 +688,17 @@
 | 317 | synthdata | 合成数据与隐私AI | synthetic_data_generator, differential_privacy_calibrator, data_augmentation_planner, gan_evaluator, privacy_risk_assessor, data_fidelity_scorer, tabular_synthetic_engine, image_synthetic_pipeline |
 | 318 | carboncapt | 碳捕获与封存 | capture_technology_selector, storage_site_assessor, co2_monitoring_system, ccs_economics_modeler, transport_pipeline_optimizer, mineralization_analyzer, bioenergy_ccs_evaluator, regulatory_compliance_ccs |
 | 319 | agenteval | AI Agent评测与基准 | agent_capability_scorer, task_completion_evaluator, safety_benchmark_runner, performance_comparison_tool, robustness_tester, multi_turn_dialogue_evaluator, tool_use_efficiency_analyzer, agent_hallucination_detector |
+
+---
+
+## Wave 67 — 行为经济学+AI编程助手+生物informatics+太空态势感知 (4)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 320 | behavecon | 行为经济学与Nudge设计 | choice_architect_designer, nudge_effectiveness_predictor, cognitive_bias_detector, incentive_optimizer, default_option_analyst, social_proof_calculator, loss_aversion_scaler, commitment_device_designer |
+| 321 | codepiloter | AI编程助手与DevTools | code_review_automator, test_generation, refactoring_advisor, documentation_auto_gen, bug_pattern_detector, performance_optimizer_code, security_vulnerability_scanner, api_design_reviewer |
+| 322 | bioinfai | 生物信息学与计算生物学 | sequence_alignment_analyzer, protein_folding_predictor, pathway_enrichment_analyzer, drug_target_interaction_predictor, gene_expression_profiler, variant_annotation_tool, metagenomics_classifier, structural_bioinformatics_calculator |
+| 323 | spacesitu | 太空态势感知 | space_weather_predictor, collision_avoidance_system, debris_tracking_analyzer, launch_window_optimizer, satellite_health_monitor, ground_station_scheduler, orbital_maneuver_planner, reentry_prediction_tracker |
 
 ---
 

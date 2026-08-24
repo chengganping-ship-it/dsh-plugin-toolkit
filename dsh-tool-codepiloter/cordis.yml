@@ -1,0 +1,14 @@
+- id: dsh-tool-codepiloter
+  name: dsh-tool-codepiloter
+  version: 0.1.0
+  description: AI-Assisted Coding & DevTools - code review, test generation, refactoring suggestions, documentation, bug patterns, performance optimization, security scanning, API design review
+  author: chengganping-ship-it
+  tools:
+    - code_review_automator
+    - test_generation
+    - refactoring_advisor
+    - documentation_auto_gen
+    - bug_pattern_detector
+    - performance_optimizer_code
+    - security_vulnerability_scanner
+    - api_design_reviewer

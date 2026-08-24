@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Bioinformatics & Computational Biology Toolkit v0.1.0
+# Sequence analysis, protein folding, pathway analysis, drug-target interaction
+
+- id: dsh-tool-bioinfai
+  name: dsh-tool-bioinfai
+  version: 0.1.0
+  description: Bioinformatics & Computational Biology Toolkit - Sequence alignment analysis, protein folding prediction, pathway enrichment analysis, drug-target interaction prediction, gene expression profiling, variant annotation, metagenomics classification, and structural bioinformatics calculations
+  author: chengganping-ship-it
+  tools:
+    - sequence_alignment_analyzer
+    - protein_folding_predictor
+    - pathway_enrichment_analyzer
+    - drug_target_interaction_predictor
+    - gene_expression_profiler
+    - variant_annotation_tool
+    - metagenomics_classifier
+    - structural_bioinformatics_calculator

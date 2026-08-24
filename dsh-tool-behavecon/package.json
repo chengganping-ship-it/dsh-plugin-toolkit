@@ -1,0 +1,33 @@
+{
+  "name": "dsh-tool-behavecon",
+  "version": "0.1.0",
+  "description": "行为经济学与助推设计 for DSH - 选择架构、助推设计、认知偏差检测、激励优化",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-plugin-toolkit.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "behavioral-economics",
+    "nudge",
+    "choice-architecture",
+    "cognitive-bias",
+    "incentive-design",
+    "decision-science"
+  ]
+}
