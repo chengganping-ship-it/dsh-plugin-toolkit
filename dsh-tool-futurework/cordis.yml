@@ -1,0 +1,14 @@
+- id: dsh-tool-futurework
+  name: dsh-tool-futurework
+  version: 0.1.0
+  description: Future of Work & Remote Collaboration - virtual team management, async collaboration, digital workplace, remote onboarding
+  author: chengganping-ship-it
+  tools:
+    - virtual_team_health_analyzer
+    - async_collaboration_optimizer
+    - digital_workplace_scorer
+    - remote_onboarding_automator
+    - meeting_effectiveness_evaluator
+    - knowledge_sharing_facilitator
+    - culture_reinforcement_engine
+    - flexibility_policy_advisor
