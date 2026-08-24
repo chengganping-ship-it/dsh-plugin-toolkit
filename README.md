@@ -1,11 +1,11 @@
 # DSH Plugin Toolkit
 
-> **266 DeepSeek Harness plugins — 2128 AI agent tools**
+> **270 DeepSeek Harness plugins — 2160 AI agent tools**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek-Harness-orange.svg)](https://deepseek.com/)
-[![266 Plugins](https://img.shields.io/badge/Plugins-266-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
+[![270 Plugins](https://img.shields.io/badge/Plugins-270-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
 
 ---
 
@@ -141,6 +141,10 @@ A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.c
 | AI Testing & QA | 1 | 8 |
 | Multi-Agent Orchestration | 1 | 8 |
 | No-Code/Low-Code AI | 1 | 8 |
+| Financial Compliance & AML | 1 | 8 |
+| ESG & Sustainability | 1 | 8 |
+| Real Estate & PropTech | 1 | 8 |
+| InsurTech | 1 | 8 |
 
 ## Breakthrough Infrastructure (L1-L8)
 

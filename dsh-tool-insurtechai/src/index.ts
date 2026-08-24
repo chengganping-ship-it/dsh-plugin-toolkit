@@ -1,22 +1,22 @@
 /**
  * DSH AI Insurance (InsurTech) Engine Plugin v0.1.0
  *
- * AI-powered insurance toolkit for DeepSeek Harness — underwriting, claims processing,
- * fraud detection, risk assessment, policy recommendation, actuarial pricing,
- * customer lifetime value prediction, and regulatory compliance checking.
+ * AI-powered insurance toolkit for DeepSeek Harness -- underwriting assistance,
+ * claims processing automation, fraud detection scoring, risk assessment engine,
+ * policy optimization advisory, premium calculation engine, customer lifecycle
+ * management, and regulatory compliance checking.
  *
- * McKinsey reports 85% of healthcare leaders already pursuing gen AI; insurance
- * is a massive adjacent market ripe for AI transformation.
+ * 2026: InsurTech market $65B+; AI in insurance growing at 25% CAGR.
  *
  * Tools (8):
- * 1. ai_underwriting_engine        — AI underwriting with risk grading and premium computation
- * 2. claims_processing_automator   — Automated claims validation, adjudication, and payout
- * 3. insurance_fraud_detector      — Multi-signal fraud detection and investigation priority
- * 4. risk_assessment_modeler       — Holistic risk modeling across peril dimensions
- * 5. policy_recommendation_engine  — Personalized policy recommendation and coverage optimization
- * 6. actuarial_pricing_optimizer   — Actuarial rate optimization with loss ratio targeting
- * 7. customer_lifetime_value_predictor — CLV prediction for retention and cross-sell
- * 8. regulatory_compliance_checker — Multi-jurisdiction regulatory compliance verification
+ * 1. underwriting_assistance_tool    -- AI underwriting with risk grading and premium computation
+ * 2. claims_processing_automator     -- Automated claims validation, adjudication, and payout
+ * 3. fraud_detection_scorer          -- Multi-signal fraud detection and investigation priority
+ * 4. risk_assessment_engine          -- Holistic risk modeling across peril dimensions
+ * 5. policy_optimization_advisor     -- Personalized policy recommendation and coverage optimization
+ * 6. premium_calculation_engine      -- Actuarial rate optimization with loss ratio targeting
+ * 7. customer_lifecycle_manager      -- CLV prediction for retention and cross-sell
+ * 8. regulatory_compliance_checker   -- Multi-jurisdiction regulatory compliance verification
  *
  * @module dsh-tool-insurtechai | @version 0.1.0 | @license MIT
  * @author chengganping-ship-it
@@ -30,7 +30,7 @@ export const inject = ['tools']
 
 const VERSION = '0.1.0'
 
-// ==================== SECTION 1 — Seeded Random (mulberry32 PRNG) ====================
+// ==================== SECTION 1 -- Seeded Random (mulberry32 PRNG) ====================
 
 class SeededRandom {
   private state: number
@@ -68,9 +68,9 @@ class SeededRandom {
   }
 }
 
-// ==================== SECTION 2 — Type Definitions ====================
+// ==================== SECTION 2 -- Type Definitions ====================
 
-// --- Tool 1: AI Underwriting Engine ---
+// --- Tool 1: Underwriting Assistance Tool ---
 export interface UnderwritingInput {
   applicant_id: string
   age: number
@@ -139,7 +139,7 @@ export interface ClaimsResult {
   ai_notes: string
 }
 
-// --- Tool 3: Insurance Fraud Detector ---
+// --- Tool 3: Fraud Detection Scorer ---
 export interface FraudInput {
   claim_id: string
   claim_amount: number
@@ -174,8 +174,8 @@ export interface FraudResult {
   confidence: number
 }
 
-// --- Tool 4: Risk Assessment Modeler ---
-export interface RiskModelInput {
+// --- Tool 4: Risk Assessment Engine ---
+export interface RiskAssessmentInput {
   entity_id: string
   entity_type: 'individual' | 'property' | 'business' | 'vehicle'
   location: { lat: number; lng: number; zone: string }
@@ -193,7 +193,7 @@ export interface RiskModelInput {
   loss_history: Array<{ year: number; amount: number; peril: string }>
 }
 
-export interface RiskModelResult {
+export interface RiskAssessmentResult {
   entity_id: string
   overall_risk_score: number
   risk_category: 'low' | 'moderate' | 'elevated' | 'high' | 'extreme'
@@ -207,8 +207,8 @@ export interface RiskModelResult {
   risk_adjusted_rate: number
 }
 
-// --- Tool 5: Policy Recommendation Engine ---
-export interface PolicyRecInput {
+// --- Tool 5: Policy Optimization Advisor ---
+export interface PolicyOptimizationInput {
   customer_id: string
   age: number
   marital_status: string
@@ -223,7 +223,7 @@ export interface PolicyRecInput {
   budget_monthly: number
 }
 
-export interface PolicyRecResult {
+export interface PolicyOptimizationResult {
   customer_id: string
   coverage_gaps: Array<{ type: string; current: number; recommended: number; gap: number }>
   recommendations: Array<{ rank: number; product: string; coverage: number; annual_premium: number; rationale: string; urgency: 'critical' | 'high' | 'medium' | 'low' }>
@@ -235,8 +235,8 @@ export interface PolicyRecResult {
   retention_risk: 'low' | 'moderate' | 'high'
 }
 
-// --- Tool 6: Actuarial Pricing Optimizer ---
-export interface PricingInput {
+// --- Tool 6: Premium Calculation Engine ---
+export interface PremiumCalculationInput {
   product_line: string
   target_loss_ratio: number
   current_loss_ratio: number
@@ -252,7 +252,7 @@ export interface PricingInput {
   profit_target_pct: number
 }
 
-export interface PricingResult {
+export interface PremiumCalculationResult {
   product_line: string
   indicated_rate_change_pct: number
   current_pure_premium: number
@@ -268,8 +268,8 @@ export interface PricingResult {
   scenario_analysis: Array<{ scenario: string; rate_change: number; loss_ratio: number }>
 }
 
-// --- Tool 7: Customer Lifetime Value Predictor ---
-export interface CLVInput {
+// --- Tool 7: Customer Lifecycle Manager ---
+export interface CustomerLifecycleInput {
   customer_id: string
   tenure_months: number
   product_count: number
@@ -285,7 +285,7 @@ export interface CLVInput {
   cross_sell_responsiveness: number
 }
 
-export interface CLVResult {
+export interface CustomerLifecycleResult {
   customer_id: string
   predicted_clv: number
   clv_tier: 'platinum' | 'gold' | 'silver' | 'bronze' | 'at_risk'
@@ -330,10 +330,10 @@ export interface ComplianceResult {
   remediation_timeline: string
 }
 
-// ==================== SECTION 3 — Analysis Functions ====================
+// ==================== SECTION 3 -- Analysis Functions ====================
 
-// --- Tool 1: AI Underwriting Engine ---
-function analyzeUnderwriting(input: UnderwritingInput): UnderwritingResult {
+// --- Tool 1: Underwriting Assistance Tool ---
+function assistUnderwriting(input: UnderwritingInput): UnderwritingResult {
   const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
 
   let riskScore = 30
@@ -569,8 +569,8 @@ function processClaim(input: ClaimInput): ClaimsResult {
   }
 }
 
-// --- Tool 3: Insurance Fraud Detector ---
-function detectFraud(input: FraudInput): FraudResult {
+// --- Tool 3: Fraud Detection Scorer ---
+function scoreFraud(input: FraudInput): FraudResult {
   const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
 
   let fraudScore = 0
@@ -687,11 +687,11 @@ function detectFraud(input: FraudInput): FraudResult {
   }
 }
 
-// --- Tool 4: Risk Assessment Modeler ---
-function modelRisk(input: RiskModelInput): RiskModelResult {
+// --- Tool 4: Risk Assessment Engine ---
+function assessRisk(input: RiskAssessmentInput): RiskAssessmentResult {
   const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
 
-  const perilScores: RiskModelResult['peril_scores'] = []
+  const perilScores: RiskAssessmentResult['peril_scores'] = []
   const perils = input.natural_perils.length > 0
     ? input.natural_perils
     : ['fire', 'wind', 'water_damage', 'theft', 'liability', 'earthquake', 'flood']
@@ -724,7 +724,7 @@ function modelRisk(input: RiskModelInput): RiskModelResult {
     perilScores.reduce((s, p) => s + p.score, 0) / perilScores.length + lossHistoryFactor
   ))
 
-  let riskCategory: RiskModelResult['risk_category'] = 'low'
+  let riskCategory: RiskAssessmentResult['risk_category'] = 'low'
   if (overallRiskScore >= 80) riskCategory = 'extreme'
   else if (overallRiskScore >= 60) riskCategory = 'high'
   else if (overallRiskScore >= 40) riskCategory = 'elevated'
@@ -765,12 +765,12 @@ function modelRisk(input: RiskModelInput): RiskModelResult {
   }
 }
 
-// --- Tool 5: Policy Recommendation Engine ---
-function recommendPolicies(input: PolicyRecInput): PolicyRecResult {
+// --- Tool 5: Policy Optimization Advisor ---
+function advisePolicies(input: PolicyOptimizationInput): PolicyOptimizationResult {
   const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
 
-  const coverageGaps: PolicyRecResult['coverage_gaps'] = []
-  const recommendations: PolicyRecResult['recommendations'] = []
+  const coverageGaps: PolicyOptimizationResult['coverage_gaps'] = []
+  const recommendations: PolicyOptimizationResult['recommendations'] = []
 
   const recommendedLifeCoverage = input.annual_income * 10
   const existingLife = input.existing_coverage.filter(c => c.type.includes('life')).reduce((s, c) => s + c.amount, 0)
@@ -797,7 +797,7 @@ function recommendPolicies(input: PolicyRecInput): PolicyRecResult {
 
   let rank = 1
   for (const gap of coverageGaps) {
-    const urgency: PolicyRecResult['recommendations'][0]['urgency'] =
+    const urgency: PolicyOptimizationResult['recommendations'][0]['urgency'] =
       gap.type === 'Life Insurance' && input.dependents > 0 ? 'critical' :
       gap.type === 'Health Insurance' ? 'critical' :
       gap.gap > 200000 ? 'high' :
@@ -835,7 +835,7 @@ function recommendPolicies(input: PolicyRecInput): PolicyRecResult {
   if (input.life_stage === 'pre_retirement') crossSellOpps.push('Long-term care insurance')
   if (input.annual_income > 150000) crossSellOpps.push('High-limit disability coverage')
 
-  let retentionRisk: PolicyRecResult['retention_risk'] = 'low'
+  let retentionRisk: PolicyOptimizationResult['retention_risk'] = 'low'
   if (budgetUtilizationPct > 120) retentionRisk = 'high'
   else if (budgetUtilizationPct > 90) retentionRisk = 'moderate'
 
@@ -852,8 +852,8 @@ function recommendPolicies(input: PolicyRecInput): PolicyRecResult {
   }
 }
 
-// --- Tool 6: Actuarial Pricing Optimizer ---
-function optimizePricing(input: PricingInput): PricingResult {
+// --- Tool 6: Premium Calculation Engine ---
+function calculatePremiumRates(input: PremiumCalculationInput): PremiumCalculationResult {
   const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
 
   const avgLosses = input.historical_losses.reduce((s, l) => s + l, 0) / Math.max(1, input.historical_losses.length)
@@ -881,7 +881,7 @@ function optimizePricing(input: PricingInput): PricingResult {
 
   const rateFilingRequired = Math.abs(finalRateChange) > 7
 
-  const scenarioAnalysis: PricingResult['scenario_analysis'] = [
+  const scenarioAnalysis: PremiumCalculationResult['scenario_analysis'] = [
     { scenario: 'Base Indicated', rate_change: Math.round(indicatedRateChange * 100) / 100, loss_ratio: Math.round(projectedLossRatio * 100) / 100 },
     { scenario: 'With Trend Only', rate_change: Math.round((input.trend_factor - 1) * 100 * 100) / 100, loss_ratio: Math.round((input.current_loss_ratio / input.trend_factor) * 100) / 100 },
     { scenario: 'Competitive Parity', rate_change: competitiveAdjustment, loss_ratio: Math.round((input.current_loss_ratio / (1 + competitiveAdjustment / 100)) * 100) / 100 },
@@ -906,8 +906,8 @@ function optimizePricing(input: PricingInput): PricingResult {
   }
 }
 
-// --- Tool 7: Customer Lifetime Value Predictor ---
-function predictCLV(input: CLVInput): CLVResult {
+// --- Tool 7: Customer Lifecycle Manager ---
+function manageCustomerLifecycle(input: CustomerLifecycleInput): CustomerLifecycleResult {
   const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
 
   const baseCLV = input.total_annual_premium * rng.nextFloat(5, 15)
@@ -923,7 +923,7 @@ function predictCLV(input: CLVInput): CLVResult {
 
   const predictedCLV = Math.round(baseCLV * tenureMultiplier * productMultiplier * engagementMultiplier * satisfactionMultiplier * paymentFactor * claimPenalty)
 
-  let clvTier: CLVResult['clv_tier'] = 'bronze'
+  let clvTier: CustomerLifecycleResult['clv_tier'] = 'bronze'
   if (predictedCLV > 100000) clvTier = 'platinum'
   else if (predictedCLV > 50000) clvTier = 'gold'
   else if (predictedCLV > 20000) clvTier = 'silver'
@@ -939,7 +939,7 @@ function predictCLV(input: CLVInput): CLVResult {
 
   const expectedRetentionYears = Math.round((1 - churnProb) * rng.nextFloat(5, 15) * 10) / 10
 
-  const revenueForecast: CLVResult['revenue_forecast'] = []
+  const revenueForecast: CustomerLifecycleResult['revenue_forecast'] = []
   for (let y = 1; y <= 5; y++) {
     const survivalProb = Math.pow(1 - churnProb, y)
     const revenue = Math.round(input.total_annual_premium * survivalProb * (1 + (y - 1) * 0.03))
@@ -947,7 +947,7 @@ function predictCLV(input: CLVInput): CLVResult {
   }
 
   const crossSellProducts = ['Auto Insurance', 'Home Insurance', 'Umbrella', 'Life Insurance', 'Disability', 'Long-term Care']
-  const crossSellPotential: CLVResult['cross_sell_potential'] = []
+  const crossSellPotential: CustomerLifecycleResult['cross_sell_potential'] = []
   for (const product of crossSellProducts) {
     if (rng.next() > 0.5) {
       const probability = Math.round(rng.nextFloat(0.1, input.cross_sell_responsiveness / 100) * 100) / 100
@@ -1124,11 +1124,11 @@ function checkCompliance(input: ComplianceInput): ComplianceResult {
   }
 }
 
-// ==================== SECTION 4 — Report Formatting Functions ====================
+// ==================== SECTION 4 -- Report Formatting Functions ====================
 
 function formatUnderwritingReport(result: UnderwritingResult): string {
   const lines: string[] = []
-  lines.push('## AI Underwriting Engine Report')
+  lines.push('## Underwriting Assistance Report')
   lines.push('')
   lines.push('**Applicant:** ' + result.applicant_id + ' | **Decision:** ' + result.decision.toUpperCase())
   lines.push('**Risk Grade:** ' + result.risk_grade.replace('_', ' ').toUpperCase() + ' | **Risk Score:** ' + result.risk_score + '/100')
@@ -1161,7 +1161,7 @@ function formatUnderwritingReport(result: UnderwritingResult): string {
   lines.push('**Next Review:** ' + result.next_review_months + ' months')
   lines.push('')
   lines.push('---')
-  lines.push('*AI Underwriting Engine v' + VERSION + ' | Risk-based assessment with ML augmentation*')
+  lines.push('*Underwriting Assistance Tool v' + VERSION + ' | Risk-based assessment with ML augmentation*')
   return lines.join('\n')
 }
 
@@ -1214,7 +1214,7 @@ function formatClaimsReport(result: ClaimsResult): string {
 
 function formatFraudReport(result: FraudResult): string {
   const lines: string[] = []
-  lines.push('## Insurance Fraud Detection Report')
+  lines.push('## Fraud Detection Report')
   lines.push('')
   lines.push('**Claim:** ' + result.claim_id + ' | **Fraud Probability:** ' + result.fraud_probability + '%')
   lines.push('**Risk Level:** ' + result.fraud_risk_level.toUpperCase() + ' | **Priority:** ' + result.investigation_priority + '/10')
@@ -1247,13 +1247,13 @@ function formatFraudReport(result: FraudResult): string {
   lines.push(result.recommended_action)
   lines.push('')
   lines.push('---')
-  lines.push('*Insurance Fraud Detector v' + VERSION + ' | Multi-signal fraud analytics*')
+  lines.push('*Fraud Detection Scorer v' + VERSION + ' | Multi-signal fraud analytics*')
   return lines.join('\n')
 }
 
-function formatRiskModelReport(result: RiskModelResult): string {
+function formatRiskReport(result: RiskAssessmentResult): string {
   const lines: string[] = []
-  lines.push('## Risk Assessment Model Report')
+  lines.push('## Risk Assessment Report')
   lines.push('')
   lines.push('**Entity:** ' + result.entity_id + ' | **Overall Risk Score:** ' + result.overall_risk_score + '/100')
   lines.push('**Risk Category:** ' + result.risk_category.toUpperCase())
@@ -1287,13 +1287,13 @@ function formatRiskModelReport(result: RiskModelResult): string {
   }
 
   lines.push('---')
-  lines.push('*Risk Assessment Modeler v' + VERSION + ' | Multi-peril risk analytics*')
+  lines.push('*Risk Assessment Engine v' + VERSION + ' | Multi-peril risk analytics*')
   return lines.join('\n')
 }
 
-function formatPolicyRecReport(result: PolicyRecResult): string {
+function formatPolicyReport(result: PolicyOptimizationResult): string {
   const lines: string[] = []
-  lines.push('## Policy Recommendation Report')
+  lines.push('## Policy Optimization Report')
   lines.push('')
   lines.push('**Customer:** ' + result.customer_id + ' | **Protection Score:** ' + result.protection_score + '/100')
   lines.push('**Total Recommended Premium:** $' + result.total_recommended_premium.toLocaleString() + '/yr | **Budget Utilization:** ' + result.budget_utilization_pct + '%')
@@ -1331,13 +1331,13 @@ function formatPolicyRecReport(result: PolicyRecResult): string {
   }
 
   lines.push('---')
-  lines.push('*Policy Recommendation Engine v' + VERSION + ' | AI-driven coverage optimization*')
+  lines.push('*Policy Optimization Advisor v' + VERSION + ' | AI-driven coverage optimization*')
   return lines.join('\n')
 }
 
-function formatPricingReport(result: PricingResult): string {
+function formatPremiumCalcReport(result: PremiumCalculationResult): string {
   const lines: string[] = []
-  lines.push('## Actuarial Pricing Optimization Report')
+  lines.push('## Premium Calculation Report')
   lines.push('')
   lines.push('**Product Line:** ' + result.product_line)
   lines.push('**Final Rate Change:** ' + result.final_rate_change_pct.toFixed(2) + '% | **Rate Filing Required:** ' + (result.rate_filing_required ? 'YES' : 'No'))
@@ -1369,13 +1369,13 @@ function formatPricingReport(result: PricingResult): string {
   lines.push('')
 
   lines.push('---')
-  lines.push('*Actuarial Pricing Optimizer v' + VERSION + ' | Data-driven rate optimization*')
+  lines.push('*Premium Calculation Engine v' + VERSION + ' | Data-driven rate optimization*')
   return lines.join('\n')
 }
 
-function formatCLVReport(result: CLVResult): string {
+function formatCustomerLifecycleReport(result: CustomerLifecycleResult): string {
   const lines: string[] = []
-  lines.push('## Customer Lifetime Value Prediction Report')
+  lines.push('## Customer Lifecycle Management Report')
   lines.push('')
   lines.push('**Customer:** ' + result.customer_id + ' | **CLV Tier:** ' + result.clv_tier.toUpperCase())
   lines.push('**Predicted CLV:** $' + result.predicted_clv.toLocaleString() + ' | **Churn Probability:** ' + (result.churn_probability * 100).toFixed(0) + '%')
@@ -1410,7 +1410,7 @@ function formatCLVReport(result: CLVResult): string {
   lines.push('**Lifetime Profitability:** $' + result.lifetime_profitability.toLocaleString())
   lines.push('')
   lines.push('---')
-  lines.push('*Customer Lifetime Value Predictor v' + VERSION + ' | Predictive customer analytics*')
+  lines.push('*Customer Lifecycle Manager v' + VERSION + ' | Predictive customer analytics*')
   return lines.join('\n')
 }
 
@@ -1460,14 +1460,11 @@ function formatComplianceReport(result: ComplianceResult): string {
   return lines.join('\n')
 }
 
-// ==================== SECTION 5 — Plugin Registration ====================
+// ==================== SECTION 5 -- Plugin Registration ====================
 
 export function apply(ctx: Context) {
-  const tools = ctx.tools
-
-  // Tool 1: AI Underwriting Engine
-  tools.register(defineTool({
-    name: 'ai_underwriting_engine',
+  ctx.tools.register(defineTool({
+    name: 'underwriting_assistance_tool',
     description: 'AI-powered underwriting engine that assesses applicant risk profiles and computes premiums. Returns underwriting decision, risk grade, premium rates, conditions, and exclusion riders.',
     parameters: {
       underwriting_input: {
@@ -1479,12 +1476,11 @@ export function apply(ctx: Context) {
     output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
     async execute(args: { underwriting_input: string }) {
       const input: UnderwritingInput = JSON.parse(args.underwriting_input)
-      return formatUnderwritingReport(analyzeUnderwriting(input))
+      return formatUnderwritingReport(assistUnderwriting(input))
     }
   }))
 
-  // Tool 2: Claims Processing Automator
-  tools.register(defineTool({
+  ctx.tools.register(defineTool({
     name: 'claims_processing_automator',
     description: 'Automated claims processing with validation, adjudication, and payout calculation. Performs policy checks, documentation verification, and flags suspicious claims.',
     parameters: {
@@ -1501,9 +1497,8 @@ export function apply(ctx: Context) {
     }
   }))
 
-  // Tool 3: Insurance Fraud Detector
-  tools.register(defineTool({
-    name: 'insurance_fraud_detector',
+  ctx.tools.register(defineTool({
+    name: 'fraud_detection_scorer',
     description: 'Multi-signal fraud detection engine. Analyzes claim patterns, behavioral anomalies, provider networks, and digital evidence to identify fraudulent claims.',
     parameters: {
       fraud_input: {
@@ -1515,13 +1510,12 @@ export function apply(ctx: Context) {
     output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
     async execute(args: { fraud_input: string }) {
       const input: FraudInput = JSON.parse(args.fraud_input)
-      return formatFraudReport(detectFraud(input))
+      return formatFraudReport(scoreFraud(input))
     }
   }))
 
-  // Tool 4: Risk Assessment Modeler
-  tools.register(defineTool({
-    name: 'risk_assessment_modeler',
+  ctx.tools.register(defineTool({
+    name: 'risk_assessment_engine',
     description: 'Holistic risk modeling across multiple peril dimensions. Generates peril-specific scores, loss estimates (PML/AAL/MFL), and mitigation recommendations.',
     parameters: {
       risk_input: {
@@ -1532,14 +1526,13 @@ export function apply(ctx: Context) {
     },
     output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
     async execute(args: { risk_input: string }) {
-      const input: RiskModelInput = JSON.parse(args.risk_input)
-      return formatRiskModelReport(modelRisk(input))
+      const input: RiskAssessmentInput = JSON.parse(args.risk_input)
+      return formatRiskReport(assessRisk(input))
     }
   }))
 
-  // Tool 5: Policy Recommendation Engine
-  tools.register(defineTool({
-    name: 'policy_recommendation_engine',
+  ctx.tools.register(defineTool({
+    name: 'policy_optimization_advisor',
     description: 'Personalized policy recommendation engine. Identifies coverage gaps, recommends optimal products, and provides cross-sell opportunities.',
     parameters: {
       recommendation_input: {
@@ -1550,14 +1543,13 @@ export function apply(ctx: Context) {
     },
     output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
     async execute(args: { recommendation_input: string }) {
-      const input: PolicyRecInput = JSON.parse(args.recommendation_input)
-      return formatPolicyRecReport(recommendPolicies(input))
+      const input: PolicyOptimizationInput = JSON.parse(args.recommendation_input)
+      return formatPolicyReport(advisePolicies(input))
     }
   }))
 
-  // Tool 6: Actuarial Pricing Optimizer
-  tools.register(defineTool({
-    name: 'actuarial_pricing_optimizer',
+  ctx.tools.register(defineTool({
+    name: 'premium_calculation_engine',
     description: 'Actuarial rate optimization with loss ratio targeting. Computes indicated rate changes, projects profitability, and analyzes competitive scenarios.',
     parameters: {
       pricing_input: {
@@ -1568,14 +1560,13 @@ export function apply(ctx: Context) {
     },
     output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
     async execute(args: { pricing_input: string }) {
-      const input: PricingInput = JSON.parse(args.pricing_input)
-      return formatPricingReport(optimizePricing(input))
+      const input: PremiumCalculationInput = JSON.parse(args.pricing_input)
+      return formatPremiumCalcReport(calculatePremiumRates(input))
     }
   }))
 
-  // Tool 7: Customer Lifetime Value Predictor
-  tools.register(defineTool({
-    name: 'customer_lifetime_value_predictor',
+  ctx.tools.register(defineTool({
+    name: 'customer_lifecycle_manager',
     description: 'Predict customer lifetime value using behavioral, financial, and engagement signals. Includes churn prediction, revenue forecasting, and retention strategies.',
     parameters: {
       clv_input: {
@@ -1586,13 +1577,12 @@ export function apply(ctx: Context) {
     },
     output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
     async execute(args: { clv_input: string }) {
-      const input: CLVInput = JSON.parse(args.clv_input)
-      return formatCLVReport(predictCLV(input))
+      const input: CustomerLifecycleInput = JSON.parse(args.clv_input)
+      return formatCustomerLifecycleReport(manageCustomerLifecycle(input))
     }
   }))
 
-  // Tool 8: Regulatory Compliance Checker
-  tools.register(defineTool({
+  ctx.tools.register(defineTool({
     name: 'regulatory_compliance_checker',
     description: 'Multi-jurisdiction regulatory compliance verification. Checks rate filings, disclosures, AI ethics, data privacy, and fair lending practices.',
     parameters: {
@@ -1609,6 +1599,6 @@ export function apply(ctx: Context) {
     }
   }))
 
-  console.log('[dsh-tool-insurtechai] Loaded v' + VERSION + ' -- AI InsurTech Engine, 8 tools active')
-  console.log('  Tools: ai_underwriting_engine, claims_processing_automator, insurance_fraud_detector, risk_assessment_modeler, policy_recommendation_engine, actuarial_pricing_optimizer, customer_lifetime_value_predictor, regulatory_compliance_checker')
+  console.log('[dsh-tool-insurtechai] Loaded v' + VERSION + ' -- InsurTech Engine with 8 tools')
+  console.log('  Tools: underwriting_assistance_tool, claims_processing_automator, fraud_detection_scorer, risk_assessment_engine, policy_optimization_advisor, premium_calculation_engine, customer_lifecycle_manager, regulatory_compliance_checker')
 }

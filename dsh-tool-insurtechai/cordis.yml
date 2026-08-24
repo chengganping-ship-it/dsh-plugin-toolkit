@@ -4,14 +4,14 @@
 - id: dsh-tool-insurtechai
   name: dsh-tool-insurtechai
   version: 0.1.0
-  description: AI Insurance (InsurTech) Engine - AI underwriting, claims processing automation, fraud detection, risk assessment modeling, policy recommendation, actuarial pricing optimization, customer lifetime value prediction, and regulatory compliance checking
+  description: AI Insurance (InsurTech) Engine - AI underwriting assistance, claims processing automation, fraud detection scoring, risk assessment modeling, policy optimization advisory, premium calculation engine, customer lifecycle management, and regulatory compliance checking
   author: chengganping-ship-it
   tools:
-    - ai_underwriting_engine
+    - underwriting_assistance_tool
     - claims_processing_automator
-    - insurance_fraud_detector
-    - risk_assessment_modeler
-    - policy_recommendation_engine
-    - actuarial_pricing_optimizer
-    - customer_lifetime_value_predictor
+    - fraud_detection_scorer
+    - risk_assessment_engine
+    - policy_optimization_advisor
+    - premium_calculation_engine
+    - customer_lifecycle_manager
     - regulatory_compliance_checker

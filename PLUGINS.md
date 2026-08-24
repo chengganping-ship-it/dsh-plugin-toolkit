@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 266 plugins | 2128 tools (266 × 8)**
+**Total: 270 plugins | 2160 tools (270 × 8)**
 
 ---
 
@@ -551,6 +551,17 @@
 | 264 | autestai | AI测试与QA自动化 | test_case_generator, edge_case_identifier, api_test_automator, performance_test_planner, visual_regression_detector, mutation_test_analyzer, test_coverage_optimizer, quality_gate_enforcer |
 | 265 | agentorch | 多Agent编排与协调 | task_delegation_engine, conflict_resolution_mediator, consensus_builder, resource_allocation_optimizer, coalition_formation_planner, agent_communication_protocol, workflow_synchronization_chess, performance_coordinator |
 | 266 | nocodeai | NoCode/LowCode AI | workflow_automation_builder, prompt_template_designer, app_scaffolder, data_pipeline_designer, ui_component_generator, integration_mapper, logic_flow_visualizer, deployment_automator |
+
+---
+
+## Wave 55 — 金融合规+ESG可持续+房地产科技+保险科技 (4)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 267 | fincompliance | 金融合规与AML | aml_transaction_monitor, sanctions_screening_engine, suspicious_activity_reporter, kyc_verification_orchestrator, regulatory_reporting_automator, risk_assessment_matrix, compliance_training_tracker, audit_trail_generator |
+| 268 | sustaintrack | ESG可持续报告 | esg_score_calculator, sustainability_report_generator, greenwashing_detector, impact_measurement_engine, stakeholder_engagement_tracker, climate_risk_assessor, circular_economy_optimizer, esg_benchmark_analyzer |
+| 269 | realestateai | 房地产科技 | property_valuation_engine, investment_analysis_calculator, tenant_screening_system, property_management_optimizer, rental_yield_analyzer, market_trend_forecaster, building_inspection_assessor, mortgage_eligibility_checker |
+| 270 | insurtechai | 保险科技 | claims_processing_automator, risk_assessment_engine, policy_optimization_advisor, fraud_detection_scorer, premium_calculation_engine, underwriting_assistance_tool, customer_lifecycle_manager, regulatory_compliance_checker |
 
 ---
 
