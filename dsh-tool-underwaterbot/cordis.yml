@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Underwater Robotics & Marine Tech AI Agent v0.1.0
+# AUV mission planning, ROV operations, underwater inspection, marine data analysis
+
+- id: dsh-tool-underwaterbot
+  name: dsh-tool-underwaterbot
+  version: 0.1.0
+  description: Underwater Robotics & Marine Tech AI Agent - AUV mission planning with waypoint optimization and energy budgeting, ROV operations management with tether dynamics and thruster allocation, underwater inspection with defect detection and NDT methods, marine data analysis with CTD processing and current modeling, sonar signal processing with beamforming and bottom classification, underwater communication planner with acoustic modem link budgets, ocean sediment sampler with core logging and grain size analysis, marine biodiversity monitoring with species identification and abundance estimation
+  author: underwaterbot
+  tools:
+    - auv_mission_planner
+    - rov_operations_manager
+    - underwater_inspector
+    - marine_data_analyzer
+    - sonar_signal_processor
+    - underwater_communication_planner
+    - ocean_sediment_sampler
+    - marine_biodiversity_monitor

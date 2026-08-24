@@ -1,0 +1,36 @@
+{
+  "name": "dsh-tool-materialai",
+  "version": "0.1.0",
+  "description": "Materials Science & Engineering AI for DSH - materials selection, alloy design, corrosion analysis, composites optimization. 2026: Materials AI $8B+; advanced materials $150B+",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-plugin-toolkit.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "materials-science",
+    "alloy-design",
+    "corrosion",
+    "composites",
+    "ceramics",
+    "polymers",
+    "semiconductors",
+    "nanomaterials",
+    "2026"
+  ]
+}

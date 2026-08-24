@@ -1,0 +1,6 @@
+- id: dsh-tool-autofarm
+  name: dsh-tool-autofarm
+  version: 1.0.0
+  description: Autonomous Farming & Ag Robotics - planting automation, harvesting robots, crop monitoring, soil analysis, irrigation drones, weed detection, yield mapping, and farm fleet management
+  author: chengganping-ship-it
+  tools: 8

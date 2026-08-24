@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 327 plugins | 2616 tools (327 × 8)**
+**Total: 330 plugins | 2640 tools (330 × 8)**
 
 ---
 
@@ -710,6 +710,16 @@
 | 325 | climaterisk | 气候风险与适应 | physical_risk_assessor, transition_risk_analyzer, tcfd_report_generator, adaptation_planner, scenario_analysis_climate, carbon_accounting_tool, climate_stress_tester, green_finance_eligibility_checker |
 | 326 | rpaaia | RPA+AI流程自动化 | process_discovery_engine, bot_designer, workflow_automator, exception_handler, screen_scraping_optimizer, intelligent_document_processor, bot_performance_monitor, rpa_roi_calculator |
 | 327 | satcomms | 卫星通信与地面系统 | link_budget_calculator, ground_station_planner, frequency_coordination_engine, interference_analyzer, modulation_optimizer, antenna_design_advisor, propagation_modeler, spectrum_management_tool |
+
+---
+
+## Wave 69 — 材料科学+水下机器人+自主农业 (3)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 328 | materialai | 材料科学与工程 | materials_selection_engine, alloy_designer, corrosion_analyst, composites_optimizer, ceramic_processing_advisor, polymer_formulation_planner, semiconductor_materials_selector, nanomaterials_designer |
+| 329 | underwaterbot | 水下机器人与海洋技术 | auv_mission_planner, rov_operations_manager, underwater_inspector, marine_data_analyzer, sonar_signal_processor, underwater_communication_planner, ocean_sediment_sampler, marine_biodiversity_monitor |
+| 330 | autofarm | 自主农业与农机器人 | planting_automation_planner, harvesting_robot_coordinator, crop_monitoring_analyzer, soil_analysis_sensor, irrigation_drone_operator, weed_detection_eliminator, yield_mapping_predictor, farm_fleet_manager |
 
 ---
 
