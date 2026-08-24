@@ -1,0 +1,6 @@
+- id: dsh-tool-musicaudio
+  name: dsh-tool-musicaudio
+  version: 1.0.0
+  description: Music & Audio AI toolkit - audio mastering, music generation, voice synthesis, copyright detection, sound design, spatial audio, music recommendation, and podcast production optimization tools powered by AI
+  author: chengganping-ship-it
+  tools: 8

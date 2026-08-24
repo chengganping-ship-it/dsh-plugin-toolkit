@@ -1,14 +1,14 @@
 - id: dsh-tool-aigovernance
   name: dsh-tool-aigovernance
   version: 0.1.0
-  description: "AI Governance & Compliance - EU AI Act Article 50 enforcement, bias detection, model audit, AI ethics. 2026: EU AI Act transparency deadline, California AI Transparency Act"
+  description: "AI Governance & Model Risk Management - model risk assessment, AI ethics review, model inventory, drift monitoring. 2026: AI governance $8B+; EU AI Act compliance mandatory for high-risk systems"
   author: chengganping-ship-it
   tools:
-    - eu_ai_act_compliance_checker
-    - bias_detection_auditor
-    - model_cards_generator
-    - ai_risk_classification
-    - data_governance_policy_engine
-    - ai_ethics_review_board
-    - transparency_report_generator
-    - algorithmic_impact_assessment
+    - model_risk_assessor
+    - ai_ethics_reviewer
+    - model_inventory_manager
+    - model_drift_monitor
+    - bias_audit_engine
+    - explainability_requirements_checker
+    - ai_procurement_evaluator
+    - risk_register_generator

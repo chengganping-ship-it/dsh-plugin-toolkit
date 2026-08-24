@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 300 plugins | 2400 tools (300 × 8)**
+**Total: 305 plugins | 2440 tools (305 × 8)**
 
 ---
 
@@ -641,6 +641,18 @@
 | 298 | digitaltwin | 数字孪生与仿真 | twin_model_builder, simulation_engine, predictive_maintenance_twin, scenario_analyzer, real_time_sync_monitor, twin_fidelity_assessor, what_if_analysis_tool, twin_lifecycle_manager |
 | 299 | metaverseai | 元宇宙与虚拟世界 | virtual_world_designer, avatar_system_architect, virtual_economy_balancer, immersive_experience_builder, spatial_computing_planner, virtual_event_coordinator, digital_asset_manager, cross_platform_bridge |
 | 300 | longevityai | 长寿与健康管理 | biomarker_tracker, aging_clock_calculator, intervention_planner, longevity_research_synthesizer, healthspan_optimizer, epigenetic_analyzer, senolytic_therapy_advisor, personalized_longevity_protocol |
+
+---
+
+## Wave 63 — AI治理+清洁能源+自动驾驶+音乐音频+人才招募 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 301 | aigovernance | AI治理与模型风险 | model_risk_assessor, ai_ethics_reviewer, model_inventory_manager, model_drift_monitor, bias_audit_engine, explainability_requirements_checker, ai_procurement_evaluator, risk_register_generator |
+| 302 | cleanenergy | 清洁能源与气候科技 | solar_site_selector, wind_farm_optimizer, carbon_capture_analyzer, green_hydrogen_economist, battery_storage_optimizer, microgrid_designer, energy_efficiency_auditor, green_bond_validator |
+| 303 | autonodrive | 自动驾驶与ADAS | perception_scenario_tester, safety_validation_engine, fleet_monitoring_dashboard, adas_calibration_checker, lidar_fusion_analyzer, v2x_communication_monitor, ota_update_validator, autonomous_ethics_advisor |
+| 304 | musicaudio | 音乐与音频AI | audio_mastering_engine, music_generation_advisor, voice_synthesis_designer, copyright_detection_scanner, sound_design_generator, spatial_audio_engineer, music_recommendation_analyst, podcast_production_optimizer |
+| 305 | talentscout | 人才招募与招聘AI | candidate_sourcing_engine, interview_automation_planner, skills_assessment_generator, employer_brand_analyst, talent_pipeline_optimizer, compensation_benchmarking_tool, diversity_sourcing_tracker, recruitment_roi_calculator |
 
 ---
 
