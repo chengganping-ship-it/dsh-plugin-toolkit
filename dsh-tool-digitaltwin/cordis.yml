@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Digital Twin & Simulation Engine v0.1.0
+# Digital twin modeling, simulation, predictive maintenance, scenario analysis
+
+- id: dsh-tool-digitaltwin
+  name: dsh-tool-digitaltwin
+  version: 0.1.0
+  description: Digital Twin & Simulation Engine - Digital twin modeling, simulation, predictive maintenance, scenario analysis
+  author: chengganping-ship-it
+  tools:
+    - twin_model_builder
+    - simulation_engine
+    - predictive_maintenance_twin
+    - scenario_analyzer
+    - real_time_sync_monitor
+    - twin_fidelity_assessor
+    - what_if_analysis_tool
+    - twin_lifecycle_manager

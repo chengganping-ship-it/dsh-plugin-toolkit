@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 295 plugins | 2360 tools (295 × 8)**
+**Total: 300 plugins | 2400 tools (300 × 8)**
 
 ---
 
@@ -629,6 +629,18 @@
 | 293 | xplainaagent | AI Agent可解释性与透明 | decision_tracing_engine, bias_detection_scanner, audit_log_generator, compliance_reporting_tool, explainability_score_calculator, fairness_metrics_evaluator, transparency_report_builder, risk_level_classifier |
 | 294 | circsupply | 循环供应链 | reverse_logistics_optimizer, remanufacturing_process_planner, waste_resource_matcher, lifecycle_assessment_tool, circularity_score_calculator, material_flow_analyzer, carbon_footprint_reducer, sustainable_packaging_advisor |
 | 295 | warfaresim | 国防模拟与兵棋推演 | scenario_modeler, threat_simulation_engine, strategic_planning_assessor, force_structure_analyzer, logistics_readiness_evaluator, cyber_warfare_simulator, intelligence_analysis_fusion, operational_risk_assessor |
+
+---
+
+## Wave 62 — Agent记忆+太空碎片+数字孪生+元宇宙+长寿健康 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 296 | agentmemory | Agent记忆与认知 | memory_management_engine, context_retrieval_optimizer, cognitive_architect, forgetting_curve_modeler, episodic_memory_indexer, semantic_memory_store, working_memory_monitor, memory_consolidation_planner |
+| 297 | debristrack | 太空碎片与轨道安全 | debris_tracking_system, collision_avoidance_planner, orbital_cleanup_coordinator, space_traffic_manager, reentry_risk_assessor, debris_removal_evaluator, conjunction_analysis_engine, space_sustainability_scorer |
+| 298 | digitaltwin | 数字孪生与仿真 | twin_model_builder, simulation_engine, predictive_maintenance_twin, scenario_analyzer, real_time_sync_monitor, twin_fidelity_assessor, what_if_analysis_tool, twin_lifecycle_manager |
+| 299 | metaverseai | 元宇宙与虚拟世界 | virtual_world_designer, avatar_system_architect, virtual_economy_balancer, immersive_experience_builder, spatial_computing_planner, virtual_event_coordinator, digital_asset_manager, cross_platform_bridge |
+| 300 | longevityai | 长寿与健康管理 | biomarker_tracker, aging_clock_calculator, intervention_planner, longevity_research_synthesizer, healthspan_optimizer, epigenetic_analyzer, senolytic_therapy_advisor, personalized_longevity_protocol |
 
 ---
 

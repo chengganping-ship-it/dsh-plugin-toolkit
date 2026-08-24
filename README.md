@@ -1,11 +1,11 @@
 # DSH Plugin Toolkit
 
-> **295 DeepSeek Harness plugins — 2360 AI agent tools**
+> **300 DeepSeek Harness plugins — 2400 AI agent tools**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek-Harness-orange.svg)](https://deepseek.com/)
-[![295 Plugins](https://img.shields.io/badge/Plugins-295-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
+[![300 Plugins](https://img.shields.io/badge/Plugins-300-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
 
 ---
 
@@ -170,6 +170,11 @@ A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.c
 | AI Agent Explainability | 1 | 8 |
 | Circular Supply Chain | 1 | 8 |
 | Defense Simulation | 1 | 8 |
+| Agent Memory & Cognition | 1 | 8 |
+| Space Debris & Safety | 1 | 8 |
+| Digital Twin & Simulation | 1 | 8 |
+| Metaverse & Virtual Worlds | 1 | 8 |
+| Longevity & Healthspan | 1 | 8 |
 
 ## Breakthrough Infrastructure (L1-L8)
 

@@ -1,7 +1,7 @@
 {
-  "name": "dsh-tool-agentmemory",
+  "name": "dsh-tool-digitaltwin",
   "version": "0.1.0",
-  "description": "AI Agent Memory & Cognition for DSH - memory management, context retrieval, cognitive architecture, forgetting curves",
+  "description": "Digital Twin & Simulation Engine for DeepSeek Harness - Digital twin modeling, simulation, predictive maintenance, scenario analysis",
   "type": "module",
   "main": "lib/index.js",
   "scripts": {
@@ -23,11 +23,11 @@
   "keywords": [
     "dsh",
     "deepseek-harness",
-    "agent-memory",
-    "cognition",
-    "context-retrieval",
-    "forgetting-curve",
-    "ai-agent",
-    "plugin"
+    "digital-twin",
+    "simulation",
+    "predictive-maintenance",
+    "scenario-analysis",
+    "industrial-iot",
+    "manufacturing"
   ]
 }

@@ -1,0 +1,35 @@
+{
+  "name": "dsh-tool-metaverseai",
+  "version": "0.1.0",
+  "description": "Metaverse & Virtual Worlds AI Agent for DSH - virtual world design, avatar systems, virtual economy, immersive experiences, spatial computing, virtual events, digital assets, cross-platform bridge",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "metaverseai-dev",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/metaverseai-dev/dsh-plugin-toolkit.git"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "metaverse",
+    "virtual-worlds",
+    "avatar",
+    "virtual-economy",
+    "spatial-computing",
+    "digital-assets",
+    "cross-platform",
+    "ai-agent"
+  ]
+}

@@ -1,0 +1,14 @@
+- id: dsh-tool-longevityai
+  name: dsh-tool-longevityai
+  version: 1.0.0
+  description: Longevity and Healthspan Optimization - biomarker tracking, aging clocks, intervention planning, longevity research synthesis, epigenetic analysis, senolytic therapy advisory, and personalized longevity protocols
+  author: chengganping-ship-it
+  tools:
+    - biomarker_tracker
+    - aging_clock_calculator
+    - intervention_planner
+    - longevity_research_synthesizer
+    - healthspan_optimizer
+    - epigenetic_analyzer
+    - senolytic_therapy_advisor
+    - personalized_longevity_protocol
