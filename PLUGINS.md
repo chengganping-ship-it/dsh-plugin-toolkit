@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 310 plugins | 2480 tools (310 × 8)**
+**Total: 315 plugins | 2520 tools (315 × 8)**
 
 ---
 
@@ -665,6 +665,18 @@
 | 308 | warehouserobot | 仓储机器人与自动化 | agv_routing_optimizer, pick_path_planner, robotic_fleet_coordinator, inventory_counting_robot, sortation_system_designer, goods_to_person_optimizer, palletizing_robot_planner, safety_zone_monitor |
 | 309 | corpmentor | 企业培训与L&D | learning_pathway_architect, compliance_training_automator, skill_development_tracker, knowledge_retention_analyst, mentoring_program_designer, training_roi_evaluator, microlearning_creator, leadership_development_coach |
 | 310 | quantumapp | 量子计算应用 | quantum_algorithm_designer, error_correction_analyzer, quantum_circuit_optimizer, nisq_application_mapper, quantum_machine_learning_hybrid, quantum_cryptography_planner, quantum_simulation_engineer, quantum_readiness_assessor |
+
+---
+
+## Wave 65 — 供应链风险+Agent构建器+无人机+专利管理+海运物流 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 311 | supplyrisk | 供应链风险管理 | multi_tier_visibility_mapper, disruption_prediction_engine, nearshoring_analyzer, supplier_financial_health_checker, geopolitical_risk_assessor, logistics_bottleneck_detector, demand_supply_mismatcher, resilience_strategy_advisor |
+| 312 | agentbuilder | AI Agent构建器 | agent_blueprint_designer, tool_composition_planner, multi_agent_workflow_definer, agent_simulator, guardrail_configurator, memory_system_selector, llm_optimizer, deployment_readiness_checker |
+| 313 | dronebot | 无人机舰队管理 | fleet_operations_planner, airspace_management_system, bvlos_compliance_checker, autonomous_mission_designer, payload_optimization_engine, battery_swap_scheduler, weather_risk_assessor, remote_id_broadcaster |
+| 314 | patentpro | 专利与IP管理 | patent_drafting_assistant, prior_art_search_optimizer, ip_portfolio_manager, patent_valuation_engine, patentability_scorer, claim_scope_optimizer, infringement_risk_assessor, patent_landscape_visualizer |
+| 315 | marinetrack | 海运与港口智能 | vessel_tracking_aggregator, port_congestion_analyzer, shipping_emissions_calculator, voyage_optimization_engine, berthing_schedule_planner, container_yard_optimizer, customs_clearance_tracker, piracy_risk_assessor |
 
 ---
 

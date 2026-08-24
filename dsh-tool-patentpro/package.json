@@ -1,0 +1,17 @@
+{
+  "name": "dsh-tool-patentpro",
+  "version": "1.0.0",
+  "description": "Patent & IP Management Pro — patent drafting assistance, prior art search optimization, IP portfolio management, patent valuation engine, patentability scoring, claim scope optimization, infringement risk assessment, patent landscape visualization. 2026: IP management software $10B+; patent analytics $5B+.",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": { "build": "tsc", "typecheck": "tsc --noEmit" },
+  "keywords": ["dsh", "patent", "ip", "intellectual-property", "prior-art", "patent-drafting", "patent-valuation", "cordis"],
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": { "typescript": "^5.0.0" }
+}

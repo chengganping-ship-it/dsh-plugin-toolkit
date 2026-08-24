@@ -1,0 +1,14 @@
+- id: dsh-tool-marinetrack
+  name: dsh-tool-marinetrack
+  version: 0.1.0
+  description: Maritime Shipping & Port Intelligence - vessel tracking, port congestion analysis, shipping emissions, route optimization
+  author: chengganping-ship-it
+  tools:
+    - vessel_tracking_aggregator
+    - port_congestion_analyzer
+    - shipping_emissions_calculator
+    - voyage_optimization_engine
+    - berthing_schedule_planner
+    - container_yard_optimizer
+    - customs_clearance_tracker
+    - piracy_risk_assessor

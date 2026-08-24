@@ -1,11 +1,11 @@
 # DSH Plugin Toolkit
 
-> **310 DeepSeek Harness plugins — 2480 AI agent tools**
+> **315 DeepSeek Harness plugins — 2520 AI agent tools**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek-Harness-orange.svg)](https://deepseek.com/)
-[![310 Plugins](https://img.shields.io/badge/Plugins-310-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
+[![315 Plugins](https://img.shields.io/badge/Plugins-315-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
 
 ---
 
@@ -185,6 +185,11 @@ A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.c
 | Warehouse Robotics | 1 | 8 |
 | Corporate Training & L&D | 1 | 8 |
 | Quantum Computing Apps | 1 | 8 |
+| Supply Chain Risk | 1 | 8 |
+| AI Agent Builder | 1 | 8 |
+| Drone Fleet Management | 1 | 8 |
+| Patent & IP Management | 1 | 8 |
+| Maritime Shipping | 1 | 8 |
 
 ## Breakthrough Infrastructure (L1-L8)
 
