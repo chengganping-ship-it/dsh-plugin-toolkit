@@ -1,0 +1,33 @@
+{
+  "name": "dsh-tool-quantumapp",
+  "version": "0.1.0",
+  "description": "量子计算应用工具集 for DSH - 量子算法设计、纠错分析、电路优化、NISQ应用",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-plugin-toolkit.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "quantum-computing",
+    "quantum-algorithm",
+    "error-correction",
+    "nisq",
+    "quantum-circuit",
+    "quantum-machine-learning"
+  ]
+}

@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 305 plugins | 2440 tools (305 × 8)**
+**Total: 310 plugins | 2480 tools (310 × 8)**
 
 ---
 
@@ -653,6 +653,18 @@
 | 303 | autonodrive | 自动驾驶与ADAS | perception_scenario_tester, safety_validation_engine, fleet_monitoring_dashboard, adas_calibration_checker, lidar_fusion_analyzer, v2x_communication_monitor, ota_update_validator, autonomous_ethics_advisor |
 | 304 | musicaudio | 音乐与音频AI | audio_mastering_engine, music_generation_advisor, voice_synthesis_designer, copyright_detection_scanner, sound_design_generator, spatial_audio_engineer, music_recommendation_analyst, podcast_production_optimizer |
 | 305 | talentscout | 人才招募与招聘AI | candidate_sourcing_engine, interview_automation_planner, skills_assessment_generator, employer_brand_analyst, talent_pipeline_optimizer, compensation_benchmarking_tool, diversity_sourcing_tracker, recruitment_roi_calculator |
+
+---
+
+## Wave 64 — Web3安全+精准医疗+仓储机器人+企业培训+量子计算 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 306 | web3sec | Web3安全与合约审计 | reentrancy_detector, flash_loan_attack_modeler, mev_analyzer, dao_governance_attacker, oracle_manipulation_simulator, bridge_vulnerability_scanner, nft_phishing_detector, defi_composition_risker |
+| 307 | precisionmed | 精准医疗与基因组学 | genomic_variant_analyzer, pharmacogenomics_advisor, gene_therapy_designer, biomarker_discovery_engine, crispr_off_target_predictor, liquid_biopsy_analyzer, multi_omics_integrator, clinical_genomics_reporter |
+| 308 | warehouserobot | 仓储机器人与自动化 | agv_routing_optimizer, pick_path_planner, robotic_fleet_coordinator, inventory_counting_robot, sortation_system_designer, goods_to_person_optimizer, palletizing_robot_planner, safety_zone_monitor |
+| 309 | corpmentor | 企业培训与L&D | learning_pathway_architect, compliance_training_automator, skill_development_tracker, knowledge_retention_analyst, mentoring_program_designer, training_roi_evaluator, microlearning_creator, leadership_development_coach |
+| 310 | quantumapp | 量子计算应用 | quantum_algorithm_designer, error_correction_analyzer, quantum_circuit_optimizer, nisq_application_mapper, quantum_machine_learning_hybrid, quantum_cryptography_planner, quantum_simulation_engineer, quantum_readiness_assessor |
 
 ---
 

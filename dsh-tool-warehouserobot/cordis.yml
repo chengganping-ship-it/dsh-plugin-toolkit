@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Warehouse Robotics & Automation v0.1.0
+# AGV routing, pick optimization, robotic fleet coordination, inventory counting
+
+- id: dsh-tool-warehouserobot
+  name: dsh-tool-warehouserobot
+  version: 0.1.0
+  description: Warehouse Robotics & Automation Plugin - AGV Routing Optimization, Pick Path Planning, Robotic Fleet Coordination, Inventory Counting, Sortation System Design, Goods-to-Person Optimization, Palletizing Robot Planning, Safety Zone Monitoring
+  author: chengganping-ship-it
+  tools:
+    - agv_routing_optimizer
+    - pick_path_planner
+    - robotic_fleet_coordinator
+    - inventory_counting_robot
+    - sortation_system_designer
+    - goods_to_person_optimizer
+    - palletizing_robot_planner
+    - safety_zone_monitor

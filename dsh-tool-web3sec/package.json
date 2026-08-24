@@ -1,0 +1,17 @@
+{
+  "name": "dsh-tool-web3sec",
+  "version": "0.1.0",
+  "description": "Web3 Security & Smart Contract Auditing for DSH - Reentrancy detection, flash loan attack modeling, MEV analysis, DAO governance attacks, oracle manipulation, bridge vulnerability scanning, NFT phishing detection, DeFi composability risk",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": { "build": "tsc" },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": { "typescript": "^5.0.0" },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": { "type": "git", "url": "git+https://github.com/chengganping-ship-it/dsh-plugin-toolkit.git" },
+  "keywords": ["dsh", "deepseek-harness", "web3", "security", "smart-contract", "audit", "reentrancy", "flash-loan", "mev", "dao", "oracle", "bridge", "nft", "defi"]
+}

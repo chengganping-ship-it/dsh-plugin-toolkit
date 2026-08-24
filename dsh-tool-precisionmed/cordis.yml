@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Precision Medicine & Genomics Toolkit v0.1.0
+# Genomic variant analysis, pharmacogenomics, gene therapy, biomarker discovery, multi-omics
+
+- id: dsh-tool-precisionmed
+  name: dsh-tool-precisionmed
+  version: 0.1.0
+  description: Precision Medicine & Genomics Toolkit - Genomic variant analysis with pathogenicity prediction, pharmacogenomics dosing recommendations, gene therapy vector design, biomarker discovery pipeline, CRISPR off-target prediction, liquid biopsy analysis, multi-omics integration, and clinical genomics reporting
+  author: chengganping-ship-it
+  tools:
+    - genomic_variant_analyzer
+    - pharmacogenomics_advisor
+    - gene_therapy_designer
+    - biomarker_discovery_engine
+    - crispr_off_target_predictor
+    - liquid_biopsy_analyzer
+    - multi_omics_integrator
+    - clinical_genomics_reporter
