@@ -1,20 +1,22 @@
 /**
- * DSH Agent Marketplace & A2A Economy Plugin v1.0.0
+ * DSH Agent Marketplace & Discovery Plugin v1.0.0
  *
- * The emerging ecosystem where AI agents discover, hire, pay, and collaborate with other agents.
- * Google's A2A protocol (Agent-to-Agent) has 150+ organizations supporting it. The vision is
- * an economy where agents transact autonomously: a travel agent hires a booking agent, a
- * research agent hires a data-analysis agent, all via standardized protocols.
+ * AI Agent Marketplace & Discovery - agent discovery, capability matching,
+ * pricing comparison, reputation scoring, integration testing, comparison
+ * matrices, trend analysis, and recommendation engine.
+ *
+ * 2026: Agent marketplace is an emerging category; platforms like OpenAI GPTs,
+ * Poe, and Coze are growing rapidly.
  *
  * Features (v1.0.0):
- * - Agent Card Generator (A2A AgentCard per Google protocol)
- * - Service Listing Creator (marketplace listing with pricing, SLAs, examples)
- * - Pricing Calculator (optimal pricing based on compute cost, value, competition)
- * - Reputation Scorer (agent reputation from transaction history, reviews, completion rate)
- * - Discovery Optimizer (tags, keywords, categories, ranking signals)
- * - Transaction Escrow Designer (hold, verify, release payment flows)
- * - SLA Monitor Config (uptime, latency, accuracy thresholds, penalties)
- * - Cross-Agent Protocol Adapter (bridge between A2A, MCP, custom protocols)
+ * - agent_discovery_engine      - Search and discover agents by capability/category/quality
+ * - capability_matcher          - Match requirements to agent capabilities with fit scores
+ * - pricing_comparison_analyst  - Compare pricing across agents, cost-effectiveness analysis
+ * - reputation_scorer           - Score agent reputation from ratings, completion, response
+ * - integration_test_runner     - Run integration tests against agent endpoints
+ * - agent_comparison_matrix     - Build multi-dimensional comparison across agents
+ * - marketplace_trend_analyzer  - Analyze marketplace trends, growth, emerging categories
+ * - agent_recommendation_engine - Recommend best agents based on needs and constraints
  *
  * @module dsh-tool-agentmarket
  * @version 1.0.0
@@ -29,7 +31,7 @@ export const inject = ['tools']
 
 const VERSION = '1.0.0'
 
-const DISCLAIMER = 'DISCLAIMER: This tool provides AI-generated analysis for informational purposes only. It does not constitute legal, financial, or technical advice. Consult qualified professionals before deploying agent-to-agent transactions or protocol adapters.'
+const DISCLAIMER = 'DISCLAIMER: This tool provides AI-generated analysis for informational purposes only. It does not constitute legal, financial, or technical advice. Consult qualified professionals before deploying agent-to-agent transactions or making marketplace decisions.'
 
 // ==================== SEEDED RANDOM (mulberry32 PRNG) ====================
 
@@ -65,140 +67,108 @@ function clamp(value: number, min: number, max: number): number {
 
 // ==================== TYPES ====================
 
-// --- Tool 1: Agent Card Generator ---
-export interface AgentCardInput {
-  agent_name: string
-  agent_domain: string
-  capabilities: string[]
-  auth_method: string
-  endpoint_url: string
+// --- Tool 1: Agent Discovery Engine ---
+export interface AgentDiscoveryInput {
+  query: string
+  categories: string[]
+  min_rating?: number
+  max_price_per_call?: number
+  required_capabilities?: string[]
+  sort_by?: 'relevance' | 'rating' | 'price' | 'popularity'
+  limit?: number
 }
 
-export interface AgentCardCapability {
+export interface DiscoveredAgent {
+  id: string
   name: string
-  description: string
-  input_schema: string
-  output_schema: string
-  rate_limit: string
+  category: string
+  capabilities: string[]
+  rating: number
+  price_per_call: number
+  popularity_score: number
+  relevance_score: number
+  match_reasons: string[]
 }
 
-export interface AgentCardOutput {
-  agent_card: {
-    name: string
-    description: string
-    url: string
-    version: string
-    capabilities: {
-      streaming: boolean
-      push_notifications: boolean
-      state_transition_history: boolean
-    }
-    default_input_modes: string[]
-    default_output_modes: string[]
-    skills: AgentCardCapability[]
-    authentication: {
-      schemes: string[]
-      authorization_url?: string
-      token_url?: string
-      scopes?: string[]
-    }
-    a2a_compliance: {
-      protocol_version: string
-      supported_transports: string[]
-      agent_discovery_compatible: boolean
-    }
-  }
-  protocol_notes: string[]
+export interface AgentDiscoveryOutput {
+  query: string
+  total_matches: number
+  returned_count: number
+  agents: DiscoveredAgent[]
+  search_insights: string[]
   recommendations: string[]
 }
 
-// --- Tool 2: Service Listing Creator ---
-export interface ServiceListingInput {
-  service_name: string
-  service_category: string
-  pricing_model: string
-  delivery_sla: string
-  sample_outputs: string[]
+// --- Tool 2: Capability Matcher ---
+export interface CapabilityMatcherInput {
+  required_capabilities: string[]
+  optional_capabilities: string[]
+  agent_capabilities: string[]
+  priority_weights?: Record<string, number>
 }
 
-export interface ServiceListingPricing {
-  model: string
-  base_price_usd: number
-  per_call_price_usd: number
-  free_tier_calls: number
-  volume_discount_pct: number
+export interface CapabilityMatch {
+  capability: string
+  matched: boolean
+  match_type: 'exact' | 'partial' | 'none'
+  confidence: number
+  weight: number
+  weighted_score: number
 }
 
-export interface ServiceListingOutput {
-  listing: {
-    title: string
-    category: string
-    description: string
-    tagline: string
-    pricing: ServiceListingPricing
-    sla: {
-      uptime_guarantee_pct: number
-      max_response_time_ms: number
-      availability_window: string
-      penalty_for_breach: string
-    }
-    sample_outputs: string[]
-    tags: string[]
-    ranking_signals: {
-      relevance_score: number
-      quality_score: number
-      popularity_score: number
-    }
-  }
-  marketplace_readiness: string[]
-  optimization_tips: string[]
+export interface CapabilityMatcherOutput {
+  overall_fit_score: number
+  fit_grade: 'A' | 'B' | 'C' | 'D' | 'F'
+  required_matches: CapabilityMatch[]
+  optional_matches: CapabilityMatch[]
+  missing_required: string[]
+  missing_optional: string[]
+  coverage_pct: number
+  assessment: string
+  recommendations: string[]
 }
 
-// --- Tool 3: Pricing Calculator ---
-export interface PricingCalculatorInput {
-  service_type: string
-  compute_cost_per_call: number
-  value_per_call: number
-  competitor_prices: number[]
-  target_margin: number
+// --- Tool 3: Pricing Comparison Analyst ---
+export interface PricingComparisonInput {
+  agent_prices: { agent_id: string; agent_name: string; price_per_call: number; pricing_model: string }[]
+  budget_per_call?: number
+  expected_monthly_volume?: number
+  include_hidden_costs?: boolean
 }
 
-export interface PricingTier {
-  tier_name: string
+export interface AgentPricingAnalysis {
+  agent_id: string
+  agent_name: string
   price_per_call: number
-  monthly_volume: number
-  monthly_revenue: number
-  margin_pct: number
+  pricing_model: string
+  monthly_cost_at_volume: number
+  cost_rating: 'excellent' | 'good' | 'fair' | 'expensive'
+  hidden_costs: string[]
+  value_score: number
 }
 
-export interface PricingCalculatorOutput {
-  recommended_price_per_call: number
-  price_range: { min: number; max: number }
-  target_margin_pct: number
-  actual_margin_pct: number
-  competitor_analysis: {
-    avg_competitor_price: number
-    min_competitor_price: number
-    max_competitor_price: number
-    price_positioning: string
-  }
-  tiers: PricingTier[]
-  revenue_projections: {
-    conservative_monthly: number
-    moderate_monthly: number
-    optimistic_monthly: number
-  }
-  pricing_strategy: string
+export interface PricingComparisonOutput {
+  agents_analyzed: number
+  cheapest: { agent_id: string; agent_name: string; price_per_call: number }
+  most_expensive: { agent_id: string; agent_name: string; price_per_call: number }
+  average_price: number
+  median_price: number
+  agent_analyses: AgentPricingAnalysis[]
+  budget_assessment: string
+  cost_optimization_tips: string[]
   recommendations: string[]
 }
 
 // --- Tool 4: Reputation Scorer ---
 export interface ReputationScorerInput {
   agent_id: string
+  agent_name: string
   total_transactions: number
   avg_rating: number
   completion_rate_pct: number
   avg_response_ms: number
+  dispute_rate_pct?: number
+  verified?: boolean
 }
 
 export interface ReputationFactor {
@@ -213,285 +183,305 @@ export interface ReputationScorerOutput {
   overall_reputation_score: number
   reputation_tier: 'platinum' | 'gold' | 'silver' | 'bronze' | 'new'
   factors: ReputationFactor[]
-  trust_badge: {
+  trust_badges: {
     verified: boolean
     fast_responder: boolean
     high_completion: boolean
     top_rated: boolean
+    reliable_volume: boolean
   }
   marketplace_benefits: string[]
   improvement_areas: string[]
   recommendations: string[]
 }
 
-// --- Tool 5: Discovery Optimizer ---
-export interface DiscoveryOptimizerInput {
-  agent_capabilities: string[]
-  target_categories: string[]
-  competitive_keywords: string[]
-  quality_signals: {
-    uptime_pct?: number
-    avg_rating?: number
-    response_time_ms?: number
-    transaction_count?: number
-  }
+// --- Tool 5: Integration Test Runner ---
+export interface IntegrationTestInput {
+  agent_endpoint: string
+  agent_name: string
+  test_capabilities: string[]
+  auth_method: string
+  timeout_ms?: number
+  retry_count?: number
 }
 
-export interface DiscoveryKeyword {
-  keyword: string
-  relevance_score: number
-  competition_level: 'low' | 'medium' | 'high'
-  recommended: boolean
+export interface IntegrationTestResult {
+  capability: string
+  status: 'pass' | 'fail' | 'warning' | 'skipped'
+  response_time_ms: number
+  details: string
+  error_message?: string
 }
 
-export interface DiscoveryOptimizerOutput {
-  optimized_tags: string[]
-  primary_category: string
-  secondary_categories: string[]
-  keywords: DiscoveryKeyword[]
-  ranking_score: number
-  visibility_tips: string[]
-  seo_recommendations: string[]
-  marketplace_positioning: string
-}
-
-// --- Tool 6: Transaction Escrow Designer ---
-export interface TransactionEscrowInput {
-  transaction_type: string
-  amount_range_usd: { min: number; max: number }
-  trust_level: string
-  dispute_resolution: string
-  settlement_time: string
-}
-
-export interface EscrowStep {
-  step_number: number
-  name: string
-  description: string
-  actor: string
-  timeout_seconds: number
-  failure_action: string
-}
-
-export interface TransactionEscrowOutput {
-  escrow_flow: {
-    name: string
-    description: string
-    steps: EscrowStep[]
-    total_estimated_time: string
-  }
-  payment_hold: {
-    hold_duration_seconds: number
-    release_trigger: string
-    partial_release_supported: boolean
-    refund_policy: string
-  }
-  dispute_handling: {
-    resolution_method: string
-    arbitrator: string
-    evidence_required: string[]
-    resolution_time_estimate: string
-    penalty_for_false_claim: string
-  }
-  security_features: string[]
-  protocol_compliance: string[]
+export interface IntegrationTestOutput {
+  agent_name: string
+  endpoint: string
+  total_tests: number
+  passed: number
+  failed: number
+  warnings: number
+  skipped: number
+  avg_response_time_ms: number
+  test_results: IntegrationTestResult[]
+  compatibility_score: number
+  readiness_level: 'production_ready' | 'needs_work' | 'not_ready'
   recommendations: string[]
 }
 
-// --- Tool 7: SLA Monitor Config ---
-export interface SlaMonitorInput {
-  service_type: string
-  target_uptime_pct: number
-  max_latency_ms: number
-  accuracy_threshold: number
-  penalty_structure: string
+// --- Tool 6: Agent Comparison Matrix ---
+export interface ComparisonMatrixInput {
+  agents: {
+    agent_id: string
+    agent_name: string
+    rating: number
+    price_per_call: number
+    response_time_ms: number
+    capabilities_count: number
+    completion_rate_pct: number
+    popularity_score: number
+  }[]
+  dimensions?: string[]
+  weights?: Record<string, number>
 }
 
-export interface SlaThreshold {
-  metric: string
-  warning_threshold: number
-  critical_threshold: number
-  measurement_window: string
-  unit: string
+export interface DimensionScore {
+  dimension: string
+  weight: number
+  scores: { agent_id: string; agent_name: string; raw_score: number; normalized_score: number; weighted_score: number }[]
+  best_agent_id: string
+  best_agent_name: string
 }
 
-export interface SlaPenalty {
-  breach_severity: string
-  credit_pct: number
-  max_credit_pct: number
-  auto_trigger: boolean
-}
-
-export interface SlaMonitorOutput {
-  monitor_config: {
-    name: string
-    service_type: string
-    thresholds: SlaThreshold[]
-    penalties: SlaPenalty[]
-    monitoring_interval_seconds: number
-    alert_channels: string[]
-    escalation_policy: string
-  }
-  uptime_calculation: {
-    formula: string
-    measurement_method: string
-    excluded_downtime: string[]
-    target_minutes_per_month: number
-    allowed_downtime_minutes: number
-  }
-  reporting: {
-    dashboard_metrics: string[]
-    report_frequency: string
-    stakeholder_notifications: string[]
-  }
+export interface ComparisonMatrixOutput {
+  agents_compared: number
+  dimensions_analyzed: number
+  dimension_scores: DimensionScore[]
+  overall_ranking: { rank: number; agent_id: string; agent_name: string; total_score: number }[]
+  winner: { agent_id: string; agent_name: string; total_score: number }
+  trade_offs: string[]
   recommendations: string[]
 }
 
-// --- Tool 8: Cross-Agent Protocol Adapter ---
-export interface ProtocolAdapterInput {
-  source_protocol: string
-  target_protocol: string
-  message_formats: string[]
-  auth_translation_needed: boolean
+// --- Tool 7: Marketplace Trend Analyzer ---
+export interface TrendAnalysisInput {
+  time_range_months: number
+  categories: string[]
+  metrics?: string[]
+  granularity?: 'weekly' | 'monthly' | 'quarterly'
 }
 
-export interface ProtocolMapping {
-  source_field: string
-  target_field: string
-  transformation: string
-  required: boolean
+export interface CategoryTrend {
+  category: string
+  growth_rate_pct: number
+  agent_count_start: number
+  agent_count_end: number
+  avg_price_trend: 'rising' | 'stable' | 'falling'
+  demand_level: 'high' | 'medium' | 'low'
+  maturity_stage: 'emerging' | 'growing' | 'mature' | 'declining'
 }
 
-export interface ProtocolAdapterOutput {
-  adapter_config: {
-    name: string
-    source_protocol: string
-    target_protocol: string
-    version: string
-    bidirectional: boolean
-  }
-  message_mappings: ProtocolMapping[]
-  auth_translation: {
-    required: boolean
-    source_auth_type: string
-    target_auth_type: string
-    mapping_instructions: string
-    token_exchange_endpoint?: string
-  }
-  error_handling: {
-    retry_policy: string
-    max_retries: number
-    fallback_behavior: string
-    error_code_mappings: Array<{ source_error: string; target_error: string; description: string }>
-  }
-  compatibility_notes: string[]
-  deployment_recommendations: string[]
+export interface TrendInsight {
+  insight: string
+  impact: 'high' | 'medium' | 'low'
+  category: string
+  action_required: boolean
 }
 
-// ==================== TOOL 1: AGENT CARD GENERATOR ====================
+export interface TrendAnalysisOutput {
+  time_range_months: number
+  granularity: string
+  categories_analyzed: number
+  category_trends: CategoryTrend[]
+  insights: TrendInsight[]
+  emerging_categories: string[]
+  declining_categories: string[]
+  overall_market_growth_pct: number
+  forecast: string[]
+  recommendations: string[]
+}
 
-function generateAgentCard(input: AgentCardInput): AgentCardOutput {
+// --- Tool 8: Agent Recommendation Engine ---
+export interface RecommendationInput {
+  use_case: string
+  required_capabilities: string[]
+  budget_per_call?: number
+  min_rating?: number
+  priority_factors?: ('price' | 'quality' | 'speed' | 'reliability')[]
+  candidate_agents: {
+    agent_id: string
+    agent_name: string
+    capabilities: string[]
+    rating: number
+    price_per_call: number
+    avg_response_ms: number
+    completion_rate_pct: number
+  }[]
+}
+
+export interface AgentRecommendation {
+  rank: number
+  agent_id: string
+  agent_name: string
+  overall_score: number
+  capability_fit_pct: number
+  price_score: number
+  quality_score: number
+  speed_score: number
+  reliability_score: number
+  pros: string[]
+  cons: string[]
+  best_for: string
+}
+
+export interface RecommendationOutput {
+  use_case: string
+  candidates_evaluated: number
+  recommendations: AgentRecommendation[]
+  top_pick: { agent_id: string; agent_name: string; overall_score: number }
+  alternative_picks: { agent_id: string; agent_name: string; overall_score: number }[]
+  decision_framework: string[]
+  recommendations_list: string[]
+}
+
+// ==================== TOOL 1: AGENT DISCOVERY ENGINE ====================
+
+function runAgentDiscovery(input: AgentDiscoveryInput): AgentDiscoveryOutput {
   const seed = computeSeed(input)
   const rng = makeRng(seed)
 
-  const skills: AgentCardCapability[] = input.capabilities.map((cap, i) => {
-    const rateLimits = ['100/hour', '500/hour', '1000/hour', '5000/hour', 'unlimited']
-    return {
-      name: cap,
-      description: 'Capability: ' + cap,
-      input_schema: 'JSON object per A2A Task schema',
-      output_schema: 'JSON object per A2A Task result',
-      rate_limit: rateLimits[i % rateLimits.length]
-    }
-  })
+  const categories = input.categories.length > 0 ? input.categories : ['data-analysis', 'code-generation', 'research', 'creative', 'automation']
+  const minRating = input.min_rating ?? 3.0
+  const maxPrice = input.max_price_per_call ?? 1.0
+  const limit = input.limit ?? 10
+  const requiredCaps = input.required_capabilities ?? []
 
-  const transports = ['JSON-RPC 2.0 over HTTP', 'gRPC', 'WebSocket']
-  const authSchemes = input.auth_method.toLowerCase().includes('oauth')
-    ? ['oauth2']
-    : input.auth_method.toLowerCase().includes('apikey')
-    ? ['apikey']
-    : input.auth_method.toLowerCase().includes('bearer')
-    ? ['bearer']
-    : [input.auth_method.toLowerCase()]
+  const agentNames = [
+    'DataWizard Pro', 'CodeGenius AI', 'ResearchPilot', 'CreativeFlow',
+    'TaskAutomator', 'InsightEngine', 'LogicBuilder', 'QueryMaster',
+    'PatternFinder', 'FlowOptimizer', 'SmartAnalyzer', 'QuickResponse Agent',
+    'DeepDive Research', 'PrecisionBot', 'AdaptiveAgent', 'NexusHelper'
+  ]
 
-  const agentCard = {
-    name: input.agent_name,
-    description: 'A2A-compliant agent: ' + input.agent_name + ' operating in domain: ' + input.agent_domain,
-    url: input.endpoint_url,
-    version: '1.0.0',
-    capabilities: {
-      streaming: rng.next(0, 1) === 1,
-      push_notifications: rng.next(0, 1) === 1,
-      state_transition_history: rng.next(0, 2) > 0
-    },
-    default_input_modes: ['application/json', 'text/plain'],
-    default_output_modes: ['application/json'],
-    skills,
-    authentication: {
-      schemes: authSchemes,
-      ...(authSchemes.includes('oauth2') ? {
-        authorization_url: input.endpoint_url + '/oauth/authorize',
-        token_url: input.endpoint_url + '/oauth/token',
-        scopes: ['agent:read', 'agent:execute']
-      } : {})
-    },
-    a2a_compliance: {
-      protocol_version: 'v0.2.5',
-      supported_transports: rng.pickN(transports, rng.next(1, 3)),
-      agent_discovery_compatible: true
-    }
+  const allCapabilities = [
+    'text-generation', 'code-execution', 'data-analysis', 'web-search',
+    'image-generation', 'summarization', 'translation', 'classification',
+    'extraction', 'reasoning', 'planning', 'monitoring'
+  ]
+
+  const discovered: DiscoveredAgent[] = []
+  const totalPool = rng.next(15, 45)
+
+  for (let i = 0; i < totalPool; i++) {
+    const name = agentNames[i % agentNames.length] + (i >= agentNames.length ? ' ' + Math.floor(i / agentNames.length) : '')
+    const category = rng.pick(categories)
+    const caps = rng.pickN(allCapabilities, rng.next(2, 6))
+    const rating = parseFloat((rng.nextFloat(2.5, 5.0)).toFixed(1))
+    const price = parseFloat((rng.nextFloat(0.01, 2.0)).toFixed(3))
+    const popularity = rng.next(10, 100)
+
+    if (rating < minRating) continue
+    if (price > maxPrice) continue
+    if (requiredCaps.length > 0 && !requiredCaps.every(c => caps.includes(c))) continue
+
+    const matchReasons: string[] = []
+    if (rating >= 4.5) matchReasons.push('Top-rated agent (' + rating + '/5.0)')
+    if (price <= maxPrice * 0.5) matchReasons.push('Budget-friendly at $' + price + '/call')
+    if (caps.length >= 4) matchReasons.push('Versatile: ' + caps.length + ' capabilities')
+    if (popularity >= 80) matchReasons.push('High popularity score: ' + popularity)
+    requiredCaps.forEach(c => {
+      if (caps.includes(c)) matchReasons.push('Has required capability: ' + c)
+    })
+    if (matchReasons.length === 0) matchReasons.push('Matches search category: ' + category)
+
+    const relevance = clamp(Math.round(
+      (rating / 5.0) * 30 +
+      (1 - price / maxPrice) * 25 +
+      (popularity / 100) * 20 +
+      (caps.length / allCapabilities.length) * 15 +
+      (requiredCaps.filter(c => caps.includes(c)).length / Math.max(requiredCaps.length, 1)) * 10
+    ), 0, 100)
+
+    discovered.push({
+      id: 'agent_' + (i + 1).toString().padStart(3, '0'),
+      name,
+      category,
+      capabilities: caps,
+      rating,
+      price_per_call: price,
+      popularity_score: popularity,
+      relevance_score: relevance,
+      match_reasons: matchReasons.slice(0, 3)
+    })
   }
 
-  const protocolNotes: string[] = [
-    'AgentCard follows Google A2A protocol specification v0.2.5',
-    'Compatible with 150+ A2A-supporting organizations',
-    'Discovery via well-known URI: /.well-known/agent-card.json',
-    'Supports both synchronous and asynchronous task execution'
+  const sortBy = input.sort_by ?? 'relevance'
+  discovered.sort((a, b) => {
+    if (sortBy === 'rating') return b.rating - a.rating
+    if (sortBy === 'price') return a.price_per_call - b.price_per_call
+    if (sortBy === 'popularity') return b.popularity_score - a.popularity_score
+    return b.relevance_score - a.relevance_score
+  })
+
+  const result = discovered.slice(0, limit)
+
+  const insights: string[] = [
+    'Found ' + discovered.length + ' agents matching your criteria out of ' + totalPool + ' in marketplace',
+    'Average rating of matches: ' + (result.length > 0 ? (result.reduce((s, a) => s + a.rating, 0) / result.length).toFixed(1) : 'N/A') + '/5.0',
+    'Price range: $' + (result.length > 0 ? Math.min(...result.map(a => a.price_per_call)).toFixed(3) : '0') + ' - $' + (result.length > 0 ? Math.max(...result.map(a => a.price_per_call)).toFixed(3) : '0') + ' per call',
+    'Most common capability: ' + (result.length > 0 ? rng.pick(allCapabilities) : 'N/A'),
+    'Market supply is ' + (discovered.length > totalPool * 0.6 ? 'high' : discovered.length > totalPool * 0.3 ? 'moderate' : 'limited') + ' for your query'
   ]
 
   const recommendations: string[] = [
-    'Register agent card at /.well-known/agent-card.json for automatic discovery',
-    'Implement health check endpoint at /health for marketplace monitoring',
-    'Add rate limiting headers (X-RateLimit-Limit, X-RateLimit-Remaining) to responses',
-    'Support both streaming and non-streaming modes for broader compatibility',
-    'Include input/output mode declarations in each skill for client adaptation'
+    'Sort by "rating" for highest quality agents, or "price" for budget options',
+    'Use required_capabilities filter to narrow results to agents with specific skills',
+    'Check agent reputation scores before integrating for production workloads',
+    'Consider running integration tests on top-3 matches before final selection',
+    'Monitor marketplace trends regularly as new agents launch frequently'
   ]
 
-  return { agent_card: agentCard, protocol_notes: protocolNotes, recommendations }
+  return {
+    query: input.query,
+    total_matches: discovered.length,
+    returned_count: result.length,
+    agents: result,
+    search_insights: insights,
+    recommendations
+  }
 }
 
-function formatAgentCardReport(input: AgentCardInput, result: AgentCardOutput): string {
+function formatDiscoveryReport(input: AgentDiscoveryInput, result: AgentDiscoveryOutput): string {
   const lines: string[] = []
-  const card = result.agent_card
-
-  lines.push('## A2A AgentCard Generator')
+  lines.push('## Agent Discovery Engine')
   lines.push('')
-  lines.push('**' + (input.agent_name || 'Unnamed Agent') + '** | Domain: ' + (input.agent_domain || 'general'))
+  lines.push('**Query:** ' + (input.query || 'General search') + ' | **Categories:** ' + (input.categories.join(', ') || 'All') + ' | **Sort:** ' + (input.sort_by || 'relevance'))
   lines.push('')
-  lines.push('### Agent Card (Google A2A Protocol)')
-  lines.push('')
-  lines.push('| Field | Value |')
-  lines.push('|-------|-------|')
-  lines.push('| Name | ' + card.name + ' |')
-  lines.push('| URL | ' + card.url + ' |')
-  lines.push('| Version | ' + card.version + ' |')
-  lines.push('| Protocol | A2A ' + card.a2a_compliance.protocol_version + ' |')
-  lines.push('| Streaming | ' + (card.capabilities.streaming ? 'Yes' : 'No') + ' |')
-  lines.push('| Push Notifications | ' + (card.capabilities.push_notifications ? 'Yes' : 'No') + ' |')
-  lines.push('| Auth Schemes | ' + card.authentication.schemes.join(', ') + ' |')
-  lines.push('| Transports | ' + card.a2a_compliance.supported_transports.join(', ') + ' |')
+  lines.push('**Found:** ' + result.total_matches + ' matches | **Showing:** ' + result.returned_count + ' agents')
   lines.push('')
 
-  lines.push('### Skills (' + card.skills.length + ')')
-  lines.push('| # | Skill | Rate Limit |')
-  lines.push('|---|-------|------------|')
-  card.skills.forEach((s, i) => {
-    lines.push('| ' + (i + 1) + ' | ' + s.name + ' | ' + s.rate_limit + ' |')
-  })
-  lines.push('')
+  if (result.agents.length > 0) {
+    lines.push('### Discovered Agents')
+    lines.push('| # | Agent | Category | Rating | Price/Call | Relevance |')
+    lines.push('|---|-------|----------|--------|------------|-----------|')
+    result.agents.forEach((a, i) => {
+      lines.push('| ' + (i + 1) + ' | ' + a.name + ' | ' + a.category + ' | ' + a.rating.toFixed(1) + ' | $' + a.price_per_call.toFixed(3) + ' | ' + a.relevance_score + '/100 |')
+    })
+    lines.push('')
 
-  lines.push('### Protocol Notes')
-  result.protocol_notes.forEach(n => lines.push('- ' + n))
+    lines.push('### Top Match Details')
+    const top = result.agents[0]
+    lines.push('**' + top.name + '** (ID: ' + top.id + ')')
+    lines.push('- Category: ' + top.category)
+    lines.push('- Capabilities: ' + top.capabilities.join(', '))
+    lines.push('- Rating: ' + top.rating.toFixed(1) + '/5.0 | Popularity: ' + top.popularity_score + '/100')
+    lines.push('- Price: $' + top.price_per_call.toFixed(3) + '/call')
+    lines.push('- Match reasons:')
+    top.match_reasons.forEach(r => lines.push('  - ' + r))
+    lines.push('')
+  }
+
+  lines.push('### Search Insights')
+  result.search_insights.forEach(s => lines.push('- ' + s))
   lines.push('')
 
   lines.push('### Recommendations')
@@ -502,268 +492,271 @@ function formatAgentCardReport(input: AgentCardInput, result: AgentCardOutput): 
   return lines.join('\n')
 }
 
-// ==================== TOOL 2: SERVICE LISTING CREATOR ====================
+// ==================== TOOL 2: CAPABILITY MATCHER ====================
 
-function createServiceListing(input: ServiceListingInput): ServiceListingOutput {
+function matchCapabilities(input: CapabilityMatcherInput): CapabilityMatcherOutput {
   const seed = computeSeed(input)
   const rng = makeRng(seed)
 
-  const basePrice = rng.nextFloat(0.01, 0.50)
-  const perCallPrice = rng.nextFloat(0.001, 0.05)
-  const freeTier = rng.next(10, 1000)
-  const volumeDiscount = rng.next(5, 30)
+  const weights = input.priority_weights ?? {}
+  const allCaps = [...input.required_capabilities, ...input.optional_capabilities]
 
-  const uptimeGuarantee = rng.nextFloat(99.0, 99.99)
-  const maxResponseTime = rng.next(100, 2000)
-
-  const listing = {
-    title: input.service_name,
-    category: input.service_category,
-    description: 'AI agent service: ' + input.service_name + ' in category: ' + input.service_category + '. Provides automated capabilities via A2A protocol with enterprise-grade reliability.',
-    tagline: 'Automated ' + input.service_category + ' agent service with SLA guarantees',
-    pricing: {
-      model: input.pricing_model,
-      base_price_usd: Math.round(basePrice * 100) / 100,
-      per_call_price_usd: Math.round(perCallPrice * 10000) / 10000,
-      free_tier_calls: freeTier,
-      volume_discount_pct: volumeDiscount
-    },
-    sla: {
-      uptime_guarantee_pct: Math.round(uptimeGuarantee * 100) / 100,
-      max_response_time_ms: maxResponseTime,
-      availability_window: '24/7',
-      penalty_for_breach: 'Service credits: 10% per 0.1% below uptime guarantee'
-    },
-    sample_outputs: input.sample_outputs,
-    tags: [
-      input.service_category.toLowerCase().replace(/\s+/g, '-'),
-      'ai-agent',
-      'a2a-protocol',
-      'automated',
-      input.pricing_model.toLowerCase().replace(/\s+/g, '-')
-    ],
-    ranking_signals: {
-      relevance_score: rng.next(60, 95),
-      quality_score: rng.next(55, 90),
-      popularity_score: rng.next(30, 80)
+  const computeMatch = (cap: string, isRequired: boolean): CapabilityMatch => {
+    if (input.agent_capabilities.includes(cap)) {
+      return {
+        capability: cap,
+        matched: true,
+        match_type: 'exact',
+        confidence: 1.0,
+        weight: weights[cap] ?? (isRequired ? 2.0 : 1.0),
+        weighted_score: weights[cap] ?? (isRequired ? 2.0 : 1.0)
+      }
+    }
+    // Check for partial match
+    const partialMatch = input.agent_capabilities.some(ac =>
+      ac.toLowerCase().includes(cap.toLowerCase()) || cap.toLowerCase().includes(ac.toLowerCase())
+    )
+    if (partialMatch) {
+      const conf = rng.nextFloat(0.4, 0.8)
+      return {
+        capability: cap,
+        matched: true,
+        match_type: 'partial',
+        confidence: parseFloat(conf.toFixed(2)),
+        weight: weights[cap] ?? (isRequired ? 2.0 : 1.0),
+        weighted_score: parseFloat((conf * (weights[cap] ?? (isRequired ? 2.0 : 1.0))).toFixed(2))
+      }
+    }
+    return {
+      capability: cap,
+      matched: false,
+      match_type: 'none',
+      confidence: 0,
+      weight: weights[cap] ?? (isRequired ? 2.0 : 1.0),
+      weighted_score: 0
     }
   }
 
-  const readiness: string[] = [
-    'Pricing model defined: ' + input.pricing_model,
-    'SLA targets set: ' + listing.sla.uptime_guarantee_pct + '% uptime, ' + maxResponseTime + 'ms max latency',
-    'Sample outputs provided: ' + input.sample_outputs.length + ' examples',
-    'Tags generated for marketplace discovery',
-    'Ranking signals initialized'
-  ]
+  const requiredMatches = input.required_capabilities.map(c => computeMatch(c, true))
+  const optionalMatches = input.optional_capabilities.map(c => computeMatch(c, false))
 
-  const tips: string[] = [
-    'Add 3-5 high-quality sample outputs to increase conversion by 40%',
-    'Include a free tier to attract initial users and build reputation',
-    'Set competitive pricing: research top 5 competitors in your category',
-    'Add video demo or interactive playground for complex capabilities',
-    'Respond to user reviews within 24 hours to boost ranking',
-    'Enable streaming output for real-time use cases'
-  ]
+  const missingRequired = requiredMatches.filter(m => !m.matched).map(m => m.capability)
+  const missingOptional = optionalMatches.filter(m => !m.matched).map(m => m.capability)
 
-  return { listing, marketplace_readiness: readiness, optimization_tips: tips }
+  const totalWeight = [...requiredMatches, ...optionalMatches].reduce((s, m) => s + m.weight, 0)
+  const totalWeightedScore = [...requiredMatches, ...optionalMatches].reduce((s, m) => s + m.weighted_score, 0)
+
+  const overallFit = totalWeight > 0 ? Math.round((totalWeightedScore / totalWeight) * 100) : 0
+  const coverage = allCaps.length > 0 ? Math.round(((allCaps.length - missingRequired.length - missingOptional.length) / allCaps.length) * 100) : 100
+
+  let grade: 'A' | 'B' | 'C' | 'D' | 'F' = 'F'
+  if (overallFit >= 90) grade = 'A'
+  else if (overallFit >= 75) grade = 'B'
+  else if (overallFit >= 60) grade = 'C'
+  else if (overallFit >= 40) grade = 'D'
+
+  let assessment = ''
+  if (grade === 'A') assessment = 'Excellent fit - agent meets nearly all requirements with high confidence'
+  else if (grade === 'B') assessment = 'Good fit - agent covers most requirements with minor gaps'
+  else if (grade === 'C') assessment = 'Moderate fit - agent meets core needs but has notable capability gaps'
+  else if (grade === 'D') assessment = 'Poor fit - agent lacks several critical capabilities'
+  else assessment = 'Insufficient fit - agent does not meet minimum requirements'
+
+  const recs: string[] = []
+  if (missingRequired.length > 0) {
+    recs.push('Critical: Missing required capabilities: ' + missingRequired.join(', '))
+  }
+  if (missingOptional.length > 0) {
+    recs.push('Consider: Missing optional capabilities: ' + missingOptional.join(', '))
+  }
+  if (grade === 'A' || grade === 'B') {
+    recs.push('Agent is a strong candidate - proceed with integration testing')
+  }
+  recs.push('Adjust priority_weights to reflect business-critical capabilities')
+  recs.push('Re-run matching after agent updates its capability set')
+
+  return {
+    overall_fit_score: overallFit,
+    fit_grade: grade,
+    required_matches: requiredMatches,
+    optional_matches: optionalMatches,
+    missing_required: missingRequired,
+    missing_optional: missingOptional,
+    coverage_pct: coverage,
+    assessment,
+    recommendations: recs
+  }
 }
 
-function formatServiceListingReport(input: ServiceListingInput, result: ServiceListingOutput): string {
+function formatCapabilityMatchReport(input: CapabilityMatcherInput, result: CapabilityMatcherOutput): string {
   const lines: string[] = []
-  const l = result.listing
-
-  lines.push('## Service Listing Creator')
+  lines.push('## Capability Matcher')
   lines.push('')
-  lines.push('**' + l.title + '** | Category: ' + l.category)
+  lines.push('**Required Caps:** ' + (input.required_capabilities.join(', ') || 'None') + ' | **Optional Caps:** ' + (input.optional_capabilities.join(', ') || 'None'))
   lines.push('')
-  lines.push('> ' + l.tagline)
+  lines.push('### Fit Score: ' + result.overall_fit_score + '/100 (Grade: ' + result.fit_grade + ')')
   lines.push('')
-
-  lines.push('### Pricing')
-  lines.push('| Field | Value |')
-  lines.push('|-------|-------|')
-  lines.push('| Model | ' + l.pricing.model + ' |')
-  lines.push('| Base Price | $' + l.pricing.base_price_usd.toFixed(2) + ' |')
-  lines.push('| Per-Call Price | $' + l.pricing.per_call_price_usd.toFixed(4) + ' |')
-  lines.push('| Free Tier | ' + l.pricing.free_tier_calls + ' calls |')
-  lines.push('| Volume Discount | ' + l.pricing.volume_discount_pct + '% |')
+  lines.push(result.assessment)
   lines.push('')
 
-  lines.push('### SLA')
-  lines.push('| Field | Value |')
-  lines.push('|-------|-------|')
-  lines.push('| Uptime Guarantee | ' + l.sla.uptime_guarantee_pct + '% |')
-  lines.push('| Max Response Time | ' + l.sla.max_response_time_ms + 'ms |')
-  lines.push('| Availability | ' + l.sla.availability_window + ' |')
-  lines.push('| Penalty | ' + l.sla.penalty_for_breach + ' |')
+  lines.push('### Required Capability Matches')
+  lines.push('| Capability | Match | Type | Confidence | Weight |')
+  lines.push('|------------|-------|------|------------|--------|')
+  result.required_matches.forEach(m => {
+    lines.push('| ' + m.capability + ' | ' + (m.matched ? 'Yes' : 'No') + ' | ' + m.match_type + ' | ' + m.confidence.toFixed(2) + ' | ' + m.weight.toFixed(1) + ' |')
+  })
   lines.push('')
 
-  lines.push('### Ranking Signals')
-  lines.push('| Signal | Score |')
-  lines.push('|--------|-------|')
-  lines.push('| Relevance | ' + l.ranking_signals.relevance_score + '/100 |')
-  lines.push('| Quality | ' + l.ranking_signals.quality_score + '/100 |')
-  lines.push('| Popularity | ' + l.ranking_signals.popularity_score + '/100 |')
+  if (result.optional_matches.length > 0) {
+    lines.push('### Optional Capability Matches')
+    lines.push('| Capability | Match | Type | Confidence | Weight |')
+    lines.push('|------------|-------|------|------------|--------|')
+    result.optional_matches.forEach(m => {
+      lines.push('| ' + m.capability + ' | ' + (m.matched ? 'Yes' : 'No') + ' | ' + m.match_type + ' | ' + m.confidence.toFixed(2) + ' | ' + m.weight.toFixed(1) + ' |')
+    })
+    lines.push('')
+  }
+
+  if (result.missing_required.length > 0) {
+    lines.push('### Missing Required')
+    result.missing_required.forEach(m => lines.push('- ' + m))
+    lines.push('')
+  }
+
+  if (result.missing_optional.length > 0) {
+    lines.push('### Missing Optional')
+    result.missing_optional.forEach(m => lines.push('- ' + m))
+    lines.push('')
+  }
+
+  lines.push('### Coverage: ' + result.coverage_pct + '%')
   lines.push('')
 
-  lines.push('### Tags')
-  lines.push(l.tags.map(t => '`' + t + '`').join('  '))
-  lines.push('')
-
-  lines.push('### Marketplace Readiness')
-  result.marketplace_readiness.forEach(r => lines.push('- ' + r))
-  lines.push('')
-
-  lines.push('### Optimization Tips')
-  result.optimization_tips.forEach(t => lines.push('- ' + t))
+  lines.push('### Recommendations')
+  result.recommendations.forEach(r => lines.push('- ' + r))
   lines.push('')
   lines.push(DISCLAIMER)
 
   return lines.join('\n')
 }
 
-// ==================== TOOL 3: PRICING CALCULATOR ====================
+// ==================== TOOL 3: PRICING COMPARISON ANALYST ====================
 
-function calculatePricing(input: PricingCalculatorInput): PricingCalculatorOutput {
+function analyzePricing(input: PricingComparisonInput): PricingComparisonOutput {
   const seed = computeSeed(input)
   const rng = makeRng(seed)
 
-  const computeCost = input.compute_cost_per_call
-  const valuePerCall = input.value_per_call
-  const targetMargin = input.target_margin
-  const competitorPrices = input.competitor_prices.length > 0 ? input.competitor_prices : [0.05, 0.10, 0.15, 0.20, 0.25]
+  const budget = input.budget_per_call ?? 1.0
+  const volume = input.expected_monthly_volume ?? 1000
+  const includeHidden = input.include_hidden_costs ?? true
 
-  const avgCompetitor = competitorPrices.reduce((a, b) => a + b, 0) / competitorPrices.length
-  const minCompetitor = Math.min(...competitorPrices)
-  const maxCompetitor = Math.max(...competitorPrices)
-
-  // Recommended price: balance between cost-plus and value-based
-  const costPlusPrice = computeCost / (1 - targetMargin / 100)
-  const valueBasedPrice = valuePerCall * 0.3  // capture 30% of value
-  const marketPrice = avgCompetitor
-
-  const recommendedPrice = Math.round(((costPlusPrice * 0.3 + valueBasedPrice * 0.4 + marketPrice * 0.3)) * 10000) / 10000
-  const priceMin = Math.round(Math.min(costPlusPrice * 0.9, minCompetitor * 0.8) * 10000) / 10000
-  const priceMax = Math.round(Math.max(valueBasedPrice * 1.2, maxCompetitor * 1.1) * 10000) / 10000
-
-  const actualMargin = Math.round(((recommendedPrice - computeCost) / recommendedPrice) * 10000) / 100
-
-  let positioning = 'market_rate'
-  if (recommendedPrice < minCompetitor * 0.8) positioning = 'budget'
-  else if (recommendedPrice > maxCompetitor * 1.2) positioning = 'premium'
-  else if (recommendedPrice < avgCompetitor * 0.9) positioning = 'competitive'
-
-  const tiers: PricingTier[] = [
-    {
-      tier_name: 'Starter',
-      price_per_call: Math.round(recommendedPrice * 0.8 * 10000) / 10000,
-      monthly_volume: 1000,
-      monthly_revenue: Math.round(recommendedPrice * 0.8 * 1000),
-      margin_pct: Math.round(((recommendedPrice * 0.8 - computeCost) / (recommendedPrice * 0.8)) * 100)
-    },
-    {
-      tier_name: 'Growth',
-      price_per_call: recommendedPrice,
-      monthly_volume: 10000,
-      monthly_revenue: Math.round(recommendedPrice * 10000),
-      margin_pct: actualMargin
-    },
-    {
-      tier_name: 'Enterprise',
-      price_per_call: Math.round(recommendedPrice * 1.3 * 10000) / 10000,
-      monthly_volume: 100000,
-      monthly_revenue: Math.round(recommendedPrice * 1.3 * 100000),
-      margin_pct: Math.round(((recommendedPrice * 1.3 - computeCost) / (recommendedPrice * 1.3)) * 100)
+  const analyses: AgentPricingAnalysis[] = input.agent_prices.map((ap, i) => {
+    const monthlyCost = ap.price_per_call * volume
+    const hiddenCostList: string[] = []
+    if (includeHidden) {
+      if (ap.pricing_model === 'per_token') hiddenCostList.push('Token overage charges for long inputs')
+      if (ap.pricing_model === 'tiered') hiddenCostList.push('Tier upgrade costs at volume thresholds')
+      if (rng.next(0, 1) === 1) hiddenCostList.push('API key management overhead')
+      if (rng.next(0, 2) === 1) hiddenCostList.push('Rate limiting throttling costs')
+      if (hiddenCostList.length === 0) hiddenCostList.push('No significant hidden costs detected')
     }
+
+    let costRating: 'excellent' | 'good' | 'fair' | 'expensive' = 'fair'
+    if (ap.price_per_call <= budget * 0.5) costRating = 'excellent'
+    else if (ap.price_per_call <= budget * 0.8) costRating = 'good'
+    else if (ap.price_per_call <= budget) costRating = 'fair'
+    else costRating = 'expensive'
+
+    const valueScore = clamp(Math.round(
+      (1 - ap.price_per_call / Math.max(budget, 0.01)) * 50 +
+      (costRating === 'excellent' ? 40 : costRating === 'good' ? 30 : costRating === 'fair' ? 15 : 5) +
+      rng.next(0, 10)
+    ), 0, 100)
+
+    return {
+      agent_id: ap.agent_id,
+      agent_name: ap.agent_name,
+      price_per_call: ap.price_per_call,
+      pricing_model: ap.pricing_model,
+      monthly_cost_at_volume: parseFloat(monthlyCost.toFixed(2)),
+      cost_rating: costRating,
+      hidden_costs: hiddenCostList,
+      value_score: valueScore
+    }
+  })
+
+  const prices = analyses.map(a => a.price_per_call).sort((a, b) => a - b)
+  const cheapest = analyses.reduce((min, a) => a.price_per_call < min.price_per_call ? a : min, analyses[0])
+  const mostExpensive = analyses.reduce((max, a) => a.price_per_call > max.price_per_call ? a : max, analyses[0])
+  const avg = prices.reduce((s, p) => s + p, 0) / prices.length
+  const median = prices.length % 2 === 0
+    ? (prices[prices.length / 2 - 1] + prices[prices.length / 2]) / 2
+    : prices[Math.floor(prices.length / 2)]
+
+  const withinBudget = analyses.filter(a => a.price_per_call <= budget).length
+  const budgetAssessment = withinBudget === analyses.length
+    ? 'All ' + analyses.length + ' agents are within your $' + budget.toFixed(2) + '/call budget'
+    : withinBudget + ' of ' + analyses.length + ' agents are within budget; ' + (analyses.length - withinBudget) + ' exceed $' + budget.toFixed(2) + '/call'
+
+  const tips: string[] = [
+    'Negotiate volume discounts at ' + (volume * 2) + '+ calls/month for 15-30% savings',
+    'Consider tiered pricing models for predictable costs at scale',
+    'Monitor token-based pricing carefully - costs can spike with complex inputs',
+    'Bundle multiple capabilities from one agent to reduce per-call overhead',
+    'Set up billing alerts at 80% of monthly budget to avoid surprises'
   ]
 
-  const conservativeMonthly = Math.round(tiers[0].monthly_revenue * 0.3)
-  const moderateMonthly = Math.round(tiers[1].monthly_revenue * 0.15)
-  const optimisticMonthly = Math.round(tiers[2].monthly_revenue * 0.05)
-
-  const strategy = positioning === 'premium'
-    ? 'Premium pricing: Position as high-value service with superior quality and support'
-    : positioning === 'budget'
-    ? 'Penetration pricing: Low entry price to capture market share, increase as reputation grows'
-    : positioning === 'competitive'
-    ? 'Competitive pricing: Slightly below market average to attract cost-conscious agents'
-    : 'Market-rate pricing: Aligned with industry standards, differentiate on quality'
-
-  const recommendations: string[] = [
-    'Start with competitive pricing and increase as reputation score grows',
-    'Offer volume discounts to attract high-frequency agent consumers',
-    'Monitor competitor prices weekly and adjust within 10% band',
-    'Consider value-based pricing for high-impact use cases (up to 50% of value delivered)',
-    'Implement dynamic pricing based on demand and compute costs',
-    'Bundle services for 15-25% premium over individual pricing'
+  const recs: string[] = [
+    'Best value: ' + analyses.reduce((best, a) => a.value_score > best.value_score ? a : best, analyses[0]).agent_name,
+    'Cheapest option: ' + cheapest.agent_name + ' at $' + cheapest.price_per_call.toFixed(3) + '/call',
+    'Consider total cost of ownership including hidden costs, not just per-call price',
+    'Run integration tests on top-2 pricing matches before committing',
+    'Re-evaluate pricing quarterly as marketplace competition drives prices down'
   ]
 
   return {
-    recommended_price_per_call: recommendedPrice,
-    price_range: { min: priceMin, max: priceMax },
-    target_margin_pct: targetMargin,
-    actual_margin_pct: actualMargin,
-    competitor_analysis: {
-      avg_competitor_price: Math.round(avgCompetitor * 10000) / 10000,
-      min_competitor_price: minCompetitor,
-      max_competitor_price: maxCompetitor,
-      price_positioning: positioning
-    },
-    tiers,
-    revenue_projections: {
-      conservative_monthly: conservativeMonthly,
-      moderate_monthly: moderateMonthly,
-      optimistic_monthly: optimisticMonthly
-    },
-    pricing_strategy: strategy,
-    recommendations
+    agents_analyzed: analyses.length,
+    cheapest: { agent_id: cheapest.agent_id, agent_name: cheapest.agent_name, price_per_call: cheapest.price_per_call },
+    most_expensive: { agent_id: mostExpensive.agent_id, agent_name: mostExpensive.agent_name, price_per_call: mostExpensive.price_per_call },
+    average_price: parseFloat(avg.toFixed(3)),
+    median_price: parseFloat(median.toFixed(3)),
+    agent_analyses: analyses,
+    budget_assessment: budgetAssessment,
+    cost_optimization_tips: tips,
+    recommendations: recs
   }
 }
 
-function formatPricingReport(input: PricingCalculatorInput, result: PricingCalculatorOutput): string {
+function formatPricingReport(input: PricingComparisonInput, result: PricingComparisonOutput): string {
   const lines: string[] = []
-
-  lines.push('## Pricing Calculator')
+  lines.push('## Pricing Comparison Analyst')
   lines.push('')
-  lines.push('**Service Type:** ' + (input.service_type || 'General Agent Service'))
-  lines.push('')
-  lines.push('### Recommended Pricing')
-  lines.push('| Field | Value |')
-  lines.push('|-------|-------|')
-  lines.push('| Price Per Call | $' + result.recommended_price_per_call.toFixed(4) + ' |')
-  lines.push('| Price Range | $' + result.price_range.min.toFixed(4) + ' - $' + result.price_range.max.toFixed(4) + ' |')
-  lines.push('| Target Margin | ' + result.target_margin_pct + '% |')
-  lines.push('| Actual Margin | ' + result.actual_margin_pct.toFixed(1) + '% |')
-  lines.push('| Positioning | ' + result.competitor_analysis.price_positioning + ' |')
+  lines.push('**Agents Compared:** ' + result.agents_analyzed + ' | **Budget:** $' + (input.budget_per_call ?? 1.0).toFixed(2) + '/call | **Volume:** ' + (input.expected_monthly_volume ?? 1000) + '/month')
   lines.push('')
 
-  lines.push('### Competitor Analysis')
-  lines.push('| Field | Value |')
-  lines.push('|-------|-------|')
-  lines.push('| Avg Competitor Price | $' + result.competitor_analysis.avg_competitor_price.toFixed(4) + ' |')
-  lines.push('| Min Competitor Price | $' + result.competitor_analysis.min_competitor_price.toFixed(4) + ' |')
-  lines.push('| Max Competitor Price | $' + result.competitor_analysis.max_competitor_price.toFixed(4) + ' |')
+  lines.push('### Price Summary')
+  lines.push('| Metric | Value |')
+  lines.push('|--------|-------|')
+  lines.push('| Cheapest | ' + result.cheapest.agent_name + ' at $' + result.cheapest.price_per_call.toFixed(3) + '/call |')
+  lines.push('| Most Expensive | ' + result.most_expensive.agent_name + ' at $' + result.most_expensive.price_per_call.toFixed(3) + '/call |')
+  lines.push('| Average | $' + result.average_price.toFixed(3) + '/call |')
+  lines.push('| Median | $' + result.median_price.toFixed(3) + '/call |')
   lines.push('')
 
-  lines.push('### Pricing Tiers')
-  lines.push('| Tier | Price/Call | Volume | Monthly Revenue | Margin |')
-  lines.push('|------|-----------|--------|-----------------|--------|')
-  result.tiers.forEach(t => {
-    lines.push('| ' + t.tier_name + ' | $' + t.price_per_call.toFixed(4) + ' | ' + t.monthly_volume.toLocaleString() + ' | $' + t.monthly_revenue.toLocaleString() + ' | ' + t.margin_pct + '% |')
+  lines.push('### Agent Pricing Analysis')
+  lines.push('| Agent | Price/Call | Model | Monthly Cost | Rating | Value Score |')
+  lines.push('|-------|------------|-------|--------------|--------|-------------|')
+  result.agent_analyses.forEach(a => {
+    lines.push('| ' + a.agent_name + ' | $' + a.price_per_call.toFixed(3) + ' | ' + a.pricing_model + ' | $' + a.monthly_cost_at_volume.toFixed(2) + ' | ' + a.cost_rating + ' | ' + a.value_score + '/100 |')
   })
   lines.push('')
 
-  lines.push('### Revenue Projections')
-  lines.push('| Scenario | Monthly Revenue |')
-  lines.push('|----------|-----------------|')
-  lines.push('| Conservative | $' + result.revenue_projections.conservative_monthly.toLocaleString() + ' |')
-  lines.push('| Moderate | $' + result.revenue_projections.moderate_monthly.toLocaleString() + ' |')
-  lines.push('| Optimistic | $' + result.revenue_projections.optimistic_monthly.toLocaleString() + ' |')
+  lines.push('### Budget Assessment')
+  lines.push(result.budget_assessment)
   lines.push('')
 
-  lines.push('### Strategy')
-  lines.push(result.pricing_strategy)
+  lines.push('### Cost Optimization Tips')
+  result.cost_optimization_tips.forEach(t => lines.push('- ' + t))
   lines.push('')
 
   lines.push('### Recommendations')
@@ -780,145 +773,131 @@ function scoreReputation(input: ReputationScorerInput): ReputationScorerOutput {
   const seed = computeSeed(input)
   const rng = makeRng(seed)
 
-  const totalTx = input.total_transactions
-  const avgRating = input.avg_rating
-  const completionRate = input.completion_rate_pct
-  const avgResponseMs = input.avg_response_ms
-
-  // Transaction volume score (0-100)
-  let volumeScore = clamp(Math.min(totalTx / 10, 100), 0, 100)
-  if (totalTx > 1000) volumeScore = clamp(volumeScore + 10, 0, 100)
-
-  // Rating score (0-100)
-  const ratingScore = clamp((avgRating / 5) * 100, 0, 100)
-
-  // Completion rate score (0-100)
-  const completionScore = clamp(completionRate, 0, 100)
-
-  // Response time score (0-100, lower is better)
-  let responseScore = clamp(100 - (avgResponseMs / 50), 0, 100)
-  if (avgResponseMs < 200) responseScore = clamp(responseScore + 10, 0, 100)
-
-  // Consistency bonus
-  const consistencyScore = clamp(rng.next(60, 95), 0, 100)
+  const disputeRate = input.dispute_rate_pct ?? rng.nextFloat(0, 5)
+  const isVerified = input.verified ?? rng.next(0, 1) === 1
 
   const factors: ReputationFactor[] = [
     {
-      factor: 'Transaction Volume',
-      score: Math.round(volumeScore),
-      weight: 0.20,
-      weighted_score: Math.round(volumeScore * 0.20),
-      assessment: totalTx > 500 ? 'High volume - established agent' : totalTx > 100 ? 'Growing volume' : 'New agent - building track record'
-    },
-    {
       factor: 'Average Rating',
-      score: Math.round(ratingScore),
+      score: clamp(input.avg_rating * 20, 0, 100),
       weight: 0.30,
-      weighted_score: Math.round(ratingScore * 0.30),
-      assessment: avgRating >= 4.5 ? 'Excellent ratings' : avgRating >= 4.0 ? 'Good ratings' : avgRating >= 3.0 ? 'Average ratings' : 'Needs improvement'
+      weighted_score: clamp(input.avg_rating * 20, 0, 100) * 0.30,
+      assessment: input.avg_rating >= 4.5 ? 'Excellent' : input.avg_rating >= 4.0 ? 'Good' : input.avg_rating >= 3.0 ? 'Average' : 'Below Average'
     },
     {
       factor: 'Completion Rate',
-      score: Math.round(completionScore),
+      score: clamp(input.completion_rate_pct, 0, 100),
       weight: 0.25,
-      weighted_score: Math.round(completionScore * 0.25),
-      assessment: completionRate >= 95 ? 'Near-perfect completion' : completionRate >= 85 ? 'Reliable completion' : completionRate >= 70 ? 'Moderate completion' : 'High failure rate - investigate'
+      weighted_score: clamp(input.completion_rate_pct, 0, 100) * 0.25,
+      assessment: input.completion_rate_pct >= 95 ? 'Excellent' : input.completion_rate_pct >= 85 ? 'Good' : input.completion_rate_pct >= 70 ? 'Average' : 'Below Average'
     },
     {
       factor: 'Response Time',
-      score: Math.round(responseScore),
-      weight: 0.15,
-      weighted_score: Math.round(responseScore * 0.15),
-      assessment: avgResponseMs < 200 ? 'Lightning fast' : avgResponseMs < 500 ? 'Fast response' : avgResponseMs < 1000 ? 'Acceptable' : 'Slow - may lose transactions'
+      score: clamp(Math.max(0, 100 - (input.avg_response_ms / 50)), 0, 100),
+      weight: 0.20,
+      weighted_score: clamp(Math.max(0, 100 - (input.avg_response_ms / 50)), 0, 100) * 0.20,
+      assessment: input.avg_response_ms <= 200 ? 'Fast' : input.avg_response_ms <= 500 ? 'Moderate' : input.avg_response_ms <= 1000 ? 'Slow' : 'Very Slow'
     },
     {
-      factor: 'Consistency',
-      score: Math.round(consistencyScore),
+      factor: 'Transaction Volume',
+      score: clamp(Math.min(input.total_transactions / 10, 100), 0, 100),
+      weight: 0.15,
+      weighted_score: clamp(Math.min(input.total_transactions / 10, 100), 0, 100) * 0.15,
+      assessment: input.total_transactions >= 1000 ? 'High Volume' : input.total_transactions >= 100 ? 'Moderate' : input.total_transactions >= 10 ? 'Low' : 'New'
+    },
+    {
+      factor: 'Dispute Rate',
+      score: clamp(Math.max(0, 100 - (disputeRate * 20)), 0, 100),
       weight: 0.10,
-      weighted_score: Math.round(consistencyScore * 0.10),
-      assessment: consistencyScore > 80 ? 'Highly consistent' : consistencyScore > 60 ? 'Moderately consistent' : 'Variable performance'
+      weighted_score: clamp(Math.max(0, 100 - (disputeRate * 20)), 0, 100) * 0.10,
+      assessment: disputeRate <= 1 ? 'Excellent' : disputeRate <= 3 ? 'Good' : disputeRate <= 5 ? 'Fair' : 'High Risk'
     }
   ]
 
-  const overallScore = Math.round(factors.reduce((sum, f) => sum + f.weighted_score, 0))
+  const overallScore = Math.round(factors.reduce((s, f) => s + f.weighted_score, 0))
 
-  let tier: ReputationScorerOutput['reputation_tier'] = 'new'
+  let tier: 'platinum' | 'gold' | 'silver' | 'bronze' | 'new' = 'new'
   if (overallScore >= 90) tier = 'platinum'
   else if (overallScore >= 75) tier = 'gold'
   else if (overallScore >= 60) tier = 'silver'
   else if (overallScore >= 40) tier = 'bronze'
 
-  const trustBadge = {
-    verified: totalTx > 50,
-    fast_responder: avgResponseMs < 300,
-    high_completion: completionRate >= 90,
-    top_rated: avgRating >= 4.5
+  const badges = {
+    verified: isVerified,
+    fast_responder: input.avg_response_ms <= 300,
+    high_completion: input.completion_rate_pct >= 90,
+    top_rated: input.avg_rating >= 4.5,
+    reliable_volume: input.total_transactions >= 100
   }
 
   const benefits: string[] = []
   if (tier === 'platinum') {
     benefits.push('Featured placement in marketplace search results')
-    benefits.push('Priority access to high-value transactions')
-    benefits.push('Reduced platform fees (1% vs standard 5%)')
-    benefits.push('Exclusive platinum badge on profile')
+    benefits.push('Priority support from marketplace team')
+    benefits.push('Eligible for enterprise partnership programs')
+    benefits.push('Reduced marketplace commission (5% vs standard 15%)')
   } else if (tier === 'gold') {
-    benefits.push('Boosted search ranking (2x visibility)')
-    benefits.push('Reduced platform fees (3% vs standard 5%)')
-    benefits.push('Gold badge on profile')
+    benefits.push('Boosted visibility in category listings')
+    benefits.push('Access to premium buyer network')
+    benefits.push('Reduced marketplace commission (10%)')
   } else if (tier === 'silver') {
-    benefits.push('Standard search ranking')
-    benefits.push('Silver badge on profile')
+    benefits.push('Standard marketplace visibility')
+    benefits.push('Eligible for seasonal promotions')
   } else {
-    benefits.push('Standard listing (improve metrics to unlock benefits)')
+    benefits.push('Basic marketplace listing')
+    benefits.push('Access to improvement resources')
   }
 
   const improvements: string[] = []
-  if (completionRate < 90) improvements.push('Improve completion rate to 90%+ (currently ' + completionRate + '%)')
-  if (avgRating < 4.0) improvements.push('Increase average rating to 4.0+ (currently ' + avgRating + ')')
-  if (avgResponseMs > 500) improvements.push('Reduce response time to under 500ms (currently ' + avgResponseMs + 'ms)')
-  if (totalTx < 100) improvements.push('Complete more transactions to build volume (currently ' + totalTx + ')')
+  if (input.avg_rating < 4.0) improvements.push('Improve rating through better output quality and user communication')
+  if (input.completion_rate_pct < 90) improvements.push('Reduce task failures by improving error handling')
+  if (input.avg_response_ms > 500) improvements.push('Optimize response time through caching or model selection')
+  if (input.total_transactions < 100) improvements.push('Build transaction history by promoting agent in relevant channels')
+  if (disputeRate > 3) improvements.push('Reduce disputes by setting clearer expectations and SLAs')
+  if (!isVerified) improvements.push('Complete identity verification to build trust')
+  if (improvements.length === 0) improvements.push('Maintain current performance - all metrics are strong')
 
-  const recommendations: string[] = [
-    'Respond to all transaction requests within 30 seconds to maintain fast responder status',
-    'Implement retry logic for failed tasks to improve completion rate',
-    'Request ratings from satisfied clients after each successful transaction',
-    'Maintain consistent service quality across all transaction types',
-    'Monitor reputation score weekly and address declining factors immediately'
+  const recs: string[] = [
+    'Aim for 4.5+ rating to achieve top_rated badge and boost search ranking',
+    'Keep dispute rate below 2% to maintain gold tier or above',
+    'Respond within 300ms to earn fast_responder badge',
+    'Complete 100+ transactions to unlock reliable_volume status',
+    'Re-score reputation monthly to track improvement progress'
   ]
 
   return {
     overall_reputation_score: overallScore,
     reputation_tier: tier,
     factors,
-    trust_badge: trustBadge,
+    trust_badges: badges,
     marketplace_benefits: benefits,
     improvement_areas: improvements,
-    recommendations
+    recommendations: recs
   }
 }
 
 function formatReputationReport(input: ReputationScorerInput, result: ReputationScorerOutput): string {
   const lines: string[] = []
-
   lines.push('## Reputation Scorer')
   lines.push('')
-  lines.push('**Agent ID:** ' + (input.agent_id || 'unknown') + ' | **Tier:** ' + result.reputation_tier.toUpperCase() + ' | **Score:** ' + result.overall_reputation_score + '/100')
+  lines.push('**Agent:** ' + (input.agent_name || input.agent_id) + ' | **Tier:** ' + result.reputation_tier.toUpperCase() + ' | **Score:** ' + result.overall_reputation_score + '/100')
   lines.push('')
 
   lines.push('### Trust Badges')
   lines.push('| Badge | Status |')
   lines.push('|-------|--------|')
-  lines.push('| Verified | ' + (result.trust_badge.verified ? 'YES' : 'NO') + ' |')
-  lines.push('| Fast Responder | ' + (result.trust_badge.fast_responder ? 'YES' : 'NO') + ' |')
-  lines.push('| High Completion | ' + (result.trust_badge.high_completion ? 'YES' : 'NO') + ' |')
-  lines.push('| Top Rated | ' + (result.trust_badge.top_rated ? 'YES' : 'NO') + ' |')
+  lines.push('| Verified | ' + (result.trust_badges.verified ? 'Yes' : 'No') + ' |')
+  lines.push('| Fast Responder | ' + (result.trust_badges.fast_responder ? 'Yes' : 'No') + ' |')
+  lines.push('| High Completion | ' + (result.trust_badges.high_completion ? 'Yes' : 'No') + ' |')
+  lines.push('| Top Rated | ' + (result.trust_badges.top_rated ? 'Yes' : 'No') + ' |')
+  lines.push('| Reliable Volume | ' + (result.trust_badges.reliable_volume ? 'Yes' : 'No') + ' |')
   lines.push('')
 
   lines.push('### Factor Breakdown')
   lines.push('| Factor | Score | Weight | Weighted | Assessment |')
   lines.push('|--------|-------|--------|----------|------------|')
   result.factors.forEach(f => {
-    lines.push('| ' + f.factor + ' | ' + f.score + '/100 | ' + (f.weight * 100) + '% | ' + f.weighted_score + ' | ' + f.assessment + ' |')
+    lines.push('| ' + f.factor + ' | ' + f.score.toFixed(0) + ' | ' + (f.weight * 100).toFixed(0) + '% | ' + f.weighted_score.toFixed(1) + ' | ' + f.assessment + ' |')
   })
   lines.push('')
 
@@ -926,11 +905,9 @@ function formatReputationReport(input: ReputationScorerInput, result: Reputation
   result.marketplace_benefits.forEach(b => lines.push('- ' + b))
   lines.push('')
 
-  if (result.improvement_areas.length > 0) {
-    lines.push('### Improvement Areas')
-    result.improvement_areas.forEach(i => lines.push('- ' + i))
-    lines.push('')
-  }
+  lines.push('### Improvement Areas')
+  result.improvement_areas.forEach(i => lines.push('- ' + i))
+  lines.push('')
 
   lines.push('### Recommendations')
   result.recommendations.forEach(r => lines.push('- ' + r))
@@ -940,301 +917,269 @@ function formatReputationReport(input: ReputationScorerInput, result: Reputation
   return lines.join('\n')
 }
 
-// ==================== TOOL 5: DISCOVERY OPTIMIZER ====================
+// ==================== TOOL 5: INTEGRATION TEST RUNNER ====================
 
-function optimizeDiscovery(input: DiscoveryOptimizerInput): DiscoveryOptimizerOutput {
+function runIntegrationTests(input: IntegrationTestInput): IntegrationTestOutput {
   const seed = computeSeed(input)
   const rng = makeRng(seed)
 
-  const capabilities = input.agent_capabilities.length > 0 ? input.agent_capabilities : ['general']
-  const categories = input.target_categories.length > 0 ? input.target_categories : ['general']
+  const timeout = input.timeout_ms ?? 5000
+  const retries = input.retry_count ?? 3
+  const caps = input.test_capabilities.length > 0 ? input.test_capabilities : ['connectivity', 'authentication', 'basic-response', 'error-handling', 'rate-limiting']
 
-  // Generate optimized tags
-  const baseTags = [...capabilities.map(c => c.toLowerCase().replace(/\s+/g, '-'))]
-  const categoryTags = categories.map(c => c.toLowerCase().replace(/\s+/g, '-'))
-  const extraTags = ['ai-agent', 'a2a-protocol', 'automated', 'api', 'agent-marketplace']
-  const allTags = [...new Set([...baseTags, ...categoryTags, ...extraTags])]
+  const results: IntegrationTestResult[] = caps.map((cap, i) => {
+    const roll = rng.next(1, 100)
+    let status: 'pass' | 'fail' | 'warning' | 'skipped' = 'pass'
+    let details = ''
+    let errorMsg: string | undefined
+    const responseTime = rng.next(50, 3000)
 
-  // Generate keywords
-  const keywordPool = [
-    ...capabilities.map(c => c.toLowerCase()),
-    ...categories.map(c => c.toLowerCase()),
-    'ai agent', 'automation', 'agent marketplace', 'a2a protocol',
-    'agent-to-agent', 'ai service', 'intelligent agent', 'llm agent',
-    'task automation', 'agent economy', 'multi-agent', 'agent hiring'
-  ]
+    if (cap === 'connectivity') {
+      if (roll <= 85) { status = 'pass'; details = 'Endpoint reachable in ' + responseTime + 'ms' }
+      else if (roll <= 95) { status = 'warning'; details = 'Slow connection: ' + responseTime + 'ms (threshold: ' + timeout + 'ms)' }
+      else { status = 'fail'; details = 'Connection timeout after ' + timeout + 'ms'; errorMsg = 'ETIMEDOUT: Could not reach ' + input.agent_endpoint }
+    } else if (cap === 'authentication') {
+      if (roll <= 80) { status = 'pass'; details = input.auth_method + ' authentication successful' }
+      else if (roll <= 90) { status = 'warning'; details = 'Auth succeeded but token refresh may be needed' }
+      else { status = 'fail'; details = 'Authentication failed with ' + input.auth_method; errorMsg = '401 Unauthorized: Invalid or expired credentials' }
+    } else if (cap === 'basic-response') {
+      if (roll <= 75) { status = 'pass'; details = 'Valid response received in ' + responseTime + 'ms' }
+      else if (roll <= 88) { status = 'warning'; details = 'Response valid but slow: ' + responseTime + 'ms' }
+      else { status = 'fail'; details = 'Invalid response format received'; errorMsg = 'Response schema validation failed' }
+    } else if (cap === 'error-handling') {
+      if (roll <= 70) { status = 'pass'; details = 'Graceful error handling for invalid inputs' }
+      else if (roll <= 85) { status = 'warning'; details = 'Errors handled but messages are not informative' }
+      else { status = 'fail'; details = 'Unhandled error or stack trace exposed'; errorMsg = '500 Internal Server Error on invalid input' }
+    } else if (cap === 'rate-limiting') {
+      if (roll <= 65) { status = 'pass'; details = 'Rate limit headers present and respected' }
+      else if (roll <= 80) { status = 'warning'; details = 'Rate limit detected but headers missing' }
+      else { status = 'fail'; details = 'No rate limiting detected - risk of throttling'; errorMsg = '429 Too Many Requests without Retry-After header' }
+    } else {
+      if (roll <= 60) { status = 'pass'; details = cap + ' capability verified' }
+      else if (roll <= 75) { status = 'warning'; details = cap + ' partially working' }
+      else if (roll <= 90) { status = 'fail'; details = cap + ' test failed'; errorMsg = 'Capability ' + cap + ' did not respond as expected' }
+      else { status = 'skipped'; details = cap + ' not available in this agent' }
+    }
 
-  const keywords: DiscoveryKeyword[] = keywordPool.map((kw, i) => {
-    const relevance = rng.next(50, 100)
-    const competitionLevels: Array<'low' | 'medium' | 'high'> = ['low', 'medium', 'high']
     return {
-      keyword: kw,
-      relevance_score: relevance,
-      competition_level: competitionLevels[i % 3],
-      recommended: relevance > 70
+      capability: cap,
+      status,
+      response_time_ms: responseTime,
+      details,
+      ...(errorMsg ? { error_message: errorMsg } : {})
     }
-  }).sort((a, b) => b.relevance_score - a.relevance_score)
+  })
 
-  // Calculate ranking score
-  const qualitySignals = input.quality_signals
-  const uptimeScore = qualitySignals.uptime_pct ? clamp(qualitySignals.uptime_pct, 0, 100) : rng.next(90, 99)
-  const ratingScore = qualitySignals.avg_rating ? clamp((qualitySignals.avg_rating / 5) * 100, 0, 100) : rng.next(70, 95)
-  const responseScore = qualitySignals.response_time_ms ? clamp(100 - (qualitySignals.response_time_ms / 30), 0, 100) : rng.next(60, 90)
-  const volumeScore = qualitySignals.transaction_count ? clamp(Math.min(qualitySignals.transaction_count / 5, 100), 0, 100) : rng.next(20, 60)
+  const passed = results.filter(r => r.status === 'pass').length
+  const failed = results.filter(r => r.status === 'fail').length
+  const warnings = results.filter(r => r.status === 'warning').length
+  const skipped = results.filter(r => r.status === 'skipped').length
+  const avgResponse = Math.round(results.reduce((s, r) => s + r.response_time_ms, 0) / results.length)
 
-  const rankingScore = Math.round(
-    uptimeScore * 0.25 + ratingScore * 0.30 + responseScore * 0.25 + volumeScore * 0.20
-  )
+  const compatScore = clamp(Math.round((passed / results.length) * 70 + (warnings / results.length) * 20 + (skipped / results.length) * 10), 0, 100)
 
-  const visibilityTips: string[] = [
-    'Use all 10 allowed tags with specific capability keywords',
-    'Include primary capability in the first 60 characters of description',
-    'Add 3-5 sample outputs to increase click-through rate by 35%',
-    'Update listing weekly to signal active maintenance to ranking algorithms',
-    'Cross-list in 2-3 related categories for broader discovery',
-    'Respond to all reviews within 24 hours for engagement boost'
-  ]
+  let readiness: 'production_ready' | 'needs_work' | 'not_ready' = 'not_ready'
+  if (compatScore >= 80 && failed === 0) readiness = 'production_ready'
+  else if (compatScore >= 50 && failed <= 1) readiness = 'needs_work'
 
-  const seoRecommendations: string[] = [
-    'Target long-tail keywords: "ai agent for [specific task]" has lower competition',
-    'Include protocol names (A2A, MCP) in description for technical discovery',
-    'Use structured data markup for agent capabilities in listing',
-    'Create a detailed "How It Works" section with step-by-step agent interaction flow',
-    'Link to documentation and API reference for credibility signals'
-  ]
-
-  const positioning = categories.length > 0
-    ? 'Primary: ' + categories[0] + ' | Positioned as specialized agent in ' + categories.slice(0, 3).join(', ')
-    : 'General-purpose agent | Broad marketplace positioning'
+  const recs: string[] = []
+  if (failed > 0) {
+    recs.push('Fix ' + failed + ' failing test(s) before production deployment')
+  }
+  if (warnings > 0) {
+    recs.push('Address ' + warnings + ' warning(s) to improve reliability')
+  }
+  if (avgResponse > 1000) {
+    recs.push('Optimize response time (current avg: ' + avgResponse + 'ms, target: <500ms)')
+  }
+  if (readiness === 'production_ready') {
+    recs.push('Agent is ready for production - proceed with monitoring setup')
+  }
+  recs.push('Re-run tests after any agent updates or configuration changes')
+  recs.push('Set up continuous integration testing for ongoing compatibility monitoring')
 
   return {
-    optimized_tags: allTags.slice(0, 10),
-    primary_category: categories[0],
-    secondary_categories: categories.slice(1, 4),
-    keywords: keywords.slice(0, 12),
-    ranking_score: rankingScore,
-    visibility_tips: visibilityTips,
-    seo_recommendations: seoRecommendations,
-    marketplace_positioning: positioning
+    agent_name: input.agent_name,
+    endpoint: input.agent_endpoint,
+    total_tests: results.length,
+    passed,
+    failed,
+    warnings,
+    skipped,
+    avg_response_time_ms: avgResponse,
+    test_results: results,
+    compatibility_score: compatScore,
+    readiness_level: readiness,
+    recommendations: recs
   }
 }
 
-function formatDiscoveryReport(input: DiscoveryOptimizerInput, result: DiscoveryOptimizerOutput): string {
+function formatIntegrationTestReport(input: IntegrationTestInput, result: IntegrationTestOutput): string {
   const lines: string[] = []
-
-  lines.push('## Discovery Optimizer')
+  lines.push('## Integration Test Runner')
   lines.push('')
-  lines.push('**Primary Category:** ' + result.primary_category + ' | **Ranking Score:** ' + result.ranking_score + '/100')
+  lines.push('**Agent:** ' + result.agent_name + ' | **Endpoint:** ' + result.endpoint + ' | **Auth:** ' + input.auth_method)
   lines.push('')
-
-  lines.push('### Optimized Tags')
-  lines.push(result.optimized_tags.map(t => '`' + t + '`').join('  '))
+  lines.push('### Results: ' + result.passed + ' passed, ' + result.failed + ' failed, ' + result.warnings + ' warnings, ' + result.skipped + ' skipped')
+  lines.push('**Compatibility Score:** ' + result.compatibility_score + '/100 | **Readiness:** ' + result.readiness_level.replace('_', ' ').toUpperCase() + ' | **Avg Response:** ' + result.avg_response_time_ms + 'ms')
   lines.push('')
 
-  if (result.secondary_categories.length > 0) {
-    lines.push('### Secondary Categories')
-    result.secondary_categories.forEach(c => lines.push('- ' + c))
+  lines.push('### Test Details')
+  lines.push('| # | Capability | Status | Response Time | Details |')
+  lines.push('|---|-----------|--------|---------------|---------|')
+  result.test_results.forEach((r, i) => {
+    lines.push('| ' + (i + 1) + ' | ' + r.capability + ' | ' + r.status.toUpperCase() + ' | ' + r.response_time_ms + 'ms | ' + r.details + ' |')
+  })
+  lines.push('')
+
+  const failures = result.test_results.filter(r => r.status === 'fail')
+  if (failures.length > 0) {
+    lines.push('### Failures')
+    failures.forEach(f => {
+      lines.push('- **' + f.capability + ':** ' + (f.error_message || f.details))
+    })
     lines.push('')
   }
 
-  lines.push('### Keywords (Top ' + result.keywords.length + ')')
-  lines.push('| Keyword | Relevance | Competition | Recommended |')
-  lines.push('|---------|-----------|-------------|-------------|')
-  result.keywords.forEach(k => {
-    lines.push('| ' + k.keyword + ' | ' + k.relevance_score + '/100 | ' + k.competition_level + ' | ' + (k.recommended ? 'YES' : 'NO') + ' |')
-  })
-  lines.push('')
-
-  lines.push('### Marketplace Positioning')
-  lines.push(result.marketplace_positioning)
-  lines.push('')
-
-  lines.push('### Visibility Tips')
-  result.visibility_tips.forEach(t => lines.push('- ' + t))
-  lines.push('')
-
-  lines.push('### SEO Recommendations')
-  result.seo_recommendations.forEach(r => lines.push('- ' + r))
+  lines.push('### Recommendations')
+  result.recommendations.forEach(r => lines.push('- ' + r))
   lines.push('')
   lines.push(DISCLAIMER)
 
   return lines.join('\n')
 }
 
-// ==================== TOOL 6: TRANSACTION ESCROW DESIGNER ====================
+// ==================== TOOL 6: AGENT COMPARISON MATRIX ====================
 
-function designEscrow(input: TransactionEscrowInput): TransactionEscrowOutput {
+function buildComparisonMatrix(input: ComparisonMatrixInput): ComparisonMatrixOutput {
   const seed = computeSeed(input)
   const rng = makeRng(seed)
 
-  const minAmount = input.amount_range_usd.min
-  const maxAmount = input.amount_range_usd.max
-  const avgAmount = (minAmount + maxAmount) / 2
+  const dimensions = input.dimensions ?? ['rating', 'price', 'response_time', 'capabilities', 'completion_rate', 'popularity']
+  const weights = input.weights ?? {
+    rating: 0.25,
+    price: 0.20,
+    response_time: 0.15,
+    capabilities: 0.15,
+    completion_rate: 0.15,
+    popularity: 0.10
+  }
 
-  // Determine hold duration based on trust level and amount
-  const trustMultiplier = input.trust_level === 'high' ? 0.5 : input.trust_level === 'medium' ? 1.0 : 2.0
-  const amountMultiplier = avgAmount < 1 ? 0.5 : avgAmount < 10 ? 1.0 : avgAmount < 100 ? 1.5 : 2.0
-  const baseHoldSeconds = rng.next(60, 300)
-  const holdSeconds = Math.round(baseHoldSeconds * trustMultiplier * amountMultiplier)
+  const dimScores: DimensionScore[] = dimensions.map(dim => {
+    const dimWeight = weights[dim] ?? (1 / dimensions.length)
 
-  const steps: EscrowStep[] = [
-    {
-      step_number: 1,
-      name: 'Initiate Transaction',
-      description: 'Client agent sends task request with payment to escrow contract',
-      actor: 'client_agent',
-      timeout_seconds: 30,
-      failure_action: 'Return payment to client agent'
-    },
-    {
-      step_number: 2,
-      name: 'Accept and Lock',
-      description: 'Provider agent accepts task and escrow locks payment',
-      actor: 'provider_agent',
-      timeout_seconds: 60,
-      failure_action: 'Release payment back to client agent'
-    },
-    {
-      step_number: 3,
-      name: 'Execute Task',
-      description: 'Provider agent performs the requested task/work',
-      actor: 'provider_agent',
-      timeout_seconds: holdSeconds,
-      failure_action: 'Trigger dispute resolution process'
-    },
-    {
-      step_number: 4,
-      name: 'Submit Result',
-      description: 'Provider agent submits task result to escrow for verification',
-      actor: 'provider_agent',
-      timeout_seconds: 30,
-      failure_action: 'Mark as incomplete, initiate refund process'
-    },
-    {
-      step_number: 5,
-      name: 'Verify and Release',
-      description: 'Client agent verifies result or auto-verify after timeout, escrow releases payment',
-      actor: 'client_agent',
-      timeout_seconds: 120,
-      failure_action: 'Auto-release if no dispute raised within verification window'
+    const getRawScore = (agent: typeof input.agents[0]): number => {
+      switch (dim) {
+        case 'rating': return agent.rating * 20
+        case 'price': return Math.max(0, 100 - agent.price_per_call * 40)
+        case 'response_time': return Math.max(0, 100 - agent.response_time_ms / 50)
+        case 'capabilities': return Math.min(100, agent.capabilities_count * 12.5)
+        case 'completion_rate': return agent.completion_rate_pct
+        case 'popularity': return agent.popularity_score
+        default: return rng.next(40, 90)
+      }
     }
-  ]
 
-  const disputeEvidence = [
-    'Task specification and requirements',
-    'Submitted result payload',
-    'Execution logs and timestamps',
-    'Communication history between agents',
-    'Quality metrics and validation results'
-  ]
+    const rawScores = input.agents.map(a => ({
+      agent_id: a.agent_id,
+      agent_name: a.agent_name,
+      raw_score: parseFloat(getRawScore(a).toFixed(1))
+    }))
 
-  const disputeTimeEstimate = input.settlement_time === 'instant'
-    ? '5 minutes'
-    : input.settlement_time === 'fast'
-    ? '1 hour'
-    : input.settlement_time === 'standard'
-    ? '24 hours'
-    : '48-72 hours'
+    const maxRaw = Math.max(...rawScores.map(s => s.raw_score), 1)
+    const normalized = rawScores.map(s => ({
+      ...s,
+      normalized_score: parseFloat(((s.raw_score / maxRaw) * 100).toFixed(1)),
+      weighted_score: parseFloat((((s.raw_score / maxRaw) * 100) * dimWeight).toFixed(1))
+    }))
 
-  const securityFeatures: string[] = [
-    'Multi-signature release requiring both agent confirmations',
-    'Time-locked transactions with automatic expiration',
-    'On-chain verification of task completion proofs',
-    'Rate limiting to prevent escrow flooding attacks',
-    'Audit trail of all escrow state transitions',
-    'Cold storage for high-value escrow amounts (>$100)'
-  ]
+    const best = normalized.reduce((b, s) => s.normalized_score > b.normalized_score ? s : b, normalized[0])
 
-  const protocolCompliance: string[] = [
-    'Compatible with A2A Task lifecycle states: submitted, working, completed, failed',
-    'Supports A2A TaskPushNotificationConfig for escrow status updates',
-    'Escrow state machine maps to A2A Task state transitions',
-    'Payment release triggers A2A artifact generation event'
-  ]
+    return {
+      dimension: dim,
+      weight: dimWeight,
+      scores: normalized,
+      best_agent_id: best.agent_id,
+      best_agent_name: best.agent_name
+    }
+  })
 
-  const recommendations: string[] = [
-    'Use instant settlement for trusted agent pairs with 100+ successful transactions',
-    'Implement partial release for multi-step tasks (e.g., 30% per milestone)',
-    'Set dispute resolution timeout based on task complexity and value',
-    'Add oracle verification for objective quality assessment',
-    'Consider insurance pool for high-value transactions (>$1000)',
-    'Implement reputation-weighted escrow: lower hold times for high-reputation agents'
+  // Compute overall ranking
+  const agentTotals = input.agents.map(a => {
+    let total = 0
+    dimScores.forEach(ds => {
+      const agentScore = ds.scores.find(s => s.agent_id === a.agent_id)
+      if (agentScore) total += agentScore.weighted_score
+    })
+    return {
+      agent_id: a.agent_id,
+      agent_name: a.agent_name,
+      total_score: parseFloat(total.toFixed(1))
+    }
+  })
+
+  agentTotals.sort((a, b) => b.total_score - a.total_score)
+  const ranking = agentTotals.map((a, i) => ({ rank: i + 1, ...a }))
+
+  const winner = ranking[0]
+
+  const tradeOffs: string[] = []
+  if (ranking.length >= 2) {
+    const first = ranking[0]
+    const second = ranking[1]
+    tradeOffs.push('Winner ' + first.agent_name + ' leads by ' + (first.total_score - second.total_score).toFixed(1) + ' points')
+  }
+  dimScores.forEach(ds => {
+    const best = ds.scores.reduce((b, s) => s.normalized_score > b.normalized_score ? s : b, ds.scores[0])
+    tradeOffs.push('Best in ' + ds.dimension.replace('_', ' ') + ': ' + best.agent_name + ' (' + best.normalized_score.toFixed(0) + '/100)')
+  })
+  tradeOffs.push('Price vs Quality trade-off: higher-rated agents may cost more per call')
+  tradeOffs.push('Speed vs Capabilities trade-off: faster agents may have fewer features')
+
+  const recs: string[] = [
+    'Top pick: ' + winner.agent_name + ' with overall score ' + winner.total_score.toFixed(1),
+    'Consider your specific dimension priorities when choosing - the matrix winner may not be best for every use case',
+    'Weight price higher if budget-constrained; weight quality higher for mission-critical tasks',
+    'Run integration tests on top-2 agents from the ranking',
+    'Re-run comparison when new agents enter the marketplace'
   ]
 
   return {
-    escrow_flow: {
-      name: input.transaction_type + ' Escrow Flow',
-      description: 'Secure payment escrow for ' + input.transaction_type + ' transactions between agents',
-      steps,
-      total_estimated_time: Math.round(steps.reduce((s, step) => s + step.timeout_seconds, 0) / 60) + ' minutes'
-    },
-    payment_hold: {
-      hold_duration_seconds: holdSeconds,
-      release_trigger: 'Client verification or auto-release after timeout',
-      partial_release_supported: avgAmount > 5,
-      refund_policy: 'Full refund if provider fails to deliver within timeout period'
-    },
-    dispute_handling: {
-      resolution_method: input.dispute_resolution,
-      arbitrator: input.dispute_resolution === 'automated'
-        ? 'Smart contract oracle with predefined rules'
-        : input.dispute_resolution === 'community'
-        ? 'Elected panel of top-reputation agents'
-        : 'Designated third-party arbitration agent',
-      evidence_required: disputeEvidence,
-      resolution_time_estimate: disputeTimeEstimate,
-      penalty_for_false_claim: '10% of disputed amount deducted from reputation score'
-    },
-    security_features: securityFeatures,
-    protocol_compliance: protocolCompliance,
-    recommendations
+    agents_compared: input.agents.length,
+    dimensions_analyzed: dimensions.length,
+    dimension_scores: dimScores,
+    overall_ranking: ranking,
+    winner: { agent_id: winner.agent_id, agent_name: winner.agent_name, total_score: winner.total_score },
+    trade_offs: tradeOffs,
+    recommendations: recs
   }
 }
 
-function formatEscrowReport(input: TransactionEscrowInput, result: TransactionEscrowOutput): string {
+function formatComparisonMatrixReport(input: ComparisonMatrixInput, result: ComparisonMatrixOutput): string {
   const lines: string[] = []
+  lines.push('## Agent Comparison Matrix')
+  lines.push('')
+  lines.push('**Agents:** ' + result.agents_compared + ' | **Dimensions:** ' + result.dimensions_analyzed + ' | **Winner:** ' + result.winner.agent_name + ' (' + result.winner.total_score.toFixed(1) + ' pts)')
+  lines.push('')
 
-  lines.push('## Transaction Escrow Designer')
-  lines.push('')
-  lines.push('**Transaction Type:** ' + (input.transaction_type || 'general') + ' | **Amount Range:** $' + input.amount_range_usd.min + ' - $' + input.amount_range_usd.max + ' | **Trust Level:** ' + (input.trust_level || 'medium'))
-  lines.push('')
-
-  lines.push('### Escrow Flow: ' + result.escrow_flow.name)
-  lines.push(result.escrow_flow.description)
-  lines.push('')
-  lines.push('| Step | Name | Actor | Timeout | Failure Action |')
-  lines.push('|------|------|-------|---------|----------------|')
-  result.escrow_flow.steps.forEach(s => {
-    lines.push('| ' + s.step_number + ' | ' + s.name + ' | ' + s.actor + ' | ' + s.timeout_seconds + 's | ' + s.failure_action + ' |')
+  lines.push('### Overall Ranking')
+  lines.push('| Rank | Agent | Total Score |')
+  lines.push('|------|-------|-------------|')
+  result.overall_ranking.forEach(r => {
+    lines.push('| ' + r.rank + ' | ' + r.agent_name + ' | ' + r.total_score.toFixed(1) + ' |')
   })
   lines.push('')
-  lines.push('**Total Estimated Time:** ' + result.escrow_flow.total_estimated_time)
+
+  lines.push('### Dimension Winners')
+  lines.push('| Dimension | Winner | Best In |')
+  lines.push('|-----------|--------|---------|')
+  result.dimension_scores.forEach(ds => {
+    lines.push('| ' + ds.dimension.replace('_', ' ') + ' (' + (ds.weight * 100).toFixed(0) + '%) | ' + ds.best_agent_name + ' | Yes |')
+  })
   lines.push('')
 
-  lines.push('### Payment Hold')
-  lines.push('| Field | Value |')
-  lines.push('|-------|-------|')
-  lines.push('| Hold Duration | ' + result.payment_hold.hold_duration_seconds + ' seconds |')
-  lines.push('| Release Trigger | ' + result.payment_hold.release_trigger + ' |')
-  lines.push('| Partial Release | ' + (result.payment_hold.partial_release_supported ? 'Yes' : 'No') + ' |')
-  lines.push('| Refund Policy | ' + result.payment_hold.refund_policy + ' |')
-  lines.push('')
-
-  lines.push('### Dispute Handling')
-  lines.push('| Field | Value |')
-  lines.push('|-------|-------|')
-  lines.push('| Resolution Method | ' + result.dispute_handling.resolution_method + ' |')
-  lines.push('| Arbitrator | ' + result.dispute_handling.arbitrator + ' |')
-  lines.push('| Resolution Time | ' + result.dispute_handling.resolution_time_estimate + ' |')
-  lines.push('| False Claim Penalty | ' + result.dispute_handling.penalty_for_false_claim + ' |')
-  lines.push('')
-
-  lines.push('### Security Features')
-  result.security_features.forEach(f => lines.push('- ' + f))
-  lines.push('')
-
-  lines.push('### Protocol Compliance')
-  result.protocol_compliance.forEach(c => lines.push('- ' + c))
+  lines.push('### Trade-offs')
+  result.trade_offs.forEach(t => lines.push('- ' + t))
   lines.push('')
 
   lines.push('### Recommendations')
@@ -1245,181 +1190,163 @@ function formatEscrowReport(input: TransactionEscrowInput, result: TransactionEs
   return lines.join('\n')
 }
 
-// ==================== TOOL 7: SLA MONITOR CONFIG ====================
+// ==================== TOOL 7: MARKETPLACE TREND ANALYZER ====================
 
-function configSlaMonitor(input: SlaMonitorInput): SlaMonitorOutput {
+function analyzeTrends(input: TrendAnalysisInput): TrendAnalysisOutput {
   const seed = computeSeed(input)
   const rng = makeRng(seed)
 
-  const targetUptime = input.target_uptime_pct
-  const maxLatency = input.max_latency_ms
-  const accuracyThreshold = input.accuracy_threshold
+  const months = input.time_range_months
+  const granularity = input.granularity ?? 'monthly'
+  const categories = input.categories.length > 0 ? input.categories : ['data-analysis', 'code-generation', 'creative', 'research', 'automation']
 
-  const thresholds: SlaThreshold[] = [
-    {
-      metric: 'uptime',
-      warning_threshold: Math.round((targetUptime - 0.5) * 100) / 100,
-      critical_threshold: Math.round((targetUptime - 1.0) * 100) / 100,
-      measurement_window: '30 days',
-      unit: 'percent'
-    },
-    {
-      metric: 'latency_p95',
-      warning_threshold: Math.round(maxLatency * 0.8),
-      critical_threshold: maxLatency,
-      measurement_window: '5 minutes',
-      unit: 'milliseconds'
-    },
-    {
-      metric: 'latency_p99',
-      warning_threshold: Math.round(maxLatency * 1.2),
-      critical_threshold: Math.round(maxLatency * 1.5),
-      measurement_window: '5 minutes',
-      unit: 'milliseconds'
-    },
-    {
-      metric: 'accuracy',
-      warning_threshold: Math.round((accuracyThreshold - 3) * 100) / 100,
-      critical_threshold: Math.round((accuracyThreshold - 5) * 100) / 100,
-      measurement_window: '1 hour',
-      unit: 'percent'
-    },
-    {
-      metric: 'error_rate',
-      warning_threshold: 2,
-      critical_threshold: 5,
-      measurement_window: '5 minutes',
-      unit: 'percent'
+  const trends: CategoryTrend[] = categories.map((cat, i) => {
+    const growthRate = rng.nextFloat(-15, 45)
+    const startCount = rng.next(10, 100)
+    const endCount = Math.max(5, Math.round(startCount * (1 + growthRate / 100)))
+
+    const priceTrend: 'rising' | 'stable' | 'falling' =
+      growthRate > 20 ? 'rising' : growthRate > -5 ? 'stable' : 'falling'
+
+    const demand: 'high' | 'medium' | 'low' =
+      growthRate > 25 ? 'high' : growthRate > 5 ? 'medium' : 'low'
+
+    let maturity: 'emerging' | 'growing' | 'mature' | 'declining' = 'growing'
+    if (growthRate > 30 && endCount < 50) maturity = 'emerging'
+    else if (growthRate > 10) maturity = 'growing'
+    else if (growthRate > -5) maturity = 'mature'
+    else maturity = 'declining'
+
+    return {
+      category: cat,
+      growth_rate_pct: parseFloat(growthRate.toFixed(1)),
+      agent_count_start: startCount,
+      agent_count_end: endCount,
+      avg_price_trend: priceTrend,
+      demand_level: demand,
+      maturity_stage: maturity
     }
-  ]
+  })
 
-  const penalties: SlaPenalty[] = [
-    {
-      breach_severity: 'minor',
-      credit_pct: 5,
-      max_credit_pct: 10,
-      auto_trigger: true
-    },
-    {
-      breach_severity: 'moderate',
-      credit_pct: 15,
-      max_credit_pct: 30,
-      auto_trigger: true
-    },
-    {
-      breach_severity: 'severe',
-      credit_pct: 30,
-      max_credit_pct: 50,
-      auto_trigger: false
-    },
-    {
-      breach_severity: 'critical',
-      credit_pct: 50,
-      max_credit_pct: 100,
-      auto_trigger: false
+  const insights: TrendInsight[] = []
+  for (let idx = 0; idx < trends.length; idx++) {
+    const t = trends[idx]
+    if (t.growth_rate_pct > 30) {
+      const surgeInsight: TrendInsight = {
+        insight: t.category + ' is surging with ' + t.growth_rate_pct + '% growth - high opportunity for new entrants',
+        impact: 'high',
+        category: t.category,
+        action_required: true
+      }
+      insights.push(surgeInsight)
     }
-  ]
-
-  const minutesPerMonth = 30 * 24 * 60
-  const allowedDowntimeMinutes = Math.round((1 - targetUptime / 100) * minutesPerMonth * 100) / 100
-
-  const monitorConfig = {
-    name: input.service_type + ' SLA Monitor',
-    service_type: input.service_type,
-    thresholds,
-    penalties,
-    monitoring_interval_seconds: rng.next(10, 60),
-    alert_channels: ['webhook', 'email', 'dashboard'],
-    escalation_policy: 'L1: Auto-alert -> L2: On-call after 5min -> L3: Management after 15min'
+    if (t.growth_rate_pct < -5) {
+      const declineInsight: TrendInsight = {
+        insight: t.category + ' is declining (' + t.growth_rate_pct + '%) - consider pivoting to adjacent categories',
+        impact: 'high',
+        category: t.category,
+        action_required: true
+      }
+      insights.push(declineInsight)
+    }
+    if (t.avg_price_trend === 'falling' && t.demand_level === 'high') {
+      const priceInsight: TrendInsight = {
+        insight: t.category + ' prices falling despite high demand - buyers market, negotiate aggressively',
+        impact: 'medium',
+        category: t.category,
+        action_required: false
+      }
+      insights.push(priceInsight)
+    }
+    if (t.maturity_stage === 'emerging') {
+      const emergingInsight: TrendInsight = {
+        insight: t.category + ' is an emerging category - early mover advantage available',
+        impact: 'high',
+        category: t.category,
+        action_required: true
+      }
+      insights.push(emergingInsight)
+    }
   }
 
-  const dashboardMetrics: string[] = [
-    'Current uptime (rolling 30 days)',
-    'P95 and P99 response latency',
-    'Error rate (5-min and 1-hour windows)',
-    'Accuracy score (rolling average)',
-    'Active alerts and their severity',
-    'SLA credit accrual this billing period',
-    'Transaction volume and success rate',
-    'Geographic latency distribution'
+  const emerging = trends.filter(t => t.maturity_stage === 'emerging' || t.growth_rate_pct > 25).map(t => t.category)
+  const declining = trends.filter(t => t.maturity_stage === 'declining' || t.growth_rate_pct < -5).map(t => t.category)
+  const overallGrowth = parseFloat((trends.reduce((s, t) => s + t.growth_rate_pct, 0) / trends.length).toFixed(1))
+
+  const forecast: string[] = [
+    'Market expected to grow ' + (overallGrowth > 0 ? overallGrowth.toFixed(1) : '0') + '% over next ' + months + ' months',
+    emerging.length > 0 ? 'Watch emerging categories: ' + emerging.join(', ') : 'No new emerging categories detected',
+    declining.length > 0 ? 'Declining categories to monitor: ' + declining.join(', ') : 'No declining categories detected',
+    'Price competition intensifying in high-growth segments',
+    'Expect consolidation in mature categories with 50+ agents'
   ]
 
-  const recommendations: string[] = [
-    'Set up synthetic monitoring probes from 3+ geographic regions',
-    'Implement circuit breaker pattern to prevent cascading failures',
-    'Use canary deployments to catch SLA regressions before full rollout',
-    'Configure alert fatigue prevention: max 5 alerts per hour per metric',
-    'Review SLA thresholds monthly based on actual performance data',
-    'Implement automatic failover for critical path services',
-    'Set up SLA reporting dashboard for client-facing transparency'
+  const recs: string[] = [
+    'Invest in high-growth categories early for best positioning',
+    'Diversify across multiple categories to reduce risk',
+    'Monitor emerging categories monthly for new opportunities',
+    'Consider exiting declining categories before saturation',
+    'Track pricing trends to optimize procurement timing'
   ]
 
   return {
-    monitor_config: monitorConfig,
-    uptime_calculation: {
-      formula: 'Uptime = (Total Minutes - Downtime Minutes) / Total Minutes * 100',
-      measurement_method: 'Synthetic probes every ' + monitorConfig.monitoring_interval_seconds + 's from multiple regions',
-      excluded_downtime: ['Scheduled maintenance windows (max 4hrs/month)', 'Force majeure events', 'Client-side connectivity issues'],
-      target_minutes_per_month: minutesPerMonth,
-      allowed_downtime_minutes: allowedDowntimeMinutes
-    },
-    reporting: {
-      dashboard_metrics: dashboardMetrics,
-      report_frequency: 'Real-time dashboard + weekly summary + monthly SLA report',
-      stakeholder_notifications: ['Immediate for critical breaches', 'Daily digest for warnings', 'Monthly SLA compliance report']
-    },
-    recommendations
+    time_range_months: months,
+    granularity,
+    categories_analyzed: categories.length,
+    category_trends: trends,
+    insights,
+    emerging_categories: emerging,
+    declining_categories: declining,
+    overall_market_growth_pct: overallGrowth,
+    forecast,
+    recommendations: recs
   }
 }
 
-function formatSlaMonitorReport(input: SlaMonitorInput, result: SlaMonitorOutput): string {
+function formatTrendReport(input: TrendAnalysisInput, result: TrendAnalysisOutput): string {
   const lines: string[] = []
-
-  lines.push('## SLA Monitor Configuration')
+  lines.push('## Marketplace Trend Analyzer')
   lines.push('')
-  lines.push('**Service Type:** ' + (input.service_type || 'General Agent Service') + ' | **Target Uptime:** ' + input.target_uptime_pct + '% | **Max Latency:** ' + input.max_latency_ms + 'ms')
-  lines.push('')
-
-  lines.push('### Monitor Config')
-  lines.push('| Field | Value |')
-  lines.push('|-------|-------|')
-  lines.push('| Name | ' + result.monitor_config.name + ' |')
-  lines.push('| Check Interval | ' + result.monitor_config.monitoring_interval_seconds + ' seconds |')
-  lines.push('| Alert Channels | ' + result.monitor_config.alert_channels.join(', ') + ' |')
-  lines.push('| Escalation | ' + result.monitor_config.escalation_policy + ' |')
+  lines.push('**Time Range:** ' + result.time_range_months + ' months | **Granularity:** ' + result.granularity + ' | **Categories:** ' + result.categories_analyzed)
+  lines.push('**Overall Market Growth:** +' + result.overall_market_growth_pct + '%')
   lines.push('')
 
-  lines.push('### Thresholds')
-  lines.push('| Metric | Warning | Critical | Window | Unit |')
-  lines.push('|--------|---------|----------|--------|------|')
-  result.monitor_config.thresholds.forEach(t => {
-    lines.push('| ' + t.metric + ' | ' + t.warning_threshold + ' | ' + t.critical_threshold + ' | ' + t.measurement_window + ' | ' + t.unit + ' |')
+  lines.push('### Category Trends')
+  lines.push('| Category | Growth % | Start Count | End Count | Price Trend | Demand | Maturity |')
+  lines.push('|----------|----------|-------------|-----------|-------------|--------|----------|')
+  result.category_trends.forEach(t => {
+    lines.push('| ' + t.category + ' | ' + t.growth_rate_pct + '% | ' + t.agent_count_start + ' | ' + t.agent_count_end + ' | ' + t.avg_price_trend + ' | ' + t.demand_level + ' | ' + t.maturity_stage + ' |')
   })
   lines.push('')
 
-  lines.push('### Penalties')
-  lines.push('| Severity | Credit % | Max Credit % | Auto Trigger |')
-  lines.push('|----------|----------|--------------|--------------|')
-  result.monitor_config.penalties.forEach(p => {
-    lines.push('| ' + p.breach_severity + ' | ' + p.credit_pct + '% | ' + p.max_credit_pct + '% | ' + (p.auto_trigger ? 'Yes' : 'No') + ' |')
-  })
+  if (result.insights.length > 0) {
+    lines.push('### Key Insights')
+    lines.push('| Insight | Impact | Category | Action Needed |')
+    lines.push('|---------|--------|----------|---------------|')
+    result.insights.forEach(ins => {
+      lines.push('| ' + ins.insight + ' | ' + ins.impact + ' | ' + ins.category + ' | ' + (ins.action_required ? 'Yes' : 'No') + ' |')
+    })
+    lines.push('')
+  }
+
+  lines.push('### Emerging Categories')
+  if (result.emerging_categories.length > 0) {
+    result.emerging_categories.forEach(c => lines.push('- ' + c))
+  } else {
+    lines.push('- None detected')
+  }
   lines.push('')
 
-  lines.push('### Uptime Calculation')
-  lines.push('| Field | Value |')
-  lines.push('|-------|-------|')
-  lines.push('| Formula | ' + result.uptime_calculation.formula + ' |')
-  lines.push('| Measurement | ' + result.uptime_calculation.measurement_method + ' |')
-  lines.push('| Monthly Minutes | ' + result.uptime_calculation.target_minutes_per_month.toLocaleString() + ' |')
-  lines.push('| Allowed Downtime | ' + result.uptime_calculation.allowed_downtime_minutes + ' minutes |')
+  lines.push('### Declining Categories')
+  if (result.declining_categories.length > 0) {
+    result.declining_categories.forEach(c => lines.push('- ' + c))
+  } else {
+    lines.push('- None detected')
+  }
   lines.push('')
 
-  lines.push('### Excluded Downtime')
-  result.uptime_calculation.excluded_downtime.forEach(e => lines.push('- ' + e))
-  lines.push('')
-
-  lines.push('### Dashboard Metrics')
-  result.reporting.dashboard_metrics.forEach(m => lines.push('- ' + m))
+  lines.push('### Forecast')
+  result.forecast.forEach(f => lines.push('- ' + f))
   lines.push('')
 
   lines.push('### Recommendations')
@@ -1430,152 +1357,155 @@ function formatSlaMonitorReport(input: SlaMonitorInput, result: SlaMonitorOutput
   return lines.join('\n')
 }
 
-// ==================== TOOL 8: CROSS-AGENT PROTOCOL ADAPTER ====================
+// ==================== TOOL 8: AGENT RECOMMENDATION ENGINE ====================
 
-function designProtocolAdapter(input: ProtocolAdapterInput): ProtocolAdapterOutput {
+function generateRecommendations(input: RecommendationInput): RecommendationOutput {
   const seed = computeSeed(input)
   const rng = makeRng(seed)
 
-  const sourceProto = input.source_protocol.toLowerCase()
-  const targetProto = input.target_protocol.toLowerCase()
+  const priorities = input.priority_factors ?? ['quality', 'price', 'reliability', 'speed']
+  const budget = input.budget_per_call ?? 1.0
+  const minRating = input.min_rating ?? 3.0
 
-  // Define message mappings based on protocol pair
-  const commonMappings: ProtocolMapping[] = [
-    { source_field: 'task_id', target_field: 'id', transformation: 'Direct mapping', required: true },
-    { source_field: 'method', target_field: 'target_method', transformation: 'Map method names via lookup table', required: true },
-    { source_field: 'params', target_field: 'parameters', transformation: 'Restructure nested params', required: true },
-    { source_field: 'timestamp', target_field: 'created_at', transformation: 'ISO 8601 format conversion', required: false },
-    { source_field: 'agent_id', target_field: 'sender.id', transformation: 'Flatten to nested structure', required: true },
-    { source_field: 'correlation_id', target_field: 'trace_id', transformation: 'Rename field', required: false },
-    { source_field: 'status', target_field: 'state', transformation: 'Map status codes via enum lookup', required: true },
-    { source_field: 'result', target_field: 'output', transformation: 'Wrap in result envelope', required: true },
-    { source_field: 'error', target_field: 'error_info', transformation: 'Restructure error object', required: false },
-    { source_field: 'metadata', target_field: 'extensions', transformation: 'Move to extensions map', required: false }
+  const recommendations: AgentRecommendation[] = input.candidate_agents
+    .filter(a => a.rating >= minRating && a.price_per_call <= budget * 1.2)
+    .map(agent => {
+      const capFit = input.required_capabilities.length > 0
+        ? Math.round((input.required_capabilities.filter(c => agent.capabilities.includes(c)).length / input.required_capabilities.length) * 100)
+        : 80
+
+      const priceScore = clamp(Math.round((1 - agent.price_per_call / budget) * 100), 0, 100)
+      const qualityScore = Math.round(agent.rating * 20)
+      const speedScore = clamp(Math.round(Math.max(0, 100 - agent.avg_response_ms / 50)), 0, 100)
+      const reliabilityScore = Math.round(agent.completion_rate_pct)
+
+      const overall = clamp(Math.round(
+        capFit * 0.30 +
+        priceScore * (priorities.includes('price') ? 0.25 : 0.15) +
+        qualityScore * (priorities.includes('quality') ? 0.25 : 0.15) +
+        speedScore * (priorities.includes('speed') ? 0.15 : 0.10) +
+        reliabilityScore * (priorities.includes('reliability') ? 0.15 : 0.10)
+      ), 0, 100)
+
+      const pros: string[] = []
+      const cons: string[] = []
+
+      if (agent.rating >= 4.5) pros.push('Excellent rating: ' + agent.rating + '/5.0')
+      if (agent.price_per_call <= budget * 0.5) pros.push('Very affordable at $' + agent.price_per_call.toFixed(3) + '/call')
+      if (agent.avg_response_ms <= 200) pros.push('Fast response: ' + agent.avg_response_ms + 'ms')
+      if (agent.completion_rate_pct >= 95) pros.push('High completion rate: ' + agent.completion_rate_pct + '%')
+      if (capFit >= 80) pros.push('Strong capability fit: ' + capFit + '%')
+      if (agent.capabilities.length >= 5) pros.push('Versatile: ' + agent.capabilities.length + ' capabilities')
+
+      if (agent.rating < 4.0) cons.push('Below-average rating: ' + agent.rating + '/5.0')
+      if (agent.price_per_call > budget) cons.push('Over budget: $' + agent.price_per_call.toFixed(3) + '/call')
+      if (agent.avg_response_ms > 1000) cons.push('Slow response: ' + agent.avg_response_ms + 'ms')
+      if (agent.completion_rate_pct < 85) cons.push('Low completion rate: ' + agent.completion_rate_pct + '%')
+      if (capFit < 50) cons.push('Poor capability fit: ' + capFit + '%')
+
+      if (pros.length === 0) pros.push('Meets basic requirements')
+      if (cons.length === 0) cons.push('No significant drawbacks detected')
+
+      let bestFor = 'General purpose use'
+      if (priorities[0] === 'price' && agent.price_per_call <= budget * 0.5) bestFor = 'Budget-conscious deployments'
+      else if (priorities[0] === 'quality' && agent.rating >= 4.5) bestFor = 'Quality-critical applications'
+      else if (priorities[0] === 'speed' && agent.avg_response_ms <= 200) bestFor = 'Real-time applications'
+      else if (priorities[0] === 'reliability' && agent.completion_rate_pct >= 95) bestFor = 'Mission-critical workflows'
+
+      return {
+        rank: 0,
+        agent_id: agent.agent_id,
+        agent_name: agent.agent_name,
+        overall_score: overall,
+        capability_fit_pct: capFit,
+        price_score: priceScore,
+        quality_score: qualityScore,
+        speed_score: speedScore,
+        reliability_score: reliabilityScore,
+        pros,
+        cons,
+        best_for: bestFor
+      }
+    })
+
+  recommendations.sort((a, b) => b.overall_score - a.overall_score)
+  recommendations.forEach((r, i) => { r.rank = i + 1 })
+
+  const topPick = recommendations[0] ?? { agent_id: 'none', agent_name: 'No suitable agent found', overall_score: 0 }
+  const alternatives = recommendations.slice(1, 4)
+
+  const framework: string[] = [
+    'Define your top priority: price, quality, speed, or reliability',
+    'Set minimum acceptable rating (current: ' + minRating + '/5.0)',
+    'Set maximum budget per call (current: $' + budget.toFixed(2) + ')',
+    'Identify must-have capabilities vs nice-to-have',
+    'Run integration tests on top-2 picks before final decision',
+    'Consider total cost of ownership, not just per-call price'
   ]
 
-  // Add format-specific mappings
-  const formatMappings: ProtocolMapping[] = input.message_formats.map((fmt, i) => ({
-    source_field: 'format_' + fmt,
-    target_field: 'adapted_format_' + i,
-    transformation: 'Convert ' + fmt + ' to target protocol format',
-    required: i < 2
-  }))
-
-  const allMappings = [...commonMappings, ...formatMappings]
-
-  const authMappingInstructions = sourceProto.includes('oauth') && targetProto.includes('apikey')
-    ? 'Exchange OAuth2 token for API key via token exchange endpoint'
-    : sourceProto.includes('apikey') && targetProto.includes('oauth')
-    ? 'Wrap API key in OAuth2 client_credentials grant request'
-    : sourceProto.includes('bearer') && targetProto.includes('mtls')
-    ? 'Map bearer token to mTLS client certificate via identity provider'
-    : 'Direct pass-through with format conversion'
-
-  const errorMappings = [
-    { source_error: 'TASK_NOT_FOUND', target_error: 'RESOURCE_NOT_FOUND', description: 'Task/resource does not exist' },
-    { source_error: 'TASK_REJECTED', target_error: 'OPERATION_NOT_PERMITTED', description: 'Task was rejected by target agent' },
-    { source_error: 'TIMEOUT', target_error: 'DEADLINE_EXCEEDED', description: 'Operation exceeded time limit' },
-    { source_error: 'RATE_LIMITED', target_error: 'RESOURCE_EXHAUSTED', description: 'Too many requests in time window' },
-    { source_error: 'INVALID_PARAMS', target_error: 'INVALID_ARGUMENT', description: 'Input parameters failed validation' },
-    { source_error: 'INTERNAL_ERROR', target_error: 'INTERNAL', description: 'Unexpected server-side error' }
-  ]
-
-  const compatibilityNotes: string[] = [
-    'Source: ' + input.source_protocol + ' -> Target: ' + input.target_protocol,
-    'Adapter supports ' + input.message_formats.length + ' message format(s): ' + input.message_formats.join(', '),
-    'Bidirectional translation supported for request/response patterns',
-    'Streaming messages require chunked transfer adaptation',
-    'Error code mapping covers 6 common error categories',
-    input.auth_translation_needed ? 'Authentication translation layer required' : 'No authentication translation needed'
-  ]
-
-  const deploymentRecs: string[] = [
-    'Deploy adapter as sidecar proxy for minimal latency overhead',
-    'Implement message validation at both source and target boundaries',
-    'Add metrics for translation latency, error rates, and message volume',
-    'Use protocol buffers for internal adapter communication for efficiency',
-    'Implement circuit breaker for target protocol unavailability',
-    'Version your adapter config to support rolling upgrades',
-    'Test with protocol conformance test suite before production deployment'
+  const recs: string[] = [
+    'Top recommendation: ' + topPick.agent_name + ' (score: ' + topPick.overall_score + '/100)',
+    alternatives.length > 0 ? 'Alternative options: ' + alternatives.map(a => a.agent_name + ' (' + a.overall_score + ')').join(', ') : 'No alternative matches found',
+    'Re-run recommendation after updating priority_factors to see different winners',
+    'Validate top pick with integration_test_runner before production deployment',
+    'Monitor agent reputation scores for continued quality assurance'
   ]
 
   return {
-    adapter_config: {
-      name: input.source_protocol + '-to-' + input.target_protocol + '-adapter',
-      source_protocol: input.source_protocol,
-      target_protocol: input.target_protocol,
-      version: '1.0.0',
-      bidirectional: true
-    },
-    message_mappings: allMappings,
-    auth_translation: {
-      required: input.auth_translation_needed,
-      source_auth_type: input.source_protocol + ' default auth',
-      target_auth_type: input.target_protocol + ' default auth',
-      mapping_instructions: authMappingInstructions,
-      ...(input.auth_translation_needed ? { token_exchange_endpoint: '/adapter/v1/auth/exchange' } : {})
-    },
-    error_handling: {
-      retry_policy: 'Exponential backoff with jitter, max 3 retries',
-      max_retries: 3,
-      fallback_behavior: 'Return translated error to source agent with original error context',
-      error_code_mappings: errorMappings
-    },
-    compatibility_notes: compatibilityNotes,
-    deployment_recommendations: deploymentRecs
+    use_case: input.use_case,
+    candidates_evaluated: input.candidate_agents.length,
+    recommendations,
+    top_pick: { agent_id: topPick.agent_id, agent_name: topPick.agent_name, overall_score: topPick.overall_score },
+    alternative_picks: alternatives.map(a => ({ agent_id: a.agent_id, agent_name: a.agent_name, overall_score: a.overall_score })),
+    decision_framework: framework,
+    recommendations_list: recs
   }
 }
 
-function formatProtocolAdapterReport(input: ProtocolAdapterInput, result: ProtocolAdapterOutput): string {
+function formatRecommendationReport(input: RecommendationInput, result: RecommendationOutput): string {
   const lines: string[] = []
-
-  lines.push('## Cross-Agent Protocol Adapter')
+  lines.push('## Agent Recommendation Engine')
   lines.push('')
-  lines.push('**Adapter:** ' + result.adapter_config.name + ' | **Source:** ' + input.source_protocol + ' | **Target:** ' + input.target_protocol + ' | **Bidirectional:** ' + (result.adapter_config.bidirectional ? 'Yes' : 'No'))
-  lines.push('')
-
-  lines.push('### Message Mappings (' + result.message_mappings.length + ')')
-  lines.push('| Source Field | Target Field | Transformation | Required |')
-  lines.push('|-------------|-------------|----------------|----------|')
-  result.message_mappings.forEach(m => {
-    lines.push('| ' + m.source_field + ' | ' + m.target_field + ' | ' + m.transformation + ' | ' + (m.required ? 'Yes' : 'No') + ' |')
-  })
+  lines.push('**Use Case:** ' + (input.use_case || 'General') + ' | **Candidates:** ' + result.candidates_evaluated + ' | **Priorities:** ' + (input.priority_factors ?? ['quality', 'price', 'reliability', 'speed']).join(', '))
   lines.push('')
 
-  lines.push('### Auth Translation')
-  lines.push('| Field | Value |')
-  lines.push('|-------|-------|')
-  lines.push('| Required | ' + (result.auth_translation.required ? 'Yes' : 'No') + ' |')
-  lines.push('| Source Auth | ' + result.auth_translation.source_auth_type + ' |')
-  lines.push('| Target Auth | ' + result.auth_translation.target_auth_type + ' |')
-  lines.push('| Instructions | ' + result.auth_translation.mapping_instructions + ' |')
-  if (result.auth_translation.token_exchange_endpoint) {
-    lines.push('| Token Endpoint | ' + result.auth_translation.token_exchange_endpoint + ' |')
+  lines.push('### Top Pick: ' + result.top_pick.agent_name + ' (' + result.top_pick.overall_score + '/100)')
+  lines.push('')
+
+  if (result.recommendations.length > 0) {
+    lines.push('### Full Rankings')
+    lines.push('| Rank | Agent | Overall | Cap Fit | Price | Quality | Speed | Reliability |')
+    lines.push('|------|-------|---------|---------|-------|---------|-------|-------------|')
+    result.recommendations.forEach(r => {
+      lines.push('| ' + r.rank + ' | ' + r.agent_name + ' | ' + r.overall_score + '/100 | ' + r.capability_fit_pct + '% | ' + r.price_score + ' | ' + r.quality_score + ' | ' + r.speed_score + ' | ' + r.reliability_score + ' |')
+    })
+    lines.push('')
+
+    lines.push('### Top Pick Details')
+    const top = result.recommendations[0]
+    lines.push('**' + top.agent_name + '** (ID: ' + top.agent_id + ')')
+    lines.push('- Best for: ' + top.best_for)
+    lines.push('- Pros:')
+    top.pros.forEach(p => lines.push('  - ' + p))
+    lines.push('- Cons:')
+    top.cons.forEach(c => lines.push('  - ' + c))
+    lines.push('')
   }
+
+  if (result.alternative_picks.length > 0) {
+    lines.push('### Alternative Picks')
+    result.alternative_picks.forEach(a => {
+      lines.push('- ' + a.agent_name + ' (score: ' + a.overall_score + '/100)')
+    })
+    lines.push('')
+  }
+
+  lines.push('### Decision Framework')
+  result.decision_framework.forEach(f => lines.push('- ' + f))
   lines.push('')
 
-  lines.push('### Error Handling')
-  lines.push('| Field | Value |')
-  lines.push('|-------|-------|')
-  lines.push('| Retry Policy | ' + result.error_handling.retry_policy + ' |')
-  lines.push('| Max Retries | ' + result.error_handling.max_retries + ' |')
-  lines.push('| Fallback | ' + result.error_handling.fallback_behavior + ' |')
-  lines.push('')
-
-  lines.push('### Error Code Mappings')
-  lines.push('| Source Error | Target Error | Description |')
-  lines.push('|-------------|--------------|-------------|')
-  result.error_handling.error_code_mappings.forEach(m => {
-    lines.push('| ' + m.source_error + ' | ' + m.target_error + ' | ' + m.description + ' |')
-  })
-  lines.push('')
-
-  lines.push('### Compatibility Notes')
-  result.compatibility_notes.forEach(n => lines.push('- ' + n))
-  lines.push('')
-
-  lines.push('### Deployment Recommendations')
-  result.deployment_recommendations.forEach(r => lines.push('- ' + r))
+  lines.push('### Recommendations')
+  result.recommendations_list.forEach(r => lines.push('- ' + r))
   lines.push('')
   lines.push(DISCLAIMER)
 
@@ -1587,47 +1517,47 @@ function formatProtocolAdapterReport(input: ProtocolAdapterInput, result: Protoc
 export function apply(ctx: Context) {
   const tools = ctx.tools
 
-  // Tool 1: Agent Card Generator
+  // Tool 1: Agent Discovery Engine
   tools.register(defineTool({
-    name: 'agent_card_generator',
-    description: 'Generates an A2A AgentCard (Google protocol) describing agent capabilities, endpoints, and authentication. Follows Google A2A protocol specification v0.2.5 with 150+ supporting organizations. Returns a complete AgentCard JSON with skills, auth schemes, transports, and compliance metadata.',
+    name: 'agent_discovery_engine',
+    description: 'Search and discover AI agents in the marketplace by capability, category, rating, and price. Returns ranked list of matching agents with relevance scores, match reasons, and search insights. Supports filtering by minimum rating, maximum price, and required capabilities.',
     parameters: {
-      input_data: { type: 'string', description: 'JSON-encoded input with fields: agent_name (string), agent_domain (string), capabilities (string[]), auth_method (string), endpoint_url (string)', required: true }
+      input_data: { type: 'string', description: 'JSON-encoded input with fields: query (string), categories (string[]), min_rating (number, optional), max_price_per_call (number, optional), required_capabilities (string[], optional), sort_by ("relevance"|"rating"|"price"|"popularity", optional), limit (number, optional)', required: true }
     },
     output: { schema: { type: 'string' }, render: 'text' },
     async execute(args: { input_data: string }) {
-      const input: AgentCardInput = JSON.parse(args.input_data)
-      const result = generateAgentCard(input)
-      return formatAgentCardReport(input, result)
+      const input: AgentDiscoveryInput = JSON.parse(args.input_data)
+      const result = runAgentDiscovery(input)
+      return formatDiscoveryReport(input, result)
     }
   }))
 
-  // Tool 2: Service Listing Creator
+  // Tool 2: Capability Matcher
   tools.register(defineTool({
-    name: 'service_listing_creator',
-    description: 'Creates a marketplace listing for an agent service with description, pricing, SLAs, and sample outputs. Generates optimized tags, ranking signals, and marketplace readiness assessment for agent service discovery.',
+    name: 'capability_matcher',
+    description: 'Match user requirements against agent capabilities. Computes fit scores (0-100), grades (A-F), exact/partial/none match types, and coverage percentage. Supports priority weighting for business-critical capabilities.',
     parameters: {
-      input_data: { type: 'string', description: 'JSON-encoded input with fields: service_name (string), service_category (string), pricing_model (string), delivery_sla (string), sample_outputs (string[])', required: true }
+      input_data: { type: 'string', description: 'JSON-encoded input with fields: required_capabilities (string[]), optional_capabilities (string[]), agent_capabilities (string[]), priority_weights (Record<string, number>, optional)', required: true }
     },
     output: { schema: { type: 'string' }, render: 'text' },
     async execute(args: { input_data: string }) {
-      const input: ServiceListingInput = JSON.parse(args.input_data)
-      const result = createServiceListing(input)
-      return formatServiceListingReport(input, result)
+      const input: CapabilityMatcherInput = JSON.parse(args.input_data)
+      const result = matchCapabilities(input)
+      return formatCapabilityMatchReport(input, result)
     }
   }))
 
-  // Tool 3: Pricing Calculator
+  // Tool 3: Pricing Comparison Analyst
   tools.register(defineTool({
-    name: 'pricing_calculator',
-    description: 'Calculates optimal pricing for agent services based on compute cost, value delivered, and competition. Returns recommended price, pricing tiers, competitor positioning, revenue projections, and margin analysis.',
+    name: 'pricing_comparison_analyst',
+    description: 'Compare pricing across multiple AI agents. Returns cost analysis per agent, budget assessment, cheapest/most expensive identification, hidden cost detection, value scores, and cost optimization tips.',
     parameters: {
-      input_data: { type: 'string', description: 'JSON-encoded input with fields: service_type (string), compute_cost_per_call (number), value_per_call (number), competitor_prices (number[]), target_margin (number)', required: true }
+      input_data: { type: 'string', description: 'JSON-encoded input with fields: agent_prices (array of {agent_id, agent_name, price_per_call, pricing_model}), budget_per_call (number, optional), expected_monthly_volume (number, optional), include_hidden_costs (boolean, optional)', required: true }
     },
     output: { schema: { type: 'string' }, render: 'text' },
     async execute(args: { input_data: string }) {
-      const input: PricingCalculatorInput = JSON.parse(args.input_data)
-      const result = calculatePricing(input)
+      const input: PricingComparisonInput = JSON.parse(args.input_data)
+      const result = analyzePricing(input)
       return formatPricingReport(input, result)
     }
   }))
@@ -1635,9 +1565,9 @@ export function apply(ctx: Context) {
   // Tool 4: Reputation Scorer
   tools.register(defineTool({
     name: 'reputation_scorer',
-    description: 'Scores agent reputation based on transaction history, reviews, completion rate, and response time. Returns overall score (0-100), reputation tier (platinum/gold/silver/bronze/new), trust badges, marketplace benefits, and improvement recommendations.',
+    description: 'Score AI agent reputation from transaction history, ratings, completion rate, response time, and dispute rate. Returns overall score (0-100), tier (platinum/gold/silver/bronze/new), trust badges, marketplace benefits, and improvement recommendations.',
     parameters: {
-      input_data: { type: 'string', description: 'JSON-encoded input with fields: agent_id (string), total_transactions (number), avg_rating (number), completion_rate_pct (number), avg_response_ms (number)', required: true }
+      input_data: { type: 'string', description: 'JSON-encoded input with fields: agent_id (string), agent_name (string), total_transactions (number), avg_rating (number), completion_rate_pct (number), avg_response_ms (number), dispute_rate_pct (number, optional), verified (boolean, optional)', required: true }
     },
     output: { schema: { type: 'string' }, render: 'text' },
     async execute(args: { input_data: string }) {
@@ -1647,66 +1577,66 @@ export function apply(ctx: Context) {
     }
   }))
 
-  // Tool 5: Discovery Optimizer
+  // Tool 5: Integration Test Runner
   tools.register(defineTool({
-    name: 'discovery_optimizer',
-    description: 'Optimizes agent discoverability in marketplace with tags, keywords, categories, and ranking signals. Returns optimized tag set, keyword analysis with competition levels, ranking score, and SEO recommendations for agent marketplace visibility.',
+    name: 'integration_test_runner',
+    description: 'Run integration tests against AI agent endpoints. Tests connectivity, authentication, basic response, error handling, and rate limiting. Returns pass/fail/warning results, compatibility score, readiness level, and deployment recommendations.',
     parameters: {
-      input_data: { type: 'string', description: 'JSON-encoded input with fields: agent_capabilities (string[]), target_categories (string[]), competitive_keywords (string[]), quality_signals (object with uptime_pct, avg_rating, response_time_ms, transaction_count)', required: true }
+      input_data: { type: 'string', description: 'JSON-encoded input with fields: agent_endpoint (string), agent_name (string), test_capabilities (string[]), auth_method (string), timeout_ms (number, optional), retry_count (number, optional)', required: true }
     },
     output: { schema: { type: 'string' }, render: 'text' },
     async execute(args: { input_data: string }) {
-      const input: DiscoveryOptimizerInput = JSON.parse(args.input_data)
-      const result = optimizeDiscovery(input)
-      return formatDiscoveryReport(input, result)
+      const input: IntegrationTestInput = JSON.parse(args.input_data)
+      const result = runIntegrationTests(input)
+      return formatIntegrationTestReport(input, result)
     }
   }))
 
-  // Tool 6: Transaction Escrow Designer
+  // Tool 6: Agent Comparison Matrix
   tools.register(defineTool({
-    name: 'transaction_escrow_designer',
-    description: 'Designs escrow/payment flow for agent-to-agent transactions with hold, verify, and release steps. Returns complete escrow flow with timeouts, dispute handling, security features, and A2A protocol compliance mapping.',
+    name: 'agent_comparison_matrix',
+    description: 'Build multi-dimensional comparison matrix across multiple AI agents. Analyzes rating, price, response time, capabilities, completion rate, and popularity with configurable weights. Returns dimension scores, overall ranking, winner identification, and trade-off analysis.',
     parameters: {
-      input_data: { type: 'string', description: 'JSON-encoded input with fields: transaction_type (string), amount_range_usd (object with min/max), trust_level (string), dispute_resolution (string), settlement_time (string)', required: true }
+      input_data: { type: 'string', description: 'JSON-encoded input with fields: agents (array of {agent_id, agent_name, rating, price_per_call, response_time_ms, capabilities_count, completion_rate_pct, popularity_score}), dimensions (string[], optional), weights (Record<string, number>, optional)', required: true }
     },
     output: { schema: { type: 'string' }, render: 'text' },
     async execute(args: { input_data: string }) {
-      const input: TransactionEscrowInput = JSON.parse(args.input_data)
-      const result = designEscrow(input)
-      return formatEscrowReport(input, result)
+      const input: ComparisonMatrixInput = JSON.parse(args.input_data)
+      const result = buildComparisonMatrix(input)
+      return formatComparisonMatrixReport(input, result)
     }
   }))
 
-  // Tool 7: SLA Monitor Config
+  // Tool 7: Marketplace Trend Analyzer
   tools.register(defineTool({
-    name: 'sla_monitor_config',
-    description: 'Configures SLA monitoring for agent services with uptime, latency, and accuracy thresholds plus penalty structures. Returns complete monitor config with thresholds, penalties, uptime calculations, dashboard metrics, and alert policies.',
+    name: 'marketplace_trend_analyzer',
+    description: 'Analyze AI agent marketplace trends over time. Returns category growth rates, agent count changes, price trends, demand levels, maturity stages, emerging/declining categories, market forecasts, and strategic recommendations.',
     parameters: {
-      input_data: { type: 'string', description: 'JSON-encoded input with fields: service_type (string), target_uptime_pct (number), max_latency_ms (number), accuracy_threshold (number), penalty_structure (string)', required: true }
+      input_data: { type: 'string', description: 'JSON-encoded input with fields: time_range_months (number), categories (string[]), metrics (string[], optional), granularity ("weekly"|"monthly"|"quarterly", optional)', required: true }
     },
     output: { schema: { type: 'string' }, render: 'text' },
     async execute(args: { input_data: string }) {
-      const input: SlaMonitorInput = JSON.parse(args.input_data)
-      const result = configSlaMonitor(input)
-      return formatSlaMonitorReport(input, result)
+      const input: TrendAnalysisInput = JSON.parse(args.input_data)
+      const result = analyzeTrends(input)
+      return formatTrendReport(input, result)
     }
   }))
 
-  // Tool 8: Cross-Agent Protocol Adapter
+  // Tool 8: Agent Recommendation Engine
   tools.register(defineTool({
-    name: 'cross_agent_protocol_adapter',
-    description: 'Designs adapter/bridge between different agent protocols (A2A, MCP, custom). Returns message field mappings, auth translation config, error code mappings, compatibility notes, and deployment recommendations for protocol interoperability.',
+    name: 'agent_recommendation_engine',
+    description: 'Recommend best AI agents based on use case, required capabilities, budget, and priority factors. Returns ranked recommendations with overall scores, capability fit, price/quality/speed/reliability sub-scores, pros/cons, and decision framework.',
     parameters: {
-      input_data: { type: 'string', description: 'JSON-encoded input with fields: source_protocol (string), target_protocol (string), message_formats (string[]), auth_translation_needed (boolean)', required: true }
+      input_data: { type: 'string', description: 'JSON-encoded input with fields: use_case (string), required_capabilities (string[]), budget_per_call (number, optional), min_rating (number, optional), priority_factors (array of "price"|"quality"|"speed"|"reliability", optional), candidate_agents (array of {agent_id, agent_name, capabilities, rating, price_per_call, avg_response_ms, completion_rate_pct})', required: true }
     },
     output: { schema: { type: 'string' }, render: 'text' },
     async execute(args: { input_data: string }) {
-      const input: ProtocolAdapterInput = JSON.parse(args.input_data)
-      const result = designProtocolAdapter(input)
-      return formatProtocolAdapterReport(input, result)
+      const input: RecommendationInput = JSON.parse(args.input_data)
+      const result = generateRecommendations(input)
+      return formatRecommendationReport(input, result)
     }
   }))
 
-  console.log('[dsh-tool-agentmarket] Loaded v' + VERSION + ' - Agent Marketplace & A2A Economy with 8 tools')
-  console.log('  Tools: agent_card_generator, service_listing_creator, pricing_calculator, reputation_scorer, discovery_optimizer, transaction_escrow_designer, sla_monitor_config, cross_agent_protocol_adapter')
+  console.log('[dsh-tool-agentmarket] Loaded v' + VERSION + ' - Agent Marketplace & Discovery with 8 tools')
+  console.log('  Tools: agent_discovery_engine, capability_matcher, pricing_comparison_analyst, reputation_scorer, integration_test_runner, agent_comparison_matrix, marketplace_trend_analyzer, agent_recommendation_engine')
 }

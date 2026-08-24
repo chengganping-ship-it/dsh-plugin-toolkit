@@ -1,6 +1,14 @@
 - id: dsh-tool-agentmarket
   name: dsh-tool-agentmarket
   version: 1.0.0
-  description: Agent Marketplace & A2A Economy - AgentCard generation, service listing, pricing optimization, reputation scoring, discovery optimization, transaction escrow design, SLA monitoring, and cross-agent protocol adaptation for Google's A2A protocol (150+ supporting orgs)
+  description: AI Agent Marketplace & Discovery - agent discovery, capability matching, pricing comparison, reputation scoring, integration testing, comparison matrices, trend analysis, and recommendation engine. 2026 emerging category; platforms like OpenAI GPTs, Poe, Coze growing rapidly.
   author: chengganping-ship-it
-  tools: 8
+  tools:
+    - agent_discovery_engine
+    - capability_matcher
+    - pricing_comparison_analyst
+    - reputation_scorer
+    - integration_test_runner
+    - agent_comparison_matrix
+    - marketplace_trend_analyzer
+    - agent_recommendation_engine

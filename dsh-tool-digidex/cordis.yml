@@ -1,0 +1,14 @@
+- id: dsh-tool-digidex
+  name: dsh-tool-digidex
+  version: 0.1.0
+  description: 数字身份与KYC AI引擎 — 身份验证引擎、生物识别认证、凭证管理、KYC/AML合规检查、隐私保护身份、数字钱包集成、身份欺诈检测、去中心化ID解析
+  author: digidex-dev
+  tools:
+    - identity_verification_engine
+    - biometric_authenticator
+    - credential_manager
+    - kyc_compliance_checker
+    - privacy_presider
+    - digital_wallet_integrator
+    - identity_fraud_detector
+    - decentralized_id_resolver

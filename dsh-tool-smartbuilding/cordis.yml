@@ -1,0 +1,14 @@
+- id: dsh-tool-smartbuilding
+  name: dsh-tool-smartbuilding
+  version: 0.1.0
+  description: Smart Building & Facilities Management - energy optimization, predictive maintenance, space utilization, HVAC optimization, building automation, indoor air quality, smart lighting, cost optimization
+  author: chengganping-ship-it
+  tools:
+    - energy_optimization_engine
+    - predictive_maintenance_scheduler
+    - space_utilization_analyzer
+    - hvac_optimization_planner
+    - building_automation_integrator
+    - indoor_air_quality_monitor
+    - smart_lighting_controller
+    - facilities_cost_optimizer

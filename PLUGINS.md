@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 256 plugins | 2048 tools (256 × 8)**
+**Total: 261 plugins | 2088 tools (261 × 8)**
 
 ---
 
@@ -527,6 +527,18 @@
 | 254 | supplyviz | 供应链可视化与追溯 | shipment_tracking_aggregator, provenance_verifier, cold_chain_monitor, supplier_risk_scorer, esg_compliance_tracker, chain_of_custody_auditor, trade_document_automator, sustainability_score_calculator |
 | 255 | agentpay | Agent商务与支付 | agent_transaction_approver, escrow_service_manager, micropayment_optimizer, cross_agent_settlement, payment_routing_engineer, budget_enforcement_module, fraud_detection_agent, autonomous_purchase_advisor |
 | 256 | telemedai | 远程医疗与数字健康 | virtual_triage_system, remote_patient_monitor, medication_adherence_tracker, symptom_analyzer_ai, diagnostic_decision_support, telehealth_session_optimizer, chronic_care_manager, emergency_dispatch_coordinator |
+
+---
+
+## Wave 53 — 碳信用+Agent市场+食品科技+数字身份+智能建筑 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 257 | carboncredit | 碳信用与自愿市场 | carbon_footprint_calculator, offset_project_evaluator, credit_verification_engine, registry_transaction_manager, carbon_neutrality_roadmap, scope_emissions_tracker, offset_portfolio_optimizer, carbon_price_forecaster |
+| 258 | agentmarket | AI Agent市场与发现 | agent_discovery_engine, capability_matcher, pricing_comparison_analyst, reputation_scorer, integration_test_runner, agent_comparison_matrix, marketplace_trend_analyzer, agent_recommendation_engine |
+| 259 | foodtechai | 食品科技与替代蛋白 | alternative_protein_analyzer, food_safety_compliance_checker, supply_chain_traceability_engine, personalized_nutrition_planner, food_waste_reducer, regulatory_compliance_tracker, ingredient_sustainability_scorer, menu_optimization_engine |
+| 260 | digidex | 数字身份与KYC | identity_verification_engine, biometric_authenticator, credential_manager, kyc_compliance_checker, privacy_presider, digital_wallet_integrator, identity_fraud_detector, decentralized_id_resolver |
+| 261 | smartbuilding | 智能建筑与设施管理 | energy_optimization_engine, predictive_maintenance_scheduler, space_utilization_analyzer, hvac_optimization_planner, building_automation_integrator, indoor_air_quality_monitor, smart_lighting_controller, facilities_cost_optimizer |
 
 ---
 

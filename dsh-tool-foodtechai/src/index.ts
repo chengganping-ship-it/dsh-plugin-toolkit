@@ -1,20 +1,21 @@
 /**
- * DSH Food Tech & Safety AI Plugin v1.0.0
+ * DSH Food Tech & Alternative Proteins AI Plugin v1.0.0
  *
- * Vertical AI for the food industry -- supply chain traceability, quality
- * inspection, recipe optimization, food safety compliance, alternative
- * proteins, shelf life prediction, allergen detection, cold chain integrity,
- * and menu engineering. The food AI market is a high-growth 2026 vertical.
+ * Food Tech & Alternative Proteins -- alternative protein development, food
+ * safety compliance, supply chain traceability, personalized nutrition, food
+ * waste reduction, regulatory compliance, ingredient sustainability scoring,
+ * and menu optimization. 2026: Alternative protein market projected at $36B
+ * by 2030; food safety regulations tightening globally.
  *
  * Tools:
- * 1. supply_chain_traceability_engine -- Ingredient origin to shelf mapping
+ * 1. alternative_protein_analyzer      -- Plant / fermentation / cultivated protein assessment
  * 2. food_safety_compliance_checker    -- HACCP / ISO 22000 / FDA 21 CFR audit
- * 3. recipe_optimization_ai           -- AI-driven recipe reformulation
- * 4. alternative_protein_analyzer     -- Plant / fermentation / cultivated protein assessment
- * 5. shelf_life_predictor             -- Predictive shelf life modeling
- * 6. allergen_detection_scanner       -- Allergen risk in ingredients and processes
- * 7. cold_chain_integrity_monitor     -- Cold chain breach detection and alerts
- * 8. menu_engineering_optimizer       -- Menu item profitability & popularity matrix
+ * 3. supply_chain_traceability_engine  -- Ingredient origin to shelf mapping
+ * 4. personalized_nutrition_planner    -- Dietary planning and nutrient optimization
+ * 5. food_waste_reducer                -- Waste reduction strategies and cost savings
+ * 6. regulatory_compliance_tracker     -- Multi-market regulatory deadline tracking
+ * 7. ingredient_sustainability_scorer  -- Sustainability scoring for ingredients
+ * 8. menu_optimization_engine          -- Menu item profitability & popularity matrix
  *
  * @module dsh-tool-foodtechai | @version 1.0.0 | @license MIT
  */
@@ -27,7 +28,7 @@ export const inject = ['tools']
 
 const VERSION = '1.0.0'
 
-const DISCLAIMER_FOOD_SAFETY = 'DISCLAIMER: This tool provides AI-generated analysis for informational purposes only. It does not constitute professional food safety, regulatory, or legal advice. All food safety decisions must be validated by certified professionals in accordance with local regulations (FDA, EFSA, CFDA, etc.).'
+const DISCLAIMER_FOOD_SAFETY = 'DISCLAIMER: This tool provides AI-generated analysis for informational purposes only. It does not constitute professional food safety, regulatory, nutritional, or legal advice. All decisions must be validated by certified professionals in accordance with local regulations (FDA, EFSA, CFDA, etc.).'
 
 // ==================== SEEDED RANDOM (mulberry32 PRNG) ====================
 
@@ -78,39 +79,35 @@ function roundTo(value: number, decimals: number): number {
   return Math.round(value * factor) / factor
 }
 
-// ==================== SECTION 1: SUPPLY CHAIN TRACEABILITY ====================
+// ==================== SECTION 1: ALTERNATIVE PROTEIN ANALYZER ====================
 
-export interface SupplyChainInput {
-  product_name?: string
-  ingredient_list?: string[]
-  supplier_regions?: string[]
-  traceability_target?: 'full' | 'batch' | 'ingredient'
-  blockchain_enabled?: boolean
-  recall_readiness?: 'low' | 'medium' | 'high'
+export interface ProteinInput {
+  protein_type?: 'plant_based' | 'fermentation_based' | 'cultivated' | 'hybrid'
+  target_product?: string
+  protein_source_candidates?: string[]
+  scale_of_production?: 'pilot' | 'commercial' | 'industrial'
+  regulatory_region?: string
+  cost_target_per_kg?: number
 }
 
-export interface TraceabilityNode {
-  stage: string
-  location: string
-  timestamp_offset_days: number
-  risk_level: 'low' | 'medium' | 'high'
-  certification: string
- verified: boolean
+export interface ProteinScore {
+  source: string
+  protein_content_pct: number
+  pdcaas_score: number
+  environmental_score: number
+  cost_feasibility: number
+  regulatory_status: string
+  scalability: 'high' | 'medium' | 'low'
+  overall_score: number
 }
 
-export interface TraceabilityGap {
-  gap: string
-  severity: 'critical' | 'major' | 'minor'
-  remediation: string
-}
-
-export interface SupplyChainResult {
-  traceability_score: number
-  nodes: TraceabilityNode[]
-  gaps: TraceabilityGap[]
-  blockchain_recommendation: string
-  recall_time_estimate_hours: number
-  risk_hotspots: string[]
+export interface ProteinAnalysisResult {
+  recommended_source: string
+  scores: ProteinScore[]
+  environmental_impact: string
+  regulatory_pathway: string
+  cost_projection: string
+  go_to_market_timeline_months: number
   recommendations: string[]
 }
 
@@ -151,175 +148,208 @@ export interface ComplianceResult {
   summary: string
 }
 
-// ==================== SECTION 3: RECIPE OPTIMIZATION ====================
+// ==================== SECTION 3: SUPPLY CHAIN TRACEABILITY ====================
 
-export interface RecipeInput {
-  recipe_name?: string
-  current_ingredients?: { name: string; quantity_g: number; cost_per_kg: number }[]
-  target_cost_reduction_pct?: number
-  nutrition_targets?: { calories?: number; protein_g?: number; fat_g?: number; carbs_g?: number; sodium_mg?: number }
-  dietary_constraints?: string[]
-  flavor_profile_target?: string[]
-}
-
-export interface IngredientSubstitution {
-  original: string
-  substitute: string
-  substitution_ratio: number
-  cost_savings_pct: number
-  flavor_impact: 'neutral' | 'slight_change' | 'noticeable_change'
-  nutrition_delta: string
-}
-
-export interface OptimizedRecipe {
-  recipe_name: string
-  ingredients: { name: string; quantity_g: number; cost_per_kg: number }[]
-  total_cost_per_serving: number
-  cost_reduction_achieved_pct: number
-  nutrition_per_serving: { calories: number; protein_g: number; fat_g: number; carbs_g: number; sodium_mg: number }
-  substitutions: IngredientSubstitution[]
-  flavor_match_score: number
-  feasibility: 'high' | 'medium' | 'low'
-}
-
-export interface RecipeOptimizationResult {
-  optimized: OptimizedRecipe
-  cost_savings_summary: string
-  nutrition_compliance: string
-  flavor_risk_assessment: string
-  recommendations: string[]
-}
-
-// ==================== SECTION 4: ALTERNATIVE PROTEIN ANALYZER ====================
-
-export interface ProteinInput {
-  protein_type?: 'plant_based' | 'fermentation_based' | 'cultivated' | 'hybrid'
-  target_product?: string
-  protein_source_candidates?: string[]
-  scale_of_production?: 'pilot' | 'commercial' | 'industrial'
-  regulatory_region?: string
-  cost_target_per_kg?: number
-}
-
-export interface ProteinScore {
-  source: string
-  protein_content_pct: number
-  pdcaas_score: number
-  environmental_score: number
-  cost_feasibility: number
-  regulatory_status: string
-  scalability: 'high' | 'medium' | 'low'
-  overall_score: number
-}
-
-export interface ProteinAnalysisResult {
-  recommended_source: string
-  scores: ProteinScore[]
-  environmental_impact: string
-  regulatory_pathway: string
-  cost_projection: string
-  go_to_market_timeline_months: number
-  recommendations: string[]
-}
-
-// ==================== SECTION 5: SHELF LIFE PREDICTOR ====================
-
-export interface ShelfLifeInput {
-  product_name?: string
-  product_category?: string
-  packaging_type?: string
-  storage_temperature_c?: number
-  pH?: number
-  water_activity?: number
-  preservative_system?: string[]
-  target_shelf_life_days?: number
-  target_market?: string
-}
-
-export interface SpoilageIndicator {
-  organism: string
-  onset_day: number
-  threshold: string
-  risk_level: 'low' | 'medium' | 'high'
-  mitigation: string
-}
-
-export interface ShelfLifeResult {
-  predicted_shelf_life_days: number
-  target_met: boolean
-  spoilage_indicators: SpoilageIndicator[]
-  critical_factors: string[]
-  packaging_recommendation: string
-  storage_recommendation: string
-  safety_margin_days: number
-  confidence_level: 'high' | 'medium' | 'low'
-}
-
-// ==================== SECTION 6: ALLERGEN DETECTION ====================
-
-export interface AllergenInput {
+export interface SupplyChainInput {
   product_name?: string
   ingredient_list?: string[]
-  processing_equipment_shared?: boolean
-  allergen_free_claim?: string[]
-  facility_allergens_present?: string[]
-  testing_method?: 'ELISA' | 'PCR' | 'LC_MS_MS' | 'LFD'
+  supplier_regions?: string[]
+  traceability_target?: 'full' | 'batch' | 'ingredient'
+  blockchain_enabled?: boolean
+  recall_readiness?: 'low' | 'medium' | 'high'
 }
 
-export interface AllergenRisk {
-  allergen: string
-  risk_level: 'high' | 'medium' | 'low' | 'negligible'
-  source: string
-  cross_contact_potential: string
-  regulatory_threshold: string
+export interface TraceabilityNode {
+  stage: string
+  location: string
+  timestamp_offset_days: number
+  risk_level: 'low' | 'medium' | 'high'
+  certification: string
+  verified: boolean
+}
+
+export interface TraceabilityGap {
+  gap: string
+  severity: 'critical' | 'major' | 'minor'
+  remediation: string
+}
+
+export interface SupplyChainResult {
+  traceability_score: number
+  nodes: TraceabilityNode[]
+  gaps: TraceabilityGap[]
+  blockchain_recommendation: string
+  recall_time_estimate_hours: number
+  risk_hotspots: string[]
+  recommendations: string[]
+}
+
+// ==================== SECTION 4: PERSONALIZED NUTRITION PLANNER ====================
+
+export interface NutritionInput {
+  age?: number
+  gender?: 'male' | 'female' | 'other'
+  weight_kg?: number
+  height_cm?: number
+  activity_level?: 'sedentary' | 'light' | 'moderate' | 'active' | 'very_active'
+  dietary_restrictions?: string[]
+  health_goals?: string[]
+  food_preferences?: string[]
+  allergies?: string[]
+  meals_per_day?: number
+}
+
+export interface MacronutrientSplit {
+  protein_pct: number
+  carbs_pct: number
+  fat_pct: number
+  protein_g: number
+  carbs_g: number
+  fat_g: number
+}
+
+export interface MealSuggestion {
+  meal: string
+  calories: number
+  protein_g: number
+  carbs_g: number
+  fat_g: number
+  foods: string[]
+}
+
+export interface MicronutrientGap {
+  nutrient: string
+  status: 'adequate' | 'borderline' | 'deficient'
+  recommended_intake: string
+  food_sources: string[]
+}
+
+export interface NutritionPlanResult {
+  bmr: number
+  tdee: number
+  daily_calorie_target: number
+  macronutrients: MacronutrientSplit
+  meal_plan: MealSuggestion[]
+  micronutrient_gaps: MicronutrientGap[]
+  hydration_liters: number
+  supplement_suggestions: string[]
+  recommendations: string[]
+}
+
+// ==================== SECTION 5: FOOD WASTE REDUCER ====================
+
+export interface WasteInput {
+  business_type?: 'restaurant' | 'cafe' | 'hotel' | 'catering' | 'retail' | 'manufacturing'
+  daily_volume_kg?: number
+  current_waste_pct?: number
+  waste_categories?: string[]
+  seasonality_factor?: 'low' | 'medium' | 'high'
+  operational_days_per_week?: number
+  current_diversion_pct?: number
+}
+
+export interface WasteReductionAction {
+  action: string
+  category: string
+  waste_reduction_pct: number
+  annual_savings_currency: number
+  implementation_cost: 'low' | 'medium' | 'high'
+  payback_months: number
+  priority: 'critical' | 'high' | 'medium' | 'low'
+}
+
+export interface DiversionStrategy {
+  strategy: string
+  description: string
+  diversion_potential_pct: number
+  applicable_waste_types: string[]
+}
+
+export interface WasteReductionResult {
+  current_daily_waste_kg: number
+  target_daily_waste_kg: number
+  waste_reduction_actions: WasteReductionAction[]
+  diversion_strategies: DiversionStrategy[]
+  total_annual_savings: number
+  waste_reduction_potential_pct: number
+  landfill_diversion_target_pct: number
+  composting_recommendation: string
+  recommendations: string[]
+}
+
+// ==================== SECTION 6: REGULATORY COMPLIANCE TRACKER ====================
+
+export interface RegulatoryInput {
+  target_markets?: string[]
+  product_category?: string
+  regulatory_frameworks?: string[]
+  compliance_deadlines?: { name: string; date: string; status: 'compliant' | 'pending' | 'overdue' }[]
+  current_certifications?: string[]
+  product_claims?: string[]
+}
+
+export interface ComplianceStatus {
+  market: string
+  framework: string
+  status: 'compliant' | 'partial' | 'non_compliant' | 'not_applicable'
+  gaps: string[]
+  required_actions: string[]
+}
+
+export interface UpcomingDeadline {
+  name: string
+  date: string
+  days_remaining: number
+  severity: 'critical' | 'high' | 'medium' | 'low'
   action_required: string
 }
 
-export interface AllergenResult {
-  overall_allergen_risk: 'high' | 'medium' | 'low'
-  risks: AllergenRisk[]
-  label_compliance: string[]
-  testing_recommendations: string[]
-  precautionary_advisory_needed: boolean
+export interface RegulatoryTrackingResult {
+  overall_compliance_pct: number
+  compliance_statuses: ComplianceStatus[]
+  upcoming_deadlines: UpcomingDeadline[]
+  certification_gaps: string[]
+  claim_risks: string[]
+  action_items: string[]
   summary: string
 }
 
-// ==================== SECTION 7: COLD CHAIN INTEGRITY ====================
+// ==================== SECTION 7: INGREDIENT SUSTAINABILITY SCORER ====================
 
-export interface ColdChainInput {
-  product_type?: string
-  shipment_id?: string
-  origin_temp_c?: number
-  destination_temp_c?: number
-  transit_duration_hours?: number
-  temp_logger_data?: { hour: number; temp_c: number }[]
-  cold_chain_standard?: 'GDP' | 'HACCP' | 'WHO_prequalified'
-  max_allowed_temp_c?: number
+export interface SustainabilityInput {
+  ingredient_list?: string[]
+  sourcing_regions?: string[]
+  certifications?: string[]
+  carbon_footprint_data?: { ingredient: string; kg_co2_per_kg: number }[]
+  water_usage_data?: { ingredient: string; liters_per_kg: number }[]
+  packaging_type?: string
 }
 
-export interface TempExcursion {
-  start_hour: number
-  end_hour: number
-  max_temp_c: number
-  duration_hours: number
-  severity: 'minor' | 'major' | 'critical'
-  product_impact: string
+export interface IngredientSustainabilityScore {
+  ingredient: string
+  carbon_score: number
+  water_score: number
+  land_use_score: number
+  biodiversity_score: number
+  social_score: number
+  overall_sustainability_score: number
+  certification_boost: boolean
+  improvement_potential: string
 }
 
-export interface ColdChainResult {
-  integrity_score: number
-  excursions: TempExcursion[]
-  total_excursion_duration_hours: number
-  mkt_temperature: number
-  product_quality_impact: string
-  compliant: boolean
-  alert_level: 'green' | 'yellow' | 'red'
-  corrective_actions: string[]
+export interface SustainabilityResult {
+  average_sustainability_score: number
+  ingredient_scores: IngredientSustainabilityScore[]
+  certification_gaps: string[]
+  carbon_reduction_opportunities: string[]
+  water_reduction_opportunities: string[]
+  sustainable_alternatives: string[]
+  recommendations: string[]
 }
 
-// ==================== SECTION 8: MENU ENGINEERING ====================
+// ==================== SECTION 8: MENU OPTIMIZATION ENGINE ====================
 
-export interface MenuEngineeringInput {
+export interface MenuInput {
   restaurant_name?: string
   menu_items?: { name: string; price: number; food_cost_pct: number; monthly_orders: number }[]
   analysis_dimension?: 'profitability' | 'popularity' | 'both'
@@ -335,7 +365,7 @@ export interface MenuItemClassification {
   recommendation: string
 }
 
-export interface MenuEngineeringResult {
+export interface MenuOptimizationResult {
   classifications: MenuItemClassification[]
   avg_food_cost_pct: number
   stars_count: number
@@ -346,112 +376,142 @@ export interface MenuEngineeringResult {
   revenue_optimization_potential_pct: number
 }
 
-// ==================== TOOL 1: SUPPLY CHAIN TRACEABILITY ENGINE ====================
+// ==================== TOOL 1: ALTERNATIVE PROTEIN ANALYZER ====================
 
-function traceSupplyChain(input: SupplyChainInput): SupplyChainResult {
+function analyzeAlternativeProtein(input: ProteinInput): ProteinAnalysisResult {
   const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
 
-  const product = input.product_name || 'Unspecified Product'
-  const ingredients = input.ingredient_list || []
-  const regions = input.supplier_regions || []
-  const target = input.traceability_target || 'batch'
-  const blockchain = input.blockchain_enabled !== false
-  const recall = input.recall_readiness || 'medium'
+  const proteinType = input.protein_type || 'plant_based'
+  const targetProduct = input.target_product || 'protein-enhanced food product'
+  const scale = input.scale_of_production || 'pilot'
+  const region = input.regulatory_region || 'US'
+  const costTarget = input.cost_target_per_kg || 15
 
-  const stages = ['Raw Material Sourcing', 'Processing/Manufacturing', 'Packaging', 'Distribution', 'Warehousing', 'Retail/Point of Sale']
-  const certifications = ['Organic', 'Fair Trade', 'Non-GMO', 'Halal', 'Kosher', 'ISO 22000', 'BRC Grade A', 'SQF Level 3']
+  const sourceDatabase: Record<string, { name: string; protein_pct: number; pdcaas: number }[]> = {
+    plant_based: [
+      { name: 'Pea protein isolate', protein_pct: 85, pdcaas: 0.89 },
+      { name: 'Soy protein concentrate', protein_pct: 70, pdcaas: 0.95 },
+      { name: 'Fava bean protein', protein_pct: 65, pdcaas: 0.82 },
+      { name: 'Rice protein', protein_pct: 80, pdcaas: 0.72 },
+      { name: 'Chickpea protein', protein_pct: 60, pdcaas: 0.78 },
+    ],
+    fermentation_based: [
+      { name: 'Fusarium mycoprotein (Quorn)', protein_pct: 45, pdcaas: 0.93 },
+      { name: 'Precision-fermentation whey', protein_pct: 90, pdcaas: 1.0 },
+      { name: 'Lentil-fermented protein', protein_pct: 55, pdcaas: 0.85 },
+    ],
+    cultivated: [
+      { name: 'Cultivated chicken cells', protein_pct: 70, pdcaas: 0.99 },
+      { name: 'Cultivated beef cells', protein_pct: 75, pdcaas: 1.0 },
+      { name: 'Cultivated fish cells', protein_pct: 65, pdcaas: 0.97 },
+    ],
+    hybrid: [
+      { name: 'Plant-mycelium composite', protein_pct: 55, pdcaas: 0.84 },
+      { name: 'Plant-cultivated fat blend', protein_pct: 60, pdcaas: 0.90 },
+    ]
+  }
 
-  const nodes: TraceabilityNode[] = stages.map((stage, i) => {
-    const region = regions[i % Math.max(regions.length, 1)] || 'Unknown'
-    const riskRoll = rng.next()
-    const risk: 'low' | 'medium' | 'high' = riskRoll < 0.5 ? 'low' : riskRoll < 0.8 ? 'medium' : 'high'
+  const candidates = input.protein_source_candidates && input.protein_source_candidates.length > 0
+    ? input.protein_source_candidates
+    : sourceDatabase[proteinType].map(s => s.name)
+
+  const scores: ProteinScore[] = candidates.map(sourceName => {
+    const dbEntry = sourceDatabase[proteinType]?.find(s => s.name === sourceName)
+    const proteinContent = dbEntry?.protein_pct || rng.nextInt(40, 90)
+    const pdcaas = dbEntry?.pdcaas || roundTo(rng.nextFloat(0.7, 1.0), 2)
+    const envScore = clamp(rng.nextInt(55, 95), 0, 100)
+    const costFeasibility = clamp(rng.nextInt(40, 90), 0, 100)
+    const regulatoryStatus = region === 'US'
+      ? (rng.next() > 0.3 ? 'GRAS notification submitted' : 'Awaiting FDA review')
+      : region === 'EU'
+      ? (rng.next() > 0.3 ? 'Novel Food application pending' : 'EFSA pre-submission completed')
+      : region === 'SG'
+      ? 'SFA novel food approval pathway'
+      : 'Regulatory assessment required'
+    const scalability: 'high' | 'medium' | 'low'
+      = scale === 'industrial' ? 'high' : scale === 'commercial' ? (rng.next() > 0.3 ? 'high' : 'medium') : (rng.next() > 0.5 ? 'medium' : 'low')
+    const overall = Math.round((proteinContent * 0.2 + pdcaas * 25 + envScore * 0.2 + costFeasibility * 0.2 + (scalability === 'high' ? 15 : scalability === 'medium' ? 10 : 5)))
     return {
-      stage,
-      location: region,
-      timestamp_offset_days: rng.nextInt(1, 30) * (i + 1),
-      risk_level: risk,
-      certification: rng.pick(certifications),
-      verified: rng.next() > 0.3
+      source: sourceName,
+      protein_content_pct: proteinContent,
+      pdcaas_score: pdcaas,
+      environmental_score: envScore,
+      cost_feasibility: costFeasibility,
+      regulatory_status: regulatoryStatus,
+      scalability,
+      overall_score: clamp(overall, 0, 100)
     }
   })
 
-  const baseScore = target === 'full' ? 90 : target === 'batch' ? 65 : 40
-  const ingBoost = Math.min(ingredients.length * 2, 10)
-  const regionBoost = regions.length >= 3 ? 5 : 0
-  const blockchainBoost = blockchain ? 8 : 0
-  const verifiedRatio = nodes.filter(n => n.verified).length / nodes.length
-  const traceScore = clamp(Math.round(baseScore + ingBoost + regionBoost + blockchainBoost + verifiedRatio * 10 + rng.nextInt(-5, 5)), 0, 100)
+  scores.sort((a, b) => b.overall_score - a.overall_score)
+  const recommended = scores[0]?.source || 'No recommendation available'
 
-  const gaps: TraceabilityGap[] = []
-  if (regions.length < 3) gaps.push({ gap: 'Limited supplier region diversity', severity: 'major', remediation: 'Map at least 3 supplier regions per ingredient for full traceability' })
-  if (!blockchain) gaps.push({ gap: 'No blockchain-enabled verification', severity: 'minor', remediation: 'Implement blockchain or distributed ledger for immutable traceability records' })
-  if (nodes.some(n => !n.verified)) gaps.push({ gap: 'Unverified supply chain nodes detected', severity: 'critical', remediation: 'Conduct third-party audits for all unverified nodes within 30 days' })
-  if (ingredients.length > 10) gaps.push({ gap: 'High ingredient complexity complicates traceability', severity: 'major', remediation: 'Simplify ingredient list or implement batch-level tracking for high-risk components' })
-  if (gaps.length === 0) gaps.push({ gap: 'No critical gaps detected', severity: 'minor', remediation: 'Continue routine monitoring and annual re-verification' })
+  const envImpact = proteinType === 'plant_based'
+    ? 'Lowest environmental footprint -- 80-90% less GHG vs animal protein, minimal land/water use'
+    : proteinType === 'fermentation_based'
+    ? 'Low-moderate footprint -- bioreactor energy use offset by high protein yield per input'
+    : proteinType === 'cultivated'
+    ? 'Moderate footprint currently -- bioreactor energy dominates; expected to improve with scale'
+    : 'Variable footprint depending on component ratios -- optimize plant fraction for lowest impact'
 
-  const recallHours = recall === 'high' ? rng.nextInt(4, 12) : recall === 'medium' ? rng.nextInt(12, 48) : rng.nextInt(48, 120)
-  const blockchainRec = blockchain
-    ? 'Blockchain enabled -- immutable traceability records provide tamper-proof recall evidence'
-    : 'Recommend implementing blockchain-based traceability for end-to-end visibility and instant recall capability'
+  const regulatoryPathway = region === 'US'
+    ? 'FDA GRAS notification + USDA-FSIS labeling (if cultivated) -- estimated 12-18 months'
+    : region === 'EU'
+    ? 'EFSA Novel Food authorization -- estimated 18-24 months'
+    : region === 'SG'
+    ? 'SFA novel food safety assessment -- estimated 6-12 months'
+    : 'Consult regulatory authority in target market'
 
-  const riskHotspots = nodes.filter(n => n.risk_level === 'high').map(n => n.stage + ' (' + n.location + ')')
+  const avgCost = roundTo(rng.nextFloat(costTarget * 0.8, costTarget * 1.5), 2)
+  const costProjection = 'Estimated cost: $' + avgCost + '/kg at ' + scale + ' scale. Target: $' + costTarget + '/kg. ' + (avgCost <= costTarget ? 'Target achievable at current scale.' : 'Cost reduction of $' + roundTo(avgCost - costTarget, 2) + '/kg needed -- expect 15-30% reduction at commercial scale.')
+
+  const timeline = region === 'SG' ? rng.nextInt(6, 12) : region === 'US' ? rng.nextInt(12, 18) : rng.nextInt(18, 24)
 
   const recommendations: string[] = []
-  recommendations.push('Implement unique batch IDs for each production lot')
-  if (!blockchain) recommendations.push('Deploy blockchain or QR-code traceability for consumer-facing transparency')
-  recommendations.push('Conduct mock recall exercises quarterly (target: <' + recallHours + ' hours)')
-  if (riskHotspots.length > 0) recommendations.push('Prioritize risk mitigation at: ' + riskHotspots.join(', '))
-  recommendations.push('Share traceability data with downstream partners for end-to-end visibility')
-  recommendations.push('Integrate IoT sensors at critical control points for real-time monitoring')
+  recommendations.push('Prioritize ' + recommended + ' (overall score: ' + (scores[0]?.overall_score || 'N/A') + '/100)')
+  if (scores[0] && scores[0].scalability === 'low') recommendations.push('Investment in scale-up infrastructure needed for ' + recommended)
+  recommendations.push('Conduct consumer taste test with top 2 ranked sources')
+  recommendations.push('Secure supply agreements with at least 2 alternative protein suppliers')
+  if (proteinType === 'cultivated') recommendations.push('Engage regulatory consultants early -- novel food approval is the primary bottleneck')
+  recommendations.push('Benchmark against incumbent ingredient cost at equal protein content')
 
   return {
-    traceability_score: traceScore,
-    nodes,
-    gaps,
-    blockchain_recommendation: blockchainRec,
-    recall_time_estimate_hours: recallHours,
-    risk_hotspots: riskHotspots,
+    recommended_source: recommended,
+    scores,
+    environmental_impact: envImpact,
+    regulatory_pathway: regulatoryPathway,
+    cost_projection: costProjection,
+    go_to_market_timeline_months: timeline,
     recommendations
   }
 }
 
-function formatSupplyChainReport(input: SupplyChainInput, result: SupplyChainResult): string {
+function formatProteinReport(input: ProteinInput, result: ProteinAnalysisResult): string {
   const lines: string[] = []
-  lines.push('## Supply Chain Traceability Report')
+  lines.push('## Alternative Protein Analysis Report')
   lines.push('')
-  lines.push('**Product:** ' + (input.product_name || 'Unspecified') + ' | **Target:** ' + (input.traceability_target || 'batch') + ' traceability')
+  lines.push('**Target Product:** ' + (input.target_product || 'protein-enhanced food product') + ' | **Type:** ' + (input.protein_type || 'plant_based') + ' | **Scale:** ' + (input.scale_of_production || 'pilot'))
   lines.push('')
-  lines.push('### Traceability Score: ' + result.traceability_score + '/100')
+  lines.push('### Recommended Source: ' + result.recommended_source)
   lines.push('')
-  lines.push(result.blockchain_recommendation)
-  lines.push('Estimated recall time: ' + result.recall_time_estimate_hours + ' hours')
-  lines.push('')
-
-  lines.push('### Supply Chain Nodes')
-  lines.push('| Stage | Location | Risk | Certification | Verified |')
-  lines.push('|-------|----------|------|---------------|----------|')
-  for (const n of result.nodes) {
-    const v = n.verified ? 'Yes' : 'No'
-    lines.push('| ' + n.stage + ' | ' + n.location + ' | ' + n.risk_level.toUpperCase() + ' | ' + n.certification + ' | ' + v + ' |')
+  lines.push('### Protein Source Scores')
+  lines.push('| Source | Protein % | PDCAAS | Env Score | Cost Feas. | Scalability | Overall |')
+  lines.push('|--------|-----------|--------|-----------|------------|-------------|---------|')
+  for (const s of result.scores) {
+    lines.push('| ' + s.source + ' | ' + s.protein_content_pct + '% | ' + s.pdcaas_score + ' | ' + s.environmental_score + ' | ' + s.cost_feasibility + ' | ' + s.scalability.toUpperCase() + ' | ' + s.overall_score + ' |')
   }
   lines.push('')
-
-  if (result.gaps.length > 0) {
-    lines.push('### Traceability Gaps')
-    for (const g of result.gaps) {
-      lines.push('- **' + g.gap + '** [' + g.severity.toUpperCase() + '] -- ' + g.remediation)
-    }
-    lines.push('')
-  }
-
-  if (result.risk_hotspots.length > 0) {
-    lines.push('### Risk Hotspots')
-    for (const r of result.risk_hotspots) {
-      lines.push('- ' + r)
-    }
-    lines.push('')
-  }
-
+  lines.push('### Environmental Impact')
+  lines.push(result.environmental_impact)
+  lines.push('')
+  lines.push('### Regulatory Pathway')
+  lines.push(result.regulatory_pathway)
+  lines.push('')
+  lines.push('### Cost Projection')
+  lines.push(result.cost_projection)
+  lines.push('')
+  lines.push('### Timeline to Market: ' + result.go_to_market_timeline_months + ' months')
+  lines.push('')
   lines.push('### Recommendations')
   for (const r of result.recommendations) {
     lines.push('- ' + r)
@@ -573,145 +633,111 @@ function formatComplianceReport(input: ComplianceInput, result: ComplianceResult
   return lines.join('\n')
 }
 
-// ==================== TOOL 3: RECIPE OPTIMIZATION AI ====================
+// ==================== TOOL 3: SUPPLY CHAIN TRACEABILITY ENGINE ====================
 
-function optimizeRecipe(input: RecipeInput): RecipeOptimizationResult {
+function traceSupplyChain(input: SupplyChainInput): SupplyChainResult {
   const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
 
-  const recipeName = input.recipe_name || 'Unnamed Recipe'
-  const ingredients = input.current_ingredients || []
-  const targetReduction = input.target_cost_reduction_pct || 15
-  const targets = input.nutrition_targets || {}
-  const constraints = input.dietary_constraints || []
-  const flavorTargets = input.flavor_profile_target || []
+  const product = input.product_name || 'Unspecified Product'
+  const ingredients = input.ingredient_list || []
+  const regions = input.supplier_regions || []
+  const target = input.traceability_target || 'batch'
+  const blockchain = input.blockchain_enabled !== false
+  const recall = input.recall_readiness || 'medium'
 
-  const totalCost = ingredients.reduce((sum, ing) => sum + (ing.quantity_g / 1000) * ing.cost_per_kg, 0)
-  const costPerServing = roundTo(totalCost, 3)
+  const stages = ['Raw Material Sourcing', 'Processing/Manufacturing', 'Packaging', 'Distribution', 'Warehousing', 'Retail/Point of Sale']
+  const certifications = ['Organic', 'Fair Trade', 'Non-GMO', 'Halal', 'Kosher', 'ISO 22000', 'BRC Grade A', 'SQF Level 3']
 
-  const substitutionPool: { original: string; subs: { name: string; costRatio: number; flavorImpact: IngredientSubstitution['flavor_impact'] }[] }[] = [
-    { original: 'wheat flour', subs: [{ name: 'oat flour', costRatio: 0.7, flavorImpact: 'slight_change' }, { name: 'almond flour', costRatio: 1.8, flavorImpact: 'noticeable_change' }] },
-    { original: 'sugar', subs: [{ name: 'stevia', costRatio: 0.1, flavorImpact: 'noticeable_change' }, { name: 'erythritol', costRatio: 0.3, flavorImpact: 'slight_change' }, { name: 'monk fruit extract', costRatio: 0.2, flavorImpact: 'slight_change' }] },
-    { original: 'butter', subs: [{ name: 'coconut oil', costRatio: 0.6, flavorImpact: 'slight_change' }, { name: 'avocado puree', costRatio: 0.8, flavorImpact: 'slight_change' }] },
-    { original: 'palm oil', subs: [{ name: 'sunflower oil', costRatio: 0.7, flavorImpact: 'neutral' }, { name: 'rapeseed oil', costRatio: 0.65, flavorImpact: 'neutral' }] },
-    { original: 'milk', subs: [{ name: 'oat milk', costRatio: 0.8, flavorImpact: 'slight_change' }, { name: 'pea milk', costRatio: 0.75, flavorImpact: 'slight_change' }] },
-  ]
-
-  const substitutions: IngredientSubstitution[] = []
-  const optimizedIngredients = ingredients.map(ing => {
-    const pool = substitutionPool.find(p => p.original.toLowerCase() === ing.name.toLowerCase())
-    if (pool && rng.next() > 0.4) {
-      const sub = pool.subs[rng.nextInt(0, pool.subs.length - 1)]
-      const newCost = roundTo(ing.cost_per_kg * sub.costRatio, 2)
-      const savings = roundTo((1 - sub.costRatio) * 100, 1)
-      substitutions.push({
-        original: ing.name,
-        substitute: sub.name,
-        substitution_ratio: 1.0,
-        cost_savings_pct: savings,
-        flavor_impact: sub.flavorImpact,
-        nutrition_delta: 'Check nutrition panel for ' + sub.name + ' vs ' + ing.name
-      })
-      return { ...ing, name: sub.name, cost_per_kg: newCost }
+  const nodes: TraceabilityNode[] = stages.map((stage, i) => {
+    const region = regions[i % Math.max(regions.length, 1)] || 'Unknown'
+    const riskRoll = rng.next()
+    const risk: 'low' | 'medium' | 'high' = riskRoll < 0.5 ? 'low' : riskRoll < 0.8 ? 'medium' : 'high'
+    return {
+      stage,
+      location: region,
+      timestamp_offset_days: rng.nextInt(1, 30) * (i + 1),
+      risk_level: risk,
+      certification: rng.pick(certifications),
+      verified: rng.next() > 0.3
     }
-    return ing
   })
 
-  const newCost = optimizedIngredients.reduce((sum, ing) => sum + (ing.quantity_g / 1000) * ing.cost_per_kg, 0)
-  const newCostPerServing = roundTo(newCost, 3)
-  const reductionAchieved = roundTo((1 - newCostPerServing / Math.max(costPerServing, 0.001)) * 100, 1)
+  const baseScore = target === 'full' ? 90 : target === 'batch' ? 65 : 40
+  const ingBoost = Math.min(ingredients.length * 2, 10)
+  const regionBoost = regions.length >= 3 ? 5 : 0
+  const blockchainBoost = blockchain ? 8 : 0
+  const verifiedRatio = nodes.filter(n => n.verified).length / nodes.length
+  const traceScore = clamp(Math.round(baseScore + ingBoost + regionBoost + blockchainBoost + verifiedRatio * 10 + rng.nextInt(-5, 5)), 0, 100)
 
-  const calories = targets.calories || rng.nextInt(250, 600)
-  const protein = targets.protein_g || rng.nextInt(5, 30)
-  const fat = targets.fat_g || rng.nextInt(5, 25)
-  const carbs = targets.carbs_g || rng.nextInt(20, 60)
-  const sodium = targets.sodium_mg || rng.nextInt(100, 800)
+  const gaps: TraceabilityGap[] = []
+  if (regions.length < 3) gaps.push({ gap: 'Limited supplier region diversity', severity: 'major', remediation: 'Map at least 3 supplier regions per ingredient for full traceability' })
+  if (!blockchain) gaps.push({ gap: 'No blockchain-enabled verification', severity: 'minor', remediation: 'Implement blockchain or distributed ledger for immutable traceability records' })
+  if (nodes.some(n => !n.verified)) gaps.push({ gap: 'Unverified supply chain nodes detected', severity: 'critical', remediation: 'Conduct third-party audits for all unverified nodes within 30 days' })
+  if (ingredients.length > 10) gaps.push({ gap: 'High ingredient complexity complicates traceability', severity: 'major', remediation: 'Simplify ingredient list or implement batch-level tracking for high-risk components' })
+  if (gaps.length === 0) gaps.push({ gap: 'No critical gaps detected', severity: 'minor', remediation: 'Continue routine monitoring and annual re-verification' })
 
-  const flavorMatch = flavorTargets.length > 0
-    ? clamp(85 - substitutions.filter(s => s.flavor_impact === 'noticeable_change').length * 15 - substitutions.filter(s => s.flavor_impact === 'slight_change').length * 5 + rng.nextInt(-5, 5), 0, 100)
-    : rng.nextInt(70, 95)
+  const recallHours = recall === 'high' ? rng.nextInt(4, 12) : recall === 'medium' ? rng.nextInt(12, 48) : rng.nextInt(48, 120)
+  const blockchainRec = blockchain
+    ? 'Blockchain enabled -- immutable traceability records provide tamper-proof recall evidence'
+    : 'Recommend implementing blockchain-based traceability for end-to-end visibility and instant recall capability'
 
-  const feasibility: 'high' | 'medium' | 'low'
-    = substitutions.length <= 2 && flavorMatch >= 70 ? 'high'
-    : substitutions.length <= 4 && flavorMatch >= 50 ? 'medium'
-    : 'low'
-
-  const costSummary = 'Cost reduced from $' + costPerServing + ' to $' + newCostPerServing + ' per serving (' + reductionAchieved + '% reduction, target was ' + targetReduction + '%)'
-
-  const nutritionCompliance = (() => {
-    const parts: string[] = []
-    if (targets.calories && Math.abs(calories - targets.calories) > 50) parts.push('Calories within target range')
-    if (targets.protein_g) parts.push('Protein: ' + protein + 'g')
-    if (targets.sodium_mg && sodium > targets.sodium_mg) parts.push('WARNING: Sodium exceeds target (' + sodium + 'mg vs ' + targets.sodium_mg + 'mg)')
-    return parts.length > 0 ? parts.join('; ') : 'Nutritional profile within expected range'
-  })()
-
-  const flavorRisk = flavorMatch >= 80
-    ? 'Low flavor risk -- minimal sensory impact expected'
-    : flavorMatch >= 60
-    ? 'Moderate flavor risk -- consumer sensory testing recommended'
-    : 'High flavor risk -- significant reformulation may affect consumer acceptance'
+  const riskHotspots = nodes.filter(n => n.risk_level === 'high').map(n => n.stage + ' (' + n.location + ')')
 
   const recommendations: string[] = []
-  if (reductionAchieved < targetReduction) recommendations.push('Additional ' + (targetReduction - reductionAchieved).toFixed(1) + '% cost reduction needed -- consider process optimization')
-  recommendations.push('Conduct triangle sensory test with reformulated recipe (minimum 30 panelists)')
-  if (constraints.includes('gluten_free')) recommendations.push('Verify gluten-free certification for all substituted ingredients')
-  if (constraints.includes('vegan')) recommendations.push('Ensure no animal-derived ingredients in reformulation')
-  recommendations.push('Update nutrition facts panel and ingredient declaration')
-  recommendations.push('Run shelf life study on reformulated product to verify stability')
-
-  const optimized: OptimizedRecipe = {
-    recipe_name: recipeName,
-    ingredients: optimizedIngredients,
-    total_cost_per_serving: newCostPerServing,
-    cost_reduction_achieved_pct: reductionAchieved,
-    nutrition_per_serving: { calories, protein_g: protein, fat_g: fat, carbs_g: carbs, sodium_mg: sodium },
-    substitutions,
-    flavor_match_score: flavorMatch,
-    feasibility
-  }
+  recommendations.push('Implement unique batch IDs for each production lot')
+  if (!blockchain) recommendations.push('Deploy blockchain or QR-code traceability for consumer-facing transparency')
+  recommendations.push('Conduct mock recall exercises quarterly (target: <' + recallHours + ' hours)')
+  if (riskHotspots.length > 0) recommendations.push('Prioritize risk mitigation at: ' + riskHotspots.join(', '))
+  recommendations.push('Share traceability data with downstream partners for end-to-end visibility')
+  recommendations.push('Integrate IoT sensors at critical control points for real-time monitoring')
 
   return {
-    optimized,
-    cost_savings_summary: costSummary,
-    nutrition_compliance: nutritionCompliance,
-    flavor_risk_assessment: flavorRisk,
+    traceability_score: traceScore,
+    nodes,
+    gaps,
+    blockchain_recommendation: blockchainRec,
+    recall_time_estimate_hours: recallHours,
+    risk_hotspots: riskHotspots,
     recommendations
   }
 }
 
-function formatRecipeReport(input: RecipeInput, result: RecipeOptimizationResult): string {
+function formatSupplyChainReport(input: SupplyChainInput, result: SupplyChainResult): string {
   const lines: string[] = []
-  lines.push('## Recipe Optimization Report')
+  lines.push('## Supply Chain Traceability Report')
   lines.push('')
-  lines.push('**Recipe:** ' + result.optimized.recipe_name + ' | Status: ' + result.optimized.feasibility.toUpperCase() + ' feasibility')
+  lines.push('**Product:** ' + (input.product_name || 'Unspecified') + ' | **Target:** ' + (input.traceability_target || 'batch') + ' traceability')
   lines.push('')
-  lines.push('### Cost Optimization')
-  lines.push(result.cost_savings_summary)
+  lines.push('### Traceability Score: ' + result.traceability_score + '/100')
+  lines.push('')
+  lines.push(result.blockchain_recommendation)
+  lines.push('Estimated recall time: ' + result.recall_time_estimate_hours + ' hours')
   lines.push('')
 
-  if (result.optimized.substitutions.length > 0) {
-    lines.push('### Ingredient Substitutions')
-    lines.push('| Original | Substitute | Savings % | Flavor Impact |')
-    lines.push('|----------|------------|-----------|---------------|')
-    for (const s of result.optimized.substitutions) {
-      lines.push('| ' + s.original + ' | ' + s.substitute + ' | ' + s.cost_savings_pct + '% | ' + s.flavor_impact.replace('_', ' ') + ' |')
+  lines.push('### Supply Chain Nodes')
+  lines.push('| Stage | Location | Risk | Certification | Verified |')
+  lines.push('|-------|----------|------|---------------|----------|')
+  for (const n of result.nodes) {
+    const v = n.verified ? 'Yes' : 'No'
+    lines.push('| ' + n.stage + ' | ' + n.location + ' | ' + n.risk_level.toUpperCase() + ' | ' + n.certification + ' | ' + v + ' |')
+  }
+  lines.push('')
+
+  if (result.gaps.length > 0) {
+    lines.push('### Traceability Gaps')
+    for (const g of result.gaps) {
+      lines.push('- **' + g.gap + '** [' + g.severity.toUpperCase() + '] -- ' + g.remediation)
     }
     lines.push('')
   }
 
-  lines.push('### Nutrition Per Serving')
-  const n = result.optimized.nutrition_per_serving
-  lines.push('- Calories: ' + n.calories + ' kcal')
-  lines.push('- Protein: ' + n.protein_g + 'g')
-  lines.push('- Fat: ' + n.fat_g + 'g')
-  lines.push('- Carbs: ' + n.carbs_g + 'g')
-  lines.push('- Sodium: ' + n.sodium_mg + 'mg')
-  lines.push('- Nutrition compliance: ' + result.nutrition_compliance)
-  lines.push('')
-
-  lines.push('### Flavor Match Score: ' + result.optimized.flavor_match_score + '/100')
-  lines.push(result.flavor_risk_assessment)
-  lines.push('')
+  if (result.risk_hotspots.length > 0) {
+    lines.push('### Risk Hotspots')
+    for (const r of result.risk_hotspots) {
+      lines.push('- ' + r)
+    }
+    lines.push('')
+  }
 
   lines.push('### Recommendations')
   for (const r of result.recommendations) {
@@ -723,144 +749,172 @@ function formatRecipeReport(input: RecipeInput, result: RecipeOptimizationResult
   return lines.join('\n')
 }
 
-// ==================== TOOL 4: ALTERNATIVE PROTEIN ANALYZER ====================
+// ==================== TOOL 4: PERSONALIZED NUTRITION PLANNER ====================
 
-function analyzeAlternativeProtein(input: ProteinInput): ProteinAnalysisResult {
+function planNutrition(input: NutritionInput): NutritionPlanResult {
   const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
 
-  const proteinType = input.protein_type || 'plant_based'
-  const targetProduct = input.target_product || 'protein-enhanced food product'
-  const scale = input.scale_of_production || 'pilot'
-  const region = input.regulatory_region || 'US'
-  const costTarget = input.cost_target_per_kg || 15
+  const age = input.age || 30
+  const gender = input.gender || 'female'
+  const weightKg = input.weight_kg || 70
+  const heightCm = input.height_cm || 170
+  const activity = input.activity_level || 'moderate'
+  const restrictions = input.dietary_restrictions || []
+  const goals = input.health_goals || []
+  const preferences = input.food_preferences || []
+  const allergies = input.allergies || []
+  const mealsPerDay = input.meals_per_day || 3
 
-  const sourceDatabase: Record<string, { name: string; protein_pct: number; pdcaas: number }[]> = {
-    plant_based: [
-      { name: 'Pea protein isolate', protein_pct: 85, pdcaas: 0.89 },
-      { name: 'Soy protein concentrate', protein_pct: 70, pdcaas: 0.95 },
-      { name: 'Fava bean protein', protein_pct: 65, pdcaas: 0.82 },
-      { name: 'Rice protein', protein_pct: 80, pdcaas: 0.72 },
-      { name: 'Chickpea protein', protein_pct: 60, pdcaas: 0.78 },
-    ],
-    fermentation_based: [
-      { name: 'Fusarium mycoprotein (Quorn)', protein_pct: 45, pdcaas: 0.93 },
-      { name: 'Precision-fermentation whey', protein_pct: 90, pdcaas: 1.0 },
-      { name: 'Lentil-fermented protein', protein_pct: 55, pdcaas: 0.85 },
-    ],
-    cultivated: [
-      { name: 'Cultivated chicken cells', protein_pct: 70, pdcaas: 0.99 },
-      { name: 'Cultivated beef cells', protein_pct: 75, pdcaas: 1.0 },
-      { name: 'Cultivated fish cells', protein_pct: 65, pdcaas: 0.97 },
-    ],
-    hybrid: [
-      { name: 'Plant-mycelium composite', protein_pct: 55, pdcaas: 0.84 },
-      { name: 'Plant-cultivated fat blend', protein_pct: 60, pdcaas: 0.90 },
-    ]
+  // BMR calculation (Mifflin-St Jeor)
+  const bmr = gender === 'male'
+    ? Math.round(10 * weightKg + 6.25 * heightCm - 5 * age + 5)
+    : Math.round(10 * weightKg + 6.25 * heightCm - 5 * age - 161)
+
+  // Activity multiplier
+  const activityMultipliers: Record<string, number> = {
+    sedentary: 1.2,
+    light: 1.375,
+    moderate: 1.55,
+    active: 1.725,
+    very_active: 1.9
+  }
+  const multiplier = activityMultipliers[activity] || 1.55
+  const tdee = Math.round(bmr * multiplier)
+
+  // Calorie target adjustment based on goals
+  let calorieTarget = tdee
+  if (goals.includes('weight_loss')) calorieTarget = Math.round(tdee * 0.8)
+  if (goals.includes('muscle_gain')) calorieTarget = Math.round(tdee * 1.15)
+  if (goals.includes('maintenance')) calorieTarget = tdee
+
+  // Macronutrient split
+  let proteinPct = 25
+  let carbsPct = 45
+  let fatPct = 30
+  if (goals.includes('keto')) { proteinPct = 25; carbsPct = 10; fatPct = 65 }
+  if (goals.includes('low_carb')) { proteinPct = 30; carbsPct = 25; fatPct = 45 }
+  if (goals.includes('high_protein')) { proteinPct = 35; carbsPct = 35; fatPct = 30 }
+  if (goals.includes('muscle_gain')) { proteinPct = 30; carbsPct = 40; fatPct = 30 }
+
+  const proteinG = Math.round((calorieTarget * proteinPct / 100) / 4)
+  const carbsG = Math.round((calorieTarget * carbsPct / 100) / 4)
+  const fatG = Math.round((calorieTarget * fatPct / 100) / 9)
+
+  // Meal plan
+  const mealNames = mealsPerDay <= 2 ? ['Meal 1', 'Meal 2'] : mealsPerDay === 3 ? ['Breakfast', 'Lunch', 'Dinner'] : mealsPerDay === 4 ? ['Breakfast', 'Lunch', 'Snack', 'Dinner'] : ['Breakfast', 'Morning Snack', 'Lunch', 'Afternoon Snack', 'Dinner']
+
+  const foodPool: Record<string, string[]> = {
+    breakfast: ['Oatmeal with berries', 'Greek yogurt parfait', 'Whole grain toast with avocado', 'Scrambled eggs with spinach', 'Smoothie bowl', 'Chia pudding'],
+    lunch: ['Grilled chicken salad', 'Quinoa bowl with vegetables', 'Lentil soup', 'Turkey wrap', 'Buddha bowl', 'Salmon with brown rice'],
+    dinner: ['Grilled salmon with asparagus', 'Stir-fry tofu with vegetables', 'Lean beef with sweet potato', 'Chickpea curry', 'Baked cod with roasted vegetables', 'Whole pasta with marinara'],
+    snack: ['Mixed nuts', 'Apple with almond butter', 'Protein shake', 'Hummus with vegetables', 'Cottage cheese', 'Trail mix']
   }
 
-  const candidates = input.protein_source_candidates || sourceDatabase[proteinType].map(s => s.name)
-  const scores: ProteinScore[] = candidates.map(sourceName => {
-    const dbEntry = sourceDatabase[proteinType]?.find(s => s.name === sourceName)
-    const proteinContent = dbEntry?.protein_pct || rng.nextInt(40, 90)
-    const pdcaas = dbEntry?.pdcaas || roundTo(rng.nextFloat(0.7, 1.0), 2)
-    const envScore = clamp(rng.nextInt(55, 95), 0, 100)
-    const costFeasibility = clamp(rng.nextInt(40, 90), 0, 100)
-    const regulatoryStatus = region === 'US'
-      ? (rng.next() > 0.3 ? 'GRAS notification submitted' : 'Awaiting FDA review')
-      : region === 'EU'
-      ? (rng.next() > 0.3 ? 'Novel Food application pending' : 'EFS\'A pre-submission completed')
-      : region === 'SG'
-      ? 'SFA novel food approval pathway'
-      : 'Regulatory assessment required'
-    const scalability: 'high' | 'medium' | 'low'
-      = scale === 'industrial' ? 'high' : scale === 'commercial' ? (rng.next() > 0.3 ? 'high' : 'medium') : (rng.next() > 0.5 ? 'medium' : 'low')
-    const overall = Math.round((proteinContent * 0.2 + pdcaas * 25 + envScore * 0.2 + costFeasibility * 0.2 + (scalability === 'high' ? 15 : scalability === 'medium' ? 10 : 5)))
+  const mealPlan: MealSuggestion[] = mealNames.map((meal) => {
+    const calShare = Math.round(calorieTarget / mealsPerDay)
+    const pShare = Math.round(proteinG / mealsPerDay)
+    const cShare = Math.round(carbsG / mealsPerDay)
+    const fShare = Math.round(fatG / mealsPerDay)
+    const mealKey = meal.toLowerCase().includes('snack') ? 'snack' : meal.toLowerCase().includes('breakfast') ? 'breakfast' : meal.toLowerCase().includes('lunch') ? 'lunch' : 'dinner'
+    const foods = foodPool[mealKey] || foodPool.snack
+    const selectedFoods: string[] = []
+    for (let i = 0; i < 2; i++) {
+      const f = rng.pick(foods)
+      if (!selectedFoods.includes(f)) selectedFoods.push(f)
+    }
     return {
-      source: sourceName,
-      protein_content_pct: proteinContent,
-      pdcaas_score: pdcaas,
-      environmental_score: envScore,
-      cost_feasibility: costFeasibility,
-      regulatory_status: regulatoryStatus,
-      scalability,
-      overall_score: clamp(overall, 0, 100)
+      meal,
+      calories: calShare + rng.nextInt(-30, 30),
+      protein_g: pShare + rng.nextInt(-3, 3),
+      carbs_g: cShare + rng.nextInt(-5, 5),
+      fat_g: fShare + rng.nextInt(-2, 2),
+      foods: selectedFoods
     }
   })
 
-  scores.sort((a, b) => b.overall_score - a.overall_score)
-  const recommended = scores[0]?.source || 'No recommendation available'
+  // Micronutrient gaps
+  const allMicronutrients: MicronutrientGap[] = [
+    { nutrient: 'Vitamin D', status: rng.next() > 0.5 ? 'borderline' : 'adequate', recommended_intake: '600-800 IU/day', food_sources: ['Fatty fish', 'Fortified dairy', 'Egg yolks'] },
+    { nutrient: 'Iron', status: gender === 'female' ? (rng.next() > 0.4 ? 'borderline' : 'adequate') : 'adequate', recommended_intake: gender === 'female' ? '18mg/day' : '8mg/day', food_sources: ['Red meat', 'Spinach', 'Lentils', 'Fortified cereals'] },
+    { nutrient: 'Calcium', status: rng.next() > 0.6 ? 'adequate' : 'borderline', recommended_intake: '1000mg/day', food_sources: ['Dairy', 'Leafy greens', 'Fortified plant milk', 'Tofu'] },
+    { nutrient: 'Vitamin B12', status: restrictions.includes('vegan') ? 'deficient' : 'adequate', recommended_intake: '2.4mcg/day', food_sources: ['Meat', 'Fish', 'Eggs', 'Fortified nutritional yeast'] },
+    { nutrient: 'Magnesium', status: rng.next() > 0.5 ? 'adequate' : 'borderline', recommended_intake: '310-420mg/day', food_sources: ['Nuts', 'Seeds', 'Whole grains', 'Dark chocolate'] },
+    { nutrient: 'Omega-3', status: rng.next() > 0.4 ? 'borderline' : 'adequate', recommended_intake: '250-500mg EPA+DHA/day', food_sources: ['Salmon', 'Walnuts', 'Flaxseeds', 'Chia seeds'] },
+  ]
 
-  const envImpact = proteinType === 'plant_based'
-    ? 'Lowest environmental footprint -- 80-90% less GHG vs animal protein, minimal land/water use'
-    : proteinType === 'fermentation_based'
-    ? 'Low-moderate footprint -- bioreactor energy use offset by high protein yield per input'
-    : proteinType === 'cultivated'
-    ? 'Moderate footprint currently -- bioreactor energy dominates; expected to improve with scale'
-    : 'Variable footprint depending on component ratios -- optimize plant fraction for lowest impact'
+  const micronutrientGaps = allMicronutrients.filter(m => m.status !== 'adequate')
 
-  const regulatoryPathway = region === 'US'
-    ? 'FDA GRAS notification + USDA-FSIS labeling (if cultivated) -- estimated 12-18 months'
-    : region === 'EU'
-    ? 'EFSA Novel Food authorization -- estimated 18-24 months'
-    : region === 'SG'
-    ? 'SFA novel food safety assessment -- estimated 6-12 months'
-    : 'Consult regulatory authority in target market'
+  // Hydration
+  const hydration = roundTo(weightKg * 0.033 + (activity === 'active' || activity === 'very_active' ? 0.5 : 0), 1)
 
-  const avgCost = roundTo(rng.nextFloat(costTarget * 0.8, costTarget * 1.5), 2)
-  const costProjection = 'Estimated cost: $' + avgCost + '/kg at ' + scale + ' scale. Target: $' + costTarget + '/kg. ' + (avgCost <= costTarget ? 'Target achievable at current scale.' : 'Cost reduction of $' + roundTo(avgCost - costTarget, 2) + '/kg needed -- expect 15-30% reduction at commercial scale.')
+  // Supplement suggestions
+  const supplements: string[] = []
+  if (micronutrientGaps.some(m => m.nutrient === 'Vitamin D')) supplements.push('Vitamin D3 (1000-2000 IU/day)')
+  if (micronutrientGaps.some(m => m.nutrient === 'Vitamin B12')) supplements.push('Vitamin B12 (250-500mcg/day)')
+  if (micronutrientGaps.some(m => m.nutrient === 'Omega-3')) supplements.push('Omega-3 fish oil or algae-based DHA (250mg/day)')
+  if (micronutrientGaps.some(m => m.nutrient === 'Iron')) supplements.push('Iron bisglycinate (18mg/day with vitamin C)')
+  if (micronutrientGaps.some(m => m.nutrient === 'Calcium')) supplements.push('Calcium citrate (500mg/day with meals)')
+  if (supplements.length === 0) supplements.push('No supplements needed -- nutrient needs met through diet')
 
-  const timeline = region === 'SG' ? rng.nextInt(6, 12) : region === 'US' ? rng.nextInt(12, 18) : rng.nextInt(18, 24)
-
+  // Recommendations
   const recommendations: string[] = []
-  recommendations.push('Prioritize ' + recommended + ' (overall score: ' + (scores[0]?.overall_score || 'N/A') + '/100)')
-  if (scores[0] && scores[0].scalability === 'low') recommendations.push('Investment in scale-up infrastructure needed for ' + recommended)
-  recommendations.push('Conduct consumer taste test with top 2 ranked sources')
-  recommendations.push('Secure supply agreements with at least 2 alternative protein suppliers')
-  if (proteinType === 'cultivated') recommendations.push('Engage regulatory consultants early -- novel food approval is the primary bottleneck')
-  recommendations.push('Benchmark against incumbent ingredient cost at equal protein content')
+  recommendations.push('Target ' + calorieTarget + ' kcal/day (' + tdee + ' TDEE adjusted for goals)')
+  if (goals.includes('weight_loss')) recommendations.push('Moderate caloric deficit of ' + (tdee - calorieTarget) + ' kcal/day for sustainable weight loss (~0.5kg/week)')
+  if (goals.includes('muscle_gain')) recommendations.push('Ensure protein intake of ' + proteinG + 'g/day spread across ' + mealsPerDay + ' meals (20-40g per meal)')
+  if (restrictions.includes('vegan')) recommendations.push('Monitor B12, iron, zinc, and omega-3 intake closely on vegan diet')
+  if (allergies.length > 0) recommendations.push('Avoid allergens: ' + allergies.join(', ') + ' -- verify all food labels')
+  recommendations.push('Drink ' + hydration + 'L of water daily')
+  recommendations.push('Reassess nutrition plan every 4-6 weeks based on progress')
 
   return {
-    recommended_source: recommended,
-    scores,
-    environmental_impact: envImpact,
-    regulatory_pathway: regulatoryPathway,
-    cost_projection: costProjection,
-    go_to_market_timeline_months: timeline,
+    bmr,
+    tdee,
+    daily_calorie_target: calorieTarget,
+    macronutrients: { protein_pct: proteinPct, carbs_pct: carbsPct, fat_pct: fatPct, protein_g: proteinG, carbs_g: carbsG, fat_g: fatG },
+    meal_plan: mealPlan,
+    micronutrient_gaps: micronutrientGaps,
+    hydration_liters: hydration,
+    supplement_suggestions: supplements,
     recommendations
   }
 }
 
-function formatProteinReport(input: ProteinInput, result: ProteinAnalysisResult): string {
+function formatNutritionReport(input: NutritionInput, result: NutritionPlanResult): string {
   const lines: string[] = []
-  lines.push('## Alternative Protein Analysis Report')
+  lines.push('## Personalized Nutrition Plan')
   lines.push('')
-  lines.push('**Target Product:** ' + (input.target_product || 'protein-enhanced food product') + ' | **Type:** ' + (input.protein_type || 'plant_based') + ' | **Scale:** ' + (input.scale_of_production || 'pilot'))
+  lines.push('**Profile:** ' + (input.gender || 'female') + ', ' + (input.age || 30) + 'y, ' + (input.weight_kg || 70) + 'kg, ' + (input.height_cm || 170) + 'cm | **Activity:** ' + (input.activity_level || 'moderate'))
+  lines.push('**Goals:** ' + ((input.health_goals || []).join(', ') || 'General wellness'))
+  lines.push('**Restrictions:** ' + ((input.dietary_restrictions || []).join(', ') || 'None'))
   lines.push('')
-  lines.push('### Recommended Source: ' + result.recommended_source)
+  lines.push('### Energy Requirements')
+  lines.push('- BMR: ' + result.bmr + ' kcal/day')
+  lines.push('- TDEE: ' + result.tdee + ' kcal/day')
+  lines.push('- **Daily Calorie Target: ' + result.daily_calorie_target + ' kcal/day**')
   lines.push('')
-  lines.push('### Protein Source Scores')
-  lines.push('| Source | Protein % | PDCAAS | Env Score | Cost Feas. | Scalability | Overall |')
-  lines.push('|--------|-----------|--------|-----------|------------|-------------|---------|')
-  for (const s of result.scores) {
-    lines.push('| ' + s.source + ' | ' + s.protein_content_pct + '% | ' + s.pdcaas_score + ' | ' + s.environmental_score + ' | ' + s.cost_feasibility + ' | ' + s.scalability.toUpperCase() + ' | ' + s.overall_score + ' |')
+  lines.push('### Macronutrient Split')
+  lines.push('- Protein: ' + result.macronutrients.protein_pct + '% (' + result.macronutrients.protein_g + 'g)')
+  lines.push('- Carbohydrates: ' + result.macronutrients.carbs_pct + '% (' + result.macronutrients.carbs_g + 'g)')
+  lines.push('- Fat: ' + result.macronutrients.fat_pct + '% (' + result.macronutrients.fat_g + 'g)')
+  lines.push('')
+  lines.push('### Meal Plan')
+  for (const m of result.meal_plan) {
+    lines.push('- **' + m.meal + '** (' + m.calories + ' kcal): ' + m.foods.join(' + ') + ' | P:' + m.protein_g + 'g C:' + m.carbs_g + 'g F:' + m.fat_g + 'g')
   }
   lines.push('')
-
-  lines.push('### Environmental Impact')
-  lines.push(result.environmental_impact)
+  lines.push('### Micronutrient Gaps')
+  for (const g of result.micronutrient_gaps) {
+    lines.push('- **' + g.nutrient + '** [' + g.status.toUpperCase() + '] -- Target: ' + g.recommended_intake + ' | Sources: ' + g.food_sources.join(', '))
+  }
   lines.push('')
-
-  lines.push('### Regulatory Pathway')
-  lines.push(result.regulatory_pathway)
+  lines.push('### Hydration')
+  lines.push('Target: ' + result.hydration_liters + 'L/day')
   lines.push('')
-
-  lines.push('### Cost Projection')
-  lines.push(result.cost_projection)
+  lines.push('### Supplement Suggestions')
+  for (const s of result.supplement_suggestions) {
+    lines.push('- ' + s)
+  }
   lines.push('')
-
-  lines.push('### Timeline to Market: ' + result.go_to_market_timeline_months + ' months')
-  lines.push('')
-
   lines.push('### Recommendations')
   for (const r of result.recommendations) {
     lines.push('- ' + r)
@@ -871,468 +925,352 @@ function formatProteinReport(input: ProteinInput, result: ProteinAnalysisResult)
   return lines.join('\n')
 }
 
-// ==================== TOOL 5: SHELF LIFE PREDICTOR ====================
+// ==================== TOOL 5: FOOD WASTE REDUCER ====================
 
-function predictShelfLife(input: ShelfLifeInput): ShelfLifeResult {
+function reduceFoodWaste(input: WasteInput): WasteReductionResult {
   const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
 
-  const productName = input.product_name || 'Unspecified Product'
-  const category = input.product_category || 'refrigerated ready-to-eat'
-  const packaging = input.packaging_type || 'Modified Atmosphere Packaging (MAP)'
-  const storageTemp = input.storage_temperature_c ?? 4
-  const pH = input.pH ?? 6.0
-  const aw = input.water_activity ?? 0.95
-  const preservatives = input.preservative_system || []
-  const target = input.target_shelf_life_days || 30
+  const businessType = input.business_type || 'restaurant'
+  const dailyVolume = input.daily_volume_kg || 100
+  const currentWastePct = input.current_waste_pct || 15
+  const categories = input.waste_categories || ['prep_waste', 'plate_waste', 'spoilage']
+  const seasonality = input.seasonality_factor || 'medium'
+  const opDays = input.operational_days_per_week || 6
+  const currentDiversion = input.current_diversion_pct || 10
 
-  // Base shelf life estimation
-  let baseDays = category.includes('frozen') ? 180 : category.includes('dry') ? 365 : category.includes('canned') ? 730 : 30
+  const currentDailyWasteKg = Math.round(dailyVolume * currentWastePct / 100)
 
-  // Temperature factor (higher temp = shorter shelf life)
-  const tempFactor = storageTemp <= -18 ? 1.5 : storageTemp <= 4 ? 1.0 : storageTemp <= 10 ? 0.6 : storageTemp <= 25 ? 0.3 : 0.15
-
-  // pH factor (lower pH = longer shelf life for microbial inhibition)
-  const pHFactor = pH <= 3.5 ? 2.0 : pH <= 4.5 ? 1.5 : pH <= 5.5 ? 1.0 : pH <= 6.5 ? 0.7 : 0.5
-
-  // Water activity factor
-  const awFactor = aw <= 0.85 ? 2.0 : aw <= 0.91 ? 1.2 : 1.0
-
-  // Preservative factor
-  const preservativeFactor = 1 + (preservatives.length * 0.15)
-
-  const predictedDays = Math.round(baseDays * tempFactor * pHFactor * awFactor * preservativeFactor + rng.nextInt(-3, 3))
-
-  const organisms = [
-    { organism: 'Listeria monocytogenes', baseDay: 10, threshold: '< 100 CFU/g at end of shelf life' },
-    { organism: 'Lactobacillus spp.', baseDay: 5, threshold: 'Visible spoilage at > 10^7 CFU/g' },
-    { organism: 'Pseudomonas spp.', baseDay: 7, threshold: 'Off-odors at > 10^6 CFU/g' },
-    { organism: 'Yeasts & Molds', baseDay: 14, threshold: 'Visible growth at > 10^3 CFU/g' },
-    { organism: 'Bacillus cereus', baseDay: 20, threshold: '< 10^4 CFU/g (toxin risk)' },
+  // Waste reduction actions
+  const actions: WasteReductionAction[] = [
+    {
+      action: 'Implement FIFO (First In, First Out) inventory rotation system',
+      category: 'spoilage',
+      waste_reduction_pct: roundTo(rng.nextFloat(15, 30), 1),
+      annual_savings_currency: Math.round(rng.nextFloat(3000, 12000)),
+      implementation_cost: 'low',
+      payback_months: rng.nextInt(1, 3),
+      priority: 'high'
+    },
+    {
+      action: 'Deploy AI-powered demand forecasting for prep quantities',
+      category: 'prep_waste',
+      waste_reduction_pct: roundTo(rng.nextFloat(20, 40), 1),
+      annual_savings_currency: Math.round(rng.nextFloat(5000, 20000)),
+      implementation_cost: 'medium',
+      payback_months: rng.nextInt(3, 6),
+      priority: 'critical'
+    },
+    {
+      action: 'Offer variable portion sizes (small/regular/large)',
+      category: 'plate_waste',
+      waste_reduction_pct: roundTo(rng.nextFloat(10, 25), 1),
+      annual_savings_currency: Math.round(rng.nextFloat(2000, 8000)),
+      implementation_cost: 'low',
+      payback_months: rng.nextInt(1, 2),
+      priority: 'high'
+    },
+    {
+      action: 'Establish food donation partnership with local food bank',
+      category: 'surplus',
+      waste_reduction_pct: roundTo(rng.nextFloat(5, 15), 1),
+      annual_savings_currency: Math.round(rng.nextFloat(1000, 5000)),
+      implementation_cost: 'low',
+      payback_months: rng.nextInt(1, 2),
+      priority: 'medium'
+    },
+    {
+      action: 'Install smart waste tracking bins with weight sensors',
+      category: 'measurement',
+      waste_reduction_pct: roundTo(rng.nextFloat(10, 20), 1),
+      annual_savings_currency: Math.round(rng.nextFloat(4000, 15000)),
+      implementation_cost: 'medium',
+      payback_months: rng.nextInt(4, 8),
+      priority: 'high'
+    },
+    {
+      action: 'Staff training on trim utilization and root-to-stem cooking',
+      category: 'prep_waste',
+      waste_reduction_pct: roundTo(rng.nextFloat(8, 18), 1),
+      annual_savings_currency: Math.round(rng.nextFloat(2000, 7000)),
+      implementation_cost: 'low',
+      payback_months: rng.nextInt(1, 2),
+      priority: 'medium'
+    }
   ]
 
-  const spoilageIndicators: SpoilageIndicator[] = organisms
-    .filter(() => rng.next() > 0.2)
-    .map(o => {
-      const onset = Math.round(o.baseDay * tempFactor * pHFactor * 0.8 + rng.nextInt(-1, 2))
-      const risk: 'low' | 'medium' | 'high' = onset < predictedDays * 0.3 ? 'high' : onset < predictedDays * 0.6 ? 'medium' : 'low'
-      return {
-        organism: o.organism,
-        onset_day: Math.max(1, onset),
-        threshold: o.threshold,
-        risk_level: risk,
-        mitigation: risk === 'high' ? 'Critical: reformulate pH/aw or add preservative' : risk === 'medium' ? 'Monitor: increase preservative concentration by 10-20%' : 'Acceptable: within safety margin'
-      }
-    })
+  // Diversion strategies
+  const diversionStrategies: DiversionStrategy[] = [
+    {
+      strategy: 'On-site composting',
+      description: 'Aerobic composting of prep waste and plate scrapings for soil amendment',
+      diversion_potential_pct: roundTo(rng.nextFloat(30, 50), 1),
+      applicable_waste_types: ['prep_waste', 'plate_waste', 'produce_spoilage']
+    },
+    {
+      strategy: 'Anaerobic digestion / biogas',
+      description: 'Convert organic waste to biogas for energy recovery',
+      diversion_potential_pct: roundTo(rng.nextFloat(40, 60), 1),
+      applicable_waste_types: ['prep_waste', 'spoilage', 'fats_oils']
+    },
+    {
+      strategy: 'Animal feed partnership',
+      description: 'Redirect suitable food scraps to local farms for animal feed',
+      diversion_potential_pct: roundTo(rng.nextFloat(15, 30), 1),
+      applicable_waste_types: ['bread', 'produce', 'prep_waste']
+    },
+    {
+      strategy: 'Food rescue redistribution',
+      description: 'Partner with food rescue organizations to redistribute surplus edible food',
+      diversion_potential_pct: roundTo(rng.nextFloat(10, 25), 1),
+      applicable_waste_types: ['surplus', 'day_old', 'overproduction']
+    }
+  ]
 
-  const criticalFactors: string[] = []
-  if (storageTemp > 4) criticalFactors.push('Storage temperature (' + storageTemp + 'C) accelerates microbial growth')
-  if (pH > 5.5) criticalFactors.push('pH ' + pH + ' is favorable for pathogen growth')
-  if (aw > 0.92) criticalFactors.push('Water activity ' + aw + ' supports rapid microbial proliferation')
-  if (preservatives.length === 0) criticalFactors.push('No preservative system detected')
-  if (criticalFactors.length === 0) criticalFactors.push('All critical parameters within optimal range')
+  const totalReductionPct = Math.min(roundTo(actions.reduce((sum, a) => sum + a.waste_reduction_pct, 0) * 0.6, 1), 60)
+  const targetDailyWasteKg = Math.round(currentDailyWasteKg * (1 - totalReductionPct / 100))
+  const totalAnnualSavings = actions.reduce((sum, a) => sum + a.annual_savings_currency, 0)
 
-  const packagingRec = category.includes('frozen')
-    ? 'Vacuum-sealed polyethylene bags with oxygen barrier; maintain -18C or below'
-    : category.includes('dry')
-    ? 'Moisture-barrier foil laminate with desiccant; hermetic seal essential'
-    : 'High-barrier MAP (70% N2, 30% CO2) with oxygen transmission rate < 1 cc/m2/day'
+  const landfillDiversionTarget = clamp(Math.round(currentDiversion + totalReductionPct * 0.8 + rng.nextInt(-5, 5)), 0, 95)
 
-  const logDetail = target >= 30 ? 'Use data loggers with 15-min intervals; alert if temp exceeds ' + (storageTemp + 2) + 'C for >30 min' : 'Monitor continuously with automated alerts'
-  const storageRec = 'Maintain ' + storageTemp + 'C +/- 1C continuously. ' + logDetail
+  const compostingRec = businessType === 'restaurant' || businessType === 'cafe'
+    ? 'Recommended: Small-scale aerobic composting for prep waste (10-20kg/day capacity). Partner with local garden or farm for output.'
+    : businessType === 'hotel' || businessType === 'catering'
+    ? 'Recommended: Medium-scale in-vessel composting system (50-200kg/day). Consider on-site biogas for energy recovery.'
+    : 'Recommended: Evaluate centralized composting facility partnership or anaerobic digestion for large-volume organic waste.'
 
-  const safetyMargin = Math.max(0, Math.round(predictedDays * 0.15))
-  const confidence: 'high' | 'medium' | 'low'
-    = criticalFactors.length <= 1 ? 'high' : criticalFactors.length <= 3 ? 'medium' : 'low'
+  const recommendations: string[] = []
+  recommendations.push('Current waste: ' + currentDailyWasteKg + 'kg/day (' + currentWastePct + '% of ' + dailyVolume + 'kg total)')
+  recommendations.push('Target waste: ' + targetDailyWasteKg + 'kg/day (reduction of ' + totalReductionPct + '%)')
+  recommendations.push('Potential annual savings: $' + totalAnnualSavings.toLocaleString())
+  recommendations.push('Prioritize AI demand forecasting -- highest impact with ' + actions[1].waste_reduction_pct + '% waste reduction')
+  recommendations.push('Achieve ' + landfillDiversionTarget + '% landfill diversion through combined composting and food rescue')
+  if (seasonality === 'high') recommendations.push('Account for seasonal variation: adjust ordering and prep volumes monthly based on historical patterns')
+  recommendations.push('Track daily waste by category using smart bins to identify top reduction opportunities')
+  recommendations.push('Set monthly waste reduction targets and review progress with kitchen team')
 
   return {
-    predicted_shelf_life_days: predictedDays,
-    target_met: predictedDays >= target,
-    spoilage_indicators: spoilageIndicators,
-    critical_factors: criticalFactors,
-    packaging_recommendation: packagingRec,
-    storage_recommendation: storageRec,
-    safety_margin_days: safetyMargin,
-    confidence_level: confidence
+    current_daily_waste_kg: currentDailyWasteKg,
+    target_daily_waste_kg: targetDailyWasteKg,
+    waste_reduction_actions: actions,
+    diversion_strategies: diversionStrategies,
+    total_annual_savings: totalAnnualSavings,
+    waste_reduction_potential_pct: totalReductionPct,
+    landfill_diversion_target_pct: landfillDiversionTarget,
+    composting_recommendation: compostingRec,
+    recommendations
   }
 }
 
-function formatShelfLifeReport(input: ShelfLifeInput, result: ShelfLifeResult): string {
+function formatWasteReport(input: WasteInput, result: WasteReductionResult): string {
   const lines: string[] = []
-  lines.push('## Shelf Life Prediction Report')
+  lines.push('## Food Waste Reduction Report')
   lines.push('')
-  lines.push('**Product:** ' + (input.product_name || 'Unspecified') + ' | **Category:** ' + (input.product_category || 'refrigerated ready-to-eat'))
-  lines.push('**Storage:** ' + (input.storage_temperature_c ?? 4) + 'C | **pH:** ' + (input.pH ?? 6.0) + ' | **aw:** ' + (input.water_activity ?? 0.95))
+  lines.push('**Business:** ' + (input.business_type || 'restaurant') + ' | **Daily Volume:** ' + (input.daily_volume_kg || 100) + 'kg | **Current Waste:** ' + (input.current_waste_pct || 15) + '%')
+  lines.push('**Categories:** ' + ((input.waste_categories || []).join(', ') || 'prep_waste, plate_waste, spoilage'))
   lines.push('')
-  lines.push('### Predicted Shelf Life: ' + result.predicted_shelf_life_days + ' days')
-  lines.push('Target: ' + (input.target_shelf_life_days || 30) + ' days -- ' + (result.target_met ? 'TARGET MET' : 'TARGET NOT MET (shortfall: ' + ((input.target_shelf_life_days || 30) - result.predicted_shelf_life_days) + ' days)'))
-  lines.push('Confidence: ' + result.confidence_level.toUpperCase() + ' | Safety Margin: ' + result.safety_margin_days + ' days')
+  lines.push('### Waste Reduction Summary')
+  lines.push('- Current daily waste: ' + result.current_daily_waste_kg + ' kg')
+  lines.push('- Target daily waste: ' + result.target_daily_waste_kg + ' kg')
+  lines.push('- Reduction potential: ' + result.waste_reduction_potential_pct + '%')
+  lines.push('- Landfill diversion target: ' + result.landfill_diversion_target_pct + '%')
+  lines.push('- Total annual savings: $' + result.total_annual_savings.toLocaleString())
   lines.push('')
-
-  lines.push('### Spoilage Indicators')
-  lines.push('| Organism | Onset (Day) | Risk Level | Threshold | Mitigation |')
-  lines.push('|----------|-------------|------------|-----------|------------|')
-  for (const s of result.spoilage_indicators) {
-    lines.push('| ' + s.organism + ' | ' + s.onset_day + ' | ' + s.risk_level.toUpperCase() + ' | ' + s.threshold + ' | ' + s.mitigation + ' |')
+  lines.push('### Waste Reduction Actions')
+  lines.push('| Action | Category | Reduction % | Annual Savings | Cost | Payback | Priority |')
+  lines.push('|--------|----------|-------------|----------------|------|---------|----------|')
+  for (const a of result.waste_reduction_actions) {
+    lines.push('| ' + a.action + ' | ' + a.category + ' | ' + a.waste_reduction_pct + '% | $' + a.annual_savings_currency.toLocaleString() + ' | ' + a.implementation_cost.toUpperCase() + ' | ' + a.payback_months + 'mo | ' + a.priority.toUpperCase() + ' |')
   }
   lines.push('')
-
-  lines.push('### Critical Factors')
-  for (const f of result.critical_factors) {
-    lines.push('- ' + f)
+  lines.push('### Diversion Strategies')
+  for (const s of result.diversion_strategies) {
+    lines.push('- **' + s.strategy + '** (' + s.diversion_potential_pct + '% diversion): ' + s.description)
+    lines.push('  Applicable to: ' + s.applicable_waste_types.join(', '))
   }
   lines.push('')
-
-  lines.push('### Packaging Recommendation')
-  lines.push(result.packaging_recommendation)
+  lines.push('### Composting Recommendation')
+  lines.push(result.composting_recommendation)
   lines.push('')
-  lines.push('### Storage Recommendation')
-  lines.push(result.storage_recommendation)
+  lines.push('### Recommendations')
+  for (const r of result.recommendations) {
+    lines.push('- ' + r)
+  }
   lines.push('')
   lines.push(DISCLAIMER_FOOD_SAFETY)
 
   return lines.join('\n')
 }
 
-// ==================== TOOL 6: ALLERGEN DETECTION SCANNER ====================
+// ==================== TOOL 6: REGULATORY COMPLIANCE TRACKER ====================
 
-function scanAllergens(input: AllergenInput): AllergenResult {
+function trackRegulatoryCompliance(input: RegulatoryInput): RegulatoryTrackingResult {
   const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
 
-  const productName = input.product_name || 'Unspecified Product'
-  const ingredients = input.ingredient_list || []
-  const shared = input.processing_equipment_shared !== false
-  const claims = input.allergen_free_claim || []
-  const facilityAllergens = input.facility_allergens_present || []
-  const testing = input.testing_method || 'ELISA'
+  const markets = input.target_markets || ['US', 'EU']
+  const productCategory = input.product_category || 'General food product'
+  const frameworks = input.regulatory_frameworks || ['FDA', 'EFSA']
+  const deadlines = input.compliance_deadlines || []
+  const certifications = input.current_certifications || []
+  const claims = input.product_claims || []
 
-  const allergenKeywords: Record<string, string[]> = {
-    'Milk': ['milk', 'whey', 'casein', 'lactose', 'butter', 'cream', 'yogurt', 'cheese'],
-    'Eggs': ['egg', 'albumin', 'lysozyme', 'ovalbumin'],
-    'Peanuts': ['peanut', 'groundnut', 'arachis'],
-    'Tree Nuts': ['almond', 'cashew', 'walnut', 'hazelnut', 'pistachio', 'pecan', 'macadamia'],
-    'Soy': ['soy', 'soya', 'tofu', 'edamame', 'miso'],
-    'Wheat': ['wheat', 'gluten', 'barley', 'rye', 'triticale', 'semolina'],
-    'Fish': ['fish', 'cod', 'salmon', 'tuna', 'anchovy'],
-    'Shellfish': ['shrimp', 'crab', 'lobster', 'prawn', 'shellfish'],
-    'Sesame': ['sesame', 'tahini'],
-    'Mustard': ['mustard'],
-    'Sulfites': ['sulfite', 'sulphite', 'E220', 'E221'],
-    'Lupin': ['lupin', 'lupine'],
-    'Celery': ['celery'],
-    'Mollusks': ['mussel', 'oyster', 'clam', 'squid'],
-  }
+  // Compliance statuses per market
+  const complianceStatuses: ComplianceStatus[] = markets.map(market => {
+    const marketFrameworks = market === 'US' ? ['FDA 21 CFR', 'FSMA', 'USDA-FSIS']
+      : market === 'EU' ? ['EC 178/2002', 'EU FIC 1169/2011', 'EFSA Novel Food']
+      : market === 'UK' ? ['UK FSA', 'Food Safety Act 1990', 'UK Nutrition Claims']
+      : market === 'CN' ? ['GB Standards', 'SAMR', 'CFDA Novel Ingredient']
+      : ['Local food safety authority']
 
-  const regulatoryThresholds: Record<string, string> = {
-    'Milk': 'VITAL 2.0: 0.5 mg protein (action level)',
-    'Eggs': 'VITAL 2.0: 0.2 mg protein (action level)',
-    'Peanuts': 'VITAL 2.0: 0.2 mg protein (action level)',
-    'Tree Nuts': 'VITAL 2.0: 0.1 mg protein (action level, per nut)',
-    'Soy': 'VITAL 2.0: 1.0 mg protein (action level)',
-    'Wheat': 'Gluten-free: < 20 ppm Codex standard',
-    'Fish': 'VITAL 2.0: 0.1 mg protein (action level)',
-    'Shellfish': 'VITAL 2.0: 0.1 mg protein (action level)',
-    'Sesame': 'VITAL 2.0: 0.1 mg protein (action level)',
-    'Mustard': 'EU Annex II: mandatory declaration',
-    'Sulfites': '> 10 mg/kg SO2: mandatory declaration',
-    'Lupin': 'EU Annex II: mandatory declaration',
-    'Celery': 'EU Annex II: mandatory declaration',
-    'Mollusks': 'VITAL 2.0: 0.1 mg protein (action level)',
-  }
+    const gaps: string[] = []
+    const requiredActions: string[] = []
 
-  const risks: AllergenRisk[] = []
+    if (market === 'US' && !certifications.includes('FDA_registered')) {
+      gaps.push('FDA facility registration not confirmed')
+      requiredActions.push('Register facility with FDA prior to shipping')
+    }
+    if (market === 'EU' && !certifications.includes('EU_authorized')) {
+      gaps.push('EU import authorization pending')
+      requiredActions.push('Obtain EU novel food authorization or demonstrate substantial equivalence')
+    }
+    if (claims.length > 0 && !certifications.includes('health_claims_approved')) {
+      gaps.push('Health claims require pre-market approval in ' + market)
+      requiredActions.push('Submit health claim substantiation dossier to ' + market + ' authority')
+    }
+    if (productCategory.includes('novel') || productCategory.includes('alternative_protein')) {
+      gaps.push('Novel food/ingredient approval required in ' + market)
+      requiredActions.push('Initiate novel food safety assessment in ' + market)
+    }
 
-  // Check each known allergen
-  for (const [allergen, keywords] of Object.entries(allergenKeywords)) {
-    const foundInIngredient = ingredients.some(ing =>
-      keywords.some(kw => ing.toLowerCase().includes(kw.toLowerCase()))
-    )
-    const inFacility = facilityAllergens.some(fa => allergen.toLowerCase() === fa.toLowerCase())
-    const hasClaim = claims.some(c => c.toLowerCase() === allergen.toLowerCase())
+    const status: 'compliant' | 'partial' | 'non_compliant' | 'not_applicable'
+      = gaps.length === 0 ? 'compliant' : gaps.length <= 2 ? 'partial' : 'non_compliant'
 
-    if (foundInIngredient || inFacility) {
-      let riskLevel: 'high' | 'medium' | 'low' | 'negligible' = 'negligible'
-      let source = ''
-      let crossContact = ''
-      let action = ''
+    return {
+      market,
+      framework: marketFrameworks[0] || 'General',
+      status,
+      gaps,
+      required_actions: requiredActions
+    }
+  })
 
-      if (foundInIngredient) {
-        riskLevel = hasClaim ? 'high' : 'medium'
-        source = 'Declared ingredient'
-        crossContact = 'Direct allergen presence in formulation'
-        action = 'Verify mandatory allergen declaration on label; ensure bold/uppercase highlighting'
-      } else if (inFacility && shared) {
-        riskLevel = 'medium'
-        source = 'Facility cross-contact'
-        crossContact = 'Shared equipment detected; allergen present in same facility'
-        action = 'Wash-down validation required; consider dedicated production line or schedule allergen runs last'
-      } else if (inFacility && !shared) {
-        riskLevel = 'low'
-        source = 'Facility presence (dedicated lines)'
-        crossContact = 'Low risk due to dedicated equipment'
-        action = 'Maintain segregation protocols; verify HVAC isolation'
-      }
+  // Upcoming deadlines
+  const upcomingDeadlines: UpcomingDeadline[] = deadlines.length > 0 ? deadlines.map(d => {
+    const daysRemaining = Math.max(0, Math.round((new Date(d.date).getTime() - Date.now()) / 86400000))
+    const severity: 'critical' | 'high' | 'medium' | 'low'
+      = d.status === 'overdue' ? 'critical'
+      : daysRemaining <= 30 ? 'high'
+      : daysRemaining <= 90 ? 'medium'
+      : 'low'
+    return {
+      name: d.name,
+      date: d.date,
+      days_remaining: daysRemaining,
+      severity,
+      action_required: d.status === 'overdue' ? 'URGENT: Overdue -- submit immediately' : 'Prepare submission ' + Math.max(0, daysRemaining - 30) + ' days before deadline'
+    }
+  }) : [
+    { name: 'Annual facility registration renewal', date: '2026-03-31', days_remaining: rng.nextInt(60, 120), severity: 'medium', action_required: 'Prepare renewal documentation 60 days prior' },
+    { name: 'Novel food safety assessment update', date: '2026-06-30', days_remaining: rng.nextInt(120, 200), severity: 'low', action_required: 'Compile safety data package' }
+  ]
 
-      if (hasClaim && foundInIngredient) {
-        action = 'CRITICAL CONFLICT: Allergen-free claim with detected allergen in ingredient list -- reformulate or remove claim immediately'
-      }
+  // Certification gaps
+  const expectedCerts = ['HACCP', 'ISO_22000', 'GMP']
+  if (markets.includes('US')) expectedCerts.push('FDA_registered', 'FSMA_PCHF')
+  if (markets.includes('EU')) expectedCerts.push('EU_authorized', 'EC_178/2002')
+  if (claims.length > 0) expectedCerts.push('health_claims_approved')
 
-      risks.push({
-        allergen,
-        risk_level: riskLevel,
-        source,
-        cross_contact_potential: crossContact,
-        regulatory_threshold: regulatoryThresholds[allergen] || 'No specific threshold defined',
-        action_required: action
-      })
+  const certificationGaps = expectedCerts.filter(c => !certifications.includes(c))
+
+  // Claim risks
+  const claimRisks: string[] = []
+  for (const claim of claims) {
+    if (claim.toLowerCase().includes('cure') || claim.toLowerCase().includes('treat')) {
+      claimRisks.push('"' + claim + '" may constitute an unauthorized drug claim -- high regulatory risk')
+    }
+    if (claim.toLowerCase().includes('natural') && !certifications.includes('organic')) {
+      claimRisks.push('"' + claim + '" natural claim requires substantiation and may need organic certification')
+    }
+    if (claim.toLowerCase().includes('protein') && !claim.toLowerCase().includes('source of')) {
+      claimRisks.push('"' + claim + '" protein claim must meet minimum 12g/100g or 6g/100ml threshold')
     }
   }
+  if (claimRisks.length === 0 && claims.length > 0) claimRisks.push('All claims appear compliant -- continue monitoring regulatory guidance updates')
 
-  // Sort risks by severity
-  const riskOrder = { high: 0, medium: 1, low: 2, negligible: 3 }
-  risks.sort((a, b) => riskOrder[a.risk_level] - riskOrder[b.risk_level])
-
-  const labelCompliance: string[] = []
-  const presentAllergens = risks.filter(r => r.source === 'Declared ingredient').map(r => r.allergen)
-  if (presentAllergens.length > 0) {
-    labelCompliance.push('Declare in ingredient list: ' + presentAllergens.join(', '))
-    labelCompliance.push('Apply bold/uppercase highlighting for allergens per FDA FALCPA / EU FIC')
+  // Action items
+  const actionItems: string[] = []
+  for (const cs of complianceStatuses) {
+    if (cs.status !== 'compliant') {
+      actionItems.push('[' + cs.market + '] ' + cs.required_actions.join('; '))
+    }
   }
-if (risks.some(r => r.source === 'Facility cross-contact')) {
-  const crossContactAllergens = risks.filter(r => r.source === 'Facility cross-contact').map(r => r.allergen)
-  labelCompliance.push('May contain advisory statement recommended for: ' + crossContactAllergens.join(', '))
-}
-  if (claims.length > 0 && risks.filter(r => r.risk_level === 'high').length === 0) {
-    labelCompliance.push('Allergen-free claims verified: ' + claims.join(', ') + ' -- no conflicting ingredients detected')
+  for (const dl of upcomingDeadlines.filter(d => d.severity === 'critical' || d.severity === 'high')) {
+    actionItems.push('[' + dl.severity.toUpperCase() + '] ' + dl.name + ' due ' + dl.date + ' -- ' + dl.action_required)
   }
+  if (certificationGaps.length > 0) actionItems.push('Obtain missing certifications: ' + certificationGaps.join(', '))
+  actionItems.push('Schedule quarterly regulatory update review for all target markets')
+  actionItems.push('Monitor FDA/EFSA guidance updates for ' + productCategory + ' category')
 
-  const testingRecs: string[] = []
-  testingRecs.push('ELISA validation for top 3 allergens (specificity > 95%, LOD < 1 ppm recommended)')
-  if (shared) testingRecs.push('Conduct ATP + allergen protein swab tests on shared equipment between runs')
-  testingRecs.push('Run ' + testing + ' on finished product batch -- samples per ISO 18184 sampling plan')
-  testingRecs.push('Retain samples for 1 year beyond shelf life for traceability')
+  // Overall compliance
+  const compliantMarkets = complianceStatuses.filter(c => c.status === 'compliant').length
+  const overallCompliance = Math.round((compliantMarkets / Math.max(complianceStatuses.length, 1)) * 100)
 
-  const precautionaryNeeded = risks.some(r => r.source === 'Facility cross-contact')
-
-  const overallRisk: 'high' | 'medium' | 'low'
-    = risks.some(r => r.risk_level === 'high') ? 'high'
-    : risks.some(r => r.risk_level === 'medium') ? 'medium'
-    : 'low'
-
-  const summary = 'Product "' + productName + '": ' + risks.length + ' allergen risk(s) detected. Overall risk: ' + overallRisk.toUpperCase() + '. ' + (precautionaryNeeded ? 'Precautionary advisory labeling recommended.' : 'Standard allergen labeling sufficient.')
+  const summary = productCategory + ' across ' + markets.length + ' market(s): ' + overallCompliance + '% overall compliance. ' + certificationGaps.length + ' certification gap(s). ' + upcomingDeadlines.filter(d => d.severity === 'critical').length + ' critical deadline(s).'
 
   return {
-    overall_allergen_risk: overallRisk,
-    risks,
-    label_compliance: labelCompliance,
-    testing_recommendations: testingRecs,
-    precautionary_advisory_needed: precautionaryNeeded,
+    overall_compliance_pct: overallCompliance,
+    compliance_statuses: complianceStatuses,
+    upcoming_deadlines: upcomingDeadlines,
+    certification_gaps: certificationGaps,
+    claim_risks: claimRisks,
+    action_items: actionItems,
     summary
   }
 }
 
-function formatAllergenReport(input: AllergenInput, result: AllergenResult): string {
+function formatRegulatoryReport(input: RegulatoryInput, result: RegulatoryTrackingResult): string {
   const lines: string[] = []
-  lines.push('## Allergen Detection Report')
+  lines.push('## Regulatory Compliance Tracking Report')
   lines.push('')
-  lines.push('**Product:** ' + (input.product_name || 'Unspecified') + ' | **Method:** ' + (input.testing_method || 'ELISA'))
-  lines.push('**Shared Equipment:** ' + (input.processing_equipment_shared ? 'Yes' : 'No'))
+  lines.push('**Product:** ' + (input.product_category || 'General food product') + ' | **Markets:** ' + ((input.target_markets || ['US', 'EU']).join(', ')))
+  lines.push('**Overall Compliance:** ' + result.overall_compliance_pct + '%')
   lines.push('')
   lines.push(result.summary)
   lines.push('')
 
-  if (result.risks.length > 0) {
-    lines.push('### Allergen Risk Assessment')
-    lines.push('| Allergen | Risk | Source | Cross-Contact | Regulatory Threshold | Action |')
-    lines.push('|----------|------|--------|---------------|---------------------|--------|')
-    for (const r of result.risks) {
-      lines.push('| ' + r.allergen + ' | ' + r.risk_level.toUpperCase() + ' | ' + r.source + ' | ' + r.cross_contact_potential + ' | ' + r.regulatory_threshold + ' | ' + r.action_required + ' |')
+  lines.push('### Market Compliance Status')
+  lines.push('| Market | Framework | Status | Gaps |')
+  lines.push('|--------|-----------|--------|------|')
+  for (const cs of result.compliance_statuses) {
+    lines.push('| ' + cs.market + ' | ' + cs.framework + ' | ' + cs.status.toUpperCase().replace('_', ' ') + ' | ' + (cs.gaps.join('; ') || 'None') + ' |')
+  }
+  lines.push('')
+
+  lines.push('### Upcoming Deadlines')
+  lines.push('| Deadline | Date | Days Left | Severity | Action |')
+  lines.push('|----------|------|-----------|----------|--------|')
+  for (const d of result.upcoming_deadlines) {
+    lines.push('| ' + d.name + ' | ' + d.date + ' | ' + d.days_remaining + ' | ' + d.severity.toUpperCase() + ' | ' + d.action_required + ' |')
+  }
+  lines.push('')
+
+  if (result.certification_gaps.length > 0) {
+    lines.push('### Certification Gaps')
+    for (const g of result.certification_gaps) {
+      lines.push('- ' + g)
     }
     lines.push('')
   }
 
-  if (result.label_compliance.length > 0) {
-    lines.push('### Label Compliance')
-    for (const l of result.label_compliance) {
-      lines.push('- ' + l)
+  if (result.claim_risks.length > 0) {
+    lines.push('### Claim Risks')
+    for (const r of result.claim_risks) {
+      lines.push('- ' + r)
     }
     lines.push('')
   }
 
-  lines.push('### Testing Recommendations')
-  for (const t of result.testing_recommendations) {
-    lines.push('- ' + t)
-  }
-  lines.push('')
-
-  if (result.precautionary_advisory_needed) {
-    lines.push('### Precautionary Advisory')
-    lines.push('RECOMMENDED: Add "May contain..." statement based on facility cross-contact risk assessment')
-    lines.push('')
-  }
-
-  lines.push(DISCLAIMER_FOOD_SAFETY)
-
-  return lines.join('\n')
-}
-
-// ==================== TOOL 7: COLD CHAIN INTEGRITY MONITOR ====================
-
-function monitorColdChain(input: ColdChainInput): ColdChainResult {
-  const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
-
-  const productType = input.product_type || 'Refrigerated dairy'
-  const tempData = input.temp_logger_data || []
-  const maxTemp = input.max_allowed_temp_c ?? 8
-  const standard = input.cold_chain_standard || 'HACCP'
-  const transitHours = input.transit_duration_hours ?? 48
-  const originTemp = input.origin_temp_c ?? 4
-  const destTemp = input.destination_temp_c ?? 6
-
-  // Generate temperature data if not provided
-  const dataPoints = tempData.length > 0 ? tempData : (() => {
-    const points: { hour: number; temp_c: number }[] = []
-    for (let h = 0; h <= transitHours; h++) {
-      let temp = originTemp + rng.nextFloat(-1, 1)
-      // Simulate a potential excursion mid-transit
-      if (h >= transitHours * 0.4 && h <= transitHours * 0.55) {
-        temp += rng.nextFloat(2, 8)
-      }
-      points.push({ hour: h, temp_c: roundTo(temp, 1) })
-    }
-    return points
-  })()
-
-  // Detect excursions
-  const excursions: TempExcursion[] = []
-  let inExcursion = false
-  let startHour = 0
-  let maxExcTemp = 0
-
-  for (let i = 0; i < dataPoints.length; i++) {
-    const dp = dataPoints[i]
-    if (dp.temp_c > maxTemp) {
-      if (!inExcursion) {
-        inExcursion = true
-        startHour = dp.hour
-        maxExcTemp = dp.temp_c
-      } else {
-        maxExcTemp = Math.max(maxExcTemp, dp.temp_c)
-      }
-    } else if (inExcursion) {
-      const duration = dataPoints[i - 1].hour - startHour
-      if (duration >= 0.5) {
-        const severity: 'minor' | 'major' | 'critical'
-          = maxExcTemp > maxTemp + 8 ? 'critical' : maxExcTemp > maxTemp + 4 ? 'major' : 'minor'
-        excursions.push({
-          start_hour: startHour,
-          end_hour: dataPoints[i - 1].hour,
-          max_temp_c: roundTo(maxExcTemp, 1),
-          duration_hours: roundTo(duration, 1),
-          severity,
-          product_impact: severity === 'critical' ? 'Product quality compromised -- potential total loss' : severity === 'major' ? 'Quality degradation likely -- reduce shelf life by 20-30%' : 'Minor impact -- acceptable with monitoring'
-        })
-      }
-      inExcursion = false
-      maxExcTemp = 0
-    }
-  }
-
-  // Close final excursion if still open
-  if (inExcursion) {
-    const duration = dataPoints[dataPoints.length - 1].hour - startHour
-    if (duration >= 0.5) {
-      const severity: 'minor' | 'major' | 'critical'
-        = maxExcTemp > maxTemp + 8 ? 'critical' : maxExcTemp > maxTemp + 4 ? 'major' : 'minor'
-      excursions.push({
-        start_hour: startHour,
-        end_hour: dataPoints[dataPoints.length - 1].hour,
-        max_temp_c: roundTo(maxExcTemp, 1),
-        duration_hours: roundTo(duration, 1),
-        severity,
-        product_impact: severity === 'critical' ? 'Product quality compromised -- potential total loss' : severity === 'major' ? 'Quality degradation likely -- reduce shelf life by 20-30%' : 'Minor impact -- acceptable with monitoring'
-      })
-    }
-  }
-
-  const totalExcursionHours = roundTo(excursions.reduce((sum, e) => sum + e.duration_hours, 0), 1)
-
-  // MKT (Mean Kinetic Temperature)
-  const temps = dataPoints.map(d => d.temp_c)
-  const avgTemp = temps.reduce((a, b) => a + b, 0) / temps.length
-  const mkt = roundTo(avgTemp + rng.nextFloat(-0.5, 0.5), 2)
-
-  // Integrity score
-  const baseScore = 100
-  const excursionPenalty = excursions.reduce((sum, e) => sum + (e.severity === 'critical' ? 25 : e.severity === 'major' ? 15 : 5), 0)
-  const score = clamp(baseScore + rng.nextInt(-3, 3) - excursionPenalty, 0, 100)
-
-  const compliant = excursions.filter(e => e.severity !== 'minor').length === 0
-
-  const alertLevel: 'green' | 'yellow' | 'red'
-    = excursions.some(e => e.severity === 'critical') ? 'red'
-    : excursions.some(e => e.severity === 'major') ? 'yellow'
-    : 'green'
-
-  const qualityImpact = score >= 80
-    ? 'Minimal quality impact -- product within specification'
-    : score >= 60
-    ? 'Moderate quality degradation -- reduce shelf life estimate and monitor'
-    : score >= 40
-    ? 'Significant quality impact -- lab testing required before release'
-    : 'Product likely compromised -- quarantine pending quality assessment'
-
-  const correctiveActions: string[] = []
-  if (alertLevel === 'red') correctiveActions.push('QUARANTINE product; initiate quality investigation per ' + standard + ' protocol')
-  if (excursions.length > 0) correctiveActions.push('Notify receiving facility of cold chain breach; request incoming QC inspection')
-  correctiveActions.push('Review refrigeration unit performance log for equipment malfunction')
-  correctiveActions.push('Verify pre-shipping product temperature was within specification')
-  if (totalExcursionHours > 4) correctiveActions.push('Retrain logistics team on cold chain loading/unloading SOPs')
-  correctiveActions.push('Install real-time GPS temperature monitoring with automated alerts for future shipments')
-
-  return {
-    integrity_score: score,
-    excursions,
-    total_excursion_duration_hours: totalExcursionHours,
-    mkt_temperature: mkt,
-    product_quality_impact: qualityImpact,
-    compliant,
-    alert_level: alertLevel,
-    corrective_actions: correctiveActions
-  }
-}
-
-function formatColdChainReport(input: ColdChainInput, result: ColdChainResult): string {
-  const lines: string[] = []
-  lines.push('## Cold Chain Integrity Report')
-  lines.push('')
-  lines.push('**Product:** ' + (input.product_type || 'Refrigerated dairy') + ' | **Standard:** ' + (input.cold_chain_standard || 'HACCP'))
-  lines.push('**Max Allowed Temp:** ' + (input.max_allowed_temp_c ?? 8) + 'C | **Transit Duration:** ' + (input.transit_duration_hours ?? 48) + 'h')
-  lines.push('')
-  lines.push('### Integrity Score: ' + result.integrity_score + '/100 | Alert Level: ' + result.alert_level.toUpperCase())
-  lines.push('Compliant: ' + (result.compliant ? 'YES' : 'NO') + ' | MKT: ' + result.mkt_temperature + 'C')
-  lines.push('Total excursion duration: ' + result.total_excursion_duration_hours + ' hours')
-  lines.push('')
-
-  if (result.excursions.length > 0) {
-    lines.push('### Temperature Excursions')
-    lines.push('| Start (h) | End (h) | Max Temp | Duration | Severity | Impact |')
-    lines.push('|-----------|---------|----------|----------|----------|--------|')
-    for (const e of result.excursions) {
-      lines.push('| ' + e.start_hour + ' | ' + e.end_hour + ' | ' + e.max_temp_c + 'C | ' + e.duration_hours + 'h | ' + e.severity.toUpperCase() + ' | ' + e.product_impact + ' |')
-    }
-    lines.push('')
-  } else {
-    lines.push('### No Temperature Excursions Detected')
-    lines.push('All temperature readings within acceptable range.')
-    lines.push('')
-  }
-
-  lines.push('### Quality Impact')
-  lines.push(result.product_quality_impact)
-  lines.push('')
-
-  lines.push('### Corrective Actions')
-  for (const a of result.corrective_actions) {
+  lines.push('### Action Items')
+  for (const a of result.action_items) {
     lines.push('- ' + a)
   }
   lines.push('')
@@ -1341,9 +1279,179 @@ function formatColdChainReport(input: ColdChainInput, result: ColdChainResult): 
   return lines.join('\n')
 }
 
-// ==================== TOOL 8: MENU ENGINEERING OPTIMIZER ====================
+// ==================== TOOL 7: INGREDIENT SUSTAINABILITY SCORER ====================
 
-function optimizeMenu(input: MenuEngineeringInput): MenuEngineeringResult {
+function scoreIngredientSustainability(input: SustainabilityInput): SustainabilityResult {
+  const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
+
+  const ingredients = input.ingredient_list || ['wheat flour', 'sugar', 'palm oil', 'soy protein', 'cocoa']
+  const regions = input.sourcing_regions || ['Global']
+  const certs = input.certifications || []
+  const carbonData = input.carbon_footprint_data || []
+  const waterData = input.water_usage_data || []
+
+  // Reference data for common ingredients
+  const referenceCarbon: Record<string, number> = {
+    'wheat flour': 0.8, 'sugar': 0.6, 'palm oil': 3.3, 'soy protein': 2.0,
+    'cocoa': 19.0, 'rice': 2.5, 'oats': 1.2, 'pea protein': 1.5,
+    'almond': 3.5, 'dairy': 9.0, 'beef': 27.0, 'chicken': 6.0,
+    'coconut oil': 2.3, 'sunflower oil': 1.8, 'olive oil': 1.6
+  }
+  const referenceWater: Record<string, number> = {
+    'wheat flour': 1800, 'sugar': 1500, 'palm oil': 5000, 'soy protein': 2100,
+    'cocoa': 17000, 'rice': 2500, 'oats': 1800, 'pea protein': 1100,
+    'almond': 16000, 'dairy': 1000, 'beef': 15000, 'chicken': 4300,
+    'coconut oil': 3500, 'sunflower oil': 3400, 'olive oil': 4200
+  }
+
+  const ingredientScores: IngredientSustainabilityScore[] = ingredients.map(ing => {
+    const ingLower = ing.toLowerCase()
+    const carbonKg = carbonData.find(c => c.ingredient.toLowerCase() === ingLower)?.kg_co2_per_kg
+      || referenceCarbon[ingLower] || rng.nextFloat(1, 10)
+    const waterL = waterData.find(w => w.ingredient.toLowerCase() === ingLower)?.liters_per_kg
+      || referenceWater[ingLower] || rng.nextFloat(500, 8000)
+
+    // Score inversely proportional to impact (lower impact = higher score)
+    const carbonScore = clamp(Math.round(100 - carbonKg * 5 + rng.nextInt(-5, 5)), 0, 100)
+    const waterScore = clamp(Math.round(100 - waterL / 200 + rng.nextInt(-5, 5)), 0, 100)
+    const landUseScore = clamp(rng.nextInt(40, 85), 0, 100)
+    const biodiversityScore = clamp(rng.nextInt(35, 80), 0, 100)
+    const socialScore = clamp(rng.nextInt(45, 90), 0, 100)
+
+    const hasCert = certs.some(c => c.toLowerCase().includes(ingLower) || c.toLowerCase().includes('organic') || c.toLowerCase().includes('fair_trade'))
+    const certBoost = hasCert ? 10 : 0
+
+    const overall = Math.round((carbonScore * 0.3 + waterScore * 0.25 + landUseScore * 0.2 + biodiversityScore * 0.15 + socialScore * 0.1) + certBoost)
+
+    const improvement = carbonScore < 50
+      ? 'High priority: switch to lower-carbon alternative or certified sustainable source'
+      : waterScore < 50
+      ? 'High priority: source from water-efficient regions or implement water recycling'
+      : overall < 60
+      ? 'Moderate: seek certified sustainable suppliers and improve traceability'
+      : 'Good: maintain current sourcing; explore continuous improvement opportunities'
+
+    return {
+      ingredient: ing,
+      carbon_score: carbonScore,
+      water_score: waterScore,
+      land_use_score: landUseScore,
+      biodiversity_score: biodiversityScore,
+      social_score: socialScore,
+      overall_sustainability_score: clamp(overall, 0, 100),
+      certification_boost: hasCert,
+      improvement_potential: improvement
+    }
+  })
+
+  const avgScore = Math.round(ingredientScores.reduce((sum, s) => sum + s.overall_sustainability_score, 0) / Math.max(ingredientScores.length, 1))
+
+  // Certification gaps
+  const certGaps: string[] = []
+  if (!certs.some(c => c.toLowerCase().includes('organic'))) certGaps.push('Organic certification not present -- consider for high-impact ingredients')
+  if (!certs.some(c => c.toLowerCase().includes('fair_trade'))) certGaps.push('Fair Trade certification missing -- important for cocoa, sugar, coffee sourcing')
+  if (!certs.some(c => c.toLowerCase().includes('rspo') || c.toLowerCase().includes('palm'))) certGaps.push('RSPO certification needed if palm oil is used')
+  if (!certs.some(c => c.toLowerCase().includes('rainforest'))) certGaps.push('Rainforest Alliance certification recommended for agricultural commodities')
+  if (certGaps.length === 0) certGaps.push('All key sustainability certifications present')
+
+  // Carbon reduction opportunities
+  const carbonOpps: string[] = []
+  const highCarbon = ingredientScores.filter(s => s.carbon_score < 50)
+  for (const hc of highCarbon) {
+    carbonOpps.push('Replace or reduce ' + hc.ingredient + ' (carbon score: ' + hc.carbon_score + '/100) with lower-impact alternative')
+  }
+  carbonOpps.push('Source ingredients from regional suppliers to reduce transport emissions')
+  carbonOpps.push('Implement seasonal sourcing calendar to minimize greenhouse/energy-intensive production')
+
+  // Water reduction opportunities
+  const waterOpps: string[] = []
+  const highWater = ingredientScores.filter(s => s.water_score < 50)
+  for (const hw of highWater) {
+    waterOpps.push('Address water intensity of ' + hw.ingredient + ' (water score: ' + hw.water_score + '/100) through supplier engagement')
+  }
+  waterOpps.push('Prioritize ingredients from water-stressed regions for improvement programs')
+
+  // Sustainable alternatives
+  const alternatives: string[] = []
+  if (ingredients.some(i => i.toLowerCase().includes('palm'))) alternatives.push('Replace palm oil with certified sustainable palm oil (RSPO) or sunflower/rapeseed oil')
+  if (ingredients.some(i => i.toLowerCase().includes('beef'))) alternatives.push('Substitute beef with plant-based protein or lower-impact poultry')
+  if (ingredients.some(i => i.toLowerCase().includes('almond'))) alternatives.push('Consider oat or pea-based alternatives to reduce water footprint')
+  if (alternatives.length === 0) alternatives.push('Current ingredient mix has reasonable sustainability profile -- focus on certification and traceability improvements')
+
+  const recommendations: string[] = []
+  recommendations.push('Average sustainability score: ' + avgScore + '/100 across ' + ingredients.length + ' ingredients')
+  if (avgScore < 60) recommendations.push('Priority: Improve sourcing for lowest-scoring ingredients (' + ingredientScores.filter(s => s.overall_sustainability_score < 50).map(s => s.ingredient).join(', ') + ')')
+  recommendations.push('Set target: achieve 75+ average sustainability score within 12 months')
+  recommendations.push('Require sustainability certifications for all new ingredient suppliers')
+  recommendations.push('Publish annual sustainability sourcing report for stakeholder transparency')
+  recommendations.push('Engage top 3 suppliers by volume in joint sustainability improvement program')
+
+  return {
+    average_sustainability_score: avgScore,
+    ingredient_scores: ingredientScores,
+    certification_gaps: certGaps,
+    carbon_reduction_opportunities: carbonOpps,
+    water_reduction_opportunities: waterOpps,
+    sustainable_alternatives: alternatives,
+    recommendations
+  }
+}
+
+function formatSustainabilityReport(input: SustainabilityInput, result: SustainabilityResult): string {
+  const lines: string[] = []
+  lines.push('## Ingredient Sustainability Scoring Report')
+  lines.push('')
+  lines.push('**Ingredients:** ' + (input.ingredient_list || []).join(', '))
+  lines.push('**Sourcing Regions:** ' + (input.sourcing_regions || ['Global']).join(', '))
+  lines.push('**Certifications:** ' + ((input.certifications || []).join(', ') || 'None'))
+  lines.push('')
+  lines.push('### Average Sustainability Score: ' + result.average_sustainability_score + '/100')
+  lines.push('')
+  lines.push('### Ingredient Scores')
+  lines.push('| Ingredient | Carbon | Water | Land | Biodiversity | Social | Overall | Cert Boost |')
+  lines.push('|------------|--------|-------|------|--------------|--------|---------|------------|')
+  for (const s of result.ingredient_scores) {
+    lines.push('| ' + s.ingredient + ' | ' + s.carbon_score + ' | ' + s.water_score + ' | ' + s.land_use_score + ' | ' + s.biodiversity_score + ' | ' + s.social_score + ' | ' + s.overall_sustainability_score + ' | ' + (s.certification_boost ? 'Yes' : 'No') + ' |')
+  }
+  lines.push('')
+
+  lines.push('### Certification Gaps')
+  for (const g of result.certification_gaps) {
+    lines.push('- ' + g)
+  }
+  lines.push('')
+
+  lines.push('### Carbon Reduction Opportunities')
+  for (const o of result.carbon_reduction_opportunities) {
+    lines.push('- ' + o)
+  }
+  lines.push('')
+
+  lines.push('### Water Reduction Opportunities')
+  for (const o of result.water_reduction_opportunities) {
+    lines.push('- ' + o)
+  }
+  lines.push('')
+
+  lines.push('### Sustainable Alternatives')
+  for (const a of result.sustainable_alternatives) {
+    lines.push('- ' + a)
+  }
+  lines.push('')
+
+  lines.push('### Recommendations')
+  for (const r of result.recommendations) {
+    lines.push('- ' + r)
+  }
+  lines.push('')
+  lines.push(DISCLAIMER_FOOD_SAFETY)
+
+  return lines.join('\n')
+}
+
+// ==================== TOOL 8: MENU OPTIMIZATION ENGINE ====================
+
+function optimizeMenu(input: MenuInput): MenuOptimizationResult {
   const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
 
   const restaurantName = input.restaurant_name || 'Unnamed Restaurant'
@@ -1371,7 +1479,6 @@ function optimizeMenu(input: MenuEngineeringInput): MenuEngineeringResult {
     const contributionMargin = Math.round((item.price * (1 - item.food_cost_pct / 100)) * 100) / 100
     const popularityIndex = avgOrders > 0 ? Math.round((item.monthly_orders / avgOrders) * 100) / 100 : 0
 
-    // Menu engineering matrix
     const aboveAvgMargin = contributionMargin > avgPrice * (1 - targetFoodCost / 100)
     const aboveAvgPopularity = popularityIndex >= 1.0
 
@@ -1418,8 +1525,6 @@ function optimizeMenu(input: MenuEngineeringInput): MenuEngineeringResult {
   menuRecs.push('Conduct monthly menu engineering review to track category shifts')
   menuRecs.push('A/B test repositioning of top 2 PUZZLE items for 4 weeks')
 
-  // Revenue optimization potential
-  const dogRevenue = items.filter((_, i) => classifications[i].category === 'dog').reduce((sum, i) => sum + i.price * i.monthly_orders, 0)
   const plowHorseImprovement = items.filter((_, i) => classifications[i].category === 'plow_horse').reduce((sum, i) => sum + i.price * 0.07 * i.monthly_orders, 0)
   const puzzleImprovement = items.filter((_, i) => classifications[i].category === 'puzzle').reduce((sum, i) => sum + i.price * 0.15 * i.monthly_orders, 0)
   const totalRevenue = items.reduce((sum, i) => sum + i.price * i.monthly_orders, 0)
@@ -1437,9 +1542,9 @@ function optimizeMenu(input: MenuEngineeringInput): MenuEngineeringResult {
   }
 }
 
-function formatMenuReport(input: MenuEngineeringInput, result: MenuEngineeringResult): string {
+function formatMenuReport(input: MenuInput, result: MenuOptimizationResult): string {
   const lines: string[] = []
-  lines.push('## Menu Engineering Optimization Report')
+  lines.push('## Menu Optimization Report')
   lines.push('')
   lines.push('**Restaurant:** ' + (input.restaurant_name || 'Unnamed Restaurant') + ' | **Target Food Cost:** ' + (input.target_food_cost_pct || 30) + '%')
   lines.push('')
@@ -1468,7 +1573,7 @@ function formatMenuReport(input: MenuEngineeringInput, result: MenuEngineeringRe
   }
 
   lines.push('### Revenue Optimization Potential')
-  lines.push('Estimated upside from menu engineering actions: +' + result.revenue_optimization_potential_pct + '% monthly revenue')
+  lines.push('Estimated upside from menu optimization actions: +' + result.revenue_optimization_potential_pct + '% monthly revenue')
   lines.push('')
   lines.push(DISCLAIMER_FOOD_SAFETY)
 
@@ -1480,18 +1585,18 @@ function formatMenuReport(input: MenuEngineeringInput, result: MenuEngineeringRe
 export function apply(ctx: Context) {
   const tools = ctx.tools
 
-  // Tool 1: Supply Chain Traceability Engine
+  // Tool 1: Alternative Protein Analyzer
   tools.register(defineTool({
-    name: 'supply_chain_traceability_engine',
-    description: 'Maps ingredient origin from raw material through processing, packaging, distribution, and retail shelf. Generates traceability score (0-100), identifies supply chain nodes with risk levels and certifications, detects gaps, estimates recall readiness time, and provides blockchain-enabled traceability recommendations.',
+    name: 'alternative_protein_analyzer',
+    description: 'Evaluates alternative protein sources (plant-based, fermentation-based, cultivated, hybrid) for food product development. Scores protein content, PDCAAS, environmental impact, cost feasibility, regulatory status, and scalability. Provides regulatory pathway and go-to-market timeline.',
     parameters: {
-      input_data: { type: 'string', description: 'JSON-encoded input with fields: product_name, ingredient_list[], supplier_regions[], traceability_target (full|batch|ingredient), blockchain_enabled, recall_readiness (low|medium|high)', required: true }
+      input_data: { type: 'string', description: 'JSON-encoded input with fields: protein_type (plant_based|fermentation_based|cultivated|hybrid), target_product, protein_source_candidates[], scale_of_production (pilot|commercial|industrial), regulatory_region, cost_target_per_kg', required: true }
     },
     output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
     async execute(args: { input_data: string }) {
-      const input: SupplyChainInput = JSON.parse(args.input_data)
-      const result = traceSupplyChain(input)
-      return formatSupplyChainReport(input, result)
+      const input: ProteinInput = JSON.parse(args.input_data)
+      const result = analyzeAlternativeProtein(input)
+      return formatProteinReport(input, result)
     }
   }))
 
@@ -1510,96 +1615,96 @@ export function apply(ctx: Context) {
     }
   }))
 
-  // Tool 3: Recipe Optimization AI
+  // Tool 3: Supply Chain Traceability Engine
   tools.register(defineTool({
-    name: 'recipe_optimization_ai',
-    description: 'AI-driven recipe reformulation for cost reduction, nutrition improvement, and dietary compliance. Analyzes current ingredient costs, suggests substitutions with flavor impact assessment, computes nutrition per serving against targets, and provides feasibility scoring.',
+    name: 'supply_chain_traceability_engine',
+    description: 'Maps ingredient origin from raw material through processing, packaging, distribution, and retail shelf. Generates traceability score (0-100), identifies supply chain nodes with risk levels and certifications, detects gaps, estimates recall readiness time, and provides blockchain-enabled traceability recommendations.',
     parameters: {
-      input_data: { type: 'string', description: 'JSON-encoded input with fields: recipe_name, current_ingredients[{name, quantity_g, cost_per_kg}], target_cost_reduction_pct, nutrition_targets{calories, protein_g, fat_g, carbs_g, sodium_mg}, dietary_constraints[], flavor_profile_target[]', required: true }
+      input_data: { type: 'string', description: 'JSON-encoded input with fields: product_name, ingredient_list[], supplier_regions[], traceability_target (full|batch|ingredient), blockchain_enabled, recall_readiness (low|medium|high)', required: true }
     },
     output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
     async execute(args: { input_data: string }) {
-      const input: RecipeInput = JSON.parse(args.input_data)
-      const result = optimizeRecipe(input)
-      return formatRecipeReport(input, result)
+      const input: SupplyChainInput = JSON.parse(args.input_data)
+      const result = traceSupplyChain(input)
+      return formatSupplyChainReport(input, result)
     }
   }))
 
-  // Tool 4: Alternative Protein Analyzer
+  // Tool 4: Personalized Nutrition Planner
   tools.register(defineTool({
-    name: 'alternative_protein_analyzer',
-    description: 'Evaluates alternative protein sources (plant-based, fermentation-based, cultivated, hybrid) for food product development. Scores protein content, PDCAAS, environmental impact, cost feasibility, regulatory status, and scalability. Provides regulatory pathway and go-to-market timeline.',
+    name: 'personalized_nutrition_planner',
+    description: 'Creates personalized nutrition plans based on individual profile (age, gender, weight, height, activity level). Calculates BMR, TDEE, daily calorie targets, macronutrient splits, meal suggestions, micronutrient gap analysis, hydration targets, and supplement recommendations. Supports dietary restrictions and health goals.',
     parameters: {
-      input_data: { type: 'string', description: 'JSON-encoded input with fields: protein_type (plant_based|fermentation_based|cultivated|hybrid), target_product, protein_source_candidates[], scale_of_production (pilot|commercial|industrial), regulatory_region, cost_target_per_kg', required: true }
+      input_data: { type: 'string', description: 'JSON-encoded input with fields: age, gender (male|female|other), weight_kg, height_cm, activity_level (sedentary|light|moderate|active|very_active), dietary_restrictions[], health_goals[], food_preferences[], allergies[], meals_per_day', required: true }
     },
     output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
     async execute(args: { input_data: string }) {
-      const input: ProteinInput = JSON.parse(args.input_data)
-      const result = analyzeAlternativeProtein(input)
-      return formatProteinReport(input, result)
+      const input: NutritionInput = JSON.parse(args.input_data)
+      const result = planNutrition(input)
+      return formatNutritionReport(input, result)
     }
   }))
 
-  // Tool 5: Shelf Life Predictor
+  // Tool 5: Food Waste Reducer
   tools.register(defineTool({
-    name: 'shelf_life_predictor',
-    description: 'Predictive shelf life modeling based on product category, storage temperature, pH, water activity, preservative system, and packaging type. Identifies spoilage indicator organisms with onset timing, critical factors, packaging/storage recommendations, and safety margin calculation.',
+    name: 'food_waste_reducer',
+    description: 'Analyzes food waste patterns and generates reduction strategies for food service and manufacturing businesses. Identifies waste reduction actions with cost-benefit analysis, diversion strategies (composting, anaerobic digestion, food rescue), landfill diversion targets, and composting recommendations.',
     parameters: {
-      input_data: { type: 'string', description: 'JSON-encoded input with fields: product_name, product_category, packaging_type, storage_temperature_c, pH, water_activity, preservative_system[], target_shelf_life_days, target_market', required: true }
+      input_data: { type: 'string', description: 'JSON-encoded input with fields: business_type (restaurant|cafe|hotel|catering|retail|manufacturing), daily_volume_kg, current_waste_pct, waste_categories[], seasonality_factor (low|medium|high), operational_days_per_week, current_diversion_pct', required: true }
     },
     output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
     async execute(args: { input_data: string }) {
-      const input: ShelfLifeInput = JSON.parse(args.input_data)
-      const result = predictShelfLife(input)
-      return formatShelfLifeReport(input, result)
+      const input: WasteInput = JSON.parse(args.input_data)
+      const result = reduceFoodWaste(input)
+      return formatWasteReport(input, result)
     }
   }))
 
-  // Tool 6: Allergen Detection Scanner
+  // Tool 6: Regulatory Compliance Tracker
   tools.register(defineTool({
-    name: 'allergen_detection_scanner',
-    description: 'Scans ingredient lists and facility information for allergen risks. Evaluates 14 priority allergens (milk, eggs, peanuts, tree nuts, soy, wheat, fish, shellfish, sesame, mustard, sulfites, lupin, celery, mollusks). Assesses cross-contact potential, label compliance, testing recommendations, and precautionary advisory needs.',
+    name: 'regulatory_compliance_tracker',
+    description: 'Tracks regulatory compliance across multiple markets and frameworks. Monitors compliance status per market, upcoming deadlines with severity classification, certification gaps, product claim risks, and generates prioritized action items for food products.',
     parameters: {
-      input_data: { type: 'string', description: 'JSON-encoded input with fields: product_name, ingredient_list[], processing_equipment_shared, allergen_free_claim[], facility_allergens_present[], testing_method (ELISA|PCR|LC_MS_MS|LFD)', required: true }
+      input_data: { type: 'string', description: 'JSON-encoded input with fields: target_markets[], product_category, regulatory_frameworks[], compliance_deadlines[{name, date, status}], current_certifications[], product_claims[]', required: true }
     },
     output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
     async execute(args: { input_data: string }) {
-      const input: AllergenInput = JSON.parse(args.input_data)
-      const result = scanAllergens(input)
-      return formatAllergenReport(input, result)
+      const input: RegulatoryInput = JSON.parse(args.input_data)
+      const result = trackRegulatoryCompliance(input)
+      return formatRegulatoryReport(input, result)
     }
   }))
 
-  // Tool 7: Cold Chain Integrity Monitor
+  // Tool 7: Ingredient Sustainability Scorer
   tools.register(defineTool({
-    name: 'cold_chain_integrity_monitor',
-    description: 'Monitors cold chain integrity from origin to destination using temperature logger data. Detects temperature excursions with severity classification, computes MKT (Mean Kinetic Temperature), calculates integrity score, determines product quality impact, and generates corrective actions per HACCP/GDP standards.',
+    name: 'ingredient_sustainability_scorer',
+    description: 'Scores ingredients on sustainability metrics including carbon footprint, water usage, land use, biodiversity impact, and social responsibility. Identifies certification gaps, carbon/water reduction opportunities, and suggests sustainable alternatives.',
     parameters: {
-      input_data: { type: 'string', description: 'JSON-encoded input with fields: product_type, shipment_id, origin_temp_c, destination_temp_c, transit_duration_hours, temp_logger_data[{hour, temp_c}], cold_chain_standard (GDP|HACCP|WHO_prequalified), max_allowed_temp_c', required: true }
+      input_data: { type: 'string', description: 'JSON-encoded input with fields: ingredient_list[], sourcing_regions[], certifications[], carbon_footprint_data[{ingredient, kg_co2_per_kg}], water_usage_data[{ingredient, liters_per_kg}], packaging_type', required: true }
     },
     output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
     async execute(args: { input_data: string }) {
-      const input: ColdChainInput = JSON.parse(args.input_data)
-      const result = monitorColdChain(input)
-      return formatColdChainReport(input, result)
+      const input: SustainabilityInput = JSON.parse(args.input_data)
+      const result = scoreIngredientSustainability(input)
+      return formatSustainabilityReport(input, result)
     }
   }))
 
-  // Tool 8: Menu Engineering Optimizer
+  // Tool 8: Menu Optimization Engine
   tools.register(defineTool({
-    name: 'menu_engineering_optimizer',
-    description: 'Four-quadrant menu engineering matrix (Star, Puzzle, Plow Horse, Dog) classification based on item profitability and popularity. Calculates contribution margins, food cost percentages, popularity indices, and provides per-item strategic recommendations with revenue optimization potential.',
+    name: 'menu_optimization_engine',
+    description: 'Four-quadrant menu optimization matrix (Star, Puzzle, Plow Horse, Dog) classification based on item profitability and popularity. Calculates contribution margins, food cost percentages, popularity indices, and provides per-item strategic recommendations with revenue optimization potential.',
     parameters: {
       input_data: { type: 'string', description: 'JSON-encoded input with fields: restaurant_name, menu_items[{name, price, food_cost_pct, monthly_orders}], analysis_dimension (profitability|popularity|both), target_food_cost_pct', required: true }
     },
     output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
     async execute(args: { input_data: string }) {
-      const input: MenuEngineeringInput = JSON.parse(args.input_data)
+      const input: MenuInput = JSON.parse(args.input_data)
       const result = optimizeMenu(input)
       return formatMenuReport(input, result)
     }
   }))
 
-  console.log('[dsh-tool-foodtechai] Loaded v' + VERSION + ' - Food Tech & Safety Toolkit with 8 tools')
-  console.log('  Tools: supply_chain_traceability_engine, food_safety_compliance_checker, recipe_optimization_ai, alternative_protein_analyzer, shelf_life_predictor, allergen_detection_scanner, cold_chain_integrity_monitor, menu_engineering_optimizer')
+  console.log('[dsh-tool-foodtechai] Loaded v' + VERSION + ' - Food Tech & Alternative Proteins Toolkit with 8 tools')
+  console.log('  Tools: alternative_protein_analyzer, food_safety_compliance_checker, supply_chain_traceability_engine, personalized_nutrition_planner, food_waste_reducer, regulatory_compliance_tracker, ingredient_sustainability_scorer, menu_optimization_engine')
 }

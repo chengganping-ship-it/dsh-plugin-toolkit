@@ -1,0 +1,35 @@
+{
+  "name": "dsh-tool-digidex",
+  "version": "0.1.0",
+  "description": "数字身份与KYC AI引擎插件 - 身份验证、生物识别认证、凭证管理、KYC/AML合规、隐私保护身份、数字钱包集成、身份欺诈检测、去中心化ID解析",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "digidex-dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digidex-dev/dsh-plugin-toolkit.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "digital-identity",
+    "kyc",
+    "aml",
+    "biometric",
+    "credential",
+    "privacy",
+    "blockchain",
+    "ai-agent"
+  ]
+}

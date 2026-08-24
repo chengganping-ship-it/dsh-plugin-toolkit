@@ -1,7 +1,7 @@
 {
   "name": "dsh-tool-foodtechai",
   "version": "1.0.0",
-  "description": "Food Tech & Safety AI toolkit for DeepSeek Harness -- supply chain traceability, quality inspection, recipe optimization, food safety compliance, alternative proteins, shelf life prediction, allergen detection, cold chain integrity, and menu engineering. Vertical AI in food is a growing 2026 market.",
+  "description": "Food Tech & Alternative Proteins AI toolkit for DeepSeek Harness -- alternative protein development, food safety compliance, supply chain traceability, personalized nutrition, food waste reduction, regulatory compliance tracking, ingredient sustainability scoring, and menu optimization. 2026: Alternative protein market projected at $36B by 2030.",
   "type": "module",
   "main": "lib/index.js",
   "dependencies": {
@@ -27,13 +27,14 @@
     "deepseek-harness",
     "plugin",
     "foodtech",
+    "alternative-proteins",
     "food-safety",
     "supply-chain",
-    "recipe-optimization",
-    "alternative-proteins",
-    "allergen-detection",
-    "cold-chain",
-    "menu-engineering",
+    "personalized-nutrition",
+    "food-waste",
+    "regulatory-compliance",
+    "sustainability",
+    "menu-optimization",
     "cordis"
   ]
 }
