@@ -1,0 +1,58 @@
+{
+  "name": "dsh-tool-supplyviz",
+  "version": "0.1.0",
+  "description": "Supply Chain Visibility & Traceability for DeepSeek Harness - Real-time tracking, provenance verification, cold chain monitoring, supplier risk scoring, ESG compliance tracking, chain of custody auditing, trade document automation, and sustainability scoring",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/types/**/*.d.ts",
+    "cordis.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "pack": "npm pack",
+    "prepack": "npm run build"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-supplyviz.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "supply-chain",
+    "visibility",
+    "traceability",
+    "provenance",
+    "cold-chain",
+    "esg",
+    "sustainability",
+    "compliance",
+    "custody"
+  ],
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dsh": {
+    "bundle": "cordis.yml"
+  },
+  "author": "chengganping-ship-it"
+}

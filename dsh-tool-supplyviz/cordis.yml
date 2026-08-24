@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Supply Chain Visibility & Traceability v0.1.0
+# Real-time tracking, provenance verification, cold chain monitoring, ESG compliance
+
+- id: dsh-tool-supplyviz
+  name: dsh-tool-supplyviz
+  version: 0.1.0
+  description: Supply Chain Visibility & Traceability - Real-time tracking, provenance verification, cold chain monitoring, supplier risk scoring, ESG compliance tracking, chain of custody auditing, trade document automation, and sustainability scoring
+  author: chengganping-ship-it
+  tools:
+    - shipment_tracking_aggregator
+    - provenance_verifier
+    - cold_chain_monitor
+    - supplier_risk_scorer
+    - esg_compliance_tracker
+    - chain_of_custody_auditor
+    - trade_document_automator
+    - sustainability_score_calculator

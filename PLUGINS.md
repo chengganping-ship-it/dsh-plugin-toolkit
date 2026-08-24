@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 251 plugins | 2008 tools (251 × 8)**
+**Total: 256 plugins | 2048 tools (256 × 8)**
 
 ---
 
@@ -515,6 +515,18 @@
 | 249 | creatormonetize | 创作者经济变现 | newsletter_monetization_planner, subscription_pricing_optimizer, ad_revenue_maximizer, sponsorship_deal_scorer, content_paywall_strategy, audience_growth_engine, platform_comparison_analyst, creator_financial_forecaster |
 | 250 | apidxoptimizer | API DX优化器 | dx_score_calculator, sdk_usability_analyst, developer_onboarding_optimizer, documentation_quality_grader, api_adoption_predictor, integration_time_finder, error_handling_assessor, churn_prediction_signals |
 | 251 | returnsmart | 电商退货智能优化 | return_probability_predictor, reverse_logistics_optimizer, refund_automation_engine, return_pattern_analyst, return_fraud_detector, restocking_process_optimizer, return_policy_advisor, environmental_impact_calculator |
+
+---
+
+## Wave 52 — 公共部门+心理健康+供应链可视化+Agent支付+远程医疗 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 252 | civicengage | 公共部门与公民科技 | citizen_engagement_analyzer, public_service_optimizer, homelessness_intervention_planner, urban_mobility_analyst, digital_equity_mapper, public_safety_predictor, civic_sentiment_tracker, smart_city_roi_calculator |
+| 253 | mindfulai | 心理健康与正念 | meditation_session_generator, mood_pattern_analyst, cbt_exercise_creator, stress_management_coach, sleep_quality_optimizer, mindfulness_habit_builder, emotional_intelligence_trainer, wellness_progress_tracker |
+| 254 | supplyviz | 供应链可视化与追溯 | shipment_tracking_aggregator, provenance_verifier, cold_chain_monitor, supplier_risk_scorer, esg_compliance_tracker, chain_of_custody_auditor, trade_document_automator, sustainability_score_calculator |
+| 255 | agentpay | Agent商务与支付 | agent_transaction_approver, escrow_service_manager, micropayment_optimizer, cross_agent_settlement, payment_routing_engineer, budget_enforcement_module, fraud_detection_agent, autonomous_purchase_advisor |
+| 256 | telemedai | 远程医疗与数字健康 | virtual_triage_system, remote_patient_monitor, medication_adherence_tracker, symptom_analyzer_ai, diagnostic_decision_support, telehealth_session_optimizer, chronic_care_manager, emergency_dispatch_coordinator |
 
 ---
 

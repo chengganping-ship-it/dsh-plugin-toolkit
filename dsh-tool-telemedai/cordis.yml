@@ -1,0 +1,14 @@
+- id: dsh-tool-telemedai
+  name: dsh-tool-telemedai
+  version: 0.1.0
+  description: Telemedicine & Remote Healthcare AI - virtual triage, remote patient monitoring, medication adherence tracking, symptom analysis AI, diagnostic decision support, telehealth session optimization, chronic care management, emergency dispatch coordination
+  author: chengganping-ship-it
+  tools:
+    - virtual_triage_system
+    - remote_patient_monitor
+    - medication_adherence_tracker
+    - symptom_analyzer_ai
+    - diagnostic_decision_support
+    - telehealth_session_optimizer
+    - chronic_care_manager
+    - emergency_dispatch_coordinator
