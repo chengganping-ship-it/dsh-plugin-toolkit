@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Cyber Insurance & Risk Transfer v0.1.0
+# Cyber risk quantification, policy design, claims assessment, breach cost estimation
+
+- id: dsh-tool-cyberinsure
+  name: dsh-tool-cyberinsure
+  version: 0.1.0
+  description: Cyber Insurance & Risk Transfer Toolkit - cyber risk quantification, policy design, claims assessment, breach cost estimation, coverage gap analysis, threat exposure scoring, incident response retainer, and regulatory fine calculation. 2026 market insight - cyber insurance market $25B+ growing at 20% CAGR.
+  author: chengganping-ship-it
+  tools:
+    - cyber_risk_quantifier
+    - policy_design_engine
+    - claims_assessor
+    - breach_cost_estimator
+    - coverage_gap_analyst
+    - threat_exposure_scorer
+    - incident_response_retainer
+    - regulatory_fine_calculator

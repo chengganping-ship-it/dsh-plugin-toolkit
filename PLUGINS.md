@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 287 plugins | 2296 tools (287 × 8)**
+**Total: 291 plugins | 2328 tools (291 × 8)**
 
 ---
 
@@ -607,6 +607,17 @@
 | 285 | chainid | 区块链身份与凭证 | verifiable_credential_issuer, did_resolver, zero_knowledge_proof_generator, reputation_system_designer, credential_revocation_manager, identity_federation_bridge, compliance_attestation_engine, trust_score_calculator |
 | 286 | qualityAI | 制造质量与过程优化 | spc_chart_analyzer, defect_prediction_modeler, root_cause_analyzer, process_capability_calculator, six_sigma_project_selector, inspection_plan_optimizer, supplier_quality_scorer, cost_of_poor_quality_tracker |
 | 287 | telecomai | 电信与网络智能 | network_optimization_engine, spectrum_allocation_optimizer, five_g_deployment_planner, network_slice_manager, customer_churn_predictor, fraud_detection_telecom, quality_of_experience_analyzer, infrastructure_investment_advisor |
+
+---
+
+## Wave 60 — 网络安全保险+DataOps+灾难恢复+数字营销广告 (4)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 288 | cyberinsure | 网络安全保险 | cyber_risk_quantifier, policy_design_engine, claims_assessor, breach_cost_estimator, coverage_gap_analyst, threat_exposure_scorer, incident_response_retainer, regulatory_fine_calculator |
+| 289 | dataflowai | DataOps与数据分析 | data_pipeline_monitor, data_quality_assessor, lineage_tracking_engine, catalog_management_system, anomaly_detection_dataops, schema_drift_detector, data_freshness_checker, cost_optimization_dataops |
+| 290 | disasterrecov | 灾难恢复与业务连续性 | dr_plan_generator, failover_test_coordinator, recovery_time_analyzer, resilience_score_calculator, business_impact_analyzer, backup_strategy_optimizer, incident_comm_planner, compliance_alignment_checker |
+| 291 | dmartai | 数字营销广告智能 | ad_creative_tester, attribution_analysis_engine, roas_optimizer, creative_fatigue_detector, cross_channel_analyzer, personalization_engine, landing_page_optimizer, audience_overlap_analyzer |
 
 ---
 

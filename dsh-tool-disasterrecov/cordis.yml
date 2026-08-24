@@ -1,0 +1,14 @@
+- id: dsh-tool-disasterrecov
+  name: dsh-tool-disasterrecov
+  version: 0.1.0
+  description: Disaster Recovery & Business Continuity for DSH - DR planning, failover testing, recovery time analysis, resilience scoring | 2026 DR/BC market $20B+ at 15% CAGR
+  author: chengganping-ship-it
+  tools:
+    - dr_plan_generator
+    - failover_test_coordinator
+    - recovery_time_analyzer
+    - resilience_score_calculator
+    - business_impact_analyzer
+    - backup_strategy_optimizer
+    - incident_comm_planner
+    - compliance_alignment_checker

@@ -1,0 +1,59 @@
+{
+  "name": "dsh-tool-cyberinsure",
+  "version": "0.1.0",
+  "description": "Cyber Insurance & Risk Transfer Toolkit for DeepSeek Harness - cyber risk quantification, policy design, claims assessment, breach cost estimation, coverage gap analysis, threat exposure scoring, incident response retainer, and regulatory fine calculation. 2026: Cyber insurance market $25B+; growing at 20% CAGR.",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/types/**/*.d.ts",
+    "cordis.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "pack": "npm pack",
+    "prepack": "npm run build"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-cyberinsure.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "cyber-insurance",
+    "risk-transfer",
+    "cyber-risk",
+    "policy-design",
+    "claims-assessment",
+    "breach-cost",
+    "coverage-gap",
+    "threat-exposure",
+    "incident-response",
+    "regulatory-fine"
+  ],
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dsh": {
+    "bundle": "cordis.yml"
+  },
+  "author": "chengganping-ship-it"
+}

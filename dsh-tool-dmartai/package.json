@@ -1,0 +1,11 @@
+{
+  "name": "dsh-tool-dmartai",
+  "version": "1.0.0",
+  "description": "数字营销广告智能 — 广告创意测试、归因分析、ROAS优化、创意疲劳检测 (dsh-tool-dmartai)",
+  "main": "src/index.ts",
+  "scripts": { "build": "tsc", "dev": "tsc --watch", "typecheck": "tsc --noEmit" },
+  "dependencies": { "@deepseek-ai/cordis": "^4.0.1", "@deepseek-ai/dsh-tools": "^0.0.1-rc.1" },
+  "devDependencies": { "typescript": "^5.0.0" },
+  "keywords": ["dsh","deepseek-harness","digital-marketing","advertising","adtech","plugin"],
+  "license": "MIT"
+}
