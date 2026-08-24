@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 340 plugins | 2720 tools (340 × 8)**
+**Total: 345 plugins | 2760 tools (345 × 8)**
 
 ---
 
@@ -744,6 +744,18 @@
 | 338 | quantumapp | 量子计算应用 | quantum_circuit_designer, vqe_configurator, error_correction_mapper, quantum_optimizer, qml_model_setup, quantum_safe_migration_planner, quantum_hardware_selector, nisq_algorithm_advisor |
 | 339 | digiwintwin | 数字孪生与工业元宇宙 | factory_twin_constructor, sensor_fusion_engine, production_line_simulator, predictive_twin_analyzer, energy_twin_modeler, supply_chain_twin_planner, arvr_visualization_setup, twin_actuation_controller |
 | 340 | spacedebris | 太空碎片与轨道管理 | collision_risk_assessor, orbital_maneuver_planner, debris_catalog_tracker, end_of_life_disposal, conjunction_data_generator, removal_mission_designer, ssa_dashboard_builder, orbital_slot_allocator |
+
+---
+
+## Wave 72 — 合成生物学+智能电网+语音AI+3D打印+隐私工程 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 341 | synthbio | 合成生物学与基因工程 | crispr_guide_designer, metabolic_pathway_optimizer, genetic_circuit_designer, protein_structure_predictor, biosensor_engineer, fermentation_optimizer, dna_assembly_planner, biosafety_assessor |
+| 342 | smartgrid | 智能电网与能源互联网 | demand_response_optimizer, der_management_system, grid_fault_detector, storage_dispatch_engine, renewable_forecaster, microgrid_controller, power_quality_analyzer, ev_charging_coordinator |
+| 343 | voiceai | 语音AI与实时翻译 | asr_pipeline_config, speaker_identifier, emotion_detector, tts_voice_cloner, realtime_translator, voice_command_nlg, audio_enhancer, conversation_ai_orchestrator |
+| 344 | logiprint | 3D打印与增材制造 | print_orientation_optimizer, support_structure_designer, print_cost_estimator, material_selector_am, topology_optimizer, post_processing_workflow, quality_inspection_planner, print_farm_manager |
+| 345 | privacyeng | 隐私工程与联邦学习 | dp_budget_allocator, fl_architect_designer, data_anonymization_engineer, privacy_impact_assessor, consent_management_config, smpc_setup_planner, gdpr_compliance_checker, synthetic_data_generator |
 
 ---
 

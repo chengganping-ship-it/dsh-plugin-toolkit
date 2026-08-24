@@ -1,0 +1,10 @@
+{
+  "name": "dsh-tool-logiprint",
+  "version": "1.0.0",
+  "description": "3D Printing & Additive Manufacturing — orientation, supports, topology optimization, print farm",
+  "main": "src/index.ts",
+  "dsh": {
+    "category": "Additive Manufacturing",
+    "tags": ["3d-printing", "topology", "slm", "fdm", "sla", "print-farm"]
+  }
+}

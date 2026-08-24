@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Smart Grid & Energy Internet v1.0.0
+# Demand response, DER management, fault detection, storage dispatch, renewable forecasting, microgrid control, power quality, EV charging
+
+- id: dsh-tool-smartgrid
+  name: dsh-tool-smartgrid
+  version: 1.0.0
+  description: Smart Grid & Energy Internet - demand response optimizer, DER management system, grid fault detector, storage dispatch engine, renewable forecaster, microgrid controller, power quality analyzer, EV charging coordinator
+  author: dsh
+  tools:
+    - demand_response_optimizer
+    - der_management_system
+    - grid_fault_detector
+    - storage_dispatch_engine
+    - renewable_forecaster
+    - microgrid_controller
+    - power_quality_analyzer
+    - ev_charging_coordinator

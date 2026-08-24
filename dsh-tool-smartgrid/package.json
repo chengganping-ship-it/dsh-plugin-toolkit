@@ -1,0 +1,10 @@
+{
+  "name": "dsh-tool-smartgrid",
+  "version": "1.0.0",
+  "description": "Smart Grid & Energy Internet — demand response, DER management, fault detection, storage dispatch",
+  "main": "src/index.ts",
+  "dsh": {
+    "category": "Smart Grid",
+    "tags": ["smart-grid", "demand-response", "energy-storage", "microgrid", "ev-charging"]
+  }
+}

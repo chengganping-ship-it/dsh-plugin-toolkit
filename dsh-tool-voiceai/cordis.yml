@@ -1,0 +1,328 @@
+name: dsh-tool-voiceai
+version: 1.0.0
+description: Voice AI & Real-Time Translation plugin — ASR, TTS cloning, translation, emotion, conversational AI
+category: Voice AI
+tags:
+  - voice
+  - asr
+  - tts
+  - translation
+  - emotion
+  - cloning
+
+tools:
+  - name: asr_pipeline_config
+    description: Configure automatic speech recognition pipeline with model selection, beam search, diarization, and streaming options
+    input:
+      type: object
+      properties:
+        model_size:
+          type: string
+          description: ASR model size tier (tiny, base, small, medium, large-v3)
+        language:
+          type: string
+          description: Primary recognition language (e.g. en, zh, ja, es)
+        enable_diarization:
+          type: boolean
+          description: Enable multi-speaker diarization
+        streaming_mode:
+          type: boolean
+          description: Enable streaming/real-time recognition
+        audio_sample_rate:
+          type: integer
+          description: Audio sample rate in Hz
+    output:
+      type: object
+      properties:
+        model:
+          type: string
+        language:
+          type: string
+        wer_percent:
+          type: number
+        cer_percent:
+          type: number
+        latency_ms:
+          type: number
+        vocabulary_size:
+          type: integer
+        beam_size:
+          type: integer
+        enable_diarization:
+          type: boolean
+        streaming_supported:
+          type: boolean
+        sample_rate_hz:
+          type: integer
+        confidence_threshold:
+          type: number
+
+  - name: speaker_identifier
+    description: Identify and verify speakers from voice embeddings, returning speaker ID, verification scores, and enrollment metrics
+    input:
+      type: object
+      properties:
+        audio_reference:
+          type: string
+          description: Reference audio file path or URI
+        candidate_speakers:
+          type: integer
+          description: Number of candidate speakers in the pool
+        verification_threshold:
+          type: number
+          description: Threshold for speaker verification acceptance
+    output:
+      type: object
+      properties:
+        speaker_id:
+          type: string
+        embedding_dimension:
+          type: integer
+        verification_score:
+          type: number
+        num_enrolled_speakers:
+          type: integer
+        embedding_model:
+          type: string
+        equal_error_rate:
+          type: number
+        min_audio_seconds:
+          type: number
+        enrollment_clips_required:
+          type: integer
+        identification_rank:
+          type: integer
+
+  - name: emotion_detector
+    description: Detect emotional state from voice features including arousal, valence, intensity, and classification scores
+    input:
+      type: object
+      properties:
+        audio_sample:
+          type: string
+          description: Audio sample path or URI for emotion analysis
+        granular_analysis:
+          type: boolean
+          description: Enable frame-level granular emotion tracking
+        emotion_categories:
+          type: integer
+          description: Number of emotion categories to classify
+    output:
+      type: object
+      properties:
+        dominant_emotion:
+          type: string
+        emotion_scores:
+          type: array
+          items:
+            type: object
+        arousal:
+          type: number
+        valence:
+          type: number
+        intensity:
+          type: number
+        model_accuracy:
+          type: number
+        inference_time_ms:
+          type: number
+        spectogram_features:
+          type: integer
+        confidence_margin:
+          type: number
+
+  - name: tts_voice_cloner
+    description: Clone a target voice from reference audio, configuring voice synthesis parameters and quality metrics
+    input:
+      type: object
+      properties:
+        target_voice_sample:
+          type: string
+          description: Path or URI to the target voice reference audio
+        training_epochs:
+          type: integer
+          description: Number of fine-tuning epochs for the voice clone
+        target_language:
+          type: string
+        preserve_prosody:
+          type: boolean
+    output:
+      type: object
+      properties:
+        cloned_voice_id:
+          type: string
+        similarity_score:
+          type: number
+        mos_score:
+          type: number
+        training_clones:
+          type: integer
+        target_language:
+          type: string
+        sample_rate_khz:
+          type: number
+        gpu_memory_mb:
+          type: integer
+        inference_time_ms:
+          type: number
+        pitch_range_hz:
+          type: string
+        preserve_prosody:
+          type: boolean
+
+  - name: realtime_translator
+    description: Configure and evaluate a real-time speech-to-speech translation pipeline with quality metrics
+    input:
+      type: object
+      properties:
+        source_language:
+          type: string
+        target_language:
+          type: string
+        domain:
+          type: string
+          description: Translation domain (medical, legal, technical, general)
+        enable_pivot:
+          type: boolean
+          description: Enable pivot translation through English
+    output:
+      type: object
+      properties:
+        source_language:
+          type: string
+        target_language:
+          type: string
+        bleu_score:
+          type: number
+        latency_ms:
+          type: number
+        word_count:
+          type: integer
+        character_count:
+          type: integer
+        segment_count:
+          type: integer
+        translation_model:
+          type: string
+        quality_score:
+          type: number
+        back_translation_score:
+          type: number
+        enable_pivot:
+          type: boolean
+
+  - name: voice_command_nlg
+    description: Generate natural language responses for voice commands with intent parsing, entity extraction, and multi-turn context
+    input:
+      type: object
+      properties:
+        command_text:
+          type: string
+        interaction_context:
+          type: integer
+          description: Number of prior interaction turns to consider
+        device_type:
+          type: string
+          description: Target device category (smart_speaker, mobile, automotive, iot)
+        response_style:
+          type: string
+    output:
+      type: object
+      properties:
+        command_intent:
+          type: string
+        num_entities:
+          type: integer
+        confidence:
+          type: number
+        response_text:
+          type: string
+        interaction_turns:
+          type: integer
+        device_type:
+          type: string
+        context_window:
+          type: integer
+        nlg_model:
+          type: string
+        response_length_chars:
+          type: integer
+
+  - name: audio_enhancer
+    description: Enhance audio quality through noise reduction, dereverband, and spectral restoration with measurable quality improvement
+    input:
+      type: object
+      properties:
+        audio_input:
+          type: string
+        target_noise_reduction_db:
+          type: number
+        preserve_speech_clarity:
+          type: boolean
+        enhancement_level:
+          type: string
+          description: light, moderate, or aggressive
+    output:
+      type: object
+      properties:
+        snr_db:
+          type: number
+        noise_reduction_db:
+          type: number
+        clarity_score:
+          type: number
+        original_quality_mos:
+          type: number
+        enhanced_quality_mos:
+          type: number
+        processing_latency_ms:
+          type: number
+        filter_type:
+          type: string
+        bitrate_kbps:
+          type: integer
+        sample_rate_hz:
+          type: integer
+        dynamic_range_db:
+          type: number
+
+  - name: conversation_ai_orchestrator
+    description: Orchestrate a multi-turn conversational AI session with context management, turn-taking, skill routing, and memory
+    input:
+      type: object
+      properties:
+        user_message:
+          type: string
+        session_turns:
+          type: integer
+          description: Number of prior turns in this session
+        available_skills:
+          type: integer
+          description: Number of registered conversational skills
+        memory_capacity_tokens:
+          type: integer
+    output:
+      type: object
+      properties:
+        session_id:
+          type: string
+        num_turns:
+          type: integer
+        response_latency_ms:
+          type: number
+        context_length:
+          type: integer
+        turn_taking_signal:
+          type: string
+        user_satisfaction_score:
+          type: number
+        active_skills:
+          type: integer
+        dialogue_model:
+          type: string
+        memory_tokens_used:
+          type: integer
+        intent_distribution:
+          type: array
+          items:
+            type: object
