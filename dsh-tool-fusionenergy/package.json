@@ -1,0 +1,34 @@
+{
+  "name": "dsh-tool-fusionenergy",
+  "version": "0.1.0",
+  "description": "Fusion Energy & Plasma Physics Toolkit for DSH - tokamak design, plasma confinement, fusion fuel cycles, reactor materials",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-plugin-toolkit.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "fusion-energy",
+    "plasma-physics",
+    "tokamak",
+    "fusion-reactor",
+    "tritium",
+    "magnetic-confinement",
+    "fusion-economics"
+  ]
+}

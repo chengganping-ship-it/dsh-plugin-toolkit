@@ -1,0 +1,59 @@
+{
+  "name": "dsh-tool-wildlifeai",
+  "version": "0.1.0",
+  "description": "Wildlife Conservation & Ecology Plugin for DeepSeek Harness - species monitoring, habitat analysis, poaching prevention, biodiversity assessment, population modeling, migration tracking, camera trap analysis, and conservation ROI calculation",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/types/**/*.d.ts",
+    "cordis.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "pack": "npm pack",
+    "prepack": "npm run build"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dsh-plugins/dsh-tool-wildlifeai.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "wildlife",
+    "conservation",
+    "ecology",
+    "biodiversity",
+    "species-monitoring",
+    "habitat-analysis",
+    "poaching-prevention",
+    "camera-trap",
+    "migration-tracking"
+  ],
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "tsx": "^4.0.0"
+  },
+  "dsh": {
+    "bundle": "cordis.yml"
+  },
+  "author": "dsh-plugins"
+}

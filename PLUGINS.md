@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 330 plugins | 2640 tools (330 × 8)**
+**Total: 335 plugins | 2680 tools (335 × 8)**
 
 ---
 
@@ -720,6 +720,18 @@
 | 328 | materialai | 材料科学与工程 | materials_selection_engine, alloy_designer, corrosion_analyst, composites_optimizer, ceramic_processing_advisor, polymer_formulation_planner, semiconductor_materials_selector, nanomaterials_designer |
 | 329 | underwaterbot | 水下机器人与海洋技术 | auv_mission_planner, rov_operations_manager, underwater_inspector, marine_data_analyzer, sonar_signal_processor, underwater_communication_planner, ocean_sediment_sampler, marine_biodiversity_monitor |
 | 330 | autofarm | 自主农业与农机器人 | planting_automation_planner, harvesting_robot_coordinator, crop_monitoring_analyzer, soil_analysis_sensor, irrigation_drone_operator, weed_detection_eliminator, yield_mapping_predictor, farm_fleet_manager |
+
+---
+
+## Wave 70 — 核聚变+AI代码审查+野生动物保护+自主船舶+预测性维护 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 331 | fusionenergy | 核聚变能源 | tokamak_designer, plasma_confinement_analyzer, fusion_fuel_cycle_optimizer, reactor_materials_selector, tritium_breeding_calculator, magnetic_field_configurator, fusion_economics_modeler, regulatory_pathway_fusion |
+| 332 | prreviewer | AI代码审查与质量 | pr_review_automator, code_quality_scorer, security_code_analyzer, performance_review_engine, architecture_compliance_checker, test_coverage_reviewer, documentation_completeness_checker, tech_debt_assessor |
+| 333 | wildlifeai | 野生动物保护与生态 | species_monitoring_engine, habitat_analysis_mapper, poaching_prevention_system, biodiversity_assessment_tool, wildlife_population_modeler, migration_tracker, camera_trap_analyzer, conservation_roi_calculator |
+| 334 | autoship | 自主船舶与海事 | autonomous_navigation_planner, collision_avoidance_maritime, port_automation_coordinator, fleet_autonomy_manager, fuel_optimization_autonomous, weather_routing_autonomous, remote_monitoring_center, regulatory_compliance_maritime |
+| 335 | predmaint | 预测性维护与资产健康 | vibration_analysis_engine, remaining_useful_life_calculator, maintenance_scheduler, spare_parts_optimizer, thermal_imaging_analyzer, oil_analysis_interpreter, motor_current_signature_analyzer, asset_health_dashboard |
 
 ---
 

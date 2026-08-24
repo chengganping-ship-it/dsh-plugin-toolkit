@@ -1,0 +1,58 @@
+{
+  "name": "dsh-tool-predmaint",
+  "version": "0.1.0",
+  "description": "Predictive Maintenance & Asset Health AI Agent for DeepSeek Harness - Vibration analysis, remaining useful life calculation, maintenance scheduling, spare parts optimization, thermal imaging analysis, oil analysis interpretation, motor current signature analysis, asset health dashboards",
+  "type": "commonjs",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/types/**/*.d.ts",
+    "cordis.yml",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "pack": "npm pack",
+    "prepack": "npm run build"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/predmaint/dsh-tool-predmaint.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "predictive-maintenance",
+    "asset-health",
+    "vibration-analysis",
+    "remaining-useful-life",
+    "maintenance-scheduling",
+    "spare-parts",
+    "thermal-imaging",
+    "oil-analysis",
+    "motor-current",
+    "condition-monitoring"
+  ],
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dsh": {
+    "bundle": "cordis.yml"
+  },
+  "author": "predmaint"
+}

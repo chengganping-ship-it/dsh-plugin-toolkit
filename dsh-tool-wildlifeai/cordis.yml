@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Wildlife Conservation & Ecology v0.1.0
+# Species monitoring, habitat analysis, poaching prevention, biodiversity assessment
+
+- id: dsh-tool-wildlifeai
+  name: dsh-tool-wildlifeai
+  version: 0.1.0
+  description: Wildlife Conservation & Ecology - species monitoring engine, habitat analysis mapper, poaching prevention system, biodiversity assessment tool, wildlife population modeler, migration tracker, camera trap analyzer, conservation ROI calculator
+  author: dsh-plugins
+  tools:
+    - species_monitoring_engine
+    - habitat_analysis_mapper
+    - poaching_prevention_system
+    - biodiversity_assessment_tool
+    - wildlife_population_modeler
+    - migration_tracker
+    - camera_trap_analyzer
+    - conservation_roi_calculator
