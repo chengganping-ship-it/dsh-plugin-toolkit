@@ -1,0 +1,14 @@
+- id: dsh-tool-apidxoptimizer
+  name: dsh-tool-apidxoptimizer
+  version: 0.1.0
+  description: API Developer Experience Optimizer - DX scoring, SDK usability analysis, developer onboarding optimization, documentation quality scoring, API adoption prediction
+  author: chengganping-ship-it
+  tools:
+    - dx_score_calculator
+    - sdk_usability_analyst
+    - developer_onboarding_optimizer
+    - documentation_quality_grader
+    - api_adoption_predictor
+    - integration_time_finder
+    - error_handling_assessor
+    - churn_prediction_signals

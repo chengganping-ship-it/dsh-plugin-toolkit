@@ -1,0 +1,6 @@
+- id: dsh-tool-freelanceos
+  name: dsh-tool-freelanceos
+  version: 1.0.0
+  description: Freelancer Business OS -- proposal generation, pricing optimization, client relationship management, portfolio building, contract review. 8 tools for the $50B+ freelance economy in 2026.
+  author: chengganping-ship-it
+  tools: 8

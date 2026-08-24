@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: DeFi Risk Engineering Toolkit v0.1.0
+# Protocol risk scoring, flash loan attack detection, TVL health monitoring, oracle manipulation detection
+
+- id: dsh-tool-defiriskeng
+  name: dsh-tool-defiriskeng
+  version: 0.1.0
+  description: DeFi Risk Engineering Toolkit - Protocol risk scoring, flash loan attack detection, TVL health monitoring, oracle manipulation detection, impermanent loss calculator, smart contract vulnerability scanner, governance attack analyzer, and DeFi portfolio risk manager
+  author: chengganping-ship-it
+  tools:
+    - protocol_risk_scorer
+    - flash_loan_attack_detector
+    - tvl_health_monitor
+    - oracle_manipulation_detector
+    - impermanent_loss_calculator
+    - smart_contract_vulnerability_scanner
+    - governance_attack_analyzer
+    - defi_portfolio_risk_manager

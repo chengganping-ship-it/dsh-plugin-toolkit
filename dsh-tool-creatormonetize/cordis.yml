@@ -1,0 +1,14 @@
+- id: dsh-tool-creatormonetize
+  name: dsh-tool-creatormonetize
+  version: 0.1.0
+  description: 创作者经济变现工具集 - Newsletter变现、订阅优化、广告收入优化、赞助策略
+  author: chengganping-ship-it
+  tools:
+    - newsletter_monetization_planner
+    - subscription_pricing_optimizer
+    - ad_revenue_maximizer
+    - sponsorship_deal_scorer
+    - content_paywall_strategy
+    - audience_growth_engine
+    - platform_comparison_analyst
+    - creator_financial_forecaster

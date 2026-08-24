@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 246 plugins | 1968 tools (246 × 8)**
+**Total: 251 plugins | 2008 tools (251 × 8)**
 
 ---
 
@@ -503,6 +503,18 @@
 - `package.json` / `tsconfig.json` / `src/index.ts` / `src/yaml-parser.ts` / `src/sdk-shims.ts`
 - StdioServerTransport, tsc 编译零错误, tools/list 返回 184 个工具
 - 解决 SDK exports map 在 Node 24 下的 require() 兼容性问题
+
+---
+
+## Wave 51 — DeFi风险工程+自由创作者变现+API DX+电商退货+自由职业OS (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 247 | defiriskeng | DeFi风险工程 | protocol_risk_scorer, flash_loan_attack_detector, tvl_health_monitor, oracle_manipulation_detector, impermanent_loss_calculator, smart_contract_vulnerability_scanner, governance_attack_analyzer, defi_portfolio_risk_manager |
+| 248 | freelanceos | 自由职业OS | proposal_crafter, pricing_strategy_optimizer, client_relationship_manager, portfolio_effectiveness_scorer, contract_review_assistant, income_diversification_advisor, time_tracking_analytics, freelancer_brand_positioner |
+| 249 | creatormonetize | 创作者经济变现 | newsletter_monetization_planner, subscription_pricing_optimizer, ad_revenue_maximizer, sponsorship_deal_scorer, content_paywall_strategy, audience_growth_engine, platform_comparison_analyst, creator_financial_forecaster |
+| 250 | apidxoptimizer | API DX优化器 | dx_score_calculator, sdk_usability_analyst, developer_onboarding_optimizer, documentation_quality_grader, api_adoption_predictor, integration_time_finder, error_handling_assessor, churn_prediction_signals |
+| 251 | returnsmart | 电商退货智能优化 | return_probability_predictor, reverse_logistics_optimizer, refund_automation_engine, return_pattern_analyst, return_fraud_detector, restocking_process_optimizer, return_policy_advisor, environmental_impact_calculator |
 
 ---
 

@@ -1,0 +1,14 @@
+- id: dsh-tool-returnsmart
+  name: dsh-tool-returnsmart
+  version: 0.1.0
+  description: E-Commerce Returns & Refund Optimizer - return prediction, reverse logistics, refund automation, fraud detection
+  author: chengganping-ship-it
+  tools:
+    - return_probability_predictor
+    - reverse_logistics_optimizer
+    - refund_automation_engine
+    - return_pattern_analyst
+    - return_fraud_detector
+    - restocking_process_optimizer
+    - return_policy_advisor
+    - environmental_impact_calculator

@@ -1,0 +1,33 @@
+{
+  "name": "dsh-tool-creatormonetize",
+  "version": "0.1.0",
+  "description": "Creator Economy Monetization for DSH - newsletter monetization, subscription optimization, ad revenue optimization, sponsorship strategy",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-plugin-toolkit.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "creator-economy",
+    "monetization",
+    "newsletter",
+    "subscription",
+    "ad-revenue",
+    "sponsorship"
+  ]
+}
