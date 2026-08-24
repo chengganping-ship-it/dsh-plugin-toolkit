@@ -1,0 +1,14 @@
+- id: dsh-tool-freightflow
+  name: dsh-tool-freightflow
+  version: 0.1.0
+  description: Freight & Logistics Optimization - route optimization, load planning, carrier selection, freight audit, warehouse optimization
+  author: chengganping-ship-it
+  tools:
+    - route_optimization_engine
+    - load_planning_optimizer
+    - carrier_selection_analyst
+    - freight_audit_automator
+    - warehouse_slotting_optimizer
+    - last_mile_delivery_planner
+    - cross_dock_optimizer
+    - transportation_spend_analyzer

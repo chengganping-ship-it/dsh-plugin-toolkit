@@ -1,7 +1,7 @@
 {
   "name": "dsh-tool-energygrid",
   "version": "0.1.0",
-  "description": "Smart Grid & Energy Management for DeepSeek Harness - Demand forecasting, grid optimization, energy trading, renewable integration, battery management, carbon capture, power quality, microgrid islanding, and energy storage sizing",
+  "description": "Energy Grid & Utilities for DeepSeek Harness - Grid optimization, demand forecasting, renewable integration, energy trading, outage management, power quality, energy storage, utility bill analysis",
   "type": "commonjs",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -34,15 +34,14 @@
     "plugin",
     "smart-grid",
     "energy-management",
-    "demand-forecasting",
     "grid-optimization",
-    "energy-trading",
+    "demand-forecasting",
     "renewable-integration",
-    "battery-management",
-    "carbon-capture",
+    "energy-trading",
+    "outage-management",
     "power-quality",
-    "microgrid",
-    "energy-storage"
+    "energy-storage",
+    "utility-bill"
   ],
   "dependencies": {
     "@deepseek-ai/cordis": "^4.0.1",

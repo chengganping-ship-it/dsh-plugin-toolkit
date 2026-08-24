@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Cybersecurity & Threat Intelligence v0.1.0
+# Threat intelligence, vulnerability management, incident response, security orchestration
+
+- id: dsh-tool-cyberthreat
+  name: dsh-tool-cyberthreat
+  version: 0.1.0
+  description: Cybersecurity & Threat Intelligence - threat intelligence aggregator, vulnerability management engine, incident response orchestrator, security orchestration automator, attack surface mapper, malware behavior analyst, security posture scorer, zero trust architecture advisor
+  author: dsh-plugins
+  tools:
+    - threat_intelligence_aggregator
+    - vulnerability_management_engine
+    - incident_response_orchestrator
+    - security_orchestration_automator
+    - attack_surface_mapper
+    - malware_behavior_analyst
+    - security_posture_scorer
+    - zero_trust_architecture_advisor

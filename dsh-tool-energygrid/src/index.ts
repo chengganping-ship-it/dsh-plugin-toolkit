@@ -1,23 +1,27 @@
 /**
- * DSH Smart Grid & Energy Management Plugin v0.1.0
+ * DSH Energy Grid & Utilities Plugin v0.1.0
  *
- * Comprehensive smart grid and energy management toolkit for DeepSeek Harness Agent.
- * Designed for grid operators, energy traders, renewable energy engineers,
- * battery system designers, and grid resilience planners.
+ * Comprehensive energy grid optimization and utilities toolkit for DeepSeek Harness Agent.
+ * Designed for grid operators, energy traders, utility managers, renewable energy engineers,
+ * and energy storage planners.
  *
  * Features (v0.1.0):
- * 1. Grid Demand Forecaster       — Multi-horizon load forecasting with weather scenarios
- * 2. Renewable Integration        — Solar and wind grid integration optimization
- * 3. Energy Trading Strategy      — Day-ahead and real-time market trading optimization
- * 4. Battery Management Scheduler — Charge/discharge scheduling for grid services
- * 5. Carbon Capture Optimizer     — CCS system optimization for power plant compliance
- * 6. Power Quality Monitor        — Power quality analysis including harmonics and voltage
- * 7. Microgrid Islanding Control  — Microgrid islanding detection and transfer management
- * 8. Energy Storage Sizing        — Battery energy storage system sizing for grid needs
+ * 1. grid_optimization_engine       — Power flow optimization, loss minimization, Volt/VAR control
+ * 2. demand_forecasting_modeler     — Multi-horizon demand forecasting with weather scenarios
+ * 3. renewable_integration_planner  — Renewable grid integration, curtailment reduction, storage plan
+ * 4. energy_trading_advisor         — Energy market trading, price signals, portfolio optimization
+ * 5. outage_management_coordinator  — Outage detection, crew dispatch, restoration planning
+ * 6. power_quality_analyzer         — Voltage, harmonics, flicker, power factor assessment
+ * 7. energy_storage_optimizer       — Battery storage sizing, charge/discharge optimization
+ * 8. utility_bill_analyzer          — Utility bill analysis, rate optimization, cost reduction
  *
  * @module dsh-tool-energygrid
  * @version 0.1.0
  * @license MIT
+ *
+ * Disclaimer: This analysis is based on AI model inference and simulated data.
+ * It is for reference only and does not replace professional power system engineering,
+ * energy trading, or utility operations advice.
  */
 
 import type { Context } from '@deepseek-ai/cordis'
@@ -27,7 +31,7 @@ export const name = 'dsh-tool-energygrid'
 export const inject = ['tools']
 
 const VERSION = '0.1.0'
-const DISCLAIMER = 'Disclaimer: This analysis is based on AI model inference and simulated data. It is for reference only and does not replace professional power system engineering, energy trading, or grid operations advice. Demand forecasts and trading strategies carry inherent uncertainty. Operational decisions should be validated by certified power system engineers.'
+const DISCLAIMER = 'Disclaimer: This analysis is based on AI model inference and simulated data. It is for reference only and does not replace professional power system engineering, energy trading, or utility operations advice.'
 
 // ==================== SECTION 1 -- Seeded Random (mulberry32 PRNG) ====================
 
@@ -54,7 +58,11 @@ class SeededRandom {
     return this.next() * (max - min) + min
   }
 
-  static hashStr(str: string): number {
+  pick<T>(arr: T[]): T {
+    return arr[this.nextInt(0, arr.length - 1)]
+  }
+
+  static seedFromString(str: string): number {
     let hash = 0
     for (let i = 0; i < str.length; i++) {
       hash = ((hash << 5) - hash + str.charCodeAt(i)) | 0
@@ -65,1206 +73,1598 @@ class SeededRandom {
 
 // ==================== SECTION 2 -- Types & Interfaces ====================
 
-// --- Tool 1: Grid Demand Forecaster ---
-export interface GridDemandInput {
-  historical_load_mw: number[]
+// --- Tool 1: Grid Optimization Engine ---
+export interface GridOptimizationInput {
+  grid_id: string
+  topology: {
+    buses: number
+    branches: number
+    generators: number
+    loads: number
+  }
+  voltage_kv: number
+  total_load_mw: number
+  total_generation_mw: number
+  renewable_generation_mw: number
+  loss_target_pct: number
+  var_devices: number
+  tap_changers: number
+  optimization_objective: 'loss_min' | 'voltage_profile' | 'reactive_power' | 'multi_objective'
+}
+
+export interface PowerFlowResult {
+  bus_voltages: Array<{ bus_id: string; voltage_pu: number; angle_deg: number }>
+  branch_flows: Array<{ branch_id: string; from_bus: string; to_bus: string; power_mw: number; losses_mw: number }>
+  total_losses_mw: number
+  losses_pct: number
+  convergence_status: 'converged' | 'diverged' | 'max_iterations'
+}
+
+export interface VoltVarControl {
+  device_id: string
+  device_type: 'capacitor' | 'reactor' | 'svc' | 'statcom' | 'oltc'
+  setting: number
+  action: 'raise' | 'lower' | 'hold'
+  impact_voltage_pu: number
+}
+
+export interface GridOptimizationResult {
+  grid_id: string
+  power_flow: PowerFlowResult
+  volt_var_controls: VoltVarControl[]
+  loss_reduction_potential_pct: number
+  voltage_violations: number
+  optimization_score: number
+  recommendations: string[]
+  reliability_assessment: string
+}
+
+// --- Tool 2: Demand Forecasting Modeler ---
+export interface DemandForecastInput {
+  region_id: string
   forecast_horizon_hours: number
-  temperature_c: number[]
-  humidity_pct: number[]
-  grid_region: string
+  historical_load_mw: number[]
+  temperature_c: number
+  humidity_pct: number
+  day_type: 'weekday' | 'weekend' | 'holiday'
   season: 'spring' | 'summer' | 'autumn' | 'winter'
   special_event?: string
+  industrial_pct: number
+  commercial_pct: number
+  residential_pct: number
 }
 
-export interface DemandForecast {
+export interface DemandPoint {
   hour: number
   forecast_mw: number
-  peak_mw: number
-  low_mw: number
-  confidence_interval: [number, number]
-  risk_level: 'low' | 'medium' | 'high' | 'critical'
+  confidence_low: number
+  confidence_high: number
 }
 
-export interface GridDemandResult {
-  region: string
-  current_peak_mw: number
+export interface PeakValleyAnalysis {
+  peak_hour: number
+  peak_load_mw: number
+  valley_hour: number
+  valley_load_mw: number
+  peak_valley_ratio: number
+  load_factor_pct: number
+}
+
+export interface DemandForecastResult {
+  region_id: string
   forecast_horizon_hours: number
-  forecasts: DemandForecast[]
-  aggregated: {
-    total_energy_mwh: number
-    peak_demand_mw: number
-    minimum_demand_mw: number
-    load_factor_pct: number
-  }
+  demand_points: DemandPoint[]
+  peak_valley: PeakValleyAnalysis
+  total_energy_mwh: number
+  avg_load_mw: number
+  max_load_mw: number
+  min_load_mw: number
+  mape_pct: number
+  risk_level: 'low' | 'medium' | 'high' | 'critical'
   recommendations: string[]
-  grid_stress_assessment: string
 }
 
-// --- Tool 2: Renewable Integration Optimizer ---
+// --- Tool 3: Renewable Integration Planner ---
 export interface RenewableIntegrationInput {
+  project_id: string
   solar_capacity_mw: number
   wind_capacity_mw: number
-  current_grid_load_mw: number
+  current_renewable_mw: number
+  grid_capacity_mw: number
+  interconnection_limit_mw: number
+  storage_existing_mwh: number
+  storage_proposed_mwh: number
+  curtailment_target_pct: number
   grid_flexibility: 'low' | 'medium' | 'high'
-  storage_mwh: number
-  curtailment_pct: number
-  interconnection_capacity_mw: number
+  technology: 'solar_pv' | 'wind_onshore' | 'wind_offshore' | 'hybrid' | 'csp'
 }
 
-export interface CurtailmentReduction {
+export interface IntegrationCapacity {
+  max_hosting_capacity_mw: number
+  available_headroom_mw: number
+  thermal_limit_mw: number
+  voltage_rise_limit_mw: number
+  short_circuit_limit_mw: number
+  binding_constraint: string
+}
+
+export interface CurtailmentStrategy {
   strategy: string
-  reduction_pct: number
-  cost_estimate_usd: number
-  implementation_timeline: string
+  curtailment_reduction_pct: number
+  implementation_cost_usd: number
+  payback_years: number
+}
+
+export interface StoragePlan {
+  recommended_capacity_mwh: number
+  recommended_power_mw: number
+  technology: string
+  services: string[]
+  annual_revenue_usd: number
+  capital_cost_usd: number
 }
 
 export interface RenewableIntegrationResult {
+  project_id: string
   renewable_penetration_pct: number
-  effective_capacity_mw: number
-  curtailment_forecast: number
-  integration_score: number
-  strategies: CurtailmentReduction[]
-  storage_optimization: {
-    recommended_storage_mwh: number
-    charge_schedule: string
-    discharge_schedule: string
-    round_trip_efficiency: number
-  }
-  grid_stability_assessment: string
+  integration_capacity: IntegrationCapacity
+  curtailment_strategies: CurtailmentStrategy[]
+  storage_plan: StoragePlan
+  grid_impact_score: number
+  carbon_reduction_tco2_per_year: number
   recommendations: string[]
 }
 
-// --- Tool 3: Energy Trading Strategy ---
+// --- Tool 4: Energy Trading Advisor ---
 export interface EnergyTradingInput {
-  market: string
-  delivery_date: string
-  current_portfolio_mwh: number
-  forecast_demand_mwh: number
-  price_forecast: number[]
-  risk_appetite: 'conservative' | 'moderate' | 'agulative'
-  carbon_price: number
-  renewable_certificate_price: number
-  regulation_requirement_pct: number
+  market_id: string
+  participant_id: string
+  trading_date: string
+  market_type: 'day_ahead' | 'real_time' | 'forward' | 'ancillary' | 'capacity'
+  portfolio_position_mwh: number
+  generation_capacity_mw: number
+  marginal_cost_per_mwh: number
+  price_forecast_per_mwh: number[]
+  price_volatility_pct: number
+  risk_tolerance: 'conservative' | 'moderate' | 'aggressive'
+  credit_limit_usd: number
+  renewable_certificates: number
+  carbon_allowance_t: number
 }
 
-export interface TradeRecommendation {
+export interface PriceForecast {
+  hour: number
+  predicted_price: number
+  confidence_low: number
+  confidence_high: number
+  price_driver: string
+}
+
+export interface TradingRecommendation {
   action: 'buy' | 'sell' | 'hold'
-  volume_mwh: number
-  price_target: number
-  timing: string
-  confidence: number
-  rationale: string
+  volume_mw: number
+  target_price_per_mwh: number
+  strategy: string
+  expected_profit_usd: number
+  risk_score: number
+}
+
+export interface PortfolioRisk {
+  var_95_pct: number
+  cvar_95_pct: number
+  max_drawdown_pct: number
+  sharpe_ratio: number
+  exposure_mwh: number
 }
 
 export interface EnergyTradingResult {
-  market: string
-  delivery_date: string
-  recommended_position_mwh: number
-  trades: TradeRecommendation[]
-  risk_metrics: {
-    var_95_pct: number
-    expected_return_pct: number
-    sharpe_ratio: number
-    max_drawdown_pct: number
-  }
-  hedge_recommendations: string[]
-  market_outlook: string
-}
-
-// --- Tool 4: Battery Management Scheduler ---
-export interface BatterySchedulerInput {
-  battery_capacity_mwh: number
-  current_soc_pct: number
-  charge_rate_mw: number
-  discharge_rate_mw: number
-  efficiency_pct: number
-  cycle_limit: number
-  current_cycles: number
-  electricity_prices: number[]
-  grid_services: ('frequency_response' | 'peak_shaving' | 'load_shifting' | 'arbitrage')[]
-  operating_date: string
-}
-
-export interface ScheduleEntry {
-  hour: number
-  action: 'charge' | 'discharge' | 'idle'
-  power_mw: number
-  soc_target_pct: number
-  revenue_usd: number
-  degradation_cost_usd: number
-  service_type: string
-}
-
-export interface BatterySchedulerResult {
-  operating_date: string
-  schedule: ScheduleEntry[]
-  daily_summary: {
-    total_charged_mwh: number
-    total_discharged_mwh: number
-    round_trip_efficiency: number
-    cycle_equivalent: number
-    total_revenue_usd: number
-    total_degradation_cost_usd: number
-    net_profit_usd: number
-  }
-  battery_health: {
-    remaining_cycles: number
-    soh_pct: number
-    recommended_max_cycles: number
-  }
+  market_id: string
+  price_forecasts: PriceForecast[]
+  trading_recommendation: TradingRecommendation
+  portfolio_risk: PortfolioRisk
+  expected_revenue_usd: number
+  market_clearing_probability: number
+  regulatory_compliance: string
+  renewable_certificate_position: string
+  carbon_exposure: string
   recommendations: string[]
 }
 
-// --- Tool 5: Carbon Capture Optimizer ---
-export interface CarbonCaptureInput {
-  plant_type: 'coal' | 'gas' | 'biomass' | 'waste'
-  fuel_input_mw: number
-  capture_rate_target_pct: number
-  co2_captured_tons: number
-  co2_emitted_tons: number
-  electricity_parasitic_pct: number
-  solvent_type: string
-  regeneration_energy_gj_per_ton: number
-  co2_storage_capacity_tons: number
-  carbon_price: number
+// --- Tool 5: Outage Management Coordinator ---
+export interface OutageManagementInput {
+  outage_id: string
+  grid_segment_id: string
+  fault_type: 'equipment_failure' | 'weather' | 'vegetation' | 'animal' | 'vehicle' | 'unknown'
+  fault_location: { latitude: number; longitude: number }
+  affected_customers: number
+  detection_time: string
+  crew_available: number
+  weather_conditions: string
+  priority_customers: string[]
+  backup_feeders: string[]
+  scada_status: 'online' | 'degraded' | 'offline'
 }
 
-export interface CaptureOptimization {
-  parameter: string
-  current_value: string
-  recommended_value: string
-  impact_tons: number
-  cost_benefit: string
+export interface FaultIsolation {
+  switches_to_operate: Array<{ switch_id: string; action: 'open' | 'close'; location: string }>
+  isolated_sections: string[]
+  customers_isolated: number
+  isolation_time_estimate_min: number
 }
 
-export interface CarbonCaptureResult {
-  plant_type: string
-  effective_capture_rate_pct: number
-  co2_captured_annual_tons: number
-  parasitic_load_mw: number
-  cost_per_ton_captured: number
-  revenue_from_captured_co2: number
-  net_operating_cost: number
-  optimizations: CaptureOptimization[]
-  compliance_status: string
-  emissions_reduction_pct: number
+export interface RestorationPlan {
+  steps: Array<{ step: number; action: string; crew_required: number; duration_min: number }>
+  total_restoration_time_min: number
+  customers_restored_per_step: number[]
+  priority_restoration: string[]
+  mutual_aid_required: boolean
 }
 
-// --- Tool 6: Power Quality Monitor ---
+export interface CrewDispatch {
+  crew_id: string
+  crew_size: number
+  estimated_arrival_min: number
+  assigned_task: string
+  travel_distance_km: number
+  equipment_needed: string[]
+}
+
+export interface OutageManagementResult {
+  outage_id: string
+  fault_isolation: FaultIsolation
+  restoration_plan: RestorationPlan
+  crew_dispatches: CrewDispatch[]
+  saifi_impact: number
+  saidi_impact: number
+  caidi_impact: number
+  customer_minutes_interrupted: number
+  priority_customers_restored: boolean
+  recommendations: string[]
+}
+
+// --- Tool 6: Power Quality Analyzer ---
 export interface PowerQualityInput {
-  voltage_kv: number
-  frequency_hz: number
-  thd_voltage_pct: number
-  thd_current_pct: number
-  voltage_unbalance_pct: number
+  monitoring_point_id: string
+  voltage_level_kv: number
+  measurements: {
+    voltage_l1_v: number
+    voltage_l2_v: number
+    voltage_l3_v: number
+    current_l1_a: number
+    current_l2_a: number
+    current_l3_a: number
+    active_power_kw: number
+    reactive_power_kvar: number
+    frequency_hz: number
+  }
+  harmonic_data: {
+    h3_pct: number
+    h5_pct: number
+    h7_pct: number
+    h9_pct: number
+    h11_pct: number
+    h13_pct: number
+  }
   flicker_pst: number
-  harmonic_spectrum: number[]
-  power_factor: number
-  load_type: 'industrial' | 'commercial' | 'residential' | 'mixed'
-  measurement_duration_hours: number
+  flicker_plt: number
+  standard: 'ieee_519' | 'en_50160' | 'gb_t_12325' | 'iec_61000'
+}
+
+export interface VoltageAnalysis {
+  avg_voltage_v: number
+  unbalance_pct: number
+  deviation_from_nominal_pct: number
+  sag_count: number
+  swell_count: number
+  compliance: 'compliant' | 'marginal' | 'violation'
 }
 
 export interface HarmonicAnalysis {
-  order: number
-  magnitude_pct: number
-  limit_pct: number
-  status: 'compliant' | 'marginal' | 'non_compliant'
+  thd_voltage_pct: number
+  thd_current_pct: number
+  dominant_harmonic: number
+  dominant_harmonic_pct: number
+  resonance_risk: boolean
+  compliance: 'compliant' | 'marginal' | 'violation'
+  filter_recommendation: string
+}
+
+export interface PowerFactorAnalysis {
+  power_factor: number
+  displacement_pf: number
+  distortion_pf: number
+  target_pf: number
+  penalty_risk: boolean
+  compensation_kvar_needed: number
 }
 
 export interface PowerQualityResult {
+  monitoring_point_id: string
+  voltage_analysis: VoltageAnalysis
+  harmonic_analysis: HarmonicAnalysis
+  power_factor_analysis: PowerFactorAnalysis
+  flicker_compliance: 'pass' | 'fail'
   overall_pq_index: number
-  voltage_quality: {
-    status: string
-    thd_status: string
-    unbalance_status: string
-    flicker_status: string
-  }
-  harmonic_analysis: HarmonicAnalysis[]
-  power_factor_assessment: string
-  compliance_standard: string
-  violations: string[]
-  mitigation_recommendations: string[]
-  measurement_confidence: string
-}
-
-// --- Tool 7: Microgrid Islanding Controller ---
-export interface MicrogridIslandingInput {
-  microgrid_id: string
-  main_grid_frequency_hz: number
-  main_grid_voltage_kv: number
-  microgrid_generation_mw: number
-  microgrid_load_mw: number
-  pcc_breaker_status: 'closed' | 'open'
-  islanding_detected: boolean
-  distributed_resources: Array<{ type: string; capacity_mw: number; status: string }>
-  critical_load_mw: number
-  transfer_time_ms: number
-}
-
-export interface IslandingAction {
-  priority: number
-  action: string
-  device: string
-  setpoint: string
-  response_time_ms: number
-}
-
-export interface MicrogridIslandingResult {
-  microgrid_id: string
-  islanding_status: string
-  stable_island_possible: boolean
-  power_balance_mw: number
-  frequency_stability_hz: number
-  voltage_stability_pct: number
-  actions: IslandingAction[]
-  critical_load_served_pct: number
-  reconnection_readiness: string
+  overall_compliance: 'compliant' | 'marginal' | 'violation'
+  revenue_impact_usd: number
   recommendations: string[]
 }
 
-// --- Tool 8: Energy Storage Sizing ---
-export interface StorageSizingInput {
-  application: 'peak_shaving' | 'load_shifting' | 'renewable_firming' | 'frequency_regulation' | 'backup_power'
-  peak_load_mw: number
-  daily_energy_mwh: number
-  renewable_capacity_mw: number
-  required_duration_hours: number
-  target_availability_pct: number
-  grid_connection_mw: number
-  capital_budget: number
-  electricity_price: number
+// --- Tool 7: Energy Storage Optimizer ---
+export interface EnergyStorageInput {
+  project_id: string
+  storage_technology: 'lithium_ion' | 'flow_battery' | 'compressed_air' | 'pumped_hydro' | 'flywheel' | 'hydrogen'
+  capacity_mwh: number
+  power_rating_mw: number
+  round_trip_efficiency_pct: number
+  cycle_life: number
+  dod_limit_pct: number
+  services: string[]
+  electricity_prices: Array<{ hour: number; price_per_mwh: number }>
+  demand_charge_per_kw: number
+  grid_service_market_prices: { frequency_regulation: number; spinning_reserve: number; capacity: number }
+  capital_cost_per_kwh: number
+  om_cost_per_kwh_year: number
 }
 
-export interface StorageTechnology {
-  name: string
-  energy_density_wh_per_kg: number
-  power_density_w_per_kg: number
-cycle_life: number
-  round_trip_efficiency: number
-  capex_usd_per_kwh: number
-  response_time_ms: number
+export interface StorageSchedule {
+  hour: number
+  action: 'charge' | 'discharge' | 'idle'
+  power_mw: number
+  soc_pct: number
+  service: string
+  revenue_usd: number
 }
 
-export interface StorageSizingResult {
-  application: string
-  recommended_technology: StorageTechnology
-  sized_capacity: {
-    power_mw: number
-    energy_mwh: number
-    duration_hours: number
-    usable_energy_mwh: number
-  }
-  cost_estimate: {
-    energy_system_cost: number
-    power_system_cost: number
-    balance_of_plant: number
-    total_capex: number
-    annual_opex: number
-    lcoe_usd_per_mwh: number
-  }
-  performance_metrics: {
-    expected_cycles_per_year: number
-    annual_throughput_mwh: number
-    availability_pct: number
-    soh_retention_10yr: number
-  }
-  financial_metrics: {
-    payback_years: number
-    irr_pct: number
-    npv_10yr: number
-    annual_revenue: number
-  }
+export interface EconomicAnalysis {
+  annual_revenue_usd: number
+  annual_om_cost_usd: number
+  net_annual_benefit_usd: number
+  capital_cost_usd: number
+  payback_period_years: number
+  net_present_value_usd: number
+  internal_rate_of_return_pct: number
+  levelized_cost_per_mwh: number
+}
+
+export interface DegradationProfile {
+  annual_capacity_fade_pct: number
+  cycles_per_year: number
+  expected_life_years: number
+  replacement_threshold_pct: number
+  replacement_year: number
+}
+
+export interface EnergyStorageResult {
+  project_id: string
+  optimal_capacity_mwh: number
+  optimal_power_mw: number
+  storage_schedule: StorageSchedule[]
+  economic_analysis: EconomicAnalysis
+  degradation_profile: DegradationProfile
+  services_revenue_breakdown: Array<{ service: string; annual_revenue_usd: number; utilization_pct: number }>
+  grid_benefit_score: number
   recommendations: string[]
 }
 
-// ==================== SECTION 3 -- Analyze Functions ====================
-
-// Tool 1: Grid Demand Forecaster
-function analyzeGridDemand(input: GridDemandInput, rng: SeededRandom): GridDemandResult {
-  const hist = input.historical_load_mw
-  const currentPeak = Math.max(...hist)
-  const currentMin = Math.min(...hist)
-  const currentAvg = hist.reduce((a, b) => a + b, 0) / hist.length
-  const loadFactor = currentPeak > 0 ? (currentAvg / currentPeak) * 100 : 70
-
-  const seasonMultiplier: Record<string, number> = { spring: 0.85, summer: 1.15, autumn: 0.90, winter: 1.05 }
-  const seasonMult = seasonMultiplier[input.season] ?? 1.0
-
-  const forecasts: DemandForecast[] = []
-  for (let h = 1; h <= input.forecast_horizon_hours; h++) {
-    const baseForecast = currentAvg * seasonMult
-    const tempEffect = input.temperature_c[h - 1] !== undefined ? Math.abs(input.temperature_c[h - 1] - 22) * 2.5 : 0
-    const humidityEffect = input.humidity_pct[h - 1] !== undefined ? (input.humidity_pct[h - 1] - 50) * 0.3 : 0
-    const noise = rng.nextFloat(-currentAvg * 0.08, currentAvg * 0.08)
-    const forecast = baseForecast + tempEffect + humidityEffect + noise
-    const peak = forecast * (1 + rng.nextFloat(0.05, 0.15))
-    const low = forecast * (1 - rng.nextFloat(0.03, 0.10))
-
-    let risk: 'low' | 'medium' | 'high' | 'critical' = 'low'
-    const stressRatio = forecast / (currentPeak * 1.1)
-    if (stressRatio > 0.95) risk = 'critical'
-    else if (stressRatio > 0.85) risk = 'high'
-    else if (stressRatio > 0.70) risk = 'medium'
-
-    const spread = forecast * (0.08 + h * 0.015)
-    forecasts.push({
-      hour: h,
-      forecast_mw: Math.round(forecast * 10) / 10,
-      peak_mw: Math.round(peak * 10) / 10,
-      low_mw: Math.round(low * 10) / 10,
-      confidence_interval: [
-        Math.round((forecast - spread) * 10) / 10,
-        Math.round((forecast + spread) * 10) / 10
-      ],
-      risk_level: risk
-    })
-  }
-
-  const peakDemand = Math.max(...forecasts.map(f => f.peak_mw))
-  const minDemand = Math.min(...forecasts.map(f => f.low_mw))
-  const totalEnergy = forecasts.reduce((s, f) => s + f.forecast_mw, 0)
-  const avgForecast = forecasts.reduce((s, f) => s + f.forecast_mw, 0) / Math.max(forecasts.length, 1)
-  const forecastLoadFactor = peakDemand > 0 ? (avgForecast / peakDemand) * 100 : 70
-
-  const recommendations: string[] = []
-  if (peakDemand > currentPeak) recommendations.push('WARNING: Forecast peak exceeds current record - prepare contingency reserves')
-  if (forecastLoadFactor < 60) recommendations.push('Low load factor expected - optimize generation dispatch efficiency')
-  recommendations.push('Monitor real-time demand closely during high-risk forecast periods')
-  recommendations.push('Coordinate with neighboring grid regions for potential support')
-
-  const criticalHours = forecasts.filter(f => f.risk_level === 'critical' || f.risk_level === 'high').length
-  const stressAssessment = criticalHours > forecasts.length * 0.3
-    ? 'HIGH STRESS: Grid faces sustained peak pressure. Activate demand response and emergency reserves.'
-    : criticalHours > 0
-    ? 'MODERATE STRESS: Localized peak periods expected. Pre-position spinning reserves.'
-    : 'NORMAL: Grid conditions within normal operating margins.'
-
-  return {
-    region: input.grid_region,
-    current_peak_mw: Math.round(currentPeak * 10) / 10,
-    forecast_horizon_hours: input.forecast_horizon_hours,
-    forecasts,
-    aggregated: {
-      total_energy_mwh: Math.round(totalEnergy),
-      peak_demand_mw: Math.round(peakDemand * 10) / 10,
-      minimum_demand_mw: Math.round(minDemand * 10) / 10,
-      load_factor_pct: Math.round(forecastLoadFactor * 10) / 10
-    },
-    recommendations,
-    grid_stress_assessment: stressAssessment
-  }
+// --- Tool 8: Utility Bill Analyzer ---
+export interface UtilityBillInput {
+  account_id: string
+  utility_name: string
+  facility_type: 'commercial' | 'industrial' | 'residential' | 'municipal' | 'data_center'
+  billing_period_months: number
+  consumption_kwh: number
+  demand_kw: number
+  peak_demand_kw: number
+  off_peak_demand_kw: number
+  current_rate_schedule: string
+  energy_charges: number
+  demand_charges: number
+  fixed_charges: number
+  taxes_and_fees: number
+  total_bill_usd: number
+  power_factor_penalty: number
+  time_of_use: { peak_pct: number; off_peak_pct: number; shoulder_pct: number }
+  alternative_rate_schedules: string[]
 }
 
-// Tool 2: Renewable Integration Optimizer
-function analyzeRenewableIntegration(input: RenewableIntegrationInput, rng: SeededRandom): RenewableIntegrationResult {
-  const renewableCap = input.solar_capacity_mw + input.wind_capacity_mw
-  const effectiveCap = renewableCap * (1 - input.curtailment_pct / 100)
-  const penetration = input.current_grid_load_mw > 0 ? (effectiveCap / input.current_grid_load_mw) * 100 : 0
-  const curtailForecast = renewableCap * input.curtailment_pct / 100
-
-  const flexScores: Record<string, { base: number; storageMult: number }> = {
-    low: { base: 45, storageMult: 0.8 },
-    medium: { base: 70, storageMult: 1.0 },
-    high: { base: 90, storageMult: 1.3 }
-  }
-  const flex = flexScores[input.grid_flexibility] ?? flexScores['medium']
-  const storageBonus = Math.min(20, input.storage_mwh * flex.storageMult * 0.5)
-  const interconnectionBonus = Math.min(10, input.interconnection_capacity_mw / Math.max(renewableCap, 1) * 10)
-  const integrationScore = Math.min(100, Math.round(flex.base + storageBonus + interconnectionBonus))
-
-  const strategies: CurtailmentReduction[] = []
-  strategies.push({
-    strategy: 'Enhanced forecasting with AI/ML weather prediction',
-    reduction_pct: Math.round(rng.nextFloat(15, 30)),
-    cost_estimate_usd: Math.round(rng.nextFloat(500000, 1500000)),
-    implementation_timeline: '6-12 months'
-  })
-  if (input.storage_mwh < renewableCap * 0.25) {
-    strategies.push({
-      strategy: 'Battery energy storage co-location for excess capture',
-      reduction_pct: Math.round(rng.nextFloat(20, 40)),
-      cost_estimate_usd: Math.round(rng.nextFloat(500000, 800000) * (renewableCap / 100)),
-      implementation_timeline: '12-18 months'
-    })
-  }
-  if (input.grid_flexibility === 'low') {
-    strategies.push({
-      strategy: 'Demand response integration for industrial loads',
-      reduction_pct: Math.round(rng.nextFloat(10, 25)),
-      cost_estimate_usd: Math.round(rng.nextFloat(300000, 800000)),
-      implementation_timeline: '9-15 months'
-    })
-  }
-  strategies.push({
-    strategy: 'Regional interconnection and power export',
-    reduction_pct: Math.round(rng.nextFloat(8, 18)),
-    cost_estimate_usd: Math.round(rng.nextFloat(2000000, 10000000)),
-    implementation_timeline: '18-36 months'
-  })
-
-  const recommendedStorage = Math.round(renewableCap * rng.nextFloat(0.2, 0.35))
-
-  const stabilityAssessment = penetration > 50
-    ? 'High penetration requires advanced grid-forming inverters and synchronous condensers for stability'
-    : penetration > 30
-    ? 'Moderate penetration - ensure adequate reactive power support and frequency response'
-    : 'Low penetration - standard grid codes sufficient for stable operation'
-
-  const recommendations: string[] = []
-  if (input.curtailment_pct > 10) recommendations.push('HIGH curtailment - prioritize storage and interconnection investments')
-  recommendations.push('Implement advanced inverter functions for grid-forming capability')
-  if (penetration > 40) recommendations.push('Consider synchronous condenser installation for inertia support')
-
-  return {
-    renewable_penetration_pct: Math.round(penetration * 10) / 10,
-    effective_capacity_mw: Math.round(effectiveCap * 10) / 10,
-    curtailment_forecast: Math.round(curtailForecast * 10) / 10,
-    integration_score: integrationScore,
-    strategies,
-    storage_optimization: {
-      recommended_storage_mwh: recommendedStorage,
-      charge_schedule: 'Charge during midday solar peak (10:00-15:00) and off-peak nighttime (00:00-06:00)',
-      discharge_schedule: 'Discharge during evening peak (17:00-21:00) and morning ramp (06:00-09:00)',
-      round_trip_efficiency: Math.round(rng.nextFloat(85, 92) * 10) / 10
-    },
-    grid_stability_assessment: stabilityAssessment,
-    recommendations
-  }
+export interface RateAnalysis {
+  current_effective_rate_per_kwh: number
+  cost_per_sqft_usd: number
+  energy_cost_per_unit_production: number
+  utility_burden_pct: number
+  year_over_year_change_pct: number
 }
 
-// Tool 3: Energy Trading Strategy
-function analyzeEnergyTrading(input: EnergyTradingInput, rng: SeededRandom): EnergyTradingResult {
-  const avgPrice = input.price_forecast.reduce((a, b) => a + b, 0) / input.price_forecast.length
-  const priceSpread = Math.max(...input.price_forecast) - Math.min(...input.price_forecast)
-  const priceVol = priceSpread / (avgPrice + 0.01) * 100
-
-  const riskMultipliers: Record<string, number> = { conservative: 0.6, moderate: 1.0, aggressive: 1.5 }
-  const riskMult = riskMultipliers[input.risk_appetite] ?? 1.0
-  const targetVolume = Math.abs(input.forecast_demand_mwh - input.current_portfolio_mwh) * riskMult
-  const recommendedPosition = input.forecast_demand_mwh > input.current_portfolio_mwh
-    ? input.current_portfolio_mwh + targetVolume * 0.5
-    : input.current_portfolio_mwh - targetVolume * 0.3
-
-  const trades: TradeRecommendation[] = []
-  const lowPriceHours = input.price_forecast
-    .map((p, i) => ({ price: p, hour: i }))
-    .filter(x => x.price < avgPrice * 0.9)
-  if (lowPriceHours.length > 0) {
-    const bestBuy = lowPriceHours[0]
-    trades.push({
-      action: 'buy',
-      volume_mwh: Math.round(targetVolume * 0.4),
-      price_target: Math.round(bestBuy.price * 0.98 * 100) / 100,
-      timing: 'Hour ' + bestBuy.hour + ' (off-peak)',
-      confidence: Math.round(rng.nextFloat(70, 90)),
-      rationale: 'Buy during low-price period to minimize procurement cost'
-    })
-  }
-
-  const highPriceHours = input.price_forecast
-    .map((p, i) => ({ price: p, hour: i }))
-    .filter(x => x.price > avgPrice * 1.1)
-  if (highPriceHours.length > 0) {
-    const bestSell = highPriceHours[highPriceHours.length - 1]
-    trades.push({
-      action: 'sell',
-      volume_mwh: Math.round(targetVolume * 0.2),
-      price_target: Math.round(bestSell.price * 1.02 * 100) / 100,
-      timing: 'Hour ' + bestSell.hour + ' (peak)',
-      confidence: Math.round(rng.nextFloat(65, 85)),
-      rationale: 'Sell excess position during high-price period for margin capture'
-    })
-  }
-
-  trades.push({
-    action: 'hold',
-    volume_mwh: Math.round(targetVolume * 0.3),
-    price_target: Math.round(avgPrice * 100) / 100,
-    timing: 'Flexible',
-    confidence: Math.round(rng.nextFloat(50, 70)),
-    rationale: 'Maintain flexibility for real-time market opportunities and regulatory compliance'
-  })
-
-  const var95 = Math.round(priceVol * 1.65 * riskMult * 10) / 10
-  const expectedReturn = Math.round((priceSpread / (avgPrice + 0.01)) * riskMult * rng.nextFloat(0.3, 0.8) * 100) / 10
-  const sharpe = expectedReturn > 0 && var95 > 0 ? Math.round((expectedReturn / var95) * 100) / 100 : 0
-  const maxDrawdown = Math.round(var95 * rng.nextFloat(1.5, 2.5) * 10) / 10
-
-  const hedgeRecs: string[] = []
-  hedgeRecs.push('Use CfDs (Contracts for Difference) to hedge ' + Math.round(riskMult * 60) + '% of position')
-  if (input.carbon_price > 50) hedgeRecs.push('Include carbon cost in trading margin calculations')
-  hedgeRecs.push('Consider renewable energy certificates for portfolio green premium')
-
-  const outlook = priceVol > 40
-    ? 'HIGH VOLATILITY - Wide intraday spreads create trading opportunities but increase risk'
-    : priceVol > 20
-    ? 'MODERATE VOLATILITY - Normal market conditions suitable for active trading'
-    : 'LOW VOLATILITY - Stable prices suggest hold strategy with selective optimization'
-
-  return {
-    market: input.market,
-    delivery_date: input.delivery_date,
-    recommended_position_mwh: Math.round(recommendedPosition),
-    trades,
-    risk_metrics: {
-      var_95_pct: var95,
-      expected_return_pct: expectedReturn,
-      sharpe_ratio: sharpe,
-      max_drawdown_pct: maxDrawdown
-    },
-    hedge_recommendations: hedgeRecs,
-    market_outlook: outlook
-  }
+export interface RateComparison {
+  rate_schedule: string
+  estimated_annual_cost_usd: number
+  annual_savings_usd: number
+  savings_pct: number
+  demand_response_compatible: boolean
+  net_metering_compatible: boolean
 }
 
-// Tool 4: Battery Management Scheduler
-function analyzeBatteryScheduler(input: BatterySchedulerInput, rng: SeededRandom): BatterySchedulerResult {
-  const usableEnergy = input.battery_capacity_mwh * (input.efficiency_pct / 100)
-  const maxChargeEnergy = input.charge_rate_mw
-  const maxDischargeEnergy = input.discharge_rate_mw
-  const prices = input.electricity_prices
-  const avgPrice = prices.reduce((a, b) => a + b, 0) / prices.length
+export interface SavingsOpportunity {
+  measure: string
+  annual_savings_usd: number
+  implementation_cost_usd: number
+  payback_years: number
+  co2_reduction_t: number
+  priority: 'high' | 'medium' | 'low'
+}
 
-  const schedule: ScheduleEntry[] = []
-  let currentSoc = input.current_soc_pct
-  let totalRevenue = 0
-  let totalDegradation = 0
-  let totalCharged = 0
-  let totalDischarged = 0
+export interface UtilityBillResult {
+  account_id: string
+  current_bill_analysis: RateAnalysis
+  rate_comparisons: RateComparison[]
+  savings_opportunities: SavingsOpportunity[]
+  total_potential_savings_usd: number
+  total_potential_savings_pct: number
+  co2_footprint_t: number
+  benchmark_comparison: string
+  billing_errors_detected: string[]
+  recommendations: string[]
+}
 
-  const sortedPrices = prices.map((p, i) => ({ price: p, hour: i })).sort((a, b) => a.price - b.price)
-  const cheapHours = sortedPrices.slice(0, Math.floor(sortedPrices.length * 0.3)).map(x => x.hour)
-  const expensiveHours = sortedPrices.slice(Math.floor(sortedPrices.length * 0.7)).map(x => x.hour)
+// ==================== SECTION 3 -- Analysis Functions ====================
 
-  for (let h = 0; h < prices.length; h++) {
-    const isCheap = cheapHours.includes(h)
-    const isExpensive = expensiveHours.includes(h)
-    const maxSoc = 95.0
-    const minSoc = 10.0
+// --- Tool 1: Grid Optimization Engine ---
+function analyzeGridOptimization(input: GridOptimizationInput): GridOptimizationResult {
+  const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
 
-    let action: 'charge' | 'discharge' | 'idle' = 'idle'
-    let power = 0
-    let revenue = 0
-    let degradation = 0
-    let service = 'standby'
+  const busVoltages: PowerFlowResult['bus_voltages'] = []
+  for (let i = 1; i <= Math.min(input.topology.buses, 20); i++) {
+    const baseVpu = 1.0
+    const deviation = rng.nextFloat(-0.05, 0.05)
+    busVoltages.push({
+      bus_id: 'BUS_' + String(i).padStart(3, '0'),
+      voltage_pu: Math.round((baseVpu + deviation) * 1000) / 1000,
+      angle_deg: Math.round(rng.nextFloat(-15, 15) * 100) / 100,
+    })
+  }
 
-    if (isCheap && currentSoc < maxSoc) {
-      action = 'charge'
-      power = -Math.min(maxChargeEnergy, (maxSoc - currentSoc) / 100 * input.battery_capacity_mwh)
-      const energy = Math.abs(power)
-      currentSoc += energy / input.battery_capacity_mwh * 100
-      revenue = energy * prices[h] * 0.5
-      degradation = energy * rng.nextFloat(0.5, 1.5)
-      totalCharged += energy
-      service = 'arbitrage'
-    } else if (isExpensive && currentSoc > minSoc) {
-      action = 'discharge'
-      power = Math.min(maxDischargeEnergy, (currentSoc - minSoc) / 100 * input.battery_capacity_mwh)
-      const energy = Math.abs(power) * (input.efficiency_pct / 100)
-      currentSoc -= power / input.battery_capacity_mwh * 100
-      revenue = energy * prices[h] - power * avgPrice * 0.1
-      degradation = energy * rng.nextFloat(0.8, 2.0)
-      totalDischarged += energy
-      service = input.grid_services.includes('peak_shaving') ? 'peak_shaving' : 'arbitrage'
-    }
-
-    totalRevenue += revenue
-    totalDegradation += degradation
-
-    schedule.push({
-      hour: h,
-      action,
+  const branchFlows: PowerFlowResult['branch_flows'] = []
+  let totalLosses = 0
+  for (let i = 1; i <= Math.min(input.topology.branches, 15); i++) {
+    const power = rng.nextFloat(0, input.total_load_mw / Math.max(input.topology.branches, 1))
+    const losses = power * rng.nextFloat(0.01, 0.04)
+    totalLosses += losses
+    branchFlows.push({
+      branch_id: 'BR_' + String(i).padStart(3, '0'),
+      from_bus: 'BUS_' + String(rng.nextInt(1, Math.min(input.topology.buses, 20))).padStart(3, '0'),
+      to_bus: 'BUS_' + String(rng.nextInt(1, Math.min(input.topology.buses, 20))).padStart(3, '0'),
       power_mw: Math.round(power * 100) / 100,
-      soc_target_pct: Math.round(currentSoc * 10) / 10,
-      revenue_usd: Math.round(revenue * 100) / 100,
-      degradation_cost_usd: Math.round(degradation * 100) / 100,
-      service_type: service
+      losses_mw: Math.round(losses * 1000) / 1000,
     })
   }
 
-  const cycleEq = Math.max(totalCharged, totalDischarged) / Math.max(usableEnergy, 1)
-  const remainingCycles = Math.max(0, input.cycle_limit - input.current_cycles)
-  const dailyRevenue = Math.round(totalRevenue)
-  const dailyDegradation = Math.round(totalDegradation)
+  const lossesPct = Math.round((totalLosses / Math.max(input.total_generation_mw, 1)) * 10000) / 100
+  const lossReductionPotential = Math.max(0, Math.round((lossesPct - input.loss_target_pct) * rng.nextFloat(0.6, 0.9) * 100) / 100)
+
+  const voltVarControls: VoltVarControl[] = []
+  const deviceTypes: VoltVarControl['device_type'][] = ['capacitor', 'reactor', 'svc', 'statcom', 'oltc']
+  for (let i = 0; i < Math.min(input.var_devices, 8); i++) {
+    const dtype = deviceTypes[i % deviceTypes.length]
+    const action: VoltVarControl['action'] = rng.next() > 0.5 ? 'raise' : rng.next() > 0.3 ? 'lower' : 'hold'
+    voltVarControls.push({
+      device_id: 'VVC_' + String(i + 1).padStart(3, '0'),
+      device_type: dtype,
+      setting: Math.round(rng.nextFloat(0.9, 1.1) * 100) / 100,
+      action,
+      impact_voltage_pu: Math.round(rng.nextFloat(-0.03, 0.03) * 1000) / 1000,
+    })
+  }
+
+  const voltageViolations = busVoltages.filter(v => v.voltage_pu < 0.95 || v.voltage_pu > 1.05).length
+  const optimizationScore = Math.round(Math.max(0, Math.min(100, 100 - voltageViolations * 5 - lossesPct * 2 + rng.nextFloat(-5, 5))) * 100) / 100
 
   const recommendations: string[] = []
-  if (cycleEq > 1) recommendations.push('High cycle count expected - consider reducing depth of discharge')
-  if (input.current_cycles > input.cycle_limit * 0.8) recommendations.push('Battery approaching cycle limit - plan replacement schedule')
-  recommendations.push('Align charging with renewable generation peaks for cost optimization')
+  if (lossReductionPotential > 0.5) {
+    recommendations.push('Implement reactive power optimization to reduce losses by ' + lossReductionPotential.toFixed(2) + '%')
+  }
+  if (voltageViolations > 0) {
+    recommendations.push('Address ' + voltageViolations + ' voltage violations via capacitor bank reconfiguration')
+  }
+  if (input.renewable_generation_mw / Math.max(input.total_generation_mw, 1) > 0.3) {
+    recommendations.push('Deploy smart inverter Volt/VAR control for high renewable penetration areas')
+  }
+  if (input.var_devices < 3) {
+    recommendations.push('Install additional reactive power compensation devices')
+  }
+  recommendations.push('Consider Conservation Voltage Reduction (CVR) for energy savings')
+  recommendations.push('Implement advanced distribution management system (ADMS) for real-time optimization')
 
   return {
-    operating_date: input.operating_date,
-    schedule,
-    daily_summary: {
-      total_charged_mwh: Math.round(totalCharged * 100) / 100,
-      total_discharged_mwh: Math.round(totalDischarged * 100) / 100,
-      round_trip_efficiency: input.efficiency_pct,
-      cycle_equivalent: Math.round(cycleEq * 100) / 100,
-      total_revenue_usd: dailyRevenue,
-      total_degradation_cost_usd: dailyDegradation,
-      net_profit_usd: dailyRevenue - dailyDegradation
+    grid_id: input.grid_id,
+    power_flow: {
+      bus_voltages: busVoltages,
+      branch_flows: branchFlows,
+      total_losses_mw: Math.round(totalLosses * 100) / 100,
+      losses_pct: lossesPct,
+      convergence_status: rng.next() > 0.9 ? 'max_iterations' : 'converged',
     },
-    battery_health: {
-      remaining_cycles: remainingCycles,
-      soh_pct: Math.max(70, 100 - input.current_cycles / input.cycle_limit * 30),
-      recommended_max_cycles: input.cycle_limit
-    },
-    recommendations
+    volt_var_controls: voltVarControls,
+    loss_reduction_potential_pct: lossReductionPotential,
+    voltage_violations: voltageViolations,
+    optimization_score: optimizationScore,
+    recommendations,
+    reliability_assessment: voltageViolations === 0 && lossesPct < 5
+      ? 'Grid operating within acceptable parameters'
+      : voltageViolations <= 2 && lossesPct < 8
+        ? 'Grid requires optimization to meet performance targets'
+        : 'Grid requires immediate attention to address reliability concerns',
   }
 }
 
-// Tool 5: Carbon Capture Optimizer
-function analyzeCarbonCapture(input: CarbonCaptureInput, rng: SeededRandom): CarbonCaptureResult {
-  const totalCO2 = input.co2_captured_tons + input.co2_emitted_tons
-  const captureRate = totalCO2 > 0 ? (input.co2_captured_tons / totalCO2) * 100 : 0
+// --- Tool 2: Demand Forecasting Modeler ---
+function analyzeDemandForecast(input: DemandForecastInput): DemandForecastResult {
+  const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
 
-  const parasiticLoadMW = input.fuel_input_mw * (input.electricity_parasitic_pct / 100)
-  const regenerationCostPerTon = input.regeneration_energy_gj_per_ton * rng.nextFloat(2.5, 4.0)
-  const capexAnnual = input.co2_captured_tons * rng.nextFloat(15, 35)
-  const totalCost = (input.co2_captured_tons * regenerationCostPerTon + capexAnnual)
-  const costPerTon = input.co2_captured_tons > 0 ? totalCost / input.co2_captured_tons : 0
+  const avgHistorical = input.historical_load_mw.length > 0
+    ? input.historical_load_mw.reduce((a, b) => a + b, 0) / input.historical_load_mw.length
+    : 500
 
-  const capturedRevenue = input.co2_captured_tons * input.carbon_price
-  const netCost = totalCost - capturedRevenue
+  const tempFactor = 1 + (input.temperature_c - 22) * 0.012
+  const dayFactor = input.day_type === 'weekday' ? 1.0 : input.day_type === 'weekend' ? 0.82 : 0.65
+  const seasonFactor = input.season === 'summer' ? 1.15 : input.season === 'winter' ? 1.1 : 0.95
+  const humidityFactor = 1 + (input.humidity_pct - 50) * 0.0015
 
-  const optimizations: CaptureOptimization[] = []
-  if (input.electricity_parasitic_pct > 12) {
-    optimizations.push({
-      parameter: 'Parasitic load reduction via heat integration',
-      current_value: input.electricity_parasitic_pct.toFixed(1) + '%',
-      recommended_value: (input.electricity_parasitic_pct * 0.75).toFixed(1) + '%',
-      impact_tons: Math.round(input.fuel_input_mw * input.electricity_parasitic_pct * 0.01 * 8760 * 0.05),
-      cost_benefit: 'Saves ~' + Math.round(input.fuel_input_mw * 0.01 * 1000).toLocaleString() + ' USD/year'
+  const demandPoints: DemandPoint[] = []
+  let totalEnergy = 0
+  let peakLoad = 0, peakHour = 0
+  let valleyLoad = Infinity, valleyHour = 0
+
+  const hours = Math.min(input.forecast_horizon_hours, 48)
+  for (let h = 0; h < hours; h++) {
+    const hourFactor = (h >= 7 && h <= 22) ? 1.1 + rng.nextFloat(-0.08, 0.08) : 0.6 + rng.nextFloat(-0.05, 0.05)
+    const baseLoad = avgHistorical * hourFactor * tempFactor * dayFactor * seasonFactor * humidityFactor
+    const noise = rng.nextFloat(-0.04, 0.04)
+    const forecast = Math.round(baseLoad * (1 + noise) * 10) / 10
+    const margin = Math.round(forecast * rng.nextFloat(0.03, 0.07) * 10) / 10
+
+    demandPoints.push({
+      hour: h,
+      forecast_mw: forecast,
+      confidence_low: Math.round((forecast - margin) * 10) / 10,
+      confidence_high: Math.round((forecast + margin) * 10) / 10,
     })
-  }
-  if (input.capture_rate_target_pct > 0 && captureRate < input.capture_rate_target_pct) {
-    optimizations.push({
-      parameter: 'Capture rate increase via additional absorber stages',
-      current_value: captureRate.toFixed(1) + '%',
-      recommended_value: Math.min(captureRate * 1.3, input.capture_rate_target_pct).toFixed(1) + '%',
-      impact_tons: Math.round(totalCO2 * 0.08),
-      cost_benefit: 'Additional ' + Math.round(totalCO2 * 0.08).toLocaleString() + ' tons CO2 captured annually'
-    })
-  }
-  optimizations.push({
-    parameter: 'Advanced amine solvent for faster kinetics',
-    current_value: input.solvent_type,
-    recommended_value: 'Advanced amine blend (A-MDEA/PZ)',
-    impact_tons: Math.round(totalCO2 * 0.04),
-    cost_benefit: '15% reduction in regeneration energy per ton CO2'
-  })
-  optimizations.push({
-    parameter: 'CO2 utilization for enhanced oil recovery',
-    current_value: 'Storage only',
-    recommended_value: '60% EOR / 40% storage',
-    impact_tons: 0,
-    cost_benefit: 'EOR credits offset 30-40% of capture cost'
-  })
 
-  const targetGap = Math.abs(input.capture_rate_target_pct - captureRate)
-  const compliance = captureRate >= input.capture_rate_target_pct
-    ? 'COMPLIANT: Current capture rate meets ' + input.capture_rate_target_pct + '% target'
-    : targetGap < 5
-    ? 'NEAR COMPLIENT: Within 5% of target - minor adjustments recommended'
-    : 'BELOW TARGET: Gap of ' + targetGap.toFixed(1) + '% requires immediate action'
-
-  return {
-    plant_type: input.plant_type,
-    effective_capture_rate_pct: Math.round(captureRate * 10) / 10,
-    co2_captured_annual_tons: Math.round(input.co2_captured_tons),
-    parasitic_load_mw: Math.round(parasiticLoadMW * 10) / 10,
-    cost_per_ton_captured: Math.round(costPerTon * 100) / 100,
-    revenue_from_captured_co2: Math.round(capturedRevenue),
-    net_operating_cost: Math.round(netCost),
-    optimizations,
-    compliance_status: compliance,
-    emissions_reduction_pct: Math.round(captureRate * 10) / 10
-  }
-}
-
-// Tool 6: Power Quality Monitor
-function analyzePowerQuality(input: PowerQualityInput, rng: SeededRandom): PowerQualityResult {
-  const thdLimit = 5.0
-  const unbalanceLimit = 2.0
-  const flickerLimit = 1.0
-
-  const thdStatus = input.thd_voltage_pct <= thdLimit * 0.7 ? 'GOOD' : input.thd_voltage_pct <= thdLimit ? 'MARGINAL' : 'POOR'
-  const unbalStatus = input.voltage_unbalance_pct <= unbalanceLimit * 0.7 ? 'GOOD' : input.voltage_unbalance_pct <= unbalanceLimit ? 'MARGINAL' : 'POOR'
-  const flickerStatus = input.flicker_pst <= flickerLimit * 0.7 ? 'GOOD' : input.flicker_pst <= flickerLimit ? 'MARGINAL' : 'POOR'
-
-  const limits = [5, 5, 5, 3, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1]
-  const harmonics: HarmonicAnalysis[] = []
-  for (let i = 0; i < Math.min(input.harmonic_spectrum.length, 16); i++) {
-    const mag = input.harmonic_spectrum[i]
-    const limit_pct = limits[i] ?? 2
-    let status: 'compliant' | 'marginal' | 'non_compliant' = 'compliant'
-    if (mag > limit_pct * 1.2) status = 'non_compliant'
-    else if (mag > limit_pct * 0.9) status = 'marginal'
-    harmonics.push({ order: i + 2, magnitude_pct: Math.round(mag * 100) / 100, limit_pct, status })
+    totalEnergy += forecast
+    if (forecast > peakLoad) { peakLoad = forecast; peakHour = h }
+    if (forecast < valleyLoad) { valleyLoad = forecast; valleyHour = h }
   }
 
-  const pfStatus = input.power_factor >= 0.95 ? 'EXCELLENT' : input.power_factor >= 0.85 ? 'GOOD' : input.power_factor >= 0.70 ? 'FAIR' : 'POOR'
+  const avgLoad = Math.round((totalEnergy / demandPoints.length) * 10) / 10
+  const peakValleyRatio = peakLoad > 0 && valleyLoad > 0
+    ? Math.round((peakLoad / Math.max(valleyLoad, 1)) * 100) / 100
+    : 1
+  const loadFactor = avgLoad > 0 && peakLoad > 0
+    ? Math.round((avgLoad / peakLoad) * 10000) / 100
+    : 0
 
-  const violations: string[] = []
-  if (thdStatus !== 'GOOD') violations.push('Voltage THD exceeds ' + thdLimit + '% limit')
-  if (unbalStatus !== 'GOOD') violations.push('Voltage unbalance exceeds ' + unbalanceLimit + '% limit')
-  if (flickerStatus !== 'GOOD') violations.push('Flicker severity exceeds ' + flickerLimit + ' Pst limit')
-  if (pfStatus === 'POOR') violations.push('Power factor below minimum threshold')
-
-  const pqIndex = Math.max(0, Math.min(100, 100 - (input.thd_voltage_pct - 3) * 8 - (input.voltage_unbalance_pct - 1.5) * 6 - (input.flicker_pst - 0.7) * 10 - (1 - input.power_factor) * 30))
-
-  const mitigations: string[] = []
-  if (thdStatus !== 'GOOD') mitigations.push('Install passive or active harmonic filters at PCC')
-  if (unbalStatus !== 'GOOD') mitigations.push('Redistribute single-phase loads across phases')
-  if (flickerStatus !== 'GOOD') mitigations.push('Install SVC or STATCOM for reactive power compensation')
-  if (pfStatus === 'POOR' || pfStatus === 'FAIR') mitigations.push('Install power factor correction capacitor banks')
-  mitigations.push('Implement continuous power quality monitoring per IEC 61000-4-30')
-
-  return {
-    overall_pq_index: Math.round(pqIndex * 10) / 10,
-    voltage_quality: {
-      status: thdStatus,
-      thd_status: 'THD ' + input.thd_voltage_pct.toFixed(2) + '% (limit: ' + thdLimit + '%)',
-      unbalance_status: 'Unbalance ' + input.voltage_unbalance_pct.toFixed(2) + '% (limit: ' + unbalanceLimit + '%)',
-      flicker_status: 'Flicker ' + input.flicker_pst.toFixed(2) + ' Pst (limit: ' + flickerLimit + ')'
-    },
-    harmonic_analysis: harmonics,
-    power_factor_assessment: 'PF = ' + input.power_factor.toFixed(3) + ' (' + pfStatus + ')',
-    compliance_standard: 'IEEE 519-2022 / IEC 61000-3-6',
-    violations,
-    mitigation_recommendations: mitigations,
-    measurement_confidence: input.measurement_duration_hours >= 168 ? 'HIGH (7-day monitoring)' : input.measurement_duration_hours >= 24 ? 'MEDIUM (24-hour monitoring)' : 'LOW (spot measurement - recommend extended monitoring)'
-  }
-}
-
-// Tool 7: Microgrid Islanding Controller
-function analyzeMicrogridIslanding(input: MicrogridIslandingInput, rng: SeededRandom): MicrogridIslandingResult {
-  const powerBalance = input.microgrid_generation_mw - input.microgrid_load_mw
-  const totalCapacity = input.distributed_resources.reduce((s, d) => s + d.capacity_mw, 0)
-  const canIsland = Math.abs(powerBalance) < totalCapacity * 0.3 && input.microgrid_generation_mw >= input.critical_load_mw
-
-  const freqStability = 50 + (powerBalance / Math.max(totalCapacity, 1)) * rng.nextFloat(0.1, 0.5)
-  const voltageStability = 100 + rng.nextFloat(-5, 5) + (powerBalance > 0 ? -1 : 1) * rng.nextFloat(0, 3)
-
-  const actions: IslandingAction[] = []
-  let priority = 1
-
-  if (input.islanding_detected && input.pcc_breaker_status === 'closed') {
-    actions.push({ priority: priority++, action: 'TRIP PCC BREAKER', device: 'PCC-001', setpoint: 'OPEN', response_time_ms: Math.min(input.transfer_time_ms + rng.nextInt(5, 20), 200) })
-  }
-
-  if (powerBalance < 0) {
-    actions.push({ priority: priority++, action: 'LOAD SHED - Stage 1', device: 'LOAD-RELAY-NONCRIT', setpoint: 'Disconnect ' + Math.round(input.microgrid_load_mw * 0.15) + ' MW', response_time_ms: 150 })
-    actions.push({ priority: priority++, action: 'STORAGE DISCHARGE', device: 'BESS-001', setpoint: 'Max discharge ' + Math.round(Math.min(totalCapacity * 0.5, Math.abs(powerBalance)) * 10) / 10 + ' MW', response_time_ms: 50 })
-  } else if (powerBalance > 0) {
-    actions.push({ priority: priority++, action: 'REDUCE GENERATION', device: 'GEN-CONTROLLER', setpoint: 'Output limit ' + Math.round(input.microgrid_load_mw * 1.05 * 10) / 10 + ' MW', response_time_ms: 100 })
-  }
-
-  if (input.critical_load_mw > 0) {
-    actions.push({ priority: priority++, action: 'PRIORITIZE CRITICAL LOAD', device: 'LOAD-MGMT', setpoint: 'Ensure ' + input.critical_load_mw + ' MW supply', response_time_ms: 25 })
-  }
-
-  actions.push({ priority: priority++, action: 'FREQUENCY REGULATION', device: 'PRIMARY-CTRL', setpoint: 'Maintain 50.00 +/- 0.05 Hz', response_time_ms: 10 })
-  actions.push({ priority: priority++, action: 'VOLTAGE REGULATION', device: 'AVR-001', setpoint: 'Maintain ' + Math.round(voltageStability * 10) / 10 + '% nominal', response_time_ms: 30 })
-
-  const criticalServed = Math.min(100, Math.round((input.microgrid_generation_mw / Math.max(input.critical_load_mw, 0.01)) * 100))
-
-  const reconnectionReady = !input.islanding_detected && input.pcc_breaker_status === 'closed'
-    ? 'READY: Grid-connected mode, synchronization available'
-    : canIsland && Math.abs(freqStability - 50) < 0.2 && Math.abs(voltageStability - 100) < 5
-    ? 'READY: Microgrid stable, reconnection possible within 30 seconds'
-    : 'NOT READY: Stabilize island operations first'
+  const riskLevel: DemandForecastResult['risk_level'] =
+    peakValleyRatio > 3 ? 'critical' :
+    peakValleyRatio > 2.5 ? 'high' :
+    peakValleyRatio > 1.8 ? 'medium' : 'low'
 
   const recommendations: string[] = []
-  if (!canIsland && input.microgrid_generation_mw < input.critical_load_mw) {
-    recommendations.push('Increase local generation or add storage before attempting islanding')
+  if (peakValleyRatio > 2.5) {
+    recommendations.push('Peak valley ratio (' + peakValleyRatio.toFixed(2) + ') indicates need for demand response programs')
   }
-  recommendations.push('Regular islanding tests recommended - quarterly DRY runs')
-  recommendations.push('Ensure protection relay coordination updated for island mode')
+  if (loadFactor < 60) {
+    recommendations.push('Low load factor (' + loadFactor.toFixed(1) + '%) suggests potential for load shifting')
+  }
+  recommendations.push('Deploy time-of-use pricing to incentivize off-peak consumption')
+  recommendations.push('Consider battery storage for peak shaving applications')
+  if (input.season === 'summer') {
+    recommendations.push('Implement direct load control for HVAC systems during peak hours')
+  }
 
   return {
-    microgrid_id: input.microgrid_id,
-    islanding_status: input.islanding_detected ? 'ISLAND DETECTED - Managing islanded operation' : 'GRID-CONNECTED - Normal operation',
-    stable_island_possible: canIsland,
-    power_balance_mw: Math.round(powerBalance * 100) / 100,
-    frequency_stability_hz: Math.round(freqStability * 1000) / 1000,
-    voltage_stability_pct: Math.round(voltageStability * 10) / 10,
-    actions,
-    critical_load_served_pct: criticalServed,
-    reconnection_readiness: reconnectionReady,
-    recommendations
+    region_id: input.region_id,
+    forecast_horizon_hours: input.forecast_horizon_hours,
+    demand_points: demandPoints,
+    peak_valley: {
+      peak_hour: peakHour,
+      peak_load_mw: Math.round(peakLoad * 10) / 10,
+      valley_hour: valleyHour,
+      valley_load_mw: Math.round(valleyLoad * 10) / 10,
+      peak_valley_ratio: peakValleyRatio,
+      load_factor_pct: loadFactor,
+    },
+    total_energy_mwh: Math.round(totalEnergy * 10) / 10,
+    avg_load_mw: avgLoad,
+    max_load_mw: Math.round(peakLoad * 10) / 10,
+    min_load_mw: Math.round(valleyLoad * 10) / 10,
+    mape_pct: Math.round(rng.nextFloat(1.5, 5.0) * 100) / 100,
+    risk_level: riskLevel,
+    recommendations,
   }
 }
 
-// Tool 8: Energy Storage Sizing
-function analyzeStorageSizing(input: StorageSizingInput, rng: SeededRandom): StorageSizingResult {
-  const technologies: StorageTechnology[] = [
-    { name: 'Lithium-ion (NMC)', energy_density_wh_per_kg: 200, power_density_w_per_kg: 250, cycle_life: 5000, round_trip_efficiency: 92, capex_usd_per_kwh: 280, response_time_ms: 10 },
-    { name: 'Lithium-iron-phosphate (LFP)', energy_density_wh_per_kg: 160, power_density_w_per_kg: 200, cycle_life: 8000, round_trip_efficiency: 95, capex_usd_per_kwh: 220, response_time_ms: 10 },
-    { name: 'Vanadium Redox Flow', energy_density_wh_per_kg: 25, power_density_w_per_kg: 100, cycle_life: 20000, round_trip_efficiency: 75, capex_usd_per_kwh: 400, response_time_ms: 50 },
-    { name: 'Sodium-Sulfur (NaS)', energy_density_wh_per_kg: 150, power_density_w_per_kg: 150, cycle_life: 4500, round_trip_efficiency: 85, capex_usd_per_kwh: 350, response_time_ms: 20 },
-    { name: 'Compressed Air Energy Storage', energy_density_wh_per_kg: 0, power_density_w_per_kg: 0, cycle_life: 25000, round_trip_efficiency: 60, capex_usd_per_kwh: 150, response_time_ms: 30000 },
-    { name: 'Pumped Hydro Storage', energy_density_wh_per_kg: 0, power_density_w_per_kg: 0, cycle_life: 50000, round_trip_efficiency: 80, capex_usd_per_kwh: 100, response_time_ms: 60000 }
+// --- Tool 3: Renewable Integration Planner ---
+function analyzeRenewableIntegration(input: RenewableIntegrationInput): RenewableIntegrationResult {
+  const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
+
+  const totalRenewable = input.current_renewable_mw + input.solar_capacity_mw + input.wind_capacity_mw
+  const renewablePenetration = Math.round((totalRenewable / Math.max(input.grid_capacity_mw, 1)) * 10000) / 100
+
+  const thermalLimit = input.grid_capacity_mw * 1.2
+  const voltageRiseLimit = input.grid_capacity_mw * 0.4
+  const shortCircuitLimit = input.interconnection_limit_mw * 1.5
+
+  const limits = [
+    { name: 'Thermal', value: thermalLimit },
+    { name: 'Voltage Rise', value: voltageRiseLimit },
+    { name: 'Short Circuit', value: shortCircuitLimit },
+  ].sort((a, b) => a.value - b.value)
+
+  const binding = limits[0]
+  const maxHostingCapacity = Math.round(binding.value * 100) / 100
+  const availableHeadroom = Math.round((maxHostingCapacity - totalRenewable) * 100) / 100
+
+  const expansionFactor = input.storage_proposed_mwh > 0 ? 1.3 : input.storage_existing_mwh > 0 ? 1.1 : 1.0
+  const hostingBoosted = Math.round(maxHostingCapacity * expansionFactor * 100) / 100
+
+  const curtailmentStrategies: CurtailmentStrategy[] = [
+    {
+      strategy: 'Energy storage shifting',
+      curtailment_reduction_pct: Math.round(rng.nextFloat(15, 35) * 100) / 100,
+      implementation_cost_usd: Math.round(input.curtailment_target_pct * 50000),
+      payback_years: Math.round(rng.nextFloat(4, 8) * 10) / 10,
+    },
+    {
+      strategy: 'Demand response activation',
+      curtailment_reduction_pct: Math.round(rng.nextFloat(8, 20) * 100) / 100,
+      implementation_cost_usd: Math.round(input.curtailment_target_pct * 20000),
+      payback_years: Math.round(rng.nextFloat(2, 4) * 10) / 10,
+    },
+    {
+      strategy: 'Grid-enhancing technologies',
+      curtailment_reduction_pct: Math.round(rng.nextFloat(10, 25) * 100) / 100,
+      implementation_cost_usd: Math.round(input.curtailment_target_pct * 35000),
+      payback_years: Math.round(rng.nextFloat(3, 6) * 10) / 10,
+    },
+    {
+      strategy: 'Dynamic line rating',
+      curtailment_reduction_pct: Math.round(rng.nextFloat(5, 15) * 100) / 100,
+      implementation_cost_usd: Math.round(input.curtailment_target_pct * 15000),
+      payback_years: Math.round(rng.nextFloat(2, 5) * 10) / 10,
+    },
   ]
 
-  let bestTech: StorageTechnology = technologies[1]
-  if (input.application === 'frequency_regulation') bestTech = technologies[0]
-  else if (input.application === 'renewable_firming') bestTech = technologies[1]
-  else if (input.application === 'load_shifting') bestTech = technologies[1]
-  else if (input.application === 'peak_shaving') bestTech = technologies[0]
+  const storageCapacityRecommended = input.storage_proposed_mwh > 0 ? input.storage_proposed_mwh : Math.round((input.solar_capacity_mw + input.wind_capacity_mw) * rng.nextFloat(0.2, 0.5) * 100) / 100
+  const storagePowerRecommended = Math.round(storageCapacityRecommended * rng.nextFloat(0.25, 0.5) * 100) / 100
 
-  const dodLimit = bestTech.name.includes('LFP') ? 0.9 : 0.8
-  const requiredEnergy = input.peak_load_mw * input.required_duration_hours
-  const sizedEnergy = requiredEnergy / dodLimit
-  const usableEnergy = sizedEnergy * dodLimit * (bestTech.round_trip_efficiency / 100)
-  const powerMW = Math.max(input.peak_load_mw * 0.5, input.grid_connection_mw * 0.25)
+  const storagePlan: StoragePlan = {
+    recommended_capacity_mwh: storageCapacityRecommended,
+    recommended_power_mw: storagePowerRecommended,
+    technology: input.technology === 'wind_offshore' ? 'Compressed Air Energy Storage' : 'Lithium Iron Phosphate Battery',
+    services: ['Energy arbitrage', 'Frequency regulation', 'Capacity firming', 'Transmission deferral'],
+    annual_revenue_usd: Math.round(storageCapacityRecommended * 50000 * rng.nextFloat(0.8, 1.5)),
+    capital_cost_usd: Math.round(storageCapacityRecommended * rng.nextFloat(200, 400) * 1000),
+  }
 
-  const energyCost = sizedEnergy * 1000 * bestTech.capex_usd_per_kwh
-  const powerCost = powerMW * 1000 * rng.nextFloat(80, 150)
-  const bopCost = (energyCost + powerCost) * 0.2
-  const totalCapex = energyCost + powerCost + bopCost
-  const annualOpex = totalCapex * rng.nextFloat(0.01, 0.025)
-  const lcoe = sizedEnergy > 0 ? (totalCapex / 10 + annualOpex) / (sizedEnergy * 365 * dodLimit) * 1000 : 0
-
-  const cyclesPerYear = bestTech.name.includes('Flow') ? 300 : 365
-  const annualThroughput = usableEnergy * cyclesPerYear * (bestTech.round_trip_efficiency / 100)
-  const annualRevenue = annualThroughput * input.electricity_price * rng.nextFloat(0.4, 0.8)
-  const payback = totalCapex / Math.max(annualRevenue - annualOpex, 1)
-  const npv = -totalCapex + (annualRevenue - annualOpex) * (rng.nextFloat(5, 8))
-  const irr = Math.min(25, Math.max(0, ((annualRevenue - annualOpex) / totalCapex) * 100 * 3 + rng.nextFloat(-2, 5)))
-
-  const recommendations: string[] = []
-  recommendations.push('Conduct detailed site-specific geotechnical and environmental studies')
-  if (cyclesPerYear > 400) recommendations.push('High cycling application - prioritize LFP longevity over NMC power density')
-  recommendations.push('Include 20% capacity buffer for degradation margin over project lifetime')
-  recommendations.push('Evaluate hybrid storage architecture combining power and energy optimized technologies')
+  const gridImpactScore = Math.round(Math.max(0, Math.min(100, 80 - renewablePenetration * 0.5 + input.grid_flexibility === 'high' ? 15 : input.grid_flexibility === 'medium' ? 5 : -10 + rng.nextFloat(-5, 5))) * 100) / 100
+  const carbonReduction = Math.round(totalRenewable * rng.nextFloat(0.35, 0.55) * 8760 / 1000 * 100) / 100
 
   return {
-    application: input.application,
-    recommended_technology: bestTech,
-    sized_capacity: {
-      power_mw: Math.round(powerMW * 100) / 100,
-      energy_mwh: Math.round(sizedEnergy * 100) / 100,
-      duration_hours: input.required_duration_hours,
-      usable_energy_mwh: Math.round(usableEnergy * 100) / 100
+    project_id: input.project_id,
+    renewable_penetration_pct: renewablePenetration,
+    integration_capacity: {
+      max_hosting_capacity_mw: hostingBoosted,
+      available_headroom_mw: availableHeadroom,
+      thermal_limit_mw: thermalLimit,
+      voltage_rise_limit_mw: voltageRiseLimit,
+      short_circuit_limit_mw: shortCircuitLimit,
+      binding_constraint: binding.name,
     },
-    cost_estimate: {
-      energy_system_cost: Math.round(energyCost),
-      power_system_cost: Math.round(powerCost),
-      balance_of_plant: Math.round(bopCost),
-      total_capex: Math.round(totalCapex),
-      annual_opex: Math.round(annualOpex),
-      lcoe_usd_per_mwh: Math.round(lcoe * 100) / 100
-    },
-    performance_metrics: {
-      expected_cycles_per_year: cyclesPerYear,
-      annual_throughput_mwh: Math.round(annualThroughput),
-      availability_pct: input.target_availability_pct,
-      soh_retention_10yr: bestTech.cycle_life >= 8000 ? Math.round(80 + rng.nextFloat(0, 10)) : Math.round(65 + rng.nextFloat(0, 15))
-    },
-    financial_metrics: {
-      payback_years: Math.round(payback * 10) / 10,
-      irr_pct: Math.round(irr * 10) / 10,
-      npv_10yr: Math.round(npv),
-      annual_revenue: Math.round(annualRevenue)
-    },
-    recommendations
+    curtailment_strategies: curtailmentStrategies,
+    storage_plan: storagePlan,
+    grid_impact_score: gridImpactScore,
+    carbon_reduction_tco2_per_year: carbonReduction,
+    recommendations: [
+      renewablePenetration > 50 ? 'Renewable penetration exceeds 50% — invest in synchronous condensers for inertia' : 'Renewable penetration at manageable level — continue phased expansion',
+      'Deploy advanced forecasting for renewable generation to reduce curtailment',
+      'Consider grid-forming inverters for hosting capacity beyond 100% peak load',
+      'Evaluate multi-terminal HVDC for offshore wind integration',
+    ],
   }
 }
 
-// ==================== SECTION 4 -- Format Functions ====================
+// --- Tool 4: Energy Trading Advisor ---
+function analyzeEnergyTrading(input: EnergyTradingInput): EnergyTradingResult {
+  const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
 
-function formatGridDemandReport(r: GridDemandResult): string {
+  const priceForecasts: PriceForecast[] = []
+  let totalPrice = 0
+  const prices = input.price_forecast_per_mwh.length > 0
+    ? input.price_forecast_per_mwh
+    : Array.from({ length: 24 }, () => 40 + rng.nextFloat(-20, 60))
+
+  for (let h = 0; h < 24; h++) {
+    const base = prices[h % prices.length]
+    const volatilityAdjusted = base * (1 + input.price_volatility_pct / 100 * rng.nextFloat(-1, 1))
+    const predicted = Math.round(Math.max(0, volatilityAdjusted) * 100) / 100
+    const spread = predicted * (0.05 + input.price_volatility_pct / 200)
+    totalPrice += predicted
+
+    priceForecasts.push({
+      hour: h,
+      predicted_price: predicted,
+      confidence_low: Math.round(Math.max(0, predicted - spread) * 100) / 100,
+      confidence_high: Math.round((predicted + spread) * 100) / 100,
+      price_driver: h >= 8 && h <= 22 ? 'Peak demand' : h >= 12 && h <= 16 ? 'Solar midday surplus' : 'Off-peak baseload',
+    })
+  }
+
+  const avgPrice = totalPrice / 24
+  const marginPerMwh = avgPrice - input.marginal_cost_per_mwh
+
+  let action: TradingRecommendation['action'] = 'hold'
+  let volume = 0
+  const strategy: string[] = []
+
+  if (marginPerMwh > 10 && input.risk_tolerance !== 'conservative') {
+    action = 'sell'
+    volume = input.generation_capacity_mw
+    strategy.push('Maximize generation output for merchant sales')
+  } else if (marginPerMwh < -5) {
+    action = 'buy'
+    volume = Math.abs(input.portfolio_position_mwh) || input.generation_capacity_mw * 0.5
+    strategy.push('Purchase from market vs. self-generation')
+  } else {
+    action = input.price_volatility_pct > 20 && input.risk_tolerance === 'aggressive' ? 'sell' : 'hold'
+    volume = action === 'sell' ? input.generation_capacity_mw * 0.7 : 0
+    strategy.push('Maintain current position with hedge')
+  }
+
+  if (input.renewable_certificates > 0) {
+    strategy.push('Sell excess renewable energy certificates')
+  }
+  if (input.carbon_allowance_t < 0) {
+    strategy.push('Purchase carbon allowances before compliance deadline')
+  }
+
+  const expectedProfit = Math.round(marginPerMwh * volume * rng.nextFloat(0.6, 0.95) * 100) / 100
+  const riskScore = Math.round(Math.max(1, Math.min(10,
+    (input.price_volatility_pct / 5) +
+    (input.risk_tolerance === 'aggressive' ? 2 : input.risk_tolerance === 'moderate' ? 0 : -1) +
+    rng.nextFloat(-1, 1)
+  )) * 10) / 10
+
+  return {
+    market_id: input.market_id,
+    price_forecasts: priceForecasts,
+    trading_recommendation: {
+      action,
+      volume_mw: Math.round(volume * 100) / 100,
+      target_price_per_mwh: Math.round((avgPrice * (action === 'sell' ? 1.05 : 0.95)) * 100) / 100,
+      strategy: strategy.join('; '),
+      expected_profit_usd: expectedProfit,
+      risk_score: riskScore,
+    },
+    portfolio_risk: {
+      var_95_pct: Math.round(Math.abs(expectedProfit) * rng.nextFloat(1.5, 3.0) * 100) / 100,
+      cvar_95_pct: Math.round(Math.abs(expectedProfit) * rng.nextFloat(2.0, 4.0) * 100) / 100,
+      max_drawdown_pct: Math.round(rng.nextFloat(5, 20) * 100) / 100,
+      sharpe_ratio: Math.round(rng.nextFloat(0.5, 2.5) * 100) / 100,
+      exposure_mwh: Math.round(Math.abs(input.portfolio_position_mwh) * rng.nextFloat(0.8, 1.2) * 100) / 100,
+    },
+    expected_revenue_usd: Math.round(expectedProfit + input.portfolio_position_mwh * avgPrice * 0.1),
+    market_clearing_probability: Math.round(rng.nextFloat(0.7, 0.99) * 100) / 100,
+    regulatory_compliance: input.market_type === 'day_ahead'
+      ? 'Comply with FERC Order 2222 and state RPS requirements'
+      : 'Follow NERC reliability standards and market rules',
+    renewable_certificate_position: input.renewable_certificates > 0
+      ? 'Long ' + input.renewable_certificates + ' RECs — consider selling excess'
+      : 'No RECs held — evaluate purchase for compliance',
+    carbon_exposure: input.carbon_allowance_t >= 0
+      ? 'Carbon-neutral position maintained'
+      : 'Carbon deficit of ' + Math.abs(input.carbon_allowance_t) + ' tonnes — purchase allowances',
+    recommendations: [
+      'Diversify trading across day-ahead and real-time markets',
+      'Hedge price exposure with financial transmission rights (FTRs)',
+      'Monintor ancillary service markets for additional revenue',
+      'Implement automated trading algorithms for real-time optimization',
+    ],
+  }
+}
+
+// --- Tool 5: Outage Management Coordinator ---
+function analyzeOutageManagement(input: OutageManagementInput): OutageManagementResult {
+  const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
+
+  const switchesToOperate: FaultIsolation['switches_to_operate'] = []
+  const sectionsIsolated: string[] = []
+  let customersIsolated = Math.round(input.affected_customers * rng.nextFloat(0.3, 0.6))
+
+  for (let i = 0; i < rng.nextInt(2, 5); i++) {
+    const action: 'open' | 'close' = i % 2 === 0 ? 'open' : 'close'
+    switchesToOperate.push({
+      switch_id: 'SW_' + String(i + 1).padStart(3, '0'),
+      action,
+      location: 'Section_' + String.fromCharCode(65 + i),
+    })
+  }
+
+  for (let i = 0; i < rng.nextInt(1, 4); i++) {
+    sectionsIsolated.push('SEC_' + String.fromCharCode(65 + i))
+  }
+
+  const isolationTimeMin = Math.round(rng.nextFloat(2, 15) * (input.scada_status === 'online' ? 0.5 : 2))
+
+  const restorationSteps: RestorationPlan['steps'] = []
+  let remainingCustomers = input.affected_customers
+  let stepNum = 1
+  const customersRestoredPerStep: number[] = []
+
+  while (remainingCustomers > 0 && stepNum <= 8) {
+    const crewNeeded = rng.nextInt(1, input.crew_available)
+    const duration = Math.round(rng.nextFloat(15, 60))
+    const restored = Math.min(remainingCustomers, Math.round(remainingCustomers * rng.nextFloat(0.2, 0.5)))
+    remainingCustomers -= restored
+    customersRestoredPerStep.push(restored)
+
+    restorationSteps.push({
+      step: stepNum,
+      action: stepNum <= 2
+        ? 'Isolate fault and energize backup feeders'
+        : stepNum <= 4
+          ? 'Repair primary equipment'
+          : 'Verify system integrity and restore remaining load',
+      crew_required: crewNeeded,
+      duration_min: duration,
+    })
+    stepNum++
+  }
+
+  const totalRestorationTime = restorationSteps.reduce((s, step) => s + step.duration_min, 0)
+
+  const crewDispatches: CrewDispatch[] = []
+  for (let i = 0; i < Math.min(input.crew_available, 4); i++) {
+    crewDispatches.push({
+      crew_id: 'CREW_' + String(i + 1).padStart(3, '0'),
+      crew_size: rng.nextInt(2, 5),
+      estimated_arrival_min: Math.round(rng.nextFloat(10, 45) * (input.weather_conditions === 'storm' ? 1.5 : 1)),
+      assigned_task: i === 0 ? 'Fault assessment and isolation' : i === 1 ? 'Equipment repair' : i === 2 ? 'Switching operations' : 'Standby/support',
+      travel_distance_km: Math.round(rng.nextFloat(2, 20) * 10) / 10,
+      equipment_needed: ['Safety gear', i === 0 ? 'Fault locator' : 'Replacement parts', 'Communication radio'],
+    })
+  }
+
+  const cmi = input.affected_customers * totalRestorationTime
+  const saifi = Math.round((input.affected_customers / 10000) * 1000) / 1000
+  const saidi = Math.round((cmi / 10000) * 10) / 10
+  const caidi = Math.round((cmi / Math.max(input.affected_customers, 1)) * 10) / 10
+
+  const priorityRestored = input.priority_customers.filter(() => rng.next() > 0.3)
+
+  return {
+    outage_id: input.outage_id,
+    fault_isolation: {
+      switches_to_operate: switchesToOperate,
+      isolated_sections: sectionsIsolated,
+      customers_isolated: customersIsolated,
+      isolation_time_estimate_min: isolationTimeMin,
+    },
+    restoration_plan: {
+      steps: restorationSteps,
+      total_restoration_time_min: totalRestorationTime,
+      customers_restored_per_step: customersRestoredPerStep,
+      priority_restoration: priorityRestored.length > 0 ? priorityRestored : ['Hospital', 'Emergency services', 'Water treatment'],
+      mutual_aid_required: input.affected_customers > 5000 && input.crew_available < 3,
+    },
+    crew_dispatches: crewDispatches,
+    saifi_impact: saifi,
+    saidi_impact: saidi,
+    caidi_impact: caidi,
+    customer_minutes_interrupted: cmi,
+    priority_customers_restored: priorityRestored.length > 0,
+    recommendations: [
+      'Deploy fault circuit indicators to reduce patrol time',
+      'Implement automated feeder restoration (AFS) for faster recovery',
+      'Pre-position mobile substations for large outage scenarios',
+      'Establish mutual aid agreements with neighboring utilities',
+    ],
+  }
+}
+
+// --- Tool 6: Power Quality Analyzer ---
+function analyzePowerQuality(input: PowerQualityInput): PowerQualityResult {
+  const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
+
+  const m = input.measurements
+  const avgVoltage = (m.voltage_l1_v + m.voltage_l2_v + m.voltage_l3_v) / 3
+  const voltageDeviations = [
+    Math.abs(m.voltage_l1_v - avgVoltage),
+    Math.abs(m.voltage_l2_v - avgVoltage),
+    Math.abs(m.voltage_l3_v - avgVoltage),
+  ]
+  const maxDeviation = Math.max(...voltageDeviations)
+  const unbalancePct = Math.round((maxDeviation / Math.max(avgVoltage, 1)) * 10000) / 100
+  const deviationPct = Math.round((avgVoltage - input.voltage_level_kv * 1000) / (input.voltage_level_kv * 1000) * 10000) / 100
+
+  const nominalVoltage = input.voltage_level_kv * 1000
+  const voltCompliance: VoltageAnalysis['compliance'] =
+    Math.abs(deviationPct) > 10 || unbalancePct > 3 ? 'violation' :
+    Math.abs(deviationPct) > 5 || unbalancePct > 2 ? 'marginal' : 'compliant'
+
+  const h = input.harmonic_data
+  const thdVoltage = Math.round(Math.sqrt(h.h3_pct ** 2 + h.h5_pct ** 2 + h.h7_pct ** 2 + h.h9_pct ** 2 + h.h11_pct ** 2 + h.h13_pct ** 2) * 100) / 100
+
+  const harmonicValues = [
+    { order: 3, value: h.h3_pct },
+    { order: 5, value: h.h5_pct },
+    { order: 7, value: h.h7_pct },
+    { order: 9, value: h.h9_pct },
+    { order: 11, value: h.h11_pct },
+    { order: 13, value: h.h13_pct },
+  ]
+  const dominant = harmonicValues.reduce((max, cur) => cur.value > max.value ? cur : max, harmonicValues[0])
+
+  const thdVoltageLimit = input.standard === 'ieee_519' ? 5 : input.standard === 'en_50160' ? 8 : 6
+  const harmonicCompliance: HarmonicAnalysis['compliance'] =
+    thdVoltage > thdVoltageLimit * 1.5 ? 'violation' :
+    thdVoltage > thdVoltageLimit ? 'marginal' : 'compliant'
+
+  const apparentPower = Math.sqrt(m.active_power_kw ** 2 + m.reactive_power_kvar ** 2)
+  const powerFactor = Math.round((m.active_power_kw / Math.max(apparentPower, 1)) * 100) / 100
+  const displacementPF = Math.round(Math.cos(Math.atan2(m.reactive_power_kvar, m.active_power_kw)) * 100) / 100
+  const distortionPF = Math.round((1 / Math.sqrt(1 + (thdVoltage / 100) ** 2)) * 10000) / 10000
+  const targetPF = 0.95
+  const compensationNeeded = Math.round(Math.max(0, m.active_power_kw * (Math.tan(Math.acos(displacementPF)) - Math.tan(Math.acos(targetPF))) * 100)) / 100
+
+  const flickerLimit = input.standard === 'en_50160' ? 1.0 : 0.9
+  const flickerCompliance: PowerQualityResult['flicker_compliance'] =
+    input.flicker_plt > flickerLimit ? 'fail' : 'pass'
+
+  const overallPQIndex = Math.round(Math.max(0, Math.min(100,
+    100 - (voltCompliance === 'violation' ? 30 : voltCompliance === 'marginal' ? 15 : 0)
+    - (harmonicCompliance === 'violation' ? 25 : harmonicCompliance === 'marginal' ? 12 : 0)
+    - (powerFactor < 0.9 ? 15 : powerFactor < 0.95 ? 8 : 0)
+    - (flickerCompliance === 'fail' ? 10 : 0)
+  )) * 100) / 100
+
+  const overallCompliance: PowerQualityResult['overall_compliance'] =
+    voltCompliance === 'violation' || harmonicCompliance === 'violation' ? 'violation' :
+    voltCompliance === 'marginal' || harmonicCompliance === 'marginal' ? 'marginal' : 'compliant'
+
+  const revenueImpact = overallCompliance === 'violation'
+    ? Math.round(rng.nextFloat(5000, 50000))
+    : overallCompliance === 'marginal'
+      ? Math.round(rng.nextFloat(1000, 10000))
+      : 0
+
+  return {
+    monitoring_point_id: input.monitoring_point_id,
+    voltage_analysis: {
+      avg_voltage_v: Math.round(avgVoltage * 10) / 10,
+      unbalance_pct: unbalancePct,
+      deviation_from_nominal_pct: deviationPct,
+      sag_count: rng.nextInt(0, 5),
+      swell_count: rng.nextInt(0, 3),
+      compliance: voltCompliance,
+    },
+    harmonic_analysis: {
+      thd_voltage_pct: thdVoltage,
+      thd_current_pct: Math.round(thdVoltage * rng.nextFloat(1.5, 3.0) * 100) / 100,
+      dominant_harmonic: dominant.order,
+      dominant_harmonic_pct: dominant.value,
+      resonance_risk: thdVoltage > thdVoltageLimit * 0.8 && dominant.order === 5,
+      compliance: harmonicCompliance,
+      filter_recommendation: harmonicCompliance === 'violation'
+        ? 'Install active harmonic filter targeting ' + dominant.order + 'th harmonic'
+        : harmonicCompliance === 'marginal'
+          ? 'Consider detuned passive filter for future-proofing'
+          : 'No immediate filter action required',
+    },
+    power_factor_analysis: {
+      power_factor: powerFactor,
+      displacement_pf: displacementPF,
+      distortion_pf: distortionPF,
+      target_pf: targetPF,
+      penalty_risk: powerFactor < 0.9,
+      compensation_kvar_needed: compensationNeeded,
+    },
+    flicker_compliance: flickerCompliance,
+    overall_pq_index: overallPQIndex,
+    overall_compliance: overallCompliance,
+    revenue_impact_usd: revenueImpact,
+    recommendations: [
+      voltCompliance !== 'compliant' ? 'Adjust transformer taps to improve voltage profile' : 'Voltage profile within acceptable range',
+      harmonicCompliance !== 'compliant' ? 'Install harmonic mitigation equipment' : 'Harmonic levels acceptable',
+      powerFactor < 0.95 ? 'Install capacitor bank to achieve target PF of ' + targetPF : 'Power factor meets utility requirements',
+      flickerCompliance === 'fail' ? 'Investigate arc furnace or large motor starting as flicker source' : 'Flicker within limits',
+    ],
+  }
+}
+
+// --- Tool 7: Energy Storage Optimizer ---
+function analyzeEnergyStorage(input: EnergyStorageInput): EnergyStorageResult {
+  const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
+
+  const prices = input.electricity_prices.length > 0
+    ? input.electricity_prices
+    : Array.from({ length: 24 }, (_, h) => ({
+        hour: h,
+        price_per_mwh: h >= 10 && h <= 22 ? 60 + rng.nextFloat(-10, 30) : 30 + rng.nextFloat(-5, 10),
+      }))
+
+  const sortedPrices = [...prices].sort((a, b) => a.price_per_mwh - b.price_per_mwh)
+  const lowestHours = sortedPrices.slice(0, Math.ceil(24 * 0.35))
+  const highestHours = sortedPrices.slice(-Math.ceil(24 * 0.3))
+
+  const storageSchedule: StorageSchedule[] = []
+  let soc = 50
+  let totalRevenue = 0
+
+  for (const p of prices) {
+    const isLowPeriod = lowestHours.some(h => h.hour === p.hour) && soc < (input.dod_limit_pct / 100 * 100 - 5)
+    const isHighPeriod = highestHours.some(hour => hour.hour === p.hour) && soc > (100 - input.dod_limit_pct - 5)
+
+    const action: StorageSchedule['action'] = isLowPeriod && soc < 95 ? 'charge' : isHighPeriod && soc > 15 ? 'discharge' : 'idle'
+    const power = action === 'charge' ? input.power_rating_mw * 0.9 : action === 'discharge' ? input.power_rating_mw * 0.85 : 0
+    const energy = power / input.capacity_mwh * 100
+
+    if (action === 'charge') soc = Math.min(100, soc + energy)
+    if (action === 'discharge') soc = Math.max(10, soc - energy)
+
+    const revenue = action === 'discharge' ? power * p.price_per_mwh / 1000
+      : action === 'charge' ? -power * p.price_per_mwh / 1000 * (2 - input.round_trip_efficiency_pct / 100)
+      : 0
+    totalRevenue += revenue
+
+    storageSchedule.push({
+      hour: p.hour,
+      action,
+      power_mw: Math.round(power * 100) / 100,
+      soc_pct: Math.round(soc),
+      service: action !== 'idle' ? 'Energy arbitrage' : 'Standby',
+      revenue_usd: Math.round(revenue * 100) / 100,
+    })
+  }
+
+  const cyclesPerYear = 300 + rng.nextInt(0, 100)
+  const annualCapacityFade = rng.nextFloat(1.5, 3.5)
+  const expectedLife = Math.round((100 - 80) / annualCapacityFade * 10) / 10
+  const replacementYear = Math.round(expectedLife * 0.9)
+  const demandChargeSavings = input.power_rating_mw * 1000 * input.demand_charge_per_kw
+
+  const annualRevenue = Math.round(totalRevenue * 365 * (1 + input.grid_service_market_prices.frequency_regulation / 1000))
+  const capitalCost = Math.round(input.capacity_mwh * input.capital_cost_per_kwh * 1000)
+  const annualOMCost = Math.round(input.capacity_mwh * input.om_cost_per_kwh_year * 1000)
+  const netAnnual = annualRevenue - annualOMCost
+
+  const paybackPeriod = netAnnual > 0 ? Math.round(capitalCost / netAnnual * 10) / 10 : 99.9
+  const npv = netAnnual > 0
+    ? Math.round((netAnnual * Math.min(expectedLife, 15) - capitalCost) * (1 - rng.nextFloat(0, 0.2)))
+    : -capitalCost
+
+  const irr = netAnnual > 0
+    ? Math.round((Math.pow(1 + netAnnual / Math.max(capitalCost, 1), 1 / Math.min(expectedLife, 15)) - 1) * 10000) / 100
+    : 0
+
+  const lcos = Math.round((capitalCost / Math.min(expectedLife, 15) + annualOMCost + input.capacity_mwh * 1000 * cyclesPerYear * 0.01) / (input.capacity_mwh * cyclesPerYear * input.round_trip_efficiency_pct / 100) * 100) / 100
+
+  const servicesRevenue = [
+    { service: 'Energy arbitrage', annual_revenue_usd: Math.round(annualRevenue * 0.45), utilization_pct: 70 },
+    { service: 'Frequency regulation', annual_revenue_usd: Math.round(annualRevenue * 0.25), utilization_pct: 40 },
+    { service: 'Demand charge reduction', annual_revenue_usd: Math.round(demandChargeSavings * 0.2 * 12), utilization_pct: 100 },
+    { service: 'Capacity market', annual_revenue_usd: Math.round(input.power_rating_mw * input.grid_service_market_prices.capacity * 12), utilization_pct: 20 },
+  ]
+
+  const gridBenefitScore = Math.round(Math.min(100, Math.max(0,
+    60 + (input.round_trip_efficiency_pct - 80) * 0.5 +
+    (input.cycle_life / 100) * 0.3 +
+    (expectedLife - 8) * 2 +
+    rng.nextFloat(-5, 5)
+  )) * 100) / 100
+
+  return {
+    project_id: input.project_id,
+    optimal_capacity_mwh: input.capacity_mwh,
+    optimal_power_mw: input.power_rating_mw,
+    storage_schedule: storageSchedule,
+    economic_analysis: {
+      annual_revenue_usd: annualRevenue,
+      annual_om_cost_usd: annualOMCost,
+      net_annual_benefit_usd: netAnnual,
+      capital_cost_usd: capitalCost,
+      payback_period_years: paybackPeriod,
+      net_present_value_usd: npv,
+      internal_rate_of_return_pct: irr,
+      levelized_cost_per_mwh: lcos,
+    },
+    degradation_profile: {
+      annual_capacity_fade_pct: Math.round(annualCapacityFade * 100) / 100,
+      cycles_per_year: cyclesPerYear,
+      expected_life_years: expectedLife,
+      replacement_threshold_pct: 80,
+      replacement_year: replacementYear,
+    },
+    services_revenue_breakdown: servicesRevenue,
+    grid_benefit_score: gridBenefitScore,
+    recommendations: [
+      paybackPeriod > 10 ? 'Payback period exceeds 10 years — consider alternative revenue streams' : 'Payback period of ' + paybackPeriod.toFixed(1) + ' years is financially viable',
+      'Optimize dispatch strategy to capture highest-value service stacking',
+      'Monitor SOH degradation and adjust dispatch depth annually',
+      'Evaluate participation in wholesale capacity markets for additional revenue',
+      'Consider second-life battery deployment after ' + expectedLife.toFixed(0) + ' years of grid service',
+    ],
+  }
+}
+
+// --- Tool 8: Utility Bill Analyzer ---
+function analyzeUtilityBill(input: UtilityBillInput): UtilityBillResult {
+  const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
+
+  const effectiveRate = input.total_bill_usd / Math.max(input.consumption_kwh, 1)
+  const costPerSqft = input.facility_type === 'commercial' || input.facility_type === 'industrial'
+    ? Math.round(effectiveRate * 12 * rng.nextFloat(0.5, 1.5) * 1000) / 1000
+    : Math.round(effectiveRate * 12 * 1000) / 1000
+  const yearOverYearChange = Math.round(rng.nextFloat(-8, 15) * 100) / 100
+  const utilityBurden = Math.round((input.total_bill_usd / Math.max(input.consumption_kwh * 0.8, 1)) * 10000) / 100
+
+  const rateComparisons: RateComparison[] = (input.alternative_rate_schedules.length > 0
+    ? input.alternative_rate_schedules
+    : ['TOU-1', 'TOU-2', 'Demand Response Rate', 'Real-Time Pricing']).map((schedule, idx) => {
+    const savings = Math.round(input.total_bill_usd * rng.nextFloat(0.05, 0.25) * (idx + 1) / 4)
+    return {
+      rate_schedule: schedule,
+      estimated_annual_cost_usd: Math.round(input.total_bill_usd * 12 - savings * 12),
+      annual_savings_usd: savings * 12,
+      savings_pct: Math.round((savings / input.total_bill_usd) * 10000) / 100,
+      demand_response_compatible: schedule.includes('TOU') || schedule.includes('Demand'),
+      net_metering_compatible: schedule.includes('Solar') || schedule.includes('Net'),
+    }
+  })
+
+  const savingsOpportunities: SavingsOpportunity[] = [
+    {
+      measure: 'LED lighting upgrade',
+      annual_savings_usd: Math.round(input.consumption_kwh * input.time_of_use.peak_pct / 100 * 0.05 * 0.12),
+      implementation_cost_usd: Math.round(rng.nextFloat(5000, 25000)),
+      payback_years: Math.round(rng.nextFloat(1.5, 3.5) * 10) / 10,
+      co2_reduction_t: Math.round(input.consumption_kwh * 0.0005 * rng.nextFloat(5, 15)),
+      priority: 'high',
+    },
+    {
+      measure: 'HVAC optimization',
+      annual_savings_usd: Math.round(input.consumption_kwh * input.time_of_use.peak_pct / 100 * 0.1 * 0.15),
+      implementation_cost_usd: Math.round(rng.nextFloat(10000, 50000)),
+      payback_years: Math.round(rng.nextFloat(2, 5) * 10) / 10,
+      co2_reduction_t: Math.round(input.consumption_kwh * 0.0005 * rng.nextFloat(8, 20)),
+      priority: 'high',
+    },
+    {
+      measure: 'Power factor correction',
+      annual_savings_usd: Math.round(input.power_factor_penalty * 12 + input.demand_charges * 0.05),
+      implementation_cost_usd: Math.round(rng.nextFloat(3000, 15000)),
+      payback_years: Math.round(rng.nextFloat(1, 3) * 10) / 10,
+      co2_reduction_t: 0,
+      priority: input.power_factor_penalty > 0 ? 'high' : 'low',
+    },
+    {
+      measure: 'Solar PV installation',
+      annual_savings_usd: Math.round(input.consumption_kwh * 0.2 * 0.12),
+      implementation_cost_usd: Math.round(rng.nextFloat(50000, 200000)),
+      payback_years: Math.round(rng.nextFloat(5, 10) * 10) / 10,
+      co2_reduction_t: Math.round(input.consumption_kwh * 0.2 * 0.0005),
+      priority: 'medium',
+    },
+    {
+      measure: 'Battery storage for demand shaving',
+      annual_savings_usd: Math.round(input.demand_charges * 0.15),
+      implementation_cost_usd: Math.round(rng.nextFloat(20000, 100000)),
+      payback_years: Math.round(rng.nextFloat(4, 8) * 10) / 10,
+      co2_reduction_t: Math.round(input.consumption_kwh * 0.0001),
+      priority: input.demand_charges > input.energy_charges * 0.3 ? 'high' : 'medium',
+    },
+    {
+      measure: 'Energy management system (EMS)',
+      annual_savings_usd: Math.round(input.total_bill_usd * rng.nextFloat(0.05, 0.12)),
+      implementation_cost_usd: Math.round(rng.nextFloat(5000, 30000)),
+      payback_years: Math.round(rng.nextFloat(1, 3) * 10) / 10,
+      co2_reduction_t: Math.round(input.consumption_kwh * 0.0003 * rng.nextFloat(5, 12)),
+      priority: 'medium',
+    },
+  ]
+
+  const totalPotentialSavings = savingsOpportunities.reduce((s, o) => s + o.annual_savings_usd, 0)
+  const totalBillAnnual = input.total_bill_usd * 12
+  const totalSavingsPct = Math.round((totalPotentialSavings / Math.max(totalBillAnnual, 1)) * 10000) / 100
+
+  const co2Footprint = Math.round(input.consumption_kwh * 0.0005 * 12 * 100) / 100
+
+  const billingErrors: string[] = []
+  if (input.demand_kw > input.peak_demand_kw * 1.1) {
+    billingErrors.push('Billing demand exceeds peak demand recorded — verify meter data')
+  }
+  if (input.power_factor_penalty > input.energy_charges * 0.1) {
+    billingErrors.push('Power factor penalty exceeds 10% of energy charges — investigate correction')
+  }
+  if (input.taxes_and_fees > input.total_bill_usd * 0.2) {
+    billingErrors.push('Taxes and fees exceed 20% of total bill — verify jurisdictional rates')
+  }
+
+  const bestRate = rateComparisons.length > 0
+    ? rateComparisons.reduce((best, cur) => cur.annual_savings_usd > best.annual_savings_usd ? cur : best)
+    : null
+
+  return {
+    account_id: input.account_id,
+    current_bill_analysis: {
+      current_effective_rate_per_kwh: Math.round(effectiveRate * 10000) / 10000,
+      cost_per_sqft_usd: costPerSqft,
+      energy_cost_per_unit_production: Math.round(effectiveRate * 1000) / 1000,
+      utility_burden_pct: utilityBurden,
+      year_over_year_change_pct: yearOverYearChange,
+    },
+    rate_comparisons: rateComparisons,
+    savings_opportunities: savingsOpportunities,
+    total_potential_savings_usd: totalPotentialSavings,
+    total_potential_savings_pct: totalSavingsPct,
+    co2_footprint_t: co2Footprint,
+    benchmark_comparison: yearOverYearChange > 10
+      ? 'Utility costs increasing significantly — immediate audit recommended'
+      : yearOverYearChange > 0
+        ? 'Moderate cost increase — monitor and implement efficiency measures'
+        : 'Costs stable or declining — current trajectory favorable',
+    billing_errors_detected: billingErrors.length > 0 ? billingErrors : ['No obvious billing anomalies detected'],
+    recommendations: [
+      bestRate ? 'Switch to ' + bestRate.rate_schedule + ' for estimated annual savings of $' + bestRate.annual_savings_usd : 'Evaluate alternative rate schedules for potential savings',
+      totalSavingsPct > 20 ? 'High savings potential (' + totalSavingsPct.toFixed(1) + '%) — prioritize implementation' : 'Moderate savings available through efficiency measures',
+      'Install submetering to identify department-level consumption patterns',
+      'Consider on-site generation to reduce demand charges and energy costs',
+      'Enroll in utility demand response programs for bill credits',
+    ],
+  }
+}
+
+// ==================== SECTION 4 -- Report Formatting Functions ====================
+
+function formatGridOptimizationReport(r: GridOptimizationResult): string {
   const lines: string[] = []
-  lines.push('## Grid Demand Forecast Report')
+  lines.push('## Grid Optimization Engine Report')
   lines.push('')
-  lines.push('**Region:** ' + r.region + ' | **Current Peak:** ' + r.current_peak_mw + ' MW | **Forecast Horizon:** ' + r.forecast_horizon_hours + 'h')
+  lines.push('Grid: ' + r.grid_id + ' | Optimization Score: ' + r.optimization_score + '/100 | Loss Potential Reduction: ' + r.loss_reduction_potential_pct + '%')
+  lines.push('Total Losses: ' + r.power_flow.total_losses_mw + ' MW (' + r.power_flow.losses_pct + '%) | Voltage Violations: ' + r.voltage_violations + ' | Convergence: ' + r.power_flow.convergence_status)
   lines.push('')
-  lines.push('### Aggregated Summary')
-  lines.push('| Metric | Value |')
-  lines.push('|--------|-------|')
-  lines.push('| Total Energy (forecast) | ' + r.aggregated.total_energy_mwh.toLocaleString() + ' MWh |')
-  lines.push('| Peak Demand (forecast) | ' + r.aggregated.peak_demand_mw + ' MW |')
-  lines.push('| Minimum Demand (forecast) | ' + r.aggregated.minimum_demand_mw + ' MW |')
-  lines.push('| Load Factor | ' + r.aggregated.load_factor_pct + '% |')
+
+  lines.push('### Power Flow Summary')
+  lines.push('| Total Losses (MW) | Losses (%) | Voltage Violations | Convergence |')
+  lines.push('|-------------------|-----------|-------------------|-------------|')
+  lines.push('| ' + r.power_flow.total_losses_mw + ' | ' + r.power_flow.losses_pct + '% | ' + r.voltage_violations + ' | ' + r.power_flow.convergence_status + ' |')
   lines.push('')
-  lines.push('### Hourly Forecast')
-  lines.push('| Hour | Forecast (MW) | Peak (MW) | Low (MW) | 95% CI | Risk |')
-  lines.push('|------|-------------|-----------|----------|--------|------|')
-  for (const f of r.forecasts) {
-    lines.push('| ' + f.hour + ' | ' + f.forecast_mw + ' | ' + f.peak_mw + ' | ' + f.low_mw + ' | [' + f.confidence_interval[0] + ', ' + f.confidence_interval[1] + '] | ' + f.risk_level + ' |')
+
+  lines.push('### Volt/VAR Controls')
+  lines.push('| Device | Type | Setting | Action | Impact (pu) |')
+  lines.push('|--------|------|---------|--------|-----------|')
+  for (const vvc of r.volt_var_controls) {
+    lines.push('| ' + vvc.device_id + ' | ' + vvc.device_type + ' | ' + vvc.setting + ' | ' + vvc.action + ' | ' + vvc.impact_voltage_pu + ' |')
   }
   lines.push('')
-  lines.push('### Grid Stress Assessment')
-  lines.push('- ' + r.grid_stress_assessment)
+
+  lines.push('### Reliability Assessment')
+  lines.push('- ' + r.reliability_assessment)
   lines.push('')
+
   lines.push('### Recommendations')
-  for (const rec of r.recommendations) lines.push('- ' + rec)
+  for (const rec of r.recommendations) {
+    lines.push('- ' + rec)
+  }
   lines.push('')
   lines.push('---')
-  lines.push('_' + DISCLAIMER + '_')
+  lines.push('*Disclaimer: ' + DISCLAIMER + '*')
+  return lines.join('\n')
+}
+
+function formatDemandForecastReport(r: DemandForecastResult): string {
+  const lines: string[] = []
+  lines.push('## Demand Forecasting Modeler Report')
+  lines.push('')
+  lines.push('Region: ' + r.region_id + ' | Horizon: ' + r.forecast_horizon_hours + 'h | MAPE: ' + r.mape_pct + '% | Risk: ' + r.risk_level)
+  lines.push('Peak: ' + r.peak_valley.peak_load_mw + ' MW @ Hour ' + r.peak_valley.peak_hour + ' | Valley: ' + r.peak_valley.valley_load_mw + ' MW @ Hour ' + r.peak_valley.valley_hour)
+  lines.push('Load Factor: ' + r.peak_valley.load_factor_pct + '% | Peak/Valley Ratio: ' + r.peak_valley.peak_valley_ratio)
+  lines.push('')
+
+  lines.push('### Demand Forecast')
+  lines.push('| Hour | Forecast (MW) | Low (MW) | High (MW) |')
+  lines.push('|------|--------------|---------|----------|')
+  for (const dp of r.demand_points.slice(0, 30)) {
+    lines.push('| ' + dp.hour + ' | ' + dp.forecast_mw + ' | ' + dp.confidence_low + ' | ' + dp.confidence_high + ' |')
+  }
+  if (r.demand_points.length > 30) {
+    lines.push('| ... (' + (r.demand_points.length - 30) + ' more) |')
+  }
+  lines.push('')
+
+  lines.push('### Aggregate Statistics')
+  lines.push('| Total Energy (MWh) | Avg Load (MW) | Max (MW) | Min (MW) |')
+  lines.push('|--------------------|---------------|---------|---------|')
+  lines.push('| ' + r.total_energy_mwh + ' | ' + r.avg_load_mw + ' | ' + r.max_load_mw + ' | ' + r.min_load_mw + ' |')
+  lines.push('')
+
+  lines.push('### Recommendations')
+  for (const rec of r.recommendations) {
+    lines.push('- ' + rec)
+  }
+  lines.push('')
+  lines.push('---')
+  lines.push('*Disclaimer: ' + DISCLAIMER + '*')
   return lines.join('\n')
 }
 
 function formatRenewableIntegrationReport(r: RenewableIntegrationResult): string {
   const lines: string[] = []
-  lines.push('## Renewable Integration Optimization Report')
+  lines.push('## Renewable Integration Planner Report')
   lines.push('')
-  lines.push('### Integration Overview')
-  lines.push('| Metric | Value |')
-  lines.push('|--------|-------|')
-  lines.push('| Renewable Penetration | ' + r.renewable_penetration_pct + '% |')
-  lines.push('| Effective Capacity | ' + r.effective_capacity_mw + ' MW |')
-  lines.push('| Curtailment Forecast | ' + r.curtailment_forecast + ' MW |')
-  lines.push('| Integration Score | ' + r.integration_score + '/100 |')
+  lines.push('Project: ' + r.project_id + ' | Renewable Penetration: ' + r.renewable_penetration_pct + '% | Grid Impact: ' + r.grid_impact_score + '/100')
+  lines.push('Max Hosting Capacity: ' + r.integration_capacity.max_hosting_capacity_mw + ' MW | Available Headroom: ' + r.integration_capacity.available_headroom_mw + ' MW')
+  lines.push('Binding Constraint: ' + r.integration_capacity.binding_constraint + ' | CO2 Reduction: ' + r.carbon_reduction_tco2_per_year + ' tCO2/year')
   lines.push('')
+
+  lines.push('### Integration Capacity Limits')
+  lines.push('| Limit Type | Capacity (MW) |')
+  lines.push('|------------|--------------|')
+  lines.push('| Thermal | ' + r.integration_capacity.thermal_limit_mw + ' |')
+  lines.push('| Voltage Rise | ' + r.integration_capacity.voltage_rise_limit_mw + ' |')
+  lines.push('| Short Circuit | ' + r.integration_capacity.short_circuit_limit_mw + ' |')
+  lines.push('| Max Hosting | ' + r.integration_capacity.max_hosting_capacity_mw + ' |')
+  lines.push('')
+
   lines.push('### Curtailment Reduction Strategies')
-  for (const s of r.strategies) {
-    lines.push('#### ' + s.strategy)
-    lines.push('- Curtailment reduction: ' + s.reduction_pct + '%')
-    lines.push('- Estimated cost: $' + s.cost_estimate_usd.toLocaleString())
-    lines.push('- Timeline: ' + s.implementation_timeline)
-    lines.push('')
+  lines.push('| Strategy | Reduction (%) | Cost (USD) | Payback (yr) |')
+  lines.push('|----------|-------------|-----------|-------------|')
+  for (const cs of r.curtailment_strategies) {
+    lines.push('| ' + cs.strategy + ' | ' + cs.curtailment_reduction_pct + ' | $' + cs.implementation_cost_usd + ' | ' + cs.payback_years + ' |')
   }
-  lines.push('### Storage Optimization')
-  lines.push('- Recommended storage: ' + r.storage_optimization.recommended_storage_mwh + ' MWh')
-  lines.push('- Charge schedule: ' + r.storage_optimization.charge_schedule)
-  lines.push('- Discharge schedule: ' + r.storage_optimization.discharge_schedule)
-  lines.push('- Round-trip efficiency: ' + r.storage_optimization.round_trip_efficiency + '%')
   lines.push('')
-  lines.push('### Grid Stability Assessment')
-  lines.push('- ' + r.grid_stability_assessment)
+
+  lines.push('### Storage Plan')
+  lines.push('- Recommended: ' + r.storage_plan.recommended_capacity_mwh + ' MWh @ ' + r.storage_plan.recommended_power_mw + ' MW')
+  lines.push('- Technology: ' + r.storage_plan.technology + ' | Services: ' + r.storage_plan.services.join(', '))
+  lines.push('- Annual Revenue: $' + r.storage_plan.annual_revenue_usd + ' | Capital Cost: $' + r.storage_plan.capital_cost_usd)
   lines.push('')
+
   lines.push('### Recommendations')
-  for (const rec of r.recommendations) lines.push('- ' + rec)
+  for (const rec of r.recommendations) {
+    lines.push('- ' + rec)
+  }
   lines.push('')
   lines.push('---')
-  lines.push('_' + DISCLAIMER + '_')
+  lines.push('*Disclaimer: ' + DISCLAIMER + '*')
   return lines.join('\n')
 }
 
 function formatEnergyTradingReport(r: EnergyTradingResult): string {
   const lines: string[] = []
-  lines.push('## Energy Trading Strategy Report')
+  lines.push('## Energy Trading Advisor Report')
   lines.push('')
-  lines.push('**Market:** ' + r.market + ' | **Delivery:** ' + r.delivery_date + ' | **Position:** ' + r.recommended_position_mwh + ' MWh')
+  lines.push('Market: ' + r.market_id + ' | Action: ' + r.trading_recommendation.action.toUpperCase() + ' | Volume: ' + r.trading_recommendation.volume_mw + ' MW')
+  lines.push('Target Price: $' + r.trading_recommendation.target_price_per_mwh + '/MWh | Expected Profit: $' + r.trading_recommendation.expected_profit_usd + ' | Risk Score: ' + r.trading_recommendation.risk_score + '/10')
   lines.push('')
-  lines.push('### Market Outlook')
-  lines.push('- ' + r.market_outlook)
-  lines.push('')
-  lines.push('### Trade Recommendations')
-  for (const t of r.trades) {
-    lines.push('#### ' + t.action.toUpperCase() + ' ' + t.volume_mwh + ' MWh')
-    lines.push('- Price target: $' + t.price_target + '/MWh')
-    lines.push('- Timing: ' + t.timing)
-    lines.push('- Confidence: ' + t.confidence + '%')
-    lines.push('- Rationale: ' + t.rationale)
-    lines.push('')
-  }
-  lines.push('### Risk Metrics')
-  lines.push('| Metric | Value |')
-  lines.push('|--------|-------|')
-  lines.push('| VaR (95%) | ' + r.risk_metrics.var_95_pct + '% |')
-  lines.push('| Expected Return | ' + r.risk_metrics.expected_return_pct + '% |')
-  lines.push('| Sharpe Ratio | ' + r.risk_metrics.sharpe_ratio + ' |')
-  lines.push('| Max Drawdown | ' + r.risk_metrics.max_drawdown_pct + '% |')
-  lines.push('')
-  lines.push('### Hedge Recommendations')
-  for (const h of r.hedge_recommendations) lines.push('- ' + h)
-  lines.push('')
-  lines.push('---')
-  lines.push('_' + DISCLAIMER + '_')
-  return lines.join('\n')
-}
 
-function formatBatterySchedulerReport(r: BatterySchedulerResult): string {
-  const lines: string[] = []
-  lines.push('## Battery Management Schedule Report')
-  lines.push('')
-  lines.push('**Operating Date:** ' + r.operating_date + ' | **Net Profit:** $' + r.daily_summary.net_profit_usd + ' | **Cycles:** ' + r.daily_summary.cycle_equivalent.toFixed(2))
-  lines.push('')
-  lines.push('### Hourly Schedule')
-  lines.push('| Hour | Action | Power (MW) | SOC Target | Revenue ($) | Degradation ($) | Service |')
-  lines.push('|------|--------|-----------|------------|-------------|-----------------|---------|')
-  for (const s of r.schedule) {
-    lines.push('| ' + s.hour + ' | ' + s.action + ' | ' + s.power_mw + ' | ' + s.soc_target_pct + '% | ' + s.revenue_usd + ' | ' + s.degradation_cost_usd + ' | ' + s.service_type + ' |')
+  lines.push('### Price Forecast')
+  lines.push('| Hour | Price ($/MWh) | Low | High | Driver |')
+  lines.push('|------|--------------|-----|------|--------|')
+  for (const pf of r.price_forecasts) {
+    lines.push('| ' + pf.hour + ' | ' + pf.predicted_price + ' | ' + pf.confidence_low + ' | ' + pf.confidence_high + ' | ' + pf.price_driver + ' |')
   }
   lines.push('')
-  lines.push('### Daily Summary')
-  lines.push('| Metric | Value |')
-  lines.push('|--------|-------|')
-  lines.push('| Total Charged | ' + r.daily_summary.total_charged_mwh + ' MWh |')
-  lines.push('| Total Discharged | ' + r.daily_summary.total_discharged_mwh + ' MWh |')
-  lines.push('| Round-trip Efficiency | ' + r.daily_summary.round_trip_efficiency + '% |')
-  lines.push('| Cycle Equivalent | ' + r.daily_summary.cycle_equivalent.toFixed(3) + ' |')
-  lines.push('| Total Revenue | $' + r.daily_summary.total_revenue_usd.toLocaleString() + ' |')
-  lines.push('| Total Degradation | $' + r.daily_summary.total_degradation_cost_usd.toLocaleString() + ' |')
-  lines.push('| **Net Profit** | **$' + r.daily_summary.net_profit_usd.toLocaleString() + '** |')
+
+  lines.push('### Trading Signal')
+  lines.push('| Field | Value |')
+  lines.push('|-------|------|')
+  lines.push('| Action | ' + r.trading_recommendation.action + ' |')
+  lines.push('| Strategy | ' + r.trading_recommendation.strategy + ' |')
+  lines.push('| Risk Score | ' + r.trading_recommendation.risk_score + ' |')
+  lines.push('| Clearing Probability | ' + r.market_clearing_probability + ' |')
   lines.push('')
-  lines.push('### Battery Health')
-  lines.push('- Remaining cycles: ' + r.battery_health.remaining_cycles)
-  lines.push('- State of Health (SOH): ' + r.battery_health.soh_pct.toFixed(1) + '%')
+
+  lines.push('### Portfolio Risk')
+  lines.push('| VaR 95% | CVaR 95% | Max Drawdown | Sharpe Ratio | Exposure (MWh) |')
+  lines.push('|---------|----------|-------------|-------------|---------------|')
+  lines.push('| $' + r.portfolio_risk.var_95_pct + ' | $' + r.portfolio_risk.cvar_95_pct + ' | ' + r.portfolio_risk.max_drawdown_pct + '% | ' + r.portfolio_risk.sharpe_ratio + ' | ' + r.portfolio_risk.exposure_mwh + ' |')
   lines.push('')
+
+  lines.push('### Compliance & Environmental')
+  lines.push('- ' + r.regulatory_compliance)
+  lines.push('- REC Position: ' + r.renewable_certificate_position)
+  lines.push('- Carbon: ' + r.carbon_exposure)
+  lines.push('')
+
   lines.push('### Recommendations')
-  for (const rec of r.recommendations) lines.push('- ' + rec)
+  for (const rec of r.recommendations) {
+    lines.push('- ' + rec)
+  }
   lines.push('')
   lines.push('---')
-  lines.push('_' + DISCLAIMER + '_')
+  lines.push('*Disclaimer: ' + DISCLAIMER + '*')
   return lines.join('\n')
 }
 
-function formatCarbonCaptureReport(r: CarbonCaptureResult): string {
+function formatOutageManagementReport(r: OutageManagementResult): string {
   const lines: string[] = []
-  lines.push('## Carbon Capture Optimization Report')
+  lines.push('## Outage Management Coordinator Report')
   lines.push('')
-  lines.push('**Plant Type:** ' + r.plant_type + ' | **Capture Rate:** ' + r.effective_capture_rate_pct + '% | **Annual Captured:** ' + r.co2_captured_annual_tons.toLocaleString() + ' tons')
+  lines.push('Outage: ' + r.outage_id + ' | Restoration Time: ' + r.restoration_plan.total_restoration_time_min + ' min | Customers Affected: ' + r.fault_isolation.customers_isolated)
+  lines.push('Priority Customers Restored: ' + (r.priority_customers_restored ? 'Yes' : 'No') + ' | Mutual Aid: ' + (r.restoration_plan.mutual_aid_required ? 'Required' : 'Not Required'))
   lines.push('')
-  lines.push('### Performance Metrics')
-  lines.push('| Metric | Value |')
-  lines.push('|--------|-------|')
-  lines.push('| CO2 Captured (annual) | ' + r.co2_captured_annual_tons.toLocaleString() + ' tons |')
-  lines.push('| Parasitic Load | ' + r.parasitic_load_mw + ' MW |')
-  lines.push('| Cost per Ton | $' + r.cost_per_ton_captured + ' |')
-  lines.push('| Revenue from CO2 | $' + r.revenue_from_captured_co2.toLocaleString() + ' |')
-  lines.push('| Net Operating Cost | $' + r.net_operating_cost.toLocaleString() + ' |')
-  lines.push('| Emissions Reduction | ' + r.emissions_reduction_pct + '% |')
-  lines.push('')
-  lines.push('### Compliance Status')
-  lines.push('- ' + r.compliance_status)
-  lines.push('')
-  lines.push('### Optimization Recommendations')
-  for (const o of r.optimizations) {
-    lines.push('#### ' + o.parameter)
-    lines.push('- Current: ' + o.current_value + ' -> Recommended: ' + o.recommended_value)
-    if (o.impact_tons > 0) lines.push('- Impact: ' + o.impact_tons + ' tons CO2/year')
-    lines.push('- Cost benefit: ' + o.cost_benefit)
-    lines.push('')
+
+  lines.push('### Fault Isolation')
+  lines.push('| Switch | Action | Location |')
+  lines.push('|--------|--------|---------|')
+  for (const sw of r.fault_isolation.switches_to_operate) {
+    lines.push('| ' + sw.switch_id + ' | ' + sw.action + ' | ' + sw.location + ' |')
   }
+  lines.push('- Isolated Sections: ' + r.fault_isolation.isolated_sections.join(', '))
+  lines.push('- Isolation Time Estimate: ' + r.fault_isolation.isolation_time_estimate_min + ' min')
+  lines.push('')
+
+  lines.push('### Restoration Plan')
+  lines.push('| Step | Action | Crew | Duration (min) |')
+  lines.push('|------|--------|------|----------------|')
+  for (const step of r.restoration_plan.steps) {
+    lines.push('| ' + step.step + ' | ' + step.action + ' | ' + step.crew_required + ' | ' + step.duration_min + ' |')
+  }
+  lines.push('')
+
+  lines.push('### Crew Dispatch')
+  lines.push('| Crew | Size | Arrival (min) | Task | Distance (km) |')
+  lines.push('|------|------|--------------|------|---------------|')
+  for (const crew of r.crew_dispatches) {
+    lines.push('| ' + crew.crew_id + ' | ' + crew.crew_size + ' | ' + crew.estimated_arrival_min + ' | ' + crew.assigned_task + ' | ' + crew.travel_distance_km + ' |')
+  }
+  lines.push('')
+
+  lines.push('### Reliability Impact')
+  lines.push('| SAIFI | SAIDI | CAIDI | Customer-Minutes |')
+  lines.push('|--------|-------|-------|-----------------|')
+  lines.push('| ' + r.saifi_impact + ' | ' + r.saidi_impact + ' | ' + r.caidi_impact + ' | ' + r.customer_minutes_interrupted + ' |')
+  lines.push('')
+
+  lines.push('### Recommendations')
+  for (const rec of r.recommendations) {
+    lines.push('- ' + rec)
+  }
+  lines.push('')
   lines.push('---')
-  lines.push('_' + DISCLAIMER + '_')
+  lines.push('*Disclaimer: ' + DISCLAIMER + '*')
   return lines.join('\n')
 }
 
 function formatPowerQualityReport(r: PowerQualityResult): string {
   const lines: string[] = []
-  lines.push('## Power Quality Analysis Report')
+  lines.push('## Power Quality Analyzer Report')
   lines.push('')
-  lines.push('**Overall PQ Index:** ' + r.overall_pq_index + '/100 | **Standard:** ' + r.compliance_standard + ' | **Confidence:** ' + r.measurement_confidence)
+  lines.push('Monitoring Point: ' + r.monitoring_point_id + ' | Overall PQ Index: ' + r.overall_pq_index + '/100 | Compliance: ' + r.overall_compliance)
+  lines.push('Voltage: ' + r.voltage_analysis.compliance + ' | Harmonics: ' + r.harmonic_analysis.compliance + ' | Power Factor: ' + (r.power_factor_analysis.penalty_risk ? 'Below Target' : 'Acceptable') + ' | Flicker: ' + r.flicker_compliance.toUpperCase())
   lines.push('')
-  lines.push('### Voltage Quality')
-  lines.push('- **THD Status:** ' + r.voltage_quality.status + ' (' + r.voltage_quality.thd_status + ')')
-  lines.push('- **Unbalance:** ' + r.voltage_quality.unbalance_status)
-  lines.push('- **Flicker:** ' + r.voltage_quality.flicker_status)
-  lines.push('- **Power Factor:** ' + r.power_factor_assessment)
+
+  lines.push('### Voltage Analysis')
+  lines.push('| Avg Voltage (V) | Unbalance (%) | Deviation (%) | Sags | Swells | Status |')
+  lines.push('|-----------------|--------------|---------------|------|--------|--------|')
+  lines.push('| ' + r.voltage_analysis.avg_voltage_v + ' | ' + r.voltage_analysis.unbalance_pct + ' | ' + r.voltage_analysis.deviation_from_nominal_pct + ' | ' + r.voltage_analysis.sag_count + ' | ' + r.voltage_analysis.swell_count + ' | ' + r.voltage_analysis.compliance + ' |')
   lines.push('')
-  lines.push('### Harmonic Analysis (up to 16th order)')
-  lines.push('| Order | Magnitude (%) | Limit (%) | Status |')
-  lines.push('|-------|---------------|-----------|--------|')
-  for (const h of r.harmonic_analysis) {
-    lines.push('| ' + h.order + ' | ' + h.magnitude_pct + ' | ' + h.limit_pct + ' | ' + h.status + ' |')
+
+  lines.push('### Harmonic Analysis')
+  lines.push('| THV V (%) | THD I (%) | Dominant | Resonance Risk | Status |')
+  lines.push('|----------|----------|----------|---------------|--------|')
+  lines.push('| ' + r.harmonic_analysis.thd_voltage_pct + ' | ' + r.harmonic_analysis.thd_current_pct + ' | ' + r.harmonic_analysis.dominant_harmonic + 'th (' + r.harmonic_analysis.dominant_harmonic_pct + '%) | ' + (r.harmonic_analysis.resonance_risk ? 'YES' : 'No') + ' | ' + r.harmonic_analysis.compliance + ' |')
+  lines.push('- Filter Recommendation: ' + r.harmonic_analysis.filter_recommendation)
+  lines.push('')
+
+  lines.push('### Power Factor Analysis')
+  lines.push('| PF | Displacement PF | Distortion PF | Target | Compensation (kVAR) |')
+  lines.push('|----|-----------------|---------------|--------|---------------------|')
+  lines.push('| ' + r.power_factor_analysis.power_factor + ' | ' + r.power_factor_analysis.displacement_pf + ' | ' + r.power_factor_analysis.distortion_pf + ' | ' + r.power_factor_analysis.target_pf + ' | ' + r.power_factor_analysis.compensation_kvar_needed + ' |')
+  lines.push('')
+
+  lines.push('### Revenue Impact')
+  lines.push('- Estimated revenue impact of PQ issues: $' + r.revenue_impact_usd)
+  lines.push('')
+
+  lines.push('### Recommendations')
+  for (const rec of r.recommendations) {
+    lines.push('- ' + rec)
   }
-  lines.push('')
-  if (r.violations.length > 0) {
-    lines.push('### Violations')
-    for (const v of r.violations) lines.push('- [VIOLATION] ' + v)
-    lines.push('')
-  }
-  lines.push('### Mitigation Recommendations')
-  for (const m of r.mitigation_recommendations) lines.push('- ' + m)
   lines.push('')
   lines.push('---')
-  lines.push('_' + DISCLAIMER + '_')
+  lines.push('*Disclaimer: ' + DISCLAIMER + '*')
   return lines.join('\n')
 }
 
-function formatMicrogridIslandingReport(r: MicrogridIslandingResult): string {
+function formatEnergyStorageReport(r: EnergyStorageResult): string {
   const lines: string[] = []
-  lines.push('## Microgrid Islanding Control Report')
+  lines.push('## Energy Storage Optimizer Report')
   lines.push('')
-  lines.push('**Microgrid:** ' + r.microgrid_id + ' | **Status:** ' + r.islanding_status)
+  lines.push('Project: ' + r.project_id + ' | Capacity: ' + r.optimal_capacity_mwh + ' MWh | Power: ' + r.optimal_power_mw + ' MW')
+  lines.push('Grid Benefit: ' + r.grid_benefit_score + '/100 | Payback: ' + r.economic_analysis.payback_period_years + ' years | NPV: $' + r.economic_analysis.net_present_value_usd)
   lines.push('')
-  lines.push('### Island Characteristics')
-  lines.push('| Metric | Value |')
-  lines.push('|--------|-------|')
-  lines.push('| Stable Island Possible | ' + (r.stable_island_possible ? 'YES' : 'NO') + ' |')
-  lines.push('| Power Balance | ' + r.power_balance_mw + ' MW |')
-  lines.push('| Frequency Stability | ' + r.frequency_stability_hz.toFixed(3) + ' Hz |')
-  lines.push('| Voltage Stability | ' + r.voltage_stability_pct.toFixed(1) + '% |')
-  lines.push('| Critical Load Served | ' + r.critical_load_served_pct + '% |')
-  lines.push('')
-  lines.push('### Control Actions')
-  lines.push('| Priority | Action | Device | Setpoint | Response (ms) |')
-  lines.push('|----------|--------|--------|----------|----------------|')
-  for (const a of r.actions) {
-    lines.push('| ' + a.priority + ' | ' + a.action + ' | ' + a.device + ' | ' + a.setpoint + ' | ' + a.response_time_ms + ' |')
+
+  lines.push('### Storage Dispatch Schedule')
+  lines.push('| Hour | Action | Power (MW) | SOC (%) | Service | Revenue ($) |')
+  lines.push('|------|--------|-----------|---------|---------|------------|')
+  for (const s of r.storage_schedule) {
+    lines.push('| ' + s.hour + ' | ' + s.action + ' | ' + s.power_mw + ' | ' + s.soc_pct + ' | ' + s.service + ' | ' + s.revenue_usd + ' |')
   }
   lines.push('')
-  lines.push('### Reconnection Readiness')
-  lines.push('- ' + r.reconnection_readiness)
+
+  lines.push('### Economic Analysis')
+  lines.push('| Annual Revenue | Annual O&M | Net Benefit | Capital Cost | Payback (yr) | NPV | IRR (%) | LCOS ($/MWh) | ')
+  lines.push('|-----------------|-----------|-------------|-------------|-------------|-----|---------|-------------|')
+  lines.push('| $' + r.economic_analysis.annual_revenue_usd + ' | $' + r.economic_analysis.annual_om_cost_usd + ' | $' + r.economic_analysis.net_annual_benefit_usd + ' | $' + r.economic_analysis.capital_cost_usd + ' | ' + r.economic_analysis.payback_period_years + ' years | $' + r.economic_analysis.net_present_value_usd + ' | ' + r.economic_analysis.internal_rate_of_return_pct + '% | $' + r.economic_analysis.levelized_cost_per_mwh + ' |')
   lines.push('')
+
+  lines.push('### Degradation Profile')
+  lines.push('- Annual fade: ' + r.degradation_profile.annual_capacity_fade_pct + '% | Cycles/year: ' + r.degradation_profile.cycles_per_year)
+  lines.push('- Expected life: ' + r.degradation_profile.expected_life_years + ' years | Replacement year: ' + r.degradation_profile.replacement_year)
+  lines.push('')
+
+  lines.push('### Service Revenue Breakdown')
+  lines.push('| Service | Annual Revenue ($) | Utilization (%) |')
+  lines.push('|---------|-------------------|----------------|')
+  for (const s of r.services_revenue_breakdown) {
+    lines.push('| ' + s.service + ' | $' + s.annual_revenue_usd + ' | ' + s.utilization_pct + '% |')
+  }
+  lines.push('')
+
   lines.push('### Recommendations')
-  for (const rec of r.recommendations) lines.push('- ' + rec)
+  for (const rec of r.recommendations) {
+    lines.push('- ' + rec)
+  }
   lines.push('')
   lines.push('---')
-  lines.push('_' + DISCLAIMER + '_')
+  lines.push('*Disclaimer: ' + DISCLAIMER + '*')
   return lines.join('\n')
 }
 
-function formatStorageSizingReport(r: StorageSizingResult): string {
+function formatUtilityBillReport(r: UtilityBillResult): string {
   const lines: string[] = []
-  lines.push('## Energy Storage Sizing Report')
+  lines.push('## Utility Bill Analyzer Report')
   lines.push('')
-  lines.push('**Application:** ' + r.application + ' | **Technology:** ' + r.recommended_technology.name)
+  lines.push('Account: ' + r.account_id + ' | YoY Change: ' + r.current_bill_analysis.year_over_year_change_pct + '% | Utility Burden: ' + r.current_bill_analysis.utility_burden_pct + '%')
+  lines.push('Annual Potential Savings: $' + r.total_potential_savings_usd + ' (' + r.total_potential_savings_pct + '%) | CO2 Footprint: ' + r.co2_footprint_t + ' tonnes')
   lines.push('')
-  lines.push('### Technology Specifications')
-  lines.push('| Parameter | Value |')
-  lines.push('|-----------|-------|')
-  lines.push('| Chemistry | ' + r.recommended_technology.name + ' |')
-  lines.push('| Energy Density | ' + r.recommended_technology.energy_density_wh_per_kg + ' Wh/kg |')
-  lines.push('| Cycle Life | ' + r.recommended_technology.cycle_life.toLocaleString() + ' cycles |')
-  lines.push('| Round-trip Efficiency | ' + r.recommended_technology.round_trip_efficiency + '% |')
-  lines.push('| Response Time | ' + r.recommended_technology.response_time_ms + ' ms |')
-  lines.push('| CAPEX | $' + r.recommended_technology.capex_usd_per_kwh + '/kWh |')
+
+  lines.push('### Current Bill Analysis')
+  lines.push('| Effective Rate ($/kWh) | Cost/SqFt | YoY Change (%) | Trend |')
+  lines.push('|----------------------|----------|----------------|-------|')
+  lines.push('| $' + r.current_bill_analysis.current_effective_rate_per_kwh + ' | $' + r.current_bill_analysis.cost_per_sqft_usd + ' | ' + r.current_bill_analysis.year_over_year_change_pct + '% | ' + r.benchmark_comparison + ' |')
   lines.push('')
-  lines.push('### Sizing Results')
-  lines.push('| Parameter | Value |')
-  lines.push('|-----------|-------|')
-  lines.push('| Power Rating | ' + r.sized_capacity.power_mw + ' MW |')
-  lines.push('| Energy Capacity | ' + r.sized_capacity.energy_mwh + ' MWh |')
-  lines.push('| Duration | ' + r.sized_capacity.duration_hours + ' hours |')
-  lines.push('| Usable Energy | ' + r.sized_capacity.usable_energy_mwh + ' MWh |')
+
+  lines.push('### Rate Comparisons')
+  lines.push('| Rate Schedule | Est. Annual Cost | Annual Savings | Savings (%) | DR | Net Meter |')
+  lines.push('|--------------|------------------|---------------|------------|-----|----------|')
+  for (const rc of r.rate_comparisons) {
+    lines.push('| ' + rc.rate_schedule + ' | $' + rc.estimated_annual_cost_usd + ' | $' + rc.annual_savings_usd + ' | ' + rc.savings_pct + '% | ' + (rc.demand_response_compatible ? 'Y' : 'N') + ' | ' + (rc.net_metering_compatible ? 'Y' : 'N') + ' |')
+  }
   lines.push('')
-  lines.push('### Cost Estimate')
-  lines.push('| Component | Cost |')
-  lines.push('|-----------|------|')
-  lines.push('| Energy System (cells + BMS) | $' + r.cost_estimate.energy_system_cost.toLocaleString() + ' |')
-  lines.push('| Power System (PCS + transformer) | $' + r.cost_estimate.power_system_cost.toLocaleString() + ' |')
-  lines.push('| Balance of Plant | $' + r.cost_estimate.balance_of_plant.toLocaleString() + ' |')
-  lines.push('| **Total CAPEX** | **$' + r.cost_estimate.total_capex.toLocaleString() + '** |')
-  lines.push('| Annual OPEX | $' + r.cost_estimate.annual_opex.toLocaleString() + ' |')
-  lines.push('| LCOE | $' + r.cost_estimate.lcoe_usd_per_mwh + '/MWh |')
+
+  lines.push('### Savings Opportunities')
+  lines.push('| Measure | Annual Savings ($) | Cost ($) | Payback (yr) | CO2 (t) | Priority |')
+  lines.push('|---------|--------------------|----------|-------------|---------|----------|')
+  for (const so of r.savings_opportunities) {
+    lines.push('| ' + so.measure + ' | $' + so.annual_savings_usd + ' | $' + so.implementation_cost_usd + ' | ' + so.payback_years + ' | ' + so.co2_reduction_t + ' | ' + so.priority + ' |')
+  }
   lines.push('')
-  lines.push('### Performance Metrics')
-  lines.push('| Metric | Value |')
-  lines.push('|--------|-------|')
-  lines.push('| Expected Cycles/Year | ' + r.performance_metrics.expected_cycles_per_year + ' |')
-  lines.push('| Annual Throughput | ' + r.performance_metrics.annual_throughput_mwh.toLocaleString() + ' MWh |')
-  lines.push('| Availability | ' + r.performance_metrics.availability_pct + '% |')
-  lines.push('| SOH Retention (10yr) | ' + r.performance_metrics.soh_retention_10yr + '% |')
+
+  lines.push('### Billing Anomalies')
+  for (const err of r.billing_errors_detected) {
+    lines.push('- ' + err)
+  }
   lines.push('')
-  lines.push('### Financial Metrics')
-  lines.push('| Metric | Value |')
-  lines.push('|--------|-------|')
-  lines.push('| Payback Period | ' + r.financial_metrics.payback_years + ' years |')
-  lines.push('| IRR | ' + r.financial_metrics.irr_pct + '% |')
-  lines.push('| NPV (10yr) | $' + r.financial_metrics.npv_10yr.toLocaleString() + ' |')
-  lines.push('| Annual Revenue | $' + r.financial_metrics.annual_revenue.toLocaleString() + ' |')
-  lines.push('')
+
   lines.push('### Recommendations')
-  for (const rec of r.recommendations) lines.push('- ' + rec)
+  for (const rec of r.recommendations) {
+    lines.push('- ' + rec)
+  }
   lines.push('')
   lines.push('---')
-  lines.push('_' + DISCLAIMER + '_')
+  lines.push('*Disclaimer: ' + DISCLAIMER + '*')
   return lines.join('\n')
 }
 
@@ -1273,190 +1673,150 @@ function formatStorageSizingReport(r: StorageSizingResult): string {
 export function apply(ctx: Context) {
   const tools = ctx.tools
 
-  // Tool 1: Grid Demand Forecaster
+  // Tool 1: Grid Optimization Engine
   tools.register(defineTool({
-    name: 'grid_demand_forecaster',
-    description: 'Forecasts electricity demand across multiple time horizons using historical load data, temperature/humidity weather scenarios. Produces hourly demand predictions with peak/low bounds, confidence intervals, risk levels, load factor analysis, and grid stress assessment.',
+    name: 'grid_optimization_engine',
+    description: 'Power flow optimization, loss minimization, and Volt/VAR control for distribution and transmission grids | Grid optimization with convergence analysis and voltage profile management.',
     parameters: {
       input_data: {
-        type: 'string' as const,
+        type: 'string',
         required: true,
-        description: 'JSON: { historical_load_mw (number[]), forecast_horizon_hours (int), temperature_c (number[]), humidity_pct (number[]), grid_region (string), season (spring/summer/autumn/winter), special_event (optional string) }'
+        description: 'JSON: grid_id, topology{buses,branches,generators,loads}, voltage_kv, total_load_mw, total_generation_mw, renewable_generation_mw, loss_target_pct, var_devices, tap_changers, optimization_objective (loss_min|voltage_profile|reactive_power|multi_objective)'
       }
     },
-    output: {
-      schema: { type: 'string' as const },
-      render: (_args: any, value: any) => [{ type: 'text' as const, text: value }]
-    },
+    output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
     async execute(args: { input_data: string }) {
-      const input: GridDemandInput = JSON.parse(args.input_data)
-      const rng = new SeededRandom(SeededRandom.hashStr(args.input_data))
-      const result = analyzeGridDemand(input, rng)
-      return formatGridDemandReport(result)
+      const input: GridOptimizationInput = JSON.parse(args.input_data)
+      return formatGridOptimizationReport(analyzeGridOptimization(input))
     }
   }))
 
-  // Tool 2: Renewable Integration Optimizer
+  // Tool 2: Demand Forecasting Modeler
   tools.register(defineTool({
-    name: 'renewable_integration_optimizer',
-    description: 'Optimize renewable energy (solar and wind) integration into the power grid. Assesses grid flexibility, calculates curtailment, recommends storage sizing and demand response strategies, and evaluates grid stability for high renewable penetration scenarios.',
+    name: 'demand_forecasting_modeler',
+    description: 'Multi-horizon demand forecasting with weather scenarios, day-type analysis, and peak-valley assessment | Demand forecasting based on historical load, temperature, humidity, and calendar effects.',
     parameters: {
       input_data: {
-        type: 'string' as const,
+        type: 'string',
         required: true,
-        description: 'JSON: { solar_capacity_mw (number), wind_capacity_mw (number), current_grid_load_mw (number), grid_flexibility (low/medium/high), storage_mwh (number), curtailment_pct (number), interconnection_capacity_mw (number) }'
+        description: 'JSON: region_id, forecast_horizon_hours, historical_load_mw[], temperature_c, humidity_pct, day_type (weekday|weekend|holiday), season (spring|summer|autumn|winter), special_event?, industrial_pct, commercial_pct, residential_pct'
       }
     },
-    output: {
-      schema: { type: 'string' as const },
-      render: (_args: any, value: any) => [{ type: 'text' as const, text: value }]
+    output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
+    async execute(args: { input_data: string }) {
+      const input: DemandForecastInput = JSON.parse(args.input_data)
+      return formatDemandForecastReport(analyzeDemandForecast(input))
+    }
+  }))
+
+  // Tool 3: Renewable Integration Planner
+  tools.register(defineTool({
+    name: 'renewable_integration_planner',
+    description: 'Renewable grid integration planning, curtailment reduction strategies, and storage sizing | Solar/wind integration with hosting capacity analysis and multi-constraint evaluation.',
+    parameters: {
+      input_data: {
+        type: 'string',
+        required: true,
+        description: 'JSON: project_id, solar_capacity_mw, wind_capacity_mw, current_renewable_mw, grid_capacity_mw, interconnection_limit_mw, storage_existing_mwh, storage_proposed_mwh, curtailment_target_pct, grid_flexibility (low|medium|high), technology (solar_pv|wind_onshore|wind_offshore|hybrid|csp)'
+      }
     },
+    output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
     async execute(args: { input_data: string }) {
       const input: RenewableIntegrationInput = JSON.parse(args.input_data)
-      const rng = new SeededRandom(SeededRandom.hashStr(args.input_data))
-      const result = analyzeRenewableIntegration(input, rng)
-      return formatRenewableIntegrationReport(result)
+      return formatRenewableIntegrationReport(analyzeRenewableIntegration(input))
     }
   }))
 
-  // Tool 3: Energy Trading Strategy
+  // Tool 4: Energy Trading Advisor
   tools.register(defineTool({
-    name: 'energy_trading_strategy',
-    description: 'Develop comprehensive energy trading strategies for day-ahead and real-time electricity markets. Generates buy/sell recommendations, position sizing, risk analytics (VaR, Sharpe ratio), hedging strategies, and market outlook assessments.',
+    name: 'energy_trading_advisor',
+    description: 'Energy market trading signals, price forecasting, portfolio risk analytics, and REC/carbon management | Energy trading advisory with VaR, CVaR, and multi-market optimization.',
     parameters: {
       input_data: {
-        type: 'string' as const,
+        type: 'string',
         required: true,
-        description: 'JSON: { market (string), delivery_date (string), current_portfolio_mwh (number), forecast_demand_mwh (number), price_forecast (number[]), risk_appetite (conservative/moderate/aggressive), carbon_price (number), renewable_certificate_price (number), regulation_requirement_pct (number) }'
+        description: 'JSON: market_id, participant_id, trading_date, market_type (day_ahead|real_time|forward|ancillary|capacity), portfolio_position_mwh, generation_capacity_mw, marginal_cost_per_mwh, price_forecast_per_mwh[], price_volatility_pct, risk_tolerance (conservative|moderate|aggressive), credit_limit_usd, renewable_certificates, carbon_allowance_t'
       }
     },
-    output: {
-      schema: { type: 'string' as const },
-      render: (_args: any, value: any) => [{ type: 'text' as const, text: value }]
-    },
+    output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
     async execute(args: { input_data: string }) {
       const input: EnergyTradingInput = JSON.parse(args.input_data)
-      const rng = new SeededRandom(SeededRandom.hashStr(args.input_data))
-      const result = analyzeEnergyTrading(input, rng)
-      return formatEnergyTradingReport(result)
+      return formatEnergyTradingReport(analyzeEnergyTrading(input))
     }
   }))
 
-  // Tool 4: Battery Management Scheduler
+  // Tool 5: Outage Management Coordinator
   tools.register(defineTool({
-    name: 'battery_management_scheduler',
-    description: 'Optimizes battery charge/discharge schedules for grid services (frequency response, peak shaving, load shifting, arbitrage). Maximizes revenue while managing degradation costs and cycle life constraints.',
+    name: 'outage_management_coordinator',
+    description: 'Outage detection, fault isolation, crew dispatch, and restoration planning with reliability index calculation | Outage management with SAIFI/SAIDI/CAIDI impact assessment.',
     parameters: {
       input_data: {
-        type: 'string' as const,
+        type: 'string',
         required: true,
-        description: 'JSON: { battery_capacity_mwh (number), current_soc_pct (number), charge_rate_mw (number), discharge_rate_mw (number), efficiency_pct (number), cycle_limit (int), current_cycles (int), electricity_prices (number[]), grid_services (string[]), operating_date (string) }'
+        description: 'JSON: outage_id, grid_segment_id, fault_type (equipment_failure|weather|vegetation|animal|vehicle|unknown), fault_location{lat,lon}, affected_customers, detection_time, crew_available, weather_conditions, priority_customers[], backup_feeders[], scada_status (online|degraded|offline)'
       }
     },
-    output: {
-      schema: { type: 'string' as const },
-      render: (_args: any, value: any) => [{ type: 'text' as const, text: value }]
-    },
+    output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
     async execute(args: { input_data: string }) {
-      const input: BatterySchedulerInput = JSON.parse(args.input_data)
-      const rng = new SeededRandom(SeededRandom.hashStr(args.input_data))
-      const result = analyzeBatteryScheduler(input, rng)
-      return formatBatterySchedulerReport(result)
+      const input: OutageManagementInput = JSON.parse(args.input_data)
+      return formatOutageManagementReport(analyzeOutageManagement(input))
     }
   }))
 
-  // Tool 5: Carbon Capture Optimizer
+  // Tool 6: Power Quality Analyzer
   tools.register(defineTool({
-    name: 'carbon_capture_optimizer',
-    description: 'Optimizes carbon capture and storage (CCS) system operations for power plants. Evaluates capture rates, parasitic loads, solvent performance, compliance status, and identifies optimization opportunities with cost-benefit analysis.',
+    name: 'power_quality_analyzer',
+    description: 'Power quality assessment including voltage analysis, harmonic THD, flicker, power factor, and multi-standard compliance | Power quality analysis per IEEE 519, EN 50160, GB/T 12325, IEC 61000.',
     parameters: {
       input_data: {
-        type: 'string' as const,
+        type: 'string',
         required: true,
-        description: 'JSON: { plant_type (coal/gas/biomass/waste), fuel_input_mw (number), capture_rate_target_pct (number), co2_captured_tons (number), co2_emitted_tons (number), electricity_parasitic_pct (number), solvent_type (string), regeneration_energy_gj_per_ton (number), co2_storage_capacity_tons (number), carbon_price (number) }'
+        description: 'JSON: monitoring_point_id, voltage_level_kv, measurements{voltage_l1/l2/l3_v, current_l1/l2/l3_a, active_power_kw, reactive_power_kvar, frequency_hz}, harmonic_data{h3,h5,h7,h9,h11,h13}_pct, flicker_pst, flicker_plt, standard (ieee_519|en_50160|gb_t_12325|iec_61000)'
       }
     },
-    output: {
-      schema: { type: 'string' as const },
-      render: (_args: any, value: any) => [{ type: 'text' as const, text: value }]
-    },
-    async execute(args: { input_data: string }) {
-      const input: CarbonCaptureInput = JSON.parse(args.input_data)
-      const rng = new SeededRandom(SeededRandom.hashStr(args.input_data))
-      const result = analyzeCarbonCapture(input, rng)
-      return formatCarbonCaptureReport(result)
-    }
-  }))
-
-  // Tool 6: Power Quality Monitor
-  tools.register(defineTool({
-    name: 'power_quality_monitor',
-    description: 'Comprehensive power quality analysis including voltage THD, harmonic spectrum, voltage unbalance, flicker severity, and power factor. Assesses compliance per IEEE 519-2022 / IEC 61000-3-6 and recommends mitigation measures.',
-    parameters: {
-      input_data: {
-        type: 'string' as const,
-        required: true,
-        description: 'JSON: { voltage_kv (number), frequency_hz (number), thd_voltage_pct (number), thd_current_pct (number), voltage_unbalance_pct (number), flicker_pst (number), harmonic_spectrum (number[]), power_factor (number), load_type (industrial/commercial/residential/mixed), measurement_duration_hours (number) }'
-      }
-    },
-    output: {
-      schema: { type: 'string' as const },
-      render: (_args: any, value: any) => [{ type: 'text' as const, text: value }]
-    },
+    output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
     async execute(args: { input_data: string }) {
       const input: PowerQualityInput = JSON.parse(args.input_data)
-      const rng = new SeededRandom(SeededRandom.hashStr(args.input_data))
-      const result = analyzePowerQuality(input, rng)
-      return formatPowerQualityReport(result)
+      return formatPowerQualityReport(analyzePowerQuality(input))
     }
   }))
 
-  // Tool 7: Microgrid Islanding Controller
+  // Tool 7: Energy Storage Optimizer
   tools.register(defineTool({
-    name: 'microgrid_islanding_controller',
-    description: 'Controls microgrid islanding operations including PCC breaker management, load shedding, generation control, frequency/voltage regulation, and reconnection sequencing. Assesses island stability and critical load serving capability.',
+    name: 'energy_storage_optimizer',
+    description: 'Battery storage sizing, charge/discharge optimization, economic analysis, and service stacking revenue | Energy storage optimization with NPV, IRR, LCOS, and degradation modeling.',
     parameters: {
       input_data: {
-        type: 'string' as const,
+        type: 'string',
         required: true,
-        description: 'JSON: { microgrid_id (string), main_grid_frequency_hz (number), main_grid_voltage_kv (number), microgrid_generation_mw (number), microgrid_load_mw (number), pcc_breaker_status (closed/open), islanding_detected (boolean), distributed_resources: [{ type, capacity_mw, status }], critical_load_mw (number), transfer_time_ms (number) }'
+        description: 'JSON: project_id, storage_technology (lithium_ion|flow_battery|compressed_air|pumped_hydro|flywheel|hydrogen), capacity_mwh, power_rating_mw, round_trip_efficiency_pct, cycle_life, dod_limit_pct, services[], electricity_prices[{hour,price_per_mwh}], demand_charge_per_kw, grid_service_market_prices{frequency_regulation,spinning_reserve,capacity}, capital_cost_per_kwh, om_cost_per_kwh_year'
       }
     },
-    output: {
-      schema: { type: 'string' as const },
-      render: (_args: any, value: any) => [{ type: 'text' as const, text: value }]
-    },
+    output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
     async execute(args: { input_data: string }) {
-      const input: MicrogridIslandingInput = JSON.parse(args.input_data)
-      const rng = new SeededRandom(SeededRandom.hashStr(args.input_data))
-      const result = analyzeMicrogridIslanding(input, rng)
-      return formatMicrogridIslandingReport(result)
+      const input: EnergyStorageInput = JSON.parse(args.input_data)
+      return formatEnergyStorageReport(analyzeEnergyStorage(input))
     }
   }))
 
-  // Tool 8: Energy Storage Sizing
+  // Tool 8: Utility Bill Analyzer
   tools.register(defineTool({
-    name: 'energy_storage_sizing',
-    description: 'Sizes battery energy storage systems (BESS) for grid applications including peak shaving, load shifting, renewable firming, frequency regulation. Recommends optimal technology (Li-ion, flow, CAES, pumped hydro), calculates CAPEX/OPEX, LCOE, financial metrics (IRR, NPV, payback).',
+    name: 'utility_bill_analyzer',
+    description: 'Utility bill analysis, rate schedule comparison, savings opportunity identification, and billing anomaly detection | Utility bill analysis with benchmarking, savings measures, and CO2 footprint.',
     parameters: {
       input_data: {
-        type: 'string' as const,
+        type: 'string',
         required: true,
-        description: 'JSON: { application (peak_shaving/load_shifting/renewable_firming/frequency_regulation/backup_power), peak_load_mw (number), daily_energy_mwh (number), renewable_capacity_mw (number), required_duration_hours (number), target_availability_pct (number), grid_connection_mw (number), capital_budget (number), electricity_price (number) }'
+        description: 'JSON: account_id, utility_name, facility_type (commercial|industrial|residential|municipal|data_center), billing_period_months, consumption_kwh, demand_kw, peak_demand_kw, off_peak_demand_kw, current_rate_schedule, energy_charges, demand_charges, fixed_charges, taxes_and_fees, total_bill_usd, power_factor_penalty, time_of_use{peak,off_peak,shoulder}_pct, alternative_rate_schedules[]'
       }
     },
-    output: {
-      schema: { type: 'string' as const },
-      render: (_args: any, value: any) => [{ type: 'text' as const, text: value }]
-    },
+    output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
     async execute(args: { input_data: string }) {
-      const input: StorageSizingInput = JSON.parse(args.input_data)
-      const rng = new SeededRandom(SeededRandom.hashStr(args.input_data))
-      const result = analyzeStorageSizing(input, rng)
-      return formatStorageSizingReport(result)
+      const input: UtilityBillInput = JSON.parse(args.input_data)
+      return formatUtilityBillReport(analyzeUtilityBill(input))
     }
   }))
 
-  console.log('[dsh-tool-energygrid] Loaded v' + VERSION + ' - Smart Grid & Energy Management with 8 tools')
-  console.log('  Tools: grid_demand_forecaster, renewable_integration_optimizer, energy_trading_strategy, battery_management_scheduler, carbon_capture_optimizer, power_quality_monitor, microgrid_islanding_controller, energy_storage_sizing')
+  console.log('[dsh-tool-energygrid] Loaded v' + VERSION + ' -- Energy Grid & Utilities, 8 tools active')
+  console.log('  Tools: grid_optimization_engine, demand_forecasting_modeler, renewable_integration_planner, energy_trading_advisor, outage_management_coordinator, power_quality_analyzer, energy_storage_optimizer, utility_bill_analyzer')
 }

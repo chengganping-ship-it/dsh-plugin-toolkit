@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Pharmaceutical & Drug Discovery AI Agent v0.1.0
+# Clinical trial design, drug interaction, regulatory submission, pharmacovigilance
+
+- id: dsh-tool-pharmaai
+  name: dsh-tool-pharmaai
+  version: 0.1.0
+  description: Pharmaceutical AI - clinical trial design, drug interaction checking, regulatory submission, pharmacovigilance, drug target identification, formulation optimization, bioequivalence analysis, patent landscape mapping
+  author: chengganping-ship-it
+  tools:
+    - clinical_trial_designer
+    - drug_interaction_checker
+    - regulatory_submission_preparer
+    - pharmacovigilance_monitor
+    - drug_target_identification
+    - formulation_optimizer
+    - bioequivalence_analyzer
+    - patent_landscape_mapper

@@ -1,0 +1,14 @@
+- id: dsh-tool-privacyguard
+  name: dsh-tool-privacyguard
+  version: 0.1.0
+  description: Data Privacy and Protection Engine - GDPR compliance, data mapping, consent management, privacy impact assessments, data breach response
+  author: chengganping-ship-it
+  tools:
+    - gdpr_compliance_checker
+    - data_mapping_automator
+    - consent_management_engine
+    - privacy_impact_assessor
+    - data_breach_responder
+    - data_retention_optimizer
+    - cross_border_transfer_checker
+    - privacy_policy_analyzer
