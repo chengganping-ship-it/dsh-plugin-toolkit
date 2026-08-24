@@ -1,0 +1,14 @@
+- id: dsh-tool-knowledgelake
+  name: dsh-tool-knowledgelake
+  version: 0.1.0
+  description: 知识管理与个人知识图谱 - 笔记链接、知识图谱、间隔重复、研究综合、Zettelkasten系统
+  author: chengganping-ship-it
+  tools:
+    - note_linking_engine
+    - knowledge_graph_builder
+    - spaced_repetition_scheduler
+    - research_synthesizer
+    - zettelkasten_organizer
+    - content_summarizer
+    - concept_map_generator
+    - knowledge_gap_analyzer

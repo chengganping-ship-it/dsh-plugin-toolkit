@@ -1,1 +1,5 @@
-- name: dsh-tools
+name: agentorch
+version: 1.0.0
+description: Multi-Agent Orchestration & Coordination — agent task delegation, conflict resolution, consensus building, resource allocation, coalition formation
+author: chengganping-ship-it
+tools: 8

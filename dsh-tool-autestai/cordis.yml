@@ -1,0 +1,14 @@
+- id: dsh-tool-autestai
+  name: dsh-tool-autestai
+  version: 0.1.0
+  description: AI Testing & QA Automation - test generation, edge case identification, API testing, performance testing, visual regression
+  author: chengganping-ship-it
+  tools:
+    - test_case_generator
+    - edge_case_identifier
+    - api_test_automator
+    - performance_test_planner
+    - visual_regression_detector
+    - mutation_test_analyzer
+    - test_coverage_optimizer
+    - quality_gate_enforcer
