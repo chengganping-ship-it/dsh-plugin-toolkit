@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 291 plugins | 2328 tools (291 × 8)**
+**Total: 295 plugins | 2360 tools (295 × 8)**
 
 ---
 
@@ -618,6 +618,17 @@
 | 289 | dataflowai | DataOps与数据分析 | data_pipeline_monitor, data_quality_assessor, lineage_tracking_engine, catalog_management_system, anomaly_detection_dataops, schema_drift_detector, data_freshness_checker, cost_optimization_dataops |
 | 290 | disasterrecov | 灾难恢复与业务连续性 | dr_plan_generator, failover_test_coordinator, recovery_time_analyzer, resilience_score_calculator, business_impact_analyzer, backup_strategy_optimizer, incident_comm_planner, compliance_alignment_checker |
 | 291 | dmartai | 数字营销广告智能 | ad_creative_tester, attribution_analysis_engine, roas_optimizer, creative_fatigue_detector, cross_channel_analyzer, personalization_engine, landing_page_optimizer, audience_overlap_analyzer |
+
+---
+
+## Wave 61 — 数字钱包+AI可解释性+循环供应链+国防模拟 (4)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 292 | digiwallet | 数字钱包与支付 | wallet_security_analyst, payment_routing_optimizer, multi_currency_manager, fraud_detection_wallet, compliance_checker_payments, merchant_onboarding_assessor, transaction_analyzer, cross_border_payment_advisor |
+| 293 | xplainaagent | AI Agent可解释性与透明 | decision_tracing_engine, bias_detection_scanner, audit_log_generator, compliance_reporting_tool, explainability_score_calculator, fairness_metrics_evaluator, transparency_report_builder, risk_level_classifier |
+| 294 | circsupply | 循环供应链 | reverse_logistics_optimizer, remanufacturing_process_planner, waste_resource_matcher, lifecycle_assessment_tool, circularity_score_calculator, material_flow_analyzer, carbon_footprint_reducer, sustainable_packaging_advisor |
+| 295 | warfaresim | 国防模拟与兵棋推演 | scenario_modeler, threat_simulation_engine, strategic_planning_assessor, force_structure_analyzer, logistics_readiness_evaluator, cyber_warfare_simulator, intelligence_analysis_fusion, operational_risk_assessor |
 
 ---
 

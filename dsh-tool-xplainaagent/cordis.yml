@@ -1,0 +1,18 @@
+# DeepSeek Harness Plugin: AI Agent Explainability & Transparency v0.1.0
+# Decision tracing, bias detection, audit logging, compliance reporting,
+# explainability scoring, fairness metrics, transparency reporting, risk classification
+
+- id: dsh-tool-xplainaagent
+  name: dsh-tool-xplainaagent
+  version: 0.1.0
+  description: AI Agent Explainability & Transparency - Decision tracing engine with causal chain analysis, bias detection scanner across protected attributes, audit log generator with tamper-evident trails, compliance reporting for EU AI Act/NIST/ISO, explainability score calculation with multi-dimensional assessment, fairness metrics evaluation with statistical parity analysis, transparency report builder for stakeholder communication, and risk level classifier with governance recommendations
+  author: chengganping-ship-it
+  tools:
+    - decision_tracing_engine
+    - bias_detection_scanner
+    - audit_log_generator
+    - compliance_reporting_tool
+    - explainability_score_calculator
+    - fairness_metrics_evaluator
+    - transparency_report_builder
+    - risk_level_classifier

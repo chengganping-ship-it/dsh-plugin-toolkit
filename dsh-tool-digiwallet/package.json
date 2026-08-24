@@ -1,0 +1,35 @@
+{
+  "name": "dsh-tool-digiwallet",
+  "version": "0.1.0",
+  "description": "Digital Wallets & Payments for DSH - wallet security, payment routing, multi-currency support, fraud detection, compliance, merchant onboarding, transaction analysis, cross-border payments",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-plugin-toolkit.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "digital-wallet",
+    "payments",
+    "fintech",
+    "fraud-detection",
+    "compliance",
+    "multi-currency",
+    "cross-border",
+    "ai-agent"
+  ]
+}

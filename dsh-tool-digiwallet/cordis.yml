@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: Digital Wallets & Payments v0.1.0
+# AI-powered digital wallet security, payment routing, and compliance toolkit
+
+- id: dsh-tool-digiwallet
+  name: dsh-tool-digiwallet
+  version: 0.1.0
+  description: Digital Wallets & Payments - wallet security analysis, payment routing optimization, multi-currency management, fraud detection, compliance checking, merchant onboarding assessment, transaction analysis, cross-border payment advisory
+  author: chengganping-ship-it
+  tools:
+    - wallet_security_analyst
+    - payment_routing_optimizer
+    - multi_currency_manager
+    - fraud_detection_wallet
+    - compliance_checker_payments
+    - merchant_onboarding_assessor
+    - transaction_analyzer
+    - cross_border_payment_advisor

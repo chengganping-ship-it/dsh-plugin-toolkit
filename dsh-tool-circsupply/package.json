@@ -1,0 +1,19 @@
+{
+  "name": "dsh-tool-circsupply",
+  "version": "0.1.0",
+  "description": "Circular Supply Chain — reverse logistics, remanufacturing optimization, waste-to-resource matching, lifecycle assessment",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@deepseek-ai/dsh-tools": "latest",
+    "@deepseek-ai/cordis": "latest"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0"
+  },
+  "license": "MIT"
+}
