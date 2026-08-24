@@ -1,0 +1,14 @@
+- id: dsh-tool-cyberins
+  name: dsh-tool-cyberins
+  version: 1.0.0
+  description: Cyber Insurance & Risk Underwriting — risk exposure quantification, premium calculation, claims forensics, compliance mapping, incident response retainer, vendor risk assessment, breach cost estimation, policy wording optimization
+  author: chengganping-ship-it
+  tools:
+    - risk_exposure_quantifier
+    - premium_calculator
+    - claims_forensic_analyst
+    - compliance_coverage_mapper
+    - incident_response_retainer
+    - vendor_risk_assessor
+    - breach_cost_estimator
+    - policy_wording_optimizer

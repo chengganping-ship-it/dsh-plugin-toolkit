@@ -1,0 +1,14 @@
+- id: dsh-tool-cloudcost
+  name: dsh-tool-cloudcost
+  version: 0.1.0
+  description: Cloud Cost Optimization & FinOps - Reserved instance planner, waste detector, multi-cloud cost comparison, savings plan recommender, cost allocation tag auditor, billing anomaly detector, budget forecaster, rightsizing engine
+  author: chengganping-ship-it
+  tools:
+    - reserved_instance_planner
+    - waste_detector
+    - multicloud_cost_comparison
+    - savings_plan_recommender
+    - tag_audit_optimizer
+    - billing_anomaly_detector
+    - budget_forecaster
+    - rightsizing_engine

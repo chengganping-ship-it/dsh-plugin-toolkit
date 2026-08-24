@@ -1,0 +1,473 @@
+- id: dsh-tool-agritech
+  name: dsh-tool-agritech
+  version: 0.1.0
+  description: 农业科技与精准农业 - 作物产量预测、土壤健康分析、灌溉优化、病虫害检测、无人机巡田、温室气候控制、收获时机优化、农场财务规划
+  author: chengganping-ship-it
+  dsh:
+    category: AgriTech
+    tags:
+      - agriculture
+      - precision
+      - drone
+      - greenhouse
+  tools:
+    - crop_yield_predictor
+    - soil_health_analyzer
+    - irrigation_optimizer
+    - pest_disease_detector
+    - drone_crop_scout
+    - greenhouse_climate_controller
+    - harvest_timing_optimizer
+    - farm_financial_planner
+  inputSchema:
+    crop_yield_predictor:
+      type: object
+      properties:
+        crop_type:
+          type: string
+          description: 作物类型 (wheat|corn|rice|soybean|cotton|potato|tomato)
+        field_area_ha:
+          type: number
+          description: 田地面积（公顷）
+        soil_type:
+          type: string
+          description: 土壤类型 (clay|loam|silt|sand|peat)
+        rainfall_mm:
+          type: number
+          description: 生长季降雨量（mm）
+        avg_temperature_c:
+          type: number
+          description: 平均温度（摄氏度）
+        fertilizer_kg_ha:
+          type: number
+          description: 施肥量（kg/ha）
+        seed_variety:
+          type: string
+          description: 种子品种名称
+    soil_health_analyzer:
+      type: object
+      properties:
+        ph_level:
+          type: number
+          description: 土壤pH值 (0-14)
+        organic_matter_pct:
+          type: number
+          description: 有机质含量百分比
+        nitrogen_mg_kg:
+          type: number
+          description: 氮含量（mg/kg）
+        phosphorus_mg_kg:
+          type: number
+          description: 磷含量（mg/kg）
+        potassium_mg_kg:
+          type: number
+          description: 钾含量（mg/kg）
+        soil_moisture_pct:
+          type: number
+          description: 土壤含水量百分比
+        sampling_depth_cm:
+          type: number
+          description: 采样深度（cm）
+    irrigation_optimizer:
+      type: object
+      properties:
+        crop_type:
+          type: string
+          description: 作物类型
+        growth_stage:
+          type: string
+          description: 生长阶段 (seedling|vegetative|flowering|fruiting|maturity)
+        soil_moisture_pct:
+          type: number
+          description: 当前土壤含水量百分比
+        et0_mm_day:
+          type: number
+          description: 参考蒸散发量（mm/day）
+        rainfall_forecast_mm:
+          type: number
+          description: 预报降雨量（mm）
+        field_area_ha:
+          type: number
+          description: 田地面积（公顷）
+        irrigation_method:
+          type: string
+          description: 灌溉方式 (drip|sprinkler|furrow|center_pivot)
+    pest_disease_detector:
+      type: object
+      properties:
+        crop_type:
+          type: string
+          description: 作物类型
+        leaf_image_features:
+          type: string
+          description: 叶片图像特征描述或编码
+        symptom_description:
+          type: string
+          description: 症状描述
+        humidity_pct:
+          type: number
+          description: 环境湿度百分比
+        temperature_c:
+          type: number
+          description: 环境温度（摄氏度）
+        growth_stage:
+          type: string
+          description: 生长阶段
+    drone_crop_scout:
+      type: object
+      properties:
+        field_area_ha:
+          type: number
+          description: 田地面积（公顷）
+        flight_altitude_m:
+          type: number
+          description: 飞行高度（m）
+        crop_type:
+          type: string
+          description: 作物类型
+        growth_stage:
+          type: string
+          description: 生长阶段
+        ndvi_min:
+          type: number
+          description: 最小NDVI值
+        ndvi_max:
+          type: number
+          description: 最大NDVI值
+    greenhouse_climate_controller:
+      type: object
+      properties:
+        greenhouse_area_m2:
+          type: number
+          description: 温室面积（m2）
+        current_temp_c:
+          type: number
+          description: 当前温度（摄氏度）
+        current_humidity_pct:
+          type: number
+          description: 当前湿度百分比
+        target_temp_c:
+          type: number
+          description: 目标温度（摄氏度）
+        target_humidity_pct:
+          type: number
+          description: 目标湿度百分比
+        outside_temp_c:
+          type: number
+          description: 外部温度（摄氏度）
+        light_intensity_lux:
+          type: number
+          description: 光照强度（lux）
+        co2_ppm:
+          type: number
+          description: CO2浓度（ppm）
+    harvest_timing_optimizer:
+      type: object
+      properties:
+        crop_type:
+          type: string
+          description: 作物类型
+        brix_degrees:
+          type: number
+          description: 糖度（Brix）
+        moisture_content_pct:
+          type: number
+          description: 含水量百分比
+        days_after_planting:
+          type: number
+          description: 种植后天数
+        weather_forecast:
+          type: string
+          description: 天气预报 (sunny|cloudy|rainy|stormy)
+        grain_hardness:
+          type: number
+          description: 谷物硬度指数
+    farm_financial_planner:
+      type: object
+      properties:
+        total_area_ha:
+          type: number
+          description: 总面积（公顷）
+        crop_type:
+          type: string
+          description: 作物类型
+        seed_cost_ha:
+          type: number
+          description: 种子成本（元/ha）
+        fertilizer_cost_ha:
+          type: number
+          description: 肥料成本（元/ha）
+        pesticide_cost_ha:
+          type: number
+          description: 农药成本（元/ha）
+        labor_cost_ha:
+          type: number
+          description: 人工成本（元/ha）
+        machinery_cost_ha:
+          type: number
+          description: 机械成本（元/ha）
+        expected_yield_t_ha:
+          type: number
+          description: 预期产量（t/ha）
+        market_price_per_ton:
+          type: number
+          description: 市场价格（元/吨）
+  outputSchema:
+    crop_yield_predictor:
+      type: object
+      properties:
+        predicted_yield_t_ha:
+          type: number
+        yield_confidence_pct:
+          type: number
+        biomass_estimate_t_ha:
+          type: number
+        water_use_efficiency:
+          type: number
+        nitrogen_use_efficiency:
+          type: number
+        limiting_factor:
+          type: string
+        recommendation:
+          type: string
+    soil_health_analyzer:
+      type: object
+      properties:
+        overall_score:
+          type: number
+        ph_rating:
+          type: string
+        organic_matter_rating:
+          type: string
+        nitrogen_rating:
+          type: string
+        phosphorus_rating:
+          type: string
+        potassium_rating:
+          type: string
+        improvement_recommendations:
+          type: string
+    irrigation_optimizer:
+      type: object
+      properties:
+        recommended_water_mm:
+          type: number
+        irrigation_frequency_days:
+          type: number
+        water_savings_pct:
+          type: number
+        energy_cost_ha:
+          type: number
+        schedule_recommendation:
+          type: string
+        soil_moisture_target_pct:
+          type: number
+    pest_disease_detector:
+      type: object
+      properties:
+        detected_pest_disease:
+          type: string
+        severity_pct:
+          type: number
+        affected_area_pct:
+          type: number
+        risk_level:
+          type: string
+        treatment_recommendation:
+          type: string
+        prevention_measures:
+          type: string
+    drone_crop_scout:
+      type: object
+      properties:
+        avg_ndvi:
+          type: number
+        ndvi_variance:
+          type: number
+        stressed_area_pct:
+          type: number
+        vegetation_coverage_pct:
+          type: number
+        anomaly_zones:
+          type: number
+        scout_report:
+          type: string
+    greenhouse_climate_controller:
+      type: object
+      properties:
+        heating_cooling_action:
+          type: string
+        ventilation_action:
+          type: string
+        shading_action:
+          type: string
+        co2_injection_needed:
+          type: boolean
+        dli_mol_m2_day:
+          type: number
+        energy_consumption_kwh:
+          type: number
+        estimated_cost_per_day:
+          type: number
+    harvest_timing_optimizer:
+      type: object
+      properties:
+        harvest_readiness_pct:
+          type: number
+        optimal_harvest_date:
+          type: string
+        quality_grade:
+          type: string
+        expected_moisture_pct:
+          type: number
+        sugar_content_brix:
+          type: number
+        storage_life_days:
+          type: number
+    farm_financial_planner:
+      type: object
+      properties:
+        total_cost_ha:
+          type: number
+        total_revenue_ha:
+          type: number
+        net_profit_ha:
+          type: number
+        profit_margin_pct:
+          type: number
+        break_even_yield_t_ha:
+          type: number
+        roi_pct:
+          type: number
+  examples:
+    crop_yield_predictor:
+      - input:
+          crop_type: wheat
+          field_area_ha: 50
+          soil_type: loam
+          rainfall_mm: 450
+          avg_temperature_c: 18
+          fertilizer_kg_ha: 120
+          seed_variety: WinterStar-7
+        output:
+          predicted_yield_t_ha: 6.8
+          yield_confidence_pct: 87.3
+          biomass_estimate_t_ha: 14.2
+          water_use_efficiency: 15.1
+          nitrogen_use_efficiency: 56.7
+          limiting_factor: rainfall
+          recommendation: 建议增加灌溉补充，拔节期追施尿素20kg/ha可提升产量约0.5t/ha
+    soil_health_analyzer:
+      - input:
+          ph_level: 6.2
+          organic_matter_pct: 3.8
+          nitrogen_mg_kg: 45
+          phosphorus_mg_kg: 28
+          potassium_mg_kg: 180
+          soil_moisture_pct: 22
+          sampling_depth_cm: 20
+        output:
+          overall_score: 78.5
+          ph_rating: 适宜
+          organic_matter_rating: 良好
+          nitrogen_rating: 中等
+          phosphorus_rating: 丰富
+          potassium_rating: 丰富
+          improvement_recommendations: 建议增施有机肥提升氮含量，pH值理想无需调整
+    irrigation_optimizer:
+      - input:
+          crop_type: corn
+          growth_stage: flowering
+          soil_moisture_pct: 45
+          et0_mm_day: 6.2
+          rainfall_forecast_mm: 15
+          field_area_ha: 30
+          irrigation_method: drip
+        output:
+          recommended_water_mm: 38.5
+          irrigation_frequency_days: 3
+          water_savings_pct: 22.4
+          energy_cost_ha: 45.8
+          schedule_recommendation: 建议分2次灌溉，每次19.3mm，间隔3天
+          soil_moisture_target_pct: 65
+    pest_disease_detector:
+      - input:
+          crop_type: rice
+          leaf_image_features: brown_lesions_spread_from_tip
+          symptom_description: 叶片尖端褐色条斑，逐渐向基部扩展
+          humidity_pct: 85
+          temperature_c: 26
+          growth_stage: tillering
+        output:
+          detected_pest_disease: 稻瘟病 (Magnaporthe oryzae)
+          severity_pct: 34.7
+          affected_area_pct: 18.2
+          risk_level: 高
+          treatment_recommendation: 立即喷施三环唑或稻瘟灵，7天后再施一次
+          prevention_measures: 避免偏施氮肥，保持田间通风透光，选用抗病品种
+    drone_crop_scout:
+      - input:
+          field_area_ha: 80
+          flight_altitude_m: 120
+          crop_type: corn
+          growth_stage: vegetative
+          ndvi_min: 0.35
+          ndvi_max: 0.89
+        output:
+          avg_ndvi: 0.72
+          ndvi_variance: 0.08
+          stressed_area_pct: 12.5
+          vegetation_coverage_pct: 91.3
+          anomaly_zones: 4
+          scout_report: 田块整体长势良好，东北角发现4处疑似胁迫区域建议实地核查
+    greenhouse_climate_controller:
+      - input:
+          greenhouse_area_m2: 2000
+          current_temp_c: 28.5
+          current_humidity_pct: 75
+          target_temp_c: 24
+          target_humidity_pct: 65
+          outside_temp_c: 32
+          light_intensity_lux: 65000
+          co2_ppm: 380
+        output:
+          heating_cooling_action: 启动湿帘风机降温系统
+          ventilation_action: 开启顶窗通风60%
+          shading_action: 展开外遮阳网50%
+          co2_injection_needed: true
+          dli_mol_m2_day: 28.5
+          energy_consumption_kwh: 145.2
+          estimated_cost_per_day: 286.4
+    harvest_timing_optimizer:
+      - input:
+          crop_type: wheat
+          brix_degrees: 13.5
+          moisture_content_pct: 14.2
+          days_after_planting: 115
+          weather_forecast: sunny
+          grain_hardness: 72
+        output:
+          harvest_readiness_pct: 92.5
+          optimal_harvest_date: 2025-06-18
+          quality_grade: 一等
+          expected_moisture_pct: 13.8
+          sugar_content_brix: 13.8
+          storage_life_days: 365
+    farm_financial_planner:
+      - input:
+          total_area_ha: 100
+          crop_type: corn
+          seed_cost_ha: 1200
+          fertilizer_cost_ha: 2800
+          pesticide_cost_ha: 800
+          labor_cost_ha: 1500
+          machinery_cost_ha: 2000
+          expected_yield_t_ha: 9.5
+          market_price_per_ton: 2200
+        output:
+          total_cost_ha: 8300
+          total_revenue_ha: 20900
+          net_profit_ha: 12600
+          profit_margin_pct: 60.3
+          break_even_yield_t_ha: 3.77
+          roi_pct: 151.8

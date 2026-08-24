@@ -1,0 +1,30 @@
+id: dsh-tool-neurolink
+name: dsh-tool-neurolink
+version: 1.0.0
+description: >
+  Brain-Computer Interface & Neural Engineering plugin: signal processing pipeline,
+  spike sorting config, BCI decoder calibration, neural implant safety check,
+  neurofeedback protocol designer, cognitive state classifier, brain mapping planner,
+  and ethical review generator for human augmentation.
+author: chengganping-ship-it
+category: Neural Engineering
+tags:
+  - bci
+  - neural
+  - spike-sorting
+  - neurofeedback
+  - brain-mapping
+  - eeg
+  - neuroethics
+  - implant
+tools:
+  - signal_processing_pipeline
+  - spike_sorting_config
+  - bci_decoder_calibrator
+  - neural_implant_safety
+  - neurofeedback_protocol_designer
+  - cognitive_state_classifier
+  - brain_mapping_planner
+  - neuroethics_reviewer
+entries:
+  - path: src/index.ts

@@ -1,0 +1,12 @@
+{
+  "name": "dsh-tool-cyberins",
+  "version": "1.0.0",
+  "description": "Cyber Insurance & Risk Underwriting — risk exposure quantification, premium calculation, claims forensics, compliance mapping, incident response retainer, vendor risk assessment, breach cost estimation, policy wording optimization (dsh-tool-cyberins)",
+  "main": "src/index.ts",
+  "dsh.category": "Cyber Insurance",
+  "scripts": { "build": "tsc", "dev": "tsc --watch", "typecheck": "tsc --noEmit" },
+  "dependencies": { "@deepseek-ai/cordis": "^4.0.1", "@deepseek-ai/dsh-tools": "^0.0.1-rc.1" },
+  "devDependencies": { "typescript": "^5.0.0" },
+  "keywords": ["dsh","deepseek-harness","cyber-insurance","risk-underwriting","claims-forensics","breach-cost","compliance","plugin"],
+  "license": "MIT"
+}

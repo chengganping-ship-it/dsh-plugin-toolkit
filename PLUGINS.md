@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 345 plugins | 2760 tools (345 × 8)**
+**Total: 350 plugins | 2800 tools (350 × 8)**
 
 ---
 
@@ -756,6 +756,18 @@
 | 343 | voiceai | 语音AI与实时翻译 | asr_pipeline_config, speaker_identifier, emotion_detector, tts_voice_cloner, realtime_translator, voice_command_nlg, audio_enhancer, conversation_ai_orchestrator |
 | 344 | logiprint | 3D打印与增材制造 | print_orientation_optimizer, support_structure_designer, print_cost_estimator, material_selector_am, topology_optimizer, post_processing_workflow, quality_inspection_planner, print_farm_manager |
 | 345 | privacyeng | 隐私工程与联邦学习 | dp_budget_allocator, fl_architect_designer, data_anonymization_engineer, privacy_impact_assessor, consent_management_config, smpc_setup_planner, gdpr_compliance_checker, synthetic_data_generator |
+
+---
+
+## Wave 73 — 农业科技+网络保险+脑机接口+云成本+法律文档 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 346 | agritech | 农业科技与精准农业 | crop_yield_predictor, soil_health_analyzer, irrigation_optimizer, pest_disease_detector, drone_crop_scout, greenhouse_climate_controller, harvest_timing_optimizer, farm_financial_planner |
+| 347 | cyberins | 网络安全保险与风控 | risk_exposure_quantifier, premium_calculator, claims_forensic_analyst, compliance_coverage_mapper, incident_response_retainer, vendor_risk_assessor, breach_cost_estimator, policy_wording_optimizer |
+| 348 | neurolink | 脑机接口与神经工程 | signal_processing_pipeline, spike_sorting_config, bci_decoder_calibrator, neural_implant_safety, neurofeedback_protocol_designer, cognitive_state_classifier, brain_mapping_planner, neuroethics_reviewer |
+| 349 | cloudcost | 云成本优化与FinOps | reserved_instance_planner, waste_detector, multicloud_cost_comparison, savings_plan_recommender, tag_audit_optimizer, billing_anomaly_detector, budget_forecaster, rightsizing_engine |
+| 350 | legaldoc | 法律文档自动化与合同分析 | clause_extractor, obligation_tracker, renewal_risk_assessor, regulatory_deadline_monitor, esignature_workflow_designer, legal_hold_planner, template_generator, compliance_gap_reporter |
 
 ---
 

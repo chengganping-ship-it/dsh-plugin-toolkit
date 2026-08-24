@@ -1,0 +1,39 @@
+{
+  "name": "dsh-tool-agritech",
+  "version": "0.1.0",
+  "description": "Agricultural Technology & Precision Farming for DSH - crop yield prediction, soil health, irrigation optimization, pest detection, drone scouting, greenhouse control, harvest timing, farm finance",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dsh": {
+    "category": "AgriTech",
+    "tags": ["agriculture", "precision", "drone", "greenhouse"]
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-plugin-toolkit.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "agriculture",
+    "agritech",
+    "precision-farming",
+    "drone",
+    "greenhouse",
+    "irrigation",
+    "crop-yield",
+    "soil-health"
+  ]
+}
