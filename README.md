@@ -1,11 +1,11 @@
 # DSH Plugin Toolkit
 
-> **279 DeepSeek Harness plugins — 2232 AI agent tools**
+> **283 DeepSeek Harness plugins — 2264 AI agent tools**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek-Harness-orange.svg)](https://deepseek.com/)
-[![279 Plugins](https://img.shields.io/badge/Plugins-279-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
+[![283 Plugins](https://img.shields.io/badge/Plugins-283-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
 
 ---
 
@@ -154,6 +154,10 @@ A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.c
 | HR Tech & People Analytics | 1 | 8 |
 | Smart Agriculture | 1 | 8 |
 | Future of Work | 1 | 8 |
+| Venture Capital & Investment | 1 | 8 |
+| Social Media & Influencer | 1 | 8 |
+| Supply Chain Finance | 1 | 8 |
+| Space Tourism | 1 | 8 |
 
 ## Breakthrough Infrastructure (L1-L8)
 

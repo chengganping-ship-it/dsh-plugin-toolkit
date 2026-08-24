@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 279 plugins | 2232 tools (279 × 8)**
+**Total: 283 plugins | 2264 tools (283 × 8)**
 
 ---
 
@@ -585,6 +585,17 @@
 | 277 | hrtechai | HR科技与人才分析 | employee_engagement_analyst, performance_management_optimizer, workforce_planning_forecaster, compensation_benefits_analyst, talent_acquisition_scorer, retention_risk_predictor, learning_development_planner, dei_metrics_tracker |
 | 278 | smartagriai | 智慧农业与精准种植 | crop_health_monitor, irrigation_optimization_engine, pest_detection_classifier, yield_prediction_modeler, soil_health_analyzer, weather_risk_assessor, harvest_timing_optimizer, carbon_footprint_tracker |
 | 279 | futurework | 未来工作与远程协作 | virtual_team_health_analyzer, async_collaboration_optimizer, digital_workplace_scorer, remote_onboarding_automator, meeting_effectiveness_evaluator, knowledge_sharing_facilitator, culture_reinforcement_engine, flexibility_policy_advisor |
+
+---
+
+## Wave 58 — 风险投资+社交媒体+供应链金融+太空旅游 (4)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 280 | vcintel | 风险投资情报 | deal_sourcing_engine, due_diligence_checker, portfolio_health_monitor, market_mapping_analyst, startup_scoring_model, cap_table_analyzer, exit_strategy_advisor, investment_thesis_validator |
+| 281 | socialpulse | 社交媒体分析 | content_performance_predictor, audience_demographics_analyst, influencer_vetting_scorer, campaign_optimization_engine, hashtag_strategy_planner, sentiment_analysis_tracker, competitor_benchmark_analyzer, viral_content_analyzer |
+| 282 | scfinance | 供应链金融 | invoice_factoring_advisor, purchase_order_financier, trade_credit_insurer, letter_of_credit_manager, supply_chain_risk_assessor, dynamic_discounting_optimizer, reverse_factoring_coordinator, trade_finance_compliance_checker |
+| 283 | spacetourism | 太空旅游 | mission_planning_engine, passenger_screening_assessor, experience_designer, safety_compliance_checker, training_program_generator, pricing_strategy_optimizer, market_demand_forecaster, regulatory_approval_tracker |
 
 ---
 
