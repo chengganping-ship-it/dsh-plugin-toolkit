@@ -1,0 +1,14 @@
+- id: dsh-tool-rpaaia
+  name: dsh-tool-rpaaia
+  version: 0.1.0
+  description: "RPA + AI Automation Platform - process discovery, bot design, workflow automation, exception handling. 2026: RPA market $30B+; AI-powered RPA $15B+"
+  author: chengganping-ship-it
+  tools:
+    - process_discovery_engine
+    - bot_designer
+    - workflow_automator
+    - exception_handler
+    - screen_scraping_optimizer
+    - intelligent_document_processor
+    - bot_performance_monitor
+    - rpa_roi_calculator

@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 323 plugins | 2584 tools (323 × 8)**
+**Total: 327 plugins | 2616 tools (327 × 8)**
 
 ---
 
@@ -699,6 +699,17 @@
 | 321 | codepiloter | AI编程助手与DevTools | code_review_automator, test_generation, refactoring_advisor, documentation_auto_gen, bug_pattern_detector, performance_optimizer_code, security_vulnerability_scanner, api_design_reviewer |
 | 322 | bioinfai | 生物信息学与计算生物学 | sequence_alignment_analyzer, protein_folding_predictor, pathway_enrichment_analyzer, drug_target_interaction_predictor, gene_expression_profiler, variant_annotation_tool, metagenomics_classifier, structural_bioinformatics_calculator |
 | 323 | spacesitu | 太空态势感知 | space_weather_predictor, collision_avoidance_system, debris_tracking_analyzer, launch_window_optimizer, satellite_health_monitor, ground_station_scheduler, orbital_maneuver_planner, reentry_prediction_tracker |
+
+---
+
+## Wave 68 — Agent安全+气候风险+RPA+卫星通信 (4)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 324 | agentsec | AI Agent安全与防御 | prompt_injection_detector, jailbreak_prevention_engine, output_filter_controller, agent_sandbox_manager, tool_use_monitor, data_exfiltration_guard, privilege_escalation_detector, adversarial_robustness_scorer |
+| 325 | climaterisk | 气候风险与适应 | physical_risk_assessor, transition_risk_analyzer, tcfd_report_generator, adaptation_planner, scenario_analysis_climate, carbon_accounting_tool, climate_stress_tester, green_finance_eligibility_checker |
+| 326 | rpaaia | RPA+AI流程自动化 | process_discovery_engine, bot_designer, workflow_automator, exception_handler, screen_scraping_optimizer, intelligent_document_processor, bot_performance_monitor, rpa_roi_calculator |
+| 327 | satcomms | 卫星通信与地面系统 | link_budget_calculator, ground_station_planner, frequency_coordination_engine, interference_analyzer, modulation_optimizer, antenna_design_advisor, propagation_modeler, spectrum_management_tool |
 
 ---
 

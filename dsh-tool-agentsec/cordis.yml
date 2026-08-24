@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: AI Agent Security & Prompt Injection Defense v0.1.0
+# Prompt injection detection, jailbreak prevention, output filtering, agent sandboxing
+
+- id: dsh-tool-agentsec
+  name: dsh-tool-agentsec
+  version: 0.1.0
+  description: AI Agent Security & Prompt Injection Defense - Prompt injection detector, jailbreak prevention engine, output filter controller, agent sandbox manager, tool use monitor, data exfiltration guard, privilege escalation detector, and adversarial robustness scorer
+  author: dsh-plugins
+  tools:
+    - prompt_injection_detector
+    - jailbreak_prevention_engine
+    - output_filter_controller
+    - agent_sandbox_manager
+    - tool_use_monitor
+    - data_exfiltration_guard
+    - privilege_escalation_detector
+    - adversarial_robustness_scorer
