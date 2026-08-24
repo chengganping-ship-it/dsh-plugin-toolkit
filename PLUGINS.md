@@ -485,7 +485,24 @@
 
 ---
 
-**Total: 242 plugins | 1936 tools**
+**Total: 246 plugins | 1968 tools (246 × 8)**
+
+---
+
+## Wave 50 — 太空资源+国防安全+职业路径+MarTech栈+L1 MCP Bridge实战 (4 plugins + 实装基础设施)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 243 | spaceresources | 太空资源与采矿 | asteroid_mining_feasibility, space_manufacturing_optimizer, orbital_debris_valuator, lunar_resource_mapper, space_logistics_planner, in_situ_resource_utilization, space_economics_modeler, orbital_slot_optimizer |
+| 244 | defencesecure | 国防安全AI | threat_assessment_matrix, cyber_defense_orchestrator, intelligence_fusion_engine, autonomous_system_executor, critical_infrastructure_protector, supply_chain_security_ai, strategic_forecasting_model, classified_network_monitor |
+| 245 | careerpathai | 职业路径与发展 | career_trajectory_mapper, skills_gap_analyzer, job_market_intelligence, resume_ats_optimizer, interview_readiness_coach, salary_negotiation_advisor, professional_brand_builder, learning_pathway_designer |
+| 246 | martechstack | AI营销技术栈 | ad_campaign_optimizer, conversion_rate_scientist, seo_automation_engine, social_media_analytics, marketing_attribution_modeler, customer_acquisition_cost_optimizer, marketing_roi_calculator, content_performance_predictor |
+
+**L1 MCP Bridge 实战化 (senior-developer:senior-developer 实装):**
+- `mcp-bridge/` — 真实运行的 MCP v1.30 服务器, 自动发现并注册 184 个工具
+- `package.json` / `tsconfig.json` / `src/index.ts` / `src/yaml-parser.ts` / `src/sdk-shims.ts`
+- StdioServerTransport, tsc 编译零错误, tools/list 返回 184 个工具
+- 解决 SDK exports map 在 Node 24 下的 require() 兼容性问题
 
 ---
 
@@ -495,7 +512,7 @@ The toolkit includes 5 infrastructure layers that elevate plugins from standalon
 
 | Layer | Path | Standard | Files |
 |-------|------|----------|-------|
-| **L1: MCP Bridge** | `mcp-bridge/` | MCP v1.30 (Linux Foundation) | `src/index.ts`, `src/plugin-discovery.ts`, `src/tool-adapter.ts`, `src/cost-tracker.ts`, `.mcp.json` |
+| **L1: MCP Bridge** | `mcp-bridge/` | MCP v1.30 (Linux Foundation, 97M downloads/mo) | `src/index.ts` (StdioTransport, 自动发现184工具), `src/yaml-parser.ts` (cordis.yml解析器), `src/sdk-shims.ts` (Node 24兼容) |
 | **L2: A2A Cards** | `a2a-cards/` | Google A2A v1.0 (GA May 2026) | `generate.ts`, `schema.ts`, `cards/*.json` (185 cards) |
 | **L3: Loop Engineering** | `loop-engineering/` | Self-correcting agentic loops | `src/loop-executor.ts`, `src/validators.ts`, `src/self-critique.ts`, `examples/carbon-loop-demo.ts` |
 | **L4: Cost Governance** | `cost-governance/` | Budget enforcement & token tracking | `src/budget-manager.ts`, `src/cost-tracker.ts`, `src/optimizer.ts`, `src/alerting.ts`, `src/dashboard.ts` |

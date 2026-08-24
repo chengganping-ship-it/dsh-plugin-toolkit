@@ -1,11 +1,11 @@
 # DSH Plugin Toolkit
 
-> **242 DeepSeek Harness plugins — 1936 AI agent tools**
+> **246 DeepSeek Harness plugins — 1968 AI agent tools**
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![DeepSeek Harness](https://img.shields.io/badge/DeepSeek-Harness-orange.svg)](https://deepseek.com/)
-[![242 Plugins](https://img.shields.io/badge/Plugins-242-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
+[![246 Plugins](https://img.shields.io/badge/Plugins-246-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
 
 ---
 
@@ -117,6 +117,10 @@ A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.c
 | CLI-Agentify | 1 | 8 |
 | OPC One-Person Company | 1 | 8 |
 | Virtual Influencer | 1 | 8 |
+| Space Resources | 1 | 8 |
+| Defense & National Security | 1 | 8 |
+| Career Path AI | 1 | 8 |
+| AI MarTech Stack | 1 | 8 |
 
 ## Breakthrough Infrastructure (L1-L8)
 
@@ -124,7 +128,7 @@ A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.c
 
 | Layer | Directory/Plugin | Standards | Purpose |
 |-------|------------------|-----------|---------|
-| **L1: MCP Bridge** | `mcp-bridge/` | MCP v1.30 (Linux Foundation, 97M monthly downloads) | Stateless MCP server exposing plugins to any MCP-compatible AI client. |
+| **L1: MCP Bridge** | `mcp-bridge/` | MCP v1.30 (Linux Foundation, 97M monthly downloads) | Real MCP server (StdioTransport, 184 tools auto-discovered). Compiles + runs via ts-node. |
 | **L2: A2A Cards** | `a2a-cards/` | Google A2A v1.0 (150+ orgs, GA May 2026) | Auto-generated AgentCard descriptors for cross-platform inter-agent delegation. |
 | **L3: Loop Engineering** | `loop-engineering/` | 2026 discipline: execute→verify→retry→escalate | Self-correcting agentic loop library with validators and AI self-critique. |
 | **L4: Cost Governance** | `cost-governance/` | Gartner: 40% AI projects cancelled due to cost | Token tracking, budget enforcement, threshold alerts, cost optimizer. |

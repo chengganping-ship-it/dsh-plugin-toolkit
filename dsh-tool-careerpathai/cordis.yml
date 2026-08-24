@@ -1,0 +1,14 @@
+- id: dsh-tool-careerpathai
+  name: dsh-tool-careerpathai
+  version: 0.1.0
+  description: AI Career & Skills Development - career trajectory mapping, skills gap analysis, job market intelligence, resume ATS optimization, interview readiness, salary negotiation, professional brand building, learning pathway design
+  author: chengganping-ship-it
+  tools:
+    - career_trajectory_mapper
+    - skills_gap_analyzer
+    - job_market_intelligence
+    - resume_ats_optimizer
+    - interview_readiness_coach
+    - salary_negotiation_advisor
+    - professional_brand_builder
+    - learning_pathway_designer

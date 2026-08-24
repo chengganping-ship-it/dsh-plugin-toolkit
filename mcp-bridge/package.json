@@ -1,37 +1,25 @@
 {
   "name": "dsh-mcp-bridge",
   "version": "1.0.0",
-  "description": "Universal MCP Bridge exposing 186 DSH plugins (1488 AI agent tools) as MCP servers for Claude Desktop, Cursor, VSCode, Windsurf, and any MCP client.",
-  "type": "module",
+  "description": "L1 MCP Bridge exposing all dsh-tool-* plugins to any MCP-compatible AI client",
   "main": "src/index.js",
   "scripts": {
-    "start": "tsx src/index.ts",
-    "dev": "tsx watch src/index.ts",
-    "build": "tsc",
+    "start": "ts-node src/index.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.30.0",
-    "zod": "^4.0.0"
+    "@modelcontextprotocol/sdk": "^1.30.0"
   },
   "devDependencies": {
-    "tsx": "^4.0.0",
-    "typescript": "^5.9.0"
+    "typescript": "^5.9.0",
+    "ts-node": "^10.9.0",
+    "@types/node": "^22.0.0"
   },
   "keywords": [
     "mcp",
     "model-context-protocol",
     "dsh",
-    "deepseek-harness",
-    "ai-tools",
-    "bridge",
-    "claude-desktop",
-    "cursor",
-    "vscode"
+    "bridge"
   ],
-  "license": "MIT",
-  "dsh": {
-    "bundle": "cordis.yml"
-  },
-  "author": "chengganping-ship-it"
+  "license": "MIT"
 }

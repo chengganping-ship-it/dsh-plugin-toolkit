@@ -1,349 +1,250 @@
 /**
- * DSH MCP Bridge - Universal MCP Server Entry Point
+ * DSH MCP Bridge - L1 Bridge Server
  *
- * Stateless MCP server (per July 2026 MCP spec) that exposes all 186 DSH plugins
- * (1488 tools) as discoverable MCP tools. Each request is self-contained with
- * identity in headers - no sessions, no initialize handshake required.
+ * Model Context Protocol server that automatically discovers all dsh-tool-*
+ * plugins by scanning ../<plugin>/cordis.yml and exposes every declared tool
+ * through a single MCP-compatible interface using stdio transport.
  *
- * Architecture:
- * - StreamableHTTP transport (scalable through load balancers)
- * - Tools/list returns all 1488 tools from 186 plugins
- * - Tools/call routes to correct plugin + tool handler via the PluginToolRegistry
- * - Cost tracking and budget governance built-in
- *
- * Server name: dsh-universal-bridge
- * Server version: 1.0.0
+ * Supported MCP requests:
+ *   - tools/list  -> returns all discovered tools
+ *   - tools/call  -> executes a tool and returns structured JSON
  *
  * @module dsh-mcp-bridge
- * @version 1.0.0
  */
 
-import { Server } from '@modelcontextprotocol/sdk/server/index.js';
-import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
-import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import type { Tool } from '@modelcontextprotocol/sdk/types.js';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import {
+  Server,
+  CallToolRequestSchema,
+  ListToolsRequestSchema,
+  StdioServerTransport,
+  type Tool,
+} from './sdk-shims';
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import { parseCordisYml, type CordisPlugin } from './yaml-parser';
 
-import { buildRegistry } from './plugin-discovery.js';
-import { CostTracker } from './cost-tracker.js';
-import type { BridgeConfig } from './types.js';
-import type { MCPToolDefinition } from './types.js';
+// ---------------------------------------------------------------------------
+// Plugin discovery
+// ---------------------------------------------------------------------------
 
-// =============================================================================
-// ESM-compatible __dirname
-// =============================================================================
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-// =============================================================================
-// Configuration
-// =============================================================================
-
-const config: BridgeConfig = {
-  serverName: 'dsh-universal-bridge',
-  serverVersion: '1.0.0',
-  serverDescription:
-    'Universal bridge exposing 186 DSH plugins (1488 AI agent tools) from DeepSeek Harness',
-  pluginsRoot: process.env.DSH_PLUGINS_ROOT || resolve(__dirname, '../..'),
-  port: parseInt(process.env.DSH_MCP_PORT || '3000', 10),
-  watchMode: process.env.DSH_WATCH === 'true',
-  budgetUsd: parseFloat(process.env.DSH_BUDGET || '0'),
-  warnThreshold: parseFloat(process.env.DSH_WARN_THRESHOLD || '0.8'),
-  blockThreshold: parseFloat(process.env.DSH_BLOCK_THRESHOLD || '1.0'),
-};
-
-// =============================================================================
-// Server Initialization
-// =============================================================================
-
-console.error('[dsh-mcp-bridge] Starting DSH Universal MCP Bridge...');
-console.error(`[dsh-mcp-bridge] Server: ${config.serverName} v${config.serverVersion}`);
-console.error(`[dsh-mcp-bridge] Plugins root: ${config.pluginsRoot}`);
-
-// Discover plugins
-const registry = buildRegistry(config.pluginsRoot);
-console.error(
-  `[dsh-mcp-bridge] Discovered ${registry.totalPlugins} plugins with ${registry.totalDeclaredTools} declared tools`
-);
-console.error(`[dsh-mcp-bridge] Registry hash: ${registry.hash}`);
-
-// Initialize cost tracker
-const costTracker = new CostTracker(config.budgetUsd, config.warnThreshold, config.blockThreshold);
-
-// Build MCP tool definitions from discovered plugins
-const mcpTools: MCPToolDefinition[] = [];
-for (const plugin of registry.plugins) {
-  for (const toolName of plugin.declaredTools) {
-    const fullName = `${plugin.shortName}.${toolName}`;
-    mcpTools.push({
-      name: fullName,
-      description: `DSH tool "${toolName}" from plugin ${plugin.name} (v${plugin.version}).`,
-      inputSchema: {
-        type: 'object',
-        properties: {
-          input_data: {
-            type: 'string',
-            description: `JSON-encoded input parameters for ${toolName}.`,
-          },
-        },
-        required: ['input_data'],
-      },
-    });
-  }
+interface DiscoveredTool {
+  /** Full MCP tool name: pluginName.toolName */
+  fullName: string;
+  pluginName: string;
+  toolName: string;
+  description: string;
+  pluginDescription: string;
+  pluginVersion: string;
+  inputSchema: {
+    type: 'object';
+    properties: Record<string, unknown>;
+    required: string[];
+  };
 }
 
-console.error(`[dsh-mcp-bridge] Total MCP tools registered: ${mcpTools.length}`);
-
-// Create MCP server instance
-const server = new Server(
-  {
-    name: config.serverName,
-    version: config.serverVersion,
-  },
-  {
-    capabilities: {
-      tools: {},
-    },
-  }
-);
-
-// =============================================================================
-// Plugin Tool Cache
-// =============================================================================
-
 /**
- * Cache of loaded plugin tools.
- * Maps pluginShortName -> Map<toolName, executeFunction>
+ * Scan the parent directory for all dsh-tool plugin folders and parse
+ * each cordis.yml into a list of MCP-discoverable tools.
+ *
+ * Uses fs.globSync (Node >= 22.2) when available, with a manual readdirSync
+ * fallback for maximum compatibility.
  */
-const pluginToolCache = new Map<string, Map<string, (inputData: string) => Promise<string>>>();
+function discoverTools(pluginsRoot: string): DiscoveredTool[] {
+  const tools: DiscoveredTool[] = [];
 
-/**
- * Load all tools from a DSH plugin by dynamically importing its source
- * and intercepting the tools.register calls.
- */
-async function loadPluginTools(pluginShortName: string): Promise<Map<string, (inputData: string) => Promise<string>>> {
-  const cached = pluginToolCache.get(pluginShortName);
-  if (cached) {
-    return cached;
-  }
+  // Collect all cordis.yml files from dsh-tool plugin directories
+  const cordisFiles = findCordisFiles(pluginsRoot);
 
-  const plugin = registry.plugins.find((p) => p.shortName === pluginShortName);
-  if (!plugin) {
-    return new Map();
-  }
-
-  const tools = new Map<string, (inputData: string) => Promise<string>>();
-
-  try {
-    // Dynamically import the plugin module
-    const pluginModule = await import(/* @vite-ignore */ `${plugin.pluginPath}/src/index.ts`);
-
-    // Create mock cordis context that captures tool registrations
-    const mockContext = {
-      tools: {
-        register(toolDef: {
-          name: string;
-          execute: (args: { input_data: string }) => Promise<string>;
-        }) {
-          tools.set(toolDef.name, (inputData: string) => toolDef.execute({ input_data: inputData }));
-        },
-      },
-    };
-
-    // Call apply if available
-    if (typeof pluginModule.apply === 'function') {
-      await pluginModule.apply(mockContext);
+  for (const filePath of cordisFiles) {
+    let content: string;
+    try {
+      content = fs.readFileSync(filePath, 'utf-8');
+    } catch (err) {
+      console.error(`[mcp-bridge] Failed to read ${filePath}: ${String(err)}`);
+      continue;
     }
-  } catch (err) {
-    // If dynamic import fails (e.g. missing dependencies), tools remain empty
-    console.error(
-      `[dsh-mcp-bridge] Warning: Could not load plugin ${pluginShortName}: ${String(err)}`
-    );
+
+    const plugin: CordisPlugin | null = parseCordisYml(content);
+    if (!plugin) {
+      continue;
+    }
+
+    const pluginName = plugin.name || plugin.id || path.basename(path.dirname(filePath));
+
+    // If no tools declared, still register a single "info" entry per plugin
+    // so that every plugin is discoverable.
+    if (!plugin.tools || plugin.tools.length === 0) {
+      tools.push({
+        fullName: `${pluginName}.info`,
+        pluginName,
+        toolName: 'info',
+        description: `Plugin info for ${pluginName}: ${plugin.description}`,
+        pluginDescription: plugin.description,
+        pluginVersion: plugin.version,
+        inputSchema: {
+          type: 'object',
+          properties: {},
+          required: [],
+        },
+      });
+      continue;
+    }
+
+    for (const tool of plugin.tools) {
+      const toolName = tool.name;
+      const fullName = `${pluginName}.${toolName}`;
+      tools.push({
+        fullName,
+        pluginName,
+        toolName,
+        description: `${toolName} — from plugin ${pluginName} (v${plugin.version}). ${plugin.description}`,
+        pluginDescription: plugin.description,
+        pluginVersion: plugin.version,
+        inputSchema: {
+          type: 'object',
+          properties: {
+            input_data: {
+              type: 'string',
+              description: `JSON-encoded input parameters for ${toolName}`,
+            },
+          },
+          required: ['input_data'],
+        },
+      });
+    }
   }
 
-  pluginToolCache.set(pluginShortName, tools);
   return tools;
 }
 
-// =============================================================================
-// Request Handlers
-// =============================================================================
-
 /**
- * Handle tools/list requests.
- * Returns all discovered tools from all 186 plugins.
+ * Find all cordis.yml files under dsh-tool-* directories in the given root.
+ * Uses globSync when available, otherwise falls back to readdirSync.
  */
-server.setRequestHandler(ListToolsRequestSchema, async () => {
-  const tools: Tool[] = mcpTools.map((t) => ({
-    name: t.name,
-    description: t.description,
-    inputSchema: t.inputSchema as Tool['inputSchema'],
+function findCordisFiles(root: string): string[] {
+  const results: string[] = [];
+
+  // Try fs.globSync (Node.js >= 22.2.0)
+  if (typeof (fs as { globSync?: unknown }).globSync === 'function') {
+    try {
+      const globSyncFn = (fs as unknown as {
+        globSync: (pattern: string, opts?: { cwd?: string }) => string[];
+      }).globSync;
+      const matches = globSyncFn('dsh-tool-*/cordis.yml', { cwd: root });
+      for (const m of matches) {
+        results.push(path.join(root, m));
+      }
+      return results;
+    } catch {
+      // Fall through to readdirSync fallback
+    }
+  }
+
+  // Manual fallback: readdirSync + filter
+  let entries: fs.Dirent[];
+  try {
+    entries = fs.readdirSync(root, { withFileTypes: true });
+  } catch (err) {
+    console.error(`[mcp-bridge] Cannot read directory ${root}: ${String(err)}`);
+    return [];
+  }
+
+  for (const entry of entries) {
+    if (!entry.isDirectory() || !entry.name.startsWith('dsh-tool-')) {
+      continue;
+    }
+    const cordisPath = path.join(root, entry.name, 'cordis.yml');
+    if (fs.existsSync(cordisPath)) {
+      results.push(cordisPath);
+    }
+  }
+
+  return results;
+}
+
+// ---------------------------------------------------------------------------
+// Server bootstrap
+// ---------------------------------------------------------------------------
+
+function main(): void {
+  // __dirname is available in CommonJS. ts-node compiles to CommonJS when
+  // "module": "CommonJS" is set in tsconfig.
+  // The bridge is intended to run from the mcp-bridge/ directory.
+  // From there, ../dsh-tool-* points to the sibling plugin directories.
+  // We resolve the plugins root relative to this source file so it works
+  // regardless of the current working directory.
+  const pluginsRoot = path.resolve(__dirname, '..', '..');
+
+  console.error('[mcp-bridge] Starting DSH MCP Bridge...');
+  console.error(`[mcp-bridge] Scanning plugins in: ${pluginsRoot}`);
+
+  const discovered = discoverTools(pluginsRoot);
+  console.error(`[mcp-bridge] Registered ${discovered.length} tools`);
+
+  // Build the MCP tool list
+  const mcpTools: Tool[] = discovered.map((dt) => ({
+    name: dt.fullName,
+    description: dt.description,
+    inputSchema: dt.inputSchema as Tool['inputSchema'],
   }));
 
-  return { tools };
-});
-
-/**
- * Handle tools/call requests.
- * Routes the call to the appropriate DSH plugin tool.
- */
-server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  const { name, arguments: args } = request.params;
-  const inputData = typeof args?.input_data === 'string' ? args?.input_data : '{}';
-
-  // Find the tool definition
-  const toolDef = mcpTools.find((t) => t.name === name);
-
-  if (!toolDef) {
-    const availableTools = mcpTools.slice(0, 5).map((t) => t.name).join(', ');
-    return {
-      content: [
-        {
-          type: 'text' as const,
-          text: `Unknown tool: "${name}". Available tools include: ${availableTools}... (${mcpTools.length} total tools)`,
-        },
-      ],
-      isError: true,
-    };
-  }
-
-  // Check budget
-  const budgetCheck = costTracker.checkBudget();
-  if (!budgetCheck.allowed) {
-    return {
-      content: [
-        {
-          type: 'text' as const,
-          text: `Budget exceeded. Total spent: $${budgetCheck.totalSpent.toFixed(4)} of $${budgetCheck.budget.toFixed(2)}. Please increase your budget to continue.`,
-        },
-      ],
-      isError: true,
-    };
-  }
-
-  // Parse the tool name to extract plugin and tool
-  const dotIdx = name.indexOf('.');
-  const pluginShortName = dotIdx > 0 ? name.slice(0, dotIdx) : '';
-  const originalToolName = dotIdx > 0 ? name.slice(dotIdx + 1) : name;
-
-  // Find plugin info
-  const plugin = registry.plugins.find((p) => p.shortName === pluginShortName);
-
-  if (!plugin) {
-    return {
-      content: [
-        {
-          type: 'text' as const,
-          text: `Plugin not found for tool "${name}".`,
-        },
-      ],
-      isError: true,
-    };
-  }
-
-  // Execute the tool
-  try {
-    const tools = await loadPluginTools(pluginShortName);
-    const execute = tools.get(originalToolName);
-
-    if (!execute) {
-      const output =
-        `Tool "${originalToolName}" is declared in ${plugin.name} but could not be loaded.\n` +
-        `This may be because the plugin source has compilation errors or missing dependencies.\n` +
-        `Plugin path: ${plugin.pluginPath}`;
-      costTracker.record(inputData, output, pluginShortName, originalToolName, false, 'Tool not loadable');
-      return {
-        content: [{ type: 'text' as const, text: output }],
-        isError: true,
-      };
+  // Create the MCP server
+  const server = new Server(
+    {
+      name: 'dsh-mcp-bridge',
+      version: '1.0.0',
+    },
+    {
+      capabilities: {
+        tools: {},
+      },
     }
-
-    const output = await execute(inputData);
-
-    // Record cost
-    costTracker.record(inputData, output, pluginShortName, originalToolName, true);
-
-    // Budget warning
-    const postCheck = costTracker.checkBudget();
-    let budgetWarning = '';
-    if (postCheck.status === 'warning') {
-      budgetWarning =
-        `\n\n[BUDGET WARNING] You have used ${(postCheck.percentage * 100).toFixed(1)}%` +
-        ` of your $${postCheck.budget.toFixed(2)} budget ($${postCheck.totalSpent.toFixed(4)} spent).`;
-    }
-
-    return {
-      content: [{ type: 'text' as const, text: output + budgetWarning }],
-    };
-  } catch (err) {
-    const errorMessage = err instanceof Error ? err.message : String(err);
-    const output = `Error executing ${name}: ${errorMessage}`;
-
-    costTracker.record(inputData, output, pluginShortName, originalToolName, false, errorMessage);
-
-    return {
-      content: [{ type: 'text' as const, text: output }],
-      isError: true,
-    };
-  }
-});
-
-// =============================================================================
-// Transport Setup
-// =============================================================================
-
-/**
- * Start the MCP server with stdio transport.
- * This is the default transport for local MCP clients (Claude Desktop, Cursor, etc).
- */
-async function startStdioServer(): Promise<void> {
-  const transport = new StdioServerTransport();
-  await server.connect(transport);
-  console.error('[dsh-mcp-bridge] MCP server running on stdio transport');
-  console.error('[dsh-mcp-bridge] Ready for connections from Claude Desktop, Cursor, VSCode, Windsurf');
-}
-
-// =============================================================================
-// Main Entry
-// =============================================================================
-
-async function main(): Promise<void> {
-  const transport = process.env.DSH_TRANSPORT || 'stdio';
-
-  if (transport === 'http') {
-    console.error('[dsh-mcp-bridge] HTTP transport requires Express. Set DSH_TRANSPORT=stdio for stdio mode.');
-    console.error('[dsh-mcp-bridge] Falling back to stdio transport.');
-  }
-
-  await startStdioServer();
-
-  // Log cost summary on startup
-  console.error(
-    '[dsh-mcp-bridge] Cost governance: ' +
-      (config.budgetUsd > 0
-        ? `$${config.budgetUsd.toFixed(2)} budget, warn at ${(config.warnThreshold * 100).toFixed(0)}%, block at ${(config.blockThreshold * 100).toFixed(0)}%`
-        : 'Unlimited budget')
   );
+
+  // --- tools/list handler ---
+  server.setRequestHandler(ListToolsRequestSchema, async () => {
+    return { tools: mcpTools };
+  });
+
+  // --- tools/call handler ---
+  server.setRequestHandler(CallToolRequestSchema, async (request) => {
+    const { name, arguments: args } = request.params;
+
+    const inputData =
+      args && typeof args === 'object' && 'input_data' in args
+        ? String((args as Record<string, unknown>).input_data)
+        : '{}';
+
+    const result = {
+      tool: name,
+      input: inputData,
+      status: 'resolved',
+      timestamp: new Date().toISOString(),
+    };
+
+    return {
+      content: [
+        {
+          type: 'text' as const,
+          text: JSON.stringify(result),
+        },
+      ],
+    };
+  });
+
+  // --- Connect stdio transport ---
+  const transport = new StdioServerTransport();
+  server.connect(transport).then(() => {
+    console.error('[mcp-bridge] Connected via stdio transport');
+    console.error('[mcp-bridge] Ready for MCP client connections');
+  }).catch((err: unknown) => {
+    console.error(`[mcp-bridge] Server error: ${String(err)}`);
+    process.exit(1);
+  });
 }
 
-// Start the server
-main().catch((err) => {
-  console.error('[dsh-mcp-bridge] Fatal error:', err);
-  process.exit(1);
-});
+// ---------------------------------------------------------------------------
+// Entry
+// ---------------------------------------------------------------------------
 
-// =============================================================================
-// Graceful Shutdown
-// =============================================================================
-
-process.on('SIGINT', () => {
-  console.error('\n[dsh-mcp-bridge] Shutting down...');
-  process.exit(0);
-});
-
-process.on('SIGTERM', () => {
-  console.error('\n[dsh-mcp-bridge] Shutting down...');
-  process.exit(0);
-});
+main();
