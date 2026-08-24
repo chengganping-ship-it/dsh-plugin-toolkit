@@ -1,0 +1,10 @@
+{
+  "name": "dsh-tool-dronedelivery",
+  "version": "1.0.0",
+  "description": "Drone Delivery & UAM -- route optimization, vertiport planning, BVLOS operations",
+  "main": "src/index.ts",
+  "dsh": {
+    "category": "Urban Air Mobility",
+    "tags": ["drone", "delivery", "uam", "vertiport", "utm"]
+  }
+}

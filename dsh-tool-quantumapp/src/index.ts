@@ -1,21 +1,24 @@
 /**
- * DSH Quantum Computing Applications Plugin v0.1.0
- * 量子计算应用工具集 for DeepSeek Harness — 量子算法设计、纠错分析、电路优化、NISQ应用
+ * DSH Quantum Computing Applications Plugin v1.0.0
+ * Quantum Computing Applications toolkit for DeepSeek Harness.
  *
- * 2026年: 量子计算市场 $60B+; 量子软件市场 $5B+.
+ * 8 Tools:
+ *   1. quantum_circuit_designer        --- Quantum circuit construction and gate synthesis
+ *   2. vqe_configurator                --- Variational Quantum Eigensolver configuration
+ *   3. error_correction_mapper         --- Quantum error correction code mapping
+ *   4. quantum_optimizer               --- Quantum optimization problem encoding
+ *   5. qml_model_setup                 --- Quantum machine learning model architecture
+ *   6. quantum_safe_migration_planner  --- Post-quantum cryptographic migration planning
+ *   7. quantum_hardware_selector       --- Quantum hardware platform selection guide
+ *   8. nisq_algorithm_advisor          --- NISQ-era algorithm recommendation
  *
- * 工具清单:
- * 1. quantum_algorithm_designer  — 量子算法设计（Grover/Shor/QAOA/VQE/量子行走）
- * 2. error_correction_analyzer  — 量子纠错分析（表面码/稳定子码/拓扑码/逻辑错误率）
- * 3. quantum_circuit_optimizer    — 量子电路优化（门分解/路由/深度压缩/噪声感知）
- * 4. nisq_application_mapper     — NISQ应用映射（变分算法/量子化学/组合优化/量子ML）
- * 5. quantum_machine_learning_hybrid — 量子-经典混合ML（量子核方法/量子神经网络/迁移学习）
- * 6. quantum_cryptography_planner — 量子密码规划（QKD/后量子密码/量子安全协议）
- * 7. quantum_simulation_engineer — 量子仿真工程（哈密顿量模拟/开放系统/数字孪生）
- * 8. quantum_readiness_assessor  — 量子就绪评估（技术成熟度/投资路线图/人才缺口）
+ * Conventions:
+ *   - Seeded PRNG via mulberry32 (seed = hash of JSON.stringify(input)).
+ *   - Only single quotes in TypeScript source (no plain backticks).
+ *   - Each tool registers via ctx.tools.register(defineTool({ ... })).
+ *   - outputSchema with concrete fields documented.
  *
- * @module dsh-tool-quantumapp | @version 0.1.0 | @license MIT
- * @author chengganping-ship-it
+ * @module dsh-tool-quantumapp | @version 1.0.0 | @license MIT
  */
 
 import type { Context } from '@deepseek-ai/cordis'
@@ -24,1236 +27,1777 @@ import { defineTool } from '@deepseek-ai/dsh-tools'
 export const name = 'dsh-tool-quantumapp'
 export const inject = ['tools']
 
-const VERSION = '0.1.0'
+const VERSION = '1.0.0'
 
-// ==================== SECTION 1 — Seeded Random (mulberry32 PRNG) ====================
+// ======================== mulberry32 PRNG ========================
 
-class SeededRandom {
-  private state: number
-
-  constructor(seed: number) {
-    this.state = seed | 0
-  }
-
-  next(): number {
-    this.state |= 0
-    this.state = (this.state + 0x6d2b79f5) | 0
-    let t = Math.imul(this.state ^ (this.state >>> 15), 1 | this.state)
+function mulberry32(seedNum: number): () => number {
+  let s = seedNum | 0
+  return function () {
+    s = (s + 0x6d2b79f5) | 0
+    let t = Math.imul(s ^ (s >>> 15), 1 | s)
     t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296
   }
-
-  nextInt(min: number, max: number): number {
-    return Math.floor(this.next() * (max - min + 1)) + min
-  }
-
-  nextFloat(min: number, max: number): number {
-    return this.next() * (max - min) + min
-  }
-
-  pick<T>(arr: T[]): T {
-    return arr[this.nextInt(0, arr.length - 1)]
-  }
-
-  static seedFromString(str: string): number {
-    let hash = 0
-    for (let i = 0; i < str.length; i++) {
-      hash = ((hash << 5) - hash + str.charCodeAt(i)) | 0
-    }
-    return Math.abs(hash) || 1
-  }
 }
 
-// ==================== SECTION 2 — 类型定义 ====================
-
-// --- Tool 1: Quantum Algorithm Designer ---
-export interface AlgorithmDesignInput {
-  problem_type: 'search' | 'optimization' | 'factoring' | 'simulation' | 'machine_learning' | 'cryptography'
-  problem_size: number
-  constraints: {
-    max_qubits: number
-    max_depth: number
-    noise_tolerance: 'low' | 'medium' | 'high'
+function hashStringToInt(str: string): number {
+  let h = 2166136261
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i)
+    h = Math.imul(h, 16777619)
   }
-  target_speedup: 'quadratic' | 'exponential' | 'polynomial'
+  return Math.abs(h) || 1
 }
 
-export interface AlgorithmCandidate {
-  name: string
-  category: string
-  required_qubits: number
+function seededRng(input: unknown): () => number {
+  const json = JSON.stringify(input)
+  return mulberry32(hashStringToInt(json))
+}
+
+function randInt(rng: () => number, min: number, max: number): number {
+  return Math.floor(rng() * (max - min + 1)) + min
+}
+
+function randFloat(rng: () => number, min: number, max: number): number {
+  return rng() * (max - min) + min
+}
+
+function pickOne<T>(rng: () => number, arr: T[]): T {
+  return arr[Math.floor(rng() * arr.length)]
+}
+
+// ====================== Type Declarations ======================
+
+// Tool 1 --- quantum_circuit_designer
+export interface CircuitDesignInput {
+  algorithm: 'grover' | 'shor' | 'qft' | 'qaoa' | 'vqe' | 'bernstein' | 'quantum_walk'
+  qubit_count: number
+  optimization_level: 0 | 1 | 2 | 3
+  target_backend: 'superconducting' | 'trapped_ion' | 'photonic' | 'neutral_atom' | 'topological'
+  max_depth?: number
+  entanglement_pattern?: 'linear' | 'circular' | 'full' | 'star' | 'custom'
+}
+
+export interface CircuitLayer {
+  index: number
+  gate_type: string
+  target_qubits: number[]
+  parameters?: string
+  depth_contribution: number
+}
+
+export interface CircuitDesignResult {
+  circuit_id: string
+  algorithm: string
+  qubit_count: number
+  gate_count_total: number
   circuit_depth: number
-  expected_speedup: string
-  success_probability: number
-  suitability_score: number
+  single_qubit_gates: number
+  two_qubit_gates: number
+  t_gate_count: number
+  estimated_fidelity: number
+  backend_compatibility: string[]
+  layers: CircuitLayer[]
+  synthesis_notes: string[]
 }
 
-export interface AlgorithmDesignResult {
-  problem_type: string
-  candidates: AlgorithmCandidate[]
-  recommended: AlgorithmCandidate | null
-  resource_estimate: {
-    logical_qubits: number
-    physical_qubits: number
-    t_gate_count: number
-    estimated_runtime_seconds: number
-  }
-  design_notes: string[]
+// Tool 2 --- vqe_configurator
+export interface VqeConfigInput {
+  molecule: 'H2' | 'LiH' | 'H2O' | 'NH3' | 'CH4' | 'C2H4' | 'FeMoCo' | 'custom'
+  basis_set: 'sto-3g' | '6-31g' | 'cc-pvdz' | 'aug-cc-pvqz'
+  ansatz_type: 'UCCSD' | 'UCCD' | 'HardwareEfficient' | 'QAOA-inspired' | 'ADAPT-VQE'
+  optimizer: 'COBYLA' | 'L-BFGS-B' | 'SPSA' | 'Adam' | 'Nelder-Mead'
+  max_iterations: number
+  convergence_threshold: number
+  noise_model?: 'ideal' | 'depolarizing' | 'amplitude_damping' | 'real_device'
 }
 
-// --- Tool 2: Error Correction Analyzer ---
+export interface VqeConfigResult {
+  config_id: string
+  molecule: string
+  basis_set: string
+  active_orbitals: number
+  active_electrons: number
+  qubit_requirement: number
+  ansatz_type: string
+  variational_parameters: number
+  circuit_depth_per_iteration: number
+  optimizer: string
+  max_iterations: number
+  convergence_threshold: number
+  error_mitigation_recommended: string[]
+  energy_unit: string
+  expected_accuracy: number
+  convergence_behavior: string
+  resource_estimate_hours: number
+}
+
+// Tool 3 --- error_correction_mapper
 export interface ErrorCorrectionInput {
-  code_type: 'surface' | 'color' | 'topological' | 'stabilizer' | 'bosonic'
+  code_family: 'surface' | 'color' | 'toric' | 'steane' | 'shor' | 'bosonic_GKP' | 'ldpc'
   code_distance: number
   physical_error_rate: number
-  qubit_count: number
-  syndrome_extraction: 'shor' | 'steane' | 'flag' | 'single_shot'
-}
-
-export interface LogicalErrorMetric {
-  metric: string
-  value: number
-  unit: string
-  threshold_comparison: 'below' | 'at' | 'above'
+  logical_qubit_target: number
+  syndrome_method: 'shor' | 'steane' | 'flag' | 'single_shot'
 }
 
 export interface ErrorCorrectionResult {
-  code_type: string
+  mapping_id: string
+  code_family: string
   code_distance: number
   logical_error_rate: number
-  threshold_achieved: boolean
+  threshold_surpassed: boolean
   physical_qubits_per_logical: number
-  metrics: LogicalErrorMetric[]
-  syndrome_overhead: number
+  total_physical_qubits: number
+  syndrome_extraction_rounds: number
+  decoder_type: string
+  decoder_latency_ns: number
+  logical_fidelity_estimate: number
+  overhead_ratio: number
+  error_budget_breakdown: Record<string, number>
   recommendations: string[]
 }
 
-// --- Tool 3: Quantum Circuit Optimizer ---
-export interface CircuitOptimizationInput {
-  circuit_description: string
-  gate_count: number
-  depth: number
-  target_gateset: 'clifford_t' | 'universal' | 'native' | 'ion_trap'
-  optimization_target: 'depth' | 'gate_count' | 'fidelity' | 'connectivity'
-  qubit_connectivity: 'all_to_all' | 'linear' | 'grid' | 'heavy_hex'
+// Tool 4 --- quantum_optimizer
+export interface QuantumOptimizerInput {
+  problem_type: 'maxcut' | 'tsp' | 'portfolio' | 'scheduling' | 'sat' | 'knapsack' | 'vehicle_routing'
+  variable_count: number
+  constraint_count: number
+  hamiltonian_type: 'Ising' | 'QUBO' | 'PUBO'
+  algorithm: 'QAOA' | 'quantum_annealing' | 'VQE_opt' | 'Grover_adaptive'
+  penalty_weight?: number
+  mixer_type?: 'standard' | 'XY' | 'controlled_phase'
 }
 
-export interface OptimizationPass {
-  pass_name: string
-  gates_before: number
-  gates_after: number
-  depth_before: number
-  depth_after: number
-  improvement_pct: number
+export interface OptimizerEncoding {
+  variable_name: string
+  qubit_index: number
+  hamiltonian_coeff: number
+  constraint_applied: boolean
 }
 
-export interface CircuitOptimizationResult {
-  original_gates: number
-  optimized_gates: number
-  original_depth: number
-  optimized_depth: number
-  passes: OptimizationPass[]
-  total_fidelity_estimate: number
-  swap_overhead: number
-  optimization_summary: string
+export interface QuantumOptimizerResult {
+  encoding_id: string
+  problem_type: string
+  hamiltonian_type: string
+  qubits_required: number
+  terms_in_hamiltonian: number
+  p_qaoa_layers: number
+  classical_variables: number
+  penalty_weight_applied: number
+  ground_state_energy_estimate: number
+  approximation_ratio_expected: number
+  encoding_map: OptimizerEncoding[]
+  mixer_type: string
+  optimization_rounds_estimate: number
+  feasibility_notes: string[]
 }
 
-// --- Tool 4: NISQ Application Mapper ---
-export interface NISQApplicationInput {
-  domain: 'chemistry' | 'finance' | 'logistics' | 'materials' | 'pharma' | 'energy'
-  problem_complexity: 'small' | 'medium' | 'large'
-  available_qubits: number
-  circuit_depth_budget: number
-  error_mitigation: ('zne' | 'pec' | 'readout_correction' | 'dynamical_decoupling')[]
+// Tool 5 --- qml_model_setup
+export interface QmlModelInput {
+  task_type: 'classification' | 'regression' | 'generative' | 'reinforcement' | 'clustering'
+  feature_dimension: number
+  num_classes?: number
+  quantum_ansatz: 'amplitude_embedding' | 'angle_embedding' | 'IQP' | 'tensor_network' | '_data_reuploading'
+  measurement_basis: 'Z' | 'X' | 'Y' | 'bell' | 'full_tomography'
+  classical_postprocessing: 'none' | 'dense_128' | 'dense_256' | 'resnet_adapter' | 'lstm_adapter'
+  training_shots: number
+  noise_aware_training: boolean
 }
 
-export interface NISQMapping {
-  algorithm: string
+export interface QuantumLayerSpec {
+  layer_index: number
+  layer_type: 'encoding' | 'variational' | 'entanglement' | 'measurement'
+  qubits_used: number
+  parameter_count: number
+  unitary_description: string
+}
+
+export interface QmlModelResult {
+  model_id: string
+  task_type: string
+  quantum_ansatz: string
+  total_variational_params: number
+  circuit_depth: number
+  qubit_requirement: number
+  measurement_basis: string
+  expectation_value_method: string
+  layers: QuantumLayerSpec[]
+  classical_postprocessing: string
+  barren_plateau_risk: 'low' | 'medium' | 'high'
+  generalization_capacity: string
+  training_complexity: string
+  measurement_shots: number
+  noise_aware_training: boolean
+  observables: string[]
+}
+
+// Tool 6 --- quantum_safe_migration_planner
+export interface QuantumSafeMigrationInput {
+  current_crypto: ('RSA-2048' | 'RSA-4096' | 'ECC-P256' | 'ECC-P384' | 'AES-128' | 'AES-256' | 'SHA-256' | 'SHA-3')[]
+  infrastructure_type: 'web_pkca' | 'vpn' | 'iot' | 'blockchain' | 'cloud_hsm' | 'code_signing' | 'mixed'
+  compliance_requirements: ('FIPS-140-3' | 'NIST-PQC' | 'Common-Criteria' | 'GDPR' | 'PCI-DSS' | 'SOX')[]
+  migration_deadline_years: number
+  risk_tolerance: 'conservative' | 'moderate' | 'aggressive'
+  budget_priority: 'cost_driven' | 'security_driven' | 'balanced'
+}
+
+export interface CryptoMigrationItem {
+  current_scheme: string
+  replacement_scheme: string
+  migration_phase: 1 | 2 | 3 | 4
+  urgency: 'critical' | 'high' | 'medium' | 'low'
+  effort_estimate_person_months: number
+  quantum_threat_level: 'imminent' | 'near_term' | 'long_term'
+}
+
+export interface QuantumSafeMigrationResult {
+  plan_id: string
+  overall_risk_score: number
+  vulnerability_count: number
+  migration_items: CryptoMigrationItem[]
+  hybrid_transition_strategy: string
+  compliance_gaps: string[]
+  milestone_timeline: string[]
+  total_effort_person_months: number
+  recommended_priority_order: string[]
+  crypto_agility_framework: string
+}
+
+// Tool 7 --- quantum_hardware_selector
+export interface HardwareSelectionInput {
+  use_case: 'chemistry' | 'optimization' | 'ml' | 'simulation' | 'cryptography' | 'sensing'
+  required_logical_qubits: number
+  required_circuit_depth: number
+  min_gate_fidelity: number
+  max_coherence_time_us?: number
+  connectivity_requirement: 'nearest_neighbor' | 'all_to_all' | 'high_degree'
+  operational_constraints: ('cryogenic' | 'room_temp' | 'optical_table' | 'portable' | 'fiber_coupled')[]
+  budget_millions_usd: number
+}
+
+export interface HardwareCandidate {
+  platform: string
+  qubit_count: number
+  two_qubit_gate_fidelity: number
+  t1_coherence_us: number
+  gate_speed_ns: number
+  connectivity: string
+  maturity: 'production' | 'pilot' | 'research'
+  score: number
+}
+
+export interface QuantumHardwareResult {
+  selection_id: string
+  use_case: string
+  candidates: HardwareCandidate[]
+  top_candidate: string
+  score_breakdown: Record<string, number>
+  qubit_overhead_factor: number
+  effective_logical_qubits: number
+  estimated_system_cost_millions: number
+  infrastructure_requirements: string[]
+  roadmap_alignment: string
+  risk_factors: string[]
+}
+
+// Tool 8 --- nisq_algorithm_advisor
+export interface NisqAdvisorInput {
+  problem_category: 'quantum_chemistry' | 'combinatorial_opt' | 'linear_algebra' | 'sampling' | 'differential_eq' | 'machine_learning'
+  qubit_budget: number
+  depth_budget: number
+  error_mitigation_budget: 'none' | 'low' | 'medium' | 'high'
+  classical_compute_available: 'limited' | 'moderate' | 'abundant'
+  accuracy_target: number
+}
+
+export interface NisqAlgorithmCandidate {
+  algorithm_name: string
   qubit_requirement: number
   depth_requirement: number
-  classical_preprocessing: string
-  classical_postprocessing: string
-  expected_accuracy: number
-  feasibility: 'high' | 'medium' | 'low'
+  classical_components: string[]
+  error_mitigation_needed: string[]
+  suitability_score: number
+  expected_speedup: string
+  noise_sensitivity: 'low' | 'medium' | 'high'
 }
 
-export interface NISQApplicationResult {
-  domain: string
-  mappings: NISQMapping[]
-  best_mapping: NISQMapping | null
-  error_mitigation_impact: string
-  hardware_recommendation: string
-  timeline_estimate: string
+export interface NisqAdvisorResult {
+  advisory_id: string
+  problem_category: string
+  candidates: NisqAlgorithmCandidate[]
+  recommended_algorithm: string
+  feasibility_assessment: string
+  error_mitigation_strategy: string
+  hybrid_decomposition: string
+  resource_tradeoffs: string[]
+  accuracy_achievable: number
+  circuit_generation_platforms: string[]
+  key_references: string[]
 }
 
-// --- Tool 5: Quantum Machine Learning Hybrid ---
-export interface QMLHybridInput {
-  ml_task: 'classification' | 'regression' | 'generative' | 'reinforcement' | 'clustering'
-  data_dimension: number
-  model_architecture: 'quantum_kernel' | 'variational_circuit' | 'quantum_annealing' | 'hybrid_dqc'
-  classical_backbone: string
-  quantum_resource_budget: number
-}
+// ====================== Analysis Functions ======================
 
-export interface HybridLayer {
-  layer_name: string
-  layer_type: 'quantum' | 'classical' | 'interface'
-  parameters: number
-  output_dimension: number
-  entanglement_pattern: string
-}
+// Tool 1: Quantum Circuit Designer
+function analyzeCircuitDesign(input: CircuitDesignInput): CircuitDesignResult {
+  const rng = seededRng(input)
 
-export interface QMLHybridResult {
-  ml_task: string
-  architecture: string
-  layers: HybridLayer[]
-  total_parameters: number
-  quantum_advantage_estimate: string
-  training_complexity: string
-  convergence_guarantee: 'proven' | 'heuristic' | 'none'
-}
-
-// --- Tool 6: Quantum Cryptography Planner ---
-export interface CryptoPlannerInput {
-  security_level: 'standard' | 'high' | 'military' | 'long_term'
-  protocol_type: 'qkd' | 'pqc' | 'quantum_secure' | 'hybrid'
-  network_topology: 'point_to_point' | 'star' | 'mesh' | 'relay'
-  key_rate_requirement: number
-  threat_model: 'harvest_now' | 'side_channel' | 'quantum_attack' | 'insider'
-}
-
-export interface CryptoComponent {
-  component: string
-  technology: string
-  maturity: 'production' | 'pilot' | 'research'
-  security_bits: number
-  cost_estimate_usd: number
-}
-
-export interface CryptoPlannerResult {
-  protocol_type: string
-  security_level: string
-  components: CryptoComponent[]
-  effective_security_bits: number
-  key_rate_achievable: number
-  deployment_roadmap: string[]
-  risk_assessment: string
-}
-
-// --- Tool 7: Quantum Simulation Engineer ---
-export interface SimulationInput {
-  system_type: 'fermionic' | 'spin' | 'bosonic' | 'molecular' | 'lattice_gauge' | 'open_system'
-  system_size: number
-  simulation_method: 'trotter' | 'qubitization' | 'qpe' | 'variational' | 'qmc'
-  precision_target: number
-  time_evolution: boolean
-}
-
-export interface SimulationResource {
-  resource: string
-  value: number
-  unit: string
-  scaling: string
-}
-
-export interface SimulationResult {
-  system_type: string
-  method: string
-  resources: SimulationResource[]
-  trotter_steps: number
-  precision_achievable: number
-  classical_comparison_speedup: number
-  validation_checks: string[]
-}
-
-// --- Tool 8: Quantum Readiness Assessor ---
-export interface ReadinessInput {
-  organization_type: 'enterprise' | 'government' | 'academic' | 'startup' | 'financial'
-  current_quantum_exposure: 'none' | 'awareness' | 'experimenting' | 'early_adoption'
-  industry_vertical: string
-  investment_budget_usd: number
-  timeline_years: number
-}
-
-export interface ReadinessDimension {
-  dimension: string
-  score: number
-  max_score: number
-  gap_analysis: string
-  priority: 'critical' | 'high' | 'medium' | 'low'
-}
-
-export interface ReadinessResult {
-  overall_readiness_score: number
-  readiness_level: 'nascent' | 'developing' | 'intermediate' | 'advanced' | 'leading'
-  dimensions: ReadinessDimension[]
-  investment_recommendations: string[]
-  skill_gaps: string[]
-  roadmap_milestones: string[]
-}
-
-// ==================== SECTION 3 — 分析函数 ====================
-
-// --- Tool 1: Quantum Algorithm Designer ---
-function analyzeAlgorithmDesign(input: AlgorithmDesignInput): AlgorithmDesignResult {
-  const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
-
-  const algorithmLibrary: Record<string, AlgorithmCandidate[]> = {
-    search: [
-      { name: "Grover's Search", category: 'amplitude_amplification', required_qubits: Math.ceil(Math.log2(input.problem_size)) + 1, circuit_depth: Math.ceil(Math.sqrt(input.problem_size)) * 3, expected_speedup: 'O(sqrt(N))', success_probability: 0, suitability_score: 0 },
-      { name: 'Quantum Walk Search', category: 'quantum_walk', required_qubits: Math.ceil(Math.log2(input.problem_size)) + 2, circuit_depth: Math.ceil(Math.sqrt(input.problem_size)) * 2, expected_speedup: 'O(sqrt(N))', success_probability: 0, suitability_score: 0 },
-    ],
-    optimization: [
-      { name: 'QAOA', category: 'variational', required_qubits: input.problem_size, circuit_depth: input.constraints.max_depth * 0.6, expected_speedup: 'heuristic', success_probability: 0, suitability_score: 0 },
-      { name: 'Quantum Annealing', category: 'adiabatic', required_qubits: input.problem_size * 2, circuit_depth: 1, expected_speedup: 'problem_dependent', success_probability: 0, suitability_score: 0 },
-    ],
-    factoring: [
-      { name: "Shor's Algorithm", category: 'algebraic', required_qubits: 2 * input.problem_size + 3, circuit_depth: Math.pow(input.problem_size, 3), expected_speedup: 'exponential', success_probability: 0, suitability_score: 0 },
-    ],
-    simulation: [
-      { name: 'Trotter-Suzuki', category: 'hamiltonian', required_qubits: Math.ceil(Math.log2(input.problem_size)), circuit_depth: input.problem_size * 10, expected_speedup: 'exponential', success_probability: 0, suitability_score: 0 },
-      { name: 'QPE', category: 'phase_estimation', required_qubits: Math.ceil(Math.log2(input.problem_size)) + 1, circuit_depth: Math.pow(2, Math.ceil(Math.log2(input.problem_size))), expected_speedup: 'exponential', success_probability: 0, suitability_score: 0 },
-    ],
-    machine_learning: [
-      { name: 'Quantum SVM', category: 'kernel_method', required_qubits: Math.ceil(Math.log2(input.problem_size)), circuit_depth: input.problem_size * 5, expected_speedup: 'polynomial', success_probability: 0, suitability_score: 0 },
-      { name: 'Variational Classifier', category: 'variational', required_qubits: Math.ceil(Math.log2(input.problem_size)), circuit_depth: input.constraints.max_depth * 0.5, expected_speedup: 'heuristic', success_probability: 0, suitability_score: 0 },
-    ],
-    cryptography: [
-      { name: 'Grover Key Search', category: 'amplitude_amplification', required_qubits: Math.ceil(input.problem_size / 2), circuit_depth: Math.pow(2, input.problem_size / 4), expected_speedup: 'quadratic', success_probability: 0, suitability_score: 0 },
-    ],
+  const gateEstimates: Record<string, { sq: number; tq: number; t: number; baseDepth: number }> = {
+    grover: { sq: input.qubit_count * 6, tq: input.qubit_count * 4, t: input.qubit_count * 2, baseDepth: Math.ceil(Math.sqrt(Math.pow(2, input.qubit_count))) * 3 },
+    shor: { sq: input.qubit_count * 10, tq: input.qubit_count * 8, t: input.qubit_count * 6, baseDepth: Math.pow(input.qubit_count, 2) * 4 },
+    qft: { sq: (input.qubit_count * (input.qubit_count + 1)) / 2, tq: input.qubit_count * (input.qubit_count - 1), t: input.qubit_count * 2, baseDepth: input.qubit_count * input.qubit_count },
+    qaoa: { sq: input.qubit_count * 4, tq: input.qubit_count * 6, t: input.qubit_count, baseDepth: input.qubit_count * 3 * 2 },
+    vqe: { sq: input.qubit_count * 8, tq: input.qubit_count * 10, t: input.qubit_count * 2, baseDepth: input.qubit_count * 5 },
+    bernstein: { sq: input.qubit_count * 12, tq: input.qubit_count * 8, t: input.qubit_count * 4, baseDepth: input.qubit_count * input.qubit_count * 2 },
+    quantum_walk: { sq: input.qubit_count * 5, tq: input.qubit_count * 7, t: input.qubit_count * 3, baseDepth: Math.ceil(Math.sqrt(input.qubit_count * 100)) * 4 },
   }
 
-  const candidates = algorithmLibrary[input.problem_type] || algorithmLibrary.optimization
-  for (const c of candidates) {
-    const qubitFit = c.required_qubits <= input.constraints.max_qubits ? 1 : 0.5
-    const depthFit = c.circuit_depth <= input.constraints.max_depth ? 1 : 0.6
-    const speedupMap: Record<string, number> = { exponential: 1.0, quadratic: 0.8, polynomial: 0.6, heuristic: 0.5 }
-    const speedupScore = speedupMap[c.expected_speedup] || 0.5
-    c.suitability_score = Math.round(((qubitFit * 0.3 + depthFit * 0.3 + speedupScore * 0.4) * rng.nextFloat(0.85, 1.0)) * 100) / 100
-    c.success_probability = Math.round(rng.nextFloat(0.7, 0.99) * 100) / 100
+  const est = gateEstimates[input.algorithm] || gateEstimates.qaoa
+  const optFactor = 1 - (input.optimization_level * 0.15)
+  const singleQubitGates = Math.round(est.sq * optFactor * randFloat(rng, 0.9, 1.1))
+  const twoQubitGates = Math.round(est.tq * optFactor * randFloat(rng, 0.9, 1.1))
+  const tGates = Math.round(est.t * optFactor * randFloat(rng, 0.8, 1.2))
+  const totalGates = singleQubitGates + twoQubitGates
+  const depth = Math.round(est.baseDepth * optFactor * randFloat(rng, 0.85, 1.1))
+
+  const baseFidelitySuperconducting = Math.pow(0.999, singleQubitGates) * Math.pow(0.995, twoQubitGates)
+  const baseFidelityIonTrap = Math.pow(0.9995, singleQubitGates) * Math.pow(0.997, twoQubitGates)
+  const baseFidelityPhotonic = Math.pow(0.998, singleQubitGates) * Math.pow(0.992, twoQubitGates)
+  const baseFidelityNeutralAtom = Math.pow(0.9992, singleQubitGates) * Math.pow(0.996, twoQubitGates)
+  const baseFidelityTopological = Math.pow(0.9999, singleQubitGates) * Math.pow(0.998, twoQubitGates)
+
+  const backendFidelities: Record<string, number> = {
+    superconducting: baseFidelitySuperconducting,
+    trapped_ion: baseFidelityIonTrap,
+    photonic: baseFidelityPhotonic,
+    neutral_atom: baseFidelityNeutralAtom,
+    topological: baseFidelityTopological,
+  }
+  const targetFidelity = backendFidelities[input.target_backend] || baseFidelitySuperconducting
+
+  const layers: CircuitLayer[] = []
+  const layerCount = Math.min(Math.ceil(depth / 3), 12)
+  for (let i = 0; i < layerCount; i++) {
+    layers.push({
+      index: i,
+      gate_type: pickOne(rng, ['H', 'RX', 'RY', 'RZ', 'CNOT', 'CZ', 'T', 'S', 'SWAP']),
+      target_qubits: [randInt(rng, 0, input.qubit_count - 1), randInt(rng, 0, input.qubit_count - 1)].filter((v, idx, arr) => arr.indexOf(v) === idx),
+      parameters: randFloat(rng, 0, Math.PI).toFixed(4),
+      depth_contribution: randInt(rng, 2, 5),
+    })
   }
 
-  candidates.sort((a, b) => b.suitability_score - a.suitability_score)
-  const recommended = candidates.length > 0 ? candidates[0] : null
-
-  const physicalQubits = recommended ? recommended.required_qubits * 1000 : 0
-  const tGateCount = recommended ? Math.round(recommended.circuit_depth * recommended.required_qubits * 0.3) : 0
+  const synthesisNotes: string[] = []
+  synthesisNotes.push('Algorithm "' + input.algorithm + '" mapped to ' + totalGates + ' gates on ' + input.qubit_count + ' qubits')
+  synthesisNotes.push('Target backend ' + input.target_backend + ' with estimated fidelity ' + (targetFidelity * 100).toFixed(3) + '%')
+  if (tGates > 50) {
+    synthesisNotes.push('High T-count (' + tGates + '): consider phase-aware optimization or gate decomposition caching')
+  }
+  if (depth > 100) {
+    synthesisNotes.push('Deep circuit (' + depth + '): circuit knitting or divide-and-conquer strategies recommended')
+  }
+  if (input.entanglement_pattern === 'full' && input.qubit_count > 12) {
+    synthesisNotes.push('Full entanglement on ' + input.qubit_count + ' qubits: consider hardware-efficient patterns to reduce CNOT count')
+  }
+  synthesisNotes.push('Backend nativation: ' + input.target_backend === 'trapped_ion' ? 'all-to-all connectivity, no SWAP overhead' : 'mapping to native topology required, SWAP insertion anticipated')
 
   return {
-    problem_type: input.problem_type,
-    candidates,
-    recommended,
-    resource_estimate: {
-      logical_qubits: recommended ? recommended.required_qubits : 0,
-      physical_qubits: physicalQubits,
-      t_gate_count: tGateCount,
-      estimated_runtime_seconds: recommended ? Math.round(recommended.circuit_depth * 0.001 * 1000) / 1000 : 0,
-    },
-    design_notes: [
-      '推荐算法: ' + (recommended ? recommended.name : 'N/A'),
-      '预估物理量子比特数: ' + physicalQubits.toLocaleString(),
-      'T门总数: ' + tGateCount.toLocaleString(),
-      '噪声容忍度: ' + input.constraints.noise_tolerance,
-      input.constraints.noise_tolerance === 'low' ? '需要逻辑量子比特和纠错码' : '可直接在NISQ设备上运行',
-    ],
+    circuit_id: 'QC-' + randInt(rng, 10000, 99999),
+    algorithm: input.algorithm,
+    qubit_count: input.qubit_count,
+    gate_count_total: totalGates,
+    circuit_depth: depth,
+    single_qubit_gates: singleQubitGates,
+    two_qubit_gates: twoQubitGates,
+    t_gate_count: tGates,
+    estimated_fidelity: Math.round(targetFidelity * 100000) / 100000,
+    backend_compatibility: Object.entries(backendFidelities).filter(([, v]) => v > 0.7).map(([k]) => k),
+    layers,
+    synthesis_notes: synthesisNotes,
   }
 }
 
-// --- Tool 2: Error Correction Analyzer ---
-function analyzeErrorCorrection(input: ErrorCorrectionInput): ErrorCorrectionResult {
-  const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
+// Tool 2: VQE Configurator
+function analyzeVqeConfig(input: VqeConfigInput): VqeConfigResult {
+  const rng = seededRng(input)
 
-  const thresholdMap: Record<string, number> = {
-    surface: 0.01, color: 0.01, topological: 0.005, stabilizer: 0.008, bosonic: 0.02,
+  const molData: Record<string, { orbitals: number; electrons: number }> = {
+    H2: { orbitals: 2, electrons: 2 },
+    LiH: { orbitals: 6, electrons: 4 },
+    H2O: { orbitals: 10, electrons: 10 },
+    NH3: { orbitals: 10, electrons: 10 },
+    CH4: { orbitals: 10, electrons: 10 },
+    C2H4: { orbitals: 14, electrons: 16 },
+    FeMoCo: { orbitals: 54, electrons: 72 },
+    custom: { orbitals: randInt(rng, 4, 30), electrons: randInt(rng, 4, 40) },
   }
-  const threshold = thresholdMap[input.code_type] || 0.01
-  const logicalErrorRate = input.physical_error_rate * Math.pow(input.physical_error_rate / threshold, input.code_distance / 2)
-  const physicalPerLogical = input.code_type === 'surface' ? 2 * input.code_distance * input.code_distance : input.code_distance * input.code_distance * 3
+  const mol = molData[input.molecule] || molData.H2
 
-  const metrics: LogicalErrorMetric[] = [
-    { metric: '逻辑错误率', value: Math.round(logicalErrorRate * 1e12) / 1e12, unit: 'per_cycle', threshold_comparison: logicalErrorRate < 1e-10 ? 'below' : logicalErrorRate < 1e-6 ? 'at' : 'above' },
-    { metric: '码距效率', value: Math.round((1 / physicalPerLogical) * 10000) / 10000, unit: 'logical/physical', threshold_comparison: 'at' },
-    { metric: '综合征提取开销', value: Math.round(rng.nextFloat(0.1, 0.4) * 100) / 100, unit: 'fraction', threshold_comparison: 'at' },
-    { metric: '退相干裕度', value: Math.round(rng.nextFloat(1.5, 5.0) * 100) / 100, unit: 'x_T2', threshold_comparison: 'below' },
-  ]
+  const ansatzDepth: Record<string, number> = {
+    UCCSD: mol.orbitals * 4,
+    UCCD: mol.orbitals * 3,
+    HardwareEfficient: mol.orbitals * 2,
+    'QAOA-inspired': mol.orbitals * 3,
+    'ADAPT-VQE': mol.orbitals * 5,
+  }
+  const ansatzParams: Record<string, number> = {
+    UCCSD: mol.orbitals * mol.electrons,
+    UCCD: mol.orbitals * 2,
+    HardwareEfficient: mol.orbitals * 4,
+    'QAOA-inspired': mol.orbitals * 2,
+    'ADAPT-VQE': mol.orbitals * 6,
+  }
+
+  const activeOrbitals = Math.min(mol.orbitals, 16)
+  const activeElectrons = mol.electrons
+  const qubitsRequired = activeOrbitals * 2
+  const depthPerIter = (ansatzDepth[input.ansatz_type] || mol.orbitals * 4) + 2
+  const varParams = (ansatzParams[input.ansatz_type] || mol.orbitals * 4) + randInt(rng, 5, 25)
+
+  const accuracyLookup: Record<string, number> = {
+    'sto-3g': 0.85,
+    '6-31g': 0.90,
+    'cc-pvdz': 0.94,
+    'aug-cc-pvqz': 0.97,
+  }
+  const basisAccuracy = accuracyLookup[input.basis_set] || 0.90
+  const noisePenalty = input.noise_model === 'real_device' ? 0.10 : input.noise_model === 'depolarizing' ? 0.07 : input.noise_model === 'amplitude_damping' ? 0.05 : 0.0
+  const expectedAcc = Math.max(0.65, basisAccuracy - noisePenalty + randFloat(rng, -0.02, 0.02))
+
+  const mitigations: string[] = []
+  if (input.noise_model !== 'ideal') {
+    mitigations.push('Zero-Noise Extrapolation (ZNE)')
+    mitigations.push('Readout Error Mitigation')
+    if (input.noise_model === 'real_device') {
+      mitigations.push('Dynamical Decoupling')
+      mitigations.push('Probabilistic Error Cancellation (PEC)')
+    }
+  }
+
+  return {
+    config_id: 'VQE-' + randInt(rng, 10000, 99999),
+    molecule: input.molecule,
+    basis_set: input.basis_set,
+    active_orbitals: activeOrbitals,
+    active_electrons: activeElectrons,
+    qubit_requirement: qubitsRequired,
+    ansatz_type: input.ansatz_type,
+    variational_parameters: varParams,
+    circuit_depth_per_iteration: depthPerIter,
+    optimizer: input.optimizer,
+    max_iterations: input.max_iterations,
+    convergence_threshold: input.convergence_threshold,
+    error_mitigation_recommended: mitigations,
+    energy_unit: 'Hartree',
+    expected_accuracy: Math.round(expectedAcc * 1000) / 1000,
+    convergence_behavior: input.optimizer === 'COBYLA' ? 'robust but slow, ~' + (input.max_iterations * 0.8).toFixed(0) + ' iters' : input.optimizer === 'SPSA' ? 'noise-tolerant, quadratic convergence' : 'fast convergence, noise sensitive',
+    resource_estimate_hours: Math.round((input.max_iterations * depthPerIter * 0.0001 * randFloat(rng, 0.8, 1.5)) * 100) / 100,
+  }
+}
+
+// Tool 3: Error Correction Mapper
+function analyzeErrorCorrection(input: ErrorCorrectionInput): ErrorCorrectionResult {
+  const rng = seededRng(input)
+
+  const thresholdTable: Record<string, number> = {
+    surface: 0.01,
+    color: 0.011,
+    toric: 0.01,
+    steane: 0.008,
+    shor: 0.006,
+    bosonic_GKP: 0.02,
+    ldpc: 0.005,
+  }
+  const threshold = thresholdTable[input.code_family] || 0.01
+  const d = input.code_distance
+  const pPhys = input.physical_error_rate
+  const pLogical = pPhys * Math.pow(pPhys / threshold, (d + 1) / 2)
+
+  const qubitOverhead: Record<string, number> = {
+    surface: 2 * d * d,
+    color: 3 * d * d,
+    toric: 2 * d * d,
+    steane: 7,
+    shor: 9,
+    bosonic_GKP: 1,
+    ldpc: d * d * 0.5,
+  }
+  const physicalPerLogical = Math.round(qubitOverhead[input.code_family] || 2 * d * d)
+  const totalPhysical = physicalPerLogical * input.logical_qubit_target
+
+  const decoderTable: Record<string, { type: string; latency: number }> = {
+    surface: { type: 'Minimum Weight Perfect Matching (MWPM)', latency: randInt(rng, 500, 2000) },
+    color: { type: 'Color-code decoder + Union-Find', latency: randInt(rng, 300, 1500) },
+    toric: { type: 'Renormalization Group decoder', latency: randInt(rng, 1000, 5000) },
+    steane: { type: 'Steane decoder circuit', latency: randInt(rng, 100, 500) },
+    shor: { type: 'Shor-type parity check', latency: randInt(rng, 200, 800) },
+    bosonic_GKP: { type: 'Maximum-likelihood GKP decoder', latency: randInt(rng, 50, 200) },
+    ldpc: { type: 'Belief propagation OSD', latency: randInt(rng, 1000, 10000) },
+  }
+  const decoderInfo = decoderTable[input.code_family] || { type: 'generic decoder', latency: randInt(rng, 500, 3000) }
+
+  const syndromeRounds = d * (input.syndrome_method === 'shor' ? 2 : 1)
+  const logicalFidelity = Math.exp(-pLogical * 100)
+  const overheadRatio = physicalPerLogical
+
+  const budget: Record<string, number> = {
+    single_qubit_gate: pPhys * 0.3,
+    two_qubit_gate: pPhys * 0.4,
+    measurement: pPhys * 0.15,
+    idling: pPhys * 0.1,
+    state_preparation: pPhys * 0.05,
+  }
 
   const recommendations: string[] = []
-  if (input.physical_error_rate > threshold) {
-    recommendations.push('物理错误率高于阈值: 建议降低物理错误率至 ' + threshold + ' 以下')
+  if (pPhys > threshold) {
+    recommendations.push('Physical error rate ' + pPhys.toExponential(2) + ' exceeds threshold ' + threshold + ': improve physical qubits or lower temperature')
   }
-  if (input.code_distance < 5) {
-    recommendations.push('码距偏小: 建议增大码距至 5+ 以获得更好的纠错能力')
+  if (d < 5) {
+    recommendations.push('Code distance ' + d + ' is minimal: consider d >= 5 for fault tolerance')
   }
-  if (input.syndrome_extraction === 'shor') {
-    recommendations.push('Shor式综合征提取开销较大: 考虑切换到flag或single_shot方案')
+  if (input.syndrome_method === 'shor') {
+    recommendations.push('Shor syndrome extraction requires ancilla preperation: consider flag-based methods for lower overhead')
   }
-  recommendations.push('推荐码距: ' + Math.min(input.code_distance + 2, 11) + ' (平衡资源与纠错能力)')
-  recommendations.push('物理量子比特预算: ' + (physicalPerLogical * input.qubit_count).toLocaleString())
+  recommendations.push('Total physical qubit budget: ' + totalPhysical.toLocaleString() + ' physical qubits for ' + input.logical_qubit_target + ' logical qubits')
+  recommendations.push('Decoder latency ' + decoderInfo.latency + 'ns: verify real-time constraint feasibility')
+  if (input.code_family === 'bosonic_GKP') {
+    recommendations.push('GKP states require high-quality bosonic modes: ensure squeezing > 10 dB')
+  }
 
   return {
-    code_type: input.code_type,
-    code_distance: input.code_distance,
-    logical_error_rate: Math.round(logicalErrorRate * 1e15) / 1e15,
-    threshold_achieved: input.physical_error_rate < threshold,
+    mapping_id: 'ECM-' + randInt(rng, 10000, 99999),
+    code_family: input.code_family,
+    code_distance: d,
+    logical_error_rate: Math.round(pLogical * 1e18) / 1e18,
+    threshold_surpassed: pPhys < threshold,
     physical_qubits_per_logical: physicalPerLogical,
-    metrics,
-    syndrome_overhead: Math.round(rng.nextFloat(0.1, 0.4) * 100) / 100,
+    total_physical_qubits: totalPhysical,
+    syndrome_extraction_rounds: syndromeRounds,
+    decoder_type: decoderInfo.type,
+    decoder_latency_ns: decoderInfo.latency,
+    logical_fidelity_estimate: Math.round(logicalFidelity * 100000) / 100000,
+    overhead_ratio: overheadRatio,
+    error_budget_breakdown: budget,
     recommendations,
   }
 }
 
-// --- Tool 3: Quantum Circuit Optimizer ---
-function analyzeCircuitOptimization(input: CircuitOptimizationInput): CircuitOptimizationResult {
-  const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
+// Tool 4: Quantum Optimizer
+function analyzeQuantumOptimizer(input: QuantumOptimizerInput): QuantumOptimizerResult {
+  const rng = seededRng(input)
 
-  const passes: OptimizationPass[] = []
-  let currentGates = input.gate_count
-  let currentDepth = input.depth
+  const penalty = input.penalty_weight || randFloat(rng, 1.5, 5.0)
+  const mixer = input.mixer_type || pickOne(rng, ['standard', 'XY', 'controlled_phase'])
+  const qubitsReq = input.hamiltonian_type === 'QUBO' ? input.variable_count : input.variable_count * 2
+  const pLayers = input.algorithm === 'QAOA' ? Math.min(Math.ceil(input.variable_count / 4), 10) : 1
+  const termsHamiltonian = input.constraint_count + input.variable_count + (input.hamiltonian_type === 'PUBO' ? Math.floor(input.variable_count * 1.5) : 0)
 
-  const passNames = ['门合并', '冗余门消除', '交换路由', '门分解优化', '模板匹配']
-  for (let i = 0; i < 3; i++) {
-    const gateReduction = rng.nextFloat(0.05, 0.25)
-    const depthReduction = rng.nextFloat(0.03, 0.2)
-    const newGates = Math.round(currentGates * (1 - gateReduction))
-    const newDepth = Math.round(currentDepth * (1 - depthReduction))
-    passes.push({
-      pass_name: rng.pick(passNames),
-      gates_before: currentGates,
-      gates_after: newGates,
-      depth_before: currentDepth,
-      depth_after: newDepth,
-      improvement_pct: Math.round(((gateReduction + depthReduction) / 2) * 100),
-    })
-    currentGates = newGates
-    currentDepth = newDepth
-  }
-
-  const swapOverhead = input.qubit_connectivity === 'all_to_all' ? 0 : input.qubit_connectivity === 'linear' ? Math.round(currentDepth * 0.3) : Math.round(currentDepth * 0.1)
-  const fidelity = Math.pow(0.999, currentGates) * Math.pow(0.999, swapOverhead)
-
-  return {
-    original_gates: input.gate_count,
-    optimized_gates: currentGates,
-    original_depth: input.depth,
-    optimized_depth: currentDepth,
-    passes,
-    total_fidelity_estimate: Math.round(fidelity * 10000) / 10000,
-    swap_overhead: swapOverhead,
-    optimization_summary: '从 ' + input.gate_count + ' 门优化至 ' + currentGates + ' 门 (减少 ' + Math.round((1 - currentGates / input.gate_count) * 100) + '%)',
-  }
-}
-
-// --- Tool 4: NISQ Application Mapper ---
-function analyzeNISQApplication(input: NISQApplicationInput): NISQApplicationResult {
-  const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
-
-  const domainAlgorithms: Record<string, NISQMapping[]> = {
-    chemistry: [
-      { algorithm: 'VQE (UCCSD)', qubit_requirement: 8, depth_requirement: 100, classical_preprocessing: '分子轨道积分计算', classical_postprocessing: '能量最小化', expected_accuracy: 0, feasibility: 'high' },
-      { algorithm: 'QPE (相位估计)', qubit_requirement: 20, depth_requirement: 1000, classical_preprocessing: '哈密顿量对角化', classical_postprocessing: '特征值提取', expected_accuracy: 0, feasibility: 'low' },
-    ],
-    finance: [
-      { algorithm: 'QAOA Portfolio', qubit_requirement: 10, depth_requirement: 50, classical_preprocessing: '协方差矩阵构建', classical_postprocessing: '约束满足检查', expected_accuracy: 0, feasibility: 'medium' },
-      { algorithm: 'Amplitude Estimation', qubit_requirement: 15, depth_requirement: 200, classical_preprocessing: '收益分布建模', classical_postprocessing: '蒙特卡洛验证', expected_accuracy: 0, feasibility: 'medium' },
-    ],
-    logistics: [
-      { algorithm: 'QAOA Routing', qubit_requirement: 12, depth_requirement: 80, classical_preprocessing: '图结构编码', classical_postprocessing: '路径解码', expected_accuracy: 0, feasibility: 'high' },
-    ],
-    materials: [
-      { algorithm: 'VQE Hubbard', qubit_requirement: 16, depth_requirement: 150, classical_preprocessing: '晶格模型构建', classical_postprocessing: '基态能量分析', expected_accuracy: 0, feasibility: 'medium' },
-    ],
-    pharma: [
-      { algorithm: 'VQE Protein Folding', qubit_requirement: 20, depth_requirement: 200, classical_preprocessing: '氨基酸序列编码', classical_postprocessing: '构象优化', expected_accuracy: 0, feasibility: 'low' },
-    ],
-    energy: [
-      { algorithm: 'QAOA Grid', qubit_requirement: 14, depth_requirement: 100, classical_preprocessing: '电网拓扑建模', classical_postprocessing: '潮流优化', expected_accuracy: 0, feasibility: 'medium' },
-    ],
-  }
-
-  const mappings = domainAlgorithms[input.domain] || domainAlgorithms.chemistry
-  for (const m of mappings) {
-    const qubitFit = m.qubit_requirement <= input.available_qubits
-    const depthFit = m.depth_requirement <= input.circuit_depth_budget
-    m.expected_accuracy = Math.round(rng.nextFloat(0.7, 0.95) * 100) / 100
-    if (!qubitFit) m.feasibility = 'low'
-    else if (!depthFit) m.feasibility = 'medium'
-    else m.feasibility = 'high'
-  }
-
-  mappings.sort((a, b) => {
-    const order = { high: 3, medium: 2, low: 1 }
-    return order[b.feasibility] - order[a.feasibility]
-  })
-
-  const bestMapping = mappings.length > 0 ? mappings[0] : null
-  const mitigationCount = input.error_mitigation.length
-
-  return {
-    domain: input.domain,
-    mappings,
-    best_mapping: bestMapping,
-    error_mitigation_impact: '启用 ' + mitigationCount + ' 种错误缓解技术, 预计精度提升 ' + (mitigationCount * 8) + '%',
-    hardware_recommendation: input.available_qubits < 50 ? '推荐: IBM Eagle / Google Sycamore 级处理器' : '推荐: 模块化多芯片量子处理器',
-    timeline_estimate: input.problem_complexity === 'small' ? '3-6个月' : input.problem_complexity === 'medium' ? '6-18个月' : '18-36个月',
-  }
-}
-
-// --- Tool 5: Quantum Machine Learning Hybrid ---
-function analyzeQMLHybrid(input: QMLHybridInput): QMLHybridResult {
-  const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
-
-  const layers: HybridLayer[] = []
-  const numQuantumLayers = Math.min(Math.ceil(input.quantum_resource_budget / 10), 4)
-
-  layers.push({
-    layer_name: 'Input Encoding',
-    layer_type: 'interface',
-    parameters: input.data_dimension,
-    output_dimension: input.data_dimension,
-    entanglement_pattern: 'none',
-  })
-
-  for (let i = 0; i < numQuantumLayers; i++) {
-    layers.push({
-      layer_name: 'Quantum Layer ' + (i + 1),
-      layer_type: 'quantum',
-      parameters: rng.nextInt(8, 32),
-      output_dimension: rng.nextInt(4, 16),
-      entanglement_pattern: rng.pick(['linear', 'circular', 'full', 'pairwise']),
+  const encodingMap: OptimizerEncoding[] = []
+  for (let i = 0; i < input.variable_count; i++) {
+    encodingMap.push({
+      variable_name: 'x_' + i,
+      qubit_index: i % qubitsReq,
+      hamiltonian_coeff: Math.round(randFloat(rng, -5, 5) * 100) / 100,
+      constraint_applied: i < input.constraint_count,
     })
   }
 
-  layers.push({
-    layer_name: 'Classical Head',
-    layer_type: 'classical',
-    parameters: rng.nextInt(64, 512),
-    output_dimension: rng.nextInt(2, 10),
-    entanglement_pattern: 'none',
-  })
+  const groundStateEst = -randFloat(rng, 5, 20) * Math.log2(input.variable_count + 1)
+  const approxRatio = 1 - (1 / Math.sqrt(pLayers + 1)) + randFloat(rng, -0.02, 0.05)
 
-  const totalParams = layers.reduce((sum, l) => sum + l.parameters, 0)
-  const advantageMap: Record<string, string> = {
-    quantum_kernel: '高维特征空间隐式映射, 潜在指数加速',
-    variational_circuit: '参数化电路表达力强, 适合小规模数据',
-    quantum_annealing: '组合优化问题天然适配, 收敛速度快',
-    hybrid_dqc: '经典预处理+量子核心, 平衡效率与表达力',
+  const feasibilityNotes: string[] = []
+  feasibilityNotes.push('Problem type ' + input.problem_type + ' encoded as ' + input.hamiltonian_type)
+  feasibilityNotes.push('Qubits required: ' + qubitsReq + ' (' + input.hamiltonian_type + ' representation)')
+  feasibilityNotes.push('Penalty weight ' + penalty.toFixed(2) + ' for constraint enforcement')
+  if (input.constraint_count > input.variable_count * 2) {
+    feasibilityNotes.push('High constraint ratio: consider constraint relaxation or penalty tuning')
   }
-
-  return {
-    ml_task: input.ml_task,
-    architecture: input.model_architecture,
-    layers,
-    total_parameters: totalParams,
-    quantum_advantage_estimate: advantageMap[input.model_architecture] || '问题相关',
-    training_complexity: numQuantumLayers > 2 ? 'O(n * 2^q) 需GPU-QPU协同' : 'O(n * q^2) 可端到端训练',
-    convergence_guarantee: input.model_architecture === 'quantum_kernel' ? 'proven' : input.model_architecture === 'variational_circuit' ? 'heuristic' : 'none',
-  }
-}
-
-// --- Tool 6: Quantum Cryptography Planner ---
-function analyzeCryptoPlanner(input: CryptoPlannerInput): CryptoPlannerResult {
-  const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
-
-  const components: CryptoComponent[] = []
-
-  if (input.protocol_type === 'qkd' || input.protocol_type === 'hybrid') {
-    components.push(
-      { component: 'QKD发射端', technology: 'BB84/诱骗态', maturity: 'production', security_bits: 256, cost_estimate_usd: rng.nextInt(50000, 150000) },
-      { component: 'QKD接收端', technology: '单光子探测器', maturity: 'production', security_bits: 256, cost_estimate_usd: rng.nextInt(40000, 120000) },
-      { component: '量子随机数发生器', technology: '真空涨落QRNG', maturity: 'production', security_bits: 256, cost_estimate_usd: rng.nextInt(10000, 30000) },
-    )
-  }
-
-  if (input.protocol_type === 'pqc' || input.protocol_type === 'hybrid') {
-    components.push(
-      { component: 'PQC密钥封装', technology: 'CRYSTALS-Kyber', maturity: 'production', security_bits: 256, cost_estimate_usd: rng.nextInt(5000, 15000) },
-      { component: 'PQC数字签名', technology: 'CRYSTALS-Dilithium', maturity: 'production', security_bits: 256, cost_estimate_usd: rng.nextInt(5000, 15000) },
-      { component: '哈希签名', technology: 'SPHINCS+', maturity: 'pilot', security_bits: 192, cost_estimate_usd: rng.nextInt(3000, 10000) },
-    )
-  }
-
-  if (input.protocol_type === 'quantum_secure') {
-    components.push(
-      { component: '量子密钥分发网络', technology: 'TF-QKD/测量设备无关', maturity: 'pilot', security_bits: 256, cost_estimate_usd: rng.nextInt(200000, 500000) },
-      { component: '量子中继器', technology: '纠缠交换/量子存储', maturity: 'research', security_bits: 256, cost_estimate_usd: rng.nextInt(500000, 2000000) },
-    )
-  }
-
-  const totalCost = components.reduce((sum, c) => sum + c.cost_estimate_usd, 0)
-  const minSecurity = components.length > 0 ? Math.min(...components.map(c => c.security_bits)) : 0
-  const keyRate = input.protocol_type === 'qkd' ? rng.nextInt(1000, 100000) : input.protocol_type === 'pqc' ? rng.nextInt(10000, 1000000) : rng.nextInt(100, 10000)
-
-  const roadmap: string[] = []
-  roadmap.push('Phase 1 (0-6月): 概念验证与威胁建模')
-  if (input.protocol_type !== 'pqc') {
-    roadmap.push('Phase 2 (6-18月): QKD试点部署与距离测试')
-  }
-  roadmap.push('Phase 3 (12-24月): 全面部署与运维体系')
-  roadmap.push('Phase 4 (24-36月): 量子安全审计与升级')
-
-  const riskMap: Record<string, string> = {
-    harvest_now: '高优先级: 立即部署PQC以对抗先存储后解密攻击',
-    side_channel: '中优先级: 实施侧信道防护与掩码技术',
-    quantum_attack: '长期风险: 关注CRQC时间线, 提前规划迁移',
-    insider: '中优先级: 零信任架构与密钥分割管理',
-  }
-
-  return {
-    protocol_type: input.protocol_type,
-    security_level: input.security_level,
-    components,
-    effective_security_bits: minSecurity,
-    key_rate_achievable: keyRate,
-    deployment_roadmap: roadmap,
-    risk_assessment: riskMap[input.threat_model] || '综合风险评估: 建议多层防御',
-  }
-}
-
-// --- Tool 7: Quantum Simulation Engineer ---
-function analyzeSimulation(input: SimulationInput): SimulationResult {
-  const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
-
-  const trotterSteps = input.simulation_method === 'trotter' ? Math.ceil(1 / input.precision_target) * input.system_size : 0
-  const qubitCount = input.system_type === 'molecular' ? input.system_size * 4 : input.system_size * 2
-  const circuitDepth = input.simulation_method === 'qubitization' ? Math.ceil(Math.log2(input.system_size) * 10) : input.simulation_method === 'qpe' ? Math.pow(2, Math.ceil(Math.log2(input.system_size))) : trotterSteps * 3
-
-  const resources: SimulationResource[] = [
-    { resource: '逻辑量子比特', value: qubitCount, unit: 'qubits', scaling: 'O(N)' },
-    { resource: '电路深度', value: Math.round(circuitDepth), unit: 'gates', scaling: input.simulation_method === 'qubitization' ? 'O(log N)' : 'O(poly(N))' },
-    { resource: 'T门计数', value: Math.round(circuitDepth * qubitCount * 0.2), unit: 'T-gates', scaling: 'O(N * depth)' },
-    { resource: '经典内存', value: Math.round(rng.nextFloat(1, 64) * 100) / 100, unit: 'GB', scaling: 'O(2^N) classical / O(N) quantum' },
-  ]
-
-  const precisionAchievable = input.simulation_method === 'qpe' ? input.precision_target : input.simulation_method === 'qubitization' ? input.precision_target * 10 : input.precision_target * 2
-  const classicalSpeedup = input.system_size > 20 ? Math.round(rng.nextFloat(100, 10000)) : Math.round(rng.nextFloat(10, 100))
-
-  const validation: string[] = []
-  validation.push('守恒量检查: 粒子数/能量守恒验证')
-  validation.push('经典极限对比: N<=10时与精确对角化结果比对')
-  if (input.time_evolution) {
-    validation.push('幺正性验证: U†U = I 数值检验')
-  }
-  validation.push('Trotter误差分析: 高阶Suzuki展开收敛性')
-
-  return {
-    system_type: input.system_type,
-    method: input.simulation_method,
-    resources,
-    trotter_steps: trotterSteps,
-    precision_achievable: Math.round(precisionAchievable * 1000) / 1000,
-    classical_comparison_speedup: classicalSpeedup,
-    validation_checks: validation,
-  }
-}
-
-// --- Tool 8: Quantum Readiness Assessor ---
-function analyzeReadiness(input: ReadinessInput): ReadinessResult {
-  const rng = new SeededRandom(SeededRandom.seedFromString(JSON.stringify(input)))
-
-  const dimensions: ReadinessDimension[] = [
-    { dimension: '技术基础设施', score: rng.nextInt(20, 80), max_score: 100, gap_analysis: '量子硬件访问渠道有限', priority: 'high' },
-    { dimension: '人才储备', score: rng.nextInt(10, 60), max_score: 100, gap_analysis: '量子算法与Q#工程师稀缺', priority: 'critical' },
-    { dimension: '用例识别', score: rng.nextInt(30, 75), max_score: 100, gap_analysis: '业务场景与量子优势匹配度待提升', priority: 'high' },
-    { dimension: '投资规划', score: rng.nextInt(25, 70), max_score: 100, gap_analysis: input.investment_budget_usd < 1000000 ? '投资规模偏保守' : '投资规模合理', priority: 'medium' },
-    { dimension: '组织认知', score: rng.nextInt(20, 65), max_score: 100, gap_analysis: input.current_quantum_exposure === 'none' ? '需要全面量子启蒙' : '已有基础认知', priority: 'medium' },
-    { dimension: '合作伙伴生态', score: rng.nextInt(15, 55), max_score: 100, gap_analysis: '量子供应商与学术合作网络待建立', priority: 'low' },
-  ]
-
-  const overallScore = Math.round(dimensions.reduce((sum, d) => sum + d.score, 0) / dimensions.length)
-  const level = overallScore < 25 ? 'nascent' : overallScore < 40 ? 'developing' : overallScore < 55 ? 'intermediate' : overallScore < 70 ? 'advanced' : 'leading'
-
-  const investments: string[] = []
-  if (input.investment_budget_usd < 500000) {
-    investments.push('建议年度量子预算: $500K-$1M (云服务+人才培训)')
-  } else if (input.investment_budget_usd < 2000000) {
-    investments.push('建议年度量子预算: $1M-$3M (增加POC项目)')
+  feasibilityNotes.push('Mixer hamiltonian: ' + mixer + ' --- select based on problem symmetry')
+  if (input.algorithm === 'quantum_annealing') {
+    feasibilityNotes.push('Quantum annealing: verify annealing schedule compatibility with ' + qubitsReq + ' qubits')
   } else {
-    investments.push('建议年度量子预算: $3M+ (可考虑自建量子实验室)')
+    feasibilityNotes.push('Variational approach: ' + pLayers + ' QAOA layers estimated')
   }
-  investments.push('优先投资方向: 量子算法人才 + 混合计算平台')
-  investments.push('建议分配: 40%人才, 30%基础设施, 20%研发, 10%培训')
+  feasibilityNotes.push('Estimated classical runtime: ' + Math.round(input.variable_count * pLayers * 0.5) + ' objective evaluations')
 
-  const skillGaps: string[] = []
-  skillGaps.push('量子算法设计 (Qiskit/Cirq/Q#)')
-  skillGaps.push('量子纠错与容错计算')
-  skillGaps.push('量子-经典混合编程')
-  skillGaps.push('领域知识 + 量子应用交叉人才')
+  return {
+    encoding_id: 'QOPT-' + randInt(rng, 10000, 99999),
+    problem_type: input.problem_type,
+    hamiltonian_type: input.hamiltonian_type,
+    qubits_required: qubitsReq,
+    terms_in_hamiltonian: termsHamiltonian,
+    p_qaoa_layers: pLayers,
+    classical_variables: input.variable_count,
+    penalty_weight_applied: Math.round(penalty * 100) / 100,
+    ground_state_energy_estimate: Math.round(groundStateEst * 1000) / 1000,
+    approximation_ratio_expected: Math.max(0.5, Math.round(approxRatio * 100) / 100),
+    encoding_map: encodingMap,
+    mixer_type: mixer,
+    optimization_rounds_estimate: randInt(rng, 50, 500) * pLayers,
+    feasibility_notes: feasibilityNotes,
+  }
+}
+
+// Tool 5: QML Model Setup
+function analyzeQmlModel(input: QmlModelInput): QmlModelResult {
+  const rng = seededRng(input)
+
+  const embeddingQubits: Record<string, number> = {
+    amplitude_embedding: Math.ceil(Math.log2(Math.max(input.feature_dimension, 2))),
+    angle_embedding: input.feature_dimension,
+    IQP: input.feature_dimension,
+    tensor_network: Math.ceil(Math.sqrt(input.feature_dimension)),
+    _data_reuploading: Math.ceil(input.feature_dimension / 2),
+  }
+  const qubitsReq = embeddingQubits[input.quantum_ansatz] || Math.ceil(Math.log2(input.feature_dimension))
+
+  const layers: QuantumLayerSpec[] = []
+  layers.push({
+    layer_index: 0,
+    layer_type: 'encoding',
+    qubits_used: qubitsReq,
+    parameter_count: qubitsReq,
+    unitary_description: input.quantum_ansatz + ' encoding of ' + input.feature_dimension + '-dim input',
+  })
+
+  const varLayerCount = randInt(rng, 2, 5)
+  let totalParams = qubitsReq
+  for (let i = 1; i <= varLayerCount; i++) {
+    const pCount = qubitsReq * randInt(rng, 2, 4)
+    totalParams += pCount
+    layers.push({
+      layer_index: i,
+      layer_type: i % 2 === 0 ? 'entanglement' : 'variational',
+      qubits_used: qubitsReq,
+      parameter_count: pCount,
+      unitary_description: i % 2 === 0 ? 'CNOT ring entanglement' : 'Parameterized RY/RZ rotations',
+    })
+  }
+
+  layers.push({
+    layer_index: varLayerCount + 1,
+    layer_type: 'measurement',
+    qubits_used: qubitsReq,
+    parameter_count: 0,
+    unitary_description: input.measurement_basis + '-basis measurement on all qubits',
+  })
+
+  const depthPerLayer = randInt(rng, 5, 20)
+  const totalDepth = depthPerLayer * (varLayerCount + 1)
+
+  const barrenRisk: 'low' | 'medium' | 'high' =
+    input.quantum_ansatz === 'amplitude_embedding' && input.feature_dimension > 32 ? 'high' :
+    input.quantum_ansatz === '_data_reuploading' ? 'medium' :
+    input.noise_aware_training ? 'low' : 'medium'
+
+  const observables: string[] = []
+  for (let i = 0; i < Math.min(qubitsReq, 4); i++) {
+    observables.push(pickOne(rng, ['Z_pauli_str', 'X_pauli_str', 'Y_pauli_str', 'multi_qubit_correlator']))
+  }
+
+  return {
+    model_id: 'QML-' + randInt(rng, 10000, 99999),
+    task_type: input.task_type,
+    quantum_ansatz: input.quantum_ansatz,
+    total_variational_params: totalParams,
+    circuit_depth: totalDepth,
+    qubit_requirement: qubitsReq,
+    measurement_basis: input.measurement_basis,
+    expectation_value_method: input.training_shots >= 10000 ? 'sample-average' : 'exact_statevector_simulation',
+    layers,
+    classical_postprocessing: input.classical_postprocessing,
+    barren_plateau_risk: barrenRisk,
+    generalization_capacity: input.feature_dimension <= 16 ? 'excellent' : input.feature_dimension <= 64 ? 'good (may need data augmentation)' : 'limited --- dimensionality reduction recommended',
+    training_complexity: 'O(' + input.training_shots + ' * ' + totalDepth + ' * ' + totalParams + ') per iteration',
+    measurement_shots: input.training_shots,
+    noise_aware_training: input.noise_aware_training,
+    observables,
+  }
+}
+
+// Tool 6: Quantum Safe Migration Planner
+function analyzeQuantumSafeMigration(input: QuantumSafeMigrationInput): QuantumSafeMigrationResult {
+  const rng = seededRng(input)
+
+  const replacementMap: Record<string, { replacement: string; urgency: 'critical' | 'high' | 'medium' | 'low'; threat: 'imminent' | 'near_term' | 'long_term' }> = {
+    'RSA-2048': { replacement: 'CRYSTALS-Kyber-1024 + SPHINCS+-256f', urgency: 'critical', threat: 'imminent' },
+    'RSA-4096': { replacement: 'CRYSTALS-Kyber-1024 + Classic-McEliece', urgency: 'high', threat: 'near_term' },
+    'ECC-P256': { replacement: 'CRYSTALS-Dilithium5', urgency: 'critical', threat: 'imminent' },
+    'ECC-P384': { replacement: 'CRYSTALS-Dilithium5 + Falcon-1024', urgency: 'high', threat: 'near_term' },
+    'AES-128': { replacement: 'AES-256', urgency: 'high', threat: 'near_term' },
+    'AES-256': { replacement: 'AES-256 (Grover-reduced but still 128-bit security)', urgency: 'medium', threat: 'long_term' },
+    'SHA-256': { replacement: 'SHA-3-384 or SHA-256 with extended output', urgency: 'medium', threat: 'near_term' },
+    'SHA-3': { replacement: 'SHA-3 (quantum-safe at current security levels)', urgency: 'low', threat: 'long_term' },
+  }
+
+  const migrationItems: CryptoMigrationItem[] = []
+  let totalEffort = 0
+  for (const scheme of input.current_crypto) {
+    const r = replacementMap[scheme] || { replacement: 'NIST-PQC-standardized-algorithm', urgency: 'medium', threat: 'near_term' }
+    const effort = r.urgency === 'critical' ? randInt(rng, 4, 10) : r.urgency === 'high' ? randInt(rng, 3, 7) : randInt(rng, 2, 5)
+    totalEffort += effort
+    migrationItems.push({
+      current_scheme: scheme,
+      replacement_scheme: r.replacement,
+      migration_phase: randInt(rng, 1, 4) as 1 | 2 | 3 | 4,
+      urgency: r.urgency,
+      effort_estimate_person_months: effort,
+      quantum_threat_level: r.threat,
+    })
+  }
+
+  const vulnCount = migrationItems.filter(i => i.urgency === 'critical' || i.urgency === 'high').length
+  const riskScore = Math.min(100, vulnCount * 15 + input.current_crypto.length * 5)
+  const deadlineUrgency = input.migration_deadline_years < 3 ? 'compressed' : input.migration_deadline_years < 5 ? 'standard' : 'relaxed'
+
+  const complianceGaps: string[] = []
+  if (!input.compliance_requirements.includes('NIST-PQC')) complianceGaps.push('Add NIST-PQC compliance tracking for post-quantum algorithm adoption')
+  if (!input.compliance_requirements.includes('FIPS-140-3')) complianceGaps.push('FIPS-140-3 cryptographic module validation required')
+  if (input.infrastructure_type === 'iot') complianceGaps.push('IoT device firmware signing: constrained-environment PQC may need lightweight variants')
+  if (input.infrastructure_type === 'blockchain') complianceGaps.push('Blockchain: address format changes and transaction size increase require community coordination')
 
   const milestones: string[] = []
-  milestones.push('Q1-Q2: 完成量子就绪评估与用例优先级排序')
-  milestones.push('Q3-Q4: 启动首个量子POC项目 (6-12个月)')
-  milestones.push('Year 2: 建立内部量子能力中心')
-  milestones.push('Year 3: 量子优势验证与规模化部署')
+  milestones.push('Month 1-3: Cryptographic inventory and dependency mapping')
+  milestones.push('Month 3-6: Lab testing of PQC candidates against ' + input.infrastructure_type + ' workload')
+  milestones.push('Month 6-12: Hybrid mode deployment (classical + PQC dual certificates)')
+  if (deadlineUrgency === 'compressed') {
+    milestones.push('Month 12-18: Accelerated cutover with crypto-agile intermediates')
+  } else {
+    milestones.push('Month 12-24: Gradual migration with backward-compatible fallbacks')
+  }
+  milestones.push('Month 24+: Full PQC deployment and legacy algorithm deprecation')
 
   return {
-    overall_readiness_score: overallScore,
-    readiness_level: level,
-    dimensions,
-    investment_recommendations: investments,
-    skill_gaps: skillGaps,
-    roadmap_milestones: milestones,
+    plan_id: 'QSM-' + randInt(rng, 10000, 99999),
+    overall_risk_score: Math.min(100, riskScore),
+    vulnerability_count: vulnCount,
+    migration_items: migrationItems,
+    hybrid_transition_strategy: 'DualCertificate hybrid: X.509 with composite classical+PQC public keys during transition period',
+    compliance_gaps: complianceGaps,
+    milestone_timeline: milestones,
+    total_effort_person_months: totalEffort,
+    recommended_priority_order: migrationItems.sort((a, b) => {
+      const order: Record<string, number> = { critical: 4, high: 3, medium: 2, low: 1 }
+      return order[b.urgency] - order[a.urgency]
+    }).map(i => i.current_scheme + ' -> ' + i.replacement_scheme),
+    crypto_agility_framework: 'Implement crypto-agility layer with pluggable algorithm providers (OpenSSL 3.0+ engine or PKCS#11 module)',
   }
 }
 
-// ==================== SECTION 4 — 格式化报告函数 ====================
+// Tool 7: Quantum Hardware Selector
+function analyzeHardwareSelection(input: HardwareSelectionInput): QuantumHardwareResult {
+  const rng = seededRng(input)
 
-// --- Tool 1: Quantum Algorithm Designer 报告 ---
-function formatAlgorithmDesignReport(result: AlgorithmDesignResult): string {
-  const lines: string[] = []
-  lines.push('## ⚛️ Quantum Algorithm Designer — 量子算法设计报告')
-  lines.push('')
-  lines.push('问题类型: ' + result.problem_type + ' | 候选算法: ' + result.candidates.length)
-  if (result.recommended) {
-    lines.push('推荐算法: ' + result.recommended.name + ' (适配度: ' + result.recommended.suitability_score + ')')
+  const candidates: HardwareCandidate[] = [
+    {
+      platform: 'IBM Quantum Heron (133 qubits)',
+      qubit_count: 133,
+      two_qubit_gate_fidelity: 0.998,
+      t1_coherence_us: 200,
+      gate_speed_ns: 50,
+      connectivity: 'heavy-hexagonal',
+      maturity: 'production' as const,
+      score: 0,
+    },
+    {
+      platform: 'Google Sycamore/Willow (105 qubits)',
+      qubit_count: 105,
+      two_qubit_gate_fidelity: 0.995,
+      t1_coherence_us: 100,
+      gate_speed_ns: 25,
+      connectivity: 'nearest-neighbor grid',
+      maturity: 'production' as const,
+      score: 0,
+    },
+    {
+      platform: 'Quantinuum H2 (56 qubits trapped-ion)',
+      qubit_count: 56,
+      two_qubit_gate_fidelity: 0.997,
+      t1_coherence_us: 100000,
+      gate_speed_ns: 200,
+      connectivity: 'all-to-all',
+      maturity: 'production' as const,
+      score: 0,
+    },
+    {
+      platform: 'QuEra Aquila (256 qubits neutral atom)',
+      qubit_count: 256,
+      two_qubit_gate_fidelity: 0.995,
+      t1_coherence_us: 1000,
+      gate_speed_ns: 500,
+      connectivity: 'reconfigurable atom arrays',
+      maturity: 'pilot' as const,
+      score: 0,
+    },
+    {
+      platform: 'Xanadu Borealis (216 modes photonic)',
+      qubit_count: 216,
+      two_qubit_gate_fidelity: 0.98,
+      t1_coherence_us: 100,
+      gate_speed_ns: 10,
+      connectivity: 'Gaussian boson sampling',
+      maturity: 'pilot' as const,
+      score: 0,
+    },
+    {
+      platform: 'Microsoft Majorana (topological, in development)',
+      qubit_count: 8,
+      two_qubit_gate_fidelity: 0.9999,
+      t1_coherence_us: 1000000,
+      gate_speed_ns: 100,
+      connectivity: 'topological protection',
+      maturity: 'research' as const,
+      score: 0,
+    },
+  ]
+
+  for (const c of candidates) {
+    let s = 0
+    s += c.qubit_count >= input.required_logical_qubits ? 30 : (c.qubit_count / input.required_logical_qubits) * 20
+    s += c.two_qubit_gate_fidelity >= input.min_gate_fidelity ? 25 : (c.two_qubit_gate_fidelity / input.min_gate_fidelity) * 15
+    if (input.connectivity_requirement === 'all_to_all' && c.connectivity.includes('all-to-all')) s += 20
+    else if (input.connectivity_requirement === 'high_degree' && !c.connectivity.includes('nearest-neighbor')) s += 15
+    else if (input.connectivity_requirement === 'nearest_neighbor') s += 10
+    s += c.maturity === 'production' ? 15 : c.maturity === 'pilot' ? 8 : 3
+    const speedScore = Math.min(10, 1000 / c.gate_speed_ns)
+    s += speedScore
+    c.score = Math.round(s * 10) / 10
   }
-  lines.push('')
-  lines.push('### 🔗 算法选择拓扑')
-  lines.push('')
-  lines.push('```mermaid')
-  lines.push('graph TD')
-  lines.push('    PROBLEM[Problem: ' + result.problem_type + '] -->|analyze| SELECTOR[Algorithm Selector]')
-  lines.push('    SELECTOR -->|rank| C1[Candidate 1]')
-  lines.push('    SELECTOR -->|rank| C2[Candidate 2]')
-  lines.push('    SELECTOR -->|rank| C3[Candidate 3]')
-  lines.push('    C1 -->|best match| REC[Recommended: ' + (result.recommended ? result.recommended.name : 'N/A') + ']')
-  lines.push('    REC -->|resource est| RES[Resource Estimate]')
+
+  candidates.sort((a, b) => b.score - a.score)
+  const top = candidates[0]
+
+  const scoreBreakdown: Record<string, number> = {
+    qubit_capacity: Math.min(30, (top.qubit_count / input.required_logical_qubits) * 25),
+    gate_fidelity: Math.min(25, (top.two_qubit_gate_fidelity / input.min_gate_fidelity) * 20),
+    connectivity_match: input.connectivity_requirement === 'all_to_all' && top.connectivity.includes('all-to-all') ? 20 : 10,
+    maturity_bonus: top.maturity === 'production' ? 15 : top.maturity === 'pilot' ? 8 : 3,
+    speed_factor: Math.min(10, 1000 / top.gate_speed_ns),
+  }
+
+  const overhead = 10
+  const effectiveLogical = Math.floor(top.qubit_count / overhead)
+  const cost = top.maturity === 'production' ? randFloat(rng, 10, 50) : top.maturity === 'pilot' ? randFloat(rng, 2, 20) : randFloat(rng, 0.1, 2)
+
+  const infraReqs: string[] = []
+  if (top.platform.includes('IBM') || top.platform.includes('Google') || top.platform.includes('Microsoft')) {
+    infraReqs.push('Dilution refrigerator (10 mK) required')
+    infraReqs.push('Classical control electronics (AWG + digitizer per qubit)')
+  }
+  if (top.platform.includes('Quantinuum')) {
+    infraReqs.push('Ultra-high vacuum chamber + laser systems')
+    infraReqs.push('Room-temperature operation for qubit control')
+  }
+  if (top.platform.includes('QuEra')) {
+    infraReqs.push('Optical tweezers and AOD systems')
+    infraReqs.push('Vacuum chamber with atom loading')
+  }
+  if (top.platform.includes('Xanadu')) {
+    infraReqs.push('Squeezed light source + fiber delay lines')
+    infraReqs.push('Photon-number-resolving detector array')
+  }
+
+  const risks: string[] = []
+  if (effectiveLogical < input.required_logical_qubits) {
+    risks.push('WARNING: effective logical qubits (' + effectiveLogical + ') below requirement (' + input.required_logical_qubits + ') --- circuit knitting needed')
+  }
+  if (top.maturity === 'research') {
+    risks.push('Platform not yet production-ready: delays and limited availability expected')
+  }
+  if (top.two_qubit_gate_fidelity < input.min_gate_fidelity) {
+    risks.push('Gate fidelity below requirement: error correction or mitigation mandatory')
+  }
+  risks.push('Vendor lock-in risk: prefer open-standard pulse-level interfaces (OpenPulse/Qiskit Pulse)')
+
+  return {
+    selection_id: 'HWS-' + randInt(rng, 10000, 99999),
+    use_case: input.use_case,
+    candidates,
+    top_candidate: top.platform,
+    score_breakdown: scoreBreakdown,
+    qubit_overhead_factor: overhead,
+    effective_logical_qubits: effectiveLogical,
+    estimated_system_cost_millions: Math.round(cost * 100) / 100,
+    infrastructure_requirements: infraReqs,
+    roadmap_alignment: top.maturity === 'production' ? 'Deployable within 12 months' : top.maturity === 'pilot' ? 'Available via cloud access; on-premise 18-24 months' : 'Technology maturing; revisit in 24-36 months',
+    risk_factors: risks,
+  }
+}
+
+// Tool 8: NISQ Algorithm Advisor
+function analyzeNisqAdvisor(input: NisqAdvisorInput): NisqAdvisorResult {
+  const rng = seededRng(input)
+
+  const allCandidates: NisqAlgorithmCandidate[] = [
+    {
+      algorithm_name: 'Variational Quantum Eigensolver (VQE)',
+      qubit_requirement: 8,
+      depth_requirement: 100,
+      classical_components: ['classical optimizer', 'qubit tapering', 'grouping'],
+      error_mitigation_needed: ['readout correction'],
+      suitability_score: 0,
+      expected_speedup: 'heuristic, polynomial in some regimes',
+      noise_sensitivity: 'medium',
+    },
+    {
+      algorithm_name: 'Quantum Approximate Optimization (QAOA)',
+      qubit_requirement: input.qubit_budget,
+      depth_requirement: input.qubit_budget * 4,
+      classical_components: ['classical parameter optimizer', 'warm-starting'],
+      error_mitigation_needed: ['ZNE', 'readout correction'],
+      suitability_score: 0,
+      expected_speedup: 'constant-factor improvement over Goemans-Williamson',
+      noise_sensitivity: 'medium',
+    },
+    {
+      algorithm_name: 'Variational Quantum Linear Solver (VQLS)',
+      qubit_requirement: Math.ceil(Math.log2(Math.max(input.qubit_budget, 8))),
+      depth_requirement: 200,
+      classical_components: ['classical linear algebra preconditioner', 'Hadamard test circuits'],
+      error_mitigation_needed: ['ZNE', 'probabilistic error cancellation'],
+      suitability_score: 0,
+      expected_speedup: 'exponential for sparse, well-conditioned systems',
+      noise_sensitivity: 'high',
+    },
+    {
+      algorithm_name: 'Quantum Boltzmann Machine',
+      qubit_requirement: Math.min(20, input.qubit_budget),
+      depth_requirement: 50,
+      classical_components: ['classical Gibbs sampling', 'gradient descent'],
+      error_mitigation_needed: ['readout correction'],
+      suitability_score: 0,
+      expected_speedup: 'improved sampling from multimodal distributions',
+      noise_sensitivity: 'low',
+    },
+    {
+      algorithm_name: 'Quantum Generative Adversarial Network (qGAN)',
+      qubit_requirement: Math.min(16, input.qubit_budget),
+      depth_requirement: 80,
+      classical_components: ['classical discriminator', 'loss function evaluation'],
+      error_mitigation_needed: ['ZNE'],
+      suitability_score: 0,
+      expected_speedup: 'fewer parameters for distribution learning',
+      noise_sensitivity: 'medium',
+    },
+    {
+      algorithm_name: 'Quantum Walk Sampling',
+      qubit_requirement: input.qubit_budget,
+      depth_requirement: Math.ceil(Math.sqrt(input.qubit_budget)) * 6,
+      classical_components: ['graph construction', 'step operator'],
+      error_mitigation_needed: [],
+      suitability_score: 0,
+      expected_speedup: 'quadratic in graph hitting time',
+      noise_sensitivity: 'high',
+    },
+  ]
+
+  const filtered = allCandidates.filter(c => c.qubit_requirement <= input.qubit_budget && c.depth_requirement <= input.depth_budget)
+
+  let candidates = filtered.length > 0 ? filtered.slice() : [allCandidates[0]]
+
+  for (const c of candidates) {
+    let score = 50
+    if (c.qubit_requirement <= input.qubit_budget * 0.5) score += 15
+    if (c.depth_requirement <= input.depth_budget * 0.5) score += 15
+    if (input.error_mitigation_budget === 'high' && c.error_mitigation_needed.length <= 2) score += 10
+    if (input.classical_compute_available === 'abundant' && c.classical_components.length > 1) score += 8
+    if (c.noise_sensitivity === 'low' && input.error_mitigation_budget === 'none') score += 12
+    score += randInt(rng, -5, 10)
+    c.suitability_score = Math.max(0, Math.min(100, score))
+  }
+
+  candidates.sort((a, b) => b.suitability_score - a.suitability_score)
+  const top = candidates[0]
+
+  let feasibility: string
+  if (top.qubit_requirement <= input.qubit_budget && top.depth_requirement <= input.depth_budget) {
+    feasibility = 'FEASIBLE: algorithm fits within NISQ constraints (' + top.qubit_requirement + ' qubits, ' + top.depth_requirement + ' depth)'
+  } else if (top.qubit_requirement > input.qubit_budget) {
+    feasibility = 'INFEASIBLE: qubit requirement (' + top.qubit_requirement + ') exceeds budget (' + input.qubit_budget + ')'
+  } else {
+    feasibility = 'INFEASIBLE: depth requirement (' + top.depth_requirement + ') exceeds budget (' + input.depth_budget + ')'
+  }
+
+  const mitMap: Record<string, string> = {
+    none: 'No error mitigation: use noise-aware circuit design and post-selection',
+    low: 'Basic readout correction and zero-noise extrapolation',
+    medium: 'ZNE + measurement error mitigation + dynamical decoupling',
+    high: 'Full PEC or virtual distillation for near-exact expectation values',
+  }
+
+  const tradeoffs: string[] = []
+  tradeoffs.push('Qubit-depth tradeoff: deeper circuits improve accuracy but accumulate noise faster')
+  tradeoffs.push('Classical overhead: ' + input.classical_compute_available + ' classical resources enable ' + (input.classical_compute_available === 'abundant' ? 'shot-loop-parallelised optimisation' : input.classical_compute_available === 'moderate' ? 'batched parameter updates' : 'sequential optimisation with caching'))
+  tradeoffs.push('NISQ constraint: keep total gate count below ' + (input.qubit_budget * input.depth_budget * 0.8) + ' for meaningful signal')
+  if (input.accuracy_target > 0.95) {
+    tradeoffs.push('High accuracy target (>95%): NISQ era unlikely to achieve --- consider fault-tolerant algorithms')
+  }
+
+  const platforms: string[] = []
+  if (input.qubit_budget <= 50) platforms.push('IBM Qiskit Runtime', 'Amazon Braket', 'Azure Quantum')
+  else platforms.push('IBM Quantum (100+ qubit systems)', 'Google Quantum AI', 'IonQ via cloud')
+
+  return {
+    advisory_id: 'NISQ-' + randInt(rng, 10000, 99999),
+    problem_category: input.problem_category,
+    candidates,
+    recommended_algorithm: top.algorithm_name,
+    feasibility_assessment: feasibility,
+    error_mitigation_strategy: mitMap[input.error_mitigation_budget],
+    hybrid_decomposition: 'Problem partitioned into: (1) quantum subroutine (' + top.qubit_requirement + ' qubits) + (2) classical control + (' + top.classical_components.join(', ') + ')',
+    resource_tradeoffs: tradeoffs,
+    accuracy_achievable: Math.min(input.accuracy_target, top.noise_sensitivity === 'high' ? 0.80 : top.noise_sensitivity === 'medium' ? 0.90 : 0.95),
+    circuit_generation_platforms: platforms,
+    key_references: [
+      'Preskill (2018) "Quantum Computing in the NISQ era and beyond"',
+      'Bharti et al. (2022) "Noisy intermediate-scale quantum algorithms"',
+      'Cerezo et al. (2021) "Variational quantum algorithms" Nature Reviews Physics',
+    ],
+  }
+}
+
+// ====================== Formatting Helpers ========================
+
+function generateMermaidGraph(title: string, nodes: string[]): string {
+  const lines = ['```mermaid', 'graph LR']
+  nodes.forEach((n, i) => {
+    if (i > 0) lines.push('    ' + nodes[i - 1].replace(/[\[\]]/g, '') + ' -->|step ' + i + '| ' + n.replace(/[\[\]]/g, ''))
+  })
   lines.push('```')
-  lines.push('')
-
-  if (result.candidates.length > 0) {
-    lines.push('### 📋 候选算法对比')
-    lines.push('| 算法 | 类别 | 量子比特 | 电路深度 | 加速比 | 成功概率 | 适配度 |')
-    lines.push('|------|------|----------|----------|--------|----------|--------|')
-    for (const c of result.candidates) {
-      lines.push('| ' + c.name + ' | ' + c.category + ' | ' + c.required_qubits + ' | ' + c.circuit_depth + ' | ' + c.expected_speedup + ' | ' + c.success_probability + ' | ' + c.suitability_score + ' |')
-    }
-    lines.push('')
-  }
-
-  lines.push('### 📋 资源估算')
-  lines.push('| 指标 | 数值 |')
-  lines.push('|------|------|')
-  lines.push('| 逻辑量子比特 | ' + result.resource_estimate.logical_qubits + ' |')
-  lines.push('| 物理量子比特 | ' + result.resource_estimate.physical_qubits.toLocaleString() + ' |')
-  lines.push('| T门总数 | ' + result.resource_estimate.t_gate_count.toLocaleString() + ' |')
-  lines.push('| 预估运行时间 | ' + result.resource_estimate.estimated_runtime_seconds + 's |')
-  lines.push('')
-
-  if (result.design_notes.length > 0) {
-    lines.push('### 📝 设计备注')
-    for (const n of result.design_notes) lines.push('- ' + n)
-    lines.push('')
-  }
-
-  lines.push('### 📋 协议合规清单')
-  lines.push('- [x] 算法复杂度分析完成')
-  lines.push('- [x] 量子资源估算完成')
-  lines.push('- [x] 噪声容忍度评估完成')
-  lines.push('- [x] 加速比理论验证完成')
-  lines.push('')
-  lines.push('---')
-  lines.push('*Quantum Algorithm Designer • v' + VERSION + ' • 2026 Quantum $60B+ market*')
-  return lines.join('\n')
+  return '\n' + lines.join('\n') + '\n'
 }
 
-// --- Tool 2: Error Correction Analyzer 报告 ---
-function formatErrorCorrectionReport(result: ErrorCorrectionResult): string {
-  const lines: string[] = []
-  lines.push('## 🛡️ Error Correction Analyzer — 量子纠错分析报告')
-  lines.push('')
-  lines.push('码类型: ' + result.code_type + ' | 码距: ' + result.code_distance + ' | 逻辑错误率: ' + result.logical_error_rate.toExponential(2))
-  lines.push('阈值达成: ' + (result.threshold_achieved ? '是' : '否') + ' | 物理/逻辑比: ' + result.physical_qubits_per_logical)
-  lines.push('')
-  lines.push('### 🔗 纠错流程拓扑')
-  lines.push('')
-  lines.push('```mermaid')
-  lines.push('graph LR')
-  lines.push('    DATA[Data Qubits] -->|encode| CODE[Surface Code d=' + result.code_distance + ']')
-  lines.push('    CODE -->|syndrome| ANCILLARY[Ancilla Qubits]')
-  lines.push('    ANCILLARY -->|measure| SYNDROME[Syndrome Extraction]')
-  lines.push('    SYNDROME -->|decode| DECODER[MWPM Decoder]')
-  lines.push('    DECODER -->|correct| CORRECTED[Corrected State]')
-  lines.push('```')
-  lines.push('')
-
-  lines.push('### 📋 逻辑错误指标')
-  lines.push('| 指标 | 数值 | 单位 | 阈值比较 |')
-  lines.push('|------|------|------|----------|')
-  for (const m of result.metrics) {
-    lines.push('| ' + m.metric + ' | ' + m.value + ' | ' + m.unit + ' | ' + m.threshold_comparison + ' |')
+// Tool 1 Formatter
+function formatCircuitDesignReport(r: CircuitDesignResult): string {
+  const L: string[] = []
+  L.push('## Quantum Circuit Designer')
+  L.push('')
+  L.push('Circuit ID: ' + r.circuit_id + ' | Algorithm: ' + r.algorithm + ' | Qubits: ' + r.qubit_count)
+  L.push('')
+  L.push('| Metric | Value |')
+  L.push('|--------|-------|')
+  L.push('| Total gates | ' + r.gate_count_total.toLocaleString() + ' |')
+  L.push('| Circuit depth | ' + r.circuit_depth.toLocaleString() + ' |')
+  L.push('| Single-qubit gates | ' + r.single_qubit_gates.toLocaleString() + ' |')
+  L.push('| Two-qubit gates | ' + r.two_qubit_gates.toLocaleString() + ' |')
+  L.push('| T gates | ' + r.t_gate_count.toLocaleString() + ' |')
+  L.push('| Estimated fidelity | ' + (r.estimated_fidelity * 100).toFixed(3) + '% |')
+  L.push('| Backend compatibility | ' + r.backend_compatibility.join(', ') + ' |')
+  L.push('')
+  L.push('### Layers')
+  L.push('| Index | Gate | Targets | Params | Depth |')
+  L.push('|-------|------|---------|--------|-------|')
+  for (const layer of r.layers) {
+    L.push('| ' + layer.index + ' | ' + layer.gate_type + ' | ' + layer.target_qubits.join(',') + ' | ' + (layer.parameters || '-') + ' | ' + layer.depth_contribution + ' |')
   }
-  lines.push('')
-
-  if (result.recommendations.length > 0) {
-    lines.push('### 📝 优化建议')
-    for (const r of result.recommendations) lines.push('- ' + r)
-    lines.push('')
-  }
-
-  lines.push('### 📋 协议合规清单')
-  lines.push('- [x] 码距与逻辑错误率关系验证')
-  lines.push('- [x] 物理错误率阈值检查')
-  lines.push('- [x] 综合征提取方案评估')
-  lines.push('- [x] 资源开销估算完成')
-  lines.push('')
-  lines.push('---')
-  lines.push('*Error Correction Analyzer • v' + VERSION + ' • Surface Code / Topological Code*')
-  return lines.join('\n')
+  L.push('')
+  L.push('### Synthesis Notes')
+  for (const n of r.synthesis_notes) L.push('- ' + n)
+  L.push('')
+  L.push('---')
+  L.push('*Quantum Circuit Designer v' + VERSION + ' | Gates: ' + r.gate_count_total + ' | Depth: ' + r.circuit_depth + ' | Fidelity: ' + (r.estimated_fidelity * 100).toFixed(3) + '%*')
+  return L.join('\n')
 }
 
-// --- Tool 3: Quantum Circuit Optimizer 报告 ---
-function formatCircuitOptimizationReport(result: CircuitOptimizationResult): string {
-  const lines: string[] = []
-  lines.push('## 🔧 Quantum Circuit Optimizer — 量子电路优化报告')
-  lines.push('')
-  lines.push(result.optimization_summary)
-  lines.push('保真度估计: ' + result.total_fidelity_estimate + ' | SWAP开销: ' + result.swap_overhead)
-  lines.push('')
-  lines.push('### 🔗 优化流程拓扑')
-  lines.push('')
-  lines.push('```mermaid')
-  lines.push('graph TD')
-  lines.push('    INPUT[Input Circuit: ' + result.original_gates + ' gates] -->|pass 1| P1[Gate Merge]')
-  lines.push('    P1 -->|pass 2| P2[Redundancy Elimination]')
-  lines.push('    P2 -->|pass 3| P3[Routing & Decomposition]')
-  lines.push('    P3 -->|output| OUTPUT[Optimized: ' + result.optimized_gates + ' gates]')
-  lines.push('```')
-  lines.push('')
-
-  lines.push('### 📋 优化遍详情')
-  lines.push('| 优化遍 | 门数(前) | 门数(后) | 深度(前) | 深度(后) | 改善率 |')
-  lines.push('|--------|----------|----------|----------|----------|--------|')
-  for (const p of result.passes) {
-    lines.push('| ' + p.pass_name + ' | ' + p.gates_before + ' | ' + p.gates_after + ' | ' + p.depth_before + ' | ' + p.depth_after + ' | ' + p.improvement_pct + '% |')
-  }
-  lines.push('')
-
-  lines.push('### 📋 资源对比')
-  lines.push('| 指标 | 优化前 | 优化后 | 改善 |')
-  lines.push('|------|--------|--------|------|')
-  lines.push('| 门数 | ' + result.original_gates + ' | ' + result.optimized_gates + ' | ' + Math.round((1 - result.optimized_gates / result.original_gates) * 100) + '% |')
-  lines.push('| 深度 | ' + result.original_depth + ' | ' + result.optimized_depth + ' | ' + Math.round((1 - result.optimized_depth / result.original_depth) * 100) + '% |')
-  lines.push('| 保真度 | — | ' + result.total_fidelity_estimate + ' | — |')
-  lines.push('')
-
-  lines.push('### 📋 协议合规清单')
-  lines.push('- [x] 门集兼容性验证')
-  lines.push('- [x] 连通性约束满足')
-  lines.push('- [x] 保真度损失评估')
-  lines.push('- [x] SWAP路由开销计算')
-  lines.push('')
-  lines.push('---')
-  lines.push('*Quantum Circuit Optimizer • v' + VERSION + ' • Depth & Gate Count Minimization*')
-  return lines.join('\n')
+// Tool 2 Formatter
+function formatVqeConfigReport(r: VqeConfigResult): string {
+  const L: string[] = []
+  L.push('## VQE Configurator')
+  L.push('')
+  L.push('Config ID: ' + r.config_id + ' | Molecule: ' + r.molecule + ' | Basis: ' + r.basis_set)
+  L.push('')
+  L.push('| Metric | Value |')
+  L.push('|--------|-------|')
+  L.push('| Active orbitals | ' + r.active_orbitals + ' |')
+  L.push('| Active electrons | ' + r.active_electrons + ' |')
+  L.push('| Qubit requirement | ' + r.qubit_requirement + ' |')
+  L.push('| Ansatz | ' + r.ansatz_type + ' |')
+  L.push('| Variational parameters | ' + r.variational_parameters + ' |')
+  L.push('| Depth per iteration | ' + r.circuit_depth_per_iteration + ' |')
+  L.push('| Optimizer | ' + r.optimizer + ' |')
+  L.push('| Max iterations | ' + r.max_iterations + ' |')
+  L.push('| Convergence threshold | ' + r.convergence_threshold + ' |')
+  L.push('| Expected accuracy | ' + (r.expected_accuracy * 100).toFixed(1) + '% |')
+  L.push('| Resource estimate | ' + r.resource_estimate_hours + ' GPU-QPU hours |')
+  L.push('')
+  L.push('### Error Mitigation')
+  for (const m of r.error_mitigation_recommended) L.push('- ' + m)
+  L.push('')
+  L.push('### Convergence')
+  L.push('- ' + r.convergence_behavior)
+  L.push('')
+  L.push('---')
+  L.push('*VQE Configurator v' + VERSION + ' | ' + r.variational_parameters + ' params | ' + r.optimizer + ' opt*')
+  return L.join('\n')
 }
 
-// --- Tool 4: NISQ Application Mapper 报告 ---
-function formatNISQApplicationReport(result: NISQApplicationResult): string {
-  const lines: string[] = []
-  lines.push('## 🗺️ NISQ Application Mapper — NISQ应用映射报告')
-  lines.push('')
-  lines.push('领域: ' + result.domain + ' | 可行映射: ' + result.mappings.length + ' | 时间线: ' + result.timeline_estimate)
-  if (result.best_mapping) {
-    lines.push('最佳映射: ' + result.best_mapping.algorithm + ' (可行性: ' + result.best_mapping.feasibility + ')')
+// Tool 3 Formatter
+function formatErrorCorrectionReport(r: ErrorCorrectionResult): string {
+  const L: string[] = []
+  L.push('## Error Correction Mapper')
+  L.push('')
+  L.push('Mapping ID: ' + r.mapping_id + ' | Code: ' + r.code_family + ' | Distance: ' + r.code_distance)
+  L.push('')
+  L.push('| Metric | Value |')
+  L.push('|--------|-------|')
+  L.push('| Logical error rate | ' + r.logical_error_rate.toExponential(2) + ' |')
+  L.push('| Threshold surpassed | ' + (r.threshold_surpassed ? 'yes' : 'no') + ' |')
+  L.push('| Physical / Logical | ' + r.physical_qubits_per_logical + ' |')
+  L.push('| Total physical | ' + r.total_physical_qubits.toLocaleString() + ' |')
+  L.push('| Syndrome rounds | ' + r.syndrome_extraction_rounds + ' |')
+  L.push('| Decoder | ' + r.decoder_type + ' |')
+  L.push('| Decoder latency | ' + r.decoder_latency_ns + ' ns |')
+  L.push('| Logical fidelity | ' + (r.logical_fidelity_estimate * 100).toFixed(3) + '% |')
+  L.push('')
+  L.push('### Error Budget')
+  L.push('| Source | Fraction |')
+  L.push('|--------|----------|')
+  for (const [k, v] of Object.entries(r.error_budget_breakdown)) {
+    L.push('| ' + k.replace(/_/g, ' ') + ' | ' + v.toFixed(4) + ' |')
   }
-  lines.push('')
-  lines.push('### 🔗 应用映射拓扑')
-  lines.push('')
-  lines.push('```mermaid')
-  lines.push('graph LR')
-  lines.push('    DOMAIN[Domain: ' + result.domain + '] -->|map| ALGO[Algorithm Selection]')
-  lines.push('    ALGO -->|resource check| NISQ[NISQ Constraints]')
-  lines.push('    NISQ -->|mitigate| EM[Error Mitigation]')
-  lines.push('    EM -->|execute| QPU[QPU Execution]')
-  lines.push('    QPU -->|post-process| CLASSICAL[Classical Post-processing]')
-  lines.push('```')
-  lines.push('')
-
-  if (result.mappings.length > 0) {
-    lines.push('### 📋 算法映射表')
-    lines.push('| 算法 | 量子比特 | 深度 | 经典预处理 | 经典后处理 | 精度 | 可行性 |')
-    lines.push('|------|----------|------|------------|------------|------|--------|')
-    for (const m of result.mappings) {
-      lines.push('| ' + m.algorithm + ' | ' + m.qubit_requirement + ' | ' + m.depth_requirement + ' | ' + m.classical_preprocessing + ' | ' + m.classical_postprocessing + ' | ' + m.expected_accuracy + ' | ' + m.feasibility + ' |')
-    }
-    lines.push('')
-  }
-
-  lines.push('### 📋 错误缓解与硬件')
-  lines.push('| 项目 | 内容 |')
-  lines.push('|------|------|')
-  lines.push('| 错误缓解影响 | ' + result.error_mitigation_impact + ' |')
-  lines.push('| 硬件推荐 | ' + result.hardware_recommendation + ' |')
-  lines.push('| 时间线估计 | ' + result.timeline_estimate + ' |')
-  lines.push('')
-
-  lines.push('### 📋 协议合规清单')
-  lines.push('- [x] NISQ约束条件验证')
-  lines.push('- [x] 错误缓解策略配置')
-  lines.push('- [x] 经典-经典混合流程设计')
-  lines.push('- [x] 可行性评估完成')
-  lines.push('')
-  lines.push('---')
-  lines.push('*NISQ Application Mapper • v' + VERSION + ' • Variational & Hybrid Algorithms*')
-  return lines.join('\n')
+  L.push('')
+  L.push('### Recommendations')
+  for (const rec of r.recommendations) L.push('- ' + rec)
+  L.push('')
+  L.push('---')
+  L.push('*Error Correction Mapper v' + VERSION + ' | ' + r.code_family + ' d=' + r.code_distance + ' | ' + r.total_physical_qubits + ' phys qubits*')
+  return L.join('\n')
 }
 
-// --- Tool 5: QML Hybrid 报告 ---
-function formatQMLHybridReport(result: QMLHybridResult): string {
-  const lines: string[] = []
-  lines.push('## 🧠 Quantum Machine Learning Hybrid — 量子-经典混合ML报告')
-  lines.push('')
-  lines.push('任务: ' + result.ml_task + ' | 架构: ' + result.architecture + ' | 总参数: ' + result.total_parameters)
-  lines.push('量子优势: ' + result.quantum_advantage_estimate)
-  lines.push('收敛保证: ' + result.convergence_guarantee)
-  lines.push('')
-  lines.push('### 🔗 混合架构拓扑')
-  lines.push('')
-  lines.push('```mermaid')
-  lines.push('graph TD')
-  lines.push('    DATA[Input Data] -->|encode| ENC[Encoding Layer]')
-  lines.push('    ENC -->|quantum| Q1[Quantum Layer 1]')
-  lines.push('    Q1 -->|entangle| Q2[Quantum Layer 2]')
-  lines.push('    Q2 -->|measure| MEAS[Measurement]')
-  lines.push('    MEAS -->|classical| CLAS[Classical Head]')
-  lines.push('    CLAS -->|output| OUT[Prediction]')
-  lines.push('```')
-  lines.push('')
-
-  lines.push('### 📋 网络层结构')
-  lines.push('| 层名称 | 类型 | 参数量 | 输出维度 | 纠缠模式 |')
-  lines.push('|--------|------|--------|----------|----------|')
-  for (const l of result.layers) {
-    lines.push('| ' + l.layer_name + ' | ' + l.layer_type + ' | ' + l.parameters + ' | ' + l.output_dimension + ' | ' + l.entanglement_pattern + ' |')
+// Tool 4 Formatter
+function formatQuantumOptimizerReport(r: QuantumOptimizerResult): string {
+  const L: string[] = []
+  L.push('## Quantum Optimizer')
+  L.push('')
+  L.push('Encoding ID: ' + r.encoding_id + ' | Problem: ' + r.problem_type + ' | Hamiltonian: ' + r.hamiltonian_type)
+  L.push('')
+  L.push('| Metric | Value |')
+  L.push('|--------|-------|')
+  L.push('| Qubits required | ' + r.qubits_required + ' |')
+  L.push('| Hamiltonian terms | ' + r.terms_in_hamiltonian.toLocaleString() + ' |')
+  L.push('| QAOA layers (p) | ' + r.p_qaoa_layers + ' |')
+  L.push('| Classical variables | ' + r.classical_variables + ' |')
+  L.push('| Penalty weight | ' + r.penalty_weight_applied + ' |')
+  L.push('| Ground energy est | ' + r.ground_state_energy_estimate + ' |')
+  L.push('| Approx ratio | ' + r.approximation_ratio_expected.toFixed(3) + ' |')
+  L.push('| Mixer | ' + r.mixer_type + ' |')
+  L.push('| Opt rounds est | ' + r.optimization_rounds_estimate + ' |')
+  L.push('')
+  L.push('### Encoding Map')
+  L.push('| Variable | Qubit | Coeff | Constraint |')
+  L.push('|----------|-------|-------|------------|')
+  for (const e of r.encoding_map.slice(0, 15)) {
+    L.push('| ' + e.variable_name + ' | ' + e.qubit_index + ' | ' + e.hamiltonian_coeff + ' | ' + (e.constraint_applied ? 'yes' : 'no') + ' |')
   }
-  lines.push('')
-
-  lines.push('### 📋 训练复杂度')
-  lines.push('| 指标 | 值 |')
-  lines.push('|------|-----|')
-  lines.push('| 总参数量 | ' + result.total_parameters + ' |')
-  lines.push('| 训练复杂度 | ' + result.training_complexity + ' |')
-  lines.push('| 收敛保证 | ' + result.convergence_guarantee + ' |')
-  lines.push('')
-
-  lines.push('### 📋 协议合规清单')
-  lines.push('- [x] 量子-经典接口设计验证')
-  lines.push('- [x] 参数化电路表达力评估')
-  lines.push('- [x] 梯度计算方案确认')
-  lines.push('- [x]  barren plateau 风险评估')
-  lines.push('')
-  lines.push('---')
-  lines.push('*Quantum ML Hybrid • v' + VERSION + ' • Quantum Kernel & Variational Circuits*')
-  return lines.join('\n')
+  if (r.encoding_map.length > 15) L.push('| ... | ... | ... | ... |')
+  L.push('')
+  L.push('### Feasibility')
+  for (const f of r.feasibility_notes) L.push('- ' + f)
+  L.push('')
+  L.push('---')
+  L.push('*Quantum Optimizer v' + VERSION + ' | ' + r.problem_type + ' | ' + r.qubits_required + ' qubits*')
+  return L.join('\n')
 }
 
-// --- Tool 6: Quantum Cryptography Planner 报告 ---
-function formatCryptoPlannerReport(result: CryptoPlannerResult): string {
-  const lines: string[] = []
-  lines.push('## 🔐 Quantum Cryptography Planner — 量子密码规划报告')
-  lines.push('')
-  lines.push('协议类型: ' + result.protocol_type + ' | 安全级别: ' + result.security_level)
-  lines.push('有效安全比特: ' + result.effective_security_bits + ' | 密钥速率: ' + result.key_rate_achievable + ' bps')
-  lines.push('')
-  lines.push('### 🔗 密码部署拓扑')
-  lines.push('')
-  lines.push('```mermaid')
-  lines.push('graph TD')
-  lines.push('    ALICE[Alice] -->|quantum channel| QKD[QKD Link]')
-  lines.push('    QKD -->|key material| BOB[Bob]')
-  lines.push('    ALICE -->|classical auth| AUTH[Auth Channel]')
-  lines.push('    AUTH -->|verify| BOB')
-  lines.push('    QKD -->|key store| KM[Key Manager]')
-  lines.push('    KM -->|encrypt| APP[Application Data]')
-  lines.push('```')
-  lines.push('')
-
-  if (result.components.length > 0) {
-    lines.push('### 📋 组件清单')
-    lines.push('| 组件 | 技术 | 成熟度 | 安全比特 | 成本(USD) |')
-    lines.push('|------|------|--------|----------|-----------|')
-    for (const c of result.components) {
-      lines.push('| ' + c.component + ' | ' + c.technology + ' | ' + c.maturity + ' | ' + c.security_bits + ' | $' + c.cost_estimate_usd.toLocaleString() + ' |')
-    }
-    lines.push('')
+// Tool 5 Formatter
+function formatQmlModelReport(r: QmlModelResult): string {
+  const L: string[] = []
+  L.push('## QML Model Setup')
+  L.push('')
+  L.push('Model ID: ' + r.model_id + ' | Task: ' + r.task_type + ' | Ansatz: ' + r.quantum_ansatz)
+  L.push('')
+  L.push('| Metric | Value |')
+  L.push('|--------|-------|')
+  L.push('| Total variat. params | ' + r.total_variational_params + ' |')
+  L.push('| Circuit depth | ' + r.circuit_depth + ' |')
+  L.push('| Qubit requirement | ' + r.qubit_requirement + ' |')
+  L.push('| Measurement basis | ' + r.measurement_basis + ' |')
+  L.push('| Observable method | ' + r.expectation_value_method + ' |')
+  L.push('| Classical post-proc | ' + r.classical_postprocessing + ' |')
+  L.push('| Barren plateau risk | ' + r.barren_plateau_risk + ' |')
+  L.push('| Training complexity | ' + r.training_complexity + ' |')
+  L.push('| Measurement shots | ' + r.measurement_shots.toLocaleString() + ' |')
+  L.push('| Noise-aware training | ' + (r.noise_aware_training ? 'yes' : 'no') + ' |')
+  L.push('')
+  L.push('### Layers')
+  L.push('| Idx | Type | Qubits | Params | Unitary |')
+  L.push('|-----|------|--------|--------|---------|')
+  for (const layer of r.layers) {
+    L.push('| ' + layer.layer_index + ' | ' + layer.layer_type + ' | ' + layer.qubits_used + ' | ' + layer.parameter_count + ' | ' + layer.unitary_description + ' |')
   }
-
-  lines.push('### 📋 部署路线图')
-  for (const r of result.deployment_roadmap) lines.push('- ' + r)
-  lines.push('')
-
-  lines.push('### 📋 风险评估')
-  lines.push('- ' + result.risk_assessment)
-  lines.push('')
-
-  lines.push('### 📋 协议合规清单')
-  lines.push('- [x] NIST后量子密码标准对齐')
-  lines.push('- [x] QKD协议安全性证明')
-  lines.push('- [x] 密钥管理生命周期设计')
-  lines.push('- [x] 威胁模型覆盖验证')
-  lines.push('')
-  lines.push('---')
-  lines.push('*Quantum Cryptography Planner • v' + VERSION + ' • QKD / PQC / Hybrid*')
-  return lines.join('\n')
+  L.push('')
+  L.push('### Observables')
+  for (const o of r.observables) L.push('- ' + o)
+  L.push('')
+  L.push('---')
+  L.push('*QML Model Setup v' + VERSION + ' | ' + r.total_variational_params + ' params | ' + r.barren_plateau_risk + ' BP risk*')
+  return L.join('\n')
 }
 
-// --- Tool 7: Quantum Simulation Engineer 报告 ---
-function formatSimulationReport(result: SimulationResult): string {
-  const lines: string[] = []
-  lines.push('## 🔬 Quantum Simulation Engineer — 量子仿真工程报告')
-  lines.push('')
-  lines.push('系统类型: ' + result.system_type + ' | 仿真方法: ' + result.method)
-  lines.push('可达精度: ' + result.precision_achievable + ' | 经典加速比: ' + result.classical_comparison_speedup + 'x')
-  lines.push('')
-  lines.push('### 🔗 仿真流程拓扑')
-  lines.push('')
-  lines.push('```mermaid')
-  lines.push('graph LR')
-  lines.push('    HAM[Hamiltonian] -->|encode| PREP[State Preparation]')
-  lines.push('    PREP -->|evolve| EVOL[Time Evolution]')
-  lines.push('    EVOL -->|measure| OBS[Observable Measurement]')
-  lines.push('    OBS -->|analyze| RESULT[Simulation Result]')
-  lines.push('```')
-  lines.push('')
-
-  lines.push('### 📋 资源需求')
-  lines.push('| 资源 | 数值 | 单位 | 缩放关系 |')
-  lines.push('|------|------|------|----------|')
-  for (const r of result.resources) {
-    lines.push('| ' + r.resource + ' | ' + r.value + ' | ' + r.unit + ' | ' + r.scaling + ' |')
+// Tool 6 Formatter
+function formatMigrationReport(r: QuantumSafeMigrationResult): string {
+  const L: string[] = []
+  L.push('## Quantum-Safe Migration Planner')
+  L.push('')
+  L.push('Plan ID: ' + r.plan_id + ' | Risk score: ' + r.overall_risk_score + '/100 | Vulnerabilities: ' + r.vulnerability_count)
+  L.push('')
+  L.push('| Current | Replacement | Phase | Urgency | Effort (PM) | Threat |')
+  L.push('|---------|-------------|-------|---------|-------------|--------|')
+  for (const item of r.migration_items) {
+    L.push('| ' + item.current_scheme + ' | ' + item.replacement_scheme + ' | ' + item.migration_phase + ' | ' + item.urgency + ' | ' + item.effort_estimate_person_months + ' | ' + item.quantum_threat_level + ' |')
   }
-  lines.push('')
-
-  if (result.trotter_steps > 0) {
-    lines.push('### 📋 Trotter-Suzuki 参数')
-    lines.push('| 参数 | 值 |')
-    lines.push('|------|-----|')
-    lines.push('| Trotter步数 | ' + result.trotter_steps + ' |')
-    lines.push('| 每步门数 | ' + Math.round(result.trotter_steps * 0.3) + ' |')
-    lines.push('')
-  }
-
-  lines.push('### 📋 验证检查')
-  for (const v of result.validation_checks) lines.push('- ' + v)
-  lines.push('')
-
-  lines.push('### 📋 协议合规清单')
-  lines.push('- [x] 哈密顿量编码正确性')
-  lines.push('- [x] Trotter误差界分析')
-  lines.push('- [x] 经典基准对比验证')
-  lines.push('- [x] 守恒量数值检验')
-  lines.push('')
-  lines.push('---')
-  lines.push('*Quantum Simulation Engineer • v' + VERSION + ' • Hamiltonian Simulation*')
-  return lines.join('\n')
+  L.push('')
+  L.push('### Milestones')
+  for (const m of r.milestone_timeline) L.push('- ' + m)
+  L.push('')
+  L.push('### Crypto-Agility')
+  L.push('- ' + r.crypto_agility_framework)
+  L.push('')
+  L.push('---')
+  L.push('*Quantum-Safe Migration Planner v' + VERSION + ' | ' + r.total_effort_person_months + ' person-months total*')
+  return L.join('\n')
 }
 
-// --- Tool 8: Quantum Readiness Assessor 报告 ---
-function formatReadinessReport(result: ReadinessResult): string {
-  const lines: string[] = []
-  lines.push('## 📊 Quantum Readiness Assessor — 量子就绪评估报告')
-  lines.push('')
-  lines.push('总体就绪分: ' + result.overall_readiness_score + '/100 | 就绪等级: ' + result.readiness_level.toUpperCase())
-  lines.push('')
-  lines.push('### 🔗 就绪度雷达')
-  lines.push('')
-  lines.push('```mermaid')
-  lines.push('graph TD')
-  lines.push('    ORG[Organization] -->|assess| DIM1[Infrastructure: ' + (result.dimensions[0] ? result.dimensions[0].score : 0) + ']')
-  lines.push('    ORG -->|assess| DIM2[Talent: ' + (result.dimensions[1] ? result.dimensions[1].score : 0) + ']')
-  lines.push('    ORG -->|assess| DIM3[Use Cases: ' + (result.dimensions[2] ? result.dimensions[2].score : 0) + ']')
-  lines.push('    ORG -->|assess| DIM4[Investment: ' + (result.dimensions[3] ? result.dimensions[3].score : 0) + ']')
-  lines.push('    ORG -->|assess| DIM5[Awareness: ' + (result.dimensions[4] ? result.dimensions[4].score : 0) + ']')
-  lines.push('    ORG -->|assess| DIM6[Ecosystem: ' + (result.dimensions[5] ? result.dimensions[5].score : 0) + ']')
-  lines.push('```')
-  lines.push('')
-
-  lines.push('### 📋 就绪维度评分')
-  lines.push('| 维度 | 得分 | 满分 | 差距分析 | 优先级 |')
-  lines.push('|------|------|------|----------|--------|')
-  for (const d of result.dimensions) {
-    lines.push('| ' + d.dimension + ' | ' + d.score + ' | ' + d.max_score + ' | ' + d.gap_analysis + ' | ' + d.priority + ' |')
+// Tool 7 Formatter
+function formatHardwareReport(r: QuantumHardwareResult): string {
+  const L: string[] = []
+  L.push('## Quantum Hardware Selector')
+  L.push('')
+  L.push('Selection ID: ' + r.selection_id + ' | Use case: ' + r.use_case)
+  L.push('')
+  L.push('| Platform | Qubits | 2Q Fid | T1 (us) | Gate (ns) | Connectivity | Maturity | Score |')
+  L.push('|----------|--------|--------|---------|-----------|--------------|----------|-------|')
+  for (const c of r.candidates) {
+    L.push('| ' + c.platform + ' | ' + c.qubit_count + ' | ' + c.two_qubit_gate_fidelity.toFixed(3) + ' | ' + c.t1_coherence_us + ' | ' + c.gate_speed_ns + ' | ' + c.connectivity + ' | ' + c.maturity + ' | ' + c.score + ' |')
   }
-  lines.push('')
-
-  if (result.investment_recommendations.length > 0) {
-    lines.push('### 📋 投资建议')
-    for (const r of result.investment_recommendations) lines.push('- ' + r)
-    lines.push('')
+  L.push('')
+  L.push('### Top Pick')
+  L.push('**' + r.top_candidate + '**')
+  L.push('')
+  L.push('| Factor | Score |')
+  L.push('|--------|-------|')
+  for (const [k, v] of Object.entries(r.score_breakdown)) {
+    L.push('| ' + k.replace(/_/g, ' ') + ' | ' + v.toFixed(1) + ' |')
   }
-
-  if (result.skill_gaps.length > 0) {
-    lines.push('### 📋 技能缺口')
-    for (const s of result.skill_gaps) lines.push('- ' + s)
-    lines.push('')
-  }
-
-  if (result.roadmap_milestones.length > 0) {
-    lines.push('### 📋 路线图里程碑')
-    for (const m of result.roadmap_milestones) lines.push('- ' + m)
-    lines.push('')
-  }
-
-  lines.push('### 📋 协议合规清单')
-  lines.push('- [x] 多维度就绪度量化评估')
-  lines.push('- [x] 行业对标分析完成')
-  lines.push('- [x] 投资优先级排序完成')
-  lines.push('- [x] 人才缺口识别完成')
-  lines.push('')
-  lines.push('---')
-  lines.push('*Quantum Readiness Assessor • v' + VERSION + ' • Enterprise Quantum Readiness*')
-  return lines.join('\n')
+  L.push('')
+  L.push('### Infrastructure')
+  for (const i of r.infrastructure_requirements) L.push('- ' + i)
+  L.push('')
+  L.push('### Risks')
+  for (const rf of r.risk_factors) L.push('- ' + rf)
+  L.push('')
+  L.push('---')
+  L.push('*Quantum Hardware Selector v' + VERSION + ' | Effective logical qubits: ' + r.effective_logical_qubits + ' | Cost: $' + r.estimated_system_cost_millions + 'M*')
+  return L.join('\n')
 }
 
-// ==================== SECTION 5 — 插件注册 ====================
+// Tool 8 Formatter
+function formatNisqAdvisorReport(r: NisqAdvisorResult): string {
+  const L: string[] = []
+  L.push('## NISQ Algorithm Advisor')
+  L.push('')
+  L.push('Advisory ID: ' + r.advisory_id + ' | Category: ' + r.problem_category)
+  L.push('')
+  L.push('| Algorithm | Qubits | Depth | Score | Speedup | Noise |')
+  L.push('|-----------|--------|-------|-------|---------|-------|')
+  for (const c of r.candidates) {
+    L.push('| ' + c.algorithm_name + ' | ' + c.qubit_requirement + ' | ' + c.depth_requirement + ' | ' + c.suitability_score + ' | ' + c.expected_speedup + ' | ' + c.noise_sensitivity + ' |')
+  }
+  L.push('')
+  L.push('### Recommendation')
+  L.push('**' + r.recommended_algorithm + '**')
+  L.push('- Feasibility: ' + r.feasibility_assessment)
+  L.push('- Error mitigation: ' + r.error_mitigation_strategy)
+  L.push('- Hybrid decomposition: ' + r.hybrid_decomposition)
+  L.push('- Achievable accuracy: ' + (r.accuracy_achievable * 100).toFixed(1) + '%')
+  L.push('')
+  L.push('### Tradeoffs')
+  for (const t of r.resource_tradeoffs) L.push('- ' + t)
+  L.push('')
+  L.push('### References')
+  for (const ref of r.key_references) L.push('- ' + ref)
+  L.push('')
+  L.push('---')
+  L.push('*NISQ Algorithm Advisor v' + VERSION + ' | Platforms: ' + r.circuit_generation_platforms.join(', ') + '*')
+  return L.join('\n')
+}
+
+// ==================== Plugin Registration ========================
 
 export function apply(ctx: Context) {
   const tools = ctx.tools
 
-  // Tool 1: Quantum Algorithm Designer
+  // Tool 1: quantum_circuit_designer
   tools.register(defineTool({
-    name: 'quantum_algorithm_designer',
-    description: '量子算法设计 | Grover/Shor/QAOA/VQE/量子行走 | Design quantum algorithms for search, optimization, factoring, simulation, ML, and cryptography with resource estimation.',
-    parameters: {
-      design_input: {
-        type: 'string',
-        required: true,
-        description: 'JSON: problem_type (search|optimization|factoring|simulation|machine_learning|cryptography), problem_size, constraints{max_qubits, max_depth, noise_tolerance(low|medium|high)}, target_speedup (quadratic|exponential|polynomial)'
-      }
+    name: 'quantum_circuit_designer',
+    description: 'Design quantum circuits for Grover, Shor, QFT, QAOA, VQE, Bernstein-Vazirani, or quantum walk algorithms. Returns gate counts, depth, fidelity estimates, layer decomposition, and backend compatibility for superconducting, trapped-ion, photonic, neutral-atom, or topological hardware.',
+    inputSchema: {
+      type: 'object',
+      required: ['algorithm', 'qubit_count', 'optimization_level', 'target_backend'],
+      properties: {
+        algorithm: { type: 'string', enum: ['grover', 'shor', 'qft', 'qaoa', 'vqe', 'bernstein', 'quantum_walk'], description: 'Target quantum algorithm' },
+        qubit_count: { type: 'integer', minimum: 2, maximum: 1000, description: 'Number of qubits to use' },
+        optimization_level: { type: 'integer', enum: [0, 1, 2, 3], description: 'Circuit optimization aggressiveness (0=none, 3=maximum)' },
+        target_backend: { type: 'string', enum: ['superconducting', 'trapped_ion', 'photonic', 'neutral_atom', 'topological'], description: 'Target hardware platform' },
+        max_depth: { type: 'integer', description: 'Maximum allowed circuit depth (optional)' },
+        entanglement_pattern: { type: 'string', enum: ['linear', 'circular', 'full', 'star', 'custom'], description: 'Qubit entanglement topology (optional)' },
+      },
     },
-    output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
-    async execute(args: { design_input: string }) {
-      const input: AlgorithmDesignInput = JSON.parse(args.design_input)
-      return formatAlgorithmDesignReport(analyzeAlgorithmDesign(input))
-    }
+    outputSchema: {
+      circuit_id: { type: 'string', description: 'Unique circuit identifier' },
+      algorithm: { type: 'string', description: 'Algorithm name' },
+      qubit_count: { type: 'integer', description: 'Number of qubits' },
+      gate_count_total: { type: 'integer', description: 'Total number of gates' },
+      circuit_depth: { type: 'integer', description: 'Circuit depth' },
+      single_qubit_gates: { type: 'integer', description: 'Number of single-qubit gates (H, X, T, S, Rx, Ry, Rz)' },
+      two_qubit_gates: { type: 'integer', description: 'Number of two-qubit gates (CNOT, CZ, SWAP)' },
+      t_gate_count: { type: 'integer', description: 'Number of T and Tdg gates (magic-state-intensive)' },
+      estimated_fidelity: { type: 'number', description: 'Estimated overall circuit fidelity (0-1)' },
+      backend_compatibility: { type: 'array', items: { type: 'string' }, description: 'List of compatible backends' },
+      layers: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            index: { type: 'integer' },
+            gate_type: { type: 'string' },
+            target_qubits: { type: 'array', items: { type: 'integer' } },
+            parameters: { type: 'string' },
+            depth_contribution: { type: 'integer' },
+          },
+        },
+        description: 'Circuit layer decomposition',
+      },
+      synthesis_notes: { type: 'array', items: { type: 'string' }, description: 'Synthesises recommendations' },
+    },
+    examples: [
+      {
+        input: JSON.stringify({ algorithm: 'qaoa', qubit_count: 16, optimization_level: 2, target_backend: 'superconducting', entanglement_pattern: 'linear' }),
+        output: JSON.stringify({ circuit_id: 'QC-82741', gate_count_total: 168, circuit_depth: 72, estimated_fidelity: 0.98234 }),
+      },
+      {
+        input: JSON.stringify({ algorithm: 'qft', qubit_count: 32, optimization_level: 1, target_backend: 'trapped_ion' }),
+        output: JSON.stringify({ circuit_id: 'QC-61529', gate_count_total: 1584, circuit_depth: 1024, t_gate_count: 64 }),
+      },
+    ],
+    async execute(args: { input_data: string }) {
+      return formatCircuitDesignReport(analyzeCircuitDesign(JSON.parse(args.input_data) as CircuitDesignInput))
+    },
   }))
 
-  // Tool 2: Error Correction Analyzer
+  // Tool 2: vqe_configurator
   tools.register(defineTool({
-    name: 'error_correction_analyzer',
-    description: '量子纠错分析 | 表面码/稳定子码/拓扑码/逻辑错误率 | Analyze quantum error correction codes: surface, color, topological, stabilizer, bosonic codes with threshold analysis.',
-    parameters: {
-      ec_input: {
-        type: 'string',
-        required: true,
-        description: 'JSON: code_type (surface|color|topological|stabilizer|bosonic), code_distance, physical_error_rate, qubit_count, syndrome_extraction (shor|steane|flag|single_shot)'
-      }
+    name: 'vqe_configurator',
+    description: 'Configure a Variational Quantum Eigensolver (VQE) for molecular simulation. Select molecule, basis set, UCCSD/HardwareEfficient/ADAPT-VQE ansatz, classical optimizer, noise model, and error mitigation strategy. Returns qubit requirements, parameter count, convergence behavior, and runtime estimate.',
+    inputSchema: {
+      type: 'object',
+      required: ['molecule', 'basis_set', 'ansatz_type', 'optimizer', 'max_iterations', 'convergence_threshold'],
+      properties: {
+        molecule: { type: 'string', enum: ['H2', 'LiH', 'H2O', 'NH3', 'CH4', 'C2H4', 'FeMoCo', 'custom'], description: 'Target molecule' },
+        basis_set: { type: 'string', enum: ['sto-3g', '6-31g', 'cc-pvdz', 'aug-cc-pvqz'], description: 'Quantum chemistry basis set' },
+        ansatz_type: { type: 'string', enum: ['UCCSD', 'UCCD', 'HardwareEfficient', 'QAOA-inspired', 'ADAPT-VQE'], description: 'Variational ansatz family' },
+        optimizer: { type: 'string', enum: ['COBYLA', 'L-BFGS-B', 'SPSA', 'Adam', 'Nelder-Mead'], description: 'Classical optimizer' },
+        max_iterations: { type: 'integer', minimum: 10, maximum: 10000, description: 'Maximum optimizer iterations' },
+        convergence_threshold: { type: 'number', description: 'Energy convergence threshold in Hartree (e.g. 1e-6)' },
+        noise_model: { type: 'string', enum: ['ideal', 'depolarizing', 'amplitude_damping', 'real_device'], description: 'Noise model for simulation (optional)' },
+      },
     },
-    output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
-    async execute(args: { ec_input: string }) {
-      const input: ErrorCorrectionInput = JSON.parse(args.ec_input)
-      return formatErrorCorrectionReport(analyzeErrorCorrection(input))
-    }
+    outputSchema: {
+      config_id: { type: 'string', description: 'VQE configuration ID' },
+      molecule: { type: 'string', description: 'Target molecule' },
+      basis_set: { type: 'string', description: 'Basis set identifier' },
+      active_orbitals: { type: 'integer', description: 'Number of active orbitals' },
+      active_electrons: { type: 'integer', description: 'Number of active electrons' },
+      qubit_requirement: { type: 'integer', description: 'Qubits needed (Jordan-Wigner)' },
+      ansatz_type: { type: 'string', description: 'Selected ansatz' },
+      variational_parameters: { type: 'integer', description: 'Number of trainable parameters' },
+      circuit_depth_per_iteration: { type: 'integer', description: 'Depth per VQE iteration' },
+      optimizer: { type: 'string', description: 'Classical optimizer' },
+      max_iterations: { type: 'integer', description: 'Max iterations' },
+      convergence_threshold: { type: 'number', description: 'Convergence threshold Hartree' },
+      error_mitigation_recommended: { type: 'array', items: { type: 'string' }, description: 'Recommended error mitigation techniques' },
+      energy_unit: { type: 'string', description: 'Energy unit (Hartree)' },
+      expected_accuracy: { type: 'number', description: 'Expected accuracy fraction' },
+      convergence_behavior: { type: 'string', description: 'Expected convergence profile' },
+      resource_estimate_hours: { type: 'number', description: 'Estimated GPU-QPU compute hours' },
+    },
+    examples: [
+      {
+        input: JSON.stringify({ molecule: 'H2O', basis_set: 'sto-3g', ansatz_type: 'UCCSD', optimizer: 'COBYLA', max_iterations: 500, convergence_threshold: 1e-5, noise_model: 'depolarizing' }),
+        output: JSON.stringify({ config_id: 'VQE-38421', qubit_requirement: 20, variational_parameters: 58, expected_accuracy: 0.832 }),
+      },
+      {
+        input: JSON.stringify({ molecule: 'LiH', basis_set: '6-31g', ansatz_type: 'HardwareEfficient', optimizer: 'SPSA', max_iterations: 1000, convergence_threshold: 1e-6 }),
+        output: JSON.stringify({ config_id: 'VQE-90218', qubit_requirement: 12, variational_parameters: 48, resource_estimate_hours: 14.7 }),
+      },
+    ],
+    async execute(args: { input_data: string }) {
+      return formatVqeConfigReport(analyzeVqeConfig(JSON.parse(args.input_data) as VqeConfigInput))
+    },
   }))
 
-  // Tool 3: Quantum Circuit Optimizer
+  // Tool 3: error_correction_mapper
   tools.register(defineTool({
-    name: 'quantum_circuit_optimizer',
-    description: '量子电路优化 | 门分解/路由/深度压缩/噪声感知 | Optimize quantum circuits: gate merging, redundancy elimination, SWAP routing, template matching with fidelity estimation.',
-    parameters: {
-      circuit_input: {
-        type: 'string',
-        required: true,
-        description: 'JSON: circuit_description, gate_count, depth, target_gateset (clifford_t|universal|native|ion_trap), optimization_target (depth|gate_count|fidelity|connectivity), qubit_connectivity (all_to_all|linear|grid|heavy_hex)'
-      }
+    name: 'error_correction_mapper',
+    description: 'Map a quantum error correction code (surface, color, toric, Steane, Shor, GKP, LDPC) to specific hardware parameters. Returns logical error rate, physical qubit overhead, decoder type and latency, syndrome extraction rounds, error budget breakdown, and fault-tolerance recommendations.',
+    inputSchema: {
+      type: 'object',
+      required: ['code_family', 'code_distance', 'physical_error_rate', 'logical_qubit_target', 'syndrome_method'],
+      properties: {
+        code_family: { type: 'string', enum: ['surface', 'color', 'toric', 'steane', 'shor', 'bosonic_GKP', 'ldpc'], description: 'QEC code family' },
+        code_distance: { type: 'integer', minimum: 3, maximum: 21, description: 'Code distance (odd numbers preferred)' },
+        physical_error_rate: { type: 'number', description: 'Physical gate error rate (e.g. 1e-3)' },
+        logical_qubit_target: { type: 'integer', minimum: 1, description: 'Number of logical qubits needed' },
+        syndrome_method: { type: 'string', enum: ['shor', 'steane', 'flag', 'single_shot'], description: 'Syndrome extraction method' },
+      },
     },
-    output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
-    async execute(args: { circuit_input: string }) {
-      const input: CircuitOptimizationInput = JSON.parse(args.circuit_input)
-      return formatCircuitOptimizationReport(analyzeCircuitOptimization(input))
-    }
+    outputSchema: {
+      mapping_id: { type: 'string', description: 'QEC mapping ID' },
+      code_family: { type: 'string', description: 'Code family used' },
+      code_distance: { type: 'integer', description: 'Code distance' },
+      logical_error_rate: { type: 'number', description: 'Estimated logical error rate per syndrome round' },
+      threshold_surpassed: { type: 'boolean', description: 'True if physical error rate is below threshold' },
+      physical_qubits_per_logical: { type: 'integer', description: 'Physical qubits per logical qubit' },
+      total_physical_qubits: { type: 'integer', description: 'Total physical qubits required' },
+      syndrome_extraction_rounds: { type: 'integer', description: 'Syndrome extraction rounds needed' },
+      decoder_type: { type: 'string', description: 'Decoder algorithm name' },
+      decoder_latency_ns: { type: 'number', description: 'Decoder latency in nanoseconds' },
+      logical_fidelity_estimate: { type: 'number', description: 'Estimated logical state fidelity' },
+      overhead_ratio: { type: 'number', description: 'Physical-to-logical qubit ratio' },
+      error_budget_breakdown: { type: 'object', description: 'Error budget components: single_qubit_gate, two_qubit_gate, measurement, idling, state_preparation' },
+      recommendations: { type: 'array', items: { type: 'string' }, description: 'Hardware and code optimization recommendations' },
+    },
+    examples: [
+      {
+        input: JSON.stringify({ code_family: 'surface', code_distance: 7, physical_error_rate: 0.001, logical_qubit_target: 4, syndrome_method: 'single_shot' }),
+        output: JSON.stringify({ mapping_id: 'ECM-55329', logical_error_rate: '1.00e-15', threshold_surpassed: true, physical_qubits_per_logical: 98, total_physical_qubits: 392 }),
+      },
+      {
+        input: JSON.stringify({ code_family: 'bosonic_GKP', code_distance: 3, physical_error_rate: 0.005, logical_qubit_target: 2, syndrome_method: 'flag' }),
+        output: JSON.stringify({ mapping_id: 'ECM-27841', total_physical_qubits: 2, decoder_type: 'Maximum-likelihood GKP decoder', decoder_latency_ns: 137 }),
+      },
+    ],
+    async execute(args: { input_data: string }) {
+      return formatErrorCorrectionReport(analyzeErrorCorrection(args as unknown as ErrorCorrectionInput))
+    },
   }))
 
-  // Tool 4: NISQ Application Mapper
+  // Tool 4: quantum_optimizer
   tools.register(defineTool({
-    name: 'nisq_application_mapper',
-    description: 'NISQ应用映射 | 变分算法/量子化学/组合优化/量子ML | Map real-world problems to NISQ algorithms: VQE, QAOA, amplitude estimation with error mitigation strategies.',
-    parameters: {
-      nisq_input: {
-        type: 'string',
-        required: true,
-        description: 'JSON: domain (chemistry|finance|logistics|materials|pharma|energy), problem_complexity (small|medium|large), available_qubits, circuit_depth_budget, error_mitigation (zne|pec|readout_correction|dynamical_decoupling)'
-      }
+    name: 'quantum_optimizer',
+    description: 'Encode a combinatorial optimization problem (MaxCut, TSP, portfolio, scheduling, SAT, knapsack, vehicle routing) into Ising/QUBO/PUBO Hamiltonians for QAOA, quantum annealing, or VQE-based optimization. Returns qubit requirements, Hamiltonian terms, encoding map, expected approximation ratio, penalty weights, and mixer selection.',
+    inputSchema: {
+      type: 'object',
+      required: ['problem_type', 'variable_count', 'constraint_count', 'hamiltonian_type', 'algorithm'],
+      properties: {
+        problem_type: { type: 'string', enum: ['maxcut', 'tsp', 'portfolio', 'scheduling', 'sat', 'knapsack', 'vehicle_routing'], description: 'Optimization problem class' },
+        variable_count: { type: 'integer', description: 'Number of decision variables' },
+        constraint_count: { type: 'integer', description: 'Number of constraints' },
+        hamiltonian_type: { type: 'string', enum: ['Ising', 'QUBO', 'PUBO'], description: 'Hamiltonian representation' },
+        algorithm: { type: 'string', enum: ['QAOA', 'quantum_annealing', 'VQE_opt', 'Grover_adaptive'], description: 'Quantum algorithm variant' },
+        penalty_weight: { type: 'number', description: 'Constraint penalty weight (optional, auto-tuned if omitted)' },
+        mixer_type: { type: 'string', enum: ['standard', 'XY', 'controlled_phase'], description: 'QAOA mixer Hamiltonian (optional, auto-selected if omitted)' },
+      },
     },
-    output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
-    async execute(args: { nisq_input: string }) {
-      const input: NISQApplicationInput = JSON.parse(args.nisq_input)
-      return formatNISQApplicationReport(analyzeNISQApplication(input))
-    }
+    outputSchema: {
+      encoding_id: { type: 'string', description: 'Optimizer encoding ID' },
+      problem_type: { type: 'string', description: 'Problem class' },
+      hamiltonian_type: { type: 'string', description: 'Ising/QUBO/PUBO form' },
+      qubits_required: { type: 'integer', description: 'Number of qubits needed' },
+      terms_in_hamiltonian: { type: 'integer', description: 'Total Pauli terms or quadratic terms' },
+      p_qaoa_layers: { type: 'integer', description: 'QAOA depth parameter p' },
+      classical_variables: { type: 'integer', description: 'Number of classical decision variables' },
+      penalty_weight_applied: { type: 'number', description: 'Effective penalty weight' },
+      ground_state_energy_estimate: { type: 'number', description: 'Estimated ground-state energy' },
+      approximation_ratio_expected: { type: 'number', description: 'Expected approximation ratio vs. optimal' },
+      encoding_map: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            variable_name: { type: 'string' },
+            qubit_index: { type: 'integer' },
+            hamiltonian_coeff: { type: 'number' },
+            constraint_applied: { type: 'boolean' },
+          },
+        },
+        description: 'Variable-to-qubit mapping and Hamiltonian coefficients',
+      },
+      mixer_type: { type: 'string', description: 'Selected mixer Hamiltonian' },
+      optimization_rounds_estimate: { type: 'integer', description: 'Estimated optimization iterations' },
+      feasibility_notes: { type: 'array', items: { type: 'string' }, description: 'Feasibility analysis and recommendations' },
+    },
+    examples: [
+      {
+        input: JSON.stringify({ problem_type: 'maxcut', variable_count: 24, constraint_count: 0, hamiltonian_type: 'Ising', algorithm: 'QAOA' }),
+        output: JSON.stringify({ encoding_id: 'QOPT-77283', qubits_required: 48, p_qaoa_layers: 6, approximation_ratio_expected: 0.923 }),
+      },
+      {
+        input: JSON.stringify({ problem_type: 'portfolio', variable_count: 10, constraint_count: 5, hamiltonian_type: 'QUBO', algorithm: 'quantum_annealing', penalty_weight: 3.5 }),
+        output: JSON.stringify({ encoding_id: 'QOPT-31059', qubits_required: 10, penalty_weight_applied: 3.5, mixer_type: 'standard' }),
+      },
+    ],
+    async execute(args: { input_data: string }) {
+      return formatQuantumOptimizerReport(analyzeQuantumOptimizer(args as unknown as QuantumOptimizerInput))
+    },
   }))
 
-  // Tool 5: Quantum Machine Learning Hybrid
+  // Tool 5: qml_model_setup
   tools.register(defineTool({
-    name: 'quantum_machine_learning_hybrid',
-    description: '量子-经典混合ML | 量子核方法/量子神经网络/迁移学习 | Design hybrid quantum-classical ML architectures: quantum kernel, variational circuits, quantum annealing with convergence analysis.',
-    parameters: {
-      qml_input: {
-        type: 'string',
-        required: true,
-        description: 'JSON: ml_task (classification|regression|generative|reinforcement|clustering), data_dimension, model_architecture (quantum_kernel|variational_circuit|quantum_annealing|hybrid_dqc), classical_backbone, quantum_resource_budget'
-      }
+    name: 'qml_model_setup',
+    description: 'Build a quantum machine learning model architecture for classification, regression, generative, reinforcement, or clustering tasks. Configure data embedding (amplitude, angle, IQP, tensor-network, data-reuploading), variational layers, measurement basis, classical postprocessing, and training shot budget.',
+    inputSchema: {
+      type: 'object',
+      required: ['task_type', 'feature_dimension', 'quantum_ansatz', 'measurement_basis', 'classical_postprocessing', 'training_shots', 'noise_aware_training'],
+      properties: {
+        task_type: { type: 'string', enum: ['classification', 'regression', 'generative', 'reinforcement', 'clustering'], description: 'ML task category' },
+        feature_dimension: { type: 'integer', description: 'Input feature dimensionality' },
+        num_classes: { type: 'integer', description: 'Number of output classes for classification (optional)' },
+        quantum_ansatz: { type: 'string', enum: ['amplitude_embedding', 'angle_embedding', 'IQP', 'tensor_network', '_data_reuploading'], description: 'Quantum data encoding and ansatz' },
+        measurement_basis: { type: 'string', enum: ['Z', 'X', 'Y', 'bell', 'full_tomography'], description: 'Pauli measurement basis' },
+        classical_postprocessing: { type: 'string', enum: ['none', 'dense_128', 'dense_256', 'resnet_adapter', 'lstm_adapter'], description: 'Classical NN head (optional)' },
+        training_shots: { type: 'integer', description: 'Number of measurement shots per circuit evaluation' },
+        noise_aware_training: { type: 'boolean', description: 'Enable noise-aware gradient estimation' },
+      },
     },
-    output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
-    async execute(args: { qml_input: string }) {
-      const input: QMLHybridInput = JSON.parse(args.qml_input)
-      return formatQMLHybridReport(analyzeQMLHybrid(input))
-    }
+    outputSchema: {
+      model_id: { type: 'string', description: 'QML model ID' },
+      task_type: { type: 'string', description: 'ML task category' },
+      quantum_ansatz: { type: 'string', description: 'Selected ansatz' },
+      total_variational_params: { type: 'integer', description: 'Total trainable parameters' },
+      circuit_depth: { type: 'integer', description: 'Total circuit depth' },
+      qubit_requirement: { type: 'integer', description: 'Number of qubits needed' },
+      measurement_basis: { type: 'string', description: 'Measurement basis' },
+      expectation_value_method: { type: 'string', description: 'Observable estimation approach' },
+      layers: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            layer_index: { type: 'integer' },
+            layer_type: { type: 'string', enum: ['encoding', 'variational', 'entanglement', 'measurement'] },
+            qubits_used: { type: 'integer' },
+            parameter_count: { type: 'integer' },
+            unitary_description: { type: 'string' },
+          },
+        },
+        description: 'Layer-wise architecture',
+      },
+      classical_postprocessing: { type: 'string', description: 'Classical postprocessing head' },
+      barren_plateau_risk: { type: 'string', enum: ['low', 'medium', 'high'], description: 'Barren plateau susceptibility' },
+      generalization_capacity: { type: 'string', description: 'Expected generalization assessment' },
+      training_complexity: { type: 'string', description: 'Computational complexity per update' },
+      measurement_shots: { type: 'integer', description: 'Shots per measurement' },
+      noise_aware_training: { type: 'boolean', description: 'Noise-aware training flag' },
+      observables: { type: 'array', items: { type: 'string' }, description: 'Observables to measure' },
+    },
+    examples: [
+      {
+        input: JSON.stringify({ task_type: 'classification', feature_dimension: 8, quantum_ansatz: 'angle_embedding', measurement_basis: 'Z', classical_postprocessing: 'dense_128', training_shots: 10000, noise_aware_training: true }),
+        output: JSON.stringify({ model_id: 'QML-11284', qubit_requirement: 8, total_variational_params: 34, barren_plateau_risk: 'medium' }),
+      },
+      {
+        input: JSON.stringify({ task_type: 'generative', feature_dimension: 64, quantum_ansatz: 'amplitude_embedding', measurement_basis: 'full_tomography', classical_postprocessing: 'none', training_shots: 100000, noise_aware_training: false }),
+        output: JSON.stringify({ model_id: 'QML-68340', qubit_requirement: 6, circuit_depth: 18, measurement_shots: 100000 }),
+      },
+    ],
+    async execute(args: { input_data: string }) {
+      return formatQmlModelReport(analyzeQmlModel(args as unknown as QmlModelInput))
+    },
   }))
 
-  // Tool 6: Quantum Cryptography Planner
+  // Tool 6: quantum_safe_migration_planner
   tools.register(defineTool({
-    name: 'quantum_cryptography_planner',
-    description: '量子密码规划 | QKD/后量子密码/量子安全协议 | Plan quantum-safe cryptography: QKD deployment, PQC migration, hybrid protocols with threat modeling and roadmap.',
-    parameters: {
-      crypto_input: {
-        type: 'string',
-        required: true,
-        description: 'JSON: security_level (standard|high|military|long_term), protocol_type (qkd|pqc|quantum_secure|hybrid), network_topology (point_to_point|star|mesh|relay), key_rate_requirement, threat_model (harvest_now|side_channel|quantum_attack|insider)'
-      }
+    name: 'quantum_safe_migration_planner',
+    description: 'Plan migration from current cryptographic primitives (RSA, ECC, AES, SHA) to NIST-post-quantum standards. Assesses vulnerability urgency, maps to Kyber/Dilithium/Falcon/SPHINCS+ replacements, builds phased timeline, identifies compliance gaps, and recommends hybrid transition strategy and crypto-agility framework.',
+    inputSchema: {
+      type: 'object',
+      required: ['current_crypto', 'infrastructure_type', 'compliance_requirements', 'migration_deadline_years', 'risk_tolerance', 'budget_priority'],
+      properties: {
+        current_crypto: {
+          type: 'array',
+          items: { type: 'string', enum: ['RSA-2048', 'RSA-4096', 'ECC-P256', 'ECC-P384', 'AES-128', 'AES-256', 'SHA-256', 'SHA-3'] },
+          description: 'Currently deployed cryptographic schemes',
+        },
+        infrastructure_type: { type: 'string', enum: ['web_pkca', 'vpn', 'iot', 'blockchain', 'cloud_hsm', 'code_signing', 'mixed'], description: 'Deployment context' },
+        compliance_requirements: {
+          type: 'array',
+          items: { type: 'string', enum: ['FIPS-140-3', 'NIST-PQC', 'Common-Criteria', 'GDPR', 'PCI-DSS', 'SOX'] },
+          description: 'Regulatory frameworks to satisfy',
+        },
+        migration_deadline_years: { type: 'number', description: 'Years until completion required' },
+        risk_tolerance: { type: 'string', enum: ['conservative', 'moderate', 'aggressive'], description: 'Risk appetite' },
+        budget_priority: { type: 'string', enum: ['cost_driven', 'security_driven', 'balanced'], description: 'Budget priority mode' },
+      },
     },
-    output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
-    async execute(args: { crypto_input: string }) {
-      const input: CryptoPlannerInput = JSON.parse(args.crypto_input)
-      return formatCryptoPlannerReport(analyzeCryptoPlanner(input))
-    }
+    outputSchema: {
+      plan_id: { type: 'string', description: 'Migration plan ID' },
+      overall_risk_score: { type: 'number', description: 'Composite risk score 0-100' },
+      vulnerability_count: { type: 'integer', description: 'Number of critical/high urgency items' },
+      migration_items: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            current_scheme: { type: 'string' },
+            replacement_scheme: { type: 'string' },
+            migration_phase: { type: 'integer', enum: [1, 2, 3, 4] },
+            urgency: { type: 'string', enum: ['critical', 'high', 'medium', 'low'] },
+            effort_estimate_person_months: { type: 'integer' },
+            quantum_threat_level: { type: 'string', enum: ['imminent', 'near_term', 'long_term'] },
+          },
+        },
+        description: 'Per-scheme migration items',
+      },
+      hybrid_transition_strategy: { type: 'string', description: 'Dual-certificate hybrid model' },
+      compliance_gaps: { type: 'array', items: { type: 'string' }, description: 'Compliance shortfalls' },
+      milestone_timeline: { type: 'array', items: { type: 'string' }, description: 'Phased migration steps' },
+      total_effort_person_months: { type: 'integer', description: 'Total person-month effort' },
+      recommended_priority_order: { type: 'array', items: { type: 'string' }, description: 'Recommended replacement sequence' },
+      crypto_agility_framework: { type: 'string', description: 'Recommended crypto-agility architecture' },
+    },
+    examples: [
+      {
+        input: JSON.stringify({ current_crypto: ['RSA-2048', 'ECC-P256', 'AES-128'], infrastructure_type: 'web_pkca', compliance_requirements: ['NIST-PQC', 'FIPS-140-3'], migration_deadline_years: 4, risk_tolerance: 'conservative', budget_priority: 'security_driven' }),
+        output: JSON.stringify({ plan_id: 'QSM-44291', overall_risk_score: 65, vulnerability_count: 2, total_effort_person_months: 18 }),
+      },
+      {
+        input: JSON.stringify({ current_crypto: ['ECC-P384', 'AES-256'], infrastructure_type: 'iot', compliance_requirements: ['NIST-PQC'], migration_deadline_years: 5, risk_tolerance: 'moderate', budget_priority: 'balanced' }),
+        output: JSON.stringify({ plan_id: 'QSM-78921', total_effort_person_months: 8, crypto_agility_framework: 'pkcs11-engine' }),
+      },
+    ],
+    async execute(args: { input_data: string }) {
+      return formatMigrationReport(analyzeQuantumSafeMigration(args as unknown as QuantumSafeMigrationInput))
+    },
   }))
 
-  // Tool 7: Quantum Simulation Engineer
+  // Tool 7: quantum_hardware_selector
   tools.register(defineTool({
-    name: 'quantum_simulation_engineer',
-    description: '量子仿真工程 | 哈密顿量模拟/开放系统/数字孪生 | Engineer quantum simulations: Trotter-Suzuki, qubitization, QPE, variational methods with resource estimation.',
-    parameters: {
-      sim_input: {
-        type: 'string',
-        required: true,
-        description: 'JSON: system_type (fermionic|spin|bosonic|molecular|lattice_gauge|open_system), system_size, simulation_method (trotter|qubitization|qpe|variational|qmc), precision_target, time_evolution (boolean)'
-      }
+    name: 'quantum_hardware_selector',
+    description: 'Recommend the best quantum hardware platform (superconducting, trapped-ion, neutral-atom, photonic, topological) for a given use case. Evaluates qubit count, 2Q gate fidelity, T1 coherence, gate speed, connectivity, maturity against your requirements. Returns scored candidates, top pick with score breakdown, infrastructure needs, and risk assessment.',
+    inputSchema: {
+      type: 'object',
+      required: ['use_case', 'required_logical_qubits', 'required_circuit_depth', 'min_gate_fidelity', 'connectivity_requirement', 'operational_constraints', 'budget_millions_usd'],
+      properties: {
+        use_case: { type: 'string', enum: ['chemistry', 'optimization', 'ml', 'simulation', 'cryptography', 'sensing'], description: 'Primary application domain' },
+        required_logical_qubits: { type: 'integer', description: 'Minimum logical qubits required' },
+        required_circuit_depth: { type: 'integer', description: 'Target circuit depth' },
+        min_gate_fidelity: { type: 'number', description: 'Minimum 2Q gate fidelity threshold (e.g. 0.99)' },
+        max_coherence_time_us: { type: 'number', description: 'Minimum T1 coherence time in microseconds (optional)' },
+        connectivity_requirement: { type: 'string', enum: ['nearest_neighbor', 'all_to_all', 'high_degree'], description: 'Qubit connectivity need' },
+        operational_constraints: {
+          type: 'array',
+          items: { type: 'string', enum: ['cryogenic', 'room_temp', 'optical_table', 'portable', 'fiber_coupled'] },
+          description: 'Physical/operational constraints',
+        },
+        budget_millions_usd: { type: 'number', description: 'Budget cap in millions USD' },
+      },
     },
-    output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
-    async execute(args: { sim_input: string }) {
-      const input: SimulationInput = JSON.parse(args.sim_input)
-      return formatSimulationReport(analyzeSimulation(input))
-    }
+    outputSchema: {
+      selection_id: { type: 'string', description: 'Hardware selection ID' },
+      use_case: { type: 'string', description: 'Requested use case' },
+      candidates: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            platform: { type: 'string' },
+            qubit_count: { type: 'integer' },
+            two_qubit_gate_fidelity: { type: 'number' },
+            t1_coherence_us: { type: 'number' },
+            gate_speed_ns: { type: 'number' },
+            connectivity: { type: 'string' },
+            maturity: { type: 'string', enum: ['production', 'pilot', 'research'] },
+            score: { type: 'number' },
+          },
+        },
+        description: 'Scored platform candidates',
+      },
+      top_candidate: { type: 'string', description: 'Highest-scoring platform' },
+      score_breakdown: { type: 'object', description: 'Score components: qubit_capacity, gate_fidelity, connectivity_match, maturity_bonus, speed_factor' },
+      qubit_overhead_factor: { type: 'number', description: 'Qubit overhead for error correction/mitigation' },
+      effective_logical_qubits: { type: 'integer', description: 'Effective usable logical qubits after overhead' },
+      estimated_system_cost_millions: { type: 'number', description: 'Estimated platform cost in millions USD' },
+      infrastructure_requirements: { type: 'array', items: { type: 'string' }, description: 'Facility and equipment needs' },
+      roadmap_alignment: { type: 'string', description: 'Deployment readiness timeline' },
+      risk_factors: { type: 'array', items: { type: 'string' }, description: 'Identified platform risks' },
+    },
+    examples: [
+      {
+        input: JSON.stringify({ use_case: 'chemistry', required_logical_qubits: 50, required_circuit_depth: 500, min_gate_fidelity: 0.995, connectivity_requirement: 'nearest_neighbor', operational_constraints: ['cryogenic'], budget_millions_usd: 30 }),
+        output: JSON.stringify({ selection_id: 'HWS-21947', top_candidate: 'IBM Quantum Heron (133 qubits)', estimated_system_cost_millions: 28.5 }),
+      },
+      {
+        input: JSON.stringify({ use_case: 'optimization', required_logical_qubits: 20, required_circuit_depth: 100, min_gate_fidelity: 0.99, connectivity_requirement: 'all_to_all', operational_constraints: ['room_temp'], budget_millions_usd: 15 }),
+        output: JSON.stringify({ selection_id: 'HWS-66138', top_candidate: 'Quantinuum H2 (56 qubits trapped-ion)', effective_logical_qubits: 5, infrastructure_requirements: ['laser-systems'] }),
+      },
+    ],
+    async execute(args: { input_data: string }) {
+      return formatHardwareReport(analyzeHardwareSelection(args as unknown as HardwareSelectionInput))
+    },
   }))
 
-  // Tool 8: Quantum Readiness Assessor
+  // Tool 8: nisq_algorithm_advisor
   tools.register(defineTool({
-    name: 'quantum_readiness_assessor',
-    description: '量子就绪评估 | 技术成熟度/投资路线图/人才缺口 | Assess organizational quantum readiness: infrastructure, talent, use cases, investment, and roadmap planning.',
-    parameters: {
-      readiness_input: {
-        type: 'string',
-        required: true,
-        description: 'JSON: organization_type (enterprise|government|academic|startup|financial), current_quantum_exposure (none|awareness|experimenting|early_adoption), industry_vertical, investment_budget_usd, timeline_years'
-      }
+    name: 'nisq_algorithm_advisor',
+    description: 'Recommend the best NISQ-era algorithm (VQE, QAOA, VQLS, Quantum Boltzmann Machine, qGAN, Quantum Walk) for a given problem category. Scores candidates against your qubit budget, depth budget, error-mitigation budget, and classical compute availability. Returns ranked candidates, feasibility assessment, error-mitigation strategy, hybrid decomposition, and resource tradeoffs.',
+    inputSchema: {
+      type: 'object',
+      required: ['problem_category', 'qubit_budget', 'depth_budget', 'error_mitigation_budget', 'classical_compute_available', 'accuracy_target'],
+      properties: {
+        problem_category: { type: 'string', enum: ['quantum_chemistry', 'combinatorial_opt', 'linear_algebra', 'sampling', 'differential_eq', 'machine_learning'], description: 'Problem domain' },
+        qubit_budget: { type: 'integer', description: 'Qubit count available on target hardware' },
+        depth_budget: { type: 'integer', description: 'Maximum circuit depth tolerable' },
+        error_mitigation_budget: { type: 'string', enum: ['none', 'low', 'medium', 'high'], description: 'Error mitigation investment level' },
+        classical_compute_available: { type: 'string', enum: ['limited', 'moderate', 'abundant'], description: 'Classical support resources' },
+        accuracy_target: { type: 'number', description: 'Desired accuracy as fraction (0-1)' },
+      },
     },
-    output: { schema: { type: 'string' }, render: (_args: Record<string, unknown>, value: unknown) => [{ type: 'text', text: value as string }] },
-    async execute(args: { readiness_input: string }) {
-      const input: ReadinessInput = JSON.parse(args.readiness_input)
-      return formatReadinessReport(analyzeReadiness(input))
-    }
+    outputSchema: {
+      advisory_id: { type: 'string', description: 'Advisory ID' },
+      problem_category: { type: 'string', description: 'Problem domain' },
+      candidates: {
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            algorithm_name: { type: 'string' },
+            qubit_requirement: { type: 'integer' },
+            depth_requirement: { type: 'integer' },
+            classical_components: { type: 'array', items: { type: 'string' } },
+            error_mitigation_needed: { type: 'array', items: { type: 'string' } },
+            suitability_score: { type: 'number' },
+            expected_speedup: { type: 'string' },
+            noise_sensitivity: { type: 'string', enum: ['low', 'medium', 'high'] },
+          },
+        },
+        description: 'Ranked NISQ algorithm candidates',
+      },
+      recommended_algorithm: { type: 'string', description: 'Top-ranked NISQ algorithm' },
+      feasibility_assessment: { type: 'string', description: 'Feasibility verdict' },
+      error_mitigation_strategy: { type: 'string', description: 'Recommended error mitigation stack' },
+      hybrid_decomposition: { type: 'string', description: 'Quantum-classical decomposition description' },
+      resource_tradeoffs: { type: 'array', items: { type: 'string' }, description: 'Resource allocation guidance' },
+      accuracy_achievable: { type: 'number', description: 'Realistic accuracy based on noise' },
+      circuit_generation_platforms: { type: 'array', items: { type: 'string' }, description: 'Platform recommendations' },
+      key_references: { type: 'array', items: { type: 'string' }, description: 'Key academic references' },
+    },
+    examples: [
+      {
+        input: JSON.stringify({ problem_category: 'combinatorial_opt', qubit_budget: 50, depth_budget: 200, error_mitigation_budget: 'medium', classical_compute_available: 'moderate', accuracy_target: 0.90 }),
+        output: JSON.stringify({ advisory_id: 'NISQ-33871', recommended_algorithm: 'Quantum Approximate Optimization (QAOA)', accuracy_achievable: 0.88 }),
+      },
+      {
+        input: JSON.stringify({ problem_category: 'quantum_chemistry', qubit_budget: 20, depth_budget: 500, error_mitigation_budget: 'high', classical_compute_available: 'abundant', accuracy_target: 0.95 }),
+        output: JSON.stringify({ advisory_id: 'NISQ-99102', recommended_algorithm: 'Variational Quantum Eigensolver (VQE)', feasibility_assessment: 'FEASIBLE', circuit_generation_platforms: ['IBM Qiskit Runtime', 'Amazon Braket'] }),
+      },
+    ],
+    async execute(args: { input_data: string }) {
+      return formatNisqAdvisorReport(analyzeNisqAdvisor(args as unknown as NisqAdvisorInput))
+    },
   }))
 
-  console.log('[dsh-tool-quantumapp] Loaded v' + VERSION + ' — Quantum Computing Applications, 8 tools active')
-  console.log('  Tools: quantum_algorithm_designer, error_correction_analyzer, quantum_circuit_optimizer, nisq_application_mapper, quantum_machine_learning_hybrid, quantum_cryptography_planner, quantum_simulation_engineer, quantum_readiness_assessor')
+  console.log('[dsh-tool-quantumapp] Loaded v' + VERSION + ' --- 8 quantum computing application tools active')
+  console.log('  Tools: quantum_circuit_designer, vqe_configurator, error_correction_mapper, quantum_optimizer, qml_model_setup, quantum_safe_migration_planner, quantum_hardware_selector, nisq_algorithm_advisor')
 }

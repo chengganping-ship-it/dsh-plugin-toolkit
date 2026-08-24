@@ -1,0 +1,305 @@
+name: sportsanalytics
+version: 1.0.0
+description: AI Sports Analytics — performance prediction, injury risk assessment, tactical analysis, player scouting, fan engagement, sports betting, esports, training load
+author: chengganping-ship-it
+tools:
+
+  - name: performance_predictor
+    description: AI-driven sports performance prediction — predicts future match scores, win probabilities, and key performance indicators based on historical data and opponent analysis
+    inputSchema:
+      type: object
+      properties:
+        sport_type:
+          type: string
+          description: Sport type (e.g., basketball, football, tennis)
+        athlete_name:
+          type: string
+          description: Athlete name
+        historical_matches:
+          type: number
+          description: Number of historical matches
+        opponent_rank:
+          type: number
+          description: Opponent rank (1-100)
+        upcoming_event:
+          type: string
+          description: Upcoming event name
+        training_intensity:
+          type: string
+          description: Training intensity (low/medium/high)
+    outputSchema:
+      type: object
+      properties:
+        summary:
+          type: string
+          description: Prediction summary
+    examples:
+      - input:
+          sport_type: "basketball"
+          athlete_name: "John Smith"
+          historical_matches: 45
+          opponent_rank: 12
+          upcoming_event: "NBA Finals G1"
+          training_intensity: "high"
+        output:
+          summary: "Predicted score 28.5 pts, win rate 67.3%, performance grade A"
+
+  - name: injury_risk_assessor
+    description: AI injury risk assessment — evaluates injury risk levels based on training load, physical metrics, and environmental factors with preventive recommendations
+    inputSchema:
+      type: object
+      properties:
+        athlete_name:
+          type: string
+          description: Athlete name
+        sport_type:
+          type: string
+          description: Sport type
+        weekly_training_hours:
+          type: number
+          description: Weekly training hours
+        previous_injuries_count:
+          type: number
+          description: Number of previous injuries
+        age:
+          type: number
+          description: Athlete age
+        body_fat_pct:
+          type: number
+          description: Body fat percentage
+    outputSchema:
+      type: object
+      properties:
+        risk_level:
+          type: string
+          description: Risk level assessment
+    examples:
+      - input:
+          athlete_name: "Mike Johnson"
+          sport_type: "football"
+          weekly_training_hours: 25
+          previous_injuries_count: 2
+          age: 28
+          body_fat_pct: 12
+        output:
+          risk_level: "Medium risk — knee load monitoring required, reduce intensity by 15%"
+
+  - name: tactical_analysis_engine
+    description: AI tactical analysis engine — analyzes tactical effectiveness, key passing routes, and offensive/defensive efficiency based on match data and opponent formation
+    inputSchema:
+      type: object
+      properties:
+        team_name:
+          type: string
+          description: Team name
+        opponent_formation:
+          type: string
+          description: Opponent formation (e.g., 4-3-3, 3-5-2)
+        match_context:
+          type: string
+          description: Match context (home/away/neutral)
+        possession_pct:
+          type: number
+          description: Possession percentage
+        recent_matches:
+          type: number
+          description: Number of recent matches
+    outputSchema:
+      type: object
+      properties:
+        tactical_summary:
+          type: string
+          description: Tactical analysis summary
+    examples:
+      - input:
+          team_name: "Lakers"
+          opponent_formation: "4-3-3"
+          match_context: "home"
+          possession_pct: 58
+          recent_matches: 10
+        output:
+          tactical_summary: "Recommend 4-4-2 formation, exploit opponent defensive weaknesses on wings"
+
+  - name: player_scouting_recommander
+    description: AI scouting recommendation system — filters and recommends promising players based on data performance and technical characteristics matching team needs
+    inputSchema:
+      type: object
+      properties:
+        target_position:
+          type: string
+          description: Target position (e.g., forward, midfielder)
+        budget_range:
+          type: string
+          description: Budget range (e.g., 5-15 million EUR)
+        age_range:
+          type: string
+          description: Age range (e.g., 18-25)
+        league_preference:
+          type: string
+          description: League preference
+        attributes_weight:
+          type: string
+          description: Attributes priority (speed-first/technique-first)
+    outputSchema:
+      type: object
+      properties:
+        recommendation:
+          type: string
+          description: Scouting recommendation
+    examples:
+      - input:
+          target_position: "winger"
+          budget_range: "5-15 million EUR"
+          age_range: "20-26"
+          league_preference: "top-5 European leagues"
+          attributes_weight: "speed-first"
+        output:
+          recommendation: "3 candidates recommended, top score 87, best value for money"
+
+  - name: fan_engagement_optimizer
+    description: AI fan engagement optimization — analyzes fan behavior data to optimize content strategy, interaction plans, and monetization strategies
+    inputSchema:
+      type: object
+      properties:
+        platform:
+          type: string
+          description: Platform type (social media/app/offline)
+        follower_count:
+          type: number
+          description: Follower count
+        avg_engagement_rate:
+          type: number
+          description: Average engagement rate percentage
+        content_category:
+          type: string
+          description: Content category
+        demographic_target:
+          type: string
+          description: Target demographic profile
+    outputSchema:
+      type: object
+      properties:
+        strategy:
+          type: string
+          description: Optimization strategy
+    examples:
+      - input:
+          platform: "social media"
+          follower_count: 500000
+          avg_engagement_rate: 3.5
+          content_category: "match highlights"
+          demographic_target: "18-35 male"
+        output:
+          strategy: "Increase short video frequency to 3/day, projected engagement rate rise to 5.2%"
+
+  - name: sports_betting_analytics
+    description: AI sports betting analytics — provides value bet identification and odds analysis based on odds data, historical matchups, and statistical models
+    inputSchema:
+      type: object
+      properties:
+        sport_type:
+          type: string
+          description: Sport type
+        league_name:
+          type: string
+          description: League name
+        match_id:
+          type: string
+          description: Match ID
+        bankroll:
+          type: string
+          description: Betting bankroll
+        risk_tolerance:
+          type: string
+          description: Risk tolerance (conservative/neutral/aggressive)
+    outputSchema:
+      type: object
+      properties:
+        betting_advice:
+          type: string
+          description: Betting advice
+    examples:
+      - input:
+          sport_type: "football"
+          league_name: "Premier League"
+          match_id: "EPL-2024-001"
+          bankroll: "10000"
+          risk_tolerance: "neutral"
+        output:
+          betting_advice: "2 value bets identified, expected ROI 8.3%, recommend diversified betting"
+
+  - name: esports_performance_analyzer
+    description: AI esports performance analysis — analyzes player operational efficiency, map control, and teamfight contribution based on in-game data
+    inputSchema:
+      type: object
+      properties:
+        game_title:
+          type: string
+          description: Game title (e.g., LoL, DOTA2, CS2)
+        player_name:
+          type: string
+          description: Player ID
+        match_duration_min:
+          type: number
+          description: Match duration in minutes
+        role:
+          type: string
+          description: In-game role/position
+        tournament_tier:
+          type: string
+          description: Tournament tier
+    outputSchema:
+      type: object
+      properties:
+        performance_report:
+          type: string
+          description: Performance analysis report
+    examples:
+      - input:
+          game_title: "League of Legends"
+          player_name: "MidKing"
+          match_duration_min: 35
+          role: "mid-lane"
+          tournament_tier: "LPL"
+        output:
+          performance_report: "KDA 8.3, DPM 612, kill participation 72%, Grade S"
+
+  - name: training_load_manager
+    description: AI training load management — optimizes training load distribution, recovery cycles, and competitive state adjustment based on physiological data and training plans
+    inputSchema:
+      type: object
+      properties:
+        athlete_name:
+          type: string
+          description: Athlete name
+        sport_type:
+          type: string
+          description: Sport type
+        training_phase:
+          type: string
+          description: Training phase (base/peak/pre-competition/taper)
+        hr_avg:
+          type: number
+          description: Average heart rate (bpm)
+        rpe_score:
+          type: number
+          description: RPE score (1-10)
+        sleep_hours:
+          type: number
+          description: Average sleep hours
+    outputSchema:
+      type: object
+      properties:
+        load_recommendation:
+          type: string
+          description: Load adjustment recommendation
+    examples:
+      - input:
+          athlete_name: "Alice Wang"
+          sport_type: "swimming"
+          training_phase: "pre-competition"
+          hr_avg: 145
+          rpe_score: 7
+          sleep_hours: 7.5
+        output:
+          load_recommendation: "Maintain intensity but reduce volume by 20%, add recovery sessions"

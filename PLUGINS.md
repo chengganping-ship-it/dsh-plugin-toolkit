@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 335 plugins | 2680 tools (335 × 8)**
+**Total: 340 plugins | 2720 tools (340 × 8)**
 
 ---
 
@@ -732,6 +732,18 @@
 | 333 | wildlifeai | 野生动物保护与生态 | species_monitoring_engine, habitat_analysis_mapper, poaching_prevention_system, biodiversity_assessment_tool, wildlife_population_modeler, migration_tracker, camera_trap_analyzer, conservation_roi_calculator |
 | 334 | autoship | 自主船舶与海事 | autonomous_navigation_planner, collision_avoidance_maritime, port_automation_coordinator, fleet_autonomy_manager, fuel_optimization_autonomous, weather_routing_autonomous, remote_monitoring_center, regulatory_compliance_maritime |
 | 335 | predmaint | 预测性维护与资产健康 | vibration_analysis_engine, remaining_useful_life_calculator, maintenance_scheduler, spare_parts_optimizer, thermal_imaging_analyzer, oil_analysis_interpreter, motor_current_signature_analyzer, asset_health_dashboard |
+
+---
+
+## Wave 71 — 体育科技+无人机配送+量子计算+数字孪生+太空碎片 (5)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 336 | sportsanalytics | 体育科技与数据分析 | performance_predictor, injury_risk_assessor, tactical_analysis_engine, player_scouting_recommander, fan_engagement_optimizer, sports_betting_analytics, esports_performance_analyzer, training_load_manager |
+| 337 | dronedelivery | 无人机配送与城市空中交通 | drone_route_planner, cargo_manifest_optimizer, utm_coordinator, vertiport_planner, battery_swap_scheduler, airspace_deconfliction, weather_impact_drone, bvlos_compliance_checker |
+| 338 | quantumapp | 量子计算应用 | quantum_circuit_designer, vqe_configurator, error_correction_mapper, quantum_optimizer, qml_model_setup, quantum_safe_migration_planner, quantum_hardware_selector, nisq_algorithm_advisor |
+| 339 | digiwintwin | 数字孪生与工业元宇宙 | factory_twin_constructor, sensor_fusion_engine, production_line_simulator, predictive_twin_analyzer, energy_twin_modeler, supply_chain_twin_planner, arvr_visualization_setup, twin_actuation_controller |
+| 340 | spacedebris | 太空碎片与轨道管理 | collision_risk_assessor, orbital_maneuver_planner, debris_catalog_tracker, end_of_life_disposal, conjunction_data_generator, removal_mission_designer, ssa_dashboard_builder, orbital_slot_allocator |
 
 ---
 
