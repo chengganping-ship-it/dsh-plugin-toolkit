@@ -1,0 +1,17 @@
+{
+  "name": "dsh-tool-telecomai",
+  "version": "0.1.0",
+  "description": "Telecom and Network Intelligence AI toolkit - network optimization, spectrum management, 5G/6G planning, customer churn prediction, fraud detection, QoE analysis, and infrastructure investment advisory. 2026: Telecom AI $10B+; network optimization $8B+.",
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": { "build": "tsc" },
+  "keywords": ["dsh", "telecom", "ai", "network-optimization", "5g", "6g", "spectrum", "churn", "fraud", "agent"],
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": { "typescript": "^5.0.0" }
+}
