@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 315 plugins | 2520 tools (315 × 8)**
+**Total: 319 plugins | 2552 tools (319 × 8)**
 
 ---
 
@@ -677,6 +677,17 @@
 | 313 | dronebot | 无人机舰队管理 | fleet_operations_planner, airspace_management_system, bvlos_compliance_checker, autonomous_mission_designer, payload_optimization_engine, battery_swap_scheduler, weather_risk_assessor, remote_id_broadcaster |
 | 314 | patentpro | 专利与IP管理 | patent_drafting_assistant, prior_art_search_optimizer, ip_portfolio_manager, patent_valuation_engine, patentability_scorer, claim_scope_optimizer, infringement_risk_assessor, patent_landscape_visualizer |
 | 315 | marinetrack | 海运与港口智能 | vessel_tracking_aggregator, port_congestion_analyzer, shipping_emissions_calculator, voyage_optimization_engine, berthing_schedule_planner, container_yard_optimizer, customs_clearance_tracker, piracy_risk_assessor |
+
+---
+
+## Wave 66 — Edge AI+合成数据+碳捕获+Agent评测 (4)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 316 | edgeinfer | Edge AI与端侧推理 | model_compression_engine, edge_deployment_optimizer, federated_learning_coordinator, tinyml_model_designer, inference_benchmark_tool, hardware_accelerator_selector, model_quantization_advisor, edge_to_cloud_sync_manager |
+| 317 | synthdata | 合成数据与隐私AI | synthetic_data_generator, differential_privacy_calibrator, data_augmentation_planner, gan_evaluator, privacy_risk_assessor, data_fidelity_scorer, tabular_synthetic_engine, image_synthetic_pipeline |
+| 318 | carboncapt | 碳捕获与封存 | capture_technology_selector, storage_site_assessor, co2_monitoring_system, ccs_economics_modeler, transport_pipeline_optimizer, mineralization_analyzer, bioenergy_ccs_evaluator, regulatory_compliance_ccs |
+| 319 | agenteval | AI Agent评测与基准 | agent_capability_scorer, task_completion_evaluator, safety_benchmark_runner, performance_comparison_tool, robustness_tester, multi_turn_dialogue_evaluator, tool_use_efficiency_analyzer, agent_hallucination_detector |
 
 ---
 

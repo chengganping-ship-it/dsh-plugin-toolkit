@@ -1,0 +1,11 @@
+{
+  "name": "dsh-tool-synthdata",
+  "version": "1.0.0",
+  "description": "Synthetic Data & Privacy-Preserving AI — synthetic data generation, differential privacy, data augmentation, GAN evaluation (dsh-tool-synthdata)",
+  "main": "src/index.ts",
+  "scripts": { "build": "tsc", "dev": "tsc --watch", "typecheck": "tsc --noEmit" },
+  "dependencies": { "@deepseek-ai/cordis": "^4.0.1", "@deepseek-ai/dsh-tools": "^0.0.1-rc.1" },
+  "devDependencies": { "typescript": "^5.0.0" },
+  "keywords": ["dsh","deepseek-harness","synthetic-data","differential-privacy","gan","data-augmentation","privacy","plugin"],
+  "license": "MIT"
+}

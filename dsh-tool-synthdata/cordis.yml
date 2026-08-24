@@ -1,0 +1,5 @@
+name: synthdata
+version: 1.0.0
+description: Synthetic Data & Privacy-Preserving AI — synthetic data generation, differential privacy, data augmentation, GAN evaluation
+author: chengganping-ship-it
+tools: 8

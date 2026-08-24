@@ -1,0 +1,14 @@
+- id: dsh-tool-edgeinfer
+  name: dsh-tool-edgeinfer
+  version: 0.1.0
+  description: Edge AI & On-Device Intelligence - model compression, edge deployment optimization, federated learning, TinyML
+  author: chengganping-ship-it
+  tools:
+    - model_compression_engine
+    - edge_deployment_optimizer
+    - federated_learning_coordinator
+    - tinyml_model_designer
+    - inference_benchmark_tool
+    - hardware_accelerator_selector
+    - model_quantization_advisor
+    - edge_to_cloud_sync_manager

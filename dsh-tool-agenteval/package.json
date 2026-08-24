@@ -1,0 +1,33 @@
+{
+  "name": "dsh-tool-agenteval",
+  "version": "0.1.0",
+  "description": "AI Agent Evaluation & Benchmarking - agent capability scoring, task completion evaluation, safety benchmarking, performance comparison. 2026: AI agent evaluation $2B+; agent benchmarking growing rapidly",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-plugin-toolkit.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "agent-evaluation",
+    "benchmarking",
+    "capability-scoring",
+    "safety-benchmark",
+    "hallucination-detection",
+    "2026"
+  ]
+}
