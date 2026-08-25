@@ -1,0 +1,23 @@
+{
+  "threshold": 0.02,
+  "interval": 60,
+  "minNetAnnualized": 3,
+  "symbols": [
+    "BTCUSDT", "ETHUSDT", "SOLUSDT", "XRPUSDT", "DOGEUSDT",
+    "ADAUSDT", "AVAXUSDT", "LINKUSDT", "MATICUSDT", "DOTUSDT"
+  ],
+  "telegram": {
+    "botToken": "YOUR_BOT_TOKEN",
+    "chatId": "YOUR_CHAT_ID"
+  },
+  "discord": {
+    "webhook": "https://discord.com/api/webhooks/YOUR_WEBHOOK"
+  },
+  "risk": {
+    "maxDrawdownPct": 5,
+    "maxDailyTrades": 10,
+    "maxSingleTradePct": 25,
+    "pauseAfterLoss": true
+  },
+  "healthPort": 8770
+}

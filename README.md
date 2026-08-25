@@ -1,4 +1,4 @@
-# Crypto Funding Rate MCP Server
+# Crypto Funding Rate MCP Server + Sentinel
 
 > **不给你看快照，给你看真相。所有数据来自 Binance/Bybit/OKX 真实 API。**
 
@@ -16,30 +16,179 @@
 | **费率动量趋势** | ❌ | ✅ |
 | **可执行头寸计算器** | ❌ | ✅ |
 | **95%置信区间** | ❌ | ✅ |
-
-竞品给你看一个"机会"就完了，不管你是否真的会赚钱。我们先帮你跑历史回测，用数据告诉你这个策略过去 7 天实际收益多少。
+| **7x24 监控 + Telegram/Discord 告警** | ❌ | ✅ |
+| **风控模块（最大回撤/日交易上限）** | ❌ | ✅ |
+| **PnL 追踪日志** | ❌ | ✅ |
+| **Windows 计划任务集成** | ❌ | ✅ |
 
 ---
 
-## 实测数据（2026-08-25 实时）
+## 架构：MCP Server + Sentinel
 
+```
+┌─────────────────────────────────────────────────────┐
+│                   MCP Server (6 工具)                │
+│  get_rates / find_arbitrage / analyze_symbol        │
+│  calculate_position / backtest_strategy / statistics │
+│  ↕ Claude Code / Cursor / 任意 MCP 客户端            │
+└─────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────┐
+│                   Sentinel v2.0                      │
+│  轮询 → 检测 → 风控 → 去重 → 告警 → PnL            │
+│       ↕ Binance / Bybit / OKX 真实 API             │
+│       ↕ Telegram / Discord / Slack                  │
+│       ↕ Windows 计划任务 7x24                        │
+│       ↕ HTTP 健康检查 :8770/health                  │
+└─────────────────────────────────────────────────────┘
+```
+
+---
+
+## 实测数据（2026-08-25）
+
+**MCP 工具回测：**
 ```
 BTCUSDT:
   Binance 费率: 0.0100%  |  Bybit 费率: 0.0058%
   7天回测净收益: -1.10% (费率相同时手续费在吃本金)
-  费率趋势: INCREASING（在上升）
-
 ETHUSDT:
   Binance 费率: 0.0100%  |  Bybit 费率: 0.0074%
   7天回测净收益: -1.12%
-  费率趋势: INCREASING
 ```
 
-回测告诉我们真相：**当两个交易所费率接近时，0.16% 的手续费会吃掉你。** 只有当其中一个交易所费率显著更高时才值得做。这正是这个工具的价值 — 帮你过滤假机会。
+**Sentinel 实时监控输出：**
+```
+[#3] 21:06:14 | Binance/Bybit/OKX | 1603 rates | 4590ms
+📊 健康检查: http://localhost:8770/health
+📈 PnL 日志: http://localhost:8770/pnl
+```
+
+健康检查返回：
+```json
+{
+  "status": "ok",
+  "uptime": "0h 0m",
+  "totalPolls": 3,
+  "dailyTrades": 0,
+  "dailyPnlPct": 0,
+  "maxDrawdown": 0,
+  "consecutiveErrors": 0
+}
+```
+
+历史机会（首次运行）：
+```
+🆕 NEW XRPUSDT: Spread 0.0128% → 净年化 13.81% | 做多Binance + 做空Bybit
+🆕 NEW AVAXUSDT: Spread 0.0053% → 净年化 5.56% | 做多Binance + 做空Bybit
+🆕 NEW DOGEUSDT: Spread 0.0043% → 净年化 4.47% | 做多Binance + 做空Bybit
+```
 
 ---
 
-## 6 个工具
+## Sentinel — 7x24 套利哨兵
+
+### 快速启动
+
+```bash
+# 编译
+cd crypto-funding-rate && npm install && npm run build
+
+# 使用配置文件运行（推荐）
+cp sentinel.example.json sentinel.json
+# 编辑 sentinel.json 填入你的 Telegram botToken 等
+node dist/sentinel.js
+
+# 命令行覆盖参数
+node dist/sentinel.js --threshold 0.05 --interval 300 --min-net 5
+
+# 带 Telegram 告警
+node dist/sentinel.js --telegram-token 123456:ABC --telegram-chat 123456
+
+# 带 Discord 告警
+node dist/sentinel.js --discord https://discord.com/api/webhooks/xxx
+```
+
+### 7x24 运行（Windows 计划任务）
+
+```powershell
+# 以管理员身份运行 PowerShell
+powershell -ExecutionPolicy Bypass -File setup-task.ps1
+```
+
+任务会注册为开机自启、自动重启（失败后 5 分钟重试，最多 3 次）。
+
+管理命令：
+```
+查看状态:  Get-ScheduledTask -TaskName 'FundingRateSentinel'
+停止:      Stop-ScheduledTask -TaskName 'FundingRateSentinel'
+查看日志:  Get-Content dist\out.log -Tail 20 -Wait
+```
+
+或者不安装计划任务，直接双击 `start-sentinel.bat`。
+
+### 配置文件说明
+
+**sentinel.json**：
+
+```json
+{
+  "threshold": 0.02,          // 最低 spread % 才告警
+  "interval": 60,             // 轮询间隔秒数
+  "minNetAnnualized": 3,      // 最低净年化 %
+  "symbols": ["BTCUSDT", "ETHUSDT", ...],  // 监控的币种
+  "telegram": {
+    "botToken": "YOUR_BOT_TOKEN",
+    "chatId": "YOUR_CHAT_ID"
+  },
+  "discord": {
+    "webhook": "https://..."
+  },
+  "slack": {
+    "webhook": "https://..."
+  },
+  "risk": {
+    "maxDrawdownPct": 5,      // 日最大回撤 %，超过暂停告警
+    "maxDailyTrades": 10,     // 日最大交易次数
+    "maxSingleTradePct": 25,  // 单次交易最大本金占比
+    "pauseAfterLoss": true    // 亏损时暂停
+  },
+  "healthPort": 8770          // HTTP 健康检查端口
+}
+```
+
+### 风控逻辑
+
+Sentinel 内置风控模块，遇到以下情况会自动暂停告警：
+
+| 条件 | 动作 |
+|------|------|
+| 日交易次数 >= 上限 | 暂停直到次日 |
+| 最大回撤 >= 上限 | 暂停直到次日 |
+| 连续 API 错误 >= 5 次 | 暂停直到恢复 |
+| 异常高费率 (>0.5%/8h) | 风险评分 +15，降低推荐价 |
+
+风险评分 (0-100)：
+- 🟢 <30 低风险，流动性好，spread 正常
+- 🟡 30-60 中等风险
+- 🔴 >60 高风险，warning
+
+### PnL 追踪
+
+Sentinel 自动记录每笔机会的预估盈亏到 `pnl-log.jsonl`（JSON Lines 格式），可通过 HTTP 查看：
+
+```bash
+curl http://localhost:8770/pnl
+```
+
+格式：
+```json
+{"timestamp":1724587200,"symbol":"XRPUSDT","direction":"多Binance/空Bybit","spreadPct":0.0128,"estimatedPnlPct":0.0014,"cumulativePnlPct":0.0014,"note":"risk=35"}
+```
+
+---
+
+## MCP 工具 (6 个)
 
 | 工具 | 干什么 |
 |------|--------|
@@ -50,50 +199,6 @@ ETHUSDT:
 | `backtest_strategy` | 历史回测：实际收益、最大回撤、夏普、胜率、置信区间 |
 | `get_statistics` | 费率统计：均值、波动率、动量(上升/下降) |
 
----
-
-## Sentinel — 24/7 套利监控守护进程
-
-除了 MCP 工具，还有一个独立运行的 Sentinel 守护进程，持续监控三所费率差，发现真正有利可图的机会时立即告警。
-
-```bash
-# 编译
-cd crypto-funding-rate && npm install && npm run build
-
-# 运行（默认每60秒轮询，spread>0.1% 告警）
-node dist/sentinel.js
-
-# 自定义参数
-node dist/sentinel.js --threshold 0.001 --interval 60 --min-net 3
-
-# 带 Discord/Slack 通知
-node dist/sentinel.js --webhook https://discord.com/api/webhooks/xxx
-```
-
-**实测输出（2026-08-25 20:58）：**
-```
-[#1] 20:58:05 | Binance/Bybit/OKX | 1642 rates | 14820ms | ⚡ 4 个机会
-
-🚨 发现 4 个新套利机会:
-  🆕 NEW XRPUSDT: Spread 0.0128% → 净年化 13.81% | 做多Binance + 做空Bybit
-  🆕 NEW AVAXUSDT: Spread 0.0053% → 净年化 5.56% | 做多Binance + 做空Bybit
-  🆕 NEW DOGEUSDT: Spread 0.0043% → 净年化 4.47% | 做多Binance + 做空Bybit
-  🆕 NEW BTCUSDT: Spread 0.0038% → 净年化 3.97% | 做多Binance + 做空Bybit
-```
-
-Sentinel 智能去重：同一个机会不会重复骚扰你，只有当 spread 扩大 50% 以上或 1 小时过去后才会再次提醒。
-
----
-
-## 使用 MCP 工具
-
-```bash
-cd crypto-funding-rate
-npm install
-npm run build
-```
-
-在 Claude Code / Cursor / 任何 MCP 客户端中配置：
 ```json
 {
   "mcpServers": {
@@ -103,6 +208,25 @@ npm run build
     }
   }
 }
+```
+
+---
+
+## 项目结构
+
+```
+dsh-plugin-toolkit/
+├── README.md
+├── crypto-funding-rate/
+│   ├── package.json
+│   ├── tsconfig.json
+│   ├── sentinel.example.json    # 配置模板
+│   ├── setup-task.ps1           # Windows 计划任务安装脚本
+│   ├── start-sentinel.bat       # 双击启动
+│   ├── dist/                    # 编译输出
+│   └── src/
+│       ├── index.ts             # MCP Server (6 工具)
+│       └── sentinel.ts          # Sentinel v2.0 守护进程
 ```
 
 ---

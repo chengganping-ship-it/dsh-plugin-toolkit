@@ -31,4 +31,9 @@ __pycache__/
 *.tmp
 *.bak
 
+# Sentinel runtime files
 crypto-funding-rate/node_modules/
+crypto-funding-rate/sentinel.json
+crypto-funding-rate/out.log
+crypto-funding-rate/err.log
+crypto-funding-rate/pnl-log.jsonl
