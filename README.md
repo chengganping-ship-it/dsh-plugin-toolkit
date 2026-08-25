@@ -52,7 +52,40 @@ ETHUSDT:
 
 ---
 
-## 使用
+## Sentinel — 24/7 套利监控守护进程
+
+除了 MCP 工具，还有一个独立运行的 Sentinel 守护进程，持续监控三所费率差，发现真正有利可图的机会时立即告警。
+
+```bash
+# 编译
+cd crypto-funding-rate && npm install && npm run build
+
+# 运行（默认每60秒轮询，spread>0.1% 告警）
+node dist/sentinel.js
+
+# 自定义参数
+node dist/sentinel.js --threshold 0.001 --interval 60 --min-net 3
+
+# 带 Discord/Slack 通知
+node dist/sentinel.js --webhook https://discord.com/api/webhooks/xxx
+```
+
+**实测输出（2026-08-25 20:58）：**
+```
+[#1] 20:58:05 | Binance/Bybit/OKX | 1642 rates | 14820ms | ⚡ 4 个机会
+
+🚨 发现 4 个新套利机会:
+  🆕 NEW XRPUSDT: Spread 0.0128% → 净年化 13.81% | 做多Binance + 做空Bybit
+  🆕 NEW AVAXUSDT: Spread 0.0053% → 净年化 5.56% | 做多Binance + 做空Bybit
+  🆕 NEW DOGEUSDT: Spread 0.0043% → 净年化 4.47% | 做多Binance + 做空Bybit
+  🆕 NEW BTCUSDT: Spread 0.0038% → 净年化 3.97% | 做多Binance + 做空Bybit
+```
+
+Sentinel 智能去重：同一个机会不会重复骚扰你，只有当 spread 扩大 50% 以上或 1 小时过去后才会再次提醒。
+
+---
+
+## 使用 MCP 工具
 
 ```bash
 cd crypto-funding-rate
