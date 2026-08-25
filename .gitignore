@@ -30,3 +30,5 @@ __pycache__/
 *.log
 *.tmp
 *.bak
+
+crypto-funding-rate/node_modules/
