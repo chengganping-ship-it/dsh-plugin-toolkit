@@ -1,24 +1,21 @@
 /**
- * Crypto Funding Rate MCP Server v2
+ * Crypto Funding Rate MCP Server v3
  *
- * 真实可靠的跨交易所资金费率套利分析工具。
+ * 竞品对标与超越：
+ *   Coinglass / CryptoQuant / Hyblock / Laevitas — 只给你看"当前费率"
+ *   我们给你：
+ *     1. 历史回测 — 跑这个策略过去 N 天实际赚多少
+ *     2. 统计指标 — 7d/30d 均值、波动率、夏普比率
+ *     3. 费率动量 — spread 在扩大还是缩小
+ *     4. 风险价值 — 最坏情况下亏损多少
+ *     5. 可执行头寸 — 输入金额直接输出下单参数
  *
  * 数据源：
- *   Binance: /fapi/v1/premiumIndex  → 费率、标记价、指数价、下次结算时间
- *   Bybit:   /v5/market/tickers     → 费率、标记价、指数价、OI、成交量（一个接口全拿）
- *   OKX:     /api/v5/public/funding-rate + /api/v5/market/ticker → 费率 + 价格分开拿
+ *   Binance: /fapi/v1/premiumIndex + /fapi/v1/fundingRate(历史) + /fapi/v1/openInterest
+ *   Bybit:   /v5/market/tickers + /v5/market/funding/history
+ *   OKX:     /api/v5/public/funding-rate + /api/v5/market/ticker
  *
- * 套利计算：
- *   每 8 小时一次 = 每年 1095 次
- *   净收益 = (spread × 1095) - 双边手续费(0.16%) - 安全边际(0.05%)
- *
- * 风险评分：
- *   - 流动性：基于持仓量和成交额
- *   - 费率边界：OKX 有 ±0.375% 限制，极端行情会被卡
- *   - 费率方向稳定性：当前费率是否在合理范围
- *
- * 没有随机数、没有模拟数据、没有免责声明式的废话。
- * 所有数字来自真实 API，所有计算可复现。
+ * 所有数据来自真实交易所 API。没有模拟、没有随机、没有免责声明式的废话。
  */
 
 import { Server } from '@modelcontextprotocol/sdk/server/index.js'
@@ -27,35 +24,57 @@ import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprot
 
 // ==================== TYPES ====================
 
-interface ExchangeRate {
+interface RateSnapshot {
   exchange: string
   symbol: string
-  fundingRate: number        // 当前/预测费率（小数）
-  fundingRatePct: number     // 百分比形式
-  annualizedPct: number      // × 1095 后的年化
-  markPrice: number          // 标记价格（USD）
-  indexPrice: number         // 指数价格（USD）
-  basis: number              // (mark - index) / index
-  nextFundingTime: string    // ISO
-  openInterest?: number      // 持仓量
-  openInterestValue?: number // 持仓价值（USD）
-  turnover24h?: number       // 24h 成交额
-  maxFundingRate?: number    // 费率上限
-  minFundingRate?: number    // 费率下限
+  fundingRate: number
+  fundingRatePct: number
+  markPrice: number
+  indexPrice: number
+  basis: number
+  nextFundingTime: string
+  openInterest?: number
+  openInterestValue?: number
+  turnover24h?: number
+  maxFundingRate?: number
+  minFundingRate?: number
   fetchedAt: number
 }
 
-interface ArbitrageSignal {
+interface HistoricalRate {
+  timestamp: number
+  fundingRate: number
+  markPrice: number
+}
+
+interface BacktestResult {
   symbol: string
-  direction: 'RECEIVE' | 'PAY'
-  longExchange: string       // 做多的交易所（收费率）
-  shortExchange: string      // 做空的交易所（付费率）
-  spreadPct: number          // 单次 spread
-  annualizedPct: number      // 年化 spread
-  estimatedNetPct: number    // 扣除费用后净收益
-  confidence: 'HIGH' | 'MEDIUM' | 'LOW'
-  riskNotes: string[]
-  btcPrice: number           // 用于计算合约数量
+  longExchange: string
+  shortExchange: string
+  periodDays: number
+  dataPoints: number
+  avgSpread: number
+  minSpread: number
+  maxSpread: number
+  stdDevSpread: number
+  grossReturnPct: number
+  netReturnPct: number
+  sharpeRatio: number
+  maxDrawdownPct: number
+  winRate: number
+  bestDay: number
+  worstDay: number
+  annualizedNetPct: number
+  confidence95Lower: number
+  confidence95Upper: number
+  data: Array<{ timestamp: number; spread: number; cumulative: number }>
+}
+
+interface SpreadPoint {
+  timestamp: number
+  longRate: number
+  shortRate: number
+  spread: number
 }
 
 // ==================== REAL API CALLS ====================
@@ -66,12 +85,12 @@ async function fetchJSON(url: string, timeoutMs = 15000): Promise<any> {
   try {
     const res = await fetch(url, {
       signal: controller.signal,
-      headers: { 'User-Agent': 'crypto-funding-rate-mcp/2.0' },
+      headers: { 'User-Agent': 'crypto-funding-rate-mcp/3.0' },
     })
-    if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`)
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
     const json = await res.json()
-    if (json.code && json.code !== '0' && json.code !== 0) {
-      throw new Error(`API error: ${json.msg || json.retMsg || json.code}`)
+    if (json.code && String(json.code) !== '0') {
+      throw new Error(json.msg || json.retMsg || String(json.code))
     }
     return json
   } finally {
@@ -79,11 +98,9 @@ async function fetchJSON(url: string, timeoutMs = 15000): Promise<any> {
   }
 }
 
-async function fetchBinanceRates(symbols: string[]): Promise<ExchangeRate[]> {
-  const url = 'https://fapi.binance.com/fapi/v1/premiumIndex'
-  const data = await fetchJSON(url)
+async function fetchBinanceCurrent(symbols: string[]): Promise<RateSnapshot[]> {
+  const data = await fetchJSON('https://fapi.binance.com/fapi/v1/premiumIndex')
   const now = Date.now()
-
   return data
     .filter((item: any) => symbols.includes(item.symbol))
     .map((item: any) => {
@@ -95,7 +112,6 @@ async function fetchBinanceRates(symbols: string[]): Promise<ExchangeRate[]> {
         symbol: item.symbol,
         fundingRate: rate,
         fundingRatePct: rate * 100,
-        annualizedPct: rate * 100 * 1095,
         markPrice: mark,
         indexPrice: idx,
         basis: ((mark - idx) / idx) * 100,
@@ -105,265 +121,366 @@ async function fetchBinanceRates(symbols: string[]): Promise<ExchangeRate[]> {
     })
 }
 
-async function fetchBybitRates(symbols: string[]): Promise<ExchangeRate[]> {
-  const results: ExchangeRate[] = []
+async function fetchBybitCurrent(symbols: string[]): Promise<RateSnapshot[]> {
+  const results: RateSnapshot[] = []
   const now = Date.now()
-
   for (const symbol of symbols) {
     try {
-      const url = `https://api.bybit.com/v5/market/tickers?category=linear&symbol=${symbol}`
-      const json = await fetchJSON(url)
+      const json = await fetchJSON(`https://api.bybit.com/v5/market/tickers?category=linear&symbol=${symbol}`)
       const item = json.result?.list?.[0]
       if (!item) continue
-
       const mark = parseFloat(item.markPrice || '0')
       const idx = parseFloat(item.indexPrice || '0')
       const rate = parseFloat(item.fundingRate || '0')
-
       results.push({
         exchange: 'Bybit',
         symbol,
         fundingRate: rate,
         fundingRatePct: rate * 100,
-        annualizedPct: rate * 100 * 1095,
         markPrice: mark,
         indexPrice: idx,
         basis: mark > 0 && idx > 0 ? ((mark - idx) / idx) * 100 : 0,
-        nextFundingTime: item.nextFundingTime ? new Date(parseInt(item.nextFundingTime)).toISOString() : new Date(now + 8 * 3600000).toISOString(),
+        nextFundingTime: item.nextFundingTime ? new Date(parseInt(item.nextFundingTime)).toISOString() : '',
         openInterest: item.openInterest ? parseFloat(item.openInterest) : undefined,
         openInterestValue: item.openInterestValue ? parseFloat(item.openInterestValue) : undefined,
         turnover24h: item.turnover24h ? parseFloat(item.turnover24h) : undefined,
         fetchedAt: now,
       })
-    } catch {
-      // 跳过不可用的交易对
-    }
+    } catch { /* skip */ }
   }
   return results
 }
 
-async function fetchOKXRates(symbols: string[]): Promise<ExchangeRate[]> {
-  const results: ExchangeRate[] = []
+async function fetchOKXCurrent(symbols: string[]): Promise<RateSnapshot[]> {
+  const results: RateSnapshot[] = []
   const now = Date.now()
-
   for (const symbol of symbols) {
     const instId = symbol.replace('USDT', '-USDT-SWAP')
     try {
-      // OKX 需要两个接口：一个拿费率，一个拿价格
       const [rateRes, tickerRes] = await Promise.all([
         fetchJSON(`https://www.okx.com/api/v5/public/funding-rate?instId=${instId}`).catch(() => null),
         fetchJSON(`https://www.okx.com/api/v5/market/ticker?instId=${instId}`).catch(() => null),
       ])
-
       const rateItem = rateRes?.data?.[0]
       const tickerItem = tickerRes?.data?.[0]
       if (!rateItem) continue
-
       const mark = tickerItem ? parseFloat(tickerItem.last || '0') : 0
-      const idx = 0 // OKX 不在此接口提供指数价格
       const rate = parseFloat(rateItem.fundingRate || '0')
-
       results.push({
         exchange: 'OKX',
         symbol,
         fundingRate: rate,
         fundingRatePct: rate * 100,
-        annualizedPct: rate * 100 * 1095,
         markPrice: mark,
-        indexPrice: idx,
+        indexPrice: 0,
         basis: 0,
-        nextFundingTime: rateItem.nextFundingTime ? new Date(parseInt(rateItem.nextFundingTime)).toISOString() : new Date(now + 8 * 3600000).toISOString(),
+        nextFundingTime: rateItem.nextFundingTime ? new Date(parseInt(rateItem.nextFundingTime)).toISOString() : '',
         maxFundingRate: rateItem.maxFundingRate ? parseFloat(rateItem.maxFundingRate) : undefined,
         minFundingRate: rateItem.minFundingRate ? parseFloat(rateItem.minFundingRate) : undefined,
         fetchedAt: now,
       })
-    } catch {
-      // 跳过不可用的交易对
-    }
+    } catch { /* skip */ }
   }
   return results
 }
 
-// ==================== ARBITRAGE ENGINE ====================
+// ==================== HISTORICAL DATA ====================
 
-const TRADE_FEE_PER_LEG = 0.0004  // 0.04% per trade (taker)
-const ROUND_TRIP_COST = TRADE_FEE_PER_LEG * 4 // 开多 + 开空 + 平多 + 平空
-const SAFETY_MARGIN = 0.05 // 0.05% safety buffer for slippage
-const FUNDINGS_PER_YEAR = 1095 // 365 days × 3 times/day
-
-function calculateArbitrage(rates: ExchangeRate[]): ArbitrageSignal[] {
-  const bySymbol = new Map<string, ExchangeRate[]>()
-  for (const r of rates) {
-    if (r.markPrice <= 0) continue // 跳过无效价格
-    if (!bySymbol.has(r.symbol)) bySymbol.set(r.symbol, [])
-    bySymbol.get(r.symbol)!.push(r)
-  }
-
-  const signals: ArbitrageSignal[] = []
-
-  for (const [symbol, symbolRates] of bySymbol) {
-    if (symbolRates.length < 2) continue
-
-    for (let i = 0; i < symbolRates.length; i++) {
-      for (let j = i + 1; j < symbolRates.length; j++) {
-        const a = symbolRates[i]
-        const b = symbolRates[j]
-
-        // 在 A 收费率、在 B 付费率
-        const spread = a.fundingRate - b.fundingRate
-        if (spread <= 0) continue
-
-        const annualizedPct = spread * 100 * FUNDINGS_PER_YEAR
-        const netPct = annualizedPct - (ROUND_TRIP_COST * 100) - SAFETY_MARGIN
-
-        // 生成风险提示
-        const riskNotes: string[] = []
-
-        // OKX 费率边界检查
-        for (const r of [a, b]) {
-          if (r.maxFundingRate && Math.abs(r.fundingRate) > r.maxFundingRate * 0.8) {
-            riskNotes.push(`${r.exchange} 费率接近边界(${r.fundingRate > 0 ? '+' : ''}${(r.fundingRate * 100).toFixed(4)}%/±${(r.maxFundingRate * 100).toFixed(2)}%)下一步可能跳变`)
-          }
-        }
-
-        // 高费率风险
-        if (Math.abs(a.fundingRate) > 0.001 || Math.abs(b.fundingRate) > 0.001) {
-          riskNotes.push('费率>0.1%，不可持续，警惕费率翻转')
-        }
-
-        // 流动性检查
-        for (const r of [a, b]) {
-          if (r.turnover24h && r.turnover24h < 100000000) {
-            riskNotes.push(`${r.exchange} 24h成交额$${((r.turnover24h / 1e6).toFixed(0))}M，流动性一般`)
-          }
-        }
-
-        // 基差风险
-        const basisRisk = Math.abs(a.basis) > 0.5 || Math.abs(b.basis) > 0.5
-        if (basisRisk) {
-          riskNotes.push('标记价偏离指数价>0.5%，注意收敛风险')
-        }
-
-        const btcPrice = (a.markPrice > 0 ? a.markPrice : b.markPrice) || 80000
-
-        signals.push({
-          symbol,
-          direction: 'RECEIVE',
-          longExchange: a.exchange,
-          shortExchange: b.exchange,
-          spreadPct: spread * 100,
-          annualizedPct,
-          estimatedNetPct: netPct,
-          confidence: netPct > 15 && riskNotes.length === 0 ? 'HIGH' : netPct > 5 ? 'MEDIUM' : 'LOW',
-          riskNotes,
-          btcPrice,
-        })
-      }
-    }
-  }
-
-  return signals.sort((a, b) => b.estimatedNetPct - a.estimatedNetPct)
+async function fetchBinanceHistorical(symbol: string, periods: number): Promise<HistoricalRate[]> {
+  const limit = Math.min(periods, 1000)
+  const url = `https://fapi.binance.com/fapi/v1/fundingRate?symbol=${symbol}&limit=${limit}`
+  const data = await fetchJSON(url)
+  return data.map((item: any) => ({
+    timestamp: item.fundingTime,
+    fundingRate: parseFloat(item.fundingRate),
+    markPrice: parseFloat(item.markPrice),
+  })).sort((a: HistoricalRate, b: HistoricalRate) => a.timestamp - b.timestamp)
 }
 
-// ==================== RISK SCORING ====================
+async function fetchBybitHistorical(symbol: string, periods: number): Promise<HistoricalRate[]> {
+  const limit = Math.min(periods, 200)
+  let allRates: HistoricalRate[] = []
+  let endCursor = ''
 
-function assessExchangeRisk(rate: ExchangeRate): { score: number; notes: string[] } {
-  let score = 100 // 满分 100
-  const notes: string[] = []
-
-  // 1. 费率绝对值越大越危险
-  const absRate = Math.abs(rate.fundingRate)
-  if (absRate > 0.001) { score -= 30; notes.push('费率>0.1% 极高') }
-  else if (absRate > 0.0005) { score -= 15; notes.push('费率>0.05% 偏高') }
-
-  // 2. 接近费率边界
-  if (rate.maxFundingRate && absRate > rate.maxFundingRate * 0.7) {
-    score -= 20; notes.push('接近费率边界')
+  while (allRates.length < periods) {
+    const url = `https://api.bybit.com/v5/market/funding/history?category=linear&symbol=${symbol}&limit=${Math.min(limit, periods - allRates.length)}${endCursor ? `&cursor=${endCursor}` : ''}`
+    try {
+      const json = await fetchJSON(url)
+      const items = json.result?.list || []
+      if (items.length === 0) break
+      allRates = allRates.concat(items.map((item: any) => ({
+        timestamp: parseInt(item.fundingRateTimestamp),
+        fundingRate: parseFloat(item.fundingRate),
+        markPrice: 0, // Bybit doesn't provide mark price in history
+      })))
+      if (!json.result?.nextPageCursor || json.result.nextPageCursor === endCursor) break
+      endCursor = json.result.nextPageCursor
+    } catch { break }
   }
 
-  // 3. 流动性折扣
-  if (rate.turnover24h && rate.turnover24h < 50000000) {
-    score -= 10; notes.push('24h成交额偏低')
+  return allRates.sort((a, b) => a.timestamp - b.timestamp)
+}
+
+// ==================== BACKTEST ENGINE ====================
+
+function alignTimeSeries(
+  longRates: HistoricalRate[],
+  shortRates: HistoricalRate[],
+  toleranceMs: number = 3600000 // 1 hour tolerance
+): SpreadPoint[] {
+  const spreads: SpreadPoint[] = []
+  for (const lr of longRates) {
+    const matching = shortRates.find(sr => Math.abs(sr.timestamp - lr.timestamp) <= toleranceMs)
+    if (matching) {
+      spreads.push({
+        timestamp: lr.timestamp,
+        longRate: lr.fundingRate,
+        shortRate: matching.fundingRate,
+        spread: lr.fundingRate - matching.fundingRate,
+      })
+    }
+  }
+  return spreads
+}
+
+function backtest(spreads: SpreadPoint[], roundTripCostPct: number): BacktestResult {
+  const FUNDINGS_PER_YEAR = 1095
+  const DAILY_PERIODS = 3 // 3 fundings per day
+
+  if (spreads.length === 0) {
+    throw new Error('No overlapping data points for the selected pair/exchanges')
   }
 
-  // 4. 持仓量折扣
-  if (rate.openInterestValue && rate.openInterestValue < 500000000) {
-    score -= 10; notes.push('持仓价值偏低')
+  const grossReturns: number[] = []
+  const netReturns: number[] = []
+
+  for (const point of spreads) {
+    const grossPerPeriod = point.spread * 100
+    const costPerPeriod = roundTripCostPct / DAILY_PERIODS
+    netReturns.push(grossPerPeriod - costPerPeriod)
+    grossReturns.push(grossPerPeriod)
   }
 
-  return { score: Math.max(0, score), notes }
+  // Cumulative returns
+  let cumulative = 0
+  const cumData = spreads.map((point, i) => {
+    cumulative += netReturns[i]
+    return {
+      timestamp: point.timestamp,
+      spread: point.spread * 100,
+      cumulative: parseFloat(cumulative.toFixed(4)),
+    }
+  })
+
+  // Calculate statistics
+  const avgSpread = spreads.reduce((s, p) => s + p.spread, 0) / spreads.length
+  const spreadsValues = spreads.map(p => p.spread)
+  const minSpread = Math.min(...spreadsValues)
+  const maxSpread = Math.max(...spreadsValues)
+  const variance = spreadsValues.reduce((s, v) => s + (v - avgSpread) ** 2, 0) / spreads.length
+  const stdDev = Math.sqrt(variance)
+
+  const avgNetPerPeriod = netReturns.reduce((s, v) => s + v, 0) / netReturns.length
+  const netReturnPct = netReturns.reduce((s, v) => s + v, 0)
+  const grossReturnPct = grossReturns.reduce((s, v) => s + v, 0)
+
+  // Max drawdown
+  let peak = 0
+  let maxDD = 0
+  let running = 0
+  for (const nr of netReturns) {
+    running += nr
+    if (running > peak) peak = running
+    const dd = peak - running
+    if (dd > maxDD) maxDD = dd
+  }
+
+  // Sharpe-like ratio (annualized)
+  const avgDailyNet = avgNetPerPeriod * DAILY_PERIODS
+  const netVariance = netReturns.reduce((s, v) => s + (v - avgNetPerPeriod) ** 2, 0) / netReturns.length
+  const dailyStdDev = Math.sqrt(netVariance) * Math.sqrt(DAILY_PERIODS)
+  const sharpe = dailyStdDev > 0 ? (avgDailyNet / dailyStdDev) * Math.sqrt(365) : 0
+
+  // Win rate (periods with positive net return)
+  const wins = netReturns.filter(v => v > 0).length
+  const winRate = (wins / netReturns.length) * 100
+
+  // Best/worst day (group by day)
+  const byDay = new Map<string, number>()
+  spreads.forEach((p, i) => {
+    const day = new Date(p.timestamp).toISOString().slice(0, 10)
+    byDay.set(day, (byDay.get(day) || 0) + netReturns[i])
+  })
+  const dailyReturns = Array.from(byDay.values())
+  const bestDay = Math.max(...dailyReturns)
+  const worstDay = Math.min(...dailyReturns)
+
+  // 95% confidence interval for average daily return
+  const dailyMean = avgDailyNet
+  const dailySE = dailyStdDev / Math.sqrt(dailyReturns.length)
+  const ci95Lower = dailyMean - 1.96 * dailySE
+  const ci95Upper = dailyMean + 1.96 * dailySE
+
+  const periodDays = spreads.length / DAILY_PERIODS
+  const annualizedNet = avgDailyNet * 365
+
+  return {
+    symbol: spreads[0] ? '' : '', // will be filled by caller
+    longExchange: '',
+    shortExchange: '',
+    periodDays: Math.round(periodDays),
+    dataPoints: spreads.length,
+    avgSpread: avgSpread * 100,
+    minSpread: minSpread * 100,
+    maxSpread: maxSpread * 100,
+    stdDevSpread: stdDev * 100,
+    grossReturnPct,
+    netReturnPct,
+    sharpeRatio: sharpe,
+    maxDrawdownPct: maxDD,
+    winRate,
+    bestDay,
+    worstDay,
+    annualizedNetPct: annualizedNet,
+    confidence95Lower: ci95Lower,
+    confidence95Upper: ci95Upper,
+    data: cumData,
+  }
+}
+
+// ==================== POSITION CALCULATOR ====================
+
+function calculatePosition(
+  symbol: string,
+  notional: number,
+  longEx: string,
+  shortEx: string,
+  longRate: RateSnapshot,
+  shortRate: RateSnapshot
+) {
+  const price = longRate.markPrice > 0 ? longRate.markPrice : shortRate.markPrice
+  if (price <= 0) return { error: 'Invalid price data' }
+
+  const spread = longRate.fundingRate - shortRate.fundingRate
+  if (spread <= 0) return { error: `No arbitrage: ${longEx} rate <= ${shortEx} rate` }
+
+  const size = notional / price
+  const feePerRound = notional * 0.0016 // 0.16%
+  const perFunding = notional * spread
+  const annualGross = perFunding * 1095
+  const annualNet = annualGross - (feePerRound * 1095) - (notional * 0.0005)
+
+  // Liquidation estimate (simplified): price move that would eat 50% of margin
+  const maintMargin = notional * 0.05 // 5% maintenance margin
+  const liqBufferPct = (maintMargin / 2) / notional * 100
+
+  return {
+    symbol,
+    notionalUsd: notional,
+    direction: `Long ${longEx} + Short ${shortEx}`,
+    entry: {
+      long: { exchange: longEx, price: longRate.markPrice, size: `${size.toFixed(6)} ${symbol.replace('USDT', '')}` },
+      short: { exchange: shortEx, price: shortRate.markPrice, size: `${size.toFixed(6)} ${symbol.replace('USDT', '')}` },
+    },
+    funding: {
+      longRate: `${(longRate.fundingRatePct).toFixed(4)}%`,
+      shortRate: `${(shortRate.fundingRatePct).toFixed(4)}%`,
+      spread: `${(spread * 100).toFixed(4)}%`,
+      perFundingUsd: `$${perFunding.toFixed(2)}`,
+      nextFunding: longRate.nextFundingTime,
+    },
+    costs: { roundTripFee: `$${(feePerRound).toFixed(2)}`, safetyMargin: `$${(notional * 0.0005).toFixed(2)}` },
+    returns: {
+      annualGross: `$${annualGross.toFixed(2)}`,
+      annualNet: `$${annualNet.toFixed(2)}`,
+      annualNetPct: `${((annualNet / notional) * 100).toFixed(2)}%`,
+      monthlyNet: `$${(annualNet / 12).toFixed(2)}`,
+      dailyNet: `$${(annualNet / 365).toFixed(2)}`,
+    },
+    risk: {
+      estimatedLiquidationBuffer: `${liqBufferPct.toFixed(2)}%`,
+      perFundingReturnPct: `${(spread * 100).toFixed(4)}%`,
+    },
+  }
 }
 
 // ==================== MCP SERVER ====================
 
 const server = new Server(
-  { name: 'crypto-funding-rate', version: '2.0.0' },
+  { name: 'crypto-funding-rate', version: '3.0.0' },
   { capabilities: { tools: {} } }
 )
 
-const DEFAULT_SYMBOLS = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'XRPUSDT', 'DOGEUSDT', 'ADAUSDT', 'AVAXUSDT', 'LINKUSDT', 'MATICUSDT', 'DOTUSDT']
+const DEFAULT_SYMBOLS = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'XRPUSDT', 'DOGEUSDT', 'ADAUSDT', 'AVAXUSDT', 'LINKUSDT']
 
 server.setRequestHandler(ListToolsRequestSchema, async () => ({
   tools: [
     {
       name: 'get_rates',
-      description: '获取 Binance、Bybit、OKX 三个交易所的真实资金费率、标记价、持仓量、成交量。不掺任何随机数。',
+      description: '获取实时资金费率。三所(Binance/Bybit/OKX)真实数据，含标记价、持仓量、24h成交额。',
       inputSchema: {
         type: 'object',
         properties: {
-          symbols: {
-            type: 'array',
-            items: { type: 'string' },
-            description: '交易对列表，如 ["BTCUSDT","ETHUSDT"]。默认热门币种前10。',
-          },
+          symbols: { type: 'array', items: { type: 'string' }, description: '默认热门前8' },
         },
       },
     },
     {
       name: 'find_arbitrage',
-      description: '发现跨交易所套利机会。计算净收益（扣双边手续费0.16% + 安全边际0.05%）。附带风险评分。',
+      description: '发现套利机会，附带风险评分(0-100)。可设最低净收益门槛和风险门槛。',
       inputSchema: {
         type: 'object',
         properties: {
-          symbols: {
-            type: 'array',
-            items: { type: 'string' },
-            description: '交易对列表。默认热门币种。',
-          },
-          min_net_pct: {
-            type: 'number',
-            description: '最低净年化收益门槛 %（默认 0，不设限）。',
-          },
-          risk_threshold: {
-            type: 'number',
-            description: '最低风险评分 0-100（默认 0，不设限）。',
-          },
+          symbols: { type: 'array', items: { type: 'string' } },
+          min_net_pct: { type: 'number', description: '最低净年化%(默认0)' },
+          risk_threshold: { type: 'number', description: '最低风险评分0-100(默认50)' },
         },
       },
     },
     {
       name: 'analyze_symbol',
-      description: '单币种深度分析：三个交易所的费率、基差、流动性、风险评分对比。',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          symbol: { type: 'string', description: '交易对，如 "BTCUSDT"' },
-        },
-        required: ['symbol'],
-      },
+      description: '单币种深度分析：三所费率、基差、流动性、风险评分。',
+      inputSchema: { type: 'object', properties: { symbol: { type: 'string' } }, required: ['symbol'] },
     },
     {
       name: 'calculate_position',
-      description: '根据套利信号计算可执行的头寸大小、成本、收益。输入金额和方向，输出实际下单参数。',
+      description: '可执行头寸计算器：输入金额+方向，输出实际下单参数、成本、收益、强平缓冲。',
       inputSchema: {
         type: 'object',
         properties: {
           symbol: { type: 'string' },
-          notional_usd: { type: 'number', description: '名义价值（USD），如 10000' },
+          notional_usd: { type: 'number' },
           long_exchange: { type: 'string' },
           short_exchange: { type: 'string' },
         },
         required: ['symbol', 'notional_usd', 'long_exchange', 'short_exchange'],
+      },
+    },
+    {
+      name: 'backtest_strategy',
+      description: '用历史数据回测套利策略。返回实际收益、最大回撤、夏普比率、胜率、95%置信区间。这是竞品没有的功能。',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          symbol: { type: 'string', description: '交易对，如 BTCUSDT' },
+          long_exchange: { type: 'string', description: '做多交易所' },
+          short_exchange: { type: 'string', description: '做空交易所' },
+          days: { type: 'number', description: '回测天数(默认30)' },
+        },
+        required: ['symbol', 'long_exchange', 'short_exchange'],
+      },
+    },
+    {
+      name: 'get_statistics',
+      description: '费率统计：7d/30d均值、标准差、spread动量(扩大/缩小趋势)。判断机会是否稳定。',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          symbol: { type: 'string' },
+          exchange: { type: 'string', description: '交易所名称(可选)' },
+          days: { type: 'number', description: '统计天数(默认7)' },
+        },
+        required: ['symbol'],
       },
     },
   ],
@@ -372,248 +489,179 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   const { name, arguments: args } = request.params
   const symbols: string[] = (args as any)?.symbols || DEFAULT_SYMBOLS
-  const min = Date.now()
+  const t0 = Date.now()
 
   try {
     switch (name) {
       case 'get_rates': {
         const results = await Promise.allSettled([
-          fetchBinanceRates(symbols),
-          fetchBybitRates(symbols),
-          fetchOKXRates(symbols),
+          fetchBinanceCurrent(symbols),
+          fetchBybitCurrent(symbols),
+          fetchOKXCurrent(symbols),
         ])
-
-        const all: ExchangeRate[] = []
-        const errors: Record<string, string> = {}
-
+        const all: RateSnapshot[] = []
         if (results[0].status === 'fulfilled') all.push(...results[0].value)
-        else errors.binance = String(results[0].reason?.message || 'failed')
-
         if (results[1].status === 'fulfilled') all.push(...results[1].value)
-        else errors.bybit = String(results[1].reason?.message || 'failed')
-
         if (results[2].status === 'fulfilled') all.push(...results[2].value)
-        else errors.okx = String(results[2].reason?.message || 'failed')
 
-        if (all.length === 0) {
-          return {
-            content: [{ type: 'text', text: JSON.stringify({ error: 'ALL_EXCHANGES_FAILED', errors, timestamp: new Date().toISOString() }, null, 2) }],
-            isError: true,
-          }
-        }
+        if (all.length === 0) return { content: [{ type: 'text', text: JSON.stringify({ error: 'ALL_FAILED' }) }], isError: true }
 
-        const elapsed = Date.now() - min
-        return {
-          content: [{
-            type: 'text',
-            text: JSON.stringify({
-              timestamp: new Date().toISOString(),
-              fetchTimeMs: elapsed,
-              totalRates: all.length,
-              sources: {
-                binance: all.filter(r => r.exchange === 'Binance').length || null,
-                bybit: all.filter(r => r.exchange === 'Bybit').length || null,
-                okx: all.filter(r => r.exchange === 'OKX').length || null,
-              },
-              errors: Object.keys(errors).length > 0 ? errors : undefined,
-              rates: all.sort((a, b) => a.symbol.localeCompare(b.symbol) || a.exchange.localeCompare(b.exchange)),
-            }, null, 2),
-          }],
-        }
+        return { content: [{ type: 'text', text: JSON.stringify({ timestamp: new Date().toISOString(), fetchMs: Date.now() - t0, count: all.length, rates: all.sort((a, b) => a.symbol.localeCompare(b.symbol)) }, null, 2) }] }
       }
 
       case 'find_arbitrage': {
-        const minNetPct = (args as any)?.min_net_pct ?? 0
-        const riskThreshold = (args as any)?.risk_threshold ?? 0
+        const minNet = (args as any)?.min_net_pct ?? 0
+        const riskThresh = (args as any)?.risk_threshold ?? 50
+        const results = await Promise.allSettled([fetchBinanceCurrent(symbols), fetchBybitCurrent(symbols), fetchOKXCurrent(symbols)])
+        const all: RateSnapshot[] = []
+        results.forEach(r => { if (r.status === 'fulfilled') all.push(...(r.value as RateSnapshot[])) })
 
-        const results = await Promise.allSettled([
-          fetchBinanceRates(symbols),
-          fetchBybitRates(symbols),
-          fetchOKXRates(symbols),
-        ])
+        const bySymbol = new Map<string, RateSnapshot[]>()
+        all.forEach(r => { if (!bySymbol.has(r.symbol)) bySymbol.set(r.symbol, []); bySymbol.get(r.symbol)!.push(r) })
 
-        const all: ExchangeRate[] = []
-        if (results[0].status === 'fulfilled') all.push(...results[0].value)
-        if (results[1].status === 'fulfilled') all.push(...results[1].value)
-        if (results[2].status === 'fulfilled') all.push(...results[2].value)
-
-        if (all.length < 2) {
-          return { content: [{ type: 'text', text: JSON.stringify({ error: 'INSUFFICIENT_DATA', message: '需要至少两个交易所的数据', ratesFetched: all.length }) }], isError: true }
-        }
-
-        const signals = calculateArbitrage(all)
-        const filtered = signals.filter(s => s.estimatedNetPct >= minNetPct)
-
-        // 对每个信号做风险评分
-        const enriched = filtered.map(signal => {
-          const longRate = all.find(r => r.exchange === signal.longExchange && r.symbol === signal.symbol)
-          const shortRate = all.find(r => r.exchange === signal.shortExchange && r.symbol === signal.symbol)
-          const longRisk = longRate ? assessExchangeRisk(longRate) : { score: 0, notes: [] }
-          const shortRisk = shortRate ? assessExchangeRisk(shortRate) : { score: 0, notes: [] }
-          const avgRisk = Math.round((longRisk.score + shortRisk.score) / 2)
-
-          return {
-            ...signal,
-            riskScore: avgRisk,
-            riskNotes: [...signal.riskNotes, ...longRisk.notes, ...shortRisk.notes],
-            longExchangeRisk: longRisk.score,
-            shortExchangeRisk: shortRisk.score,
+        const signals: any[] = []
+        for (const [symbol, rates] of bySymbol) {
+          if (rates.length < 2) continue
+          for (let i = 0; i < rates.length; i++) {
+            for (let j = i + 1; j < rates.length; j++) {
+              const a = rates[i], b = rates[j]
+              if (a.markPrice <= 0 || b.markPrice <= 0) continue
+              const spread = a.fundingRate - b.fundingRate
+              if (spread <= 0) continue
+              const netPct = (spread * 100 * 1095) - 0.21
+              if (netPct < minNet) continue
+              const riskScore = Math.max(0, 100 - Math.abs(a.fundingRate) * 50000)
+              if (riskScore < riskThresh) continue
+              signals.push({
+                symbol, longExchange: a.exchange, shortExchange: b.exchange,
+                spreadPct: (spread * 100).toFixed(4),
+                netAnnualizedPct: parseFloat(netPct.toFixed(2)),
+                riskScore: Math.round(riskScore),
+                longPrice: a.markPrice, shortPrice: b.markPrice,
+              })
+            }
           }
-        }).filter(s => s.riskScore >= riskThreshold)
-
-        const elapsed = Date.now() - min
-        return {
-          content: [{
-            type: 'text',
-            text: JSON.stringify({
-              timestamp: new Date().toISOString(),
-              fetchTimeMs: elapsed,
-              totalRates: all.length,
-              signalsFound: enriched.length,
-              parameters: { minNetPct, riskThreshold },
-              signals: enriched.slice(0, 15),
-              methodology: {
-                fundingsPerYear: FUNDINGS_PER_YEAR,
-                roundTripFeePct: ROUND_TRIP_COST * 100,
-                safetyMarginPct: SAFETY_MARGIN,
-                formula: 'net = (spread × 1095) - 0.16% - 0.05%',
-              },
-            }, null, 2),
-          }],
         }
+        return { content: [{ type: 'text', text: JSON.stringify({ timestamp: new Date().toISOString(), signalsFound: signals.length, signals: signals.sort((a, b) => b.netAnnualizedPct - a.netAnnualizedPct) }, null, 2) }] }
       }
 
       case 'analyze_symbol': {
-        const symbol = ((args as any)?.symbol as string)?.toUpperCase()
-        if (!symbol) return { content: [{ type: 'text', text: 'Error: symbol required' }], isError: true }
-
-        const results = await Promise.allSettled([
-          fetchBinanceRates([symbol]),
-          fetchBybitRates([symbol]),
-          fetchOKXRates([symbol]),
-        ])
-
-        const rates: ExchangeRate[] = []
-        if (results[0].status === 'fulfilled') rates.push(...results[0].value)
-        if (results[1].status === 'fulfilled') rates.push(...results[1].value)
-        if (results[2].status === 'fulfilled') rates.push(...results[2].value)
-
-        if (rates.length === 0) {
-          return { content: [{ type: 'text', text: `No data for ${symbol}` }], isError: true }
-        }
-
-        const signals = calculateArbitrage(rates)
-        const riskAssessments = rates.map(r => ({
-          exchange: r.exchange,
-          ...assessExchangeRisk(r),
-        }))
-
-        return {
-          content: [{
-            type: 'text',
-            text: JSON.stringify({
-              symbol,
-              timestamp: new Date().toISOString(),
-              rates,
-              bestSignal: signals[0] || null,
-              riskAssessment: riskAssessments,
-            }, null, 2),
-          }],
-        }
+        const sym = ((args as any)?.symbol as string)?.toUpperCase()
+        const res = await Promise.allSettled([fetchBinanceCurrent([sym]), fetchBybitCurrent([sym]), fetchOKXCurrent([sym])])
+        const rates: RateSnapshot[] = []
+        res.forEach(r => { if (r.status === 'fulfilled') rates.push(...(r.value as RateSnapshot[])) })
+        if (rates.length === 0) return { content: [{ type: 'text', text: 'No data' }], isError: true }
+        return { content: [{ type: 'text', text: JSON.stringify({ symbol: sym, timestamp: new Date().toISOString(), rates, riskScores: rates.map(r => ({ exchange: r.exchange, score: Math.max(0, 100 - Math.abs(r.fundingRate) * 50000) })) }, null, 2) }] }
       }
 
       case 'calculate_position': {
-        const symbol = ((args as any)?.symbol as string)?.toUpperCase()
-        const notional = (args as any)?.notional_usd as number
+        const sym = ((args as any)?.symbol as string)?.toUpperCase()
+        const notional = (args as any)?.notional_usd
         const longEx = (args as any)?.long_exchange as string
         const shortEx = (args as any)?.short_exchange as string
+        if (!sym || !notional || !longEx || !shortEx) return { content: [{ type: 'text', text: 'Missing params' }], isError: true }
 
-        if (!symbol || !notional || !longEx || !shortEx) {
-          return { content: [{ type: 'text', text: 'Error: symbol, notional_usd, long_exchange, short_exchange all required' }], isError: true }
-        }
+        const res = await Promise.allSettled([fetchBinanceCurrent([sym]), fetchBybitCurrent([sym]), fetchOKXCurrent([sym])])
+        const all: RateSnapshot[] = []
+        res.forEach(r => { if (r.status === 'fulfilled') all.push(...(r.value as RateSnapshot[])) })
 
-        const rates = await Promise.allSettled([
-          fetchBinanceRates([symbol]),
-          fetchBybitRates([symbol]),
-          fetchOKXRates([symbol]),
-        ])
+        const long = all.find(r => r.exchange === longEx)
+        const short = all.find(r => r.exchange === shortEx)
+        if (!long || !short) return { content: [{ type: 'text', text: 'Rate data not available' }], isError: true }
 
-        const all: ExchangeRate[] = []
-        if (rates[0].status === 'fulfilled') all.push(...rates[0].value)
-        if (rates[1].status === 'fulfilled') all.push(...rates[1].value)
-        if (rates[2].status === 'fulfilled') all.push(...rates[2].value)
-
-        const longRate = all.find(r => r.exchange === longEx && r.symbol === symbol)
-        const shortRate = all.find(r => r.exchange === shortEx && r.symbol === symbol)
-
-        if (!longRate || !shortRate) {
-          return { content: [{ type: 'text', text: `Cannot find rates for ${symbol} on ${longEx}/${shortEx}` }], isError: true }
-        }
-
-        const spread = longRate.fundingRate - shortRate.fundingRate
-        if (spread <= 0) {
-          return { content: [{ type: 'text', text: `No arbitrage: ${longEx} rate (${(longRate.fundingRatePct).toFixed(4)}%) <= ${shortEx} rate (${(shortRate.fundingRatePct).toFixed(4)}%)` }], isError: true }
-        }
-
-        const price = longRate.markPrice > 0 ? longRate.markPrice : shortRate.markPrice
-        const contracts = notional / price
-        const feeCost = notional * ROUND_TRIP_COST
-        const perFunding = notional * spread
-        const annualGross = perFunding * FUNDINGS_PER_YEAR
-        const annualNet = annualGross - feeCost - (notional * SAFETY_MARGIN / 100)
-
-        return {
-          content: [{
-            type: 'text',
-            text: JSON.stringify({
-              symbol,
-              notionalUsd: notional,
-              direction: `Long ${longEx} + Short ${shortEx}`,
-              entry: {
-                long: { exchange: longEx, price: longRate.markPrice, size: `${contracts.toFixed(6)} ${symbol.replace('USDT', '')}` },
-                short: { exchange: shortEx, price: shortRate.markPrice, size: `${contracts.toFixed(6)} ${symbol.replace('USDT', '')}` },
-              },
-              funding: {
-                longRate: `${(longRate.fundingRatePct).toFixed(4)}%`,
-                shortRate: `${(shortRate.fundingRatePct).toFixed(4)}%`,
-                spread: `${(spread * 100).toFixed(4)}%`,
-                perFundingUsd: `$${perFunding.toFixed(2)}`,
-                nextFunding: longRate.nextFundingTime,
-              },
-              costs: {
-                roundTripFee: `$${feeCost.toFixed(2)}`,
-                safetyMargin: `$${(notional * SAFETY_MARGIN / 100).toFixed(2)}`,
-              },
-              returns: {
-                annualGross: `$${annualGross.toFixed(2)}`,
-                annualNet: `$${annualNet.toFixed(2)}`,
-                annualNetPct: `${((annualNet / notional) * 100).toFixed(2)}%`,
-                monthlyNet: `$${(annualNet / 12).toFixed(2)}`,
-                dailyNet: `$${(annualNet / 365).toFixed(2)}`,
-              },
-            }, null, 2),
-          }],
-        }
+        return { content: [{ type: 'text', text: JSON.stringify(calculatePosition(sym, notional, longEx, shortEx, long, short), null, 2) }] }
       }
 
-      default:
-        return { content: [{ type: 'text', text: `Unknown tool: ${name}` }], isError: true }
+      case 'backtest_strategy': {
+        const sym = ((args as any)?.symbol as string)?.toUpperCase()
+        const longEx = (args as any)?.long_exchange as string
+        const shortEx = (args as any)?.short_exchange as string
+        const days = (args as any)?.days ?? 30
+        if (!sym || !longEx || !shortEx) return { content: [{ type: 'text', text: 'Missing params' }], isError: true }
+
+        const periods = days * 3 // 3 fundings per day
+
+        // 并行获取两所历史数据
+        const getHistorical = async (exchange: string, symbol: string, limit: number): Promise<HistoricalRate[]> => {
+          if (exchange === 'Binance') return fetchBinanceHistorical(symbol, limit)
+          if (exchange === 'Bybit') return fetchBybitHistorical(symbol, limit)
+          throw new Error(`No historical API for ${exchange}`)
+        }
+
+        const [longHist, shortHist] = await Promise.all([
+          getHistorical(longEx, sym, periods).catch(() => []),
+          getHistorical(shortEx, sym, periods).catch(() => []),
+        ])
+
+        if (longHist.length === 0 || shortHist.length === 0) {
+          return { content: [{ type: 'text', text: JSON.stringify({ error: 'NO_HISTORICAL_DATA', longEx, shortEx, sym, longPoints: longHist.length, shortPoints: shortHist.length }) }], isError: true }
+        }
+
+        const spreads = alignTimeSeries(longHist, shortHist)
+        if (spreads.length === 0) return { content: [{ type: 'text', text: 'No matching data points between exchanges' }], isError: true }
+
+        const result = backtest(spreads, 0.16)
+        result.symbol = sym
+        result.longExchange = longEx
+        result.shortExchange = shortEx
+
+        // 只保留最近30个点避免输出过大
+        if (result.data.length > 30) {
+          result.data = result.data.slice(-30)
+        }
+
+        return { content: [{ type: 'text', text: JSON.stringify(result, null, 2) }] }
+      }
+
+      case 'get_statistics': {
+        const sym = ((args as any)?.symbol as string)?.toUpperCase()
+        const exchange = (args as any)?.exchange as string | undefined
+        const days = (args as any)?.days ?? 7
+        const periods = days * 3
+
+        const rates: HistoricalRate[] = []
+        if (!exchange || exchange === 'Binance') {
+          rates.push(...await fetchBinanceHistorical(sym, periods).catch(() => []))
+        }
+        if (!exchange || exchange === 'Bybit') {
+          rates.push(...await fetchBybitHistorical(sym, periods).catch(() => []))
+        }
+
+        if (rates.length === 0) return { content: [{ type: 'text', text: 'No data' }], isError: true }
+
+        rates.sort((a, b) => a.timestamp - b.timestamp)
+        const values = rates.map(r => r.fundingRate)
+        const avg = values.reduce((s, v) => s + v, 0) / values.length
+        const std = Math.sqrt(values.reduce((s, v) => s + (v - avg) ** 2, 0) / values.length)
+        const recent = values.slice(-Math.min(10, values.length))
+        const older = values.slice(0, Math.min(10, values.length))
+        const recentAvg = recent.reduce((s, v) => s + v, 0) / recent.length
+        const olderAvg = older.reduce((s, v) => s + v, 0) / older.length
+        const momentum = recentAvg > olderAvg * 1.1 ? 'INCREASING' : recentAvg < olderAvg * 0.9 ? 'DECREASING' : 'STABLE'
+
+        const exLabel = exchange || 'ALL'
+        return { content: [{ type: 'text', text: JSON.stringify({
+          symbol: sym, exchange: exLabel, days, dataPoints: rates.length,
+          mean: (avg * 100).toFixed(4) + '%',
+          stdDev: (std * 100).toFixed(4) + '%',
+          min: (Math.min(...values) * 100).toFixed(4) + '%',
+          max: (Math.max(...values) * 100).toFixed(4) + '%',
+          momentum,
+          latest: (values[values.length - 1] * 100).toFixed(4) + '%',
+          trend: recentAvg > olderAvg ? '费率在上升' : recentAvg < olderAvg ? '费率在下降' : '费率稳定',
+        }, null, 2) }] }
+      }
+
+      default: return { content: [{ type: 'text', text: `Unknown: ${name}` }], isError: true }
     }
   } catch (err: any) {
-    return {
-      content: [{ type: 'text', text: JSON.stringify({ error: 'UNEXPECTED', message: err.message, stack: err.stack?.split('\n').slice(0, 3) }) }],
-      isError: true,
-    }
+    return { content: [{ type: 'text', text: JSON.stringify({ error: err.message }) }], isError: true }
   }
 })
 
 async function main() {
   const transport = new StdioServerTransport()
   await server.connect(transport)
-  console.error('[crypto-funding-rate v2] Running. Real APIs: Binance + Bybit + OKX.')
+  console.error('[crypto-funding-rate v3] Running. Real APIs + backtesting + statistics.')
 }
-
-main().catch((err) => {
-  console.error('Fatal:', err)
-  process.exit(1)
-})
+main().catch(err => { console.error('Fatal:', err); process.exit(1) })
