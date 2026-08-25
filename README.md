@@ -1,362 +1,52 @@
 # DSH Plugin Toolkit
 
-> **360 DeepSeek Harness plugins — 2880 AI agent tools**
-
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![DeepSeek Harness](https://img.shields.io/badge/DeepSeek-Harness-orange.svg)](https://deepseek.com/)
-[![360 Plugins](https://img.shields.io/badge/Plugins-360-8A2BE2.svg)](https://github.com/chengganping-ship-it/dsh-plugin-toolkit)
+> **真实有用的 AI 工具集 — 每个工具都调用真实 API，产出真实可用的数据。**
 
 ---
 
-## Overview
+## 这个仓库之前有什么
 
-A comprehensive plugin ecosystem for [DeepSeek Harness (DSH)](https://deepseek.com/) — the "Everything is a Plugin" AI Agent framework. 111 domain-specific plugins, each with 8 tools, covering enterprise operations, vertical industries, and personal productivity.
+之前这个仓库里有 360 个"插件"，每个插件 8 个工具，共 2880 个工具。
 
-## Categories
+**它们全是假的。**
 
-| Category | Plugins | Tools |
-|----------|---------|-------|
-| Enterprise Core | 22 | 176 |
-| Finance & Compliance | 16 | 128 |
-| Developer & Engineering | 13 | 104 |
-| Vertical Industries | 19 | 152 |
-| Marketing & Sales | 10 | 80 |
-| Personal Productivity | 8 | 64 |
-| Security & Governance | 10 | 80 |
-| Workforce & HR | 1 | 8 |
-| IP Protection | 1 | 8 |
-| Supply Chain Resilience | 1 | 8 |
-| Multi-Agent Orchestration | 1 | 8 |
-| Agent Memory Management | 1 | 8 |
-| Agent Commerce | 1 | 8 |
-| Governance & Security | 1 | 8 |
-| Skills Marketplace | 1 | 8 |
-| Physical AI / Robotics | 1 | 8 |
-| GUI / UI Agent | 1 | 8 |
-| Agent Factory | 1 | 8 |
-| Legal AI | 1 | 8 |
-| Healthcare AI | 1 | 8 |
-| AI Education | 1 | 8 |
-| FinTech AI | 1 | 8 |
-| Smart Manufacturing | 1 | 8 |
-| AI for Science | 1 | 8 |
-| Vibe Coding | 1 | 8 |
-| Smart Agriculture | 1 | 8 |
-| Digital Government | 1 | 8 |
-| Smart Retail | 1 | 8 |
-| Autonomous Driving | 1 | 8 |
-| Smart Energy | 1 | 8 |
-| Smart Logistics | 1 | 8 |
-| Cybersecurity | 1 | 8 |
-| Gaming AI | 1 | 8 |
-| Aerospace | 1 | 8 |
-| Environmental | 1 | 8 |
-| Insurance AI | 1 | 8 |
-| Media & Content | 1 | 8 |
-| Construction | 1 | 8 |
-| Hospitality & Tourism | 1 | 8 |
-| Chemical & Materials | 1 | 8 |
-| AI Pharma | 1 | 8 |
-| Telecom | 1 | 8 |
-| Auto Aftermarket | 1 | 8 |
-| Public Safety | 1 | 8 |
-| Cultural Tourism | 1 | 8 |
-| AI Recruitment | 1 | 8 |
-| PR & Media Agent | 1 | 8 |
-| Marketing AI | 1 | 8 |
-| Customer Success | 1 | 8 |
-| Food & Beverage | 1 | 8 |
-| Mental Health AI | 1 | 8 |
-| E-Commerce Ops | 1 | 8 |
-| Smart Home | 1 | 8 |
-| Creative Tools | 1 | 8 |
-| GLP Compliance | 1 | 8 |
-| Sports Intelligence | 1 | 8 |
-| Fashion Tech | 1 | 8 |
-| Carbon Trading | 1 | 8 |
-| Smart Elderly Care | 1 | 8 |
-| Aquaculture & Fisheries | 1 | 8 |
-| Fleet Management | 1 | 8 |
-| Smart Mining | 1 | 8 |
-| Maritime Shipping | 1 | 8 |
-| HR Compensation | 1 | 8 |
-| Smart Forestry | 1 | 8 |
-| Patent Analytics | 1 | 8 |
-| Waste Management | 1 | 8 |
-| Translation & Localization | 1 | 8 |
-| Museum & Archive | 1 | 8 |
-| Water Utility | 1 | 8 |
-| Semiconductor AI | 1 | 8 |
-| Pet Care & Veterinary | 1 | 8 |
-| Music Production | 1 | 8 |
-| Religious Studies | 1 | 8 |
-| Textile Manufacturing | 1 | 8 |
-| Cosmetics R&D | 1 | 8 |
-| Agent Governance | 1 | 8 |
-| Drone Delivery | 1 | 8 |
-| Funeral Services | 1 | 8 |
-| Optometry & Eye Care | 1 | 8 |
-| Wealth Management | 1 | 8 |
-| Wedding Planning | 1 | 8 |
-| Disaster Response | 1 | 8 |
-| Elevator Safety | 1 | 8 |
-| Smart Power Grid | 1 | 8 |
-| Career Coaching | 1 | 8 |
-| Language Learning | 1 | 8 |
-| Virtual Influencer | 1 | 8 |
-| Smart Dairy | 1 | 8 |
-| Hydrogen Energy | 1 | 8 |
-| Seed Breeding | 1 | 8 |
-| Underground Utility | 1 | 8 |
-| Shipbuilding | 1 | 8 |
-| Data Center | 1 | 8 |
-| PCB Design | 1 | 8 |
-| AI Video Generation | 1 | 8 |
-| Agent Security | 1 | 8 |
-| CLI-Agentify | 1 | 8 |
-| OPC One-Person Company | 1 | 8 |
-| Virtual Influencer | 1 | 8 |
-| Space Resources | 1 | 8 |
-| Defense & National Security | 1 | 8 |
-| Career Path AI | 1 | 8 |
-| AI MarTech Stack | 1 | 8 |
-| DeFi Risk Engineering | 1 | 8 |
-| Freelancer Business OS | 1 | 8 |
-| Creator Monetization | 1 | 8 |
-| API DX Optimizer | 1 | 8 |
-| E-Commerce Returns | 1 | 8 |
-| Civic Tech & Public Sector | 1 | 8 |
-| Mental Wellness AI | 1 | 8 |
-| Supply Chain Visibility | 1 | 8 |
-| Agent Commerce & Payments | 1 | 8 |
-| Remote Healthcare | 1 | 8 |
-| Carbon Credit Marketplace | 1 | 8 |
-| AI Agent Marketplace | 1 | 8 |
-| Food Tech & Alt Proteins | 1 | 8 |
-| Digital Identity & KYC | 1 | 8 |
-| Smart Building & Facilities | 1 | 8 |
-| Developer Productivity | 1 | 8 |
-| Knowledge Management | 1 | 8 |
-| AI Testing & QA | 1 | 8 |
-| Multi-Agent Orchestration | 1 | 8 |
-| No-Code/Low-Code AI | 1 | 8 |
-| Financial Compliance & AML | 1 | 8 |
-| ESG & Sustainability | 1 | 8 |
-| Real Estate & PropTech | 1 | 8 |
-| InsurTech | 1 | 8 |
-| Cybersecurity & Threat Intel | 1 | 8 |
-| Data Privacy & Protection | 1 | 8 |
-| Freight & Logistics | 1 | 8 |
-| Pharma & Drug Discovery | 1 | 8 |
-| Energy Grid & Utilities | 1 | 8 |
-| Contract Management & Legal | 1 | 8 |
-| HR Tech & People Analytics | 1 | 8 |
-| Smart Agriculture | 1 | 8 |
-| Future of Work | 1 | 8 |
-| Venture Capital & Investment | 1 | 8 |
-| Social Media & Influencer | 1 | 8 |
-| Supply Chain Finance | 1 | 8 |
-| Space Tourism | 1 | 8 |
-| AI Education & Learning | 1 | 8 |
-| Blockchain Identity | 1 | 8 |
-| Manufacturing Quality | 1 | 8 |
-| Telecom & Network | 1 | 8 |
-| Cyber Insurance | 1 | 8 |
-| DataOps & Data Analytics | 1 | 8 |
-| Disaster Recovery | 1 | 8 |
-| Digital Marketing Ads | 1 | 8 |
-| Digital Wallets & Payments | 1 | 8 |
-| AI Agent Explainability | 1 | 8 |
-| Circular Supply Chain | 1 | 8 |
-| Defense Simulation | 1 | 8 |
-| Agent Memory & Cognition | 1 | 8 |
-| Space Debris & Safety | 1 | 8 |
-| Digital Twin & Simulation | 1 | 8 |
-| Metaverse & Virtual Worlds | 1 | 8 |
-| Longevity & Healthspan | 1 | 8 |
-| AI Governance & Model Risk | 1 | 8 |
-| Clean Energy & Climate Tech | 1 | 8 |
-| Autonomous Vehicles | 1 | 8 |
-| Music & Audio AI | 1 | 8 |
-| Talent Acquisition | 1 | 8 |
-| Web3 Security & Auditing | 1 | 8 |
-| Precision Medicine & Genomics | 1 | 8 |
-| Warehouse Robotics | 1 | 8 |
-| Corporate Training & L&D | 1 | 8 |
-| Quantum Computing Apps | 1 | 8 |
-| Supply Chain Risk | 1 | 8 |
-| AI Agent Builder | 1 | 8 |
-| Drone Fleet Management | 1 | 8 |
-| Patent & IP Management | 1 | 8 |
-| Maritime Shipping | 1 | 8 |
-| Edge AI & On-Device | 1 | 8 |
-| Synthetic Data & Privacy | 1 | 8 |
-| Carbon Capture & Storage | 1 | 8 |
-| Agent Evaluation | 1 | 8 |
-| Behavioral Economics | 1 | 8 |
-| AI Coding Assistant | 1 | 8 |
-| Bioinformatics | 1 | 8 |
-| Space Situational Awareness | 1 | 8 |
-| AI Agent Security | 1 | 8 |
-| Climate Risk | 1 | 8 |
-| RPA + AI | 1 | 8 |
-| Satellite Comms | 1 | 8 |
-| Materials Science | 1 | 8 |
-| Underwater Robotics | 1 | 8 |
-| Autonomous Farming | 1 | 8 |
-| Fusion Energy | 1 | 8 |
-| AI Code Review | 1 | 8 |
-| Wildlife Conservation | 1 | 8 |
-| Autonomous Ships | 1 | 8 |
-| Predictive Maintenance | 1 | 8 |
-| Sports Analytics | 1 | 8 |
-| Drone Delivery & UAM | 1 | 8 |
-| Quantum Computing | 1 | 8 |
-| Digital Twin | 1 | 8 |
-| Space Debris | 1 | 8 |
-| Synthetic Biology | 1 | 8 |
-| Smart Grid | 1 | 8 |
-| Voice AI | 1 | 8 |
-| 3D Printing | 1 | 8 |
-| Privacy Engineering | 1 | 8 |
-| AgriTech | 1 | 8 |
-| Cyber Insurance | 1 | 8 |
-| Neural Engineering | 1 | 8 |
-| Cloud FinOps | 1 | 8 |
-| Legal Document Automation | 1 | 8 |
-| Digital Health | 1 | 8 |
-| Gamification | 1 | 8 |
-| Materials Science | 1 | 8 |
-| Knowledge Graph | 1 | 8 |
-| Carbon Markets | 1 | 8 |
-| RPA Enhanced | 1 | 8 |
-| Space Tourism | 1 | 8 |
-| Smart City | 1 | 8 |
-| Aquaculture | 1 | 8 |
+每个工具的核心都是 `mulberry32` 随机数生成器 — 输入一个字符串，输出看起来专业但完全虚构的"分析报告"。没有调用任何真实 API，没有做任何真实计算，不解决任何真实问题。
 
-## Breakthrough Infrastructure (L1-L8)
+2026-08-24，全部清除。
 
-8 infrastructure layers elevate this toolkit from L2 (process automation) to **L8 (Tool-to-Skill dimension breakthrough)**:
+---
 
-| Layer | Directory/Plugin | Standards | Purpose |
-|-------|------------------|-----------|---------|
-| **L1: MCP Bridge** | `mcp-bridge/` | MCP v1.30 (Linux Foundation, 97M monthly downloads) | Real MCP server (StdioTransport, 184 tools auto-discovered). Compiles + runs via ts-node. |
-| **L2: A2A Cards** | `a2a-cards/` | Google A2A v1.0 (150+ orgs, GA May 2026) | Auto-generated AgentCard descriptors for cross-platform inter-agent delegation. |
-| **L3: Loop Engineering** | `loop-engineering/` | 2026 discipline: execute→verify→retry→escalate | Self-correcting agentic loop library with validators and AI self-critique. |
-| **L4: Cost Governance** | `cost-governance/` | Gartner: 40% AI projects cancelled due to cost | Token tracking, budget enforcement, threshold alerts, cost optimizer. |
-| **L5: Multi-Agent Demo** | `demos/multi-agent-carbon-neutral/` | DAG-based orchestration | 5 plugin agents collaborate on carbon neutrality via 4-phase workflow. |
-| **L6: Meta-Engine** | `dsh-tool-metaforge/` | Self-generating plugin factory | Auto-scaffold, auto-validate, auto-document, auto-commit. The toolkit generates itself. |
-| **L7: AutoWave** | `dsh-tool-autowave/` | Full-cycle autonomous orchestration | **Self-orchestrating wave runner: trend→gen→validate→fix→doc→commit→push without human.** |
-| **L8: SkillsForge** | `dsh-tool-skillsforge/` | Skill evolution engine | **DIMENSION BREAKTHROUGH: Tools(hand) → Skills(brain cortex). Procedural SOP + verification + error recovery + marketplace monetization.** |
+## 这个仓库现在要做什么
 
-**Integration Architecture:**
-```
-L1 MCP Bridge → L2 A2A Cards → L3 Loop Engineering → L4 Cost Governance → L5 Multi-Agent (L6 Meta-Engine) → L7 AutoWave (self-orchestration)
-     ↑               ↑               ↑                    ↑                     ↑                          ↑
-  Tool exposure  Inter-agent    Self-correcting      Budget control       Cross plugin             Full autonomous
-                 delegation     retry loops                                   collaboration            wave pipeline
-```
+**少而精，每个工具必须：**
 
-Each layer is independently reusable — drop `loop-engineering` into any agent project to add self-correcting behavior, or drop `cost-governance` into any LLM pipeline for automatic budget enforcement.
+1. 调用真实 API 或执行真实算法
+2. 产出可验证、可使用的结果
+3. 解决一个真实存在的需求
 
-## Quick Start
+**不做：**
+- 随机数生成器伪装的分析工具
+- 没有真实数据源的"模拟器"
+- 华而不实的免责声明
 
-```bash
-# 1. Browse plugins
-ls dsh-tool-*/    # List all plugins
+---
 
-# 2. Install dependencies
-cd dsh-tool-workflow
-npm install
+## 工具列表
 
-# 3. Build
-npm run build
+| 工具 | 功能 | 数据源 | 状态 |
+|------|------|--------|------|
+| crypto-funding-rate | 实时加密货币资金费率监控与套利分析 | Binance / OKX / Bybit 真实 API | 🚧 开发中 |
 
-# 4. (Optional) Publish to npm
-npm login
-npm publish
-```
+---
 
-## Plugin Structure
+## 为什么这样做
 
-Each plugin follows a consistent pattern:
+360 个假插件不如 1 个真工具。
 
-```
-dsh-tool-name/
-├── package.json      # Dependencies & metadata
-├── tsconfig.json     # TypeScript config
-├── cordis.yml        # DSH plugin manifest
-├── src/
-│   └── index.ts      # Tool implementations (8 tools)
-└── lib/              # Build output (gitignored)
-```
+一个能真正帮你发现套利机会的工具，比 2880 个随机数生成器有价值一万倍。
 
-## Marketplace Coverage
-
-| Domain | Plugin | Key Tools |
-|--------|--------|-----------|
-| **Workflow Automation** | `workflow` | Designer, Executor, Monitor, Optimizer |
-| **Cross-Platform Agents** | `a2abridge` | Registry, Router, Translator, Orchestrator |
-| **MCP Protocol** | `mcphub` | Registry, Invoker, Composer, Monitor |
-| **Personal AI Assistant** | `personalai` | Briefing, Inbox, Meetings, Focus |
-| **AI Agent Security** | `agentguard` | Audit, Permissions, Anomaly, Compliance |
-| **AIOps** | `opsinsight` | Alert Fusion, Root Cause, Remediation |
-| **Customer Service** | `supportgenius` | Channel, Intent, Router, Sentiment |
-| **Financial Treasury** | `treasuryagent` | Cash, Liquidity, Payments, FX |
-| **Legal eDiscovery** | `legaldiscovery` | Collection, Review, Redaction |
-| **Healthcare RCM** | `healthrcm` | Eligibility, Coding, Billing, Denials |
-| **ESG Sustainability** | `esgengine` | Carbon, Reporting, Supply Chain |
-| **Knowledge Graph** | `kgpro` | Ontology, Entity, Search, Reasoning |
-| **Contract Lifecycle** | `clmengine` | Author, Negotiate, Obligations, Renewal |
-| **Customer Data** | `cdpagent` | Profile, Segment, Journey, Activation |
-| **HR & Talent** | `peoplex` | Skills, Forecast, Recruiter, Wellbeing |
-| **Research Acceleration** | `researchos` | Literature, Hypothesis, Experiment |
-| **Cloud Operations** | `cloudops` | Cost, K8s, Reliability, Carbon |
-| **Spreadsheet AI** | `spreadsheet` | Formula, Cleaner, Pivot, Charts |
-| **B2B Sales** | `salesengine` | Leads, Outreach, Deals, Forecast |
-
-> Full plugin list: see [PLUGINS.md](PLUGINS.md)
-
-## Tech Stack
-
-- **TypeScript 5.0+** with strict mode
-- **DeepSeek Harness (Cordis)** dependency injection
-- **DSH Tools** (`defineTool` API)
-- Each plugin compiles independently via `tsc`
-- 100% deterministic output via seeded PRNG
-
-## Repository Stats
-
-- **242 plugins** × **8 tools** each = **1936 tool implementations**
-- **8 breakthrough infrastructure layers** (MCP Bridge + A2A Cards + Loop Engineering + Cost Governance + Multi-Agent Demo + L6 Meta-Engine + L7 AutoWave + L8 SkillsForge)
-- **Wave 47: Real market demand plugins** (customs 70% cost reduction, invoice automation, CDP 53% efficiency, logistics optimization, Agent Skills packaging)
-- **100% TypeScript strict** — zero compilation errors across all packages
-- **MIT Licensed**
-- **Wave 49 (2026-08)**: fintechapi + mlopsai + rwaasset + auditsafe + apigatewayai
-- **Wave 48 (2026-08)**: skillsforge [L8 BREAKTHROUGH: Tools→Skills]
-- **Wave 47 (2026-08)**: tradecompliance + invoiceai + cdpagent + logisticspro + skillpackager [REAL DEMAND]
-- **Wave 46 (2026-08)**: manufacturingai + cyberinsur + autonomousvehicle + foodtechai + autowave
-- **Wave 45 (2026-08)**: pharmatechai + bioinformatics + energygrid + govtech + sportstech
-- **Wave 44 (2026-08)**: cybersecdev + insurtechai + realestateai + hospitalityai + aigovernance
-- **Wave 43 (2026-08)**: legaltechai + fintechrisk + supplychainai + retailai + constructionai
-- **Wave 42 (2026-08)**: blockchaindev + edtechpro + climatech + telecompro + metaforge
-- **Wave 41 (2026-08)**: minimalist + musicip + web3data + creativeip + robofounder
-- **Wave 40 (2026-08)**: graphrag + agrivertical + spaceexplorer + musicproducer + healthcoach
-- **Wave 39 (2026-08)**: harnesseng + opcstudio + codeevolver + nocodeengine + agentmarket
-- **Wave 38 (2026-08)**: videogenaiagent + agentsecskills + cliagentify + opcenter + virtualinfluencer
-- **Wave 37 (2026-08)**: seedbreedingagent + undergroundutilityagent + shipbuildingagent + datacenteragent + pcbdesignagent
-- **Wave 36 (2026-08)**: careercoachagent + langlearnagentpro + virtualinfluenceragent + dairyfarmagent + hydrogenenergyagent
-- **Wave 35 (2026-08)**: wealthagentpro + weddingagentpro + disasterresponseagent + elevatorsafetyagent + powergridagent
-- **Wave 34 (2026-08)**: cosmeticagentpro + agentharnessagent + dronedeliveryagent + funeralagentpro + optometryagentpro
-- **Wave 33 (2026-08)**: semiconagentpro + petcareagentpro + musicprodagent + religstudiesagent + textileagentpro
-- **Wave 32 (2026-08)**: patentagentpro + wasteagentpro + translocaleagent + museumagentpro + waterutilityagent
-- **Wave 31 (2026-08)**: fleetagentpro + mineaiagent + maritimeagent + hrcompagent + forestagentpro
-- **Wave 30 (2026-08)**: sportagentpro + fashiontechagent + carbontradingagent + agedcareagent + aquafishagent
-- **Wave 29 (2026-08)**: mentalhealthagentpro + ecomagentpro + smarthomeagent + creativeagentpro + glpcomplianceagent
-- **Wave 28 (2026-08)**: recruitagentpro + pragentpro + marketingagentpro + csagentpro + foodagentpro
-- **Wave 27 (2026-08)**: pharmaaiagent + telecomaiagent + autoafteragent + safetyagentpro + cultouragent
+---
 
 ## License
 
-[MIT](LICENSE) © 2025 chengganping-ship-it
+MIT

@@ -1,9 +1,0 @@
-{
-  "mcpServers": {
-    "dsh-universal-bridge": {
-      "command": "npx",
-      "args": ["tsx", "src/index.ts"],
-      "cwd": "./mcp-bridge"
-    }
-  }
-}

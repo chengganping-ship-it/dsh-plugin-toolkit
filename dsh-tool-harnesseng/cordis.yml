@@ -1,6 +1,0 @@
-- id: dsh-tool-harnesseng
-  name: dsh-tool-harnesseng
-  version: 1.0.0
-  description: Harness Engineering toolkit - AI agent harness design with SOUL.md generation, memory architecture, context engineering validation, constraint design, skill loading, heartbeat configuration, personality profiling, and garbage collection planning
-  author: chengganping-ship-it
-  tools: 8

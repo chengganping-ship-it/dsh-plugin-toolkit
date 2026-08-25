@@ -1,6 +1,0 @@
-- id: dsh-tool-blockchaindev
-  name: dsh-tool-blockchaindev
-  version: 1.0.0
-  description: Blockchain Development Tools - smart contract scaffolding, DeFi protocol analysis, NFT standard advisory, cross-chain bridge auditing, gas optimization, RWA tokenization design, account abstraction design, and Solidity security scanning. Hot 2026 topics include account abstraction, Layer 2 rollups, RWA tokenization, and DeFi 2.0.
-  author: chengganping-ship-it
-  tools: 8
