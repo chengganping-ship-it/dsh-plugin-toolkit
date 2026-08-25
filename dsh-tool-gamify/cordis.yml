@@ -1,0 +1,14 @@
+- id: dsh-tool-gamify
+  name: dsh-tool-gamify
+  version: 0.1.0
+  description: 游戏化与行为设计 - 成就系统设计、积分机制配置、参与度循环分析、习惯追踪架构、排行榜优化、叙事任务构建、流失预测游戏化、奖励A/B测试
+  author: chengganping-ship-it
+  tools:
+    - achievement_system_designer
+    - points_mechanics_config
+    - engagement_loop_analyzer
+    - habit_tracker_architect
+    - leaderboard_optimizer
+    - narrative_quest_builder
+    - churn_prediction_gamified
+    - ab_test_reward_optimizer

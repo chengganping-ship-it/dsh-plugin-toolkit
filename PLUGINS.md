@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 350 plugins | 2800 tools (350 × 8)**
+**Total: 355 plugins | 2840 tools (355 × 8)**
 
 ---
 
@@ -768,6 +768,17 @@
 | 348 | neurolink | 脑机接口与神经工程 | signal_processing_pipeline, spike_sorting_config, bci_decoder_calibrator, neural_implant_safety, neurofeedback_protocol_designer, cognitive_state_classifier, brain_mapping_planner, neuroethics_reviewer |
 | 349 | cloudcost | 云成本优化与FinOps | reserved_instance_planner, waste_detector, multicloud_cost_comparison, savings_plan_recommender, tag_audit_optimizer, billing_anomaly_detector, budget_forecaster, rightsizing_engine |
 | 350 | legaldoc | 法律文档自动化与合同分析 | clause_extractor, obligation_tracker, renewal_risk_assessor, regulatory_deadline_monitor, esignature_workflow_designer, legal_hold_planner, template_generator, compliance_gap_reporter |
+
+---
+
+## Wave 74 — 数字健康+游戏化+材料科学+知识图谱 (4)
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 351 | digihealth | 数字健康与远程医疗 | remote_patient_monitor, symptom_triage_ai, medication_adherence_tracker, clinical_trial_matcher, wearable_data_interpreter, telehealth_platform_config, population_health_analyzer, drug_interaction_checker |
+| 352 | gamify | 游戏化与行为设计 | achievement_system_designer, points_mechanics_config, engagement_loop_analyzer, habit_tracker_architect, leaderboard_optimizer, narrative_quest_builder, churn_prediction_gamified, ab_test_reward_optimizer |
+| 353 | nanomat | 材料科学与纳米技术 | np_synthesis_planner, thin_film_deposition_config, crystal_structure_predictor, composite_material_designer, corrosion_resistance_analyzer, surface_characterization_planner, thermal_properties_modeler, semiconductor_device_simulator |
+| 354 | knowgraph | 知识图谱与语义网 | ontology_designer, entity_linking_engine, rdf_triple_extractor, graph_query_optimizer, schema_mapping_tool, graph_embedding_config, knowledge_fusion_pipeline, sparql_query_builder |
 
 ---
 

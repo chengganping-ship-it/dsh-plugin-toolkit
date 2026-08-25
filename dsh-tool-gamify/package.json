@@ -1,0 +1,18 @@
+{
+  'name': 'dsh-tool-gamify',
+  'version': '0.1.0',
+  'description': 'Gamification & Behavioral Design - achievement system designer, points mechanics config, engagement loop analyzer, habit tracker architect, leaderboard optimizer, narrative quest builder, churn prediction gamified, A/B test for rewards',
+  'type': 'module',
+  'main': 'lib/index.js',
+  'types': 'lib/index.d.ts',
+  'scripts': { 'build': 'tsc' },
+  'keywords': ['dsh', 'gamification', 'behavioral-design', 'achievements', 'engagement', 'retention'],
+  'license': 'MIT',
+  'author': 'chengganping-ship-it',
+  'dsh.category': 'Gamification',
+  'dependencies': {
+    '@deepseek-ai/cordis': '^4.0.1',
+    '@deepseek-ai/dsh-tools': '^0.0.1-rc.1'
+  },
+  'devDependencies': { 'typescript': '^5.0.0' }
+}

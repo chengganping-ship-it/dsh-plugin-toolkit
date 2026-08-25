@@ -1,0 +1,14 @@
+- id: dsh-tool-digihealth
+  name: dsh-tool-digihealth
+  version: 0.1.0
+  description: 'Digital Health & Telemedicine - remote patient monitoring, symptom triage AI, medication adherence tracker, clinical trial matcher, wearable data interpreter, telehealth platform config, population health analyzer, drug interaction checker. 2026: global digital health $1.5T+; telemedicine utilization 80%+ post-pandemic'
+  author: chengganping-ship-it
+  tools:
+    - remote_patient_monitor
+    - symptom_triage_ai
+    - medication_adherence_tracker
+    - clinical_trial_matcher
+    - wearable_data_interpreter
+    - telehealth_platform_config
+    - population_health_analyzer
+    - drug_interaction_checker

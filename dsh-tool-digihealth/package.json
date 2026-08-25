@@ -1,0 +1,41 @@
+{
+  'name': 'dsh-tool-digihealth',
+  'version': '0.1.0',
+  'description': 'Digital Health & Telemedicine Platform for DSH - remote patient monitoring, symptom triage AI, medication adherence tracker, clinical trial matcher, wearable data interpreter, telehealth platform config, population health analyzer, drug interaction checker',
+  'type': 'module',
+  'main': 'lib/index.js',
+  'scripts': {
+    'build': 'tsc'
+  },
+  'dependencies': {
+    '@deepseek-ai/cordis': '^4.0.1',
+    '@deepseek-ai/dsh-tools': '^0.0.1-rc.1'
+  },
+  'devDependencies': {
+    'typescript': '^5.9.3'
+  },
+  'license': 'MIT',
+  'author': 'chengganping-ship-it',
+  'repository': {
+    'type': 'git',
+    'url': 'git+https://github.com/chengganping-ship-it/dsh-plugin-toolkit.git'
+  },
+  'keywords': [
+    'dsh',
+    'deepseek-harness',
+    'digital-health',
+    'telemedicine',
+    'remote-monitoring',
+    'symptom-triage',
+    'medication-adherence',
+    'clinical-trials',
+    'wearable-data',
+    'population-health',
+    'drug-interaction',
+    '2026'
+  ],
+  'dsh': {
+    'category': 'Digital Health',
+    'bundle': 'cordis.yml'
+  }
+}

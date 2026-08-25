@@ -1,0 +1,39 @@
+{
+  'name': 'dsh-tool-nanomat',
+  'version': '0.1.0',
+  'description': 'Materials Science & Nanotechnology AI for DSH - nanoparticle synthesis planner, thin-film deposition config, crystal structure predictor, composite material designer, corrosion resistance analyzer, surface characterization planner, thermal properties modeler, semiconductor device simulator. 2026: Nanomaterials market $8B+ with 20%+ CAGR in energy and biomedical sectors.',
+  'type': 'module',
+  'main': 'lib/index.js',
+  'dsh.category': 'Materials Science',
+  'scripts': {
+    'build': 'tsc'
+  },
+  'dependencies': {
+    '@deepseek-ai/cordis': '^4.0.1',
+    '@deepseek-ai/dsh-tools': '^0.0.1-rc.1'
+  },
+  'devDependencies': {
+    'typescript': '^5.9.3'
+  },
+  'license': 'MIT',
+  'author': 'chengganping-ship-it',
+  'repository': {
+    'type': 'git',
+    'url': 'git+https://github.com/chengganping-ship-it/dsh-plugin-toolkit.git'
+  },
+  'keywords': [
+    'dsh',
+    'deepseek-harness',
+    'materials-science',
+    'nanotechnology',
+    'nanoparticle-synthesis',
+    'thin-film-deposition',
+    'crystal-structure',
+    'composite-materials',
+    'corrosion-analysis',
+    'surface-characterization',
+    'thermal-properties',
+    'semiconductor-simulation',
+    '2026'
+  ]
+}

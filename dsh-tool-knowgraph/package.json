@@ -1,48 +1,13 @@
 {
   "name": "dsh-tool-knowgraph",
-  "version": "0.1.0",
-  "description": "Knowledge Graph Builder for DeepSeek Harness - Entity extraction, relationship mapping, graph analysis, knowledge triple generation, entity resolution, semantic search, and graph visualization data generation",
-  "type": "module",
-  "main": "lib/index.js",
-  "types": "lib/types/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./lib/types/index.d.ts",
-      "default": "./lib/index.js"
-    },
-    "./src/*": "./src/*",
-    "./package.json": "./package.json"
-  },
-  "files": [
-    "lib/**/*.js",
-    "lib/types/**/*.d.ts",
-    "cordis.yml",
-    "README.md",
-    "LICENSE"
-  ],
+  "version": "1.0.0",
+  "description": "Knowledge Graph & Semantic Web -- ontology designer, entity linking engine, RDF triple extractor, graph query optimizer, schema mapping tool, graph embedding config, knowledge fusion pipeline, SPARQL query builder (dsh-tool-knowgraph)",
+  "main": "src/index.ts",
   "scripts": {
     "build": "tsc",
-    "pack": "npm pack",
-    "prepack": "npm run build"
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit"
   },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-knowgraph.git"
-  },
-  "keywords": [
-    "dsh",
-    "deepseek-harness",
-    "plugin",
-    "knowledge-graph",
-    "entity-extraction",
-    "relationship-mapping",
-    "graph-analysis",
-    "semantic-search",
-    "nlp",
-    "knowledge-representation",
-    "graph-visualization"
-  ],
   "dependencies": {
     "@deepseek-ai/cordis": "^4.0.1",
     "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
@@ -51,7 +16,21 @@
     "typescript": "^5.0.0"
   },
   "dsh": {
-    "bundle": "cordis.yml"
+    "category": "Knowledge Graph",
+    "tags": ["knowledge-graph", "ontology", "rdf", "sparql", "entity-linking", "graph-embedding", "semantic-web", "schema-mapping"]
   },
-  "author": "chengganping-ship-it"
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "knowledge-graph",
+    "ontology",
+    "rdf",
+    "sparql",
+    "entity-linking",
+    "graph-embedding",
+    "semantic-web",
+    "schema-mapping",
+    "plugin"
+  ],
+  "license": "MIT"
 }
