@@ -1,0 +1,19 @@
+# DeepSeek Harness Plugin: Carbon Credit Trading & Emissions Accounting v0.1.0
+# Emissions inventory builder, credit retirement tracker, carbon offset portfolio analyzer,
+# cap-and-trade optimizer, carbon tax scenario modeler, net-zero pathway planner,
+# ESG report carbon section, border adjustment mechanism assessor
+
+- id: dsh-tool-carbontx
+  name: dsh-tool-carbontx
+  version: 0.1.0
+  description: Carbon Credit Trading & Emissions Accounting - Builds emissions inventories, tracks credit retirements, analyzes offset portfolios, optimizes cap-and-trade strategies, models carbon tax scenarios, plans net-zero pathways, generates ESG carbon reports, and assesses CBAM border adjustment exposure
+  author: dsh-plugin-toolkit
+  tools:
+    - emissions_inventory_builder
+    - credit_retirement_tracker
+    - offset_portfolio_analyzer
+    - cap_trade_optimizer
+    - carbon_tax_modeler
+    - net_zero_pathway_planner
+    - esg_carbon_reporter
+    - carbon_border_adjustment_assessor

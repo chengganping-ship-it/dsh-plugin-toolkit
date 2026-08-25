@@ -485,7 +485,7 @@
 
 ---
 
-**Total: 355 plugins | 2840 tools (355 × 8)**
+**Total: 360 plugins | 2880 tools (360 × 8)**
 
 ---
 
@@ -779,6 +779,18 @@
 | 352 | gamify | 游戏化与行为设计 | achievement_system_designer, points_mechanics_config, engagement_loop_analyzer, habit_tracker_architect, leaderboard_optimizer, narrative_quest_builder, churn_prediction_gamified, ab_test_reward_optimizer |
 | 353 | nanomat | 材料科学与纳米技术 | np_synthesis_planner, thin_film_deposition_config, crystal_structure_predictor, composite_material_designer, corrosion_resistance_analyzer, surface_characterization_planner, thermal_properties_modeler, semiconductor_device_simulator |
 | 354 | knowgraph | 知识图谱与语义网 | ontology_designer, entity_linking_engine, rdf_triple_extractor, graph_query_optimizer, schema_mapping_tool, graph_embedding_config, knowledge_fusion_pipeline, sparql_query_builder |
+
+---
+
+## Wave 75 — 碳交易+RPA+太空旅游+智慧城市+水产养殖 (5) — MILESTONE 360/2880
+
+| # | Plugin | Category | Key Tools |
+|---|--------|----------|-----------|
+| 356 | carbontx | 碳交易与排放核算 | emissions_inventory_builder, credit_retirement_tracker, offset_portfolio_analyzer, cap_trade_optimizer, carbon_tax_modeler, net_zero_pathway_planner, esg_carbon_reporter, carbon_border_adjustment_assessor |
+| 357 | roboticr | RPA增强自动化 | task_mining_analyzer, bot_throughput_estimator, exception_handler_designer, rpa_governance_framework, human_bot_handoff_optimizer, process_mining_graph, rpa_roi_calculator, autopilot_orchestrator_config |
+| 358 | spacetour | 太空旅游与亚轨道飞行 | trajectory_optimizer, passenger_health_screener, spaceport_ops_planner, microgravity_experience_designer, tourism_market_analyzer, launch_window_calculator, space_law_compliance, zero_g_safety_protocol |
+| 359 | hydrocity | 智慧城市与市政管理 | traffic_flow_optimizer, waste_collection_router, smart_grid_integration_planner, air_quality_monitor_config, water_distribution_optimizer, digital_twin_city_builder, citizen_engagement_dashboard, resilience_risk_mapper |
+| 360 | aquatech | 水产养殖与蓝色经济 | fish_health_monitor, water_quality_analyzer, feeding_optimizer, farm_site_selector, algal_bloom_predictor, aquaculture_market_planner, offshore_logistics_config, blue_carbon_estimator |
 
 ---
 

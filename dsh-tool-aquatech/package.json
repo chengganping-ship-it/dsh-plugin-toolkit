@@ -1,0 +1,58 @@
+{
+  "name": "dsh-tool-aquatech",
+  "version": "0.1.0",
+  "description": "Aquaculture & Blue Economy AI Plugin for DeepSeek Harness - Fish health monitoring, water quality analysis, feeding optimization, farm site selection, algal bloom prediction, aquaculture market planning, offshore logistics configuration, blue carbon credit estimation",
+  "type": "commonjs",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/**/*.js",
+    "lib/types/**/*.d.ts",
+    "cordis.yml",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "pack": "npm pack",
+    "prepack": "npm run build"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aquatech/dsh-tool-aquatech.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "aquaculture",
+    "blue-economy",
+    "fish-health",
+    "water-quality",
+    "feeding-optimization",
+    "algal-bloom",
+    "blue-carbon",
+    "offshore-logistics",
+    "farm-site-selection"
+  ],
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dsh": {
+    "bundle": "cordis.yml",
+    "category": "Aquaculture & Blue Economy"
+  },
+  "author": "aquatech"
+}
