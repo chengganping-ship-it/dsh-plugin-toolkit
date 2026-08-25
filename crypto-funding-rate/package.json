@@ -1,14 +1,16 @@
 {
   "name": "crypto-funding-rate-mcp",
-  "version": "1.0.0",
-  "description": "Real-time cryptocurrency funding rate monitor with cross-exchange arbitrage detection. Uses real Binance, OKX, Bybit APIs.",
+  "version": "3.0.0",
+  "description": "Real-time cryptocurrency funding rate monitor with cross-exchange arbitrage detection, backtesting, and 24/7 sentinel monitoring.",
   "type": "module",
   "bin": {
-    "crypto-funding-rate": "./dist/index.js"
+    "crypto-funding-rate": "./dist/index.js",
+    "funding-sentinel": "./dist/sentinel.js"
   },
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
+    "sentinel": "node dist/sentinel.js",
     "dev": "tsc && node dist/index.js"
   },
   "dependencies": {
