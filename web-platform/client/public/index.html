@@ -3,285 +3,299 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Funding Mirror — 实时套利监控</title>
+  <title>Funding Mirror v2 — 套利监控平台</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0a0e17; color: #e0e6ed; min-height: 100vh; }
-    .header { background: linear-gradient(135deg, #1a1f2e 0%, #0d1321 100%); border-bottom: 1px solid #2a3441; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
-    .header h1 { font-size: 20px; font-weight: 700; color: #00d4aa; }
-    .header .stats { display: flex; gap: 20px; font-size: 13px; color: #8899a6; }
-    .header .stats span { color: #e0e6ed; font-weight: 600; }
-    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #00d4aa; display: inline-block; margin-right: 6px; animation: pulse 2s infinite; }
-    .status-dot.offline { background: #ff4444; animation: none; }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-
-    .container { padding: 20px 24px; max-width: 1600px; margin: 0 auto; }
-
-    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #080c14; color: #e0e6ed; min-height: 100vh; }
+    .header { background: linear-gradient(135deg, #141923 0%, #0d1321 100%); border-bottom: 1px solid #2a3441; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; }
+    .header h1 { font-size: 18px; font-weight: 700; color: #00d4aa; letter-spacing: -0.3px; }
+    .stats { display: flex; gap: 16px; font-size: 12px; color: #6b7a8d; }
+    .stats .val { color: #e0e6ed; font-weight: 600; }
+    .stats .lb { color: #00d4aa; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #00d4aa; display: inline-block; margin-right: 4px; animation: pulse 2s infinite; }
+    .status-dot.off { background: #ff4444; animation: none; }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+    .container { padding: 16px 24px; max-width: 1800px; margin: 0 auto; }
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px; }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
     .grid-full { grid-column: 1 / -1; }
-
-    .card { background: #141923; border: 1px solid #2a3441; border-radius: 12px; padding: 16px; }
-    .card h2 { font-size: 14px; font-weight: 600; color: #8899a6; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
-
-    .heatmap { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 6px; }
-    .heat-cell { padding: 8px; border-radius: 6px; text-align: center; cursor: pointer; transition: transform 0.1s; }
-    .heat-cell:hover { transform: scale(1.05); }
-    .heat-cell .sym { font-size: 11px; font-weight: 600; }
-    .heat-cell .val { font-size: 13px; font-weight: 700; margin-top: 2px; }
-    .heat-cell .sub { font-size: 9px; opacity: 0.7; }
-
-    .opps-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    .opps-table th { text-align: left; padding: 8px; color: #8899a6; font-weight: 500; border-bottom: 1px solid #2a3441; }
-    .opps-table td { padding: 8px; border-bottom: 1px solid #1a2030; }
-    .opps-table tr:hover { background: #1a2030; }
-    .badge { padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 600; }
-    .badge-green { background: #00d4aa22; color: #00d4aa; }
-    .badge-yellow { background: #f5a62322; color: #f5a623; }
-    .badge-red { background: #ff444422; color: #ff4444; }
-    .badge-blue { background: #4a9eff22; color: #4a9eff; }
-
-    .anomaly-item { padding: 10px; border-left: 3px solid; margin-bottom: 8px; background: #1a2030; border-radius: 0 6px 6px 0; }
-    .anomaly-item.spike { border-color: #ff4444; }
-    .anomaly-item.crash { border-color: #f5a623; }
-    .anomaly-item.divergence { border-color: #4a9eff; }
-    .anomaly-item.regime { border-color: #9b59b6; }
-    .anomaly-item .desc { font-size: 13px; margin-bottom: 4px; }
-    .anomaly-item .meta { font-size: 11px; color: #8899a6; }
-
-    .prediction-item { display: flex; align-items: center; gap: 12px; padding: 8px; border-bottom: 1px solid #1a2030; }
-    .prediction-item .dir { font-size: 18px; }
-    .prediction-item .info { flex: 1; }
-    .prediction-item .sym { font-weight: 600; font-size: 13px; }
-    .prediction-item .detail { font-size: 11px; color: #8899a6; }
-    .prediction-item .conf { font-size: 12px; font-weight: 600; }
-
-    .empty { text-align: center; padding: 40px; color: #556; font-size: 14px; }
-
-    .filter-bar { display: flex; gap: 8px; margin-bottom: 12px; }
-    .filter-bar select, .filter-bar input { background: #1a2030; border: 1px solid #2a3441; color: #e0e6ed; padding: 6px 10px; border-radius: 6px; font-size: 12px; }
-
-    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+    .card { background: #141923; border: 1px solid #1e2633; border-radius: 10px; padding: 14px; }
+    .card h2 { font-size: 11px; font-weight: 600; color: #6b7a8d; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .heatmap { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 5px; }
+    .hc { padding: 6px; border-radius: 5px; text-align: center; cursor: pointer; transition: transform 0.1s; }
+    .hc:hover { transform: scale(1.06); }
+    .hc .s { font-size: 10px; font-weight: 600; }
+    .hc .v { font-size: 12px; font-weight: 700; }
+    .hc .x { font-size: 8px; opacity: 0.6; }
+    table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    th { text-align: left; padding: 6px; color: #6b7a8d; font-weight: 500; border-bottom: 1px solid #1e2633; font-size: 11px; }
+    td { padding: 6px; border-bottom: 1px solid #141c28; }
+    tr:hover { background: #141c28; }
+    .bd { padding: 2px 5px; border-radius: 3px; font-size: 10px; font-weight: 600; }
+    .bg { background: #00d4aa18; color: #00d4aa; }
+    .by { background: #f5a62318; color: #f5a623; }
+    .br { background: #ff444418; color: #ff4444; }
+    .bb { background: #4a9eff18; color: #4a9eff; }
+    .bp { background: #9b59b618; color: #9b59b6; }
+    .em { padding: 8px; border-left: 3pxpx solid; margin-bottom: 6px; background: #141c28; border-radius: 0 5px 5px 0; }
+    .em.sp { border-color: #ff4444; }
+    .em.cr { border-color: #f5a623; }
+    .em.dv { border-color: #4a9eff; }
+    .em.rg { border-color: #9b59b6; }
+    .em .d { font-size: 12px; margin-bottom: 2px; }
+    .em .m { font-size: 10px; color: #6b7a8d; }
+    .pi { display: flex; align-items: center; gap: 8px; padding: 6px; border-bottom: 1px solid #141c28; }
+    .pi .di { font-size: 16px; }
+    .pi .inf { flex: 1; }
+    .pi .sy { font-weight: 600; font-size: 12px; }
+    .pi .dt { font-size: 10px; color: #6b7a8d; }
+    .pi .cf { font-size: 11px; font-weight: 600; }
+    .empty { text-align: center; padding: 30px; color: #3d4a5c; font-size: 12px; }
+    .fb { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; align-items: center; }
+    .fb select, .fb input { background: #141c28; border: 1px solid #1e2633; color: #e0e6ed; padding: 5px 8px; border-radius: 5px; font-size: 11px; }
+    .fb button { background: #00d4aa; color: #080c14; border: none; padding: 5px 12px; border-radius: 5px; font-weight: 600; font-size: 11px; cursor: pointer; }
+    .fb button:hover { background: #00e4b8; }
+    .bt-result { background: #141c28; border-radius: 8px; padding: 12px; margin-top: 10px; }
+    .bt-result .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px; }
+    .bt-result .metric { text-align: center; }
+    .bt-result .metric .v { font-size: 16px; font-weight: 70; font-weight: 700; }
+    .bt-result .metric .l { font-size: 10px; color: #6b7a8d; }
+    canvas { width: 100%; height: 120px; }
+    .pnl-pos { color: #00d4aa; }
+    .pnl-neg { color: #ff4444; }
+    .tag { display: inline-block; padding: 1px 4px; border-radius: 3px; font-size: 9px; margin-left: 4px; }
   </style>
 </head>
 <body>
   <div class="header">
-    <h1>Funding Mirror</h1>
+    <h1>Funding Mirror v2</h1>
     <div class="stats">
-      <div><span class="status-dot" id="statusDot"></span><span id="statusText">连接中...</span></div>
-      <div>交易所: <span id="exCount">-</span></div>
-      <div>费率数: <span id="rateCount">-</span></div>
-      <div>机会: <span id="oppCount">-</span></div>
-      <div>异常: <span id="anomCount">-</span></div>
-      <div>更新: <span id="lastUpdate">-</span></div>
+      <div><span class="status-dot" id="dot"></span><span id="st">连接中</span></div>
+      <div>交易所: <span class="val" id="exC">-</span></div>
+      <div>费率: <span class="val" id="rC">-</span></div>
+      <div>机会: <span class="val lb" id="oC">-</span></div>
+      <div>异常: <span class="val" id="aC">-</span></div>
+      <div>跨品种: <span class="val" id="cC">-</span></div>
+      <div>DB: <span class="val" id="dbC">-</span></div>
     </div>
   </div>
 
   <div class="container">
     <!-- Heatmap -->
     <div class="card grid-full">
-      <h2>Arbitrage Heatmap — 套利热力图</h2>
-      <div class="filter-bar">
-        <select id="minNetFilter">
-          <option value="0">全部</option>
-          <option value="3">净年化 > 3%</option>
-          <option value="5">净年化 > 5%</option>
-          <option value="10">净年化 > 10%</option>
-        </select>
-        <select id="sortFilter">
-          <option value="net">按净年化排序</option>
-          <option value="spread">按 Spread 排序</option>
-          <option value="risk">按风险评分排序</option>
-        </select>
+      <h2>实时套利热力图</h2>
+      <div class="fb">
+        <select id="mnF"><option value="0">全部</option><option value="3">>3%</option><option value="5">>5%</option><option value="10">>10%</option></select>
+        <select id="sF"><option value="net">净年化</option><option value="spread">Spread</option><option value="risk">风险</option></select>
       </div>
-      <div class="heatmap" id="heatmap"></div>
+      <div class="heatmap" id="hm"></div>
+    </div>
+
+    <div class="grid grid-2">
+      <!-- Opportunities -->
+      <div class="card">
+        <h2>套利机会</h2>
+        <div style="max-height:350px;overflow-y:auto">
+          <table><thead><tr><th>币</th><th>多</th><th>空</th><th>Spread</th><th>净年化</th><th>风险</th></tr></thead><tbody id="ot"></tbody></table>
+        </div>
+      </div>
+      <!-- Cross-pair -->
+      <div class="card">
+        <h2>跨品种套利</h2>
+        <div id="cp" style="max-height:350px;overflow-y:auto"><div class="empty">等待相关性信号</div></div>
+      </div>
     </div>
 
     <div class="grid">
-      <!-- Opportunities Table -->
-      <div class="card">
-        <h2>Top Opportunities — 套利机会</h2>
-        <div style="max-height: 400px; overflow-y: auto;">
-          <table class="opps-table">
-            <thead><tr><th>币种</th><th>做多</th><th>做空</th><th>Spread</th><th>净年化</th><th>风险</th></tr></thead>
-            <tbody id="oppsBody"></tbody>
-          </table>
-        </div>
-      </div>
-
       <!-- Anomalies -->
       <div class="card">
-        <h2>Anomaly Alerts — 异常告警</h2>
-        <div id="anomalies" style="max-height: 400px; overflow-y: auto;">
-          <div class="empty">等待数据...</div>
-        </div>
+        <h2>异常检测</h2>
+        <div id="an" style="max-height:300px;overflow-y:auto"><div class="empty">等待数据</div></div>
       </div>
-
       <!-- Predictions -->
       <div class="card">
-        <h2>Rate Predictions — 费率预测</h2>
-        <div id="predictions" style="max-height: 350px; overflow-y: auto;">
-          <div class="empty">等待数据...</div>
-        </div>
+        <h2>费率预测</h2>
+        <div id="pr" style="max-height:300px;overflow-y:auto"><div class="empty">积累数据中</div></div>
       </div>
-
-      <!-- Capacity -->
+      <!-- Paper Trading -->
       <div class="card">
-        <h2>Capacity Estimates — 容量估算</h2>
-        <div id="capacities" style="max-height: 350px; overflow-y: auto;">
-          <div class="empty">等待数据...</div>
+        <h2>模拟交易 <span class="tag bd" id="ppTag">--</span></h2>
+        <div id="pp"></div>
+      </div>
+      <!-- Backtest -->
+      <div class="card">
+        <h2>策略回测</h2>
+        <div class="fb">
+          <select id="btStrat"><option value="PURE_CARRY">Pure Carry</option><option value="MOMENTUM">Momentum</option><option value="MEAN_REVERSION">Mean Reversion</option><option value="COMPOUND">Compound</option></select>
+          <input type="text" id="btSym" value="BTCUSDT" placeholder="Symbol" style="width:80px">
+          <button id="btRun">Run</button>
         </div>
+        <div id="btRes"></div>
       </div>
     </div>
   </div>
 
-  <script>
-    let ws;
-    let currentData = null;
-    let reconnectTimer;
+<script>
+let ws, data;
+const $ = id => document.getElementById(id);
 
-    function connect() {
-      const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
-      ws = new WebSocket(`${proto}//${location.host}/ws`);
+function connect() {
+  const p = location.protocol === 'https:' ? 'wss:' : 'ws:';
+  ws = new WebSocket(`${p}//${location.host}/ws`);
+  ws.onopen = () => { $('dot').classList.remove('off'); $('st').textContent = '实时'; };
+  ws.onmessage = e => { data = JSON.parse(e.data).data; render(); };
+  ws.onclose = () => { $('dot').classList.add('off'); $('st').textContent = '断开'; setTimeout(connect, 3000); };
+  ws.onerror = () => ws.close();
+}
 
-      ws.onopen = () => {
-        document.getElementById('statusDot').classList.remove('offline');
-        document.getElementById('statusText').textContent = '实时连接';
-        clearTimeout(reconnectTimer);
-      };
+function render() {
+  if (!data) return;
+  $('exC').textContent = data.stats.exchanges?.length || '-';
+  $('rC').textContent = data.stats.totalRates || '-';
+  $('oC').textContent = data.stats.oppCount || '-';
+  $('aC').textContent = data.stats.anomalyCount || '-';
+  $('cC').textContent = data.stats.crossPair || '-';
+  $('dbC').textContent = data.stats.db?.rates ? (data.stats.db.rates / 1000).toFixed(1) + 'k' : '-';
+  renderHM();
+  renderOpps();
+  renderAnom();
+  renderPred();
+  renderCP();
+  renderPP();
+}
 
-      ws.onmessage = (e) => {
-        const msg = JSON.parse(e.data);
-        if (msg.type === 'snapshot') {
-          currentData = msg.data;
-          render(msg.data);
-        }
-      };
+function gc(v) { return v > 10 ? '#00d4aa' : v > 5 ? '#4a9eff' : v > 2 ? '#f5a623' : '#ff4444'; }
 
-      ws.onclose = () => {
-        document.getElementById('statusDot').classList.add('offline');
-        document.getElementById('statusText').textContent = '断开，重连中...';
-        reconnectTimer = setTimeout(connect, 3000);
-      };
+function renderHM() {
+  let opps = data.opportunities || [];
+  const mn = parseFloat($('mnF').value) || 0;
+  const sf = $('sF').value;
+  opps = opps.filter(o => o.netAnnualized >= mn);
+  if (sf === 'net') opps.sort((a, b) => b.netAnnualized - a.netAnnualized);
+  else if (sf === 'spread') opps.sort((a, b) => b.spreadPct - a.spreadPct);
+  else opps.sort((a, b) => a.riskScore - b.riskScore);
+  const top = opps.slice(0, 30);
+  if (!top.length) { $('hm').innerHTML = '<div class="empty">暂无</div>'; return; }
+  $('hm').innerHTML = top.map(o => {
+    const c = gc(o.netAnnualized);
+    return `<div class="hc" style="background:${c}18;border:1px solid ${c}33">
+      <div class="s" style="color:${c}">${o.symbol.replace('USDT','')}</div>
+      <div class="v" style="color:${c}">${o.netAnnualized}%</div>
+      <div class="x">${o.spreadPct}%</div></div>`;
+  }).join('');
+}
 
-      ws.onerror = () => ws.close();
-    }
+function renderOpps() {
+  const o = data.opportunities || [];
+  $('ot').innerHTML = o.length ? o.slice(0, 15).map(x => `<tr>
+    <td><b>${x.symbol}</b></td>
+    <td><span class="bd bb">${x.longEx.slice(0,3)}</span></td>
+    <td><span class="bd bb">${x.shortEx.slice(0,3)}</span></td>
+    <td>${x.spreadPct}%</td>
+    <td style="color:#00d4aa;font-weight:600">${x.netAnnualized}%</td>
+    <td><span class="bd ${x.riskScore<30?'bg':x.riskScore<60?'by':'br'}">${x.riskScore}</span></td>
+  </tr>`).join('') : '<tr><td colspan="6" class="empty">暂无</td></tr>';
+}
 
-    function render(data) {
-      // Header stats
-      document.getElementById('exCount').textContent = data.stats.exchanges?.length || '-';
-      document.getElementById('rateCount').textContent = data.stats.totalRates || '-';
-      document.getElementById('oppCount').textContent = data.stats.oppCount || '-';
-      document.getElementById('anomCount').textContent = data.stats.anomalyCount || '-';
-      document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('zh-CN');
+function renderAnom() {
+  const a = data.anomalies || [];
+  $('an').innerHTML = a.length ? a.slice(0, 8).map(x => {
+    const c = x.type.toLowerCase().slice(0, 2);
+    const ic = x.type[0] === 'S' ? '🔺' : x.type[0] === 'C' ? '🔻' : x.type[0] === 'D' ? '⚡' : '🔄';
+    return `<div class="em ${c}"><div class="d">${ic} ${x.description}</div>
+      <div class="m">严重度 ${x.severity} | Z ${x.zScore?.toFixed(1) || '-'} | ${new Date(x.timestamp).toLocaleTimeString('zh-CN')}</div></div>`;
+  }).join('') : '<div class="empty">无异常</div>';
+}
 
-      renderHeatmap(data.opportunities || []);
-      renderOpps(data.opportunities || []);
-      renderAnomalies(data.anomalies || []);
-      renderPredictions(data.predictions || []);
-      renderCapacities(data.opportunities || []);
-    }
+function renderPred() {
+  const p = data.predictions || [];
+  $('pr').innerHTML = p.length ? p.slice(0, 8).map(x => {
+    const ic = x.direction === 'INCREASING' ? '📈' : x.direction === 'DECREASING' ? '📉' : '➡️';
+    const cl = x.direction === 'INCREASING' ? '#00d4aa' : x.direction === 'DECREASING' ? '#ff4444' : '#6b7a8d';
+    return `<div class="pi"><span class="di">${ic}</span><div class="inf">
+      <div class="sy">${x.symbol} <span style="color:#6b7a8d;font-weight:400">${x.exchange.slice(0,4)}</span></div>
+      <div class="dt">${x.facts?.join(' | ') || ''}</div></div>
+      <div class="cf" style="color:${cl}">${x.confidence}%</div></div>`;
+  }).join('') : '<div class="empty">积累数据中</div>';
+}
 
-    function getHeatColor(netAnnualized) {
-      if (netAnnualized > 10) return '#00d4aa';
-      if (netAnnualized > 5) return '#4a9eff';
-      if (netAnnualized > 2) return '#f5a623';
-      return '#ff4444';
-    }
+function renderCP() {
+  const cp = data.crossPair || [];
+  $('cp').innerHTML = cp.length ? cp.map(x => `
+    <div class="em dv"><div class="d"><b>${x.pairA}/${x.pairB}</b> @ ${x.exchange}</div>
+    <div class="m">${x.description}<br>相关性 ${x.correlation} | Z-score ${x.spreadZScore} | ${x.confidence}% 置信度</div></div>
+  `).join('') : '<div class="empty">监控中 (积累价格序列)</div>';
+}
 
-    function renderHeatmap(opps) {
-      const minNet = parseFloat(document.getElementById('minNetFilter').value) || 0;
-      const sort = document.getElementById('sortFilter').value;
-      let filtered = opps.filter(o => o.netAnnualized >= minNet);
-      if (sort === 'net') filtered.sort((a, b) => b.netAnnualized - a.netAnnualized);
-      else if (sort === 'spread') filtered.sort((a, b) => b.spreadPct - a.spreadPct);
-      else filtered.sort((a, b) => a.riskScore - b.riskScore);
+function renderPP() {
+  const ps = data.paperStats;
+  if (!ps) { $('pp').innerHTML = '<div class="empty">等待</div>'; return; }
+  const totalClass = ps.totalPnlPct >= 0 ? 'pnl-pos' : 'pnl-neg';
+  $('ppTag').textContent = `${ps.openPositions} open / ${ps.closedPositions} closed`;
+  $('pp').innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">
+      <div style="background:#141c28;padding:8px;border-radius:6px">
+        <div style="font-size:10px;color:#6b7a8d">总PnL</div>
+        <div class="${totalClass}" style="font-size:16px;font-weight:700">${ps.totalPnlPct > 0 ? '+' : ''}${ps.totalPnlPct}%</div>
+      </div>
+      <div style="background:#141c28;padding:8px;border-radius:6px">
+        <div style="font-size:10px;color:#6b7a8d">胜率</div>
+        <div style="font-size:16px;font-weight:700">${ps.winRate}%</div>
+      </div>
+      <div style="background:#141c28;padding:8px;border-radius:6px">
+        <div style="font-size:10px;color:#6b7a8d">Sharpe</div>
+        <div style="font-size:14px;font-weight:700">${ps.sharpe}</div>
+      </div>
+      <div style="background:#141c28;padding:8px;border-radius:6px">
+        <div style="font-size:10px;color:#6b7a8d">最大回撤</div>
+        <div style="font-size:14px;font-weight:700;color:#ff4444">${ps.maxDrawdown}%</div>
+      </div>
+    </div>
+    <div style="font-size:10px;color:#6b7a8d;margin-bottom:4px">总交易: ${ps.totalTrades}</div>
+    <div style="max-height:120px;overflow-y:auto">
+      ${ps.positions?.slice(0, 10).map(p => `<div style="padding:4px 0;border-bottom:1px solid #141c28;font-size:11px">
+        <span style="font-weight:600">${p.symbol}</span>
+        <span class="${p.pnlPct >= 0 ? 'pnl-pos' : 'pnl-neg'}" style="float:right">${p.pnlPct > 0 ? '+' : ''}${p.pnlPct.toFixed(2)}%</span>
+        <span style="color:#6b7a8d;font-size:9px;margin-left:8px">${p.status}</span>
+      </div>`).join('') || '<div class="empty">无持仓</div>'}
+    </div>`;
+}
 
-      const top = filtered.slice(0, 30);
-      const el = document.getElementById('heatmap');
-      if (top.length === 0) { el.innerHTML = '<div class="empty">暂无机会</div>'; return; }
+// Backtest
+$('btRun').onclick = async () => {
+  $('btRes').innerHTML = '<div class="empty">运行中...</div>';
+  try {
+    const res = await fetch('/api/backtest', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        strategy: $('btStrat').value,
+        symbol: $('btSym').value,
+        initialCapital: 100000,
+        feePerTrade: 0.04,
+        slippage: 0.02,
+      }),
+    });
+    const bt = await res.json();
+    $('btRes').innerHTML = `<div class="bt-result">
+      <div style="font-size:12px;font-weight:600;margin-bottom:8px">${bt.strategy} — ${bt.period}</div>
+      <div class="metrics">
+        <div class="metric"><div class="v ${bt.totalReturn >= 0 ? 'pnl-pos' : 'pnl-neg'}">${bt.totalReturn > 0 ? '+' : ''}${bt.totalReturn}%</div><div class="l">总收益</div></div>
+        <div class="metric"><div class="v">${bt.sharpe}</div><div class="l">Sharpe</div></div>
+        <div class="metric"><div class="v pnl-neg">${bt.maxDrawdown}%</div><div class="l">最大回撤</div></div>
+        <div class="metric"><div class="v">${bt.winRate}%</div><div class="l">胜率</div></div>
+        <div class="metric"><div class="v">${bt.tradeCount}</div><div class="l">交易次数</div></div>
+        <div class="metric"><div class="v">${bt.profitFactor}</div><div class="l">盈亏比</div></div>
+        <div class="metric"><div class="v">$${bt.finalCapital?.toLocaleString()}</div><div class="l">最终资金</div></div>
+        <div class="metric"><div class="v">${bt.annualizedReturn > 0 ? '+' : ''}${bt.annualizedReturn}%</div><div class="l">年化</div></div>
+      </div>
+    </div>`;
+  } catch (e) { $('btRes').innerHTML = `<div class="empty">Error: ${e.message}</div>`; }
+};
 
-      el.innerHTML = top.map(o => {
-        const color = getHeatColor(o.netAnnualized);
-        return `<div class="heat-cell" style="background: ${color}22; border: 1px solid ${color}44;">
-          <div class="sym" style="color: ${color}">${o.symbol.replace('USDT', '')}</div>
-          <div class="val" style="color: ${color}">${o.netAnnualized}%</div>
-          <div class="sub">${o.spreadPct}% spread</div>
-        </div>`;
-      }).join('');
-    }
-
-    function renderOpps(opps) {
-      const el = document.getElementById('oppsBody');
-      if (opps.length === 0) { el.innerHTML = '<tr><td colspan="6" class="empty">暂无机会</td></tr>'; return; }
-      el.innerHTML = opps.slice(0, 15).map(o => {
-        const riskClass = o.riskScore < 30 ? 'badge-green' : o.riskScore < 60 ? 'badge-yellow' : 'badge-red';
-        return `<tr>
-          <td><b>${o.symbol}</b></td>
-          <td><span class="badge badge-blue">${o.longEx}</span></td>
-          <td><span class="badge badge-blue">${o.shortEx}</span></td>
-          <td>${o.spreadPct}%</td>
-          <td style="color: #00d4aa; font-weight: 600">${o.netAnnualized}%</td>
-          <td><span class="badge ${riskClass}">${o.riskScore}</span></td>
-        </tr>`;
-      }).join('');
-    }
-
-    function renderAnomalies(anoms) {
-      const el = document.getElementById('anomalies');
-      if (anoms.length === 0) { el.innerHTML = '<div class="empty">无异常</div>'; return; }
-      el.innerHTML = anoms.slice(0, 10).map(a => {
-        const cls = a.type.toLowerCase();
-        const icon = a.type === 'SPIKE' ? '🔺' : a.type === 'CRASH' ? '🔻' : a.type === 'DIVERGENCE' ? '⚡' : '🔄';
-        return `<div class="anomaly-item ${cls}">
-          <div class="desc">${icon} ${a.description}</div>
-          <div class="meta">严重度: ${a.severity}/100 | Z-score: ${a.zScore?.toFixed(2) || '-'} | ${new Date(a.timestamp).toLocaleTimeString('zh-CN')}</div>
-        </div>`;
-      }).join('');
-    }
-
-    function renderPredictions(preds) {
-      const el = document.getElementById('predictions');
-      if (preds.length === 0) { el.innerHTML = '<div class="empty">等待数据积累...</div>'; return; }
-      el.innerHTML = preds.slice(0, 10).map(p => {
-        const dirIcon = p.direction === 'INCREASING' ? '📈' : p.direction === 'DECREASING' ? '📉' : '➡️';
-        const dirColor = p.direction === 'INCREASING' ? '#00d4aa' : p.direction === 'DECREASING' ? '#ff4444' : '#8899a6';
-        return `<div class="prediction-item">
-          <span class="dir">${dirIcon}</span>
-          <div class="info">
-            <div class="sym">${p.symbol} <span style="color: #8899a6; font-weight: 400">${p.exchange}</span></div>
-            <div class="detail">${p.factors?.join(' | ') || ''}</div>
-          </div>
-          <div class="conf" style="color: ${dirColor}">${p.confidence}%</div>
-        </div>`;
-      }).join('');
-    }
-
-    function renderCapacities(opps) {
-      const el = document.getElementById('capacities');
-      const withCap = opps.filter(o => o.capacity && o.capacity.maxCapacityUsd > 0);
-      if (withCap.length === 0) { el.innerHTML = '<div class="empty">暂无容量数据</div>'; return; }
-      el.innerHTML = withCap.slice(0, 8).map(o => {
-        const c = o.capacity;
-        const qualityClass = c.depthQuality === 'DEEP' ? 'badge-green' : c.depthQuality === 'MODERATE' ? 'badge-yellow' : 'badge-red';
-        return `<div class="anomaly-item divergence">
-          <div class="desc"><b>${o.symbol}</b> — 做多${o.longEx} / 做空${o.shortEx}</div>
-          <div class="meta">
-            最大容量: <b>$${(c.maxCapacityUsd / 1e6).toFixed(1)}M</b> |
-            推荐: <b>$${(c.recommendedSize / 1e6).toFixed(1)}M</b> |
-            滑点: ${c.slippageAtCapacity.toFixed(4)}% |
-            捕获率: ${c.spreadCapturePct.toFixed(0)}%
-            <span class="badge ${qualityClass}" style="margin-left: 8px">${c.depthQuality}</span>
-          </div>
-        </div>`;
-      }).join('');
-    }
-
-    // Filter handlers
-    document.getElementById('minNetFilter').onchange = () => currentData && renderHeatmap(currentData.opportunities || []);
-    document.getElementById('sortFilter').onchange = () => currentData && renderHeatmap(currentData.opportunities || []);
-
-    // Start
-    connect();
-  </script>
+$('mnF').onchange = renderHM;
+$('sF').onchange = renderHM;
+connect();
+</script>
 </body>
 </html>

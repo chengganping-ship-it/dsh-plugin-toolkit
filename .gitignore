@@ -42,3 +42,4 @@ crypto-funding-rate/pnl-log.jsonl
 web-platform/server/node_modules/
 web-platform/server/dist/
 web-platform/server/*.log
+web-platform/server/data/
