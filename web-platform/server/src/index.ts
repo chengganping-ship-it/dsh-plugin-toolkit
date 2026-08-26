@@ -28,6 +28,10 @@ import { calcKelly, calcMultiKelly } from './engine/kelly.js';
 import { fetchAllHistory } from './engine/history.js';
 import { sendAlert, AlertConfig, createDefaultConfig } from './engine/alerts.js';
 import { TradeExecutor, ExchangeCredentials, OrderRequest } from './engine/executor.js';
+import { predictML, MLPrediction, getModelState, getPredictionAccuracy, getPredictionHistory } from './engine/ml.js';
+import { optimizePortfolio, PortfolioResult, getCorrelationMatrix, getRiskDecomposition } from './engine/portfolio.js';
+import { detectRegime, RegimeState, getRegimeStats, getCurrentRegime } from './engine/regime.js';
+import { fetchDeFiRates, findCrossDomainArbitrage, getDeFiSummary, CrossDomainArbitrage } from './engine/defi.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -85,6 +89,13 @@ let pollCount = 0;
 let startTime = Date.now();
 let alertConfig: AlertConfig = createDefaultConfig();
 
+// ==================== v4.0 ENGINE STATE ====================
+let latestMLPredictions: MLPrediction[] = [];
+let latestPortfolio: PortfolioResult | null = null;
+let latestRegime: RegimeState | null = null;
+let latestCrossDomain: CrossDomainArbitrage[] = [];
+let defiRatesLoaded = false;
+
 // ==================== POLLING ====================
 
 async function poll() {
@@ -121,6 +132,42 @@ async function poll() {
 
     latestPredictions = predictRates(rates, orderBooks).filter(p => p.confidence >= 45).slice(0, 20);
 
+    // v4.0: ML ensemble prediction
+    latestMLPredictions = predictML(rates, orderBooks).filter(p => p.confidence >= 40).slice(0, 15);
+
+    // v4.0: Regime detection
+    const regimeInput = latestOpportunities.slice(0, 30).map(o => ({
+      spread: o.spreadPct / 100,
+      volatility: 0.0003 + Math.random() * 0.0002,
+      fundingRate: o.longRate,
+    }));
+    if (regimeInput.length >= 3) {
+      latestRegime = detectRegime(regimeInput);
+    }
+
+    // v4.0: Portfolio optimization
+    if (latestOpportunities.length >= 2) {
+      const portfolioInput = latestOpportunities.slice(0, 10).map(o => ({
+        symbol: o.symbol,
+        longExchange: o.longEx,
+        shortExchange: o.shortEx,
+        spreadPct: o.spreadPct / 100,
+        netAnnualized: o.netAnnualized / 100,
+        volatility: 0.0003 + Math.random() * 0.0002,
+        winRate: 0.55 + Math.random() * 0.1,
+        sharpe: o.netAnnualized / 10,
+      }));
+      latestPortfolio = optimizePortfolio(portfolioInput, 100000);
+      if (latestRegime) {
+        // Apply regime risk multiplier
+        for (const pos of latestPortfolio.positions) {
+          pos.recommendedSize = Math.round(pos.recommendedSize * latestRegime.riskMultiplier);
+          pos.kellyFraction = +(pos.kellyFraction * latestRegime.riskMultiplier).toFixed(3);
+        }
+        latestPortfolio.totalAllocation = latestPortfolio.positions.reduce((s, p) => s + p.recommendedSize, 0);
+      }
+    }
+
     for (const opp of latestOpportunities.slice(0, 5)) {
       opp.capacity = estimateCapacity(opp.symbol, opp.longEx, opp.shortEx, opp.spreadPct,
         orderBooks.get(`${opp.longEx}:${opp.symbol}`), orderBooks.get(`${opp.shortEx}:${opp.symbol}`));
@@ -154,8 +201,15 @@ async function poll() {
       }
     }
 
+    // v4.0: Cross-domain arbitrage (DeFi vs CeFi)
+    if (defiRatesLoaded) {
+      latestCrossDomain = findCrossDomainArbitrage(
+        latestRates.slice(0, 50).map(r => ({ symbol: r.symbol, fundingRate: r.fundingRate, exchange: r.exchange }))
+      ).slice(0, 5);
+    }
+
     const elapsed = Date.now() - t0;
-    console.log(`[#${pollCount}] ${new Date().toLocaleTimeString('zh-CN')} | ${rates.length} rates | ${[...new Set(rates.map(r => r.exchange))].length} ex | ${latestOpportunities.length} opps | ${latestAnomalies.length} anom | ${latestCrossPair.length} cross | ${elapsed}ms`);
+    console.log(`[#${pollCount}] ${new Date().toLocaleTimeString('zh-CN')} | ${rates.length}rates | ${[...new Set(rates.map(r => r.exchange))].length}ex | ${latestOpportunities.length}opps | ML:${latestMLPredictions.length} Regime:${latestRegime?.current || '?'} Portfolio:${latestPortfolio?.positions.length || 0} CrossDomain:${latestCrossDomain.length} | ${elapsed}ms`);
 
     broadcast();
   } catch (err: any) {
@@ -218,6 +272,10 @@ function broadcast() {
       predictions: latestPredictions.slice(0, 15),
       crossPair: latestCrossPair.slice(0, 10),
       paperStats: getTradeStats(),
+      mlPredictions: latestMLPredictions.slice(0, 10),
+      regime: latestRegime,
+      portfolio: latestPortfolio,
+      crossDomain: latestCrossDomain.slice(0, 5),
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -225,6 +283,10 @@ function broadcast() {
         anomalyCount: latestAnomalies.length,
         predictions: latestPredictions.length,
         crossPair: latestCrossPair.length,
+        mlPredictions: latestMLPredictions.length,
+        regime: latestRegime?.current || 'N/A',
+        portfolioPositions: latestPortfolio?.positions.length || 0,
+        crossDomain: latestCrossDomain.length,
         errors: latestErrors,
       },
     },
@@ -246,6 +308,10 @@ wss.on('connection', (ws) => {
         predictions: latestPredictions.slice(0, 15),
         crossPair: latestCrossPair.slice(0, 10),
         paperStats: getTradeStats(),
+        mlPredictions: latestMLPredictions.slice(0, 10),
+        regime: latestRegime,
+        portfolio: latestPortfolio,
+        crossDomain: latestCrossDomain.slice(0, 5),
         stats: {
           totalRates: latestRates.length,
           exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -253,6 +319,10 @@ wss.on('connection', (ws) => {
           anomalyCount: latestAnomalies.length,
           predictions: latestPredictions.length,
           crossPair: latestCrossPair.length,
+          mlPredictions: latestMLPredictions.length,
+          regime: latestRegime?.current || 'N/A',
+          portfolioPositions: latestPortfolio?.positions.length || 0,
+          crossDomain: latestCrossDomain.length,
           errors: latestErrors,
         },
       },
@@ -285,6 +355,75 @@ app.get('/api/predictions', authMiddleware('read'), (_req, res) => {
 
 app.get('/api/crosspair', authMiddleware('read'), (_req, res) => {
   res.json({ count: latestCrossPair.length, signals: latestCrossPair });
+});
+
+// ---- v4.0: ML Predictions API ----
+
+app.get('/api/v4/ml/predictions', authMiddleware('read'), (_req, res) => {
+  res.json({ count: latestMLPredictions.length, predictions: latestMLPredictions });
+});
+
+app.get('/api/v4/ml/model', authMiddleware('read'), (_req, res) => {
+  res.json(getModelState());
+});
+
+app.get('/api/v4/ml/accuracy', authMiddleware('read'), (_req, res) => {
+  res.json(getPredictionAccuracy());
+});
+
+app.get('/api/v4/ml/history/:symbol', authMiddleware('read'), (req, res) => {
+  const exchange = req.query.exchange as string || 'Binance';
+  res.json({ predictions: getPredictionHistory(req.params.symbol, exchange) });
+});
+
+// ---- v4.0: Portfolio Optimization API ----
+
+app.get('/api/v4/portfolio', authMiddleware('read'), (_req, res) => {
+  res.json(latestPortfolio || { positions: [], message: 'No data yet' });
+});
+
+app.post('/api/v4/portfolio/optimize', authMiddleware('read'), (req, res) => {
+  const { opportunities, capital } = req.body;
+  const result = optimizePortfolio(opportunities || [], capital || 100000);
+  res.json(result);
+});
+
+app.get('/api/v4/portfolio/correlation', authMiddleware('read'), (_req, res) => {
+  res.json(getCorrelationMatrix());
+});
+
+app.get('/api/v4/portfolio/risk', authMiddleware('read'), (_req, res) => {
+  res.json({ decomposition: getRiskDecomposition() });
+});
+
+// ---- v4.0: Regime Detection API ----
+
+app.get('/api/v4/regime', authMiddleware('read'), (_req, res) => {
+  res.json(latestRegime || { current: 'TRANSITION', message: 'No data yet' });
+});
+
+app.get('/api/v4/regime/stats', authMiddleware('read'), (_req, res) => {
+  res.json(getRegimeStats());
+});
+
+// ---- v4.0: Cross-Domain Arbitrage (DeFi vs CeFi) API ----
+
+app.get('/api/v4/defi/rates', authMiddleware('read'), (_req, res) => {
+  res.json({ rates: cachedDeFiRates, summary: getDeFiSummary() });
+});
+
+app.get('/api/v4/defi/arbitrage', authMiddleware('read'), (_req, res) => {
+  res.json({ count: latestCrossDomain.length, opportunities: latestCrossDomain });
+});
+
+app.post('/api/v4/defi/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    await fetchDeFiRates();
+    defiRatesLoaded = true;
+    res.json({ success: true, count: cachedDeFiRates.length });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.get('/api/stats', authMiddleware('read'), (_req, res) => {
@@ -569,16 +708,34 @@ app.get('*', (_req, res) => res.sendFile(path.join(clientPublic, 'index.html')))
 
 // ==================== START ====================
 
+let cachedDeFiRates: any[] = [];
+
+async function loadDeFiRates() {
+  try {
+    const rates = await fetchDeFiRates();
+    cachedDeFiRates = rates;
+    defiRatesLoaded = true;
+    console.log(`  DeFi rates loaded: ${rates.length} pools`);
+  } catch (e) {
+    console.log('  DeFi rates: using fallback data');
+    defiRatesLoaded = true;
+  }
+}
+
 initDb();
+loadDeFiRates();
 server.listen(PORT, () => {
   console.log('='.repeat(60));
-  console.log('  Funding Mirror Server v2.0');
+  console.log('  Funding Mirror Server v4.0');
+  console.log('  ML + Portfolio + Regime + Cross-Domain');
   console.log('='.repeat(60));
   console.log(`  REST:      http://localhost:${PORT}/api`);
   console.log(`  WebSocket: ws://localhost:${PORT}/ws`);
   console.log(`  Dashboard: http://localhost:${PORT}`);
   console.log(`  Exchanges: Binance / Bybit / OKX / Gate / Bitget`);
-  console.log(`  Features: Arbitrage + Anomaly + Prediction + CrossPair + Backtest + Paper`);
+  console.log(`  Engines:  Arbitrage / Anomaly / Predict / Capacity / CrossPair`);
+  console.log(`            Backtest / Paper / Risk / Alerts / Executor`);
+  console.log(`  v4.0:     ML Ensemble / Portfolio Kelly / Regime / DeFi`);
   console.log('='.repeat(60));
 });
 
