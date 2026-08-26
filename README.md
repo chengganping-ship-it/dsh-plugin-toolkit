@@ -1,21 +1,21 @@
-# Funding Mirror — 加密费率套利监控平台 v3
+# Funding Mirror — 加密费率套利监控平台 v3.5
 
 > **不给你看快照，给你看真相。所有数据来自 Binance/Bybit/OKX/Gate/Bitget 真实 API。**
 
 ---
 
-## 和竞品对比（Coinglass / CryptoQuant / Hyblock / 所有同类）
+## 和竞品对比（所有同类）
 
 | 功能 | 竞品 | 我们 |
 |------|------|------|
 | 当前费率 | ✅ | ✅ |
 | 跨交易所套利 | ❌ | ✅ |
-| **5 交易所 (Binance/Bybit/OKX/Gate/Bitget)** | 最多 3 | ✅ |
+| **5 交易所** | 最多 3 | ✅ |
 | **实时套利热力图** | ❌ | ✅ |
-| **费率异常检测 (Z-score 统计)** | ❌ | ✅ |
-| **费率方向预测 (订单簿+动量)** | ❌ | ✅ |
-| **容量估算 (订单簿深度)** | ❌ | ✅ |
-| **跨品种套利 (BTC-ETH 协整)** | ❌ | ✅ |
+| **费率异常检测 (Z-score)** | ❌ | ✅ |
+| **费率方向预测** | ❌ | ✅ |
+| **容量估算** | ❌ | ✅ |
+| **跨品种套利 (协整)** | ❌ | ✅ |
 | **Kelly 准则仓位优化** | ❌ | ✅ |
 | **VaR/CVaR/Sortino/Calmar/Omega** | ❌ | ✅ |
 | **真实历史数据回测** | ❌ | ✅ |
@@ -25,6 +25,9 @@
 | **Telegram/Discord/Slack 告警** | ❌ | ✅ |
 | **SQLite 持久化** | ❌ | ✅ |
 | **REST API + WebSocket** | ❌ | ✅ |
+| **JWT 认证 + API Key 管理** | ❌ | ✅ |
+| **真实交易执行 (Binance/Bybit)** | ❌ | ✅ |
+| **Docker 部署** | ❌ | ✅ |
 | **移动端响应式** | ❌ | ✅ |
 | **7x24 Sentinel 监控** | ❌ | ✅ |
 | **MCP Server (6 工具)** | ❌ | ✅ |
@@ -35,67 +38,107 @@
 
 ```
 crypto-funding-rate/     → MCP Server (6 工具) + Sentinel v2.0
-web-platform/server/     → REST + WebSocket + 9 大引擎 + SQLite
-web-platform/client/    → 实时仪表盘 (8 面板 + 曲线图)
+web-platform/server/     → REST + WebSocket + 11 引擎 + SQLite + Auth
+web-platform/client/    → 实时仪表盘 (8 面板 + 曲线图 + 移动端)
+docker-compose.yml       → 一键部署
 ```
 
-## 9 大引擎
+## 11 大引擎
 
-1. **Arbitrage Detector** — 跨交易所费率套利
-2. **Anomaly Detection** — Z-score 统计异常 (突变/闪崩/分歧/机制变化)
+1. **Arbitrage Detector** — 5 交易所费率套利
+2. **Anomaly Detection** — Z-score 统计异常
 3. **Rate Predictor** — 订单簿失衡 + 动量 + 均值回归
-4. **Capacity Estimator** — 订单簿深度 → 最大容量/滑点/捕获率
-5. **Cross-Pair Engine** — Pearson 相关性 + Z-score 跨品种套利
-6. **Kelly Optimizer** — Kelly 准则仓位优化 (Full/Half/Quarter)
-7. **Backtester** — 4 策略回测 + 完整风险指标
-8. **Paper Trader** — 实时模拟交易 + 自动止损止盈
-9. **Risk Metrics** — VaR, CVaR, Sortino, Calmar, Omega, 偏度, 峰度
+4. **Capacity Estimator** — 订单簿深度 → 容量/滑点
+5. **Cross-Pair Engine** — Pearson 协整跨品种套利
+6. **Kelly Optimizer** — Kelly 准则仓位优化
+7. **Backtester** — 4 策略 + 真实数据 + 风险指标
+8. **Paper Trader** — 实时模拟交易
+9. **Risk Metrics** — VaR, CVaR, Sortino, Calmar, Omega
+10. **Trade Executor** — 真实 Binance/Bybit 交易
+11. **Alert System** — Telegram/Discord/Slack 告警
 
 ---
 
-## 启动
+## 快速启动
+
+### Docker (推荐)
 
 ```bash
-# 1. Sentinel (7x24 监控)
-cd crypto-funding-rate && npm install && npm run build
-node dist/sentinel.js --config sentinel.json
-
-# 2. Web Platform
-cd web-platform/server && npm install && npm run build
-npm start
+docker-compose up -d
 ```
 
 打开 http://localhost:8771
 
+### 手动
+
+```bash
+# Sentinel
+cd crypto-funding-rate && npm install && npm run build
+node dist/sentinel.js
+
+# Web Platform
+cd web-platform/server && npm install && npm run build
+npm start
+```
+
 ---
 
-## REST API
+## REST API (25+ 端点)
 
-| 端点 | 说明 |
-|------|------|
-| `GET /api/rates` | 实时费率 |
-| `GET /api/opportunities?minNet=3` | 套利机会 |
-| `GET /api/anomalies` | 异常检测 |
-| `GET /api/predictions` | 费率预测 |
-| `GET /api/crosspair` | 跨品种信号 |
-| `GET /api/stats` | 系统状态 + DB |
-| `GET /api/paper/stats` | 模拟交易 |
-| `POST /api/backtest` | 策略回测 |
-| `POST /api/backtest/real` | 真实数据回测 |
-| `POST /api/kelly` | Kelly 仓位优化 |
-| `GET /api/history/rates/:symbol` | 真实历史费率 |
-| `POST /api/alerts/config` | 配置告警 |
-| `WS /ws` | 实时推送 |
+```
+GET  /api/rates | /api/opportunities | /api/anomalies | /api/predictions
+GET  /api/crosspair | /api/stats | /api/paper/stats | /api/backtest/strategies
+GET  /api/trade/positions | /api/trade/orders
+GET  /api/history/rates/:symbol | /api/history/opportunities | /api/history/anomalies
+POST /api/backtest | /api/backtest/real | /api/kelly | /api/paper/open
+POST /api/trade/credentials | /api/trade/order | /api/trade/arbitrage/open | /api/trade/arbitrage/close
+POST /api/alerts/config | /api/alerts/test
+POST/GET/DELETE /api/auth/keys
+WS   /ws
+```
+
+### 认证
+
+```bash
+# 默认管理员密钥 (环境变量 ADMIN_API_KEY)
+curl -H "Authorization: Bearer admin-key-change-me" http://localhost:8771/api/stats
+
+# 创建新 API Key
+curl -X POST -H "Authorization: Bearer admin-key-change-me" \
+  -H "Content-Type: application/json" \
+  -d '{"name":"trader","permissions":["read","trade"]}' \
+  http://localhost:8771/api/auth/keys
+```
+
+### 真实交易
+
+```bash
+# 1. 设置交易所 API 密钥
+curl -X POST -H "Authorization: Bearer $API_KEY" \
+  -d '{"exchange":"Binance","apiKey":"xxx","secretKey":"yyy","testnet":true}' \
+  http://localhost:8771/api/trade/credentials
+
+# 2. 下单
+curl -X POST -H "Authorization: Bearer $API_KEY" \
+  -d '{"exchange":"Binance","symbol":"BTCUSDT","side":"BUY","quantity":0.001,"type":"MARKET"}' \
+  http://localhost:8771/api/trade/order
+
+# 3. 一键套利开仓
+curl -X POST -H "Authorization: Bearer $API_KEY" \
+  -d '{"symbol":"BTCUSDT","longEx":"Binance","shortEx":"Bybit","quantityUsdt":1000,"longPrice":65000,"shortPrice":65000}' \
+  http://localhost:8771/api/trade/arbitrage/open
+```
 
 ---
 
 ## 实测（2026-08-26）
 
 ```
-[#1] 16:53:16 | 3309 rates | 5 ex | 33 opps | 10 anom | 0 cross | 14211ms
-Kelly: halfKelly=2.5%, recommended=$2,500, growth=2.4%
+[#1] 17:11:21 | 3309 rates | 5 ex | 27 opps | 9 anom | 14985ms
+Kelly: halfKelly=2.5%, size=$2,500, growth=2.4%
 History: 800 real rates from Binance/Bybit/OKX
-DB: persisted 3309 rates per poll
+Trade: dry-run order executed successfully
+Auth: JWT + API key management working
 ```
 
 ---

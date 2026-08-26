@@ -27,6 +27,8 @@ import { openPosition, updatePositions, getTradeStats, PaperTradeStats } from '.
 import { calcKelly, calcMultiKelly } from './engine/kelly.js';
 import { fetchAllHistory } from './engine/history.js';
 import { sendAlert, AlertConfig, createDefaultConfig } from './engine/alerts.js';
+import { TradeExecutor, ExchangeCredentials, OrderRequest } from './engine/executor.js';
+import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
 import * as url from 'url';
@@ -40,6 +42,28 @@ const server = createServer(app);
 const wss = new WebSocketServer({ server, path: '/ws' });
 
 app.use(express.json());
+
+// ==================== AUTH MIDDLEWARE ====================
+
+function authMiddleware(requiredPerm: string = 'read') {
+  return (req: any, res: any, next: any) => {
+    const authHeader = req.headers.authorization || '';
+    const apiKey = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : req.query.api_key as string;
+
+    if (!apiKey) {
+      // Allow read without auth in development
+      if (process.env.NODE_ENV !== 'production' && requiredPerm === 'read') return next();
+      return res.status(401).json({ error: 'API key required' });
+    }
+
+    const key = validateApiKey(apiKey);
+    if (!key) return res.status(403).json({ error: 'Invalid API key or rate limited' });
+    if (!checkPermission(key, requiredPerm)) return res.status(403).json({ error: 'Insufficient permissions' });
+
+    (req as any).apiKey = key;
+    next();
+  };
+}
 
 // ==================== STATE ====================
 
@@ -239,31 +263,31 @@ wss.on('connection', (ws) => {
 
 // ==================== REST API ====================
 
-app.get('/api/rates', (req, res) => {
+app.get('/api/rates', authMiddleware('read'), (req, res) => {
   let filtered = latestRates;
   if (req.query.exchange) filtered = filtered.filter(r => r.exchange === req.query.exchange);
   if (req.query.symbol) filtered = filtered.filter(r => r.symbol === req.query.symbol);
   res.json({ count: filtered.length, rates: filtered.slice(0, 300) });
 });
 
-app.get('/api/opportunities', (req, res) => {
+app.get('/api/opportunities', authMiddleware('read'), (req, res) => {
   const minNet = parseFloat(req.query.minNet as string) || 0;
   res.json({ count: latestOpportunities.filter(o => o.netAnnualized >= minNet).length, opportunities: latestOpportunities.filter(o => o.netAnnualized >= minNet) });
 });
 
-app.get('/api/anomalies', (_req, res) => {
+app.get('/api/anomalies', authMiddleware('read'), (_req, res) => {
   res.json({ count: latestAnomalies.length, anomalies: latestAnomalies });
 });
 
-app.get('/api/predictions', (_req, res) => {
+app.get('/api/predictions', authMiddleware('read'), (_req, res) => {
   res.json({ count: latestPredictions.length, predictions: latestPredictions });
 });
 
-app.get('/api/crosspair', (_req, res) => {
+app.get('/api/crosspair', authMiddleware('read'), (_req, res) => {
   res.json({ count: latestCrossPair.length, signals: latestCrossPair });
 });
 
-app.get('/api/stats', (_req, res) => {
+app.get('/api/stats', authMiddleware('read'), (_req, res) => {
   const dbStats = getDbStats();
   const uptime = Date.now() - startTime;
   res.json({
@@ -282,7 +306,7 @@ app.get('/api/stats', (_req, res) => {
   });
 });
 
-app.get('/api/paper/stats', (_req, res) => {
+app.get('/api/paper/stats', authMiddleware('read'), (_req, res) => {
   res.json(getTradeStats());
 });
 
@@ -434,6 +458,107 @@ app.post('/api/alerts/test', async (_req, res) => {
     message: 'Funding Mirror alert system is working!',
   });
   res.json({ success: true });
+});
+
+// ==================== TRADE EXECUTION ====================
+
+// Store exchange credentials per session (in production: encrypted DB)
+const exchangeCreds = new Map<string, ExchangeCredentials>();
+
+app.post('/api/trade/credentials', authMiddleware('trade'), (req, res) => {
+  const { exchange, apiKey, secretKey, passphrase, testnet } = req.body;
+  if (!exchange || !apiKey || !secretKey) {
+    return res.status(400).json({ error: 'Missing credentials' });
+  }
+  const creds: ExchangeCredentials = {
+    exchange,
+    apiKey,
+    secretKey,
+    passphrase,
+    testnet: testnet !== false,
+  };
+  exchangeCreds.set(exchange, creds);
+  res.json({ success: true, exchange, testnet: creds.testnet });
+});
+
+app.get('/api/trade/positions', authMiddleware('read'), (_req, res) => {
+  res.json({ positions: TradeExecutor.getPositions() });
+});
+
+app.get('/api/trade/orders', authMiddleware('read'), (req, res) => {
+  const limit = parseInt(req.query.limit as string) || 50;
+  res.json({ orders: TradeExecutor.getOrderHistory(limit) });
+});
+
+app.post('/api/trade/order', authMiddleware('trade'), async (req, res) => {
+  const { exchange, symbol, side, quantity, type, price } = req.body;
+  const creds = exchangeCreds.get(exchange);
+  if (!creds) {
+    return res.status(400).json({ error: `No credentials for ${exchange}. POST /api/trade/credentials first.` });
+  }
+
+  try {
+    const order: OrderRequest = { symbol, side, quantity, type: type || 'MARKET', price };
+    const result = await TradeExecutor.executeOrder(creds, order);
+    res.json({ success: true, order: result });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/trade/arbitrage/open', authMiddleware('trade'), async (req, res) => {
+  const { symbol, longEx, shortEx, quantityUsdt, longPrice, shortPrice } = req.body;
+  const longCreds = exchangeCreds.get(longEx);
+  const shortCreds = exchangeCreds.get(shortEx);
+
+  if (!longCreds || !shortCreds) {
+    return res.status(400).json({ error: 'Missing exchange credentials' });
+  }
+
+  try {
+    const result = await TradeExecutor.openArbitragePosition(
+      longCreds, shortCreds, symbol, quantityUsdt, longPrice, shortPrice
+    );
+    res.json({ success: true, ...result });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/trade/arbitrage/close', authMiddleware('trade'), async (req, res) => {
+  const { symbol, longEx, shortEx, longQty, shortQty } = req.body;
+  const longCreds = exchangeCreds.get(longEx);
+  const shortCreds = exchangeCreds.get(shortEx);
+
+  if (!longCreds || !shortCreds) {
+    return res.status(400).json({ error: 'Missing exchange credentials' });
+  }
+
+  try {
+    const result = await TradeExecutor.closeArbitragePosition(
+      longCreds, shortCreds, symbol, longQty, shortQty
+    );
+    res.json({ success: true, ...result });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ==================== AUTH MANAGEMENT ====================
+
+app.post('/api/auth/keys', authMiddleware('admin'), (req, res) => {
+  const { name, permissions } = req.body;
+  const apiKey = generateApiKey(name || 'user', permissions || ['read']);
+  res.json({ success: true, apiKey: apiKey.key, permissions: apiKey.permissions });
+});
+
+app.get('/api/auth/keys', authMiddleware('admin'), (_req, res) => {
+  res.json({ keys: listApiKeys() });
+});
+
+app.delete('/api/auth/keys/:prefix', authMiddleware('admin'), (req, res) => {
+  const success = revokeApiKey(req.params.prefix);
+  res.json({ success });
 });
 
 // ==================== STATIC ====================

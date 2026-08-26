@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  funding-mirror:
+    build:
+      context: ./web-platform/server
+      dockerfile: Dockerfile
+    container_name: funding-mirror
+    restart: unless-stopped
+    ports:
+      - "8771:8771"
+    environment:
+      - NODE_ENV=production
+      - PORT=8771
+      - JWT_SECRET=${JWT_SECRET:-change-me-in-production}
+      - ADMIN_API_KEY=${ADMIN_API_KEY:-admin-key-change-me}
+    volumes:
+      - funding-data:/app/data
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8771/api/stats"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  sentinel:
+    build:
+      context: ./crypto-funding-rate
+      dockerfile: Dockerfile
+    container_name: funding-sentinel
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./crypto-funding-rate/sentinel.json:/app/sentinel.json:ro
+    depends_on:
+      - funding-mirror
+
+volumes:
+  funding-data:
