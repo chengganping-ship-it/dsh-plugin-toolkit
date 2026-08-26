@@ -1,0 +1,14 @@
+{
+  "totalPolls": 1,
+  "startTime": 1787663614857,
+  "lastAlerts": {},
+  "dailyStats": {
+    "date": "2026-08-25",
+    "trades": 0,
+    "pnlPct": 0,
+    "maxDrawdown": 0,
+    "peakPct": 0
+  },
+  "lastError": null,
+  "consecutiveErrors": 0
+}

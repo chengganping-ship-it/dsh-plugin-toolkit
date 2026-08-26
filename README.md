@@ -1,6 +1,6 @@
-# Crypto Funding Rate MCP Server + Sentinel
+# Funding Mirror — 加密费率套利监控平台
 
-> **不给你看快照，给你看真相。所有数据来自 Binance/Bybit/OKX 真实 API。**
+> **不给你看快照，给你看真相。所有数据来自 Binance/Bybit/OKX/Gate/Bitget 真实 API。**
 
 ---
 
@@ -11,19 +11,24 @@
 | 当前费率 | ✅ | ✅ |
 | 标记价/指数价/持仓量/成交额 | 部分 | ✅ |
 | 跨交易所套利计算 | ❌ | ✅ |
+| **5 交易所 (Binance/Bybit/OKX/Gate/Bitget)** | 最多 3 个 | ✅ |
 | **历史回测（实际赚了多少）** | ❌ | ✅ |
 | **风险评分(0-100)** | ❌ | ✅ |
 | **费率动量趋势** | ❌ | ✅ |
 | **可执行头寸计算器** | ❌ | ✅ |
 | **95%置信区间** | ❌ | ✅ |
+| **实时套利热力图 Web UI** | ❌ | ✅ |
+| **费率异常检测 (突变/闪崩/分歧)** | ❌ | ✅ |
+| **费率方向预测 (基于订单簿失衡)** | ❌ | ✅ |
+| **容量估算 (能投多少钱)** | ❌ | ✅ |
+| **REST API + WebSocket** | ❌ | ✅ |
 | **7x24 监控 + Telegram/Discord 告警** | ❌ | ✅ |
 | **风控模块（最大回撤/日交易上限）** | ❌ | ✅ |
 | **PnL 追踪日志** | ❌ | ✅ |
-| **Windows 计划任务集成** | ❌ | ✅ |
 
 ---
 
-## 架构：MCP Server + Sentinel
+## 架构：三件套
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -41,150 +46,122 @@
 │       ↕ Windows 计划任务 7x24                        │
 │       ↕ HTTP 健康检查 :8770/health                  │
 └─────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────┐
+│              Funding Mirror Web Platform             │
+│  REST API + WebSocket + 实时热力图                  │
+│       ↕ 5 交易所 (Binance/Bybit/OKX/Gate/Bitget)   │
+│       ↕ 异常检测引擎 (Z-score/Regime/Divergence)    │
+│       ↕ 费率预测引擎 (订单簿失衡 + 动量 + 均值回归)  │
+│       ↕ 容量估算器 (基于订单簿深度)                  │
+│       ↕ Web Dashboard (热力图 + 表格 + 告警)        │
+└─────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 实测数据（2026-08-25）
+## 实测数据（2026-08-26）
 
-**MCP 工具回测：**
+**Funding Mirror Web Platform 启动：**
 ```
-BTCUSDT:
-  Binance 费率: 0.0100%  |  Bybit 费率: 0.0058%
-  7天回测净收益: -1.10% (费率相同时手续费在吃本金)
-ETHUSDT:
-  Binance 费率: 0.0100%  |  Bybit 费率: 0.0074%
-  7天回测净收益: -1.12%
+[#1] 16:04:48 | 3309 rates across 5 exchanges | 58 opps | 21 anomalies | 14040ms
 ```
 
-**Sentinel 实时监控输出：**
-```
-[#3] 21:06:14 | Binance/Bybit/OKX | 1603 rates | 4590ms
-📊 健康检查: http://localhost:8770/health
-📈 PnL 日志: http://localhost:8770/pnl
-```
-
-健康检查返回：
+**REST API 返回：**
 ```json
 {
   "status": "ok",
-  "uptime": "0h 0m",
-  "totalPolls": 3,
-  "dailyTrades": 0,
-  "dailyPnlPct": 0,
-  "maxDrawdown": 0,
-  "consecutiveErrors": 0
+  "totalRates": 3309,
+  "exchanges": ["Binance", "Bybit", "OKX", "Gate", "Bitget"],
+  "opportunities": 58,
+  "anomalies": 22,
+  "predictions": 0
 }
 ```
 
-历史机会（首次运行）：
+**套利机会示例（含容量估算）：**
+```json
+{
+  "symbol": "STORJUSDT",
+  "longEx": "Binance",
+  "shortEx": "Bybit",
+  "spreadPct": 1.3578,
+  "netAnnualized": 1399.22,
+  "capacity": {
+    "maxCapacityUsd": 100000000,
+    "recommendedSize": 50000000,
+    "slippageAtCapacity": 0.4934,
+    "spreadCapturePct": 63.65,
+    "depthQuality": "DEEP"
+  }
+}
 ```
-🆕 NEW XRPUSDT: Spread 0.0128% → 净年化 13.81% | 做多Binance + 做空Bybit
-🆕 NEW AVAXUSDT: Spread 0.0053% → 净年化 5.56% | 做多Binance + 做空Bybit
-🆕 NEW DOGEUSDT: Spread 0.0043% → 净年化 4.47% | 做多Binance + 做空Bybit
+
+**异常检测示例：**
+```json
+{
+  "symbol": "BNCUSDT",
+  "type": "DIVERGENCE",
+  "severity": 100,
+  "description": "BNCUSDT 跨所费率分歧: Bitget 0.0000% vs Bybit -2.0000%",
+  "zScore": 20
+}
 ```
+
+---
+
+## Funding Mirror Web Platform
+
+### 启动
+
+```bash
+cd web-platform/server
+npm install
+npm run build
+npm start
+```
+
+打开 http://localhost:8771 查看实时仪表盘。
+
+### REST API
+
+| 端点 | 说明 |
+|------|------|
+| `GET /api/rates` | 所有费率数据 |
+| `GET /api/opportunities?minNet=3` | 套利机会（含容量估算） |
+| `GET /api/anomalies` | 费率异常告警 |
+| `GET /api/predictions` | 费率方向预测 |
+| `GET /api/stats` | 系统状态统计 |
+| `WS /ws` | WebSocket 实时推送 |
+
+### 突破性功能
+
+**1. 实时套利热力图** — 所有币种按净年化排序，颜色编码一目了然
+
+**2. 费率异常检测** — 基于 Z-score 统计检测费率突变、闪崩、跨所分歧、机制变化
+
+**3. 费率方向预测** — 综合订单簿失衡 + 动量 + 均值回归，预测下一期费率方向
+
+**4. 容量估算器** — 基于订单簿深度，告诉你每个机会能投多少钱、滑点多少、能捕获多少 spread
+
+**5. 5 交易所全覆盖** — 比竞品多 Gate 和 Bitget，发现更多跨所机会
 
 ---
 
 ## Sentinel — 7x24 套利哨兵
 
-### 快速启动
-
 ```bash
-# 编译
-cd crypto-funding-rate && npm install && npm run build
-
-# 使用配置文件运行（推荐）
-cp sentinel.example.json sentinel.json
-# 编辑 sentinel.json 填入你的 Telegram botToken 等
-node dist/sentinel.js
-
-# 命令行覆盖参数
-node dist/sentinel.js --threshold 0.05 --interval 300 --min-net 5
-
-# 带 Telegram 告警
-node dist/sentinel.js --telegram-token 123456:ABC --telegram-chat 123456
-
-# 带 Discord 告警
-node dist/sentinel.js --discord https://discord.com/api/webhooks/xxx
+cd crypto-funding-rate
+npm install && npm run build
+node dist/sentinel.js --config sentinel.json
 ```
 
-### 7x24 运行（Windows 计划任务）
-
+Windows 计划任务安装：
 ```powershell
-# 以管理员身份运行 PowerShell
 powershell -ExecutionPolicy Bypass -File setup-task.ps1
 ```
 
-任务会注册为开机自启、自动重启（失败后 5 分钟重试，最多 3 次）。
-
-管理命令：
-```
-查看状态:  Get-ScheduledTask -TaskName 'FundingRateSentinel'
-停止:      Stop-ScheduledTask -TaskName 'FundingRateSentinel'
-查看日志:  Get-Content dist\out.log -Tail 20 -Wait
-```
-
-或者不安装计划任务，直接双击 `start-sentinel.bat`。
-
-### 配置文件说明
-
-**sentinel.json**：
-
-```json
-{
-  "threshold": 0.02,          // 最低 spread % 才告警
-  "interval": 60,             // 轮询间隔秒数
-  "minNetAnnualized": 3,      // 最低净年化 %
-  "symbols": ["BTCUSDT", "ETHUSDT", ...],  // 监控的币种
-  "telegram": {
-    "botToken": "YOUR_BOT_TOKEN",
-    "chatId": "YOUR_CHAT_ID"
-  },
-  "discord": {
-    "webhook": "https://..."
-  },
-  "slack": {
-    "webhook": "https://..."
-  },
-  "risk": {
-    "maxDrawdownPct": 5,      // 日最大回撤 %，超过暂停告警
-    "maxDailyTrades": 10,     // 日最大交易次数
-    "maxSingleTradePct": 25,  // 单次交易最大本金占比
-    "pauseAfterLoss": true    // 亏损时暂停
-  },
-  "healthPort": 8770          // HTTP 健康检查端口
-}
-```
-
-### 风控逻辑
-
-Sentinel 内置风控模块，遇到以下情况会自动暂停告警：
-
-| 条件 | 动作 |
-|------|------|
-| 日交易次数 >= 上限 | 暂停直到次日 |
-| 最大回撤 >= 上限 | 暂停直到次日 |
-| 连续 API 错误 >= 5 次 | 暂停直到恢复 |
-| 异常高费率 (>0.5%/8h) | 风险评分 +15，降低推荐价 |
-
-风险评分 (0-100)：
-- 🟢 <30 低风险，流动性好，spread 正常
-- 🟡 30-60 中等风险
-- 🔴 >60 高风险，warning
-
-### PnL 追踪
-
-Sentinel 自动记录每笔机会的预估盈亏到 `pnl-log.jsonl`（JSON Lines 格式），可通过 HTTP 查看：
-
-```bash
-curl http://localhost:8770/pnl
-```
-
-格式：
-```json
-{"timestamp":1724587200,"symbol":"XRPUSDT","direction":"多Binance/空Bybit","spreadPct":0.0128,"estimatedPnlPct":0.0014,"cumulativePnlPct":0.0014,"note":"risk=35"}
-```
+配置 Telegram/Discord/Slack 告警、风控参数见 `sentinel.example.json`。
 
 ---
 
@@ -199,17 +176,6 @@ curl http://localhost:8770/pnl
 | `backtest_strategy` | 历史回测：实际收益、最大回撤、夏普、胜率、置信区间 |
 | `get_statistics` | 费率统计：均值、波动率、动量(上升/下降) |
 
-```json
-{
-  "mcpServers": {
-    "crypto-funding-rate": {
-      "command": "node",
-      "args": ["绝对路径/crypto-funding-rate/dist/index.js"]
-    }
-  }
-}
-```
-
 ---
 
 ## 项目结构
@@ -217,24 +183,28 @@ curl http://localhost:8770/pnl
 ```
 dsh-plugin-toolkit/
 ├── README.md
-├── crypto-funding-rate/
-│   ├── package.json
-│   ├── tsconfig.json
-│   ├── sentinel.example.json    # 配置模板
-│   ├── setup-task.ps1           # Windows 计划任务安装脚本
-│   ├── start-sentinel.bat       # 双击启动
-│   ├── dist/                    # 编译输出
-│   └── src/
-│       ├── index.ts             # MCP Server (6 工具)
-│       └── sentinel.ts          # Sentinel v2.0 守护进程
+├── crypto-funding-rate/              # MCP Server + Sentinel
+│   ├── src/
+│   │   ├── index.ts                  # MCP Server (6 工具)
+│   │   └── sentinel.ts               # Sentinel v2.0 守护进程
+│   ├── sentinel.example.json
+│   ├── setup-task.ps1
+│   └── start-sentinel.bat
+└── web-platform/                     # Funding Mirror Web
+    ├── server/
+    │   ├── src/
+    │   │   ├── index.ts              # Express + WebSocket 服务器
+    │   │   ├── exchanges/
+    │   │   │   └── base.ts           # 5 交易所连接器
+    │   │   └── engine/
+    │   │       ├── anomaly.ts        # 异常检测引擎
+    │   │       ├── predictor.ts      # 费率预测引擎
+    │   │       └── capacity.ts       # 容量估算器
+    │   └── package.json
+    └── client/
+        └── public/
+            └── index.html            # 实时仪表盘 (热力图 + 表格)
 ```
-
----
-
-## 关于之前的内容
-
-这个仓库之前有 360 个假插件（2880 个工具），全部基于 `mulberry32` 随机数生成器，产出虚构数据。
-2026-08-24 已全部清除，改为做真正有用的事。
 
 ---
 

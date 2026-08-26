@@ -37,3 +37,8 @@ crypto-funding-rate/sentinel.json
 crypto-funding-rate/out.log
 crypto-funding-rate/err.log
 crypto-funding-rate/pnl-log.jsonl
+
+# Web platform
+web-platform/server/node_modules/
+web-platform/server/dist/
+web-platform/server/*.log
