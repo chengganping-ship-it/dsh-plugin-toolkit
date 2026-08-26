@@ -41,6 +41,7 @@ import { calculateFees, FeeBreakdown, getFeeSchedule, getNetworkFees, calculateB
 import { addRateSample, calculateVolSurface, getVolComparison, detectVolRegimeChange, getVolSurfaceGrid, VolSurface } from './engine/volatility.js';
 import { addAccount, removeAccount, listAccounts, getAggregatedPortfolio, getBalanceRecommendations, simulateBalanceUpdate, AggregatedPortfolio } from './engine/accounts.js';
 import { aggregateYields, getTopYields, getYieldsByRisk, getYieldSummary, clearYieldCache, YieldOpportunity } from './engine/yield.js';
+import { analyzeSentiment, getSentimentHistory, getCachedSentiment, clearSentimentCache, SentimentSummary, NewsItem } from './engine/sentiment.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -121,6 +122,8 @@ let botMessageCount = 0;
 // ==================== v7.0 ENGINE STATE ====================
 let latestYields: YieldOpportunity[] = [];
 let lastYieldFetch = 0;
+let latestSentiment: SentimentSummary | null = null;
+let lastSentimentFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -326,6 +329,16 @@ async function poll() {
       }
     }
 
+    // v7.0: Sentiment analysis (every 3 minutes)
+    if (pollCount % 6 === 0 || !latestSentiment) {
+      try {
+        latestSentiment = await analyzeSentiment();
+        lastSentimentFetch = Date.now();
+      } catch (e) {
+        // Sentiment fetch failed, keep cached data
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
@@ -404,6 +417,7 @@ function broadcast() {
       feeBreakdown: latestFeeBreakdowns.slice(0, 3),
       volSurfacePoints: latestVolSurface?.points?.slice(0, 6) || [],
       yields: latestYields.slice(0, 12),
+      sentiment: latestSentiment,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -450,6 +464,7 @@ wss.on('connection', (ws) => {
         equity: equityCurveData.slice(-50),
         health: getUsageSummary(),
         yields: latestYields.slice(0, 12),
+        sentiment: latestSentiment,
         stats: {
           totalRates: latestRates.length,
           exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -866,6 +881,37 @@ app.post('/api/v7/yields/refresh', authMiddleware('write'), async (_req, res) =>
   latestYields = await aggregateYields(cexRates);
   lastYieldFetch = Date.now();
   res.json({ success: true, count: latestYields.length });
+});
+
+// ==================== v7.0: Sentiment Analysis API ====================
+
+app.get('/api/v7/sentiment', authMiddleware('read'), (_req, res) => {
+  res.json({
+    sentiment: latestSentiment,
+    updatedAt: lastSentimentFetch,
+  });
+});
+
+app.get('/api/v7/sentiment/history', authMiddleware('read'), (req, res) => {
+  const limit = parseInt(req.query.limit as string) || 50;
+  res.json({ history: getSentimentHistory(limit) });
+});
+
+app.get('/api/v7/sentiment/news', authMiddleware('read'), (req, res) => {
+  const limit = parseInt(req.query.limit as string) || 10;
+  const news = latestSentiment ? [...(latestSentiment.topPositive || []), ...(latestSentiment.topNegative || [])] : [];
+  res.json({ count: news.length, news: news.slice(0, limit) });
+});
+
+app.post('/api/v7/sentiment/refresh', authMiddleware('write'), async (_req, res) => {
+  clearSentimentCache();
+  try {
+    latestSentiment = await analyzeSentiment();
+    lastSentimentFetch = Date.now();
+    res.json({ success: true, sentiment: latestSentiment });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze sentiment' });
+  }
 });
 
 // ---- v6.0: Telegram/Discord Bot API ----

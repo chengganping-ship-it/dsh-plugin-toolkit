@@ -118,6 +118,14 @@
     .yield-row .rec.GOOD{background:#4a9eff33;color:#4a9eff}
     .yield-row .rec.FAIR{background:#f5a62333;color:#f5a623}
     .yield-row .rec.AVOID{background:#ff444433;color:#ff4444}
+    .sent-item{padding:4px;background:#141c28;border-radius:4px;margin-bottom:4px;font-size:9px}
+    .sent-item .title{color:#e0e6ed;margin-bottom:2px}
+    .sent-item .meta{font-size:8px;color:#6b7a8d;display:flex;gap:8px;align-items:center}
+    .sent-score{padding:1px 5px;border-radius:3px;font-weight:600;font-size:8px}
+    .sent-pos{background:#00d4aa22;color:#00d4aa}
+    .sent-neg{background:#ff444422;color:#ff4444}
+    .sent-neu{background:#6b7a8d22;color:#6b7a8d}
+    .alert-item{padding:5px;border-left:3px solid #ff4444;background:#141c28;border-radius:0 4px 4px 0;margin-bottom:4px;font-size:9px}
     @media(max-width:1100px){.g{grid-template-columns:repeat(3,1fr)}.g5{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:800px){.g{grid-template-columns:repeat(2,1fr)}.g2,.g3,.g5{grid-template-columns:1fr}.c{padding:6px}.hdr{padding:6px 10px}.stats{gap:5px}}
     @media(max-width:500px){.g{grid-template-columns:1fr}.hm{grid-template-columns:repeat(auto-fill,minmax(65px,1fr))}.stats .lb{font-size:9px}}
@@ -137,6 +145,7 @@
     <div>$: <span class="v" id="eqC">-</span></div>
     <div>Strat: <span class="v" id="stC">-</span></div>
     <div>Yield: <span class="v" id="ydC">-</span></div>
+    <div>Sent: <span class="v" id="snC">-</span></div>
   </div>
 </div>
 <div class="c">
@@ -247,6 +256,18 @@
     </div>
   </div>
 
+  <!-- v7.0: Sentiment Analysis -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v7.0: News Sentiment <span id="sentBadge" class="tag bd bb">--</span></h2>
+      <div id="sentimentBox" style="max-height:250px;overflow-y:auto"><div class="emp">Scanning news...</div></div>
+    </div>
+    <div class="card">
+      <h2>v7.0: Sentiment Alerts & Symbol Map</h2>
+      <div id="sentAlerts" style="max-height:250px;overflow-y:auto;font-size:10px"><div class="emp">No alerts</div></div>
+    </div>
+  </div>
+
   <!-- Backtest -->
   <div class="g2">
     <div class="card">
@@ -296,10 +317,12 @@ function render() {
   $('eqC').textContent = '$' + (data.stats.currentEquity || 0).toLocaleString();
   $('stC').textContent = data.stats.strategySignals || '-';
   $('ydC').textContent = data.yields?.length || '-';
+  $('snC').textContent = data.sentiment?.overallScore?.toFixed(0) || '-';
   renderHM(); renderOpps(); renderAnom(); renderML(); renderCP(); renderPP();
   renderPort(); renderCDN(); renderRegime(); renderRouter(); renderHealth(); renderEquity();
   renderStratSignals(); renderFeeBreakdown(); renderVolSurface();
   renderYields(); renderYieldSummary();
+  renderSentiment(); renderSentimentAlerts();
 }
 
 function renderHM() {
@@ -619,6 +642,74 @@ function renderYieldSummary() {
       <div style="font-size:9px;color:#6b7a8d">${bestSafe.protocol} ${bestSafe.symbol}: <b style="color:#4a9eff">${bestSafe.netApy}%</b> (risk ${bestSafe.riskScore})</div>
       <div style="font-size:8px;color:#6b7a8d">${bestSafe.reasons?.join(' | ')}</div>
     </div>` : ''}`;
+}
+
+function renderSentiment() {
+  const s = data.sentiment;
+  if (!s) { $('sentimentBox').innerHTML = '<div class="emp">Loading sentiment...</div>'; return; }
+  const score = s.overallScore || 0;
+  const scoreColor = score > 20 ? '#00d4aa' : score < -20 ? '#ff4444' : '#6b7a8d';
+  const trendIcon = s.trend === 'IMPROVING' ? '📈' : s.trend === 'DETERIORATING' ? '📉' : '➡️';
+  $('sentBadge').textContent = `${score > 0 ? '+' : ''}${score.toFixed(0)}`;
+  $('sentBadge').style.color = scoreColor;
+  $('sentBadge').style.background = `${scoreColor}22`;
+
+  const news = [...(s.topPositive || []).slice(0, 2), ...(s.topNegative || []).slice(0, 2)];
+  $('sentimentBox').innerHTML = `
+    <div style="display:flex;gap:8px;margin-bottom:8px;align-items:center">
+      <div style="background:#141c28;padding:6px 10px;border-radius:4px;text-align:center">
+        <div style="font-size:18px;font-weight:700;color:${scoreColor}">${score > 0 ? '+' : ''}${score.toFixed(1)}</div>
+        <div style="font-size:7px;color:#6b7a8d">Score</div>
+      </div>
+      <div style="background:#141c28;padding:6px 10px;border-radius:4px;text-align:center">
+        <div style="font-size:14px;font-weight:600">${trendIcon} ${s.trend?.slice(0,6) || '--'}</div>
+        <div style="font-size:7px;color:#6b7a8d">Trend</div>
+      </div>
+      <div style="background:#141c28;padding:6px 10px;border-radius:4px;text-align:center">
+        <div style="font-size:14px;font-weight:600;color:#4a9eff">${s.newsCount || 0}</div>
+        <div style="font-size:7px;color:#6b7a8d">News</div>
+      </div>
+    </div>` + (news.length ? news.map(n => {
+    const sc = n.sentiment?.score || 0;
+    const cls = sc > 15 ? 'sent-pos' : sc < -15 ? 'sent-neg' : 'sent-neu';
+    return `<div class="sent-item">
+      <div class="title">${n.title?.slice(0, 70) || ''}</div>
+      <div class="meta">
+        <span class="sent-score ${cls}">${sc > 0 ? '+' : ''}${sc.toFixed(0)}</span>
+        <span>${n.source || ''}</span>
+        <span>${(n.symbols || []).slice(0, 3).join(',')}</span>
+      </div>
+    </div>`;
+  }).join('') : '<div class="emp">No recent news</div>');
+}
+
+function renderSentimentAlerts() {
+  const s = data.sentiment;
+  if (!s) { $('sentAlerts').innerHTML = '<div class="emp">No data</div>'; return; }
+  const alerts = s.alerts || [];
+  const symSent = s.symbolSentiment || {};
+  let html = '';
+  if (alerts.length) {
+    html += '<div style="font-size:8px;color:#6b7a8d;margin-bottom:4px;text-transform:uppercase">Alerts</div>';
+    html += alerts.slice(0, 3).map(a =>
+      `<div class="alert-item"><b>${a.type}</b>: ${a.message}<br><span style="font-size:8px;color:#6b7a8d">Severity: ${a.severity} | ${a.symbol}</span></div>`
+    ).join('');
+  }
+  // Symbol sentiment map
+  const symEntries = Object.entries(symSent).sort((a, b) => (b[1] as number) - (a[1] as number));
+  if (symEntries.length) {
+    html += '<div style="font-size:8px;color:#6b7a8d;margin:8px 0 4px;text-transform:uppercase">Symbol Sentiment</div>';
+    html += symEntries.slice(0, 8).map(([sym, score]) => {
+      const sc = score as number;
+      const color = sc > 20 ? '#00d4aa' : sc < -20 ? '#ff4444' : '#6b7a8d';
+      return `<div style="display:flex;justify-content:space-between;padding:2px 0;font-size:9px">
+        <span style="font-weight:600">${sym}</span>
+        <span style="color:${color};font-weight:600">${sc > 0 ? '+' : ''}${sc.toFixed(1)}</span>
+      </div>`;
+    }).join('');
+  }
+  if (!html) html = '<div class="emp">No alerts or sentiment data</div>';
+  $('sentAlerts').innerHTML = html;
 }
 
 // Kelly
