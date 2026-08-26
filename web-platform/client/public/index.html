@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Funding Mirror v5.0</title>
+  <title>Funding Mirror v6.0</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#080c14;color:#e0e6ed;overflow-x:hidden}
@@ -98,6 +98,26 @@
     .router-action .d{font-size:9px;font-weight:600}
     .router-action .m{font-size:8px;color:#6b7a8d;margin-top:1px}
     .eq-canvas{width:100%;height:80px;display:block;background:#141c28;border-radius:4px}
+    .strat-signal{padding:4px;background:#141c28;border-radius:4px;margin-bottom:3px;font-size:9px;border-left:3px solid #00d4aa}
+    .strat-signal .d{font-weight:600}
+    .strat-signal .m{font-size:8px;color:#6b7a8d}
+    .fee-item{display:flex;justify-content:space-between;padding:3px 0;font-size:9px;border-bottom:1px solid #141c28}
+    .fee-item .cost{color:#ff4444}
+    .fee-item .name{color:#6b7a8d}
+    .vol-cell{display:inline-block;width:18px;height:18px;margin:1px;border-radius:2px;font-size:7px;text-align:center;line-height:18px}
+    .vol-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;font-size:8px}
+    .vol-row{display:flex;align-items:center;gap:2px}
+    .vol-label{width:45px;font-size:8px;color:#6b7a8d}
+    .yield-row{display:flex;align-items:center;gap:4px;padding:4px;border-bottom:1px solid #141c28;font-size:9px}
+    .yield-row .proto{font-weight:600;min-width:60px}
+    .yield-row .sym{color:#6b7a8d;min-width:45px}
+    .yield-row .apy{color:#00d4aa;font-weight:600}
+    .yield-row .risk{min-width:40px;text-align:right}
+    .yield-row .rec{padding:1px 4px;border-radius:2px;font-size:7px;font-weight:600}
+    .yield-row .rec.BEST{background:#00d4aa33;color:#00d4aa}
+    .yield-row .rec.GOOD{background:#4a9eff33;color:#4a9eff}
+    .yield-row .rec.FAIR{background:#f5a62333;color:#f5a623}
+    .yield-row .rec.AVOID{background:#ff444433;color:#ff4444}
     @media(max-width:1100px){.g{grid-template-columns:repeat(3,1fr)}.g5{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:800px){.g{grid-template-columns:repeat(2,1fr)}.g2,.g3,.g5{grid-template-columns:1fr}.c{padding:6px}.hdr{padding:6px 10px}.stats{gap:5px}}
     @media(max-width:500px){.g{grid-template-columns:1fr}.hm{grid-template-columns:repeat(auto-fill,minmax(65px,1fr))}.stats .lb{font-size:9px}}
@@ -105,7 +125,7 @@
 </head>
 <body>
 <div class="hdr">
-  <h1>Funding Mirror <span class="vtag">v5.0</span></h1>
+  <h1>Funding Mirror <span class="vtag">v6.0</span></h1>
   <div class="stats">
     <div><span class="dot" id="dot"></span><span id="st">...</span></div>
     <div>Ex: <span class="v" id="exC">-</span></div>
@@ -115,6 +135,8 @@
     <div>Regime: <span class="v" id="rgC">-</span></div>
     <div>Router: <span class="v" id="rtC">-</span></div>
     <div>$: <span class="v" id="eqC">-</span></div>
+    <div>Strat: <span class="v" id="stC">-</span></div>
+    <div>Yield: <span class="v" id="ydC">-</span></div>
   </div>
 </div>
 <div class="c">
@@ -195,6 +217,36 @@
     <div id="eqStats" style="font-size:9px;color:#6b7a8d;margin-top:4px;display:flex;gap:12px;flex-wrap:wrap"></div>
   </div>
 
+  <!-- v6.0: Strategy + Fees + Volatility -->
+  <div class="g g3">
+    <div class="card">
+      <h2>v6.0: Strategy Signals</h2>
+      <div id="stratSignals" style="max-height:200px;overflow-y:auto"><div class="emp">Evaluating strategies...</div></div>
+    </div>
+    <div class="card">
+      <h2>v6.0: Fee Breakdown</h2>
+      <div id="feeBreakdown" style="max-height:200px;overflow-y:auto"><div class="emp">Calculating costs...</div></div>
+    </div>
+    <div class="card">
+      <h2>v6.0: Volatility Surface</h2>
+      <div id="volSurface" style="max-height:200px;overflow-y:auto"><div class="emp">Building surface...</div></div>
+    </div>
+  </div>
+
+  <!-- v7.0: Yield Farm Comparison -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v7.0: Yield Farm Aggregator <span id="yieldCount" class="tag bd bb">0</span></h2>
+      <div id="yieldList" style="max-height:280px;overflow-y:auto"><div class="emp">Scanning DeFi protocols...</div></div>
+    </div>
+    <div class="card">
+      <h2>v7.0: Risk-Adjusted Returns</h2>
+      <div id="yieldSummary" style="max-height:280px;overflow-y:auto;font-size:10px">
+        <div class="emp">Computing risk scores...</div>
+      </div>
+    </div>
+  </div>
+
   <!-- Backtest -->
   <div class="g2">
     <div class="card">
@@ -242,8 +294,12 @@ function render() {
   $('rgC').textContent = data.stats.regime || '-';
   $('rtC').textContent = data.stats.routerDecisions || '-';
   $('eqC').textContent = '$' + (data.stats.currentEquity || 0).toLocaleString();
+  $('stC').textContent = data.stats.strategySignals || '-';
+  $('ydC').textContent = data.yields?.length || '-';
   renderHM(); renderOpps(); renderAnom(); renderML(); renderCP(); renderPP();
   renderPort(); renderCDN(); renderRegime(); renderRouter(); renderHealth(); renderEquity();
+  renderStratSignals(); renderFeeBreakdown(); renderVolSurface();
+  renderYields(); renderYieldSummary();
 }
 
 function renderHM() {
@@ -443,6 +499,126 @@ function renderPP() {
     <div class="km"><div class="v">${ps.sharpe||0}</div><div class="l">Sharpe</div></div>
     <div class="km"><div class="v pnn">${ps.maxDrawdown||0}%</div><div class="l">MaxDD</div></div>
   </div>`;
+}
+
+function renderStratSignals() {
+  const ss = data.strategySignals || [];
+  $('stratSignals').innerHTML = ss.length ? ss.slice(0,8).map(x => {
+    const ic = x.action==='ENTER_LONG'?'🟢':x.action==='ENTER_SHORT'?'🔴':x.action==='ALERT'?'🔔':'⚪';
+    const reasons = (x.reasons || []).slice(0,2).join(' | ') || '';
+    return `<div class="strat-signal">
+      <div class="d">${ic} ${x.symbol}: <b>${x.action}</b> <span style="color:#00d4aa">${x.confidence}%</span></div>
+      <div class="m">${x.strategyName||''} | ${reasons}</div>
+    </div>`;
+  }).join('') : '<div class="emp">No active signals</div>';
+}
+
+function renderFeeBreakdown() {
+  const fb = data.feeBreakdown || [];
+  if (!fb.length) { $('feeBreakdown').innerHTML = '<div class="emp">Calculating...</div>'; return; }
+  let totalCostPct = 0;
+  const allCosts = [];
+  fb.forEach(x => {
+    (x.costs || []).forEach(c => {
+      totalCostPct += (c.pct || 0);
+      allCosts.push({ symbol: x.symbol, ...c });
+    });
+  });
+  const topCosts = allCosts.sort((a, b) => b.pct - a.pct).slice(0, 8);
+  $('feeBreakdown').innerHTML = topCosts.map(c =>
+    `<div class="fee-item"><span class="name">${c.symbol} ${c.name}</span>
+      <span>${c.category}</span>
+      <span class="cost">-${(c.pct * 100).toFixed(3)}%</span></div>`).join('') +
+    `<div class="fee-item" style="margin-top:6px;border-top:2px solid #1e2a3a;padding-top:6px">
+      <span class="name"><b>Total Hidden Cost</b></span>
+      <span class="cost" style="font-weight:600">-${(totalCostPct * 100).toFixed(3)}%</span></div>`;
+}
+
+function renderVolSurface() {
+  const pts = data.volSurfacePoints || [];
+  if (!pts.length) { $('volSurface').innerHTML = '<div class="emp">No data</div>'; return; }
+  const levels = ['LOW','MEDIUM','HIGH','EXTREME'];
+  const horizons = ['1h','4h','8h','1d','3d','7d'];
+  // Build grid from flat points array
+  const grid = {};
+  let termSlope = 0, levelSlope = 0, count = 0;
+  pts.forEach(p => {
+    if (!grid[p.rateLevel]) grid[p.rateLevel] = {};
+    grid[p.rateLevel][p.horizon] = p.volatility;
+    count++;
+  });
+  // Calculate slopes from grid
+  const lowRow = grid['LOW'] || {};
+  const highRow = grid['HIGH'] || {};
+  const h1 = horizons.filter(h => lowRow[h] != null);
+  if (h1.length >= 2) {
+    termSlope = (lowRow[h1[h1.length-1]] - lowRow[h1[0]]) / h1.length;
+  }
+  const midH = '1d';
+  if (lowRow[midH] != null && highRow[midH] != null) {
+    levelSlope = highRow[midH] - lowRow[midH];
+  }
+  const getColor = (v) => {
+    if (v == null) return '#141c28';
+    const intensity = Math.min(1, Math.abs(v) * 10);
+    return v > 0 ? `rgba(0,212,170,${intensity})` : `rgba(255,68,68,${intensity})`;
+  };
+  $('volSurface').innerHTML = `<div style="font-size:8px;color:#00d4aa;margin-bottom:4px">Term Slope: ${termSlope.toFixed(3)} | Level Slope: ${levelSlope.toFixed(3)}</div>
+    <div class="vol-grid">
+      <div class="vol-row"><span class="vol-label"></span>${horizons.map(h => `<span class="vol-cell" style="background:#1e2a3a">${h}</span>`).join('')}</div>
+      ${levels.map(l => `<div class="vol-row">
+        <span class="vol-label">${l.slice(0,4)}</span>
+        ${horizons.map(h => {
+          const v = grid[l]?.[h];
+          return `<span class="vol-cell" style="background:${getColor(v)}">${v!=null?(v*100).toFixed(1):'-'}</span>`;
+        }).join('')}
+      </div>`).join('')}
+    </div>`;
+}
+
+function renderYields() {
+  const y = data.yields || [];
+  if (!y.length) { $('yieldList').innerHTML = '<div class="emp">Loading yield data...</div>'; return; }
+  $('yieldCount').textContent = y.length;
+  $('yieldList').innerHTML = y.slice(0, 12).map(x => {
+    const riskColor = x.riskScore < 30 ? '#00d4aa' : x.riskScore < 50 ? '#4a9eff' : x.riskScore < 70 ? '#f5a623' : '#ff4444';
+    return `<div class="yield-row">
+      <span class="proto">${x.protocol?.slice(0,6)}</span>
+      <span class="sym">${x.symbol?.slice(0,5)}</span>
+      <span class="apy">${x.netApy.toFixed(2)}%</span>
+      <span style="color:#6b7a8d;flex:1">${x.chain} ${x.type?.slice(0,4)}</span>
+      <span class="risk" style="color:${riskColor}">R${x.riskScore}</span>
+      <span class="rec ${x.recommendation}">${x.recommendation?.slice(0,4)}</span>
+    </div>`;
+  }).join('');
+}
+
+function renderYieldSummary() {
+  const y = data.yields || [];
+  if (!y.length) { $('yieldSummary').innerHTML = '<div class="emp">Waiting...</div>'; return; }
+  const cexYields = y.filter(i => i.type === 'CEX_FUNDING');
+  const defiYields = y.filter(i => i.type !== 'CEX_FUNDING');
+  const bestDeFi = defiYields.sort((a, b) => b.riskAdjustedApy - a.riskAdjustedApy)[0];
+  const bestSafe = y.filter(i => i.riskScore < 40).sort((a, b) => b.netApy - a.netApy)[0];
+  const avgDefiApy = defiYields.length ? (defiYields.reduce((s, i) => s + i.apy, 0) / defiYields.length).toFixed(2) : '-';
+  const avgCexApy = cexYields.length ? (cexYields.reduce((s, i) => s + i.apy, 0) / cexYields.length).toFixed(2) : '-';
+  const protocols = [...new Set(y.map(i => i.protocol))].length;
+  $('yieldSummary').innerHTML = `
+    <div style="display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap">
+      <div style="background:#141c28;padding:5px 8px;border-radius:4px"><span style="color:#6b7a8d;font-size:8px">Protocols</span><br><b style="color:#00d4aa;font-size:14px">${protocols}</b></div>
+      <div style="background:#141c28;padding:5px 8px;border-radius:4px"><span style="color:#6b7a8d;font-size:8px">Avg DeFi APY</span><br><b style="color:#4a9eff;font-size:14px">${avgDefiApy}%</b></div>
+      <div style="background:#141c28;padding:5px 8px;border-radius:4px"><span style="color:#6b7a8d;font-size:8px">Avg CEX Funding</span><br><b style="color:#f5a623;font-size:14px">${avgCexApy}%</b></div>
+    </div>
+    ${bestDeFi ? `<div style="padding:6px;background:#00d4aa10;border-left:3px solid #00d4aa;border-radius:0 4px 4px 0;margin-bottom:6px">
+      <div style="font-weight:600;font-size:10px">🏆 Best Risk-Adjusted DeFi</div>
+      <div style="font-size:9px;color:#6b7a8d">${bestDeFi.protocol} ${bestDeFi.symbol}: <b style="color:#00d4aa">${bestDeFi.riskAdjustedApy}%</b> (risk ${bestDeFi.riskScore})</div>
+      <div style="font-size:8px;color:#6b7a8d">${bestDeFi.reasons?.join(' | ')}</div>
+    </div>` : ''}
+    ${bestSafe ? `<div style="padding:6px;background:#4a9eff10;border-left:3px solid #4a9eff;border-radius:0 4px 4px 0">
+      <div style="font-weight:600;font-size:10px">🛡️ Safest High Yield</div>
+      <div style="font-size:9px;color:#6b7a8d">${bestSafe.protocol} ${bestSafe.symbol}: <b style="color:#4a9eff">${bestSafe.netApy}%</b> (risk ${bestSafe.riskScore})</div>
+      <div style="font-size:8px;color:#6b7a8d">${bestSafe.reasons?.join(' | ')}</div>
+    </div>` : ''}`;
 }
 
 // Kelly

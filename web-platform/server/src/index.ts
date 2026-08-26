@@ -40,6 +40,7 @@ import { configureBot, sendBotMessage, generateStatusReport, generateTopOpportun
 import { calculateFees, FeeBreakdown, getFeeSchedule, getNetworkFees, calculateBreakeven, rankByNetProfitability } from './engine/fees.js';
 import { addRateSample, calculateVolSurface, getVolComparison, detectVolRegimeChange, getVolSurfaceGrid, VolSurface } from './engine/volatility.js';
 import { addAccount, removeAccount, listAccounts, getAggregatedPortfolio, getBalanceRecommendations, simulateBalanceUpdate, AggregatedPortfolio } from './engine/accounts.js';
+import { aggregateYields, getTopYields, getYieldsByRisk, getYieldSummary, clearYieldCache, YieldOpportunity } from './engine/yield.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -116,6 +117,10 @@ let latestFeeBreakdowns: FeeBreakdown[] = [];
 let latestVolSurface: VolSurface | null = null;
 let aggregatedPortfolio: AggregatedPortfolio | null = null;
 let botMessageCount = 0;
+
+// ==================== v7.0 ENGINE STATE ====================
+let latestYields: YieldOpportunity[] = [];
+let lastYieldFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -306,6 +311,21 @@ async function poll() {
     // v6.0: Multi-account aggregation
     aggregatedPortfolio = getAggregatedPortfolio();
 
+    // v7.0: Yield farm aggregation (every 5 minutes)
+    if (pollCount % 10 === 0 || latestYields.length === 0) {
+      try {
+        const cexRates = latestOpportunities.slice(0, 10).map(o => ({
+          symbol: o.symbol,
+          rate: o.netAnnualized / 100 / 1095, // convert annual to per-8h
+          exchange: o.longEx,
+        }));
+        latestYields = await aggregateYields(cexRates);
+        lastYieldFetch = Date.now();
+      } catch (e) {
+        // Yield fetch failed, keep cached data
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
@@ -383,6 +403,7 @@ function broadcast() {
       strategySignals: latestStrategySignals.slice(0, 5),
       feeBreakdown: latestFeeBreakdowns.slice(0, 3),
       volSurfacePoints: latestVolSurface?.points?.slice(0, 6) || [],
+      yields: latestYields.slice(0, 12),
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -428,6 +449,7 @@ wss.on('connection', (ws) => {
         routerDecisions: tradeDecisions.slice(0, 5),
         equity: equityCurveData.slice(-50),
         health: getUsageSummary(),
+        yields: latestYields.slice(0, 12),
         stats: {
           totalRates: latestRates.length,
           exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -811,6 +833,39 @@ app.post('/api/v6/strategies/:id/toggle', authMiddleware('write'), (req, res) =>
 
 app.get('/api/v6/strategies/signals', authMiddleware('read'), (_req, res) => {
   res.json({ count: latestStrategySignals.length, signals: latestStrategySignals });
+});
+
+// ==================== v7.0: Yield Farm Aggregator API ====================
+
+app.get('/api/v7/yields', authMiddleware('read'), (_req, res) => {
+  res.json({
+    count: latestYields.length,
+    updatedAt: lastYieldFetch,
+    yields: latestYields,
+    summary: getYieldSummary(),
+  });
+});
+
+app.get('/api/v7/yields/top', authMiddleware('read'), (req, res) => {
+  const n = parseInt(req.query.n as string) || 10;
+  res.json({ yields: getTopYields(n) });
+});
+
+app.get('/api/v7/yields/safe', authMiddleware('read'), (req, res) => {
+  const maxRisk = parseInt(req.query.maxRisk as string) || 50;
+  res.json({ yields: getYieldsByRisk(maxRisk) });
+});
+
+app.post('/api/v7/yields/refresh', authMiddleware('write'), async (_req, res) => {
+  clearYieldCache();
+  const cexRates = latestOpportunities.slice(0, 10).map(o => ({
+    symbol: o.symbol,
+    rate: o.netAnnualized / 100 / 1095,
+    exchange: o.longEx,
+  }));
+  latestYields = await aggregateYields(cexRates);
+  lastYieldFetch = Date.now();
+  res.json({ success: true, count: latestYields.length });
 });
 
 // ---- v6.0: Telegram/Discord Bot API ----
