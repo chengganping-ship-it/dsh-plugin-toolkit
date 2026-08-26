@@ -1,9 +1,15 @@
 /**
  * Advanced Backtesting Engine
  *
- * Tests funding rate arbitrage strategies with realistic fees, slippage,
- * position sizing, and multiple strategy variants.
+ * Tests funding rate arbitrage strategies with:
+ * - Real or synthetic historical funding rates
+ * - Realistic fee model (taker fees per exchange)
+ * - Slippage based on order book depth
+ * - Multiple strategy variants
+ * - Full risk metrics (Sharpe, Sortino, Calmar, VaR, CVaR, Omega)
  */
+
+import { calcRiskMetrics } from './risk.js';
 
 export interface BacktestParams {
   strategy: 'PURE_CARRY' | 'MOMENTUM' | 'MEAN_REVERSION' | 'COMPOUND';
@@ -26,6 +32,15 @@ export interface BacktestResult {
   totalReturn: number;
   annualizedReturn: number;
   sharpe: number;
+  sortino: number;
+  calmar: number;
+  var95: number;
+  var99: number;
+  cvar95: number;
+  omegaRatio: number;
+  skewness: number;
+  kurtosis: number;
+  tailRisk: string;
   maxDrawdown: number;
   winRate: number;
   profitFactor: number;
@@ -173,6 +188,9 @@ export function runBacktest(
   const winRate = trades.length > 0 ? (totalWins / trades.length) * 100 : 0;
   const profitFactor = sumLosses !== 0 ? Math.abs(sumWins / sumLosses) : sumWins > 0 ? 999 : 0;
 
+  // Advanced risk metrics
+  const risk = calcRiskMetrics(returns, annualizedReturn, maxDrawdown);
+
   return {
     strategy: params.strategy,
     symbol: params.symbol,
@@ -180,6 +198,15 @@ export function runBacktest(
     totalReturn: +totalReturn.toFixed(2),
     annualizedReturn: +annualizedReturn.toFixed(2),
     sharpe: +sharpe.toFixed(2),
+    sortino: risk.sortinoRatio,
+    calmar: risk.calmarRatio,
+    var95: risk.var95,
+    var99: risk.var99,
+    cvar95: risk.cvar95,
+    omegaRatio: risk.omegaRatio,
+    skewness: risk.skewness,
+    kurtosis: risk.kurtosis,
+    tailRisk: risk.tailRisk,
     maxDrawdown: +maxDrawdown.toFixed(2),
     winRate: +winRate.toFixed(1),
     profitFactor: +profitFactor.toFixed(2),

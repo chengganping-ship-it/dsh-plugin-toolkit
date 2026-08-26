@@ -24,6 +24,9 @@ import { estimateCapacity, CapacityEstimate } from './engine/capacity.js';
 import { detectCrossPair, CrossPairSignal } from './engine/crosspair.js';
 import { runBacktest, generateSyntheticRates, BacktestParams, BacktestResult } from './engine/backtest.js';
 import { openPosition, updatePositions, getTradeStats, PaperTradeStats } from './engine/paper.js';
+import { calcKelly, calcMultiKelly } from './engine/kelly.js';
+import { fetchAllHistory } from './engine/history.js';
+import { sendAlert, AlertConfig, createDefaultConfig } from './engine/alerts.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
 import * as url from 'url';
@@ -56,6 +59,7 @@ let latestErrors: Record<string, string> = {};
 let lastPollTime = 0;
 let pollCount = 0;
 let startTime = Date.now();
+let alertConfig: AlertConfig = createDefaultConfig();
 
 // ==================== POLLING ====================
 
@@ -107,6 +111,24 @@ async function poll() {
     const rateMap = new Map<string, { fundingRate: number; markPrice: number }>();
     for (const r of rates) rateMap.set(`${r.exchange}:${r.symbol}`, { fundingRate: r.fundingRate, markPrice: r.markPrice || 0 });
     updatePositions(rateMap);
+
+    // Send alerts
+    for (const anom of latestAnomalies.slice(0, 3)) {
+      sendAlert(alertConfig, {
+        type: 'ANOMALY', symbol: anom.symbol, severity: anom.severity,
+        title: `${anom.type} - ${anom.symbol}`, message: anom.description,
+      });
+    }
+    for (const opp of latestOpportunities.slice(0, 2)) {
+      if (opp.spreadPct > 0.05) {
+        sendAlert(alertConfig, {
+          type: 'OPPORTUNITY', symbol: opp.symbol,
+          severity: Math.min(100, Math.round(opp.spreadPct * 1000)),
+          title: `Arb ${opp.symbol} ${opp.netAnnualized}%`,
+          message: `Spread ${opp.spreadPct}% | Long ${opp.longEx} / Short ${opp.shortEx}`,
+        });
+      }
+    }
 
     const elapsed = Date.now() - t0;
     console.log(`[#${pollCount}] ${new Date().toLocaleTimeString('zh-CN')} | ${rates.length} rates | ${[...new Set(rates.map(r => r.exchange))].length} ex | ${latestOpportunities.length} opps | ${latestAnomalies.length} anom | ${latestCrossPair.length} cross | ${elapsed}ms`);
@@ -313,6 +335,105 @@ app.get('/api/history/opportunities', (req, res) => {
 app.get('/api/history/anomalies', (req, res) => {
   const hours = parseInt(req.query.hours as string) || 24;
   res.json({ hours, summary: getAnomalySummary(hours) });
+});
+
+// ---- Kelly Criterion API ----
+
+app.post('/api/kelly', (req, res) => {
+  const { winRate, avgWin, avgLoss, spreadPct, capital } = req.body;
+  const result = calcKelly({
+    winRate: winRate || 0.5,
+    avgWin: avgWin || 0.5,
+    avgLoss: avgLoss || 0.3,
+    currentSpread: spreadPct || 0.02,
+    volatility: 0.01,
+    maxDrawdownBudget: 5,
+  }, capital || 100000);
+  res.json(result);
+});
+
+// ---- Real Historical Data API ----
+
+app.get('/api/history/rates/:symbol', async (req, res) => {
+  const symbol = req.params.symbol;
+  const { rates, errors } = await fetchAllHistory(symbol);
+  res.json({ symbol, count: rates.length, rates: rates.slice(-200), errors });
+});
+
+// ---- Real Backtest (uses historical data) ----
+
+app.post('/api/backtest/real', async (req, res) => {
+  const symbol = req.body.symbol || 'BTCUSDT';
+  const strategy = req.body.strategy || 'PURE_CARRY';
+
+  // Fetch real historical rates with timeout
+  const timeout = new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), 20000));
+  let rates: any[] = [];
+  let errors: Record<string, string> = {};
+  try {
+    const result = await Promise.race([fetchAllHistory(symbol), timeout]) as any;
+    rates = result.rates;
+    errors = result.errors;
+  } catch {
+    errors.fetch = 'Timeout or error fetching history';
+  }
+
+  const binanceRates = rates.filter(r => r.exchange === 'Binance').map((r: any) => ({
+    ts: r.fundingTime, rate: r.fundingRate, price: r.markPrice || 0,
+  }));
+  const bybitRates = rates.filter(r => r.exchange === 'Bybit').map((r: any) => ({
+    ts: r.fundingTime, rate: r.fundingRate, price: 0,
+  }));
+
+  if (binanceRates.length < 10 || bybitRates.length < 10) {
+    const rateA = generateSyntheticRates(symbol, 30, 0.0005, 0.0001);
+    const rateB = generateSyntheticRates(symbol, 30, 0.0003, 0.0001);
+    const result = runBacktest(rateA, rateB, {
+      strategy, symbol,
+      startTs: Date.now() - 30 * 86400000, endTs: Date.now(),
+      initialCapital: req.body.initialCapital || 100000,
+      feePerTrade: req.body.feePerTrade || 0.04,
+      slippage: req.body.slippage || 0.02,
+      maxPositionPct: req.body.maxPositionPct || 25,
+    });
+    return res.json({ ...result, dataSource: 'SYNTHETIC', errors });
+  }
+
+  const result = runBacktest(binanceRates, bybitRates, {
+    strategy, symbol,
+    startTs: binanceRates[0].ts, endTs: binanceRates[binanceRates.length - 1].ts,
+    initialCapital: req.body.initialCapital || 100000,
+    feePerTrade: req.body.feePerTrade || 0.04,
+    slippage: req.body.slippage || 0.02,
+    maxPositionPct: req.body.maxPositionPct || 25,
+  });
+  res.json({ ...result, dataSource: 'REAL', sampleSize: Math.min(binanceRates.length, bybitRates.length) });
+});
+
+// ---- Alert Config API ----
+
+app.get('/api/alerts/config', (_req, res) => {
+  res.json(alertConfig);
+});
+
+app.post('/api/alerts/config', (req, res) => {
+  alertConfig = {
+    ...alertConfig,
+    ...req.body,
+    telegram: req.body.telegram ? { ...alertConfig.telegram, ...req.body.telegram } : alertConfig.telegram,
+    discord: req.body.discord ? { ...alertConfig.discord, ...req.body.discord } : alertConfig.discord,
+    slack: req.body.slack ? { ...alertConfig.slack, ...req.body.slack } : alertConfig.slack,
+  };
+  res.json({ success: true, config: alertConfig });
+});
+
+app.post('/api/alerts/test', async (_req, res) => {
+  await sendAlert(alertConfig, {
+    type: 'OPPORTUNITY', symbol: 'TEST',
+    severity: 80, title: 'Test Alert',
+    message: 'Funding Mirror alert system is working!',
+  });
+  res.json({ success: true });
 });
 
 // ==================== STATIC ====================
