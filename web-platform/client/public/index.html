@@ -3,97 +3,109 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Funding Mirror v4.0</title>
+  <title>Funding Mirror v5.0</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#080c14;color:#e0e6ed;overflow-x:hidden}
-    .hdr{background:linear-gradient(135deg,#141923,#0d1321);border-bottom:1px solid #1e2633;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
-    .hdr h1{font-size:16px;font-weight:700;color:#00d4aa}
+    .hdr{background:linear-gradient(135deg,#141923,#0d1321);border-bottom:1px solid #1e2633;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;flex-wrap:wrap;gap:6px}
+    .hdr h1{font-size:15px;font-weight:700;color:#00d4aa}
     .hdr .vtag{font-size:9px;background:#00d4aa18;color:#00d4aa;padding:2px 6px;border-radius:3px;margin-left:6px}
-    .stats{display:flex;gap:10px;font-size:11px;color:#6b7a8d;flex-wrap:wrap}
+    .stats{display:flex;gap:8px;font-size:10px;color:#6b7a8d;flex-wrap:wrap}
     .stats .v{color:#e0e6ed;font-weight:600}
     .stats .lb{color:#00d4aa}
-    .dot{width:7px;height:7px;border-radius:50%;background:#00d4aa;display:inline-block;margin-right:3px;animation:pulse 2s infinite}
+    .dot{width:6px;height:6px;border-radius:50%;background:#00d4aa;display:inline-block;margin-right:3px;animation:pulse 2s infinite}
     .dot.off{background:#ff4444;animation:none}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-    .c{padding:12px 16px;max-width:1800px;margin:0 auto}
-    .g{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
+    .c{padding:10px 14px;max-width:1900px;margin:0 auto}
+    .g{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
     .g2{grid-template-columns:1fr 1fr}
     .g3{grid-template-columns:1fr 1fr 1fr}
+    .g5{grid-template-columns:repeat(5,1fr)}
     .gf{grid-column:1/-1}
-    .card{background:#141923;border:1px solid #1e2633;border-radius:8px;padding:12px}
-    .card h2{font-size:10px;font-weight:600;color:#6b7a8d;margin-bottom:8px;text-transform:uppercase;letter-spacing:.3px}
-    .hm{display:grid;grid-template-columns:repeat(auto-fill,minmax(85px,1fr));gap:4px}
-    .hc{padding:5px;border-radius:4px;text-align:center;cursor:pointer;transition:transform .1s}
+    .card{background:#141923;border:1px solid #1e2633;border-radius:8px;padding:10px}
+    .card h2{font-size:9px;font-weight:600;color:#6b7a8d;margin-bottom:6px;text-transform:uppercase;letter-spacing:.3px}
+    .hm{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:4px}
+    .hc{padding:4px;border-radius:4px;text-align:center;cursor:pointer;transition:transform .1s;font-size:10px}
     .hc:hover{transform:scale(1.05)}
-    .hc .s{font-size:9px;font-weight:600}
-    .hc .v{font-size:11px;font-weight:700}
-    .hc .x{font-size:8px;opacity:.6}
-    table{width:100%;border-collapse:collapse;font-size:11px}
-    th{text-align:left;padding:5px;color:#6b7a8d;font-weight:500;border-bottom:1px solid #1e2633;font-size:10px}
-    td{padding:5px;border-bottom:1px solid #141c28}
+    .hc .s{font-size:8px;font-weight:600}
+    .hc .v{font-size:10px;font-weight:700}
+    .hc .x{font-size:7px;opacity:.6}
+    table{width:100%;border-collapse:collapse;font-size:10px}
+    th{text-align:left;padding:4px;color:#6b7a8d;font-weight:500;border-bottom:1px solid #1e2633;font-size:9px}
+    td{padding:4px;border-bottom:1px solid #141c28}
     tr:hover{background:#141c28}
-    .bd{padding:1px 4px;border-radius:3px;font-size:9px;font-weight:600}
+    .bd{padding:1px 3px;border-radius:3px;font-size:8px;font-weight:600}
     .bg{background:#00d4aa18;color:#00d4aa}
     .by{background:#f5a62318;color:#f5a623}
     .br{background:#ff444418;color:#ff4444}
     .bb{background:#4a9eff18;color:#4a9eff}
     .bp{background:#9b59b618;color:#9b59b6}
-    .em{padding:6px;border-left:3px solid;margin-bottom:5px;background:#141c28;border-radius:0 4px 4px 0}
+    .em{padding:5px;border-left:3px solid;margin-bottom:4px;background:#141c28;border-radius:0 4px 4px 0;font-size:10px}
     .em.sp{border-color:#ff4444}.em.cr{border-color:#f5a623}.em.dv{border-color:#4a9eff}.em.rg{border-color:#9b59b6}
-    .em .d{font-size:11px;margin-bottom:2px}
-    .em .m{font-size:9px;color:#6b7a8d}
-    .pi{display:flex;align-items:center;gap:6px;padding:5px;border-bottom:1px solid #141c28}
-    .pi .di{font-size:14px}
+    .em .d{font-size:10px;margin-bottom:2px}
+    .em .m{font-size:8px;color:#6b7a8d}
+    .pi{display:flex;align-items:center;gap:5px;padding:4px;border-bottom:1px solid #141c28}
+    .pi .di{font-size:12px}
     .pi .inf{flex:1}
-    .pi .sy{font-weight:600;font-size:11px}
-    .pi .dt{font-size:9px;color:#6b7a8d}
-    .pi .cf{font-size:10px;font-weight:600}
-    .emp{text-align:center;padding:25px;color:#3d4a5c;font-size:11px}
-    .fb{display:flex;gap:5px;margin-bottom:8px;flex-wrap:wrap;align-items:center}
-    .fb select,.fb input{background:#141c28;border:1px solid #1e2633;color:#e0e6ed;padding:4px 7px;border-radius:4px;font-size:10px}
-    .fb button{background:#00d4aa;color:#080c14;border:none;padding:4px 10px;border-radius:4px;font-weight:600;font-size:10px;cursor:pointer}
+    .pi .sy{font-weight:600;font-size:10px}
+    .pi .dt{font-size:8px;color:#6b7a8d}
+    .pi .cf{font-size:9px;font-weight:600}
+    .emp{text-align:center;padding:20px;color:#3d4a5c;font-size:10px}
+    .fb{display:flex;gap:4px;margin-bottom:6px;flex-wrap:wrap;align-items:center}
+    .fb select,.fb input{background:#141c28;border:1px solid #1e2633;color:#e0e6ed;padding:3px 6px;border-radius:4px;font-size:9px}
+    .fb button{background:#00d4aa;color:#080c14;border:none;padding:3px 8px;border-radius:4px;font-weight:600;font-size:9px;cursor:pointer}
     .fb button:hover{background:#00e4b8}
-    .btres{background:#141c28;border-radius:6px;padding:10px;margin-top:8px}
-    .btres .mets{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px}
+    .btres{background:#141c28;border-radius:6px;padding:8px;margin-top:6px}
+    .btres .mets{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:6px}
     .btres .met{text-align:center}
-    .btres .met .v{font-size:14px;font-weight:700}
-    .btres .met .l{font-size:9px;color:#6b7a8d}
-    canvas{width:100%;height:100px;display:block}
+    .btres .met .v{font-size:12px;font-weight:700}
+    .btres .met .l{font-size:8px;color:#6b7a8d}
+    canvas{width:100%;height:80px;display:block}
     .pnp{color:#00d4aa}.pnn{color:#ff4444}
-    .tag{display:inline-block;padding:1px 3px;border-radius:2px;font-size:8px;margin-left:3px}
-    .kms{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}
-    .km{background:#141c28;padding:6px;border-radius:4px;text-align:center}
-    .km .v{font-size:13px;font-weight:700}
-    .km .l{font-size:9px;color:#6b7a8d}
-    /* v4.0 Styles */
-    .regime-badge{display:inline-block;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:600;margin-left:6px}
+    .tag{display:inline-block;padding:1px 3px;border-radius:2px;font-size:7px;margin-left:3px}
+    .kms{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:6px}
+    .km{background:#141c28;padding:5px;border-radius:4px;text-align:center}
+    .km .v{font-size:11px;font-weight:700}
+    .km .l{font-size:8px;color:#6b7a8d}
+    .regime-badge{display:inline-block;padding:2px 6px;border-radius:3px;font-size:9px;font-weight:600;margin-left:5px}
     .regime-lv{background:#00d4aa18;color:#00d4aa}
     .regime-hv{background:#4a9eff18;color:#4a9eff}
     .regime-cr{background:#ff444418;color:#ff4444}
     .regime-op{background:#9b59b618;color:#9b59b6}
     .regime-tr{background:#f5a62318;color:#f5a623}
-    .signal-bar{display:flex;align-items:center;gap:4px;padding:2px 0;font-size:9px}
-    .signal-bar .sb-lb{width:50px;color:#6b7a8d}
-    .sb-track{flex:1;height:4px;background:#141c28;border-radius:2px;overflow:hidden}
+    .signal-bar{display:flex;align-items:center;gap:3px;padding:2px 0;font-size:8px}
+    .signal-bar .sb-lb{width:45px;color:#6b7a8d}
+    .sb-track{flex:1;height:3px;background:#141c28;border-radius:2px;overflow:hidden}
     .sb-fill{height:100%;border-radius:2px}
-    .sb-val{width:30px;text-align:right;font-weight:600}
-    .port-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #141c28;font-size:10px}
+    .sb-val{width:25px;text-align:right;font-weight:600}
+    .port-row{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #141c28;font-size:9px}
     .port-row .sym{font-weight:600}
     .port-row .alloc{color:#00d4aa}
-    .prob-row{display:flex;align-items:center;gap:6px;padding:3px 0;font-size:10px}
-    .prob-row .lb{width:110px;color:#6b7a8d}
-    .prob-bar{height:6px;border-radius:3px;transition:width .3s}
-    .cross-domain{padding:6px;background:#141c28;border-radius:4px;margin-bottom:5px;border-left:3px solid #9b59b6}
-    .cross-domain .d{font-size:10px;font-weight:600}
-    .cross-domain .m{font-size:9px;color:#6b7a8d;margin-top:2px}
-    @media(max-width:900px){.g{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}.g3{grid-template-columns:1fr}.c{padding:8px}.hdr{padding:8px 12px}.stats{gap:6px}}
-    @media(max-width:600px){.g{grid-template-columns:1fr}.hm{grid-template-columns:repeat(auto-fill,minmax(70px,1fr))}.stats .lb{font-size:10px}}
+    .prob-row{display:flex;align-items:center;gap:4px;padding:2px 0;font-size:9px}
+    .prob-row .lb{width:100px;color:#6b7a8d}
+    .prob-bar{height:5px;border-radius:3px;transition:width .3s}
+    .cross-domain{padding:5px;background:#141c28;border-radius:4px;margin-bottom:4px;border-left:3px solid #9b59b6;font-size:9px}
+    .cross-domain .d{font-size:9px;font-weight:600}
+    .cross-domain .m{font-size:8px;color:#6b7a8d;margin-top:1px}
+    .health-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:4px}
+    .health-item{padding:5px;background:#141c28;border-radius:4px;text-align:center;border-top:2px solid #00d4aa}
+    .health-item.degraded{border-top-color:#f5a623}
+    .health-item.unhealthy{border-top-color:#ff4444}
+    .health-item .ex{font-size:9px;font-weight:600}
+    .health-item .lat{font-size:8px;color:#6b7a8d}
+    .health-item .quota{font-size:8px;font-weight:600}
+    .router-action{padding:4px;background:#141c28;border-radius:4px;margin-bottom:4px;border-left:3px solid #00d4aa}
+    .router-action .d{font-size:9px;font-weight:600}
+    .router-action .m{font-size:8px;color:#6b7a8d;margin-top:1px}
+    .eq-canvas{width:100%;height:80px;display:block;background:#141c28;border-radius:4px}
+    @media(max-width:1100px){.g{grid-template-columns:repeat(3,1fr)}.g5{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:800px){.g{grid-template-columns:repeat(2,1fr)}.g2,.g3,.g5{grid-template-columns:1fr}.c{padding:6px}.hdr{padding:6px 10px}.stats{gap:5px}}
+    @media(max-width:500px){.g{grid-template-columns:1fr}.hm{grid-template-columns:repeat(auto-fill,minmax(65px,1fr))}.stats .lb{font-size:9px}}
   </style>
 </head>
 <body>
 <div class="hdr">
-  <h1>Funding Mirror <span class="vtag">v4.0</span></h1>
+  <h1>Funding Mirror <span class="vtag">v5.0</span></h1>
   <div class="stats">
     <div><span class="dot" id="dot"></span><span id="st">...</span></div>
     <div>Ex: <span class="v" id="exC">-</span></div>
@@ -101,18 +113,21 @@
     <div>Opp: <span class="v lb" id="oC">-</span></div>
     <div>ML: <span class="v" id="mlC">-</span></div>
     <div>Regime: <span class="v" id="rgC">-</span></div>
+    <div>Router: <span class="v" id="rtC">-</span></div>
+    <div>$: <span class="v" id="eqC">-</span></div>
   </div>
 </div>
 <div class="c">
-  <!-- v4.0: Regime Indicator -->
+  <!-- v5.0: Regime + Health Bar -->
   <div class="card gf" id="regimeBar" style="border-left:3px solid #00d4aa">
-    <div style="display:flex;align-items:center;justify-content:space-between">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
       <div>
         <span style="font-size:9px;color:#6b7a8d">Market Regime</span>
         <span class="regime-badge regime-lv" id="regimeBadge">LOADING</span>
       </div>
-      <div style="font-size:11px;font-weight:600" id="regimeStrategy">--</div>
-      <div style="font-size:10px;color:#6b7a8d" id="regimeDesc">--</div>
+      <div style="font-size:10px;font-weight:600" id="regimeStrategy">--</div>
+      <div style="font-size:9px;color:#6b7a8d;flex:1;min-width:200px" id="regimeDesc">--</div>
+      <div style="font-size:9px" id="healthMini" title="Exchange Health">--</div>
     </div>
   </div>
 
@@ -129,13 +144,13 @@
   <div class="g g2">
     <div class="card">
       <h2>Top Opportunities</h2>
-      <div style="max-height:320px;overflow-y:auto">
+      <div style="max-height:300px;overflow-y:auto">
         <table><thead><tr><th>Sym</th><th>Long</th><th>Short</th><th>Spr</th><th>Net</th><th>Rk</th></tr></thead><tbody id="ot"></tbody></table>
       </div>
     </div>
     <div class="card">
       <h2>v4.0: ML Predictions</h2>
-      <div id="mlP" style="max-height:320px;overflow-y:auto"><div class="emp">Waiting for ML engine...</div></div>
+      <div id="mlP" style="max-height:300px;overflow-y:auto"><div class="emp">Waiting for ML engine...</div></div>
     </div>
   </div>
 
@@ -149,34 +164,35 @@
       <div id="port" style="max-height:200px;overflow-y:auto"><div class="emp">Optimizing...</div></div>
     </div>
     <div class="card">
-      <h2>v4.0: Cross-Domain (DeFi)</h2>
-      <div id="cdn" style="max-height:200px;overflow-y:auto"><div class="emp">Comparing DeFi/CeFi...</div></div>
+      <h2>v5.0: Smart Router Decisions</h2>
+      <div id="router" style="max-height:200px;overflow-y:auto"><div class="emp">Evaluating signals...</div></div>
     </div>
   </div>
 
   <div class="g">
     <div class="card">
       <h2>Cross-Pair Signals</h2>
-      <div id="cp" style="max-height:250px;overflow-y:auto"><div class="emp">Monitoring correlations...</div></div>
+      <div id="cp" style="max-height:200px;overflow-y:auto"><div class="emp">Monitoring...</div></div>
     </div>
     <div class="card">
       <h2>Paper Trading <span class="tag bd" id="ppTag">--</span></h2>
       <div id="pp"></div>
     </div>
     <div class="card">
-      <h2>Kelly Criterion</h2>
-      <div class="fb">
-        <input type="number" id="kWR" value="55" placeholder="Win%" style="width:50px">
-        <input type="number" id="kW" value="0.8" placeholder="Win" style="width:45px">
-        <input type="number" id="kL" value="0.3" placeholder="Loss" style="width:45px">
-        <button id="kB">Calc</button>
-      </div>
-      <div id="kR"></div>
+      <h2>v5.0: Exchange Health</h2>
+      <div id="health" style="max-height:200px;overflow-y:auto"><div class="emp">Checking...</div></div>
     </div>
     <div class="card">
       <h2>v4.0: Regime Probabilities</h2>
       <div id="regimeProb"><div class="emp">Detecting...</div></div>
     </div>
+  </div>
+
+  <!-- v5.0: Equity Curve -->
+  <div class="card gf">
+    <h2>v5.0: Equity Curve & P&L</h2>
+    <canvas id="eqChart" class="eq-canvas"></canvas>
+    <div id="eqStats" style="font-size:9px;color:#6b7a8d;margin-top:4px;display:flex;gap:12px;flex-wrap:wrap"></div>
   </div>
 
   <!-- Backtest -->
@@ -192,14 +208,14 @@
       <div id="btRes"></div>
     </div>
     <div class="card">
-      <h2>Equity Curve</h2>
-      <canvas id="eqChart"></canvas>
+      <h2>v4.0: Cross-Domain (DeFi)</h2>
+      <div id="cdn" style="max-height:250px;overflow-y:auto"><div class="emp">Comparing DeFi/CeFi...</div></div>
     </div>
   </div>
 
-  <div class="card gf" style="margin-top:10px">
+  <div class="card gf" style="margin-top:8px">
     <h2>Risk Metrics (last backtest)</h2>
-    <div id="riskM" class="fb" style="justify-content:center;color:#6b7a8d;font-size:11px">Run a backtest to see risk metrics</div>
+    <div id="riskM" class="fb" style="justify-content:center;color:#6b7a8d;font-size:10px">Run a backtest to see risk metrics</div>
   </div>
 </div>
 
@@ -224,7 +240,10 @@ function render() {
   $('oC').textContent = data.stats.oppCount || '-';
   $('mlC').textContent = data.stats.mlPredictions || '-';
   $('rgC').textContent = data.stats.regime || '-';
-  renderHM(); renderOpps(); renderAnom(); renderML(); renderCP(); renderPP(); renderPort(); renderCDN(); renderRegime();
+  $('rtC').textContent = data.stats.routerDecisions || '-';
+  $('eqC').textContent = '$' + (data.stats.currentEquity || 0).toLocaleString();
+  renderHM(); renderOpps(); renderAnom(); renderML(); renderCP(); renderPP();
+  renderPort(); renderCDN(); renderRegime(); renderRouter(); renderHealth(); renderEquity();
 }
 
 function renderHM() {
@@ -235,7 +254,7 @@ function renderHM() {
   if (sf === 'net') opps.sort((a,b) => b.netAnnualized - a.netAnnualized);
   else if (sf === 'spread') opps.sort((a,b) => b.spreadPct - a.spreadPct);
   else opps.sort((a,b) => a.riskScore - b.riskScore);
-  const top = opps.slice(0, 30);
+  const top = opps.slice(0, 24);
   $('hm').innerHTML = top.length ? top.map(o => {
     const c = gc(o.netAnnualized);
     return `<div class="hc" style="background:${c}18;border:1px solid ${c}33">
@@ -247,7 +266,7 @@ function renderHM() {
 
 function renderOpps() {
   const o = data.opportunities || [];
-  $('ot').innerHTML = o.length ? o.slice(0,12).map(x => `<tr>
+  $('ot').innerHTML = o.length ? o.slice(0,10).map(x => `<tr>
     <td><b>${x.symbol}</b></td><td><span class="bd bb">${x.longEx.slice(0,3)}</span></td>
     <td><span class="bd bb">${x.shortEx.slice(0,3)}</span></td>
     <td>${x.spreadPct}%</td><td style="color:#00d4aa;font-weight:600">${x.netAnnualized}%</td>
@@ -257,61 +276,93 @@ function renderOpps() {
 
 function renderAnom() {
   const a = data.anomalies || [];
-  $('an').innerHTML = a.length ? a.slice(0,5).map(x => {
+  $('an').innerHTML = a.length ? a.slice(0,4).map(x => {
     const c = x.type.toLowerCase().slice(0,2);
     const ic = x.type[0]==='S'?'🔺':x.type[0]==='C'?'🔻':x.type[0]==='D'?'⚡':'🔄';
     return `<div class="em ${c}"><div class="d">${ic} ${x.description}</div><div class="m">Sev ${x.severity} | Z ${x.zScore?.toFixed(1)||'-'}</div></div>`;
   }).join('') : '<div class="emp">None</div>';
 }
 
-// v4.0: ML Predictions
 function renderML() {
   const ml = data.mlPredictions || [];
-  $('mlP').innerHTML = ml.length ? ml.slice(0,8).map(x => {
+  $('mlP').innerHTML = ml.length ? ml.slice(0,6).map(x => {
     const ic = x.predictedDirection==='UP'?'📈':x.predictedDirection==='DOWN'?'📉':'➡️';
     const cl = x.predictedDirection==='UP'?'#00d4aa':x.predictedDirection==='DOWN'?'#ff4444':'#6b7a8d';
-    const sigs = x.signals ? x.signals.slice(0,3).map(s => `${s.name}:${(s.signal>0?'+':'')+(s.signal*100).toFixed(1)}%`).join(', ') : '';
+    const sigs = x.signals ? x.signals.slice(0,3).map(s => `${s.name}:${(s.signal>0?'+':'')+(s.signal*100).toFixed(0)}%`).join(', ') : '';
     return `<div class="pi">
       <span class="di">${ic}</span>
-      <div class="inf"><div class="sy">${x.symbol}<span style="color:#6b7a8d;font-weight:400"> ${x.exchange?.slice(0,4)||''}</span></div>
+      <div class="inf"><div class="sy">${x.symbol} <span style="color:#6b7a8d;font-weight:400">${x.exchange?.slice(0,4)||''}</span></div>
       <div class="dt">Move: <b style="color:${cl}">${x.expectedMove>0?'+':''}${x.expectedMove}bps</b> | ${x.strategy}</div>
-      <div class="dt" style="font-size:8px">${sigs}</div></div>
+      <div class="dt" style="font-size:7px">${sigs}</div></div>
       <div class="cf" style="color:${cl}">${x.confidence}%</div></div>`;
-  }).join('') : '<div class="emp">Accumulating data...</div>';
+  }).join('') : '<div class="emp">Accumulating...</div>';
 }
 
-// v4.0: Portfolio
+function renderRouter() {
+  const rd = data.routerDecisions || [];
+  $('router').innerHTML = rd.length ? rd.map(x => {
+    const ic = x.action.includes('LONG')?'🟢':x.action.includes('SHORT')?'🔴':'⚪';
+    const statusColor = x.action.includes('ENTER')?'#00d4aa':'#f5a62z';
+    const sigComps = x.signalComponents ? x.signalComponents.map(s => `${s.name}:${s.score.toFixed(0)}${s.status==='PASS'?'✓':s.status==='FAIL'?'✗':'~'}`).join(', ') : '';
+    return `<div class="router-action">
+      <div class="d">${ic} ${x.symbol}: <b>${x.action}</b> <span style="color:${statusColor}">$${x.size?.toLocaleString()}</span></div>
+      <div class="m">${x.reason?.slice(0,80)||''}</div>
+      <div class="m" style="font-size:7px">${sigComps}</div>
+      ${x.riskFlags?.length ? `<div class="m" style="color:#f5a623">⚠ ${x.riskFlags.join(', ')}</div>` : ''}
+    </div>`;
+  }).join('') : '<div class="emp">No actionable signals</div>';
+}
+
+function renderHealth() {
+  const h = data.health;
+  if (!h) { $('health').innerHTML = '<div class="emp">No data</div>'; return; }
+  const summary = h.summary || {};
+  $('health').innerHTML = `<div class="health-grid">
+    <div class="health-item ${summary.healthyExchanges<5?'degraded':''}">
+      <div class="ex">Healthy</div>
+      <div class="lat">${summary.healthyExchanges}/${summary.totalExchanges}</div>
+    </div>
+    <div class="health-item">
+      <div class="ex">Req/min</div>
+      <div class="lat">${summary.totalRequests||0}</div>
+    </div>
+    <div class="health-item ${summary.totalErrors>10?'degraded':''}">
+      <div class="ex">Errors</div>
+      <div class="lat">${summary.totalErrors||0}</div>
+    </div>
+    <div class="health-item ${summary.avgLatency>3000?'degraded':''}">
+      <div class="ex">Avg Latency</div>
+      <div class="lat">${summary.avgLatency||0}ms</div>
+    </div>
+    <div class="health-item ${summary.recommendedInterval>30000?'degraded':''}">
+      <div class="ex">Interval</div>
+      <div class="quota">${((summary.recommendedInterval||30000)/1000).toFixed(0)}s</div>
+    </div>
+  </div>`;
+}
+
 function renderPort() {
   const pf = data.portfolio;
   if (!pf || !pf.positions) { $('port').innerHTML = '<div class="emp">Waiting...</div>'; return; }
-  $('port').innerHTML = `<div style="font-size:9px;color:#6b7a8d;margin-bottom:4px">
-    Total: <b style="color:#00d4aa">$${pf.totalAllocation?.toLocaleString()}</b> | 
-    Kelly: <b>${pf.portfolioKelly}%</b> | 
-    Sharpe: <b>${pf.portfolioSharpe}</b> |
-    DD: <b class="pnn">${pf.maxDrawdownEstimate}%</b></div>` +
-    (pf.positions || []).slice(0,6).map(p => `<div class="port-row">
-      <span class="sym">${p.symbol}</span>
-      <span>${p.longExchange.slice(0,3)}/${p.shortExchange.slice(0,3)}</span>
-      <span style="color:#6b7a8d">${(p.spreadPct*100).toFixed(3)}%</span>
+  $('port').innerHTML = `<div style="font-size:8px;color:#6b7a8d;margin-bottom:3px">
+    Total: <b style="color:#00d4aa">$${pf.totalAllocation?.toLocaleString()}</b> | Kelly: <b>${pf.portfolioKelly}%</b> | DD: <b class="pnn">${pf.maxDrawdownEstimate}%</b></div>` +
+    (pf.positions || []).slice(0,5).map(p => `<div class="port-row">
+      <span class="sym">${p.symbol}</span><span>${p.longExchange?.slice(0,3)}/${p.shortExchange?.slice(0,3)}</span>
       <span class="alloc">$${p.recommendedSize?.toLocaleString()}</span>
-      <span style="color:#6b7a8d">${p.kellyFraction}%</span>
-    </div>`).join('') + (pf.diversificationBenefit ? `<div style="font-size:9px;color:#9b59b6;margin-top:4px">Diversification benefit: ${pf.diversificationBenefit}%</div>` : '');
+    </div>`).join('');
 }
 
-// v4.0: Cross-Domain (DeFi)
 function renderCDN() {
   const cd = data.crossDomain || [];
   $('cdn').innerHTML = cd.length ? cd.map(x => {
-    const ic = x.strategy.includes('SHORT')?'🔄':'🔀';
     return `<div class="cross-domain">
-      <div class="d">${ic} ${x.symbol}: ${x.strategy}</div>
-      <div class="m">CEX ${(x.cexAnnualized*100).toFixed(1)}% | DeFi Lend ${(x.defiLendApy*100).toFixed(1)}% | Borrow ${(x.defiBorrowApy*100).toFixed(1)}%</div>
-      <div class="m" style="color:#00d4aa">Net edge: ${(x.netEdge*100).toFixed(2)}% | ${x.confidence}% confidence</div>
+      <div class="d">${x.symbol}: ${x.strategy}</div>
+      <div class="m">CEX ${(x.cexAnnualized*100).toFixed(1)}% | DeFi Lend ${(x.defiLendApy*100).toFixed(1)}</div>
+      <div class="m" style="color:#00d4aa">Net: ${(x.netEdge*100).toFixed(2)}%</div>
     </div>`;
-  }).join('') : '<div class="emp">Monitoring DeFi/CeFi spread...</div>';
+  }).join('') : '<div class="emp">Monitoring...</div>';
 }
 
-// v4.0: Regime Display
 function renderRegime() {
   const r = data.regime;
   if (!r || !r.current) { $('regimeProb').innerHTML = '<div class="emp">Detecting...</div>'; return; }
@@ -322,140 +373,121 @@ function renderRegime() {
   $('regimeStrategy').textContent = r.recommendedStrategy;
   $('regimeDesc').textContent = r.description || '';
 
-  // Regime bar color
   const bar = $('regimeBar');
   bar.style.borderLeftColor = r.current === 'LOW_VOL_MEAN_REVERT' ? '#00d4aa' : r.current === 'HIGH_VOL_TREND' ? '#4a9eff' : r.current === 'CRISIS' ? '#ff4444' : r.current === 'OPPORTUNITY' ? '#9b59b6' : '#f5a623';
 
-  // Probabilities
   const probs = r.probabilities || {};
-  const probNames = {
-    LOW_VOL_MEAN_REVERT: 'LowVol MeanRev',
-    HIGH_VOL_TREND: 'HighVol Trend',
-    CRISIS: 'CRISIS',
-    OPPORTUNITY: 'Opportunity',
-    TRANSITION: 'Transition'
-  };
-  const probColors = {
-    LOW_VOL_MEAN_REVERT: '#00d4aa',
-    HIGH_VOL_TREND: '#4a9eff',
-    CRISIS: '#ff4444',
-    OPPORTUNITY: '#9b59b6',
-    TRANSITION: '#f5a623'
-  };
+  const probNames = { LOW_VOL_MEAN_REVERT: 'LowVol MR', HIGH_VOL_TREND: 'HighVol Trend', CRISIS: 'CRISIS', OPPORTUNITY: 'Opp', TRANSITION: 'Trans' };
+  const probColors = { LOW_VOL_MEAN_REVERT: '#00d4aa', HIGH_VOL_TREND: '#4a9eff', CRISIS: '#ff4444', OPPORTUNITY: '#9b59b6', TRANSITION: '#f5a623' };
   $('regimeProb').innerHTML = Object.entries(probs).map(([k,v]) =>
     `<div class="prob-row"><span class="lb">${probNames[k]||k}</span>
     <div class="sb-track"><div class="prob-bar" style="width:${(v*100).toFixed(0)}%;background:${probColors[k]||'#6b7a8d'}"></div></div>
-    <span style="width:35px;text-align:right;font-weight:600">${(v*100).toFixed(0)}%</span></div>`
+    <span style="width:30px;text-align:right;font-weight:600">${(v*100).toFixed(0)}%</span></div>`
   ).join('');
+}
+
+function renderEquity() {
+  const eq = data.equity || [];
+  if (!eq.length) { $('eqStats').innerHTML = '<span>Waiting for P&L data...</span>'; return; }
+  const latest = eq[eq.length-1];
+  const first = eq[0];
+  const change = first?.totalEquity ? ((latest.totalEquity - first.totalEquity) / first.totalEquity * 100) : 0;
+  $('eqStats').innerHTML = `<span>Equity: <b class="${change>=0?'pnp':'pnn'}">$${latest.totalEquity?.toLocaleString()}</b></span>
+    <span>Return: <b class="${change>=0?'pnp':'pnn'}">${change>=0?'+':''}${change.toFixed(2)}%</b></span>
+    <span>DD: <b class="pnn">${latest.drawdown?.toFixed(2)||0}%</b></span>`;
+  drawEquityChart(eq);
+}
+
+function drawEquityChart(eqData) {
+  const cv = $('eqChart');
+  const ctx = cv.getContext('2d');
+  const W = cv.width = cv.offsetWidth * 2;
+  const H = cv.height = 160;
+  cv.style.width = '100%';
+  cv.style.height = '80px';
+  ctx.clearRect(0,0,W,H);
+  if (!eqData || eqData.length < 2) {
+    ctx.fillStyle = '#3d4a5c'; ctx.font = '18px sans-serif';
+    ctx.fillText('P&L data accumulating...', W/2-80, H/2);
+    return;
+  }
+  const values = eqData.map(p => p.totalEquity);
+  const min = Math.min(...values), max = Math.max(...values);
+  const range = max - min || 1;
+  ctx.beginPath(); ctx.strokeStyle = '#00d4aa'; ctx.lineWidth = 3;
+  for (let i = 0; i < values.length; i++) {
+    const x = (i / (values.length-1)) * W;
+    const y = H - ((values[i] - min) / range) * (H - 20) - 10;
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.stroke();
+  ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath();
+  ctx.fillStyle = '#00d4aa15'; ctx.fill();
+  ctx.fillStyle = '#6b7a8d'; ctx.font = '16px sans-serif';
+  ctx.fillText(`$${min.toFixed(0)}`, 5, H-5);
+  ctx.fillText(`$${max.toFixed(0)}`, 5, 18);
 }
 
 function renderCP() {
   const cp = data.crossPair || [];
-  $('cp').innerHTML = cp.length ? cp.slice(0,5).map(x => `<div class="em dv"><div class="d"><b>${x.pairA}/${x.pairB}</b> @ ${x.exchange}</div><div class="m">${x.description}<br>Corr ${x.correlation} | Z ${x.spreadZScore} | ${x.confidence}%</div></div>`).join('') : '<div class="emp">Monitoring...</div>';
+  $('cp').innerHTML = cp.length ? cp.slice(0,4).map(x => `<div class="em dv"><div class="d"><b>${x.pairA}/${x.pairB}</b></div><div class="m">${x.description}</div></div>`).join('') : '<div class="emp">Monitoring...</div>';
 }
 
 function renderPP() {
   const ps = data.paperStats;
   if (!ps) { $('pp').innerHTML = '<div class="emp">...</div>'; return; }
-  $('ppTag').textContent = `${ps.openPositions}o/${ps.closedPositions}c`;
+  $('ppTag').textContent = `${ps.openPositions||0}o/${ps.closedPositions||0}c`;
   $('pp').innerHTML = `<div class="kms">
     <div class="km"><div class="v ${ps.totalPnlPct>=0?'pnp':'pnn'}">${ps.totalPnlPct>0?'+':''}${ps.totalPnlPct}%</div><div class="l">PnL</div></div>
-    <div class="km"><div class="v">${ps.winRate}%</div><div class="l">Win</div></div>
-    <div class="km"><div class="v">${ps.sharpe}</div><div class="l">Sharpe</div></div>
-    <div class="km"><div class="v pnn">${ps.maxDrawdown}%</div><div class="l">MaxDD</div></div>
-  </div><div style="font-size:9px;color:#6b7a8d">Trades: ${ps.totalTrades}</div>`;
+    <div class="km"><div class="v">${ps.winRate||0}%</div><div class="l">Win</div></div>
+    <div class="km"><div class="v">${ps.sharpe||0}</div><div class="l">Sharpe</div></div>
+    <div class="km"><div class="v pnn">${ps.maxDrawdown||0}%</div><div class="l">MaxDD</div></div>
+  </div>`;
 }
 
 // Kelly
-$('kB').onclick = async () => {
+$('kB')?.addEventListener('click', async () => {
   const b = {winRate:$('kWR').value/100,avgWin:$('kW').value,avgLoss:$('kL').value,spreadPct:0.02,capital:100000};
   const r = await fetch('/api/kelly',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}).then(x=>x.json());
-  $('kR').innerHTML = `<div class="kms">
-    <div class="km"><div class="v">${r.halfKelly}%</div><div class="l">Half Kelly</div></div>
-    <div class="km"><div class="v">$${r.recommendedSize?.toLocaleString()}</div><div class="l">Size</div></div>
-    <div class="km"><div class="v">${r.expectedGrowth}%</div><div class="l">Growth</div></div>
-    <div class="km"><div class="v ${r.riskOfRuin>50?'pnn':'pnp'}">${r.riskOfRuin}%</div><div class="l">Ruin</div></div>
-  </div>`;
-};
+  $('kR').innerHTML = `<div class="kms"><div class="km"><div class="v">${r.halfKelly}%</div><div class="l">Half Kelly</div></div>
+    <div class="km"><div class="v">$${r.recommendedSize?.toLocaleString()}</div><div class="l">Size</div></div></div>`;
+});
 
-// Backtest (synthetic)
-$('btR').onclick = async () => {
+// Backtest
+$('btR')?.addEventListener('click', async () => {
   $('btRes').innerHTML = '<div class="emp">Running...</div>';
   const b = {strategy:$('btS').value,symbol:$('btSym').value,initialCapital:100000,feePerTrade:0.04,slippage:0.02};
   const r = await fetch('/api/backtest',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}).then(x=>x.json());
   showBT(r);
-};
+});
 
-// Backtest (real)
-$('btRR').onclick = async () => {
+$('btRR')?.addEventListener('click', async () => {
   $('btRes').innerHTML = '<div class="emp">Fetching real history...</div>';
   const b = {strategy:$('btS').value,symbol:$('btSym').value,initialCapital:100000,feePerTrade:0.04,slippage:0.02};
   try {
     const r = await fetch('/api/backtest/real',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}).then(x=>x.json());
     showBT(r);
   } catch(e) { $('btRes').innerHTML = '<div class="emp">Timeout</div>'; }
-};
+});
 
 function showBT(r) {
-  equityData = r.equityCurve || [];
-  drawEquity();
   $('btRes').innerHTML = `<div class="btres">
-    <div style="font-size:11px;font-weight:600;margin-bottom:6px">${r.strategy} ${r.symbol} <span class="tag bd ${r.dataSource==='REAL'?'bg':'by'}">${r.dataSource||'SYNTH'}</span> ${r.period||''}</div>
+    <div style="font-size:10px;font-weight:600;margin-bottom:4px">${r.strategy} ${r.symbol} <span class="tag bd ${r.dataSource==='REAL'?'bg':'by'}">${r.dataSource||'SYNTH'}</span></div>
     <div class="mets">
       <div class="met"><div class="v ${r.totalReturn>=0?'pnp':'pnn'}">${r.totalReturn>0?'+':''}${r.totalReturn}%</div><div class="l">Return</div></div>
       <div class="met"><div class="v">${r.sharpe}</div><div class="l">Sharpe</div></div>
-      <div class="met"><div class="v">${r.sortino||'-'}</div><div class="l">Sortino</div></div>
-      <div class="met"><div class="v pnn">${r.maxDrawdown}%</div><div class="l">MaxDD</div></div>
+      <div class="met"><div class="v">${r.maxDrawdown}%</div><div class="l">MaxDD</div></div>
       <div class="met"><div class="v">${r.winRate}%</div><div class="l">Win</div></div>
-      <div class="met"><div class="v">${r.tradeCount}</div><div class="l">Trades</div></div>
-      <div class="met"><div class="v">$${r.finalCapital?.toLocaleString()}</div><div class="l">Final</div></div>
-      <div class="met"><div class="v">${r.profitFactor}</div><div class="l">P/F</div></div>
-    </div>
-  </div>`;
-  $('riskM').innerHTML = `<div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+    </div></div>`;
+  $('riskM').innerHTML = `<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
     <div>VaR95: <b>${r.var95}%</b></div><div>VaR99: <b>${r.var99}%</b></div>
     <div>CVaR: <b>${r.cvar95}%</b></div><div>Sortino: <b>${r.sortino}</b></div>
     <div>Calmar: <b>${r.calmar}</b></div><div>Omega: <b>${r.omegaRatio}</b></div>
-    <div>Skew: <b>${r.skewness}</b></div><div>Kurt: <b>${r.kurtosis}</b></div>
-    <div>Tail: <b class="${r.tailRisk==='HIGH'?'pnn':r.tailRisk==='LOW'?'pnp':'by'}">${r.tailRisk}</b></div>
   </div>`;
 }
 
-function drawEquity() {
-  const cv = $('eqChart');
-  const ctx = cv.getContext('2d');
-  const W = cv.width = cv.offsetWidth * 2;
-  const H = cv.height = 200;
-  cv.style.width = '100%';
-  cv.style.height = '100px';
-  ctx.clearRect(0,0,W,H);
-  if (equityData.length < 2) {
-    ctx.fillStyle = '#3d4a5c';
-    ctx.font = '20px sans-serif';
-    ctx.fillText('Run backtest for equity curve', W/2-100, H/2);
-    return;
-  }
-  const eq = equityData.map(p => p.equity);
-  const min = Math.min(...eq), max = Math.max(...eq);
-  const range = max - min || 1;
-  ctx.beginPath();
-  ctx.strokeStyle = '#00d4aa';
-  ctx.lineWidth = 3;
-  for (let i = 0; i < eq.length; i++) {
-    const x = (i / (eq.length-1)) * W;
-    const y = H - ((eq[i] - min) / range) * (H - 20) - 10;
-    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-  }
-  ctx.stroke();
-  ctx.lineTo(W, H); ctx.lineTo(0, H); ctx.closePath();
-  ctx.fillStyle = '#00d4aa15'; ctx.fill();
-  ctx.fillStyle = '#6b7a8d'; ctx.font = '18px sans-serif';
-  ctx.fillText(`$${min.toFixed(0)}`, 5, H-5);
-  ctx.fillText(`$${max.toFixed(0)}`, 5, 20);
-}
-
-$('mnF').onchange = renderHM;
-$('sF').onchange = renderHM;
+$('mnF')?.addEventListener('change', renderHM);
+$('sF')?.addEventListener('change', renderHM);
 connect();
 </script>
 </body>

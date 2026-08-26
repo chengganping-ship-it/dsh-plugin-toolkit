@@ -32,6 +32,9 @@ import { predictML, MLPrediction, getModelState, getPredictionAccuracy, getPredi
 import { optimizePortfolio, PortfolioResult, getCorrelationMatrix, getRiskDecomposition } from './engine/portfolio.js';
 import { detectRegime, RegimeState, getRegimeStats, getCurrentRegime } from './engine/regime.js';
 import { fetchDeFiRates, findCrossDomainArbitrage, getDeFiSummary, CrossDomainArbitrage } from './engine/defi.js';
+import { routeOrder, RouterDecision, RouterConfig, getRouterState, updateTradeState, updateRouterConfig, getRouterConfig } from './engine/router.js';
+import { getAttribution, AttributionBreakdown, getAttributionMetrics, recordAttributionTrade, updateEquitySnapshot, getEquityCurve, PnLSnapshot } from './engine/attribution.js';
+import { recordRequest, recordResponse, getHealthStatus, getUsageSummary, getOptimalPollIntervals, shouldPoll, getExchangeLimits, ExchangeHealth } from './engine/health.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -95,6 +98,12 @@ let latestPortfolio: PortfolioResult | null = null;
 let latestRegime: RegimeState | null = null;
 let latestCrossDomain: CrossDomainArbitrage[] = [];
 let defiRatesLoaded = false;
+
+// ==================== v5.0 ENGINE STATE ====================
+let latestRouterDecisions: RouterDecision[] = [];
+let equityCurveData: PnLSnapshot[] = [];
+let initialEquity = 100000;
+let currentEquity = 100000;
 
 // ==================== POLLING ====================
 
@@ -208,8 +217,38 @@ async function poll() {
       ).slice(0, 5);
     }
 
+    // v5.0: Smart Order Router - fuse all signals into execution decisions
+    const capMap = new Map<string, CapacityEstimate>();
+    for (const opp of latestOpportunities.slice(0, 10)) {
+      if (opp.capacity) {
+        capMap.set(`${opp.longEx}:${opp.symbol}`, opp.capacity);
+        capMap.set(`${opp.shortEx}:${opp.symbol}`, opp.capacity);
+      }
+    }
+    const paperStats = getTradeStats();
+    latestRouterDecisions = routeOrder(
+      latestMLPredictions, latestPortfolio, latestRegime, capMap, paperStats.totalPnlPct
+    );
+
+    // v5.0: P&L tracking
+    const totalPnl = paperStats.totalPnlPct / 100 * currentEquity;
+    equityCurveData.push({
+      timestamp: Date.now(),
+      totalEquity: currentEquity + totalPnl,
+      totalReturn: paperStats.totalPnlPct,
+      unrealizedPnl: 0,
+      realizedPnl: totalPnl,
+      fundingEarned: 0,
+      tradingPnl: totalPnl,
+      fees: 0,
+      drawdown: paperStats.maxDrawdown,
+    });
+    if (equityCurveData.length > 2000) equityCurveData.shift();
+    currentEquity = initialEquity + totalPnl;
+
     const elapsed = Date.now() - t0;
-    console.log(`[#${pollCount}] ${new Date().toLocaleTimeString('zh-CN')} | ${rates.length}rates | ${[...new Set(rates.map(r => r.exchange))].length}ex | ${latestOpportunities.length}opps | ML:${latestMLPredictions.length} Regime:${latestRegime?.current || '?'} Portfolio:${latestPortfolio?.positions.length || 0} CrossDomain:${latestCrossDomain.length} | ${elapsed}ms`);
+    const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
+    console.log(`[#${pollCount}] ${new Date().toLocaleTimeString('zh-CN')} | ${rates.length}rates | ${[...new Set(rates.map(r => r.exchange))].length}ex | ${latestOpportunities.length}opps | ML:${latestMLPredictions.length} Regime:${latestRegime?.current || '?'} Portfolio:${latestPortfolio?.positions.length || 0} Router:${tradeActions} Health:${getUsageSummary().healthyExchanges}/${getUsageSummary().totalExchanges} | ${elapsed}ms`);
 
     broadcast();
   } catch (err: any) {
@@ -263,6 +302,7 @@ function findOpportunities(rates: FundingRate[]): ArbitrageOpportunity[] {
 
 const clients = new Set<WebSocket>();
 function broadcast() {
+  const tradeDecisions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT');
   const msg = JSON.stringify({
     type: 'snapshot', timestamp: Date.now(),
     data: {
@@ -276,6 +316,9 @@ function broadcast() {
       regime: latestRegime,
       portfolio: latestPortfolio,
       crossDomain: latestCrossDomain.slice(0, 5),
+      routerDecisions: tradeDecisions.slice(0, 5),
+      equity: equityCurveData.slice(-50),
+      health: getUsageSummary(),
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -287,6 +330,8 @@ function broadcast() {
         regime: latestRegime?.current || 'N/A',
         portfolioPositions: latestPortfolio?.positions.length || 0,
         crossDomain: latestCrossDomain.length,
+        routerDecisions: tradeDecisions.length,
+        currentEquity,
         errors: latestErrors,
       },
     },
@@ -299,6 +344,7 @@ function broadcast() {
 wss.on('connection', (ws) => {
   clients.add(ws);
   if (latestRates.length > 0) {
+    const tradeDecisions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT');
     ws.send(JSON.stringify({
       type: 'snapshot', timestamp: Date.now(),
       data: {
@@ -312,6 +358,9 @@ wss.on('connection', (ws) => {
         regime: latestRegime,
         portfolio: latestPortfolio,
         crossDomain: latestCrossDomain.slice(0, 5),
+        routerDecisions: tradeDecisions.slice(0, 5),
+        equity: equityCurveData.slice(-50),
+        health: getUsageSummary(),
         stats: {
           totalRates: latestRates.length,
           exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -323,6 +372,8 @@ wss.on('connection', (ws) => {
           regime: latestRegime?.current || 'N/A',
           portfolioPositions: latestPortfolio?.positions.length || 0,
           crossDomain: latestCrossDomain.length,
+          routerDecisions: tradeDecisions.length,
+          currentEquity,
           errors: latestErrors,
         },
       },
@@ -429,8 +480,10 @@ app.post('/api/v4/defi/refresh', authMiddleware('write'), async (_req, res) => {
 app.get('/api/stats', authMiddleware('read'), (_req, res) => {
   const dbStats = getDbStats();
   const uptime = Date.now() - startTime;
+  const tradeDecisions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT');
   res.json({
     status: 'ok',
+    version: '5.0',
     uptime: `${Math.floor(uptime / 3600000)}h ${Math.floor((uptime % 3600000) / 60000)}m`,
     pollCount,
     totalRates: latestRates.length,
@@ -438,6 +491,13 @@ app.get('/api/stats', authMiddleware('read'), (_req, res) => {
     opportunities: latestOpportunities.length,
     anomalies: latestAnomalies.length,
     crossPair: latestCrossPair.length,
+    mlPredictions: latestMLPredictions.length,
+    regime: latestRegime?.current || 'N/A',
+    portfolioPositions: latestPortfolio?.positions.length || 0,
+    crossDomain: latestCrossDomain.length,
+    routerDecisions: tradeDecisions.length,
+    currentEquity,
+    health: getUsageSummary(),
     wsClients: clients.size,
     lastPoll: lastPollTime ? new Date(lastPollTime).toISOString() : null,
     db: dbStats,
@@ -455,7 +515,57 @@ app.post('/api/paper/open', (req, res) => {
     return res.status(400).json({ error: 'Missing required fields' });
   }
   const pos = openPosition({ symbol, longEx, shortEx, spreadPct: spreadPct || 0.01, notional });
+  updateTradeState(symbol, 'OPEN', { size: notional || 10000, longEx, shortEx });
   res.json({ success: true, position: pos });
+});
+
+// ---- v5.0: Smart Order Router API ----
+
+app.get('/api/v5/router/decisions', authMiddleware('read'), (_req, res) => {
+  res.json({ count: latestRouterDecisions.length, decisions: latestRouterDecisions });
+});
+
+app.get('/api/v5/router/state', authMiddleware('read'), (_req, res) => {
+  res.json(getRouterState());
+});
+
+app.get('/api/v5/router/config', authMiddleware('read'), (_req, res) => {
+  res.json(getRouterConfig());
+});
+
+app.post('/api/v5/router/config', authMiddleware('write'), (req, res) => {
+  const updated = updateRouterConfig(req.body);
+  res.json({ success: true, config: updated });
+});
+
+// ---- v5.0: P&L Attribution API ----
+
+app.get('/api/v5/attribution', authMiddleware('read'), (_req, res) => {
+  res.json(getAttribution());
+});
+
+app.get('/api/v5/attribution/metrics', authMiddleware('read'), (_req, res) => {
+  res.json(getAttributionMetrics());
+});
+
+app.get('/api/v5/equity', authMiddleware('read'), (req, res) => {
+  const limit = parseInt(req.query.limit as string) || 100;
+  res.json({ equity: getEquityCurve(limit), currentEquity, initialEquity });
+});
+
+// ---- v5.0: Health & Rate Limit API ----
+
+app.get('/api/v5/health', authMiddleware('read'), (_req, res) => {
+  res.json({ exchanges: getHealthStatus(), summary: getUsageSummary() });
+});
+
+app.get('/api/v5/health/limits', authMiddleware('read'), (_req, res) => {
+  res.json(getExchangeLimits());
+});
+
+app.get('/api/v5/health/intervals', authMiddleware('read'), (req, res) => {
+  const vol = parseFloat(req.query.volatility as string) || 0.5;
+  res.json({ intervals: getOptimalPollIntervals(vol) });
 });
 
 app.post('/api/backtest', (req, res) => {
@@ -726,8 +836,8 @@ initDb();
 loadDeFiRates();
 server.listen(PORT, () => {
   console.log('='.repeat(60));
-  console.log('  Funding Mirror Server v4.0');
-  console.log('  ML + Portfolio + Regime + Cross-Domain');
+  console.log('  Funding Mirror Server v5.0');
+  console.log('  Smart Router + Auto-Execution + P&L Attribution + Health');
   console.log('='.repeat(60));
   console.log(`  REST:      http://localhost:${PORT}/api`);
   console.log(`  WebSocket: ws://localhost:${PORT}/ws`);
@@ -736,6 +846,7 @@ server.listen(PORT, () => {
   console.log(`  Engines:  Arbitrage / Anomaly / Predict / Capacity / CrossPair`);
   console.log(`            Backtest / Paper / Risk / Alerts / Executor`);
   console.log(`  v4.0:     ML Ensemble / Portfolio Kelly / Regime / DeFi`);
+  console.log(`  v5.0:     Smart Router / P&L Attribution / Health Monitor`);
   console.log('='.repeat(60));
 });
 
