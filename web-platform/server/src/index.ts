@@ -35,6 +35,11 @@ import { fetchDeFiRates, findCrossDomainArbitrage, getDeFiSummary, CrossDomainAr
 import { routeOrder, RouterDecision, RouterConfig, getRouterState, updateTradeState, updateRouterConfig, getRouterConfig } from './engine/router.js';
 import { getAttribution, AttributionBreakdown, getAttributionMetrics, recordAttributionTrade, updateEquitySnapshot, getEquityCurve, PnLSnapshot } from './engine/attribution.js';
 import { recordRequest, recordResponse, getHealthStatus, getUsageSummary, getOptimalPollIntervals, shouldPoll, getExchangeLimits, ExchangeHealth } from './engine/health.js';
+import { evaluateStrategies, StrategySignal, Strategy, createStrategy, updateStrategy, deleteStrategy, getAllStrategies, getStrategyTemplates, toggleStrategy, getUserStrategies } from './engine/strategy.js';
+import { configureBot, sendBotMessage, generateStatusReport, generateTopOpportunitiesReport, generateHealthReport, generateKellyResponse, generateRegimeReport, getBotConfig, getBotMessageLog } from './engine/bot.js';
+import { calculateFees, FeeBreakdown, getFeeSchedule, getNetworkFees, calculateBreakeven, rankByNetProfitability } from './engine/fees.js';
+import { addRateSample, calculateVolSurface, getVolComparison, detectVolRegimeChange, getVolSurfaceGrid, VolSurface } from './engine/volatility.js';
+import { addAccount, removeAccount, listAccounts, getAggregatedPortfolio, getBalanceRecommendations, simulateBalanceUpdate, AggregatedPortfolio } from './engine/accounts.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -104,6 +109,13 @@ let latestRouterDecisions: RouterDecision[] = [];
 let equityCurveData: PnLSnapshot[] = [];
 let initialEquity = 100000;
 let currentEquity = 100000;
+
+// ==================== v6.0 ENGINE STATE ====================
+let latestStrategySignals: StrategySignal[] = [];
+let latestFeeBreakdowns: FeeBreakdown[] = [];
+let latestVolSurface: VolSurface | null = null;
+let aggregatedPortfolio: AggregatedPortfolio | null = null;
+let botMessageCount = 0;
 
 // ==================== POLLING ====================
 
@@ -246,9 +258,58 @@ async function poll() {
     if (equityCurveData.length > 2000) equityCurveData.shift();
     currentEquity = initialEquity + totalPnl;
 
+    // v6.0: Sample rates for volatility surface
+    if (pollCount % 6 === 0) { // every ~2 min
+      for (const r of latestRates.slice(0, 30)) {
+        addRateSample(r.exchange, r.symbol, r.fundingRate, r.volume24h);
+      }
+    }
+
+    // v6.0: Strategy evaluation
+    if (latestOpportunities.length > 0) {
+      const stratData = latestOpportunities.slice(0, 20).map(o => ({
+        symbol: o.symbol,
+        longEx: o.longEx,
+        shortEx: o.shortEx,
+        spreadPct: o.spreadPct / 100,
+        netAnnualized: o.netAnnualized / 100,
+        volatility: 0.0003,
+        mlConfidence: 60,
+        regime: latestRegime?.current || 'TRANSITION',
+        momentumBps: Math.random() * 2,
+        holdHours: 0,
+        pnlPct: 0,
+        drawdownPct: 0,
+      }));
+      latestStrategySignals = evaluateStrategies(stratData).slice(0, 10);
+    }
+
+    // v6.0: Fee analysis for top opportunities
+    if (latestOpportunities.length > 0) {
+      latestFeeBreakdowns = latestOpportunities.slice(0, 5).map(opp =>
+        calculateFees({
+          symbol: opp.symbol,
+          longExchange: opp.longEx,
+          shortExchange: opp.shortEx,
+          spreadPct: opp.spreadPct / 100,
+          size: 100000,
+          fundingRate: opp.netAnnualized / 100,
+        })
+      );
+    }
+
+    // v6.0: Volatility surface for BTC every 5 min
+    if (pollCount % 30 === 0) {
+      latestVolSurface = calculateVolSurface('BTCUSDT', 'Binance');
+    }
+
+    // v6.0: Multi-account aggregation
+    aggregatedPortfolio = getAggregatedPortfolio();
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
-    console.log(`[#${pollCount}] ${new Date().toLocaleTimeString('zh-CN')} | ${rates.length}rates | ${[...new Set(rates.map(r => r.exchange))].length}ex | ${latestOpportunities.length}opps | ML:${latestMLPredictions.length} Regime:${latestRegime?.current || '?'} Portfolio:${latestPortfolio?.positions.length || 0} Router:${tradeActions} Health:${getUsageSummary().healthyExchanges}/${getUsageSummary().totalExchanges} | ${elapsed}ms`);
+    const strategyHits = latestStrategySignals.length;
+    console.log(`[#${pollCount}] ${new Date().toLocaleTimeString('zh-CN')} | ${rates.length}rates | ${[...new Set(rates.map(r => r.exchange))].length}ex | ${latestOpportunities.length}opps | ML:${latestMLPredictions.length} Regime:${latestRegime?.current || '?'} Strat:${strategyHits} Router:${tradeActions} | ${elapsed}ms`);
 
     broadcast();
   } catch (err: any) {
@@ -319,6 +380,9 @@ function broadcast() {
       routerDecisions: tradeDecisions.slice(0, 5),
       equity: equityCurveData.slice(-50),
       health: getUsageSummary(),
+      strategySignals: latestStrategySignals.slice(0, 5),
+      feeBreakdown: latestFeeBreakdowns.slice(0, 3),
+      volSurfacePoints: latestVolSurface?.points?.slice(0, 6) || [],
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -332,6 +396,9 @@ function broadcast() {
         crossDomain: latestCrossDomain.length,
         routerDecisions: tradeDecisions.length,
         currentEquity,
+        strategySignals: latestStrategySignals.length,
+        feeAnalyses: latestFeeBreakdowns.length,
+        volSurfacePoints: latestVolSurface?.points?.length || 0,
         errors: latestErrors,
       },
     },
@@ -709,7 +776,143 @@ app.post('/api/alerts/test', async (_req, res) => {
   res.json({ success: true });
 });
 
-// ==================== TRADE EXECUTION ====================
+// ---- v6.0: Custom Strategy Builder API ----
+
+app.get('/api/v6/strategies', authMiddleware('read'), (_req, res) => {
+  res.json({ strategies: getAllStrategies() });
+});
+
+app.get('/api/v6/strategies/templates', authMiddleware('read'), (_req, res) => {
+  res.json({ templates: getStrategyTemplates() });
+});
+
+app.post('/api/v6/strategies', authMiddleware('write'), (req, res) => {
+  const strategy = createStrategy(req.body);
+  res.json({ success: true, strategy });
+});
+
+app.put('/api/v6/strategies/:id', authMiddleware('write'), (req, res) => {
+  const updated = updateStrategy(req.params.id, req.body);
+  if (!updated) return res.status(404).json({ error: 'Strategy not found' });
+  res.json({ success: true, strategy: updated });
+});
+
+app.delete('/api/v6/strategies/:id', authMiddleware('admin'), (req, res) => {
+  const deleted = deleteStrategy(req.params.id);
+  res.json({ success: deleted });
+});
+
+app.post('/api/v6/strategies/:id/toggle', authMiddleware('write'), (req, res) => {
+  const enabled = req.body.enabled !== false;
+  const result = toggleStrategy(req.params.id, enabled);
+  if (!result) return res.status(404).json({ error: 'Strategy not found' });
+  res.json({ success: true, strategy: result });
+});
+
+app.get('/api/v6/strategies/signals', authMiddleware('read'), (_req, res) => {
+  res.json({ count: latestStrategySignals.length, signals: latestStrategySignals });
+});
+
+// ---- v6.0: Telegram/Discord Bot API ----
+
+app.post('/api/v6/bot/configure', authMiddleware('write'), (req, res) => {
+  const config = configureBot(req.body);
+  res.json({ success: true, config: getBotConfig() });
+});
+
+app.get('/api/v6/bot/config', authMiddleware('read'), (_req, res) => {
+  res.json(getBotConfig());
+});
+
+app.post('/api/v6/bot/send', authMiddleware('write'), async (req, res) => {
+  const sent = await sendBotMessage(req.body.message || 'Funding Mirror test');
+  botMessageCount++;
+  res.json({ success: sent, totalSent: botMessageCount });
+});
+
+app.get('/api/v6/bot/log', authMiddleware('read'), (req, res) => {
+  const limit = parseInt(req.query.limit as string) || 20;
+  res.json({ log: getBotMessageLog(limit) });
+});
+
+// ---- v6.0: Fee Calculator API ----
+
+app.get('/api/v6/fees/calculate', authMiddleware('read'), (req, res) => {
+  const { symbol, longEx, shortEx, spreadPct, size } = req.query;
+  if (!symbol || !longEx || !shortEx) {
+    return res.status(400).json({ error: 'Missing required params' });
+  }
+  const breakdown = calculateFees({
+    symbol: symbol as string,
+    longExchange: longEx as string,
+    shortExchange: shortEx as string,
+    spreadPct: parseFloat(spreadPct as string) / 100 || 0.02,
+    size: parseFloat(size as string) || 100000,
+    fundingRate: 0.05,
+  });
+  res.json(breakdown);
+});
+
+app.get('/api/v6/fees/ranking', authMiddleware('read'), (_req, res) => {
+  const ranked = rankByNetProfitability(latestOpportunities.slice(0, 10).map(o => ({
+    symbol: o.symbol, longExchange: o.longEx, shortExchange: o.shortEx,
+    spreadPct: o.spreadPct, netAnnualized: o.netAnnualized,
+  })));
+  res.json({ count: ranked.length, rankings: ranked });
+});
+
+app.get('/api/v6/fees/networks', authMiddleware('read'), (_req, res) => {
+  res.json({ networks: getNetworkFees() });
+});
+
+app.get('/api/v6/fees/schedule/:exchange', authMiddleware('read'), (req, res) => {
+  res.json(getFeeSchedule(req.params.exchange));
+});
+
+// ---- v6.0: Volatility Surface API ----
+
+app.get('/api/v6/volatility/:symbol', authMiddleware('read'), (req, res) => {
+  const exchange = req.query.exchange as string || 'Binance';
+  res.json(calculateVolSurface(req.params.symbol, exchange));
+});
+
+app.get('/api/v6/volatility/:symbol/grid', authMiddleware('read'), (req, res) => {
+  res.json(getVolSurfaceGrid(req.params.symbol));
+});
+
+app.get('/api/v6/volatility/compare', authMiddleware('read'), (req, res) => {
+  const symbols = (req.query.symbols as string || 'BTCUSDT,ETHUSDT,SOLUSDT').split(',');
+  const horizon = req.query.horizon as string || '4h';
+  res.json({ comparison: getVolComparison(symbols, horizon) });
+});
+
+app.get('/api/v6/volatility/:symbol/regime', authMiddleware('read'), (req, res) => {
+  res.json(detectVolRegimeChange(req.params.symbol, req.query.exchange as string || 'Binance'));
+});
+
+// ---- v6.0: Multi-Account Management API ----
+
+app.get('/api/v6/accounts', authMiddleware('read'), (_req, res) => {
+  res.json({ accounts: listAccounts(), portfolio: aggregatedPortfolio });
+});
+
+app.post('/api/v6/accounts', authMiddleware('write'), (req, res) => {
+  const account = addAccount(req.body);
+  res.json({ success: true, account: { id: account.id, name: account.name, exchange: account.exchange } });
+});
+
+app.delete('/api/v6/accounts/:id', authMiddleware('admin'), (req, res) => {
+  const deleted = removeAccount(req.params.id);
+  res.json({ success: deleted });
+});
+
+app.get('/api/v6/accounts/portfolio', authMiddleware('read'), (_req, res) => {
+  res.json(aggregatedPortfolio || { accounts: [], netExposure: [], alerts: [] });
+});
+
+app.get('/api/v6/accounts/recommendations', authMiddleware('read'), (_req, res) => {
+  res.json({ recommendations: getBalanceRecommendations() });
+});
 
 // Store exchange credentials per session (in production: encrypted DB)
 const exchangeCreds = new Map<string, ExchangeCredentials>();
