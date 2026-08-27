@@ -62,6 +62,10 @@ import { analyzeAirdropFarm, getCachedAirdropFarm, clearAirdropCache, AirdropFar
 import { analyzePerpDex, getCachedPerpDex, clearPerpCache, PerpDexSummary } from './engine/perpetualDex.js';
 import { analyzeSecurity, getCachedSecurity, clearSecurityCache, SecurityScanSummary } from './engine/securityScanner.js';
 import { analyzeSmartMoney, getCachedSmartMoney, clearSmartMoneyCache, SmartMoneySummary } from './engine/smartMoney.js';
+import { analyzeMEVProtection, getCachedMEV, clearMEVCache, MEVAnalysis } from './engine/mevProtection.js';
+import { analyzeBridgeMonitor, getCachedBridge, clearBridgeMonitorCache, BridgeMonitorData } from './engine/bridgeMonitor.js';
+import { analyzeYieldAggregator, getCachedYield, clearYieldAggCache, YieldAggregatorData } from './engine/yieldAggregator.js';
+import { analyzeNFTPredictions, getCachedNFT, clearNFTPredictorCache, NFTPredictionData } from './engine/nftPricePredictor.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -183,6 +187,14 @@ let latestSecurity: SecurityScanSummary | null = null;
 let lastSecurityFetch = 0;
 let latestSmartMoney: SmartMoneySummary | null = null;
 let lastSmartMoneyFetch = 0;
+let latestMEV: MEVAnalysis | null = null;
+let lastMEVFetch = 0;
+let latestBridge: BridgeMonitorData | null = null;
+let lastBridgeMonitorFetch = 0;
+let latestYieldAgg: YieldAggregatorData | null = null;
+let lastYieldAggFetch = 0;
+let latestNFTPrediction: NFTPredictionData | null = null;
+let lastNFTPredictionFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -635,6 +647,46 @@ async function poll() {
       }
     }
 
+    // v9.4: MEV protection analysis (every 5 minutes)
+    if (pollCount % 10 === 0 || !latestMEV) {
+      try {
+        latestMEV = await analyzeMEVProtection();
+        lastMEVFetch = Date.now();
+      } catch (e) {
+        // MEV analysis failed
+      }
+    }
+
+    // v9.5: Bridge monitoring (every 15 minutes)
+    if (pollCount % 30 === 0 || !latestBridge) {
+      try {
+        latestBridge = await analyzeBridgeMonitor();
+        lastBridgeMonitorFetch = Date.now();
+      } catch (e) {
+        // Bridge monitoring failed
+      }
+    }
+
+    // v9.6: Yield aggregation (every 20 minutes)
+    if (pollCount % 40 === 0 || !latestYieldAgg) {
+      try {
+        latestYieldAgg = await analyzeYieldAggregator();
+        lastYieldAggFetch = Date.now();
+      } catch (e) {
+        // Yield aggregation failed
+      }
+    }
+
+    // v9.7: NFT price prediction (every 10 minutes)
+    if (pollCount % 20 === 0 || !latestNFTPrediction) {
+      try {
+        latestNFTPrediction = await analyzeNFTPredictions();
+        lastNFTPredictionFetch = Date.now();
+      } catch (e) {
+        // NFT prediction failed
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
@@ -734,6 +786,10 @@ function broadcast() {
       perpDex: latestPerpDex,
       security: latestSecurity,
       smartMoney: latestSmartMoney,
+      mevProtection: latestMEV,
+      bridgeMonitor: latestBridge,
+      yieldAggregator: latestYieldAgg,
+      nftPrediction: latestNFTPrediction,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -1860,6 +1916,126 @@ app.post('/api/v9/smart/refresh', authMiddleware('write'), async (_req, res) => 
     res.json({ success: true, smart: latestSmartMoney });
   } catch (e) {
     res.status(500).json({ error: 'Failed to analyze smart money' });
+  }
+});
+
+// ---- v9.4: MEV Protection API ----
+
+app.get('/api/v9/mev/threats', authMiddleware('read'), (_req, res) => {
+  res.json({ threats: latestMEV?.threats || [], timestamp: lastMEVFetch });
+});
+
+app.get('/api/v9/mev/score', authMiddleware('read'), (_req, res) => {
+  res.json({ score: latestMEV?.protectionScore || null, timestamp: lastMEVFetch });
+});
+
+app.get('/api/v9/mev/private-tx', authMiddleware('read'), (_req, res) => {
+  res.json({ options: latestMEV?.privateTxOptions || [], timestamp: lastMEVFetch });
+});
+
+app.get('/api/v9/mev/protected-txs', authMiddleware('read'), (_req, res) => {
+  res.json({ txs: latestMEV?.protectedTxs || [], timestamp: lastMEVFetch });
+});
+
+app.get('/api/v9/mev/attackers', authMiddleware('read'), (_req, res) => {
+  res.json({ attackers: latestMEV?.topAttackers || [], timestamp: lastMEVFetch });
+});
+
+app.post('/api/v9/mev/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestMEV = await analyzeMEVProtection();
+    lastMEVFetch = Date.now();
+    res.json({ success: true, mev: latestMEV });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze MEV protection' });
+  }
+});
+
+// ---- v9.5: Bridge Monitor API ----
+
+app.get('/api/v9/bridge/status', authMiddleware('read'), (_req, res) => {
+  res.json({ bridges: latestBridge?.bridges || [], timestamp: lastBridgeMonitorFetch });
+});
+
+app.get('/api/v9/bridge/routes', authMiddleware('read'), (_req, res) => {
+  res.json({ routes: latestBridge?.routes || [], timestamp: lastBridgeMonitorFetch });
+});
+
+app.get('/api/v9/bridge/alerts', authMiddleware('read'), (_req, res) => {
+  res.json({ alerts: latestBridge?.alerts || [], timestamp: lastBridgeMonitorFetch });
+});
+
+app.get('/api/v9/bridge/liquidity', authMiddleware('read'), (_req, res) => {
+  res.json({ liquidity: latestBridge?.liquidity || [], timestamp: lastBridgeMonitorFetch });
+});
+
+app.post('/api/v9/bridge/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestBridge = await analyzeBridgeMonitor();
+    lastBridgeMonitorFetch = Date.now();
+    res.json({ success: true, bridge: latestBridge });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to monitor bridges' });
+  }
+});
+
+// ---- v9.6: Yield Aggregator API ----
+
+app.get('/api/v9/yield/protocols', authMiddleware('read'), (_req, res) => {
+  res.json({ protocols: latestYieldAgg?.protocols || [], timestamp: lastYieldAggFetch });
+});
+
+app.get('/api/v9/yield/opportunities', authMiddleware('read'), (_req, res) => {
+  res.json({ opportunities: latestYieldAgg?.opportunities || [], timestamp: lastYieldAggFetch });
+});
+
+app.get('/api/v9/yield/auto-compound', authMiddleware('read'), (_req, res) => {
+  res.json({ configs: latestYieldAgg?.autoCompoundConfigs || [], timestamp: lastYieldAggFetch });
+});
+
+app.get('/api/v9/yield/risk', authMiddleware('read'), (_req, res) => {
+  res.json({ risk: latestYieldAgg?.riskMetrics || null, timestamp: lastYieldAggFetch });
+});
+
+app.post('/api/v9/yield/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestYieldAgg = await analyzeYieldAggregator();
+    lastYieldAggFetch = Date.now();
+    res.json({ success: true, yield: latestYieldAgg });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to aggregate yields' });
+  }
+});
+
+// ---- v9.7: NFT Price Predictor API ----
+
+app.get('/api/v9/nft/predictions', authMiddleware('read'), (_req, res) => {
+  res.json({ predictions: latestNFTPrediction?.predictions || [], timestamp: lastNFTPredictionFetch });
+});
+
+app.get('/api/v9/nft/rarity', authMiddleware('read'), (_req, res) => {
+  res.json({ rarity: latestNFTPrediction?.rarityData || [], timestamp: lastNFTPredictionFetch });
+});
+
+app.get('/api/v9/nft/whales', authMiddleware('read'), (_req, res) => {
+  res.json({ whales: latestNFTPrediction?.whaleHolders || [], timestamp: lastNFTPredictionFetch });
+});
+
+app.get('/api/v9/nft/sentiment', authMiddleware('read'), (_req, res) => {
+  res.json({ sentiment: latestNFTPrediction?.sentiment || [], timestamp: lastNFTPredictionFetch });
+});
+
+app.get('/api/v9/nft/traits', authMiddleware('read'), (_req, res) => {
+  res.json({ traits: latestNFTPrediction?.traitModels || [], timestamp: lastNFTPredictionFetch });
+});
+
+app.post('/api/v9/nft/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestNFTPrediction = await analyzeNFTPredictions();
+    lastNFTPredictionFetch = Date.now();
+    res.json({ success: true, nft: latestNFTPrediction });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to predict NFT prices' });
   }
 });
 

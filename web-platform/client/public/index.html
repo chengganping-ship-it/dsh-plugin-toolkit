@@ -436,6 +436,71 @@
     .signal-action.hold{background:#f5a62322;color:#f5a623}
     .signal-token{flex:1;color:#4a9eff}
     .signal-conf{width:40px;text-align:right;color:#8899aa}
+    .mev-threat{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .threat-type{flex:1;color:#ff4444;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .threat-sev{width:35px;text-align:center;font-size:7px;padding:1px 3px;border-radius:3px}
+    .threat-sev.critical{background:#ff444422;color:#ff4444}
+    .threat-sev.high{background:#ff660022;color:#ff6600}
+    .threat-sev.medium{background:#f5a62322;color:#f5a623}
+    .threat-sev.low{background:#00d4aa22;color:#00d4aa}
+    .threat-profit{width:55px;text-align:right;color:#f5a623}
+    .mev-overall{display:flex;justify-content:center;margin-bottom:8px}
+    .mev-score-circle{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff}
+    .mev-score-circle.good{background:linear-gradient(135deg,#00d4aa,#00a085)}
+    .mev-score-circle.medium{background:linear-gradient(135deg,#f5a623,#e09000)}
+    .mev-score-circle.poor{background:linear-gradient(135deg,#ff4444,#cc0000)}
+    .mev-risk-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;margin-bottom:6px}
+    .mev-risk-item{text-align:center;padding:4px;background:#0d1117;border-radius:3px}
+    .mev-risk-item span{display:block;font-size:7px;color:#6b7a8d;margin-bottom:2px}
+    .mev-risk-item b{font-size:11px;font-weight:700}
+    .mev-rec{padding:5px;background:#141c28;border-radius:4px;font-size:8px;text-align:center;border-left:3px solid #4a9eff}
+    .bridge-item{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .bridge-name{flex:1;color:#4a9eff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .bridge-status{width:45px;text-align:center;font-size:7px;padding:1px 3px;border-radius:3px}
+    .bridge-status.online{background:#00d4aa22;color:#00d4aa}
+    .bridge-status.degraded{background:#f5a62322;color:#f5a623}
+    .bridge-status.paused{background:#ff444422;color:#ff4444}
+    .bridge-status.offline{background:#ff4444;color:#fff}
+    .bridge-latitude{width:35px;text-align:right;color:#8899aa;font-size:7px}
+    .bridge-route{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .bridge-route.recommended{background:#00d4aa08}
+    .route-path{width:60px;color:#9b59b6;font-family:monospace}
+    .route-fees{width:50px;text-align:right;color:#00d4aa}
+    .route-time{width:40px;text-align:right;color:#8899aa;font-size:7px}
+    .yield-proto{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .proto-name{flex:1;color:#4a9eff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .proto-apy{width:50px;text-align:right;font-weight:600}
+    .proto-apy.high{color:#00d4aa}
+    .proto-apy.med{color:#f5a623}
+    .proto-apy.low{color:#6b7a8d}
+    .proto-tvl{width:55px;text-align:right;color:#8899aa;font-size:7px}
+    .compound-config{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .compound-config.recommended{background:#9b59b608}
+    .compound-proto{flex:1;color:#9b59b6;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .compound-boost{width:50px;text-align:right;font-weight:600}
+    .compound-boost.pos{color:#00d4aa}
+    .compound-boost.neg{color:#ff4444}
+    .compound-freq{width:55px;text-align:right;color:#8899aa;font-size:7px}
+    .nft-pred{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .pred-col{flex:1;color:#9b59b6;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .pred-floor{width:50px;text-align:right;color:#4a9eff}
+    .pred-signal{width:60px;text-align:center;font-size:7px;padding:1px 3px;border-radius:3px}
+    .pred-signal.strong_buy{background:#00d4aa22;color:#00d4aa}
+    .pred-signal.buy{background:#00d4aa22;color:#00d4aa}
+    .pred-signal.hold{background:#f5a62322;color:#f5a623}
+    .pred-signal.sell{background:#ff444422;color:#ff4444}
+    .pred-signal.strong_sell{background:#ff444422;color:#ff4444}
+    .nft-sent{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .sent-col{width:60px;color:#9b59b6}
+    .sent-score{width:40px;text-align:right;font-weight:600}
+    .sent-score.pos{color:#00d4aa}
+    .sent-score.neg{color:#ff4444}
+    .sent-label{width:60px;text-align:center;font-size:7px;padding:1px 3px;border-radius:3px}
+    .sent-label.very_bullish{background:#00d4aa22;color:#00d4aa}
+    .sent-label.bullish{background:#00d4aa22;color:#00d4aa}
+    .sent-label.neutral{background:#f5a62322;color:#f5a623}
+    .sent-label.bearish{background:#ff444422;color:#ff4444}
+    .sent-label.very_bearish{background:#ff444422;color:#ff4444}
     @media(max-width:1100px){.g{grid-template-columns:repeat(3,1fr)}.g5{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:800px){.g{grid-template-columns:repeat(2,1fr)}.g2,.g3,.g5{grid-template-columns:1fr}.c{padding:6px}.hdr{padding:6px 10px}.stats{gap:5px}}
     @media(max-width:500px){.g{grid-template-columns:1fr}.hm{grid-template-columns:repeat(auto-fill,minmax(65px,1fr))}.stats .lb{font-size:9px}}
@@ -810,6 +875,54 @@
     </div>
   </div>
 
+  <!-- v9.4: MEV Protection -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v9.4: MEV Threats <span id="mevBadge" class="tag bd bb">-</span></h2>
+      <div id="mevThreats" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Scanning MEV...</div></div>
+    </div>
+    <div class="card">
+      <h2>v9.4: Protection Score <span id="mevScoreBadge" class="tag bd bb">-</span></h2>
+      <div id="mevScore" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Calculating...</div></div>
+    </div>
+  </div>
+
+  <!-- v9.5: Bridge Monitor -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v9.5: Bridge Status <span id="bridgeBadge" class="tag bd bb">-</span></h2>
+      <div id="bridgeStatus" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading bridges...</div></div>
+    </div>
+    <div class="card">
+      <h2>v9.5: Bridge Routes <span id="bridgeRouteBadge" class="tag bd bb">-</span></h2>
+      <div id="bridgeRoutes" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Finding routes...</div></div>
+    </div>
+  </div>
+
+  <!-- v9.6: Yield Aggregator -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v9.6: Yield Protocols <span id="yieldBadge" class="tag bd bb">-</span></h2>
+      <div id="yieldProtocols" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading yields...</div></div>
+    </div>
+    <div class="card">
+      <h2>v9.6: Auto-Compound <span id="yieldCompoundBadge" class="tag bd bb">-</span></h2>
+      <div id="yieldCompound" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Calculating...</div></div>
+    </div>
+  </div>
+
+  <!-- v9.7: NFT Price Predictor -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v9.7: NFT Predictions <span id="nftPredBadge" class="tag bd bb">-</span></h2>
+      <div id="nftPredictions" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Predicting...</div></div>
+    </div>
+    <div class="card">
+      <h2>v9.7: NFT Sentiment <span id="nftSentBadge" class="tag bd bb">-</span></h2>
+      <div id="nftSentiment" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Analyzing sentiment...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -901,6 +1014,10 @@ function render() {
   renderPerpDexes(); renderPerpArb();
   renderSecReports(); renderSecSummary();
   renderSmartWallets(); renderSmartSignals();
+  renderMEVThreats(); renderMEVScore();
+  renderBridgeStatus(); renderBridgeRoutes();
+  renderYieldProtocols(); renderYieldCompound();
+  renderNFTPredictions(); renderNFTSentiment();
 }
 
 function renderHM() {
@@ -1818,6 +1935,16 @@ function renderSecReports(){var s=data.security;if(!s){$('secReports').innerHTML
 function renderSecSummary(){var s=data.security;if(!s){$('secSummary').innerHTML='<div class="emp">Analyzing...</div>';return}var sum=s.summary||{};$('secVulnBadge').textContent=(sum.totalVulnerabilities||0)+' vulns';var h='<div class="sec-overview"><div class="sec-stat"><span class="sec-label">Critical</span><span class="sec-val critical">'+(sum.critical||0)+'</span></div><div class="sec-stat"><span class="sec-label">High</span><span class="sec-val high">'+(sum.high||0)+'</span></div><div class="sec-stat"><span class="sec-label">Medium</span><span class="sec-val medium">'+(sum.medium||0)+'</span></div><div class="sec-stat"><span class="sec-label">Low</span><span class="sec-val low">'+(sum.low||0)+'</span></div></div>';for(var v of(s.topVulnerabilities||[]).slice(0,4)){h+='<div class="vuln-item"><span class="vuln-type">'+v.type.slice(0,18)+'</span><span class="vuln-sev '+v.severity.toLowerCase()+'">'+v.severity.slice(0,4)+'</span></div>'}$('secSummary').innerHTML=h}
 function renderSmartWallets(){var s=data.smartMoney;if(!s){$('smartWallets').innerHTML='<div class="emp">Loading...</div>';return}var w=(s.wallets||[]).slice(0,6);$('smartBadge').textContent=w.length+' wallets';var h='';for(var x of w){h+='<div class="smart-wallet"><span class="wallet-addr">'+x.address.slice(0,8)+'...</span><span class="wallet-pnl '+(x.totalPnl>0?'pos':'neg')+'">'+(x.totalPnl>0?'+':'')+x.totalPnl.toFixed(0)+'%</span><span class="wallet-tier '+x.tier.toLowerCase()+'">'+x.tier.slice(0,4)+'</span></div>'}$('smartWallets').innerHTML=h||'<div class="emp">No wallets</div>'}
 function renderSmartSignals(){var s=data.smartMoney;if(!s){$('smartSignals').innerHTML='<div class="emp">Analyzing...</div>';return}var sig=(s.copySignals||[]).slice(0,5);$('smartSigBadge').textContent=sig.length+' signals';var h='';for(var x of sig){h+='<div class="signal-item"><span class="signal-action '+x.action.toLowerCase()+'">'+x.action.slice(0,4)+'</span><span class="signal-token">'+x.token.slice(0,10)+'</span><span class="signal-conf">'+x.confidence.toFixed(0)+'%</span></div>'}$('smartSignals').innerHTML=h||'<div class="emp">No signals</div>'}
+
+// ==================== v9.4-v9.7 Renders ====================
+function renderMEVThreats(){var m=data.mevProtection;if(!m){$('mevThreats').innerHTML='<div class="emp">Loading...</div>';return}var t=(m.threats||[]).slice(0,6);$('mevBadge').textContent=t.length+' threats';var h='';for(var x of t){h+='<div class="mev-threat '+x.severity.toLowerCase()+'"><span class="threat-type">'+x.type.replace(/_/g,' ')+'</span><span class="threat-sev '+x.severity.toLowerCase()+'">'+x.severity.slice(0,4)+'</span><span class="threat-profit">'+(x.profit||0).toFixed(2)+' ETH</span></div>'}$('mevThreats').innerHTML=h||'<div class="emp">No threats</div>'}
+function renderMEVScore(){var m=data.mevProtection;if(!m){$('mevScore').innerHTML='<div class="emp">Loading...</div>';return}var s=m.protectionScore||{};$('mevScoreBadge').textContent=s.overall+'/100';var h='<div class="mev-overall"><div class="mev-score-circle '+(s.overall>=70?'good':s.overall>=40?'medium':'poor')+'">'+(s.overall||0)+'</div></div>';h+='<div class="mev-risk-grid"><div class="mev-risk-item"><span>Front-run</span><b>'+(s.frontRunRisk||0)+'%</b></div><div class="mev-risk-item"><span>Sandwich</span><b>'+(s.sandwichRisk||0)+'%</b></div><div class="mev-risk-item"><span>Flash Loan</span><b>'+(s.flashLoanRisk||0)+'%</b></div></div>';if(s.recommendation)h+='<div class="mev-rec">'+s.recommendation+'</div>';$('mevScore').innerHTML=h}
+function renderBridgeStatus(){var b=data.bridgeMonitor;if(!b){$('bridgeStatus').innerHTML='<div class="emp">Loading...</div>';return}var bs=(b.bridges||[]).slice(0,6);$('bridgeBadge').textContent=b.stats.activeBridges+'/'+b.stats.totalBridges;var h='';for(var x of bs){h+='<div class="bridge-item '+x.status.toLowerCase()+'"><span class="bridge-name">'+x.name.slice(0,15)+'</span><span class="bridge-status '+x.status.toLowerCase()+'">'+x.status.slice(0,6)+'</span><span class="bridge-latency">'+x.avgLatency+'m</span></div>'}$('bridgeStatus').innerHTML=h||'<div class="emp">No bridges</div>'}
+function renderBridgeRoutes(){var b=data.bridgeMonitor;if(!b){$('bridgeRoutes').innerHTML='<div class="emp">Loading...</div>';return}var r=(b.routes||[]).slice(0,5);$('bridgeRouteBadge').textContent=r.length+' routes';var h='';for(var x of r){h+='<div class="bridge-route '+(x.recommended?'recommended':'')+'"><span class="route-path">'+x.fromChain.slice(0,3)+'→'+x.toChain.slice(0,3)+'</span><span class="route-fees">$'+x.totalFee.toFixed(1)+'</span><span class="route-time">'+x.estimatedTime+'m</span></div>'}$('bridgeRoutes').innerHTML=h||'<div class="emp">No routes</div>'}
+function renderYieldProtocols(){var y=data.yieldAggregator;if(!y){$('yieldProtocols').innerHTML='<div class="emp">Loading...</div>';return}var p=(y.protocols||[]).slice(0,6);$('yieldBadge').textContent=p.length+' protocols';var h='';for(var x of p){h+='<div class="yield-proto"><span class="proto-name">'+x.name.slice(0,12)+'</span><span class="proto-apy '+(x.apy>10?'high':x.apy>5?'med':'low')+'">'+x.apy.toFixed(1)+'%</span><span class="proto-tvl">$'+((x.tvl||0)/1e6).toFixed(0)+'M</span></div>'}$('yieldProtocols').innerHTML=h||'<div class="emp">No protocols</div>'}
+function renderYieldCompound(){var y=data.yieldAggregator;if(!y){$('yieldCompound').innerHTML='<div class="emp">Loading...</div>';return}var c=(y.autoCompoundConfigs||[]).slice(0,4);$('yieldCompoundBadge').textContent=c.length+' configs';var h='';for(var x of c){h+='<div class="compound-config '+(x.recommended?'recommended':'')+'"><span class="compound-proto">'+x.protocol.slice(0,10)+'</span><span class="compound-boost+'+(x.boostAPY>3?'pos':'neg')+'">+'+x.boostAPY.toFixed(1)+'%</span><span class="compound-freq">'+x.frequency+'x/day</span></div>'}$('yieldCompound').innerHTML=h||'<div class="emp">No configs</div>'}
+function renderNFTPredictions(){var n=data.nftPrediction;if(!n){$('nftPredictions').innerHTML='<div class="emp">Loading...</div>';return}var p=(n.predictions||[]).slice(0,6);$('nftPredBadge').textContent=p.length+' predictions';var h='';for(var x of p){h+='<div class="nft-pred '+x.trend.toLowerCase()+'"><span class="pred-col">'+x.collection.slice(0,12)+'</span><span class="pred-floor">'+x.currentFloor.toFixed(1)+' ETH</span><span class="pred-signal '+x.signal.toLowerCase().replace(/_/g,' ')+'">'+x.signal.replace(/_/g,' ').slice(0,8)+'</span></div>'}$('nftPredictions').innerHTML=h||'<div class="emp">No predictions</div>'}
+function renderNFTSentiment(){var n=data.nftPrediction;if(!n){$('nftSentiment').innerHTML='<div class="emp">Loading...</div>';return}var s=(n.sentiment||[]).slice(0,6);$('nftSentBadge').textContent=s.length+' analyzed';var h='';for(var x of s){h+='<div class="nft-sent '+x.sentiment.toLowerCase().replace(/_/g,' ')+'"><span class="sent-col">'+x.collection.slice(0,10)+'</span><span class="sent-score '+(x.sentimentScore>0?'pos':'neg')+'">'+(x.sentimentScore>0?'+':'')+x.sentimentScore+'</span><span class="sent-label">'+x.sentiment.replace(/_/g,' ').slice(0,8)+'</span></div>'}$('nftSentiment').innerHTML=h||'<div class="emp">No sentiment</div>'}
 
 // Kelly
 $('kB')?.addEventListener('click', async () => {
