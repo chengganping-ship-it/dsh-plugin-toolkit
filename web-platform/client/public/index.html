@@ -557,6 +557,56 @@
     .prob-change{width:45px;text-align:right;font-size:7px}
     .prob-change.pos{color:#00d4aa}
     .prob-change.neg{color:#ff4444}
+    .greeks-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:6px}
+    .greek{text-align:center;padding:4px;background:#0d1117;border-radius:3px}
+    .greek span{display:block;font-size:7px;color:#6b7a8d;margin-bottom:2px}
+    .greek b{font-size:11px;font-weight:700}
+    .greeks-pnl{padding:4px;background:#141c28;border-radius:3px;font-size:8px;text-align:center}
+    .iv-item{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .iv-expiry{width:60px;color:#9b59b6;font-size:7px}
+    .iv-atm{width:40px;text-align:right;color:#4a9eff}
+    .iv-skew{margin-left:auto;font-size:7px;color:#8899aa}
+    .fund-spread{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .spread-sym{width:60px;color:#9b59b6}
+    .spread-val{width:60px;text-align:right;font-weight:600}
+    .spread-val.high{color:#00d4aa}
+    .spread-val.med{color:#f5a623}
+    .spread-val.low{color:#6b7a8d}
+    .spread-signal{width:40px;text-align:center;font-size:7px;padding:1px 3px;border-radius:3px}
+    .spread-signal.enter{background:#00d4aa22;color:#00d4aa}
+    .spread-signal.exit{background:#ff444422;color:#ff4444}
+    .spread-signal.hold{background:#f5a62322;color:#f5a623}
+    .opt-entry{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .opt-entry.recommended{background:#00d4aa08}
+    .entry-sym{width:60px;color:#9b59b6}
+    .entry-time{width:60px;color:#4a9eff;font-size:7px}
+    .entry-rate{width:40px;text-align:right;color:#00d4aa;font-weight:600}
+    .spread-opp{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .opp-sym{width:60px;color:#9b59b6}
+    .opp-spread{width:60px;text-align:right;font-weight:600}
+    .opp-spread.high{color:#00d4aa}
+    .opp-spread.med{color:#f5a623}
+    .opp-spread.low{color:#6b7a8d}
+    .opp-profit{width:50px;text-align:right;color:#00d4aa}
+    .tri-arb{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .tri-ex{width:50px;color:#9b59b6;font-size:7px}
+    .tri-path{flex:1;color:#4a9eff;font-size:7px}
+    .tri-profit{width:50px;text-align:right;font-weight:600}
+    .tri-profit.high{color:#00d4aa}
+    .tri-profit.med{color:#f5a623}
+    .gas-item{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .gas-chain{width:60px;color:#4a9eff}
+    .gas-gwei{width:50px;text-align:right;color:#9b59b6}
+    .gas-usd{width:50px;text-align:right;color:#f5a623}
+    .gas-item.extreme{border-left:3px solid #ff4444}
+    .gas-item.high{border-left:3px solid #f5a623}
+    .gas-item.medium{border-left:3px solid #4a9eff}
+    .gas-item.low{border-left:3px solid #00d4aa}
+    .l2-l1{text-align:center;padding:4px;background:#ff444411;border-radius:3px;margin-bottom:4px;font-size:9px;color:#ff4444}
+    .l2-item{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .l2-chain{width:60px;color:#9b59b6}
+    .l2-cost{width:60px;text-align:right;color:#4a9eff}
+    .l2-save{width:50px;text-align:right;font-weight:600;color:#00d4aa}
     @media(max-width:1100px){.g{grid-template-columns:repeat(3,1fr)}.g5{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:800px){.g{grid-template-columns:repeat(2,1fr)}.g2,.g3,.g5{grid-template-columns:1fr}.c{padding:6px}.hdr{padding:6px 10px}.stats{gap:5px}}
     @media(max-width:500px){.g{grid-template-columns:1fr}.hm{grid-template-columns:repeat(auto-fill,minmax(65px,1fr))}.stats .lb{font-size:9px}}
@@ -1027,6 +1077,54 @@
     </div>
   </div>
 
+  <!-- v9.12: Option Greeks -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v9.12: Portfolio Greeks <span id="greeksBadge" class="tag bd bb">-</span></h2>
+      <div id="greeksPortfolio" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Calculating Greeks...</div></div>
+    </div>
+    <div class="card">
+      <h2>v9.12: IV Surface <span id="ivBadge" class="tag bd bb">-</span></h2>
+      <div id="ivSurface" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading IV...</div></div>
+    </div>
+  </div>
+
+  <!-- v9.13: Funding Rate Backtest -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v9.13: Funding Spreads <span id="fundSpreadBadge" class="tag bd bb">-</span></h2>
+      <div id="fundingSpreads" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading spreads...</div></div>
+    </div>
+    <div class="card">
+      <h2>v9.13: Optimal Entries <span id="optEntryBadge" class="tag bd bb">-</span></h2>
+      <div id="optimalEntries" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Analyzing...</div></div>
+    </div>
+  </div>
+
+  <!-- v9.14: Exchange Spread Alerts -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v9.14: Spread Opportunities <span id="spreadOppBadge" class="tag bd bb">-</span></h2>
+      <div id="spreadOpps" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Scanning spreads...</div></div>
+    </div>
+    <div class="card">
+      <h2>v9.14: Triangular Arb <span id="triArbBadge" class="tag bd bb">-</span></h2>
+      <div id="triangularArb" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Finding paths...</div></div>
+    </div>
+  </div>
+
+  <!-- v9.15: Gas Optimizer -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v9.15: Gas Prices <span id="gasBadge" class="tag bd bb">-</span></h2>
+      <div id="gasPrices" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading gas...</div></div>
+    </div>
+    <div class="card">
+      <h2>v9.15: L2 Comparison <span id="l2Badge" class="tag bd bb">-</span></h2>
+      <div id="l2Comparison" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Comparing L2s...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -1126,6 +1224,10 @@ function render() {
   renderDaoProposals(); renderDaoAlerts();
   renderRWAProtocols(); renderRWAYields();
   renderPredArb(); renderPredProbs();
+  renderGreeksPortfolio(); renderIVSurface();
+  renderFundingSpreads(); renderOptimalEntries();
+  renderSpreadOpps(); renderTriangularArb();
+  renderGasPrices(); renderL2Comparison();
 }
 
 function renderHM() {
@@ -2063,6 +2165,16 @@ function renderRWAProtocols(){var r=data.rwaYield;if(!r){$('rwaProtocols').inner
 function renderRWAYields(){var r=data.rwaYield;if(!r){$('rwaYields').innerHTML='<div class="emp">Loading...</div>';return}var o=(r.opportunities||[]).slice(0,5);$('rwaYieldBadge').textContent=o.length+' opps';var h='';for(var x of o){h+='<div class="rwa-opp '+(x.recommended?'recommended':'')+'"><span class="rwa-opp-name">'+x.protocol.slice(0,10)+'</span><span class="rwa-opp-apy '+(x.netApy>7?'high':x.netApy>4?'med':'low')+'">'+x.netApy.toFixed(1)+'%</span><span class="rwa-opp-risk '+x.risk.toLowerCase()+'">'+x.risk.slice(0,4)+'</span></div>'}$('rwaYields').innerHTML=h||'<div class="emp">No opportunities</div>'}
 function renderPredArb(){var p=data.predArb;if(!p){$('predArb').innerHTML='<div class="emp">Loading...</div>';return}var a=(p.arbitrage||[]).slice(0,5);$('predArbBadge').textContent+a.length+' arbs';var h='';for(var x of a){h+='<div class="pred-arb '+x.signal.toLowerCase()+'"><span class="arb-event">'+x.event.slice(0,15)+'</span><span class="arb-spread '+(x.spreadPct>5?'high':x.spreadPct>2?'med':'low')+'">'+x.spreadPct.toFixed(2)+'%</span><span class="arb-profit">$'+x.maxProfit.toFixed(0)+'</span></div>'}$('predArb').innerHTML=h||'<div class="emp">No arbitrage</div>'}
 function renderPredProbs(){var p=data.predArb;if(!p){$('predProbs').innerHTML='<div class="emp">Loading...</div>';return}var pr=(p.probabilities||[]).slice(0,6);$('predProbBadge').textContent=pr.length+' events';var h='';for(var x of pr){h+='<div class="pred-prob '+x.trend.toLowerCase()+'"><span class="prob-event">'+x.event.slice(0,15)+'</span><span class="prob-val '+(x.currentProb>0.5?'high':'low')+'">'+(x.currentProb*100).toFixed(0)+'%</span><span class="prob-change '+(x.change24h>0?'pos':'neg')+'">'+(x.change24h>0?'+':'')+x.change24h.toFixed(1)+'</span></div>'}$('predProbs').innerHTML=h||'<div class="emp">No probabilities</div>'}
+
+// ==================== v9.12-v9.15 Renders ====================
+function renderGreeksPortfolio(){var g=data.optionGreeks;if(!g){$('greeksPortfolio').innerHTML='<div class="emp">Loading...</div>';return}var p=g.portfolio||{};$('greeksBadge').textContent='Δ '+(p.netDelta||0).toFixed(2);var h='<div class="greeks-grid"><div class="greek"><span>Delta</span><b>'+(p.netDelta||0).toFixed(3)+'</b></div><div class="greek"><span>Gamma</span><b>'+(p.netGamma||0).toFixed(4)+'</b></div><div class="greek"><span>Vega</span><b>$'+(p.netVega||0).toFixed(0)+'</b></div><div class="greek"><span>Theta</span><b>$'+(p.netTheta||0).toFixed(0)+'</b></div></div>';h+='<div class="greeks-pnl">Total Pnl: $'+(p.totalPnl||0).toFixed(0)+' | Value: $'+(p.totalValue||0).toFixed(0)+'</div>';$('greeksPortfolio').innerHTML=h}
+function renderIVSurface(){var g=data.optionGreeks;if(!g){$('ivSurface').innerHTML='<div class="emp">Loading...</div>';return}var s=(g.ivSurface||[]).slice(0,3);$('ivBadge').textContent=s.length+' surfaces';var h='';for(var x of s){h+='<div class="iv-item"><span class="iv-expiry">'+x.expiry+'</span><span class="iv-atm">'+(x.atmIV*100).toFixed(1)+'%</span><span class="iv-skew">skew: '+x.skew.toFixed(2)+'</span></div>'}$('ivSurface').innerHTML=h||'<div class="emp">No IV data</div>'}
+function renderFundingSpreads(){var f=data.fundingBacktest;if(!f){$('fundingSpreads').innerHTML='<div class="emp">Loading...</div>';return}var s=(f.spreads||[]).slice(0,5);$('fundSpreadBadge').textContent=s.length+' spreads';var h='';for(var x of s){h+='<div class="fund-spread '+x.signal.toLowerCase()+'"><span class="spread-sym">'+x.symbol.slice(0,8)+'</span><span class="spread-val '+(x.spreadPct>0.03?'high':x.spreadPct>0.01?'med':'low')+'">'+(x.spreadPct*100).toFixed(3)+'%</span><span class="spread-signal">'+x.signal.slice(0,4)+'</span></div>'}$('fundingSpreads').innerHTML=h||'<div class="emp">No spreads</div>'}
+function renderOptimalEntries(){var f=data.fundingBacktest;if(!f){$('optimalEntries').innerHTML='<div class="emp">Loading...</div>';return}var e=(f.optimalEntries||[]).slice(0,4);$('optEntryBadge').textContent=e.length+' entries';var h='';for(var x of e){h+='<div class="opt-entry '+(x.successRate>70?'recommended':'')+'"><span class="entry-sym">'+x.symbol.slice(0,8)+'</span><span class="entry-time">'+x.dayOfWeek+'d '+x.hourOfDay}h</span><span class="entry-rate">'+x.successRate+'%</span></div>'}$('optimalEntries').innerHTML=h||'<div class="emp">No entries</div>'}
+function renderSpreadOpps(){var s=data.exchangeSpreads;if(!s){$('spreadOpps').innerHTML='<div class="emp">Loading...</div>';return}var o=(s.spreads||[]).slice(0,6);$('spreadOppBadge').textContent=o.length+' opps';var h='';for(var x of o){h+='<div class="spread-opp '+(x.netProfit>50?'high':x.netProfit>20?'med':'low')+'"><span class="opp-sym">'+x.symbol.slice(0,8)+'</span><span class="opp-spread">'+x.spreadPct.toFixed(3)+'%</span><span class="opp-profit">$'+x.netProfit.toFixed(0)+'</span></div>'}$('spreadOpps').innerHTML=h||'<div class="emp">No opportunities</div>'}
+function renderTriangularArb(){var s=data.exchangeSpreads;if(!s){$('triangularArb').innerHTML='<div class="emp">Loading...</div>';return}var t=(s.triangularArbs||[]).slice(0,3);$('triArbBadge').textContent=t.length+' paths';var h='';for(var x of t){h+='<div class="tri-arb"><span class="tri-ex">'+x.exchange.slice(0,8)+'</span><span class="tri-path">'+x.path.join('→')+'</span><span class="tri-profit '+(x.profitPct>0.3?'high':'med')+'">'+x.profitPct.toFixed(2)+'%</span></div>'}$('triangularArb').innerHTML=h||'<div class="emp">No triangular arb</div>'}
+function renderGasPrices(){var g=data.gasOptimizer;if(!g){$('gasPrices').innerHTML='<div class="emp">Loading...</div>';return}var p=(g.gasPrices||[]).slice(0,6);$('gasBadge').textContent=p.length+' chains';var h='';for(var x of p){h+='<div class="gas-item '+x.congestionLevel.toLowerCase()+'"><span class="gas-chain">'+x.chain.slice(0,8)+'</span><span class="gas-gwei">'+x.gwei.toFixed(1)+' gwei</span><span class="gas-usd">$'+x.usdCost.toFixed(2)+'</span></div>'}$('gasPrices').innerHTML=h||'<div class="emp">No gas data</div>'}
+function renderL2Comparison(){var g=data.gasOptimizer;if(!g){$('l2Comparison').innerHTML='<div class="emp">Loading...</div>';return}var c=g.l2Comparison||{};$('l2Badge').textContent=(c.l2Costs||[]).length+' L2s';var h='<div class="l2-l1">L1 Cost: $'+(c.l1Cost||0).toFixed(2)+'</div>';for(var l of(c.l2Costs||[]).slice(0,4)){h+='<div class="l2-item"><span class="l2-chain">'+l.chain.slice(0,8)+'</span><span class="l2-cost">$'+l.cost.toFixed(3)+'</span><span class="l2-save '+l.savings>95?'high':'med')+'">-'+l.savings.toFixed(0)+'%</span></div>'}$('l2Comparison').innerHTML=h}
 
 // Kelly
 $('kB')?.addEventListener('click', async () => {

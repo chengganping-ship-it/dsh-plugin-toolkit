@@ -70,6 +70,10 @@ import { analyzeOnChainAnalytics, getCachedOnChain, clearOnChainCache, OnChainAn
 import { analyzeDaoGovernance, getCachedDao, clearDaoCache, DaoGovernanceData } from './engine/daoGovernance.js';
 import { analyzeRWAYield, getCachedRWA as getCachedRWAYield, clearRWAYieldCache, RWAYieldData } from './engine/rwaYieldMonitor.js';
 import { analyzePredictionArb, getCachedPredArb, clearPredArbCache, PredictionArbData } from './engine/predictionArb.js';
+import { analyzeOptionGreeks, getCachedOptionGreeks, clearOptionGreeksCache, OptionGreeksData } from './engine/optionGreeks.js';
+import { analyzeFundingBacktest, getCachedFundingBacktest, clearFundingBacktestCache, FundingBacktestData } from './engine/fundingBacktester.js';
+import { analyzeExchangeSpreads, getCachedExchangeSpreads, clearExchangeSpreadCache, SpreadAlertData } from './engine/exchangeSpreadAlert.js';
+import { analyzeGasOptimizer, getCachedGasOptimizer, clearGasOptimizerCache, GasOptimizerData } from './engine/gasOptimizer.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -207,6 +211,14 @@ let latestRWAYield: RWAYieldData | null = null;
 let lastRWAYieldFetch = 0;
 let latestPredArb: PredictionArbData | null = null;
 let lastPredArbFetch = 0;
+let latestOptionGreeks: OptionGreeksData | null = null;
+let lastOptionGreeksFetch = 0;
+let latestFundingBacktest: FundingBacktestData | null = null;
+let lastFundingBacktestFetch = 0;
+let latestExchangeSpreads: SpreadAlertData | null = null;
+let lastExchangeSpreadsFetch = 0;
+let latestGasOptimizer: GasOptimizerData | null = null;
+let lastGasOptimizerFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -739,6 +751,46 @@ async function poll() {
       }
     }
 
+    // v9.12: Option Greeks monitoring (every 5 minutes)
+    if (pollCount % 10 === 0 || !latestOptionGreeks) {
+      try {
+        latestOptionGreeks = await analyzeOptionGreeks();
+        lastOptionGreeksFetch = Date.now();
+      } catch (e) {
+        // Option Greeks failed
+      }
+    }
+
+    // v9.13: Funding rate backtest (every 30 minutes)
+    if (pollCount % 60 === 0 || !latestFundingBacktest) {
+      try {
+        latestFundingBacktest = await analyzeFundingBacktest();
+        lastFundingBacktestFetch = Date.now();
+      } catch (e) {
+        // Funding backtest failed
+      }
+    }
+
+    // v9.14: Exchange spread alerts (every 5 minutes)
+    if (pollCount % 10 === 0 || !latestExchangeSpreads) {
+      try {
+        latestExchangeSpreads = await analyzeExchangeSpreads();
+        lastExchangeSpreadsFetch = Date.now();
+      } catch (e) {
+        // Exchange spreads failed
+      }
+    }
+
+    // v9.15: Gas optimizer (every 5 minutes)
+    if (pollCount % 10 === 0 || !latestGasOptimizer) {
+      try {
+        latestGasOptimizer = await analyzeGasOptimizer();
+        lastGasOptimizerFetch = Date.now();
+      } catch (e) {
+        // Gas optimizer failed
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
@@ -846,6 +898,10 @@ function broadcast() {
       daoGovernance: latestDao,
       rwaYield: latestRWAYield,
       predArb: latestPredArb,
+      optionGreeks: latestOptionGreeks,
+      fundingBacktest: latestFundingBacktest,
+      exchangeSpreads: latestExchangeSpreads,
+      gasOptimizer: latestGasOptimizer,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -2212,6 +2268,138 @@ app.post('/api/v9/pred/refresh', authMiddleware('write'), async (_req, res) => {
     res.json({ success: true, pred: latestPredArb });
   } catch (e) {
     res.status(500).json({ error: 'Failed to analyze prediction markets' });
+  }
+});
+
+// ---- v9.12: Option Greeks API ----
+
+app.get('/api/v9/options/positions', authMiddleware('read'), (_req, res) => {
+  res.json({ positions: latestOptionGreeks?.positions || [], timestamp: lastOptionGreeksFetch });
+});
+
+app.get('/api/v9/options/portfolio', authMiddleware('read'), (_req, res) => {
+  res.json({ portfolio: latestOptionGreeks?.portfolio || null, timestamp: lastOptionGreeksFetch });
+});
+
+app.get('/api/v9/options/iv-surface', authMiddleware('read'), (_req, res) => {
+  res.json({ surfaces: latestOptionGreeks?.ivSurface || [], timestamp: lastOptionGreeksFetch });
+});
+
+app.get('/api/v9/options/max-pain', authMiddleware('read'), (_req, res) => {
+  res.json({ maxPain: latestOptionGreeks?.maxPain || [], timestamp: lastOptionGreeksFetch });
+});
+
+app.get('/api/v9/options/scenarios', authMiddleware('read'), (_req, res) => {
+  res.json({ scenarios: latestOptionGreeks?.scenarios || [], timestamp: lastOptionGreeksFetch });
+});
+
+app.post('/api/v9/options/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestOptionGreeks = await analyzeOptionGreeks();
+    lastOptionGreeksFetch = Date.now();
+    res.json({ success: true, options: latestOptionGreeks });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze option Greeks' });
+  }
+});
+
+// ---- v9.13: Funding Rate Backtest API ----
+
+app.get('/api/v9/funding/rates', authMiddleware('read'), (_req, res) => {
+  res.json({ rates: latestFundingBacktest?.rates || [], timestamp: lastFundingBacktestFetch });
+});
+
+app.get('/api/v9/funding/spreads', authMiddleware('read'), (_req, res) => {
+  res.json({ spreads: latestFundingBacktest?.spreads || [], timestamp: lastFundingBacktestFetch });
+});
+
+app.get('/api/v9/funding/backtests', authMiddleware('read'), (_req, res) => {
+  res.json({ backtests: latestFundingBacktest?.backtestResults || [], timestamp: lastFundingBacktestFetch });
+});
+
+app.get('/api/v9/funding/optimal-entries', authMiddleware('read'), (_req, res) => {
+  res.json({ entries: latestFundingBacktest?.optimalEntries || [], timestamp: lastFundingBacktestFetch });
+});
+
+app.get('/api/v9/funding/monte-carlo', authMiddleware('read'), (_req, res) => {
+  res.json({ monteCarlo: latestFundingBacktest?.monteCarlo || null, timestamp: lastFundingBacktestFetch });
+});
+
+app.post('/api/v9/funding/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestFundingBacktest = await analyzeFundingBacktest();
+    lastFundingBacktestFetch = Date.now();
+    res.json({ success: true, funding: latestFundingBacktest });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to backtest funding rates' });
+  }
+});
+
+// ---- v9.14: Exchange Spread Alert API ----
+
+app.get('/api/v9/spread/opportunities', authMiddleware('read'), (_req, res) => {
+  res.json({ opportunities: latestExchangeSpreads?.spreads || [], timestamp: lastExchangeSpreadsFetch });
+});
+
+app.get('/api/v9/spread/triangular', authMiddleware('read'), (_req, res) => {
+  res.json({ triangular: latestExchangeSpreads?.triangularArbs || [], timestamp: lastExchangeSpreadsFetch });
+});
+
+app.get('/api/v9/spread/liquidity', authMiddleware('read'), (_req, res) => {
+  res.json({ liquidity: latestExchangeSpreads?.liquidityProfiles || [], timestamp: lastExchangeSpreadsFetch });
+});
+
+app.get('/api/v9/spread/historical', authMiddleware('read'), (_req, res) => {
+  res.json({ historical: latestExchangeSpreads?.historicalSpreads || [], timestamp: lastExchangeSpreadsFetch });
+});
+
+app.get('/api/v9/spread/exchange-status', authMiddleware('read'), (_req, res) => {
+  res.json({ status: latestExchangeSpreads?.exchangeStatus || [], timestamp: lastExchangeSpreadsFetch });
+});
+
+app.post('/api/v9/spread/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestExchangeSpreads = await analyzeExchangeSpreads();
+    lastExchangeSpreadsFetch = Date.now();
+    res.json({ success: true, spreads: latestExchangeSpreads });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze exchange spreads' });
+  }
+});
+
+// ---- v9.15: Gas Optimizer API ----
+
+app.get('/api/v9/gas/prices', authMiddleware('read'), (_req, res) => {
+  res.json({ prices: latestGasOptimizer?.gasPrices || [], timestamp: lastGasOptimizerFetch });
+});
+
+app.get('/api/v9/gas/optimal-execution', authMiddleware('read'), (_req, res) => {
+  res.json({ optimal: latestGasOptimizer?.optimalExecutions || [], timestamp: lastGasOptimizerFetch });
+});
+
+app.get('/api/v9/gas/l2-comparison', authMiddleware('read'), (_req, res) => {
+  res.json({ comparison: latestGasOptimizer?.l2Comparison || null, timestamp: lastGasOptimizerFetch });
+});
+
+app.get('/api/v9/gas/batch-suggestions', authMiddleware('read'), (_req, res) => {
+  res.json({ suggestions: latestGasOptimizer?.batchSuggestions || [], timestamp: lastGasOptimizerFetch });
+});
+
+app.get('/api/v9/gas/forecast', authMiddleware('read'), (_req, res) => {
+  res.json({ forecast: latestGasOptimizer?.forecasts || [], timestamp: lastGasOptimizerFetch });
+});
+
+app.get('/api/v9/gas/mempool', authMiddleware('read'), (_req, res) => {
+  res.json({ mempool: latestGasOptimizer?.mempoolAnalysis || [], timestamp: lastGasOptimizerFetch });
+});
+
+app.post('/api/v9/gas/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestGasOptimizer = await analyzeGasOptimizer();
+    lastGasOptimizerFetch = Date.now();
+    res.json({ success: true, gas: latestGasOptimizer });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to optimize gas' });
   }
 });
 
