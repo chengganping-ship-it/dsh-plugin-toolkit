@@ -90,6 +90,12 @@ import { analyzeNFTLending, NFTLendingData } from './engine/nftLending.js';
 import { analyzeYieldOptimizer, YieldOptimizerData } from './engine/yieldOptimizer.js';
 import { analyzeMEVShare, MEVShareData } from './engine/mevShare.js';
 import { analyzeOptionsDex, OptionsDexData } from './engine/optionsDex.js';
+import { analyzeLiquidStaking, LiquidStakingData } from './engine/liquidStakingTracker.js';
+import { analyzeAirdropEligibility, AirdropEligibilityData } from './engine/airdropEligibility.js';
+import { analyzeTokenomics, TokenomicsData } from './engine/tokenomicsAnalyzer.js';
+import { analyzeSentimentIndex, SentimentIndexData } from './engine/sentimentIndex.js';
+import { analyzeSmartMoneyHoldings, SmartMoneyHoldingsData } from './engine/smartMoneyHoldings.js';
+import { analyzeMEVBuilderRevenue, MEVBuilderRevenueData } from './engine/mevBuilderRevenue.js';
 import { analyzeTokenUnlocks, TokenUnlockData } from './engine/tokenUnlock.js';
 import { analyzeRPCPerformance, RPCPerformanceData } from './engine/rpcMonitor.js';
 import { analyzeStablecoinResidualArb, StablecoinResidualArbData } from './engine/stablecoinResidualArb.js';
@@ -277,6 +283,20 @@ let latestMEVShare: MEVShareData | null = null;
 let lastMEVShareFetch = 0;
 let latestOptionsDex: OptionsDexData | null = null;
 let lastOptionsDexFetch = 0;
+
+// ==================== v13.0 ENGINE STATE ====================
+let latestLiquidStaking: LiquidStakingData | null = null;
+let lastLiquidStakingFetch = 0;
+let latestAirdropElig: AirdropEligibilityData | null = null;
+let lastAirdropEligFetch = 0;
+let latestTokenomics: TokenomicsData | null = null;
+let lastTokenomicsFetch = 0;
+let latestSentimentIdx: SentimentIndexData | null = null;
+let lastSentimentIdxFetch = 0;
+let latestSmartMoneyHoldings: SmartMoneyHoldingsData | null = null;
+let lastSmartMoneyHoldingsFetch = 0;
+let latestMEVBuilderRev: MEVBuilderRevenueData | null = null;
+let lastMEVBuilderRevFetch = 0;
 
 // ==================== v12.0 ENGINE STATE ====================
 let latestTokenUnlocks: TokenUnlockData | null = null;
@@ -1023,6 +1043,56 @@ async function poll() {
       }
     }
 
+    // ==================== v13.0 POLLING ====================
+
+    // v13.0: Liquid staking tracker (every 30 minutes)
+    if (pollCount % 60 === 0 || !latestLiquidStaking) {
+      try {
+        latestLiquidStaking = await analyzeLiquidStaking();
+        lastLiquidStakingFetch = Date.now();
+      } catch (e) { /* Liquid staking analysis failed */ }
+    }
+
+    // v13.1: Airdrop eligibility (every 30 minutes)
+    if (pollCount % 60 === 0 || !latestAirdropElig) {
+      try {
+        latestAirdropElig = await analyzeAirdropEligibility();
+        lastAirdropEligFetch = Date.now();
+      } catch (e) { /* Airdrop eligibility analysis failed */ }
+    }
+
+    // v13.2: Tokenomics analyzer (every 30 minutes)
+    if (pollCount % 60 === 0 || !latestTokenomics) {
+      try {
+        latestTokenomics = await analyzeTokenomics();
+        lastTokenomicsFetch = Date.now();
+      } catch (e) { /* Tokenomics analysis failed */ }
+    }
+
+    // v13.3: Sentiment index (every 15 minutes)
+    if (pollCount % 30 === 0 || !latestSentimentIdx) {
+      try {
+        latestSentimentIdx = await analyzeSentimentIndex();
+        lastSentimentIdxFetch = Date.now();
+      } catch (e) { /* Sentiment index analysis failed */ }
+    }
+
+    // v13.4: Smart money holdings (every 20 minutes)
+    if (pollCount % 40 === 0 || !latestSmartMoneyHoldings) {
+      try {
+        latestSmartMoneyHoldings = await analyzeSmartMoneyHoldings();
+        lastSmartMoneyHoldingsFetch = Date.now();
+      } catch (e) { /* Smart money holdings analysis failed */ }
+    }
+
+    // v13.5: MEV builder revenue (every 15 minutes)
+    if (pollCount % 30 === 0 || !latestMEVBuilderRev) {
+      try {
+        latestMEVBuilderRev = await analyzeMEVBuilderRevenue();
+        lastMEVBuilderRevFetch = Date.now();
+      } catch (e) { /* MEV builder revenue analysis failed */ }
+    }
+
     // ==================== v12.0 POLLING ====================
 
     // v12.0: Token unlock schedule (every 30 minutes)
@@ -1218,6 +1288,12 @@ function broadcast() {
       fundingHeatmap: latestFundingHeatmap,
       bridgeTVL: latestBridgeTVL,
       proofOfReserves: latestProofOfReserves,
+      liquidStaking: latestLiquidStaking,
+      airdropElig: latestAirdropElig,
+      tokenomics: latestTokenomics,
+      sentimentIdx: latestSentimentIdx,
+      smartMoneyHoldings: latestSmartMoneyHoldings,
+      mevBuilderRev: latestMEVBuilderRev,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -3156,6 +3232,176 @@ app.post('/api/v11/options/refresh', authMiddleware('write'), async (_req, res) 
     res.json({ success: true, options: latestOptionsDex });
   } catch (e) {
     res.status(500).json({ error: 'Failed to analyze options DEX' });
+  }
+});
+
+// ==================== v13.0 API ====================
+
+// ---- v13.0: Liquid Staking API ----
+
+app.get('/api/v13/liquid-staking/protocols', authMiddleware('read'), (_req, res) => {
+  res.json({ protocols: latestLiquidStaking?.protocols || [], timestamp: lastLiquidStakingFetch });
+});
+
+app.get('/api/v13/liquid-staking/comparison', authMiddleware('read'), (_req, res) => {
+  res.json({ comparison: latestLiquidStaking?.comparison || [], timestamp: lastLiquidStakingFetch });
+});
+
+app.get('/api/v13/liquid-staking/arbitrage', authMiddleware('read'), (_req, res) => {
+  res.json({ arbitrageOpps: latestLiquidStaking?.arbitrageOpps || [], timestamp: lastLiquidStakingFetch });
+});
+
+app.get('/api/v13/liquid-staking/historical', authMiddleware('read'), (_req, res) => {
+  res.json({ historicalApy: latestLiquidStaking?.historicalApy || [], timestamp: lastLiquidStakingFetch });
+});
+
+app.post('/api/v13/liquid-staking/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestLiquidStaking = await analyzeLiquidStaking();
+    lastLiquidStakingFetch = Date.now();
+    res.json({ success: true, liquidStaking: latestLiquidStaking });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze liquid staking' });
+  }
+});
+
+// ---- v13.1: Airdrop Eligibility API ----
+
+app.get('/api/v13/airdrop/protocols', authMiddleware('read'), (_req, res) => {
+  res.json({ protocols: latestAirdropElig?.protocols || [], timestamp: lastAirdropEligFetch });
+});
+
+app.get('/api/v13/airdrop/top-opps', authMiddleware('read'), (_req, res) => {
+  res.json({ topOpps: latestAirdropElig?.topOpps || [], timestamp: lastAirdropEligFetch });
+});
+
+app.get('/api/v13/airdrop/portfolio', authMiddleware('read'), (_req, res) => {
+  res.json({ portfolioEligibility: latestAirdropElig?.portfolioEligibility || {}, timestamp: lastAirdropEligFetch });
+});
+
+app.get('/api/v13/airdrop/timeline', authMiddleware('read'), (_req, res) => {
+  res.json({ timeline: latestAirdropElig?.timeline || [], timestamp: lastAirdropEligFetch });
+});
+
+app.post('/api/v13/airdrop/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestAirdropElig = await analyzeAirdropEligibility();
+    lastAirdropEligFetch = Date.now();
+    res.json({ success: true, airdropElig: latestAirdropElig });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze airdrop eligibility' });
+  }
+});
+
+// ---- v13.2: Tokenomics API ----
+
+app.get('/api/v13/tokenomics/tokens', authMiddleware('read'), (_req, res) => {
+  res.json({ tokens: latestTokenomics?.tokens || [], timestamp: lastTokenomicsFetch });
+});
+
+app.get('/api/v13/tokenomics/unlocks', authMiddleware('read'), (_req, res) => {
+  res.json({ topUnlocks: latestTokenomics?.topUnlocks || [], timestamp: lastTokenomicsFetch });
+});
+
+app.get('/api/v13/tokenomics/burn-analysis', authMiddleware('read'), (_req, res) => {
+  res.json({ burnAnalysis: latestTokenomics?.burnAnalysis || [], timestamp: lastTokenomicsFetch });
+});
+
+app.get('/api/v13/tokenomics/valuation', authMiddleware('read'), (_req, res) => {
+  res.json({ valuationMetrics: latestTokenomics?.valuationMetrics || [], timestamp: lastTokenomicsFetch });
+});
+
+app.post('/api/v13/tokenomics/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestTokenomics = await analyzeTokenomics();
+    lastTokenomicsFetch = Date.now();
+    res.json({ success: true, tokenomics: latestTokenomics });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze tokenomics' });
+  }
+});
+
+// ---- v13.3: Sentiment Index API ----
+
+app.get('/api/v13/sentiment/composite', authMiddleware('read'), (_req, res) => {
+  res.json({ compositeIndex: latestSentimentIdx?.compositeIndex || 0, classification: latestSentimentIdx?.classification || 'NEUTRAL', timestamp: lastSentimentIdxFetch });
+});
+
+app.get('/api/v13/sentiment/components', authMiddleware('read'), (_req, res) => {
+  res.json({ components: latestSentimentIdx?.components || [], timestamp: lastSentimentIdxFetch });
+});
+
+app.get('/api/v13/sentiment/on-chain', authMiddleware('read'), (_req, res) => {
+  res.json({ onChainMetrics: latestSentimentIdx?.onChainMetrics || {}, timestamp: lastSentimentIdxFetch });
+});
+
+app.get('/api/v13/sentiment/social', authMiddleware('read'), (_req, res) => {
+  res.json({ socialMetrics: latestSentimentIdx?.socialMetrics || {}, timestamp: lastSentimentIdxFetch });
+});
+
+app.post('/api/v13/sentiment/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestSentimentIdx = await analyzeSentimentIndex();
+    lastSentimentIdxFetch = Date.now();
+    res.json({ success: true, sentimentIdx: latestSentimentIdx });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze sentiment index' });
+  }
+});
+
+// ---- v13.4: Smart Money Holdings API ----
+
+app.get('/api/v13/smart-money/traders', authMiddleware('read'), (_req, res) => {
+  res.json({ traders: latestSmartMoneyHoldings?.traders || [], timestamp: lastSmartMoneyHoldingsFetch });
+});
+
+app.get('/api/v13/smart-money/top-movers', authMiddleware('read'), (_req, res) => {
+  res.json({ topMovers: latestSmartMoneyHoldings?.topMovers || [], timestamp: lastSmartMoneyHoldingsFetch });
+});
+
+app.get('/api/v13/smart-money/sectors', authMiddleware('read'), (_req, res) => {
+  res.json({ sectorAllocation: latestSmartMoneyHoldings?.sectorAllocation || [], timestamp: lastSmartMoneyHoldingsFetch });
+});
+
+app.get('/api/v13/smart-money/aggregate', authMiddleware('read'), (_req, res) => {
+  res.json({ aggregateStats: latestSmartMoneyHoldings?.aggregateStats || {}, timestamp: lastSmartMoneyHoldingsFetch });
+});
+
+app.post('/api/v13/smart-money/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestSmartMoneyHoldings = await analyzeSmartMoneyHoldings();
+    lastSmartMoneyHoldingsFetch = Date.now();
+    res.json({ success: true, smartMoneyHoldings: latestSmartMoneyHoldings });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze smart money holdings' });
+  }
+});
+
+// ---- v13.5: MEV Builder Revenue API ----
+
+app.get('/api/v13/mev-builders/builders', authMiddleware('read'), (_req, res) => {
+  res.json({ builders: latestMEVBuilderRev?.builders || [], timestamp: lastMEVBuilderRevFetch });
+});
+
+app.get('/api/v13/mev-builders/relays', authMiddleware('read'), (_req, res) => {
+  res.json({ relayStats: latestMEVBuilderRev?.relayStats || [], timestamp: lastMEVBuilderRevFetch });
+});
+
+app.get('/api/v13/mev-builders/revenue-analysis', authMiddleware('read'), (_req, res) => {
+  res.json({ revenueAnalysis: latestMEVBuilderRev?.revenueAnalysis || {}, timestamp: lastMEVBuilderRevFetch });
+});
+
+app.get('/api/v13/mev-builders/alerts', authMiddleware('read'), (_req, res) => {
+  res.json({ alerts: latestMEVBuilderRev?.alerts || [], timestamp: lastMEVBuilderRevFetch });
+});
+
+app.post('/api/v13/mev-builders/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestMEVBuilderRev = await analyzeMEVBuilderRevenue();
+    lastMEVBuilderRevFetch = Date.now();
+    res.json({ success: true, mevBuilderRev: latestMEVBuilderRev });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze MEV builder revenue' });
   }
 });
 

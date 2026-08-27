@@ -1389,6 +1389,78 @@
     </div>
   </div>
 
+  <!-- v13.0: Liquid Staking -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v13.0: LST Protocols <span id="lstBadge" class="tag bd bb">-</span></h2>
+      <div id="lstProtocols" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+    <div class="card">
+      <h2>v13.0: LST Arbitrage <span id="lstArbBadge" class="tag bd bg">-</span></h2>
+      <div id="lstArbitrage" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Scanning...</div></div>
+    </div>
+  </div>
+
+  <!-- v13.1: Airdrop Eligibility -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v13.1: Airdrop Ops <span id="adpBadge" class="tag bd bb">-</span></h2>
+      <div id="airdropOps" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+    <div class="card">
+      <h2>v13.1: Airdrop Timeline <span id="adtBadge" class="tag bd bg">-</span></h2>
+      <div id="airdropTimeline" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- v13.2: Tokenomics -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v13.2: Tokenomics <span id="tkmBadge" class="tag bd bb">-</span></h2>
+      <div id="tokenomics" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+    <div class="card">
+      <h2>v13.2: Top Unlocks <span id="tkuBadge" class="tag bd br">-</span></h2>
+      <div id="topUnlocksTkm" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- v13.3: Sentiment Index -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v13.3: Fear & Greed <span id="fgBadge" class="tag bd bb">-</span></h2>
+      <div id="fearGreed" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+    <div class="card">
+      <h2>v13.3: Sentiment Signals <span id="sgBadge" class="tag bd bg">-</span></h2>
+      <div id="sentSignals" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- v13.4: Smart Money Holdings -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v13.4: Smart Money <span id="smBadge" class="tag bd bb">-</span></h2>
+      <div id="smartMoney" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+    <div class="card">
+      <h2>v13.4: Top Movers <span id="tmmBadge" class="tag bd bg">-</span></h2>
+      <div id="topMovers" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- v13.5: MEV Builder Revenue -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v13.5: Builders <span id="bldBadge" class="tag bd bb">-</span></h2>
+      <div id="builders" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+    <div class="card">
+      <h2>v13.5: Builder Revenue <span id="revBadge" class="tag bd bg">-</span></h2>
+      <div id="builderRevenue" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -1514,6 +1586,12 @@ function render() {
   renderFundingHeatmap(); renderCrossExArb();
   renderBridgeTVL(); renderTVLAnomalies();
   renderCEXReserves(); renderPORAlerts();
+  renderLSTProtocols(); renderLSTArbitrage();
+  renderAirdropOps(); renderAirdropTimeline();
+  renderTokenomics(); renderTopUnlocks();
+  renderFearGreed(); renderSentSignals();
+  renderSmartMoney(); renderTopMovers();
+  renderBuilders(); renderBuilderRevenue();
 }
 
 function renderHM() {
@@ -2513,6 +2591,20 @@ function renderBridgeTVL(){var b=data.bridgeTVL;if(!b){$('bridgeTvl').innerHTML=
 function renderTVLAnomalies(){var b=data.bridgeTVL;if(!b){$('tvlAnomalies').innerHTML='<div class="emp">Loading...</div>';return}var a=(b.anomalies||[]).slice(0,5);$('tvlAnomBadge').textContent=a.length+' anomalies';var h='';for(var x of a){h+='<div class="tvl-anom '+x.severity.toLowerCase()+'"><span class="anom-bridge">'+x.bridge.slice(0,10)+'</span><span class="anom-sev '+x.severity.toLowerCase()+'">'+x.severity.slice(0,4)+'</span><span class="anom-chg">'+(x.tvlChange*100).toFixed(1)+'%</span></div>'}$('tvlAnomalies').innerHTML=h||'<div class="emp">No anomalies</div>'}
 function renderCEXReserves(){var p=data.proofOfReserves;if(!p){$('cexReserves').innerHTML='<div class="emp">Loading...</div>';return}var e=(p.exchanges||[]).slice(0,6);$('porExBadge').textContent=e.length+' exchanges';var h='';for(var x of e){h+='<div class="por-ex '+x.riskLevel.toLowerCase()+'"><span class="por-name">'+x.name.slice(0,6)+'</span><span class="por-res">$'+(x.totalReservesUSD/1e9).toFixed(1)+'B</span><span class="por-cov '+(x.coverage>100?'pos':'neg')+'">'+x.coverage.toFixed(0)+'%</span></div>'}$('cexReserves').innerHTML=h||'<div class="emp">No reserve data</div>'}
 function renderPORAlerts(){var p=data.proofOfReserves;if(!p){$('porAlerts').innerHTML='<div class="emp">Loading...</div>';return}var a=(p.alerts||[]).slice(0,5);$('porAlertBadge').textContent=a.length+' alerts';var h='';for(var x of a){h+='<div class="por-alert '+x.severity.toLowerCase()+'"><span class="por-alert-ex">'+x.exchange.slice(0,6)+'</span><span class="por-alert-sev '+x.severity.toLowerCase()+'">'+x.severity.slice(0,4)+'</span><span class="por-alert-msg">'+x.message.slice(0,25)+'</span></div>'}$('porAlerts').innerHTML=h||'<div class="emp">No POR alerts</div>'}
+
+// ==================== v13.0 Renders ====================
+function renderLSTProtocols(){var l=data.liquidStaking;if(!l){$('lstProtocols').innerHTML='<div class="emp">Loading...</div>';return}var p=(l.protocols||[]).slice(0,6);$('lstBadge').textContent=p.length+' protocols';var h='';for(var x of p){h+='<div class="lst-proto '+(x.tvl>1e9?'high':x.tvl>1e8?'med':'low')+'"><span class="lst-name">'+x.name.slice(0,10)+'</span><span class="lst-tvl">$'+(x.tvl/1e6).toFixed(0)+'M</span><span class="lst-apy '+(x.apy>5?'high':'med')+'">'+x.apy.toFixed(2)+'%</span></div>'}$('lstProtocols').innerHTML=h||'<div class="emp">No LST protocols</div>'}
+function renderLSTArbitrage(){var l=data.liquidStaking;if(!l){$('lstArbitrage').innerHTML='<div class="emp">Loading...</div>';return}var a=(l.arbitrage||[]).slice(0,5);$('lstArbBadge').textContent=a.length+' arbs';var h='';for(var x of a){h+='<div class="lst-arb '+(x.spreadBps>20?'high':x.spreadBps>10?'med':'low')+'"><span class="lst-arb-token">'+x.token.slice(0,8)+'</span><span class="lst-arb-spread '+(x.spreadBps>0?'pos':'neg')+'">'+x.spreadBps+'bps</span><span class="lst-arb-profit">$'+x.potentialProfit.toFixed(0)+'</span></div>'}$('lstArbitrage').innerHTML=h||'<div class="emp">No LST arb</div>'}
+function renderAirdropOps(){var a=data.airdropElig;if(!a){$('airdropOps').innerHTML='<div class="emp">Loading...</div>';return}var o=(a.operations||[]).slice(0,6);$('adpBadge').textContent=o.length+' ops';var h='';for(var x of o){h+='<div class="adp-op '+x.urgency.toLowerCase()+'"><span class="adp-chain">'+x.chain.slice(0,6)+'</span><span class="adp-est '$'+x.estimatedValue.toFixed(0)+'</span><span class="adp-urg '+x.urgency.toLowerCase()+'">'+x.urgency.slice(0,4)+'</span></div>'}$('airdropOps').innerHTML=h||'<div class="emp">No airdrop ops</div>'}
+function renderAirdropTimeline(){var a=data.airdropElig;if(!a){$('airdropTimeline').innerHTML='<div class="emp">Loading...</div>';return}var t=(a.timeline||[]).slice(0,5);$('adtBadge').textContent=t.length+' upcoming';var h='';for(var x of t){h+='<div class="adp-timeline '+(x.confirmed?'confirmed':'rumored')+'"><span class="adt-date">'+x.date.slice(5,10)+'</span><span class="adt-token">'+x.token.slice(0,8)+'</span><span class="adt-conf '+x.confidence.toLowerCase()+'">'+x.confidence.slice(0,4)+'</span></div>'}$('airdropTimeline').innerHTML=h||'<div class="emp">No timeline</div>'}
+function renderTokenomics(){var t=data.tokenomics;if(!t){$('tokenomics').innerHTML='<div class="emp">Loading...</div>';return}var k=(t.tokens||[]).slice(0,6);$('tkmBadge').textContent=k.length+' tokens';var h='';for(var x of k){h+='<div class="tkm-token '+(x.inflation>5?'high':'x.inflation>2?'med':'low')+'"><span class="tkm-sym">'+x.symbol.slice(0,6)+'</span><span class="tkm-inf">'+(x.inflation>0?'+':'')+x.inflation.toFixed(1)+'%</span><span class="tkm-ve">'+(x.vestedPct*100).toFixed(0)+'%</span></div>'}$('tokenomics').innerHTML=h||'<div class="emp">No tokenomics</div>'}
+function renderTopUnlocks(){var t=data.tokenomics;if(!t){$('topUnlocksTkm').innerHTML='<div class="emp">Loading...</div>';return}var u=(t.unlockEvents||[]).slice(0,5);$('tkuBadge').textContent=u.length+' events';var h='';for(var x of u){h+='<div class="tku-event '+(x.impact>70?'high':x.impact>40?'med':'low')+'"><span class="tku-sym">'+x.symbol.slice(0,6)+'</span><span class="tku-date">'+x.date.slice(5,10)+'</span><span class="tku-usd">$'+(x.amountUSD/1e6).toFixed(0)+'M</span><span class="tku-imp">'+x.impact+'%</span></div>'}$('topUnlocksTkm').innerHTML=h||'<div class="emp">No unlocks</div>'}
+function renderFearGreed(){var s=data.sentimentIdx;if(!s){$('fearGreed').innerHTML='<div class="emp">Loading...</div>';return}var f=s.fearGreed||{};$('fgBadge').textContent=f.value+'/'+f.label;var h='<div class="fg-index '+(f.value>75?'extreme-greed':f.value>55?'greed':f.value>45?'neutral':f.value>25?'fear':'extreme-fear')+'"><span class="fg-val">'+f.value+'</span><span class="fg-label">'+f.label+'</span></div>';var m=(f.marketMood||[]).slice(0,4);for(var x of m){h+='<div class="fg-mood"><span class="fg-mood-chain">'+x.chain.slice(0,6)+'</span><span class="fg-mood-score '+(x.score>60?'pos':'neg')+'">'+x.score+'</span></div>'}$('fearGreed').innerHTML=h||'<div class="emp">No sentiment data</div>'}
+function renderSentSignals(){var s=data.sentimentIdx;if(!s){$('sentSignals').innerHTML='<div class="emp">Loading...</div>';return}var g=(s.signals||[]).slice(0,5);$('sgBadge').textContent=g.length+' signals';var h='';for(var x of g){h+='<div class="sg-signal '+x.direction.toLowerCase()+'"><span class="sg-signal-sym">'+x.symbol.slice(0,6)+'</span><span class="sg-signal-dir '+x.direction.toLowerCase()+'">'+x.direction.slice(0,4)+'</span><span class="sg-signal-str '+(x.strength>7?'high':x.strength>4?'med':'low')+'">'+x.strength+'/10</span></div>'}$('sentSignals').innerHTML=h||'<div class="emp">No signals</div>'}
+function renderSmartMoney(){var s=data.smartMoneyHoldings;if(!s){$('smartMoney').innerHTML='<div class="emp">Loading...</div>';return}var w=(s.wallets||[]).slice(0,6);$('smBadge').textContent=w.length+' wallets';var h='';for(var x of w){h+='<div class="sm-wallet '+(x.roi>50?'high':x.roi>20?'med':'low')+'"><span class="sm-addr">'+x.address.slice(0,8)+'...</span><span class="sm-roi '+(x.roi>0?'pos':'neg')+'">'+(x.roi>0?'+':'')+x.roi.toFixed(0)+'%</span><span class="sm-aum">$'+(x.aum/1e6).toFixed(1)+'M</span></div>'}$('smartMoney').innerHTML=h||'<div class="emp">No smart money</div>'}
+function renderTopMovers(){var s=data.smartMoneyHoldings;if(!s){$('topMovers').innerHTML='<div class="emp">Loading...</div>';return}var m=(s.movers||[]).slice(0,5);$('tmmBadge').textContent=m.length+' movers';var h='';for(var x of m){h+='<div class="tm-mover '+(x.change24h>10?'high':x.change24h>5?'med':'low')+'"><span class="tm-sym">'+x.symbol.slice(0,6)+'</span><span class="tm-chg '+(x.change24h>0?'pos':'neg')+'">'+(x.change24h>0?'+':'')+x.change24h.toFixed(1)+'%</span><span class="tm-vol">$'+(x.volume24h/1e6).toFixed(0)+'M</span></div>'}$('topMovers').innerHTML=h||'<div class="emp">No movers</div>'}
+function renderBuilders(){var m=data.mevBuilderRev;if(!m){$('builders').innerHTML='<div class="emp">Loading...</div>';return}var b=(m.builders||[]).slice(0,6);$('bldBadge').textContent=b.length+' builders';var h='';for(var x of b){h+='<div class="bld-item '+(x.marketShare>20?'high':x.marketShare>10?'med':'low')+'"><span class="bld-name">'+x.name.slice(0,10)+'</span><span class="bld-share">'+x.marketShare.toFixed(1)+'%</span><span class="bld-blocks">'+x.blocks24h+'</span></div>'}$('builders').innerHTML=h||'<div class="emp">No builders</div>'}
+function renderBuilderRevenue(){var m=data.mevBuilderRev;if(!m){$('builderRevenue').innerHTML='<div class="emp">Loading...</div>';return}var r=(m.revenue||[]).slice(0,5);$('revBadge').textContent=r.length+' entries';var h='';for(var x of r){h+='<div class="rev-item '>(x.dailyRevenue>10?'high':x.dailyRevenue>5?'med':'low')+'"><span class="rev-name">'+x.builder.slice(0,10)+'</span><span class="rev-daily">'+x.dailyRevenue.toFixed(2)+'Ξ</span><span class="rev-total">$'+(x.totalUSD/1e6).toFixed(1)+'M</span></div>'}$('builderRevenue').innerHTML=h||'<div class="emp">No revenue data</div>'}
 
 // Kelly
 $('kB')?.addEventListener('click', async () => {
