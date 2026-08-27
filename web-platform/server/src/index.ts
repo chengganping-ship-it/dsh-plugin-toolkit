@@ -47,6 +47,7 @@ import { analyzeWhaleActivity, getCachedWhaleSummary, clearWhaleCache, WhaleSumm
 import { analyzeBridges, getCachedBridgeSummary, clearBridgeCache, BridgeSummary } from './engine/bridge.js';
 import { analyzeOptions, getOptionsSummary, GreeksSummary } from './engine/options.js';
 import { optimizeGrid, getCachedGrids, clearGridCache, GridOptimization } from './engine/grid.js';
+import { analyzeLiquidations, getCachedLiquidations, clearLiquidationCache, LiquidationAnalysis } from './engine/liquidation.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -138,6 +139,8 @@ let latestOptions: GreeksSummary[] = [];
 let lastOptionsFetch = 0;
 let latestGridOptimizations: GridOptimization[] = [];
 let lastGridFetch = 0;
+let latestLiquidation: LiquidationAnalysis | null = null;
+let lastLiquidationFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -417,6 +420,25 @@ async function poll() {
       }
     }
 
+    // v7.2: Liquidation cascade prediction (every 5 minutes)
+    if (pollCount % 10 === 0 || !latestLiquidation) {
+      try {
+        const btcRate = latestRates.find(r => r.symbol === 'BTCUSDT');
+        const ethRate = latestRates.find(r => r.symbol === 'ETHUSDT');
+        if (btcRate) {
+          latestLiquidation = await analyzeLiquidations(
+            'BTC',
+            btcRate.markPrice || 65000,
+            btcRate.openInterest || 15e9,
+            0.03
+          );
+          lastLiquidationFetch = Date.now();
+        }
+      } catch (e) {
+        // Liquidation analysis failed
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
@@ -502,6 +524,7 @@ function broadcast() {
       bridge: latestBridgeSummary,
       options: latestOptions,
       grid: latestGridOptimizations,
+      liquidation: latestLiquidation,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -554,6 +577,7 @@ wss.on('connection', (ws) => {
         bridge: latestBridgeSummary,
         options: latestOptions,
         grid: latestGridOptimizations,
+        liquidation: latestLiquidation,
         stats: {
           totalRates: latestRates.length,
           exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -1159,6 +1183,37 @@ app.post('/api/v7/grid/refresh', authMiddleware('write'), async (_req, res) => {
     res.json({ success: true, grids: latestGridOptimizations });
   } catch (e) {
     res.status(500).json({ error: 'Failed to optimize grids' });
+  }
+});
+
+// ---- v7.2: Liquidation Cascade Predictor API ----
+
+app.get('/api/v7/liquidation', authMiddleware('read'), (_req, res) => {
+  if (!latestLiquidation) { res.status(503).json({ error: 'No liquidation data yet' }); return; }
+  res.json(latestLiquidation);
+});
+
+app.get('/api/v7/liquidation/warnings', authMiddleware('read'), (_req, res) => {
+  res.json({ warnings: latestLiquidation?.warnings || [], timestamp: lastLiquidationFetch });
+});
+
+app.get('/api/v7/liquidation/clusters', authMiddleware('read'), (_req, res) => {
+  res.json({ clusters: latestLiquidation?.clusters || [], timestamp: lastLiquidationFetch });
+});
+
+app.post('/api/v7/liquidation/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    const btcRate = latestRates.find(r => r.symbol === 'BTCUSDT');
+    latestLiquidation = await analyzeLiquidations(
+      'BTC',
+      btcRate?.markPrice || 65000,
+      btcRate?.openInterest || 15e9,
+      0.03
+    );
+    lastLiquidationFetch = Date.now();
+    res.json({ success: true, liquidation: latestLiquidation });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze liquidations' });
   }
 });
 

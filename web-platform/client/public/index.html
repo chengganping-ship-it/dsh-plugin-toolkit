@@ -178,6 +178,34 @@
     .mc-card{padding:6px;background:#141c28;border-radius:4px;margin-bottom:5px;font-size:9px;border-left:3px solid #f5a623}
     .mc-card .sym{font-weight:600;color:#f5a623}
     .mc-card .mc-stats{display:flex;gap:8px;margin-top:3px;font-size:8px;color:#8899aa;flex-wrap:wrap}
+    .liq-wall{padding:5px;background:#1a1020;border-radius:4px;margin-bottom:4px;font-size:9px;display:flex;justify-content:space-between;border-left:3px solid #ff4444}
+    .liq-wall .wall-type{font-weight:600}
+    .liq-wall.long-wall{border-left-color:#ff4444}
+    .liq-wall.short-wall{border-left-color:#00d4aa}
+    .liq-pressure{padding:4px;background:#141c28;border-radius:3px;margin-bottom:5px;font-size:8px;text-align:center}
+    .liq-pressure.short-press{color:#00d4aa}
+    .liq-pressure.long-press{color:#ff4444}
+    .liq-warn{padding:5px;background:#141c28;border-radius:4px;margin-bottom:4px;font-size:9px;border-left:3px solid #6b7a8d}
+    .liq-warn.crit{border-left-color:#ff4444;background:#2a1515}
+    .liq-warn.high{border-left-color:#ff6600}
+    .liq-warn.med{border-left-color:#f5a623}
+    .liq-warn.low{border-left-color:#4a9eff}
+    .liq-warn .warn-type{font-weight:600}
+    .liq-warn .warn-msg{font-size:8px;color:#8899aa;margin-top:2px}
+    .liq-gap{padding:3px;background:#1a1020;border-radius:3px;margin-bottom:5px;font-size:8px;text-align:center}
+    .liq-gap.large{background:#2a1515;color:#ff4444}
+    .liq-gap.med{color:#f5a623}
+    .liq-gap.sm{color:#4a9eff}
+    .cluster{padding:5px;background:#141c28;border-radius:4px;margin-bottom:4px;font-size:9px;border-left:3px solid #4a9eff}
+    .cluster.crit{border-left-color:#ff4444;background:#2a1515}
+    .cluster.high{border-left-color:#ff6600}
+    .cluster .cluster-price{font-weight:600;color:#4a9eff}
+    .cluster .cluster-urg{padding:1px 4px;border-radius:3px;font-size:7px;margin-left:4px}
+    .cluster .cluster-urg.critical{background:#ff444422;color:#ff4444}
+    .cluster .cluster-urg.high{background:#ff660022;color:#ff6600}
+    .cluster .cluster-urg.medium{background:#f5a62322;color:#f5a623}
+    .cluster .cluster-urg.low{background:#4a9eff22;color:#4a9eff}
+    .cluster .cluster-stats{display:flex;gap:6px;margin-top:3px;font-size:8px;color:#8899aa;flex-wrap:wrap}
     @media(max-width:1100px){.g{grid-template-columns:repeat(3,1fr)}.g5{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:800px){.g{grid-template-columns:repeat(2,1fr)}.g2,.g3,.g5{grid-template-columns:1fr}.c{padding:6px}.hdr{padding:6px 10px}.stats{gap:5px}}
     @media(max-width:500px){.g{grid-template-columns:1fr}.hm{grid-template-columns:repeat(auto-fill,minmax(65px,1fr))}.stats .lb{font-size:9px}}
@@ -372,6 +400,18 @@
     </div>
   </div>
 
+  <!-- v7.2: Liquidation Cascade Predictor -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v7.2: Liquidation Cascade Predictor <span id="liqBadge" class="tag bd bb">-</span></h2>
+      <div id="liqWarnings" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Scanning liquidation levels...</div></div>
+    </div>
+    <div class="card">
+      <h2>v7.2: Cascade Clusters & Pressure <span id="clusterBadge" class="tag bd bb">-</span></h2>
+      <div id="liqClusters" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Analyzing clusters...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -448,6 +488,7 @@ function render() {
   renderBridgeStatus(); renderCcArb();
   renderOptGreeks(); renderFvSignals();
   renderGridOverview(); renderMCResults();
+  renderLiqWarnings(); renderLiqClusters();
 }
 
 function renderHM() {
@@ -1043,6 +1084,51 @@ function renderMCResults() {
         <span>P95: ${g.mcP95Pnl > 0 ? '+' : ''}${g.mcP95Pnl.toFixed(1)}%</span>
       </div>
       <div style="font-size:7px;color:#6b7a8d">Walk-forward: ${g.walkForwardEvals} evals | Regime: ${g.regime}</div>
+    </div>
+  `).join('');
+}
+
+function renderLiqWarnings() {
+  const liq = data.liquidation;
+  if (!liq) { $('liqWarnings').innerHTML = '<div class="emp">Analyzing liquidations...</div>'; return; }
+  $('liqBadge').textContent = 'Risk ' + liq.globalRiskScore.toFixed(0) + '%';
+  const wallInfo = liq.nearestWall 
+    ? `<div class="liq-wall ${liq.nearestWall.type === 'LONG' ? 'long-wall' : 'short-wall'}">
+        <span class="wall-type">${liq.nearestWall.type} WALL</span>
+        <span>$${(liq.nearestWall.size / 1e6).toFixed(0)}M @ $${liq.nearestWall.price.toLocaleString()} (${liq.nearestWall.distancePct.toFixed(1)}%)</span>
+       </div>` : '';
+  const pressureInfo = `<div class="liq-pressure ${liq.pressureIndex > 0 ? 'short-press' : 'long-press'}">
+    Pressure: ${liq.pressureIndex > 0 ? 'Short' : 'Long'} ${Math.abs(liq.pressureIndex).toFixed(0)}% | Cascade: ${liq.cascadeProbability.toFixed(0)}%
+  </div>`;
+  const warningsHtml = (liq.warnings || []).slice(0, 4).map(w => `
+    <div class="liq-warn ${w.severity > 70 ? 'crit' : w.severity > 50 ? 'high' : w.severity > 30 ? 'med' : 'low'}">
+      <div><span class="warn-type">${w.type?.replace(/_/g, ' ')}</span> <span style="color:${w.severity > 70 ? '#ff4444' : '#f5a623'}">Sev ${w.severity.toFixed(0)}</span></div>
+      <div class="warn-msg">${w.message}</div>
+      <div style="font-size:7px;color:#6b7a8d">Impact: $${(w.estimatedImpact / 1e6).toFixed(1)}M | ${w.timeHorizon} | ${w.recommendation}</div>
+    </div>
+  `).join('');
+  $('liqWarnings').innerHTML = wallInfo + pressureInfo + warningsHtml || '<div class="emp">No active warnings</div>';
+}
+
+function renderLiqClusters() {
+  const liq = data.liquidation;
+  if (!liq) { $('liqClusters').innerHTML = '<div class="emp">Loading clusters...</div>'; return; }
+  const clusters = liq.clusters || [];
+  $('clusterBadge').textContent = clusters.length + ' clusters';
+  const gapInfo = liq.liquidityGap ? `
+    <div class="liq-gap ${liq.liquidityGap.severity === 'LARGE' ? 'large' : liq.liquidityGap.severity === 'MEDIUM' ? 'med' : 'sm'}">
+      Gap: $${liq.liquidityGap.start.toFixed(0)} - $${liq.liquidityGap.end.toFixed(0)} (${liq.liquidityGap.severity})
+    </div>` : '';
+  $('liqClusters').innerHTML = gapInfo + clusters.slice(0, 6).map(c => `
+    <div class="cluster ${c.urgency === 'CRITICAL' ? 'crit' : c.urgency === 'HIGH' ? 'high' : ''}">
+      <div><span class="cluster-price">$${c.centerPrice.toLocaleString()}</span> <span class="cluster-urg ${c.urgency.toLowerCase()}">${c.urgency}</span> <span style="color:#4a9eff">Trig ${(c.triggerProbability).toFixed(0)}%</span></div>
+      <div class="cluster-stats">
+        <span>$${(c.totalSize / 1e6).toFixed(0)}M</span>
+        <span>Long:$${(c.longSize / 1e6).toFixed(0)}M</span>
+        <span>Short:$${(c.shortSize / 1e6).toFixed(0)}M</span>
+        <span>DD:${c.cascadeDepth}</span>
+      </div>
+      <div style="font-size:7px;color:#6b7a8d">Slippage: ${c.expectedSlippage.toFixed(2)}% | Density: ${c.density.toFixed(1)}</div>
     </div>
   `).join('');
 }
