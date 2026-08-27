@@ -2,8 +2,15 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>Funding Mirror v6.0</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#00d4aa">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="Institutional-grade crypto funding rate arbitrage monitoring and trading">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/icon.svg">
+  <link rel="icon" type="image/svg+xml" href="/icons/icon.svg">
+  <title>Funding Mirror v7.0</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#080c14;color:#e0e6ed;overflow-x:hidden}
@@ -790,6 +797,35 @@ $('kB')?.addEventListener('click', async () => {
   $('kR').innerHTML = `<div class="kms"><div class="km"><div class="v">${r.halfKelly}%</div><div class="l">Half Kelly</div></div>
     <div class="km"><div class="v">$${r.recommendedSize?.toLocaleString()}</div><div class="l">Size</div></div></div>`;
 });
+
+// ==================== PWA: Service Worker Registration ====================
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').then((reg) => {
+      // Check for updates periodically
+      setInterval(() => reg.update(), 3600000);
+    }).catch(() => {});
+  });
+}
+
+// PWA: Prompt install
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  deferredPrompt = e;
+  const installBtn = document.createElement('button');
+  installBtn.textContent = '📲 Install';
+  installBtn.style.cssText = 'position:fixed;bottom:10px;right:10px;background:#00d4aa;color:#080c14;border:none;padding:8px 16px;border-radius:20px;font-size:12px;font-weight:600;cursor:pointer;z-index:100;box-shadow:0 2px 10px #00d4aa44';
+  installBtn.onclick = () => {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => installBtn.remove());
+  };
+  document.body.appendChild(ininstallBtn);
+});
+
+// PWA: Notification permission for alerts
+if ('Notification' in window && Notification.permission === 'default') {
+  document.addEventListener('click', () => Notification.requestPermission(), { once: true });
+}
 
 // Backtest
 $('btR')?.addEventListener('click', async () => {
