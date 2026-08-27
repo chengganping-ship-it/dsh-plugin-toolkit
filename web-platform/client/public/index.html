@@ -261,6 +261,23 @@
     .stress-scenario.med{border-left-color:#f5a623}
     .stress-scenario .scen-name{font-weight:600;color:#4a9eff}
     .stress-scenario .scen-desc{font-size:8px;color:#8899aa;margin-top:2px}
+    .ob-aggregate{display:flex;gap:10px;font-size:8px;margin-bottom:6px;padding:3px;background:#0d1117;border-radius:3px;flex-wrap:wrap}
+    .ob-exchange{display:flex;gap:6px;padding:4px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .ob-exchange.bid-heavy{background:#00d4aa08}
+    .ob-exchange.ask-heavy{background:#ff444408}
+    .ob-exchange .ex-name{width:55px;font-weight:600;color:#4a9eff}
+    .ob-exchange .ex-imb{width:45px;text-align:right}
+    .ob-exchange .ex-spread{width:50px;text-align:right;color:#6b7a8d}
+    .ob-exchange .ex-depth{margin-left:auto;color:#8899aa}
+    .ob-wall{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28}
+    .ob-wall .wall-side{width:30px;font-weight:600}
+    .ob-wall.bid-wall .wall-side{color:#00d4aa}
+    .ob-wall.ask-wall .wall-side{color:#ff4444}
+    .ob-wall .wall-size{width:60px}
+    .ob-wall .wall-price{width:65px;color:#4a9eff}
+    .ob-wall .wall-dist{margin-left:auto;color:#6b7a8d}
+    .ob-signal{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28}
+    .ob-signal .sig-type{flex:1}
     @media(max-width:1100px){.g{grid-template-columns:repeat(3,1fr)}.g5{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:800px){.g{grid-template-columns:repeat(2,1fr)}.g2,.g3,.g5{grid-template-columns:1fr}.c{padding:6px}.hdr{padding:6px 10px}.stats{gap:5px}}
     @media(max-width:500px){.g{grid-template-columns:1fr}.hm{grid-template-columns:repeat(auto-fill,minmax(65px,1fr))}.stats .lb{font-size:9px}}
@@ -503,6 +520,18 @@
     </div>
   </div>
 
+  <!-- v7.6: Order Book Analysis -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v7.6: Order Book Imbalance <span id="obBadge" class="tag bd bb">-</span></h2>
+      <div id="obImbalance" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Analyzing order books...</div></div>
+    </div>
+    <div class="card">
+      <h2>v7.6: Whale Walls & Signals <span id="wallBadge" class="tag bd bb">-</span></h2>
+      <div id="obSignals" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Detecting walls...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -583,6 +612,7 @@ function render() {
   renderTSCurve(); renderTSPredictions();
   renderExecOverview(); renderExecQuality();
   renderRiskMetrics(); renderStressTest();
+  renderOBImbalance(); renderOBSignals();
 }
 
 function renderHM() {
@@ -1368,6 +1398,52 @@ function renderStressTest() {
       <div style="font-size:7px;color:#6b7a8d">Worst: ${s.worstPosition} | Recovery: ${s.recoveryDays}d | Shock: ${(s.priceShock * 100).toFixed(0)}%</div>
     </div>
   `).join('');
+}
+
+function renderOBImbalance() {
+  const ob = data.orderBook;
+  if (!ob) { $('obImbalance').innerHTML = '<div class="emp">Analyzing order books...</div>'; return; }
+  $('obBadge').textContent = 'Imbalance ' + (ob.aggregateImbalance * 100).toFixed(0) + '%';
+  const crossEx = ob.crossExchange || [];
+  $('obImbalance').innerHTML = `
+    <div class="ob-aggregate">
+      <span>Aggregate: <span style="color:${ob.aggregateImbalance > 0 ? '#00d4aa' : '#ff4444'}">${ob.aggregateImbalance > 0 ? '+' : ''}${(ob.aggregateImbalance * 100).toFixed(1)}%</span></span>
+      <span>Best: ${ob.bestExchange}</span>
+      <span>Liquidity: $${(ob.aggregateLiquidity / 1e6).toFixed(0)}M</span>
+    </div>
+    ${crossEx.map(ce => `
+      <div class="ob-exchange ${ce.imbalance > 0.2 ? 'bid-heavy' : ce.imbalance < -0.2 ? 'ask-heavy' : ''}">
+        <span class="ex-name">${ce.exchange}</span>
+        <span class="ex-imb" style="color:${ce.imbalance > 0 ? '#00d4aa' : '#ff4444'}">${ce.imbalance > 0 ? '+' : ''}${(ce.imbalance * 100).toFixed(0)}%</span>
+        <span class="ex-spread">${ce.spreadPct.toFixed(3)}%</span>
+        <span class="ex-depth">$${((ce.bidDepth + ce.askDepth) / 1e6).toFixed(0)}M</span>
+      </div>
+    `).join('')}
+  `;
+}
+
+function renderOBSignals() {
+  const ob = data.orderBook;
+  if (!ob) { $('obSignals').innerHTML = '<div class="emp">Detecting walls...</div>'; return; }
+  const signals = ob.signals || [];
+  const walls = ob.whaleWalls || [];
+  $('wallBadge').textContent = signals.length + ' signals';
+  const wallsHtml = walls.slice(0, 4).map(w => `
+    <div class="ob-wall ${w.side === 'BID' ? 'bid-wall' : 'ask-wall'}">
+      <span class="wall-side">${w.side}</span>
+      <span class="wall-size">$${(w.size / 1e6).toFixed(1)}M</span>
+      <span class="wall-price">$${w.price.toFixed(0)}</span>
+      <span class="wall-dist">${w.distancePct.toFixed(2)}%</span>
+    </div>
+  `).join('');
+  const signalsHtml = signals.slice(0, 4).map(s => `
+    <div class="ob-signal ${s.direction.toLowerCase()}">
+      <span class="sig-type">${s.type?.replace(/_/g, ' ')}</span>
+      <span style="color:${s.direction === 'BULLISH' ? '#00d4aa' : s.direction === 'BEARISH' ? '#ff4444' : '#f5a623'}">${s.direction}</span>
+      <span class="sig-conf">${s.confidence.toFixed(0)}%</span>
+    </div>
+  `).join('');
+  $('obSignals').innerHTML = wallsHtml + (wallsHtml && signalsHtml ? '<div style="font-size:7px;color:#6b7a8d;margin:4px 0">Signals:</div>' : '') + signalsHtml;
 }
 
 // Kelly

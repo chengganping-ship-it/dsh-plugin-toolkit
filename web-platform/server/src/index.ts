@@ -51,6 +51,7 @@ import { analyzeLiquidations, getCachedLiquidations, clearLiquidationCache, Liqu
 import { analyzeTermStructure, getCachedTermStructures, clearTermStructureCache, TermStructureAnalysis } from './engine/termstructure.js';
 import { analyzeExecution, getActiveOrders, getExecutionHistory, clearExecutionHistory, ExecutionAnalysis } from './engine/execution.js';
 import { analyzeRisk, getCachedRisk, clearRiskCache, RiskAnalysis } from './engine/risk.js';
+import { analyzeOrderBooks, getCachedOrderBooks, clearOrderBookCache, OrderBookAnalysis } from './engine/orderbook.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -150,6 +151,8 @@ let latestExecution: ExecutionAnalysis | null = null;
 let lastExecutionFetch = 0;
 let latestRisk: RiskAnalysis | null = null;
 let lastRiskFetch = 0;
+let latestOrderBook: OrderBookAnalysis | null = null;
+let lastOrderBookFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -499,6 +502,19 @@ async function poll() {
       }
     }
 
+    // v7.6: Order book analysis (every 2 minutes)
+    if (pollCount % 4 === 0 || !latestOrderBook) {
+      try {
+        const btcRate = latestRates.find(r => r.symbol === 'BTCUSDT');
+        if (btcRate) {
+          latestOrderBook = await analyzeOrderBooks('BTCUSDT', btcRate.markPrice || 65000);
+          lastOrderBookFetch = Date.now();
+        }
+      } catch (e) {
+        // Order book analysis failed
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
@@ -588,6 +604,7 @@ function broadcast() {
       termStructure: Array.from(latestTermStructures.values()),
       execution: latestExecution,
       risk: latestRisk,
+      orderBook: latestOrderBook,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -644,6 +661,7 @@ wss.on('connection', (ws) => {
         termStructure: Array.from(latestTermStructures.values()),
         execution: latestExecution,
         risk: latestRisk,
+        orderBook: latestOrderBook,
         stats: {
           totalRates: latestRates.length,
           exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -1384,6 +1402,38 @@ app.post('/api/v7/risk/refresh', authMiddleware('write'), async (_req, res) => {
     res.json({ success: true, risk: latestRisk });
   } catch (e) {
     res.status(500).json({ error: 'Failed to analyze risk' });
+  }
+});
+
+// ---- v7.6: Order Book Analysis API ----
+
+app.get('/api/v7/orderbook', authMiddleware('read'), (_req, res) => {
+  if (!latestOrderBook) { res.status(503).json({ error: 'No order book data yet' }); return; }
+  res.json(latestOrderBook);
+});
+
+app.get('/api/v7/orderbook/signals', authMiddleware('read'), (_req, res) => {
+  res.json({ signals: latestOrderBook?.signals || [], timestamp: lastOrderBookFetch });
+});
+
+app.get('/api/v7/orderbook/walls', authMiddleware('read'), (_req, res) => {
+  res.json({ walls: latestOrderBook?.whaleWalls || [], timestamp: lastOrderBookFetch });
+});
+
+app.get('/api/v7/orderbook/cross-exchange', authMiddleware('read'), (_req, res) => {
+  res.json({ comparison: latestOrderBook?.crossExchange || [], timestamp: lastOrderBookFetch });
+});
+
+app.post('/api/v7/orderbook/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    const btcRate = latestRates.find(r => r.symbol === 'BTCUSDT');
+    if (btcRate) {
+      latestOrderBook = await analyzeOrderBooks('BTCUSDT', btcRate.markPrice || 65000);
+      lastOrderBookFetch = Date.now();
+    }
+    res.json({ success: true, orderBook: latestOrderBook });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze order books' });
   }
 });
 
