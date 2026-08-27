@@ -66,6 +66,10 @@ import { analyzeMEVProtection, getCachedMEV, clearMEVCache, MEVAnalysis } from '
 import { analyzeBridgeMonitor, getCachedBridge, clearBridgeMonitorCache, BridgeMonitorData } from './engine/bridgeMonitor.js';
 import { analyzeYieldAggregator, getCachedYield, clearYieldAggCache, YieldAggregatorData } from './engine/yieldAggregator.js';
 import { analyzeNFTPredictions, getCachedNFT, clearNFTPredictorCache, NFTPredictionData } from './engine/nftPricePredictor.js';
+import { analyzeOnChainAnalytics, getCachedOnChain, clearOnChainCache, OnChainAnalyticsData } from './engine/onChainAnalytics.js';
+import { analyzeDaoGovernance, getCachedDao, clearDaoCache, DaoGovernanceData } from './engine/daoGovernance.js';
+import { analyzeRWAYield, getCachedRWA as getCachedRWAYield, clearRWAYieldCache, RWAYieldData } from './engine/rwaYieldMonitor.js';
+import { analyzePredictionArb, getCachedPredArb, clearPredArbCache, PredictionArbData } from './engine/predictionArb.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -195,6 +199,14 @@ let latestYieldAgg: YieldAggregatorData | null = null;
 let lastYieldAggFetch = 0;
 let latestNFTPrediction: NFTPredictionData | null = null;
 let lastNFTPredictionFetch = 0;
+let latestOnChain: OnChainAnalyticsData | null = null;
+let lastOnChainFetch = 0;
+let latestDao: DaoGovernanceData | null = null;
+let lastDaoFetch = 0;
+let latestRWAYield: RWAYieldData | null = null;
+let lastRWAYieldFetch = 0;
+let latestPredArb: PredictionArbData | null = null;
+let lastPredArbFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -687,6 +699,46 @@ async function poll() {
       }
     }
 
+    // v9.8: On-chain analytics (every 10 minutes)
+    if (pollCount % 20 === 0 || !latestOnChain) {
+      try {
+        latestOnChain = await analyzeOnChainAnalytics();
+        lastOnChainFetch = Date.now();
+      } catch (e) {
+        // On-chain analytics failed
+      }
+    }
+
+    // v9.9: DAO governance (every 20 minutes)
+    if (pollCount % 40 === 0 || !latestDao) {
+      try {
+        latestDao = await analyzeDaoGovernance();
+        lastDaoFetch = Date.now();
+      } catch (e) {
+        // DAO governance failed
+      }
+    }
+
+    // v9.10: RWA yield monitoring (every 30 minutes)
+    if (pollCount % 60 === 0 || !latestRWAYield) {
+      try {
+        latestRWAYield = await analyzeRWAYield();
+        lastRWAYieldFetch = Date.now();
+      } catch (e) {
+        // RWA yield monitoring failed
+      }
+    }
+
+    // v9.11: Prediction market arbitrage (every 10 minutes)
+    if (pollCount % 20 === 0 || !latestPredArb) {
+      try {
+        latestPredArb = await analyzePredictionArb();
+        lastPredArbFetch = Date.now();
+      } catch (e) {
+        // Prediction arb failed
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
@@ -790,6 +842,10 @@ function broadcast() {
       bridgeMonitor: latestBridge,
       yieldAggregator: latestYieldAgg,
       nftPrediction: latestNFTPrediction,
+      onChain: latestOnChain,
+      daoGovernance: latestDao,
+      rwaYield: latestRWAYield,
+      predArb: latestPredArb,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -2036,6 +2092,126 @@ app.post('/api/v9/nft/refresh', authMiddleware('write'), async (_req, res) => {
     res.json({ success: true, nft: latestNFTPrediction });
   } catch (e) {
     res.status(500).json({ error: 'Failed to predict NFT prices' });
+  }
+});
+
+// ---- v9.8: On-Chain Analytics API ----
+
+app.get('/api/v9/onchain/whale-txs', authMiddleware('read'), (_req, res) => {
+  res.json({ txs: latestOnChain?.whaleTransactions || [], timestamp: lastOnChainFetch });
+});
+
+app.get('/api/v9/onchain/exchange-flows', authMiddleware('read'), (_req, res) => {
+  res.json({ flows: latestOnChain?.exchangeFlows || [], timestamp: lastOnChainFetch });
+});
+
+app.get('/api/v9/onchain/network-metrics', authMiddleware('read'), (_req, res) => {
+  res.json({ metrics: latestOnChain?.networkMetrics || [], timestamp: lastOnChainFetch });
+});
+
+app.get('/api/v9/onchain/stablecoin-depeg', authMiddleware('read'), (_req, res) => {
+  res.json({ depegs: latestOnChain?.stablecoinDepegs || [], timestamp: lastOnChainFetch });
+});
+
+app.get('/api/v9/onchain/alerts', authMiddleware('read'), (_req, res) => {
+  res.json({ alerts: latestOnChain?.alerts || [], timestamp: lastOnChainFetch });
+});
+
+app.post('/api/v9/onchain/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestOnChain = await analyzeOnChainAnalytics();
+    lastOnChainFetch = Date.now();
+    res.json({ success: true, onchain: latestOnChain });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze on-chain data' });
+  }
+});
+
+// ---- v9.9: DAO Governance API ----
+
+app.get('/api/v9/dao/proposals', authMiddleware('read'), (_req, res) => {
+  res.json({ proposals: latestDao?.proposals || [], timestamp: lastDaoFetch });
+});
+
+app.get('/api/v9/dao/delegates', authMiddleware('read'), (_req, res) => {
+  res.json({ delegates: latestDao?.delegates || [], timestamp: lastDaoFetch });
+});
+
+app.get('/api/v9/dao/attacks', authMiddleware('read'), (_req, res) => {
+  res.json({ attacks: latestDao?.attacks || [], timestamp: lastDaoFetch });
+});
+
+app.get('/api/v9/dao/treasury', authMiddleware('read'), (_req, res) => {
+  res.json({ movements: latestDao?.treasuryMovements || [], timestamp: lastDaoFetch });
+});
+
+app.post('/api/v9/dao/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestDao = await analyzeDaoGovernance();
+    lastDaoFetch = Date.now();
+    res.json({ success: true, dao: latestDao });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze DAO governance' });
+  }
+});
+
+// ---- v9.10: RWA Yield Monitor API ----
+
+app.get('/api/v9/rwa/protocols', authMiddleware('read'), (_req, res) => {
+  res.json({ protocols: latestRWAYield?.protocols || [], timestamp: lastRWAYieldFetch });
+});
+
+app.get('/api/v9/rwa/opportunities', authMiddleware('read'), (_req, res) => {
+  res.json({ opportunities: latestRWAYield?.opportunities || [], timestamp: lastRWAYieldFetch });
+});
+
+app.get('/api/v9/rwa/yield-history', authMiddleware('read'), (_req, res) => {
+  res.json({ histories: latestRWAYield?.yieldHistories || [], timestamp: lastRWAYieldFetch });
+});
+
+app.get('/api/v9/rwa/compliance', authMiddleware('read'), (_req, res) => {
+  res.json({ compliance: latestRWAYield?.compliance || [], timestamp: lastRWAYieldFetch });
+});
+
+app.post('/api/v9/rwa/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestRWAYield = await analyzeRWAYield();
+    lastRWAYieldFetch = Date.now();
+    res.json({ success: true, rwa: latestRWAYield });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to monitor RWA yields' });
+  }
+});
+
+// ---- v9.11: Prediction Market Arbitrage API ----
+
+app.get('/api/v9/pred/markets', authMiddleware('read'), (_req, res) => {
+  res.json({ markets: latestPredArb?.markets || [], timestamp: lastPredArbFetch });
+});
+
+app.get('/api/v9/pred/events', authMiddleware('read'), (_req, res) => {
+  res.json({ events: latestPredArb?.events || [], timestamp: lastPredArbFetch });
+});
+
+app.get('/api/v9/pred/arbitrage', authMiddleware('read'), (_req, res) => {
+  res.json({ arbitrage: latestPredArb?.arbitrage || [], timestamp: lastPredArbFetch });
+});
+
+app.get('/api/v9/pred/probabilities', authMiddleware('read'), (_req, res) => {
+  res.json({ probabilities: latestPredArb?.probabilities || [], timestamp: lastPredArbFetch });
+});
+
+app.get('/api/v9/pred/efficiency', authMiddleware('read'), (_req, res) => {
+  res.json({ efficiency: latestPredArb?.efficiency || [], timestamp: lastPredArbFetch });
+});
+
+app.post('/api/v9/pred/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestPredArb = await analyzePredictionArb();
+    lastPredArbFetch = Date.now();
+    res.json({ success: true, pred: latestPredArb });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze prediction markets' });
   }
 });
 

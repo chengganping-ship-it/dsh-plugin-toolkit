@@ -501,6 +501,62 @@
     .sent-label.neutral{background:#f5a62322;color:#f5a623}
     .sent-label.bearish{background:#ff444422;color:#ff4444}
     .sent-label.very_bearish{background:#ff444422;color:#ff4444}
+    .whale-tx{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .whale-token{width:40px;color:#9b59b6}
+    .whale-amount{width:60px;text-align:right;color:#f5a623;font-weight:600}
+    .whale-type{width:50px;text-align:center;font-size:7px;padding:1px 3px;border-radius:3px;background:#4a9eff22;color:#4a9eff}
+    .flow-item{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .flow-item.accumulating{border-left:2px solid #00d4aa}
+    .flow-item.dributing{border-left:2px solid #ff4444}
+    .flow-ex{flex:1;color:#4a9eff}
+    .flow-net{width:70px;text-align:right;font-weight:600}
+    .flow-net.pos{color:#00d4aa}
+    .flow-net.neg{color:#ff4444}
+    .dao-prop{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .prop-dao{width:50px;color:#9b59b6;font-size:7px}
+    .prop-title{flex:1;color:#4a9eff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .prop-votes{width:40px;text-align:right;color:#8899aa;font-size:7px}
+    .dao-alert{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .alert-type{width:60px;color:#ff4444;font-size:7px}
+    .alert-risk{width:30px;text-align:center;font-size:7px;padding:1px 3px;border-radius:3px}
+    .alert-risk.high{background:#ff444422;color:#ff4444}
+    .alert-risk.med{background:#f5a62322;color:#f5a623}
+    .alert-risk.low{background:#00d4aa22;color:#00d4aa}
+    .alert-desc{flex:1;color:#8899aa;font-size:7px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .rwa-proto{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .rwa-name{flex:1;color:#4a9eff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .rwa-apy{width:50px;text-align:right;font-weight:600}
+    .rwa-apy.high{color:#00d4aa}
+    .rwa-apy.med{color:#f5a623}
+    .rwa-apy.low{color:#6b7a8d}
+    .rwa-risk{width:30px;text-align:center;font-size:7px;padding:1px 3px;border-radius:3px;background:#00d4aa22;color:#00d4aa}
+    .rwa-opp{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .rwa-opp.recommended{background:#00d4aa08}
+    .rwa-opp-name{flex:1;color:#9b59b6;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .rwa-opp-apy{width:50px;text-align:right;font-weight:600}
+    .rwa-opp-apy.high{color:#00d4aa}
+    .rwa-opp-apy.med{color:#f5a623}
+    .rwa-opp-apy.low{color:#6b7a8d}
+    .rwa-opp-risk{width:35px;text-align:center;font-size:7px;padding:1px 3px;border-radius:3px}
+    .rwa-opp-risk.low{background:#00d4aa22;color:#00d4aa}
+    .rwa-opp-risk.medium{background:#f5a62322;color:#f5a623}
+    .rwa-opp-risk.high{background:#ff444422;color:#ff4444}
+    .pred-arb{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .pred-arb.strong_arb{background:#00d4aa08}
+    .arb-event{flex:1;color:#9b59b6;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .arb-spread{width:50px;text-align:right;font-weight:600}
+    .arb-spread.high{color:#00d4aa}
+    .arb-spread.med{color:#f5a623}
+    .arb-spread.low{color:#6b7a8d}
+    .arb-profit{width:50px;text-align:right;color:#00d4aa}
+    .pred-prob{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .prob-event{flex:1;color:#4a9eff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .prob-val{width:40px;text-align:right;font-weight:600}
+    .prob-val.high{color:#00d4aa}
+    .prob-val.low{color:#ff4444}
+    .prob-change{width:45px;text-align:right;font-size:7px}
+    .prob-change.pos{color:#00d4aa}
+    .prob-change.neg{color:#ff4444}
     @media(max-width:1100px){.g{grid-template-columns:repeat(3,1fr)}.g5{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:800px){.g{grid-template-columns:repeat(2,1fr)}.g2,.g3,.g5{grid-template-columns:1fr}.c{padding:6px}.hdr{padding:6px 10px}.stats{gap:5px}}
     @media(max-width:500px){.g{grid-template-columns:1fr}.hm{grid-template-columns:repeat(auto-fill,minmax(65px,1fr))}.stats .lb{font-size:9px}}
@@ -923,6 +979,54 @@
     </div>
   </div>
 
+  <!-- v9.8: On-Chain Analytics -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v9.8: Whale Transactions <span id="whaleBadge" class="tag bd bb">-</span></h2>
+      <div id="whaleTxs" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Tracking whales...</div></div>
+    </div>
+    <div class="card">
+      <h2>v9.8: Exchange Flows <span id="flowBadge" class="tag bd bb">-</span></h2>
+      <div id="exchangeFlows" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading flows...</div></div>
+    </div>
+  </div>
+
+  <!-- v9.9: DAO Governance -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v9.9: Active Proposals <span id="daoPropBadge" class="tag bd bb">-</span></h2>
+      <div id="daoProposals" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading proposals...</div></div>
+    </div>
+    <div class="card">
+      <h2>v9.9: Governance Alerts <span id="daoAlertBadge" class="tag bd bb">-</span></h2>
+      <div id="daoAlerts" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Monitoring...</div></div>
+    </div>
+  </div>
+
+  <!-- v9.10: RWA Yield Monitor -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v9.10: RWA Protocols <span id="rwaProtoBadge" class="tag bd bb">-</span></h2>
+      <div id="rwaProtocols" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading RWA...</div></div>
+    </div>
+    <div class="card">
+      <h2>v9.10: RWA Yield Comparison <span id="rwaYieldBadge" class="tag bd bb">-</span></h2>
+      <div id="rwaYields" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Comparing yields...</div></div>
+    </div>
+  </div>
+
+  <!-- v9.11: Prediction Market Arbitrage -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v9.11: Arb Opportunities <span id="predArbBadge" class="tag bd bb">-</span></h2>
+      <div id="predArb" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Scanning markets...</div></div>
+    </div>
+    <div class="card">
+      <h2>v9.11: Event Probabilities <span id="predProbBadge" class="tag bd bb">-</span></h2>
+      <div id="predProbs" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Calculating...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -1018,6 +1122,10 @@ function render() {
   renderBridgeStatus(); renderBridgeRoutes();
   renderYieldProtocols(); renderYieldCompound();
   renderNFTPredictions(); renderNFTSentiment();
+  renderWhaleTxs(); renderExchangeFlows();
+  renderDaoProposals(); renderDaoAlerts();
+  renderRWAProtocols(); renderRWAYields();
+  renderPredArb(); renderPredProbs();
 }
 
 function renderHM() {
@@ -1945,6 +2053,16 @@ function renderYieldProtocols(){var y=data.yieldAggregator;if(!y){$('yieldProtoc
 function renderYieldCompound(){var y=data.yieldAggregator;if(!y){$('yieldCompound').innerHTML='<div class="emp">Loading...</div>';return}var c=(y.autoCompoundConfigs||[]).slice(0,4);$('yieldCompoundBadge').textContent=c.length+' configs';var h='';for(var x of c){h+='<div class="compound-config '+(x.recommended?'recommended':'')+'"><span class="compound-proto">'+x.protocol.slice(0,10)+'</span><span class="compound-boost+'+(x.boostAPY>3?'pos':'neg')+'">+'+x.boostAPY.toFixed(1)+'%</span><span class="compound-freq">'+x.frequency+'x/day</span></div>'}$('yieldCompound').innerHTML=h||'<div class="emp">No configs</div>'}
 function renderNFTPredictions(){var n=data.nftPrediction;if(!n){$('nftPredictions').innerHTML='<div class="emp">Loading...</div>';return}var p=(n.predictions||[]).slice(0,6);$('nftPredBadge').textContent=p.length+' predictions';var h='';for(var x of p){h+='<div class="nft-pred '+x.trend.toLowerCase()+'"><span class="pred-col">'+x.collection.slice(0,12)+'</span><span class="pred-floor">'+x.currentFloor.toFixed(1)+' ETH</span><span class="pred-signal '+x.signal.toLowerCase().replace(/_/g,' ')+'">'+x.signal.replace(/_/g,' ').slice(0,8)+'</span></div>'}$('nftPredictions').innerHTML=h||'<div class="emp">No predictions</div>'}
 function renderNFTSentiment(){var n=data.nftPrediction;if(!n){$('nftSentiment').innerHTML='<div class="emp">Loading...</div>';return}var s=(n.sentiment||[]).slice(0,6);$('nftSentBadge').textContent=s.length+' analyzed';var h='';for(var x of s){h+='<div class="nft-sent '+x.sentiment.toLowerCase().replace(/_/g,' ')+'"><span class="sent-col">'+x.collection.slice(0,10)+'</span><span class="sent-score '+(x.sentimentScore>0?'pos':'neg')+'">'+(x.sentimentScore>0?'+':'')+x.sentimentScore+'</span><span class="sent-label">'+x.sentiment.replace(/_/g,' ').slice(0,8)+'</span></div>'}$('nftSentiment').innerHTML=h||'<div class="emp">No sentiment</div>'}
+
+// ==================== v9.8-v9.11 Renders ====================
+function renderWhaleTxs(){var o=data.onChain;if(!o){$('whaleTxs').innerHTML='<div class="emp">Loading...</div>';return}var t=(o.whaleTransactions||[]).slice(0,6);$('whaleBadge').textContent=t.length+' txs';var h='';for(var x of t){h+='<div class="whale-tx"><span class="whale-token">'+x.token.slice(0,6)+'</span><span class="whale-amount">$'+(x.amountUsd/1e6).toFixed(1)+'M</span><span class="whale-type '+x.type.toLowerCase()+'">'+x.type.slice(0,6)+'</span></div>'}$('whaleTxs').innerHTML=h||'<div class="emp">No whale txs</div>'}
+function renderExchangeFlows(){var o=data.onChain;if(!o){$('exchangeFlows').innerHTML='<div class="emp">Loading...</div>';return}var f=(o.exchangeFlows||[]).slice(0,5);$('flowBadge').textContent=f.length+' exchanges';var h='';for(var x of f){h+='<div class="flow-item '+x.trend.toLowerCase()+'"><span class="flow-ex">'+x.exchange.slice(0,8)+'</span><span class="flow-net '+(x.netFlow24h>0?'pos':'neg')+'">'+(x.netFlow24h>0?'+':'')+'$'+(Math.abs(x.netFlow24h)/1e6).toFixed(0)+'M</span></div>'}$('exchangeFlows').innerHTML=h||'<div class="emp">No flows</div>'}
+function renderDaoProposals(){var d=data.daoGovernance;if(!d){$('daoProposals').innerHTML='<div class="emp">Loading...</div>';return}var p=(d.proposals||[]).slice(0,6);$('daoPropBadge').textContent=d.stats.activeProposals+' active';var h='';for(var x of p){h+='<div class="dao-prop '+x.status.toLowerCase()+'"><span class="prop-dao">'+x.dao.slice(0,8)+'</span><span class="prop-title">'+x.title.slice(0,20)+'</span><span class="prop-votes">'+x.participationRate.toFixed(1)+'%</span></div>'}$('daoProposals').innerHTML=h||'<div class="emp">No proposals</div>'}
+function renderDaoAlerts(){var d=data.daoGovernance;if(!d){$('daoAlerts').innerHTML='<div class="emp">Loading...</div>';return}var a=(d.attacks||[]).slice(0,4);$('daoAlertBadge').textContent+a.length+' alerts';var h='';for(var x of a){h+='<div class="dao-alert '+x.type.toLowerCase()+'"><span class="alert-type">'+x.type.replace(/_/g,' ')+'</span><span class="alert-risk '+(x.riskScore>70?'high':x.riskScore>40?'med':'low')+'">'+x.riskScore+'</span><span class="alert-desc">'+x.description.slice(0,25)+'</span></div>'}$('daoAlerts').innerHTML=h||'<div class="emp">No alerts</div>'}
+function renderRWAProtocols(){var r=data.rwaYield;if(!r){$('rwaProtocols').innerHTML='<div class="emp">Loading...</div>';return}var p=(r.protocols||[]).slice(0,6);$('rwaProtoBadge').textContent=p.length+' protocols';var h='';for(var x of p){h+='<div class="rwa-proto"><span class="rwa-name">'+x.name.slice(0,12)+'</span><span class="rwa-apy '+(x.apy>8?'high':x.apy>5?'med':'low')+'">'+x.apy.toFixed(1)+'%</span><span class="rwa-risk '+x.riskScore.toFixed(0)+'">'+x.riskScore+'</span></div>'}$('rwaProtocols').innerHTML=h||'<div class="emp">No protocols</div>'}
+function renderRWAYields(){var r=data.rwaYield;if(!r){$('rwaYields').innerHTML='<div class="emp">Loading...</div>';return}var o=(r.opportunities||[]).slice(0,5);$('rwaYieldBadge').textContent=o.length+' opps';var h='';for(var x of o){h+='<div class="rwa-opp '+(x.recommended?'recommended':'')+'"><span class="rwa-opp-name">'+x.protocol.slice(0,10)+'</span><span class="rwa-opp-apy '+(x.netApy>7?'high':x.netApy>4?'med':'low')+'">'+x.netApy.toFixed(1)+'%</span><span class="rwa-opp-risk '+x.risk.toLowerCase()+'">'+x.risk.slice(0,4)+'</span></div>'}$('rwaYields').innerHTML=h||'<div class="emp">No opportunities</div>'}
+function renderPredArb(){var p=data.predArb;if(!p){$('predArb').innerHTML='<div class="emp">Loading...</div>';return}var a=(p.arbitrage||[]).slice(0,5);$('predArbBadge').textContent+a.length+' arbs';var h='';for(var x of a){h+='<div class="pred-arb '+x.signal.toLowerCase()+'"><span class="arb-event">'+x.event.slice(0,15)+'</span><span class="arb-spread '+(x.spreadPct>5?'high':x.spreadPct>2?'med':'low')+'">'+x.spreadPct.toFixed(2)+'%</span><span class="arb-profit">$'+x.maxProfit.toFixed(0)+'</span></div>'}$('predArb').innerHTML=h||'<div class="emp">No arbitrage</div>'}
+function renderPredProbs(){var p=data.predArb;if(!p){$('predProbs').innerHTML='<div class="emp">Loading...</div>';return}var pr=(p.probabilities||[]).slice(0,6);$('predProbBadge').textContent=pr.length+' events';var h='';for(var x of pr){h+='<div class="pred-prob '+x.trend.toLowerCase()+'"><span class="prob-event">'+x.event.slice(0,15)+'</span><span class="prob-val '+(x.currentProb>0.5?'high':'low')+'">'+(x.currentProb*100).toFixed(0)+'%</span><span class="prob-change '+(x.change24h>0?'pos':'neg')+'">'+(x.change24h>0?'+':'')+x.change24h.toFixed(1)+'</span></div>'}$('predProbs').innerHTML=h||'<div class="emp">No probabilities</div>'}
 
 // Kelly
 $('kB')?.addEventListener('click', async () => {
