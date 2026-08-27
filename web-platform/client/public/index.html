@@ -206,6 +206,24 @@
     .cluster .cluster-urg.medium{background:#f5a62322;color:#f5a623}
     .cluster .cluster-urg.low{background:#4a9eff22;color:#4a9eff}
     .cluster .cluster-stats{display:flex;gap:6px;margin-top:3px;font-size:8px;color:#8899aa;flex-wrap:wrap}
+    .ts-header{display:flex;gap:10px;font-size:8px;margin-bottom:4px;padding:3px;background:#0d1117;border-radius:3px}
+    .ts-fit{font-size:7px;color:#6b7a8d;margin-bottom:4px;text-align:center}
+    .ts-point{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28}
+    .ts-point .tenor{width:35px;color:#8899aa}
+    .ts-point .rate{width:60px;font-weight:600}
+    .ts-point .basis{width:55px;color:#6b7a8d}
+    .ts-point .oi{margin-left:auto;color:#4a9eff}
+    .pred-row{display:flex;gap:6px;padding:4px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .pred-row .horizon{width:30px;color:#8899aa}
+    .pred-row .pred-rate{width:65px;font-weight:600}
+    .pred-row .signal{width:50px;text-align:center;padding:1px 3px;border-radius:3px;font-size:7px}
+    .pred-row.rising .signal{background:#00d4aa22;color:#00d4aa}
+    .pred-row.falling .signal{background:#ff444422;color:#ff4444}
+    .pred-row.stable .signal{background:#4a9eff22;color:#4a9eff}
+    .pred-row .conf{width:35px;color:#6b7a8d;text-align:right}
+    .pred-row .bounds{margin-left:auto;font-size:7px;color:#6b7a8d}
+    .ts-signal{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28}
+    .ts-signal .sig-type{flex:1}
     @media(max-width:1100px){.g{grid-template-columns:repeat(3,1fr)}.g5{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:800px){.g{grid-template-columns:repeat(2,1fr)}.g2,.g3,.g5{grid-template-columns:1fr}.c{padding:6px}.hdr{padding:6px 10px}.stats{gap:5px}}
     @media(max-width:500px){.g{grid-template-columns:1fr}.hm{grid-template-columns:repeat(auto-fill,minmax(65px,1fr))}.stats .lb{font-size:9px}}
@@ -412,6 +430,18 @@
     </div>
   </div>
 
+  <!-- v7.3: Term Structure Predictor -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v7.3: Funding Rate Term Structure <span id="tsBadge" class="tag bd bb">-</span></h2>
+      <div id="tsCurve" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Modeling term structure...</div></div>
+    </div>
+    <div class="card">
+      <h2>v7.3: Forward Rate Predictions <span id="predBadge" class="tag bd bb">-</span></h2>
+      <div id="tsPredictions" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Predicting future rates...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -489,6 +519,7 @@ function render() {
   renderOptGreeks(); renderFvSignals();
   renderGridOverview(); renderMCResults();
   renderLiqWarnings(); renderLiqClusters();
+  renderTSCurve(); renderTSPredictions();
 }
 
 function renderHM() {
@@ -1131,6 +1162,58 @@ function renderLiqClusters() {
       <div style="font-size:7px;color:#6b7a8d">Slippage: ${c.expectedSlippage.toFixed(2)}% | Density: ${c.density.toFixed(1)}</div>
     </div>
   `).join('');
+}
+
+function renderTSCurve() {
+  const tsArray = data.termStructure || [];
+  if (!tsArray.length) { $('tsCurve').innerHTML = '<div class="emp">Modeling term structure...</div>'; return; }
+  const ts = tsArray[0];
+  $('tsBadge').textContent = ts.symbol + ' ' + ts.curveShape;
+  const contangoColor = ts.contangoScore > 0 ? '#00d4aa' : '#ff4444';
+  const termPointsHtml = (ts.termPoints || []).map(p => `
+    <div class="ts-point">
+      <span class="tenor">${p.tenor === 0 ? 'PERP' : p.tenor + 'd'}</span>
+      <span class="rate" style="color:${p.rate > 0 ? '#00d4aa' : '#ff4444'}">${(p.rate * 100).toFixed(3)}%</span>
+      <span class="basis">${p.basisPct > 0 ? '+' : ''}${p.basisPct.toFixed(3)}%</span>
+      <span class="oi">$${(p.openInterest / 1e6).toFixed(0)}M</span>
+    </div>
+  `).join('');
+  $('tsCurve').innerHTML = `
+    <div class="ts-header">
+      <span style="color:${contangoColor}">Contango: ${ts.contangoScore > 0 ? '+' : ''}${ts.contangoScore.toFixed(0)}%</span>
+      <span>Roll: ${ts.rollYieldAnnual > 0 ? '+' : ''}${ts.rollYieldAnnual.toFixed(1)}%</span>
+      <span>Carry: ${ts.carryTradeScore.toFixed(0)}%</span>
+    </div>
+    <div class="ts-fit">β0:${(ts.curveFit.beta0 * 100).toFixed(2)}% β1:${(ts.curveFit.beta1 * 100).toFixed(2)}% τ:${ts.curveFit.tau}d R²:${ts.curveFit.r2.toFixed(2)}</div>
+    ${termPointsHtml}
+    <div style="font-size:7px;color:#6b7a8d;margin-top:4px">Entry: ${ts.optimalEntry.reason} (${ts.optimalEntry.confidence.toFixed(0)}% conf)</div>
+  `;
+}
+
+function renderTSPredictions() {
+  const tsArray = data.termStructure || [];
+  if (!tsArray.length) { $('tsPredictions').innerHTML = '<div class="emp">Predicting rates...</div>'; return; }
+  const ts = tsArray[0];
+  const preds = ts.predictions || [];
+  $('predBadge').textContent = preds.find(p => p.horizon === '7d')?.signal || 'N/A';
+  $('tsPredictions').innerHTML = preds.map(p => `
+    <div class="pred-row ${p.signal.toLowerCase()}">
+      <span class="horizon">${p.horizon}</span>
+      <span class="pred-rate" style="color:${p.predictedRate > 0 ? '#00d4aa' : '#ff4444'}">${(p.predictedRate * 100).toFixed(3)}%</span>
+      <span class="signal">${p.signal}</span>
+      <span class="conf">${p.confidence.toFixed(0)}%</span>
+      <span class="bounds">[${(p.lowerBound * 100).toFixed(2)}, ${(p.upperBound * 100).toFixed(2)}]</span>
+    </div>
+  `).join('') + `
+    <div style="margin-top:6px;font-size:8px;color:#6b7a8d">Signals:</div>
+    ${(ts.signals || []).slice(0, 3).map(s => `
+      <div class="ts-signal">
+        <span class="sig-type">${s.type?.replace(/_/g, ' ')}</span>
+        <span style="color:${s.severity > 60 ? '#ff4444' : '#f5a623'}">Sev ${s.severity.toFixed(0)}</span>
+        <span style="color:#4a9eff">+${s.expectedReturn.toFixed(1)}%</span>
+      </div>
+    `).join('')}
+  `;
 }
 
 // Kelly

@@ -48,6 +48,7 @@ import { analyzeBridges, getCachedBridgeSummary, clearBridgeCache, BridgeSummary
 import { analyzeOptions, getOptionsSummary, GreeksSummary } from './engine/options.js';
 import { optimizeGrid, getCachedGrids, clearGridCache, GridOptimization } from './engine/grid.js';
 import { analyzeLiquidations, getCachedLiquidations, clearLiquidationCache, LiquidationAnalysis } from './engine/liquidation.js';
+import { analyzeTermStructure, getCachedTermStructures, clearTermStructureCache, TermStructureAnalysis } from './engine/termstructure.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -141,6 +142,8 @@ let latestGridOptimizations: GridOptimization[] = [];
 let lastGridFetch = 0;
 let latestLiquidation: LiquidationAnalysis | null = null;
 let lastLiquidationFetch = 0;
+let latestTermStructures: Map<string, TermStructureAnalysis> = new Map();
+let lastTermStructureFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -439,6 +442,25 @@ async function poll() {
       }
     }
 
+    // v7.3: Term structure analysis (every 15 minutes)
+    if (pollCount % 30 === 0 || latestTermStructures.size === 0) {
+      try {
+        const btcRate = latestRates.find(r => r.symbol === 'BTCUSDT');
+        if (btcRate) {
+          const ts = await analyzeTermStructure(
+            'BTC',
+            btcRate.markPrice || 65000,
+            btcRate.fundingRate || 0.01,
+            btcRate.exchange || 'Binance'
+          );
+          latestTermStructures.set('BTC_Binance', ts);
+          lastTermStructureFetch = Date.now();
+        }
+      } catch (e) {
+        // Term structure analysis failed
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
@@ -525,6 +547,7 @@ function broadcast() {
       options: latestOptions,
       grid: latestGridOptimizations,
       liquidation: latestLiquidation,
+      termStructure: Array.from(latestTermStructures.values()),
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -578,6 +601,7 @@ wss.on('connection', (ws) => {
         options: latestOptions,
         grid: latestGridOptimizations,
         liquidation: latestLiquidation,
+        termStructure: Array.from(latestTermStructures.values()),
         stats: {
           totalRates: latestRates.length,
           exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -1214,6 +1238,45 @@ app.post('/api/v7/liquidation/refresh', authMiddleware('write'), async (_req, re
     res.json({ success: true, liquidation: latestLiquidation });
   } catch (e) {
     res.status(500).json({ error: 'Failed to analyze liquidations' });
+  }
+});
+
+// ---- v7.3: Term Structure Predictor API ----
+
+app.get('/api/v7/termstructure', authMiddleware('read'), (_req, res) => {
+  res.json({ termStructures: Array.from(latestTermStructures.values()), timestamp: lastTermStructureFetch });
+});
+
+app.get('/api/v7/termstructure/:symbol', authMiddleware('read'), (req, res) => {
+  const key = `${req.params.symbol}_Binance`;
+  const ts = latestTermStructures.get(key);
+  if (!ts) { res.status(404).json({ error: 'Term structure not found' }); return; }
+  res.json(ts);
+});
+
+app.get('/api/v7/termstructure/:symbol/predictions', authMiddleware('read'), (req, res) => {
+  const key = `${req.params.symbol}_Binance`;
+  const ts = latestTermStructures.get(key);
+  if (!ts) { res.status(404).json({ error: 'Term structure not found' }); return; }
+  res.json({ predictions: ts.predictions, curveFit: ts.curveFit, contangoScore: ts.contangoScore });
+});
+
+app.post('/api/v7/termstructure/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    const btcRate = latestRates.find(r => r.symbol === 'BTCUSDT');
+    if (btcRate) {
+      const ts = await analyzeTermStructure(
+        'BTC',
+        btcRate.markPrice || 65000,
+        btcRate.fundingRate || 0.01,
+        btcRate.exchange || 'Binance'
+      );
+      latestTermStructures.set('BTC_Binance', ts);
+      lastTermStructureFetch = Date.now();
+    }
+    res.json({ success: true, termStructures: Array.from(latestTermStructures.values()) });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze term structure' });
   }
 });
 
