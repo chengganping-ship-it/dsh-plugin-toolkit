@@ -300,6 +300,73 @@
     .rebal-trade.medium .trade-urg{color:#f5a623}
     .rebal-trade.low .trade-urg{color:#6b7a8d}
     .tax-harvest{display:flex;justify-content:space-between;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28}
+    .cb-alert{padding:5px;background:#141c28;border-radius:4px;margin-bottom:4px;font-size:9px;border-left:3px solid #4a9eff}
+    .cb-alert.critical{border-left-color:#ff4444;background:#2a1515}
+    .cb-alert.high{border-left-color:#ff6600}
+    .cb-alert.medium{border-left-color:#f5a623}
+    .cb-alert.low{border-left-color:#4a9eff}
+    .cb-platform{font-weight:600;color:#4a9eff}
+    .cb-impact{padding:1px 4px;border-radius:3px;font-size:7px}
+    .cb-impact.critical{background:#ff444422;color:#ff4444}
+    .cb-impact.high{background:#ff660022;color:#ff6600}
+    .cb-impact.medium{background:#f5a62322;color:#f5a623}
+    .cb-impact.low{background:#4a9eff22;color:#4a9eff}
+    .cb-title{font-size:8px;margin-top:2px}
+    .tariff-item,.vat-item{display:flex;justify-content:space-between;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28}
+    .tariff-country,.vat-country{color:#8899aa}
+    .tariff-rate.up{color:#ff4444}
+    .tariff-rate.down{color:#00d4aa}
+    .vat-rate{color:#f5a623}
+    .resume-overall{display:flex;justify-content:center;margin-bottom:8px}
+    .score-circle{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff}
+    .score-circle.good{background:linear-gradient(135deg,#00d4aa,#00a085)}
+    .score-circle.medium{background:linear-gradient(135deg,#f5a623,#e09000)}
+    .score-circle.poor{background:linear-gradient(135deg,#ff4444,#cc0000)}
+    .section-score{display:flex;align-items:center;gap:6px;padding:2px 0;font-size:8px}
+    .section-name{width:60px;color:#8899aa}
+    .section-bar{flex:1;height:6px;background:#141c28;border-radius:3px;overflow:hidden}
+    .section-fill{height:100%;border-radius:3px}
+    .kw-gap{display:flex;justify-content:space-between;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28}
+    .kw-keyword{color:#4a9eff}
+    .kw-importance{padding:1px 4px;border-radius:3px;font-size:7px}
+    .kw-importance.critical{background:#ff444422;color:#ff4444}
+    .kw-importance.high{background:#ff660022;color:#ff6600}
+    .kw-importance.medium{background:#f5a62322;color:#f5a623}
+    .kw-importance.low{background:#4a9eff22;color:#4a9eff}
+    .nft-floor{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28}
+    .nft-mp{width:50px;color:#8899aa}
+    .nft-col{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .nft-price{color:#9b59b6;text-align:right}
+    .nft-arb{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28}
+    .arb-col{width:70px;color:#9b59b6;text-align:right}
+    .arb-spread{color:#00d4aa;text-align:right}
+    .arb-profit{color:#f5a623;text-align:right}
+    .rwa-protocol{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28}
+    .rwa-name{width:90px;color:#4a9eff}
+    .rwa-apy{width:50px;text-align:right;color:#00d4aa}
+    .rwa-risk{width:30px;text-align:center;font-size:7px;padding:1px 3px;border-radius:3px}
+    .rwa-risk.low{background:#00d4aa22;color:#00d4aa}
+    .rwa-risk.med{background:#f5a62322;color:#f5a623}
+    .rwa-risk.high{background:#ff444422;color:#ff4444}
+    .rwa-opp{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28}
+    .opp-name{width:80px;color:#4a9eff}
+    .opp-yield{width:50px;text-align:right;color:#00d4aa}
+    .opp-rec{width:60px;text-align:right;font-size:7px}
+    .opp-rec.strong_buy{color:#00d4aa}
+    .opp-rec.buy{color:#00d4aa}
+    .opp-rec.hold{color:#f5a623}
+    .opp-rec.avoid{color:#ff4444}
+    .tmpl-stats{display:flex;gap:10px;font-size:8px;margin-bottom:6px;padding:3px;background:#0d1117;border-radius:3px}
+    .tmpl-cat{display:flex;align-items:center;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28}
+    .cat-icon{font-size:14px}
+    .cat-name{flex:1;color:#8899aa}
+    .cat-count{color:#4a9eff}
+    .tmpl-card{padding:5px;background:#141c28;border-radius:4px;margin-bottom:4px;font-size:9px;border-left:3px solid #9b59b6}
+    .tmpl-name{font-weight:600;color:#9b59b6;margin-bottom:3px}
+    .tmpl-meta{display:flex;gap:8px;font-size:7px;color:#8899aa}
+    .tmpl-price.free{color:#00d4aa}
+    .tmpl-price.paid{color:#f5a623}
+    .tmpl-price.freemium{color:#4a9eff}
     @media(max-width:1100px){.g{grid-template-columns:repeat(3,1fr)}.g5{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:800px){.g{grid-template-columns:repeat(2,1fr)}.g2,.g3,.g5{grid-template-columns:1fr}.c{padding:6px}.hdr{padding:6px 10px}.stats{gap:5px}}
     @media(max-width:500px){.g{grid-template-columns:1fr}.hm{grid-template-columns:repeat(auto-fill,minmax(65px,1fr))}.stats .lb{font-size:9px}}
@@ -566,6 +633,66 @@
     </div>
   </div>
 
+  <!-- v8.0: Cross-Border E-Commerce Alerts -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v8.0: Cross-Border Compliance <span id="cbBadge" class="tag bd bb">-</span></h2>
+      <div id="cbAlerts" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Monitoring compliance...</div></div>
+    </div>
+    <div class="card">
+      <h2>v8.0: Tariff & VAT Changes <span id="tariffBadge" class="tag bd bb">-</span></h2>
+      <div id="tariffAlerts" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Tracking tariffs...</div></div>
+    </div>
+  </div>
+
+  <!-- v8.1: AI Resume Optimizer -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v8.1: Resume ATS Score <span id="resumeBadge" class="tag bd bb">-</span></h2>
+      <div id="resumeScore" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Analyzing resume...</div></div>
+    </div>
+    <div class="card">
+      <h2>v8.1: Keyword Gaps <span id="kwBadge" class="tag bd bb">-</span></h2>
+      <div id="kwGaps" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Finding gaps...</div></div>
+    </div>
+  </div>
+
+  <!-- v8.2: NFT Arbitrage -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v8.2: NFT Floor Prices <span id="nftBadge" class="tag bd bb">-</span></h2>
+      <div id="nftFloors" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading NFT floors...</div></div>
+    </div>
+    <div class="card">
+      <h2>v8.2: NFT Arbitrage Ops <span id="nftArbBadge" class="tag bd bb">-</span></h2>
+      <div id="nftArb" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Scanning arbitrage...</div></div>
+    </div>
+  </div>
+
+  <!-- v8.3: RWA Tracker -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v8.3: RWA Protocols <span id="rwaBadge" class="tag bd bb">-</span></h2>
+      <div id="rwaProtocols" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading RWA data...</div></div>
+    </div>
+    <div class="card">
+      <h2>v8.3: RWA Opportunities <span id="rwaOppBadge" class="tag bd bb">-</span></h2>
+      <div id="rwaOpps" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Finding opportunities...</div></div>
+    </div>
+  </div>
+
+  <!-- v8.4: Template Store -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v8.4: Template Store <span id="tmplBadge" class="tag bd bb">-</span></h2>
+      <div id="tmplStore" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading templates...</div></div>
+    </div>
+    <div class="card">
+      <h2>v8.4: Featured Templates <span id="tmplFeatBadge" class="tag bd bb">-</span></h2>
+      <div id="tmplFeatured" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading featured...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -648,6 +775,11 @@ function render() {
   renderRiskMetrics(); renderStressTest();
   renderOBImbalance(); renderOBSignals();
   renderAllocOverview(); renderRebalTrades();
+  renderCBAlerts(); renderTariffAlerts();
+  renderResumeScore(); renderKwGaps();
+  renderNFTFloors(); renderNFTArb();
+  renderRWAProtocols(); renderRWAOpps();
+  renderTmplStore(); renderTmplFeatured();
 }
 
 function renderHM() {
@@ -1532,6 +1664,29 @@ function renderRebalTrades() {
     <div style="font-size:7px;color:#6b7a8d;margin-top:4px">Cost: $${rebal.totalRebalanceCost.toFixed(2)} | Tax: $${rebal.totalTaxImpact.toFixed(0)} | Next: ${rebal.nextRebalanceDate}</div>
   `;
 }
+
+}
+
+// v8.0-v8.4 renders
+function renderCBAlerts(){var a=data.crossBorderAlerts;if(!a){$('cbAlerts').innerHTML='<div class="emp">Monitoring...</div>';return}$('cbBadge').textContent=a.criticalCount+' critical';var h='';for(var p of(a.policies||[]).slice(0,4)){h+='<div class="cb-alert '+p.impact.toLowerCase()+'"><div><span class="cb-platform">'+p.platform+'</span> <span class="cb-impact '+p.impact.toLowerCase()+'">'+p.impact+'</span></div><div class="cb-title">'+p.title+'</div></div>'}$('cbAlerts').innerHTML=h||'<div class="emp">No alerts</div>'}
+
+function renderTariffAlerts(){var a=data.crossBorderAlerts;if(!a){$('tariffAlerts').innerHTML='<div class="emp">Tracking...</div>';return}$('tariffBadge').textContent=(a.tariffs||[]).length+(a.vatChanges||[]).length+' updates';var h='';for(var t of(a.tariffs||[]).slice(0,3)){h+='<div class="tariff-item '+t.changeType.toLowerCase()+'"><span class="tariff-country">'+t.country+'</span><span class="tariff-rate '+(t.changeType==='INCREASE'?'up':'down')+'">'+t.oldRate+'% → '+t.newRate+'%</span></div>'}for(var v of(a.vatChanges||[]).slice(0,2)){h+='<div class="vat-item"><span class="vat-country">'+v.country+'</span><span class="vat-rate">'+v.oldRate+'% → '+v.newRate+'%</span></div>'}$('tariffAlerts').innerHTML=h}
+
+function renderResumeScore(){var r=data.resumeOpt;if(!r){$('resumeScore').innerHTML='<div class="emp">Submit resume...</div>';return}var a=r.analysis;$('resumeBadge').textContent=a.overallScore+'%';var h='<div class="resume-overall"><div class="score-circle '+(a.overallScore>=70?'good':a.overallScore>=50?'medium':'poor')+'">'+a.overallScore+'</div></div>';for(var s of(r.sectionScores||[])){h+='<div class="section-score"><span class="section-name">'+s.name+'</span><div class="section-bar"><div class="section-fill" style="width:'+s.score+'%;background:'+(s.score>=80?'#00d4aa':s.score>=60?'#f5a623':'#ff4444')+'"></div></div></div>'}$('resumeScore').innerHTML=h}
+
+function renderKwGaps(){var r=data.resumeOpt;if(!r){$('kwGaps').innerHTML='<div class="emp">Submit resume...</div>';return}var gaps=(r.keywordGaps||[]).slice(0,8);$('kwBadge').textContent=gaps.length+' gaps';var h='';for(var g of gaps){h+='<div class="kw-gap '+g.importance.toLowerCase()+'"><span class="kw-keyword">'+g.keyword+'</span><span class="kw-importance '+g.importance.toLowerCase()+'">'+g.importance+'</span></div>'}$('kwGaps').innerHTML=h||'<div class="emp">No gaps!</div>'}
+
+function renderNFTFloors(){var n=data.nftArbitrage;if(!n){$('nftFloors').innerHTML='<div class="emp">Loading...</div>';return}var f=(n.floorPrices||[]).slice(0,8);$('nftBadge').textContent=(n.totalVolume24h||0).toFixed(0)+' ETH';var h='';for(var x of f){h+='<div class="nft-floor"><span class="nft-mp">'+x.marketplace+'</span><span class="nft-col">'+x.collection.slice(0,12)+'</span><span class="nft-price">'+x.floorPrice.toFixed(2)+'</span></div>'}$('nftFloors').innerHTML=h}
+
+function renderNFTArb(){var n=data.nftArbitrage;if(!n){$('nftArb').innerHTML='<div class="emp">Scanning...</div>';return}var ops=(n.arbitrageOpportunities||[]).slice(0,5);$('nftArbBadge').textContent=ops.length+' ops';var h='';for(var o of ops){h+='<div class="nft-arb '+o.urgency.toLowerCase()+'"><span class="arb-col">'+o.collection.slice(0,10)+'</span><span class="arb-spread">+'+o.spreadPct.toFixed(1)+'%</span><span class="arb-profit">'+o.netProfit.toFixed(3)+' ETH</span></div>'}$('nftArb').innerHTML=h||'<div class="emp">No arbitrage</div>'}
+
+function renderRWAProtocols(){var r=data.rwa;if(!r){$('rwaProtocols').innerHTML='<div class="emp">Loading...</div>';return}var p=(r.protocols||[]).slice(0,5);$('rwaBadge').textContent=((r.totalTVL||0)/1e9).toFixed(1)+'B';var h='';for(var x of p){h+='<div class="rwa-protocol"><span class="rwa-name">'+x.name.slice(0,15)+'</span><span class="rwa-apy">'+x.apy.toFixed(1)+'%</span><span class="rwa-risk '+(x.riskScore<25?'low':x.riskScore<45?'med':'high')+'">'+x.riskScore+'</span></div>'}$('rwaProtocols').innerHTML=h}
+
+function renderRWAOpps(){var r=data.rwa;if(!r){$('rwaOpps').innerHTML='<div class="emp">Finding...</div>';return}var o=(r.opportunities||[]).slice(0,5);$('rwaOppBadge').textContent=o.length+' opps';var h='';for(var x of o){h+='<div class="rwa-opp"><span class="opp-name">'+x.protocol.slice(0,15)+'</span><span class="opp-yield">'+x.expectedYield.toFixed(1)+'%</span><span class="opp-rec '+x.recommendation.toLowerCase()+'">'+x.recommendation+'</span></div>'}$('rwaOpps').innerHTML=h}
+
+function renderTmplStore(){var s=data.templateStore;if(!s){$('tmplStore').innerHTML='<div class="emp">Loading...</div>';return}var st=s.stats||{};$('tmplBadge').textContent=(st.totalTemplates||0)+' templates';var h='<div class="tmpl-stats"><span>'+(st.totalTemplates||0)+' templates</span><span>'+(st.totalDownloads||0).toLocaleString()+' downloads</span></div>';for(var c of(s.categories||[]).slice(0,6)){h+='<div class="tmpl-cat"><span class="cat-icon">'+c.icon+'</span><span class="cat-name">'+c.name+'</span><span class="cat-count">'+c.count+'</span></div>'}$('tmplStore').innerHTML=h}
+
+function renderTmplFeatured(){var s=data.templateStore;if(!s){$('tmplFeatured').innerHTML='<div class="emp">Loading...</div>';return}var f=(s.featured||[]).slice(0,4);$('tmplFeatBadge').textContent=f.length+' featured';var h='';for(var t of f){h+='<div class="tmpl-card"><div class="tmpl-name">'+t.name.slice(0,25)+'</div><div class="tmpl-meta"><span class="tmpl-platform">'+t.platform+'</span><span class="tmpl-rating">★ '+t.rating.toFixed(1)+'</span><span class="tmpl-price '+t.pricing.toLowerCase()+'">'+(t.pricing==='FREE'?'FREE':'$'+t.price)+'</span></div></div>'}$('tmplFeatured').innerHTML=h||'<div class="emp">No featured</div>'}
 
 // Kelly
 $('kB')?.addEventListener('click', async () => {

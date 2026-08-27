@@ -53,6 +53,11 @@ import { analyzeExecution, getActiveOrders, getExecutionHistory, clearExecutionH
 import { analyzeRisk, getCachedRisk, clearRiskCache, RiskAnalysis } from './engine/risk.js';
 import { analyzeOrderBooks, getCachedOrderBooks, clearOrderBookCache, OrderBookAnalysis } from './engine/orderbook.js';
 import { analyzeRebalance, getCachedRebalance, clearRebalanceCache, RebalanceAnalysis } from './engine/rebalance.js';
+import { analyzeCrossBorderAlerts, getCachedAlerts, clearAlertCache, CrossBorderAlertSummary } from './engine/crossBorderAlert.js';
+import { optimizeResume, getCachedResumeOptimization, clearResumeCache, ResumeOptimization, JobDescription } from './engine/resumeOptimizer.js';
+import { analyzeNFTArbitrage, getCachedNFTSummary, clearNFTCache, NFTArbitrageSummary } from './engine/nftArbitrage.js';
+import { analyzeRWA, getCachedRWA, clearRWACache, RWASummary } from './engine/rwaTracker.js';
+import { getTemplateStore, getCachedStore, clearStoreCache, TemplateStore } from './engine/templateStore.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -156,6 +161,16 @@ let latestOrderBook: OrderBookAnalysis | null = null;
 let lastOrderBookFetch = 0;
 let latestRebalance: RebalanceAnalysis | null = null;
 let lastRebalanceFetch = 0;
+let latestCrossBorderAlerts: CrossBorderAlertSummary | null = null;
+let lastCrossBorderFetch = 0;
+let latestResumeOpt: ResumeOptimization | null = null;
+let lastResumeFetch = 0;
+let latestNFTSummary: NFTArbitrageSummary | null = null;
+let lastNFTFetch = 0;
+let latestRWA: RWASummary | null = null;
+let lastRWAFetch = 0;
+let latestTemplateStore: TemplateStore | null = null;
+let lastTemplateStoreFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -528,6 +543,46 @@ async function poll() {
       }
     }
 
+    // v8.0: Cross-border e-commerce alerts (every 15 minutes)
+    if (pollCount % 30 === 0 || !latestCrossBorderAlerts) {
+      try {
+        latestCrossBorderAlerts = await analyzeCrossBorderAlerts();
+        lastCrossBorderFetch = Date.now();
+      } catch (e) {
+        // Cross-border alert analysis failed
+      }
+    }
+
+    // v8.2: NFT arbitrage monitoring (every 5 minutes)
+    if (pollCount % 10 === 0 || !latestNFTSummary) {
+      try {
+        latestNFTSummary = await analyzeNFTArbitrage();
+        lastNFTFetch = Date.now();
+      } catch (e) {
+        // NFT analysis failed
+      }
+    }
+
+    // v8.3: RWA tracking (every 15 minutes)
+    if (pollCount % 30 === 0 || !latestRWA) {
+      try {
+        latestRWA = await analyzeRWA();
+        lastRWAFetch = Date.now();
+      } catch (e) {
+        // RWA analysis failed
+      }
+    }
+
+    // v8.4: Template store (every 30 minutes)
+    if (pollCount % 60 === 0 || !latestTemplateStore) {
+      try {
+        latestTemplateStore = await getTemplateStore();
+        lastTemplateStoreFetch = Date.now();
+      } catch (e) {
+        // Template store fetch failed
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
@@ -619,6 +674,10 @@ function broadcast() {
       risk: latestRisk,
       orderBook: latestOrderBook,
       rebalance: latestRebalance,
+      crossBorderAlerts: latestCrossBorderAlerts,
+      nftArbitrage: latestNFTSummary,
+      rwa: latestRWA,
+      templateStore: latestTemplateStore,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -677,6 +736,10 @@ wss.on('connection', (ws) => {
         risk: latestRisk,
         orderBook: latestOrderBook,
         rebalance: latestRebalance,
+        crossBorderAlerts: latestCrossBorderAlerts,
+        nftArbitrage: latestNFTSummary,
+        rwa: latestRWA,
+        templateStore: latestTemplateStore,
         stats: {
           totalRates: latestRates.length,
           exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -1480,6 +1543,159 @@ app.post('/api/v7/rebalance/refresh', authMiddleware('write'), async (_req, res)
     res.json({ success: true, rebalance: latestRebalance });
   } catch (e) {
     res.status(500).json({ error: 'Failed to analyze rebalancing' });
+  }
+});
+
+// ---- v8.0: Cross-Border E-Commerce Alert API ----
+
+app.get('/api/v8/cross-border/alerts', authMiddleware('read'), (_req, res) => {
+  if (!latestCrossBorderAlerts) { res.status(503).json({ error: 'No alert data yet' }); return; }
+  res.json(latestCrossBorderAlerts);
+});
+
+app.get('/api/v8/cross-border/policies', authMiddleware('read'), (_req, res) => {
+  res.json({ policies: latestCrossBorderAlerts?.policies || [], timestamp: lastCrossBorderFetch });
+});
+
+app.get('/api/v8/cross-border/tariffs', authMiddleware('read'), (_req, res) => {
+  res.json({ tariffs: latestCrossBorderAlerts?.tariffs || [], timestamp: lastCrossBorderFetch });
+});
+
+app.get('/api/v8/cross-border/vat', authMiddleware('read'), (_req, res) => {
+  res.json({ vatChanges: latestCrossBorderAlerts?.vatChanges || [], timestamp: lastCrossBorderFetch });
+});
+
+app.get('/api/v8/cross-border/compliance', authMiddleware('read'), (_req, res) => {
+  res.json({ compliance: latestCrossBorderAlerts?.compliance || [], timestamp: lastCrossBorderFetch });
+});
+
+app.post('/api/v8/cross-border/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestCrossBorderAlerts = await analyzeCrossBorderAlerts();
+    lastCrossBorderFetch = Date.now();
+    res.json({ success: true, alerts: latestCrossBorderAlerts });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze cross-border alerts' });
+  }
+});
+
+// ---- v8.1: AI Resume Optimization API ----
+
+app.post('/api/v8/resume/optimize', authMiddleware('write'), async (req, res) => {
+  try {
+    const { jobDescription, resumeText } = req.body;
+    if (!jobDescription || !resumeText) {
+      res.status(400).json({ error: 'jobDescription and resumeText required' });
+      return;
+    }
+    const result = await optimizeResume(jobDescription, resumeText);
+    res.json(result);
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to optimize resume' });
+  }
+});
+
+app.get('/api/v8/resume/result', authMiddleware('read'), (_req, res) => {
+  if (!latestResumeOpt) { res.status(404).json({ error: 'No optimization result yet' }); return; }
+  res.json(latestResumeOpt);
+});
+
+// ---- v8.2: NFT Arbitrage API ----
+
+app.get('/api/v8/nft/arbitrage', authMiddleware('read'), (_req, res) => {
+  if (!latestNFTSummary) { res.status(503).json({ error: 'No NFT data yet' }); return; }
+  res.json(latestNFTSummary);
+});
+
+app.get('/api/v8/nft/floor-prices', authMiddleware('read'), (_req, res) => {
+  res.json({ floorPrices: latestNFTSummary?.floorPrices || [], timestamp: lastNFTFetch });
+});
+
+app.get('/api/v8/nft/opportunities', authMiddleware('read'), (_req, res) => {
+  res.json({ opportunities: latestNFTSummary?.arbitrageOpportunities || [], timestamp: lastNFTFetch });
+});
+
+app.get('/api/v8/nft/whale-activity', authMiddleware('read'), (_req, res) => {
+  res.json({ activities: latestNFTSummary?.whaleActivities || [], timestamp: lastNFTFetch });
+});
+
+app.get('/api/v8/nft/mints', authMiddleware('read'), (_req, res) => {
+  res.json({ mints: latestNFTSummary?.mintAlerts || [], timestamp: lastNFTFetch });
+});
+
+app.post('/api/v8/nft/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestNFTSummary = await analyzeNFTArbitrage();
+    lastNFTFetch = Date.now();
+    res.json({ success: true, nft: latestNFTSummary });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze NFT arbitrage' });
+  }
+});
+
+// ---- v8.3: RWA Tracker API ----
+
+app.get('/api/v8/rwa/tracker', authMiddleware('read'), (_req, res) => {
+  if (!latestRWA) { res.status(503).json({ error: 'No RWA data yet' }); return; }
+  res.json(latestRWA);
+});
+
+app.get('/api/v8/rwa/protocols', authMiddleware('read'), (_req, res) => {
+  res.json({ protocols: latestRWA?.protocols || [], timestamp: lastRWAFetch });
+});
+
+app.get('/api/v8/rwa/opportunities', authMiddleware('read'), (_req, res) => {
+  res.json({ opportunities: latestRWA?.opportunities || [], timestamp: lastRWAFetch });
+});
+
+app.get('/api/v8/rwa/risks', authMiddleware('read'), (_req, res) => {
+  res.json({ risks: latestRWA?.risks || [], timestamp: lastRWAFetch });
+});
+
+app.get('/api/v8/rwa/events', authMiddleware('read'), (_req, res) => {
+  res.json({ events: latestRWA?.events || [], timestamp: lastRWAFetch });
+});
+
+app.post('/api/v8/rwa/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestRWA = await analyzeRWA();
+    lastRWAFetch = Date.now();
+    res.json({ success: true, rwa: latestRWA });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze RWA' });
+  }
+});
+
+// ---- v8.4: Template Store API ----
+
+app.get('/api/v8/templates/store', authMiddleware('read'), (_req, res) => {
+  if (!latestTemplateStore) { res.status(503).json({ error: 'No template data yet' }); return; }
+  res.json(latestTemplateStore);
+});
+
+app.get('/api/v8/templates/featured', authMiddleware('read'), (_req, res) => {
+  res.json({ templates: latestTemplateStore?.featured || [], timestamp: lastTemplateStoreFetch });
+});
+
+app.get('/api/v8/templates/trending', authMiddleware('read'), (_req, res) => {
+  res.json({ templates: latestTemplateStore?.trending || [], timestamp: lastTemplateStoreFetch });
+});
+
+app.get('/api/v8/templates/categories', authMiddleware('read'), (_req, res) => {
+  res.json({ categories: latestTemplateStore?.categories || [], timestamp: lastTemplateStoreFetch });
+});
+
+app.get('/api/v8/templates/stats', authMiddleware('read'), (_req, res) => {
+  res.json({ stats: latestTemplateStore?.stats || null, timestamp: lastTemplateStoreFetch });
+});
+
+app.post('/api/v8/templates/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestTemplateStore = await getTemplateStore();
+    lastTemplateStoreFetch = Date.now();
+    res.json({ success: true, store: latestTemplateStore });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to fetch template store' });
   }
 });
 
