@@ -101,6 +101,7 @@ import { analyzeKalshiMarkets, PredictionMarketData } from './engine/predictionM
 import { analyzeETFFlows, ETFFlowData } from './engine/cryptoETFFlowTracker.js';
 import { analyzeOptionsFlow, OptionsFlowData } from './engine/optionsFlowAnalytics.js';
 import { analyzeCurveFinance, CurveData } from './engine/stablecoinCurveTracker.js';
+import { createApiKey as createSubApiKey, validateApiKey as validateSubApiKey, checkRateLimit, revokeApiKey as revokeSubApiKey, getApiKeyUsage, getTierConfig, isEngineAllowed, getAllowedEngines, getSubscriptionSummary, cleanupExpiredKeys, SubscriptionTier, ApiKey as SubApiKey } from './subscription.js';
 import { analyzeTokenUnlocks, TokenUnlockData } from './engine/tokenUnlock.js';
 import { analyzeRPCPerformance, RPCPerformanceData } from './engine/rpcMonitor.js';
 import { analyzeStablecoinResidualArb, StablecoinResidualArbData } from './engine/stablecoinResidualArb.js';
@@ -130,19 +131,85 @@ function authMiddleware(requiredPerm: string = 'read') {
     const apiKey = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : req.query.api_key as string;
 
     if (!apiKey) {
-      // Allow read without auth in development
       if (process.env.NODE_ENV !== 'production' && requiredPerm === 'read') return next();
-      return res.status(401).json({ error: 'API key required' });
+      return res.status(401).json({ error: 'API key required. Get one at https://fundingmirror.io/signup' });
     }
 
-    const key = validateApiKey(apiKey);
-    if (!key) return res.status(403).json({ error: 'Invalid API key or rate limited' });
-    if (!checkPermission(key, requiredPerm)) return res.status(403).json({ error: 'Insufficient permissions' });
+    // Validate key via subscription system
+    const validation = validateSubApiKey(apiKey);
+    if (!validation.valid || !validation.keyData) {
+      return res.status(403).json({ error: 'Invalid or expired API key' });
+    }
 
-    (req as any).apiKey = key;
+    // Check rate limit
+    const rateLimit = checkRateLimit(apiKey);
+    if (!rateLimit.allowed) {
+      res.setHeader('X-RateLimit-Limit', getTierConfig(validation.keyData.tier).rateLimitPerMinute);
+      res.setHeader('X-RateLimit-Remaining', 0);
+      res.setHeader('X-RateLimit-Reset', rateLimit.resetAt);
+      return res.status(429).json({ error: 'Rate limit exceeded', upgradeUrl: 'https://fundingmirror.io/pricing' });
+    }
+
+    // Check engine access by tier
+    const engineId = req.path.match(/\/api\/v\d+\/([\w-]+)/)?.[1] || 'default';
+    if (!isEngineAllowed(engineId, validation.keyData.tier)) {
+      return res.status(403).json({
+        error: `Engine '${engineId}' not available on ${validation.keyData.tier} tier`,
+        upgradeUrl: 'https://fundingmirror.io/pricing',
+        currentTier: validation.keyData.tier
+      });
+    }
+
+    // Check permission level
+    if (requiredPerm === 'write' && validation.keyData.tier === 'free') {
+      return res.status(403).json({ error: 'Write operations require Pro or Enterprise tier' });
+    }
+
+    res.setHeader('X-RateLimit-Remaining', rateLimit.remaining);
+    (req as any).apiKey = validation.keyData;
     next();
   };
 }
+
+// ==================== API KEY MANAGEMENT ENDPOINTS ====================
+
+app.post('/api/keys', (req, res) => {
+  const { tier, label, expiresInDays } = req.body;
+  if (!tier || !['free', 'pro', 'enterprise'].includes(tier)) {
+    return res.status(400).json({ error: 'Invalid tier. Choose: free, pro, enterprise' });
+  }
+  try {
+    const key = createSubApiKey(tier as SubscriptionTier, label || 'API Key', expiresInDays);
+    res.json({ success: true, key: key.key, tier, message: 'Store this key safely - it cannot be retrieved again' });
+  } catch (e: any) {
+    res.status(400).json({ error: e.message });
+  }
+});
+
+app.get('/api/keys/usage', (req, res) => {
+  const authHeader = req.headers.authorization || '';
+  const apiKey = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : '';
+  const usage = getApiKeyUsage(apiKey);
+  if (!usage) return res.status(404).json({ error: 'Key not found' });
+  res.json(usage);
+});
+
+app.delete('/api/keys/:key', (req, res) => {
+  const success = revokeSubApiKey(req.params.key);
+  res.json({ success });
+});
+
+app.get('/api/subscription/summary', (_req, res) => {
+  res.json(getSubscriptionSummary());
+});
+
+app.get('/api/subscription/tiers', (_req, res) => {
+  res.json({
+    free: getTierConfig('free'),
+    pro: getTierConfig('pro'),
+    enterprise: getTierConfig('enterprise')
+  });
+});
 
 // ==================== STATE ====================
 

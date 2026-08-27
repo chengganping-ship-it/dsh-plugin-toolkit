@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Funding Mirror — Crypto Arbitrage Intelligence Platform with 86+ real-time engines monitoring funding rates, DeFi yields, MEV opportunities, and cross-chain arbitrage 24/7">
+  <title>Funding Mirror — Crypto Arbitrage Intelligence Platform</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg-primary: #0a0e14;
+      --bg-secondary: #11161f;
+      --bg-card: #141b26;
+      --bg-card-hover: #1a2333;
+      --border: #1e2a3a;
+      --border-light: #2a3a4f;
+      --text-primary: #ffffff;
+      --text-secondary: #a0b4c8;
+      --text-muted: #6b7a8d;
+      --accent: #00d4aa;
+      --accent-dim: #00d4aa22;
+      --accent-glow: #00d4aa44;
+      --danger: #ff4444;
+      --warning: #f5a623;
+      --blue: #4a9eff;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(10, 14, 20, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-logo .icon {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, var(--accent), #00a884);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--bg-primary);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .nav-cta {
+      background: var(--accent);
+      color: var(--bg-primary) !important;
+      padding: 8px 20px;
+      border-radius: 6px;
+      font-weight: 600 !important;
+      font-size: 13px !important;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover {
+      background: #00e4b8 !important;
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-size: 24px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 140px 24px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, var(--accent-dim) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-glow);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      color: var(--accent);
+      margin-bottom: 24px;
+      font-weight: 500;
+    }
+
+    .hero-badge .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .hero h1 {
+      font-size: 52px;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 .accent {
+      background: linear-gradient(135deg, var(--accent), #00e4b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 640px;
+      margin: 0 auto 36px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg-primary);
+    }
+
+    .btn-primary:hover {
+      background: #00e4b8;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 20px var(--accent-glow);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border-light);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Stats Banner */
+    .stats-banner {
+      padding: 0 24px 80px;
+    }
+
+    .stats-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .stat-item {
+      background: var(--bg-secondary);
+      padding: 28px 20px;
+      text-align: center;
+      transition: background 0.2s;
+    }
+
+    .stat-item:hover {
+      background: var(--bg-card);
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 500;
+    }
+
+    /* Section Styles */
+    .section {
+      padding: 80px 24px;
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .section-header h2 {
+      font-size: 36px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 12px;
+    }
+
+    .section-header p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* Features Grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .feature-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-light);
+      transform: translateY(-2px);
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
+    }
+
+    .feature-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 16px;
+      background: var(--accent-dim);
+      color: var(--accent);
+    }
+
+    .feature-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Pricing */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .pricing-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 28px;
+      transition: all 0.25s;
+      position: relative;
+    }
+
+    .pricing-card.featured {
+      border-color: var(--accent);
+      background: var(--bg-card-hover);
+    }
+
+    .pricing-card.featured::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: var(--bg-primary);
+      padding: 4px 16px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .pricing-card:hover {
+      border-color: var(--accent-glow);
+      transform: translateY(-2px);
+    }
+
+    .pricing-name {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .pricing-price {
+      font-size: 42px;
+      font-weight: 800;
+      color: var(--accent);
+      margin: 16px 0 4px;
+    }
+
+    .pricing-price span {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    .pricing-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .pricing-features {
+      list-style: none;
+      margin-bottom: 28px;
+    }
+
+    .pricing-features li {
+      padding: 8px 0;
+      font-size: 14px;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pricing-features li:last-child {
+      border-bottom: none;
+    }
+
+    .pricing-features li .check {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .pricing-card .btn {
+      width: 100%;
+      justify-content: center;
+    }
+
+    /* Use Cases */
+    .usecases {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+    }
+
+    .usecase-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 24px 16px;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .usecase-item:hover {
+      border-color: var(--accent-glow);
+      background: var(--bg-card-hover);
+    }
+
+    .usecase-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .usecase-item h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 24px 32px;
+      background: var(--bg-secondary);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* Mobile Menu */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px;
+      left: 0;
+      right: 0;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      z-index: 99;
+      padding: 16px;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .mobile-menu.active {
+      display: flex;
+    }
+
+    .mobile-menu a {
+      color: var(--text-secondary);
+      font-size: 15px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .pricing-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .usecases {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .stats-inner {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .mobile-toggle { display: block; }
+      .hero h1 { font-size: 34px; }
+      .hero p { font-size: 15px; }
+      .hero-actions { flex-direction: column; width: 100%; }
+      .hero-actions .btn { width: 100%; justify-content: center; }
+      .features-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .usecases { grid-template-columns: repeat(2, 1fr); }
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .section { padding: 56px 16px; }
+      .section-header h2 { font-size: 28px; }
+    }
+
+    @media (max-width: 480px) {
+      .usecases { grid-template-columns: 1fr 1fr; }
+      .stats-inner { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-logo">
+      <div class="icon">FM</div>
+      Funding Mirror
+    </div>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#usecases">Use Cases</a></li>
+      <li><a href="api-docs.html">API Docs</a></li>
+      <li><a href="#start" class="nav-cta">Start Free Trial</a></li>
+    </ul>
+    <button class="mobile-toggle" onclick="toggleMenu()" aria-label="Toggle menu">&#9776;</button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#features" onclick="toggleMenu()">Features</a>
+    <a href="#pricing" onclick="toggleMenu()">Pricing</a>
+    <a href="#usecases" onclick="toggleMenu()">Use Cases</a>
+    <a href="api-docs.html" onclick="toggleMenu()">API Docs</a>
+    <a href="#start" class="nav-cta" onclick="toggleMenu()" style="display:inline-block;margin-top:8px;text-align:center;">Start Free Trial</a>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-badge">
+      <span class="pulse"></span>
+      Live: 86+ engines actively monitoring
+    </div>
+    <h1>Funding Mirror &mdash; Crypto Arbitrage <span class="accent">Intelligence Platform</span></h1>
+    <p>86+ real-time engines monitoring funding rates, DeFi yields, MEV opportunities, and cross-chain arbitrage 24/7</p>
+    <div class="hero-actions">
+      <button class="btn btn-primary">Start Free Trial &rarr;</button>
+      <button class="btn btn-secondary">View Live Demo</button>
+    </div>
+  </section>
+
+  <!-- Stats Banner -->
+  <div class="stats-banner">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-value">86+</div>
+        <div class="stat-label">Analysis Engines</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">185+</div>
+        <div class="stat-label">REST API Endpoints</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">130+</div>
+        <div class="stat-label">Dashboard Panels</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">&lt;100ms</div>
+        <div class="stat-label">WebSocket Latency</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">99.9%</div>
+        <div class="stat-label">Uptime</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <section class="section" id="features">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2>Intelligence Modules</h2>
+        <p>Comprehensive crypto arbitrage infrastructure covering every major strategy vertical</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#9878;</div>
+          <h3>Funding Rate Arbitrage</h3>
+          <p>Cross-exchange funding rate monitoring with historical backtesting, real-time alerts, and automated position management.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#9670;</div>
+          <h3>DeFi Yield Optimizer</h3>
+          <p>Real-time yield comparison across 50+ protocols with risk-adjusted APY scoring and auto-compounding strategies.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#9889;</div>
+          <h3>MEV Intelligence</h3>
+          <p>Builder revenue tracking, frontrunning detection, sandwich attack monitoring, and MEV-Share analytics.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#128267;</div>
+          <h3>Cross-Chain Analytics</h3>
+          <p>Bridge TVL monitoring, LayerZero OFT tracking, and DEX aggregation across 20+ chains.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#128200;</div>
+          <h3>Derivatives &amp; Options</h3>
+          <p>Greeks calculator, IV arbitrage detection, options flow analytics, and volatility surface modeling.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#128202;</div>
+          <h3>Macro &amp; Sentiment</h3>
+          <p>Fear &amp; Greed index tracking, ETF flows, governance proposal monitoring, and on-chain sentiment analysis.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section class="section" id="pricing" style="background: var(--bg-secondary);">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2>Simple, Transparent Pricing</h2>
+        <p>Start free and scale as your trading operation grows</p>
+      </div>
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <div class="pricing-name">Free</div>
+          <div class="pricing-price">$0<span>/month</span></div>
+          <div class="pricing-desc">Get started with core data</div>
+          <ul class="pricing-features">
+            <li><span class="check">&#10003;</span> 5 API calls/minute</li>
+            <li><span class="check">&#10003;</span> 3 Analysis Engines</li>
+            <li><span class="check">&#10003;</span> Community Support</li>
+            <li><span class="check">&#10003;</span> Basic Dashboard</li>
+          </ul>
+          <button class="btn btn-secondary">Get Started</button>
+        </div>
+        <div class="pricing-card featured">
+          <div class="pricing-name">Pro</div>
+          <div class="pricing-price">$49<span>/month</span></div>
+          <div class="pricing-desc">For serious traders &amp; small funds</div>
+          <ul class="pricing-features">
+            <li><span class="check">&#10003;</span> 60 API calls/minute</li>
+            <li><span class="check">&#10003;</span> 30 Analysis Engines</li>
+            <li><span class="check">&#10003;</span> Email Support</li>
+            <li><span class="check">&#10003;</span> WebSocket Real-Time</li>
+            <li><span class="check">&#10003;</span> Historical Data (1 year)</li>
+          </ul>
+          <button class="btn btn-primary">Start Pro Trial</button>
+        </div>
+        <div class="pricing-card">
+          <div class="pricing-name">Enterprise</div>
+          <div class="pricing-price">$299<span>/month</span></div>
+          <div class="pricing-desc">Full institutional access</div>
+          <ul class="pricing-features">
+            <li><span class="check">&#10003;</span> Unlimited API Calls</li>
+            <li><span class="check">&#10003;</span> All 86+ Engines</li>
+            <li><span class="check">&#10003;</span> 99.9% SLA Guarantee</li>
+            <li><span class="check">&#10003;</span> Custom Integrations</li>
+            <li><span class="check">&#10003;</span> Dedicated Support</li>
+            <li><span class="check">&#10003;</span> Private Infrastructure</li>
+          </ul>
+          <button class="btn btn-secondary">Contact Sales</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Use Cases Section -->
+  <section class="section" id="usecases">
+    <div class="section-inner">
+      <div class="section-header">
+        <h2>Built For</h2>
+        <p>Powering arbitrage strategies across the crypto ecosystem</p>
+      </div>
+      <div class="usecases">
+        <div class="usecase-item">
+          <div class="usecase-icon">&#128200;</div>
+          <h4>Quantitative Trading Firms</h4>
+        </div>
+        <div class="usecase-item">
+          <div class="usecase-icon">&#128176;</div>
+          <h4>Crypto Hedge Funds</h4>
+        </div>
+        <div class="usecase-item">
+          <div class="usecase-icon">&#128267;</div>
+          <h4>DeFi Protocols</h4>
+        </div>
+        <div class="usecase-item">
+          <div class="usecase-icon">&#128181;</div>
+          <h4>Individual Arbitrageurs</h4>
+        </div>
+        <div class="usecase-item">
+          <div class="usecase-icon">&#128218;</div>
+          <h4>Research &amp; Education</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-copy">&copy; 2026 Funding Mirror. All rights reserved.</div>
+      <div style="clear:both;"></div>
+      <ul class="footer-links">
+        <li><a href="api-docs.html">API Docs</a></li>
+        <li><a href="#">Dashboard</a></li>
+        <li><a href="#">GitHub</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      var menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('active');
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+      anchor.addEventListener('click', function(e) {
+        var target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
