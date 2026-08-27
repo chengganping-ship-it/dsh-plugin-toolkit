@@ -46,6 +46,7 @@ import { getBestRoute, clearQuoteCache, DexQuote } from './engine/dexRouter.js';
 import { analyzeWhaleActivity, getCachedWhaleSummary, clearWhaleCache, WhaleSummary } from './engine/whale.js';
 import { analyzeBridges, getCachedBridgeSummary, clearBridgeCache, BridgeSummary } from './engine/bridge.js';
 import { analyzeOptions, getOptionsSummary, GreeksSummary } from './engine/options.js';
+import { optimizeGrid, getCachedGrids, clearGridCache, GridOptimization } from './engine/grid.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -135,6 +136,8 @@ let latestBridgeSummary: BridgeSummary | null = null;
 let lastBridgeFetch = 0;
 let latestOptions: GreeksSummary[] = [];
 let lastOptionsFetch = 0;
+let latestGridOptimizations: GridOptimization[] = [];
+let lastGridFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -390,6 +393,30 @@ async function poll() {
       }
     }
 
+    // v7.1: Grid optimization (every 10 minutes)
+    if (pollCount % 20 === 0 || latestGridOptimizations.length === 0) {
+      try {
+        const symbols = ['BTCUSDT', 'ETHUSDT'];
+        const optimizations: GridOptimization[] = [];
+        for (const sym of symbols) {
+          const rate = latestRates.find(r => r.symbol === sym);
+          if (rate) {
+            const opt = await optimizeGrid(
+              sym.replace('USDT', ''),
+              rate.markPrice || 65000,
+              10000,
+              latestRegime?.current || 'SIDEWAYS'
+            );
+            optimizations.push(opt);
+          }
+        }
+        latestGridOptimizations = optimizations;
+        lastGridFetch = Date.now();
+      } catch (e) {
+        // Grid optimization failed
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
@@ -474,6 +501,7 @@ function broadcast() {
       whale: latestWhaleSummary,
       bridge: latestBridgeSummary,
       options: latestOptions,
+      grid: latestGridOptimizations,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -525,6 +553,7 @@ wss.on('connection', (ws) => {
         whale: latestWhaleSummary,
         bridge: latestBridgeSummary,
         options: latestOptions,
+        grid: latestGridOptimizations,
         stats: {
           totalRates: latestRates.length,
           exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -1104,6 +1133,32 @@ app.post('/api/v7/options/refresh', authMiddleware('write'), async (_req, res) =
     res.json({ success: true, options: latestOptions });
   } catch (e) {
     res.status(500).json({ error: 'Failed to analyze options' });
+  }
+});
+
+// ---- v7.1: Grid Strategy Optimizer API ----
+
+app.get('/api/v7/grid', authMiddleware('read'), (_req, res) => {
+  res.json({ grids: latestGridOptimizations, timestamp: lastGridFetch });
+});
+
+app.get('/api/v7/grid/:symbol', authMiddleware('read'), (req, res) => {
+  const grid = latestGridOptimizations.find(g => g.symbol === req.params.symbol);
+  if (!grid) { res.status(404).json({ error: 'Grid not found' }); return; }
+  res.json(grid);
+});
+
+app.post('/api/v7/grid/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    const symbols = ['BTCUSDT', 'ETHUSDT', 'SOLUSDT'];
+    const priceMap: Record<string, number> = { BTCUSDT: 65000, ETHUSDT: 3500, SOLUSDT: 150 };
+    latestGridOptimizations = await Promise.all(
+      symbols.map(s => optimizeGrid(s.replace('USDT', ''), priceMap[s] || 100))
+    );
+    lastGridFetch = Date.now();
+    res.json({ success: true, grids: latestGridOptimizations });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to optimize grids' });
   }
 });
 

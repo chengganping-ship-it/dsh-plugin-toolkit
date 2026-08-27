@@ -171,6 +171,13 @@
     .fv-signal .action{padding:1px 5px;border-radius:3px;font-size:7px;font-weight:600}
     .fv-signal .action.SELL_OPTIONS{background:#ff444422;color:#ff4444}
     .fv-signal .action.BUY_OPTIONS{background:#00d4aa22;color:#00d4aa}
+    .grid-card{padding:6px;background:#141c28;border-radius:4px;margin-bottom:5px;font-size:9px;border-left:3px solid #4a9eff}
+    .grid-card .sym{font-weight:600;color:#4a9eff}
+    .grid-card .regime{padding:1px 5px;border-radius:3px;font-size:7px;background:#4a9eff22;color:#4a9eff;margin-left:4px}
+    .grid-card .grid-params{display:flex;gap:8px;margin-top:3px;font-size:8px;color:#8899aa;flex-wrap:wrap}
+    .mc-card{padding:6px;background:#141c28;border-radius:4px;margin-bottom:5px;font-size:9px;border-left:3px solid #f5a623}
+    .mc-card .sym{font-weight:600;color:#f5a623}
+    .mc-card .mc-stats{display:flex;gap:8px;margin-top:3px;font-size:8px;color:#8899aa;flex-wrap:wrap}
     @media(max-width:1100px){.g{grid-template-columns:repeat(3,1fr)}.g5{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:800px){.g{grid-template-columns:repeat(2,1fr)}.g2,.g3,.g5{grid-template-columns:1fr}.c{padding:6px}.hdr{padding:6px 10px}.stats{gap:5px}}
     @media(max-width:500px){.g{grid-template-columns:1fr}.hm{grid-template-columns:repeat(auto-fill,minmax(65px,1fr))}.stats .lb{font-size:9px}}
@@ -353,6 +360,18 @@
     </div>
   </div>
 
+  <!-- v7.1: Grid Strategy Optimizer -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v7.1: Grid Strategy Optimizer <span id="gridBadge" class="tag bd bb">-</span></h2>
+      <div id="gridOverview" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Optimizing grid parameters...</div></div>
+    </div>
+    <div class="card">
+      <h2>v7.1: Monte Carlo Backtest <span id="mcBadge" class="tag bd bb">-</span></h2>
+      <div id="mcResults" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Running simulations...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -428,6 +447,7 @@ function render() {
   renderWhaleAlerts(); renderLiqHeatmap();
   renderBridgeStatus(); renderCcArb();
   renderOptGreeks(); renderFvSignals();
+  renderGridOverview(); renderMCResults();
 }
 
 function renderHM() {
@@ -986,6 +1006,43 @@ function renderFvSignals() {
       <div><span class="type">${s.type?.replace(/_/g, ' ')}</span> <span class="action ${s.action}">${s.action?.replace(/_/g, ' ')}</span> <span style="color:#f5a623">Sev ${s.severity.toFixed(0)}</span></div>
       <div class="desc">${s.description}</div>
       <div style="font-size:7px;color:#6b7a8d;margin-top:2px">IV: ${(s.currentIv * 100).toFixed(1)}% | Funding: ${(s.fundingRate * 10000).toFixed(2)}bps | IV%ile: ${s.ivPercentile.toFixed(0)}%</div>
+    </div>
+  `).join('');
+}
+
+function renderGridOverview() {
+  const grids = data.grid || [];
+  if (!grids.length) { $('gridOverview').innerHTML = '<div class="emp">Optimizing grids...</div>'; return; }
+  $('gridBadge').textContent = grids.length + ' symbols';
+  $('gridOverview').innerHTML = grids.map(g => `
+    <div class="grid-card">
+      <div><span class="sym">${g.symbol}</span> <span class="regime">${g.regime}</span> <span style="color:${g.expectedSharpe > 1 ? '#00d4aa' : '#f5a623'}">Sharpe ${g.expectedSharpe.toFixed(2)}</span></div>
+      <div class="grid-params">
+        <span>Grids: ${g.optimalParams.gridCount}</span>
+        <span>Spacing: ${g.optimalParams.spacingPct.toFixed(2)}%</span>
+        <span>Range: $${g.optimalParams.lowerPrice.toLocaleString()} - $${g.optimalParams.upperPrice.toLocaleString()}</span>
+        <span>Size: $${g.optimalParams.perGridUsd.toFixed(0)}</span>
+      </div>
+      <div style="font-size:7px;color:#6b7a8d">Type: ${g.optimalParams.gridType} | MC: ${g.mcRuns} runs | WF stability: ${(g.walkForwardStability * 100).toFixed(0)}%</div>
+    </div>
+  `).join('');
+}
+
+function renderMCResults() {
+  const grids = data.grid || [];
+  if (!grids.length) { $('mcResults').innerHTML = '<div class="emp">Running Monte Carlo...</div>'; return; }
+  const best = grids.reduce((a, b) => a.mcMedianPnl > b.mcMedianPnl ? a : b);
+  $('mcBadge').textContent = best.symbol + ' ' + (best.mcMedianPnl > 0 ? '+' : '') + best.mcMedianPnl.toFixed(1) + '%';
+  $('mcResults').innerHTML = grids.map(g => `
+    <div class="mc-card">
+      <div><span class="sym">${g.symbol}</span> <span style="color:${g.mcMedianPnl > 0 ? '#00d4aa' : '#ff4444'}">Median: ${g.mcMedianPnl > 0 ? '+' : ''}${g.mcMedianPnl.toFixed(2)}%</span></div>
+      <div class="mc-stats">
+        <span>Win: ${g.mcWinRate.toFixed(0)}%</span>
+        <span>PF: ${g.mcProfitFactor.toFixed(2)}</span>
+        <span>MaxDD: ${g.mcMaxDrawdown.toFixed(1)}%</span>
+        <span>P95: ${g.mcP95Pnl > 0 ? '+' : ''}${g.mcP95Pnl.toFixed(1)}%</span>
+      </div>
+      <div style="font-size:7px;color:#6b7a8d">Walk-forward: ${g.walkForwardEvals} evals | Regime: ${g.regime}</div>
     </div>
   `).join('');
 }
