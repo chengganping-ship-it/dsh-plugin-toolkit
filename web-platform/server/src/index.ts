@@ -42,6 +42,7 @@ import { addRateSample, calculateVolSurface, getVolComparison, detectVolRegimeCh
 import { addAccount, removeAccount, listAccounts, getAggregatedPortfolio, getBalanceRecommendations, simulateBalanceUpdate, AggregatedPortfolio } from './engine/accounts.js';
 import { aggregateYields, getTopYields, getYieldsByRisk, getYieldSummary, clearYieldCache, YieldOpportunity } from './engine/yield.js';
 import { analyzeSentiment, getSentimentHistory, getCachedSentiment, clearSentimentCache, SentimentSummary, NewsItem } from './engine/sentiment.js';
+import { getBestRoute, clearQuoteCache, DexQuote } from './engine/dexRouter.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -124,6 +125,7 @@ let latestYields: YieldOpportunity[] = [];
 let lastYieldFetch = 0;
 let latestSentiment: SentimentSummary | null = null;
 let lastSentimentFetch = 0;
+let latestDexQuote: DexQuote | null = null;
 
 // ==================== POLLING ====================
 
@@ -418,6 +420,7 @@ function broadcast() {
       volSurfacePoints: latestVolSurface?.points?.slice(0, 6) || [],
       yields: latestYields.slice(0, 12),
       sentiment: latestSentiment,
+      dexQuote: latestDexQuote,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -465,6 +468,7 @@ wss.on('connection', (ws) => {
         health: getUsageSummary(),
         yields: latestYields.slice(0, 12),
         sentiment: latestSentiment,
+        dexQuote: latestDexQuote,
         stats: {
           totalRates: latestRates.length,
           exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -912,6 +916,37 @@ app.post('/api/v7/sentiment/refresh', authMiddleware('write'), async (_req, res)
   } catch (e) {
     res.status(500).json({ error: 'Failed to analyze sentiment' });
   }
+});
+
+// ==================== v7.0: DEX Router API ====================
+
+app.get('/api/v7/dex/quote', authMiddleware('read'), async (req, res) => {
+  try {
+    const { from, to, amount, chain, slippage } = req.query;
+    if (!from || !to || !amount) {
+      return res.status(400).json({ error: 'Missing required params: from, to, amount' });
+    }
+    const quote = await getBestRoute({
+      fromToken: from as string,
+      toToken: to as string,
+      amount: parseFloat(amount as string),
+      chain: (chain as string) || 'Ethereum',
+      maxSlippage: parseFloat(slippage as string) || 0.5,
+    });
+    latestDexQuote = quote;
+    res.json(quote);
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to get DEX quote', message: String(e) });
+  }
+});
+
+app.get('/api/v7/dex/latest', authMiddleware('read'), (_req, res) => {
+  res.json({ quote: latestDexQuote });
+});
+
+app.post('/api/v7/dex/clear-cache', authMiddleware('write'), (_req, res) => {
+  clearQuoteCache();
+  res.json({ success: true });
 });
 
 // ---- v6.0: Telegram/Discord Bot API ----

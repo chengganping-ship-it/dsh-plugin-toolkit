@@ -126,6 +126,14 @@
     .sent-neg{background:#ff444422;color:#ff4444}
     .sent-neu{background:#6b7a8d22;color:#6b7a8d}
     .alert-item{padding:5px;border-left:3px solid #ff4444;background:#141c28;border-radius:0 4px 4px 0;margin-bottom:4px;font-size:9px}
+    .dex-route{padding:5px;background:#141c28;border-radius:4px;margin-bottom:4px;font-size:9px;border-left:3px solid #4a9eff}
+    .dex-route .proto{font-weight:600;color:#4a9eff}
+    .dex-route .path{color:#00d4aa;font-family:monospace}
+    .dex-route .cost{font-size:8px;color:#6b7a8d}
+    .mev-gauge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:8px;font-weight:700}
+    .mev-low{background:#00d4aa22;color:#00d4aa}
+    .mev-med{background:#f5a62322;color:#f5a623}
+    .mev-high{background:#ff444422;color:#ff4444}
     @media(max-width:1100px){.g{grid-template-columns:repeat(3,1fr)}.g5{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:800px){.g{grid-template-columns:repeat(2,1fr)}.g2,.g3,.g5{grid-template-columns:1fr}.c{padding:6px}.hdr{padding:6px 10px}.stats{gap:5px}}
     @media(max-width:500px){.g{grid-template-columns:1fr}.hm{grid-template-columns:repeat(auto-fill,minmax(65px,1fr))}.stats .lb{font-size:9px}}
@@ -146,6 +154,7 @@
     <div>Strat: <span class="v" id="stC">-</span></div>
     <div>Yield: <span class="v" id="ydC">-</span></div>
     <div>Sent: <span class="v" id="snC">-</span></div>
+    <div>DEX: <span class="v" id="dxC">-</span></div>
   </div>
 </div>
 <div class="c">
@@ -268,6 +277,18 @@
     </div>
   </div>
 
+  <!-- v7.0: DEX Router -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v7.0: DEX Route Optimizer <span id="dexCount" class="tag bd bb">0</span></h2>
+      <div id="dexRoutes" style="max-height:250px;overflow-y:auto"><div class="emp">No quote yet. Use API /api/v7/dex/quote?from=ETH&to=USDC&amount=1</div></div>
+    </div>
+    <div class="card">
+      <h2>v7.0: Multi-hop & MEV Analysis</h2>
+      <div id="dexMev" style="max-height:250px;overflow-y:auto;font-size:10px"><div class="emp">Route analysis...</div></div>
+    </div>
+  </div>
+
   <!-- Backtest -->
   <div class="g2">
     <div class="card">
@@ -318,11 +339,13 @@ function render() {
   $('stC').textContent = data.stats.strategySignals || '-';
   $('ydC').textContent = data.yields?.length || '-';
   $('snC').textContent = data.sentiment?.overallScore?.toFixed(0) || '-';
+  $('dxC').textContent = data.dexQuote?.routes?.length || '-';
   renderHM(); renderOpps(); renderAnom(); renderML(); renderCP(); renderPP();
   renderPort(); renderCDN(); renderRegime(); renderRouter(); renderHealth(); renderEquity();
   renderStratSignals(); renderFeeBreakdown(); renderVolSurface();
   renderYields(); renderYieldSummary();
   renderSentiment(); renderSentimentAlerts();
+  renderDexRoutes(); renderDexMev();
 }
 
 function renderHM() {
@@ -710,6 +733,54 @@ function renderSentimentAlerts() {
   }
   if (!html) html = '<div class="emp">No alerts or sentiment data</div>';
   $('sentAlerts').innerHTML = html;
+}
+
+function renderDexRoutes() {
+  const q = data.dexQuote;
+  if (!q || !q.routes || !q.routes.length) { $('dexRoutes').innerHTML = '<div class="emp">No quote yet. Use API /api/v7/dex/quote?from=ETH&to=USDC&amount=1</div>'; return; }
+  $('dexCount').textContent = q.routes.length;
+  $('dexRoutes').innerHTML = q.routes.slice(0, 5).map((r, i) => {
+    const mevClass = r.mevRisk < 30 ? 'mev-low' : r.mevRisk < 60 ? 'mev-med' : 'mev-high';
+    const best = i === 0 ? '★ ' : '';
+    return `<div class="dex-route">
+      <div><span class="proto">${best}${r.hops?.[0]?.protocol || 'Unknown'}</span> <span class="path">${r.path?.join(' → ') || ''}</span></div>
+      <div class="cost">Out: <b style="color:#00d4aa">${r.expectedOutput?.toFixed(4) || '-'}</b> | Impact: ${r.priceImpact?.toFixed(3) || '-'}% | Gas: $${r.gasCostUsd?.toFixed(2) || '-'} | Total: $${r.totalCostUsd?.toFixed(2) || '-'}</div>
+      <div class="cost"><span class="mev-gauge ${mevClass}">MEV ${r.mevRisk}</span> Confidence: ${r.confidence}%</div>
+    </div>`;
+  }).join('');
+}
+
+function renderDexMev() {
+  const q = data.dexQuote;
+  if (!q || !q.bestRoute) { $('dexMev').innerHTML = '<div class="emp">No route data</div>'; return; }
+  const br = q.bestRoute;
+  const hops = br.hops || [];
+  const cex = q.cexComparison;
+  let html = `<div style="padding:6px;background:#4a9eff10;border-left:3px solid #4a9eff;border-radius:0 4px 4px 0;margin-bottom:8px">
+    <div style="font-weight:600;font-size:10px">🏆 Best Route: ${br.path?.join(' → ')}</div>
+    <div style="font-size:9px;color:#6b7a8d">Output: <b style="color:#00d4aa">${br.expectedOutput?.toFixed(4)}</b> | Min: ${br.minimumOutput?.toFixed(4)}</div>
+  </div>`;
+  // Hops detail
+  html += '<div style="font-size:8px;color:#6b7a8d;margin-bottom:4px;text-transform:uppercase">Hops</div>';
+  hops.forEach((h, i) => {
+    html += `<div style="padding:4px;background:#141c28;border-radius:3px;margin-bottom:3px;font-size:9px">
+      <b>Hop ${i + 1}:</b> ${h.protocol} | ${h.tokenIn} → ${h.tokenOut} | Fee: ${h.fee}bps | Liq: $${(h.liquidity / 1e6).toFixed(1)}M
+    </div>`;
+  });
+  // MEV analysis
+  html += `<div style="font-size:8px;color:#6b7a8d;margin:8px 0 4px;text-transform:uppercase">MEV Protection</div>`;
+  html += `<div style="padding:4px;background:#141c28;border-radius:3px;font-size:9px;margin-bottom:4px">
+    Sandwich Risk: <b style="color:${br.mevRisk < 30 ? '#00d4aa' : '#ff4444'}">${br.mevRisk}/100</b> | 
+    Slippage Tolerance: 0.5% | Deadline: 30s
+  </div>`;
+  // CEX comparison
+  if (cex) {
+    html += `<div style="padding:4px;background:#141c28;border-radius:3px;font-size:9px">
+      CEX Cost: $${cex.cexTotalCost?.toFixed(2)} | DEX Cost: $${br.totalCostUsd?.toFixed(2)} | 
+      Savings: <b style="color:${cex.savingsVsDex > 0 ? '#00d4aa' : '#ff4444'}">$${cex.savingsVsDex?.toFixed(2)}</b>
+    </div>`;
+  }
+  $('dexMev').innerHTML = html;
 }
 
 // Kelly
