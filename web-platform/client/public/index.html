@@ -141,6 +141,17 @@
     .mev-low{background:#00d4aa22;color:#00d4aa}
     .mev-med{background:#f5a62322;color:#f5a623}
     .mev-high{background:#ff444422;color:#ff4444}
+    .whale-alert{padding:5px;background:#141c28;border-radius:4px;margin-bottom:4px;font-size:9px;border-left:3px solid #f5a623}
+    .whale-alert .amt{color:#f5a623;font-weight:600}
+    .whale-alert .dir{font-size:8px;padding:1px 4px;border-radius:2px}
+    .whale-alert .dir.INFLOW{background:#00d4aa22;color:#00d4aa}
+    .whale-alert .dir.OUTFLOW{background:#ff444422;color:#ff4444}
+    .liq-bar{display:flex;align-items:center;gap:4px;padding:2px 0;font-size:8px}
+    .liq-bar .price{width:55px;text-align:right;color:#6b7a8d}
+    .liq-bar .bar{height:12px;border-radius:2px;min-width:2px}
+    .liq-bar .bar.long{background:linear-gradient(90deg,#ff4444,#ff6666)}
+    .liq-bar .bar.short{background:linear-gradient(90deg,#00d4aa,#44ffaa)}
+    .liq-bar .val{width:50px;font-size:7px;color:#6b7a8d}
     @media(max-width:1100px){.g{grid-template-columns:repeat(3,1fr)}.g5{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:800px){.g{grid-template-columns:repeat(2,1fr)}.g2,.g3,.g5{grid-template-columns:1fr}.c{padding:6px}.hdr{padding:6px 10px}.stats{gap:5px}}
     @media(max-width:500px){.g{grid-template-columns:1fr}.hm{grid-template-columns:repeat(auto-fill,minmax(65px,1fr))}.stats .lb{font-size:9px}}
@@ -162,6 +173,7 @@
     <div>Yield: <span class="v" id="ydC">-</span></div>
     <div>Sent: <span class="v" id="snC">-</span></div>
     <div>DEX: <span class="v" id="dxC">-</span></div>
+    <div>Whale: <span class="v" id="wlC">-</span></div>
   </div>
 </div>
 <div class="c">
@@ -284,6 +296,18 @@
     </div>
   </div>
 
+  <!-- v7.1: Whale Tracking & Liquidations -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v7.1: Whale Alerts & Exchange Flows <span id="whaleBadge" class="tag bd bb">-</span></h2>
+      <div id="whaleAlerts" style="max-height:250px;overflow-y:auto"><div class="emp">Scanning whale activity...</div></div>
+    </div>
+    <div class="card">
+      <h2>v7.1: Liquidation Heatmap <span id="liqBadge" class="tag bd bb">-</span></h2>
+      <div id="liqHeatmap" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Building liquidation map...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -347,12 +371,14 @@ function render() {
   $('ydC').textContent = data.yields?.length || '-';
   $('snC').textContent = data.sentiment?.overallScore?.toFixed(0) || '-';
   $('dxC').textContent = data.dexQuote?.routes?.length || '-';
+  $('wlC').textContent = data.whale?.alerts?.length || '-';
   renderHM(); renderOpps(); renderAnom(); renderML(); renderCP(); renderPP();
   renderPort(); renderCDN(); renderRegime(); renderRouter(); renderHealth(); renderEquity();
   renderStratSignals(); renderFeeBreakdown(); renderVolSurface();
   renderYields(); renderYieldSummary();
   renderSentiment(); renderSentimentAlerts();
   renderDexRoutes(); renderDexMev();
+  renderWhaleAlerts(); renderLiqHeatmap();
 }
 
 function renderHM() {
@@ -787,7 +813,66 @@ function renderDexMev() {
       Savings: <b style="color:${cex.savingsVsDex > 0 ? '#00d4aa' : '#ff4444'}">$${cex.savingsVsDex?.toFixed(2)}</b>
     </div>`;
   }
-  $('dexMev').innerHTML = html;
+    $('dexMev').innerHTML = html;
+}
+
+function renderWhaleAlerts() {
+  const w = data.whale;
+  if (!w) { $('whaleAlerts').innerHTML = '<div class="emp">Loading whale data...</div>'; return; }
+  $('whaleBadge').textContent = (w.alerts?.length || 0) + ' alerts';
+  const alerts = w.alerts || [];
+  const flows = w.exchangeFlows || [];
+  let html = '';
+  if (alerts.length) {
+    html += '<div style="font-size:8px;color:#6b7a8d;margin-bottom:4px;text-transform:uppercase">Whale Alerts</div>';
+    html += alerts.slice(0, 5).map(a =>
+      `<div class="whale-alert"><span class="amt">${a.symbol}</span> <span class="dir ${a.action.includes('LONG') ? 'INFLOW' : 'OUTFLOW'}">${a.action}</span><br>
+      <span style="font-size:8px;color:#6b7a8d">${a.message?.slice(0, 80)}</span></div>`
+    ).join('');
+  }
+  // Exchange flows summary
+  if (flows.length) {
+    html += '<div style="font-size:8px;color:#6b7a8d;margin:8px 0 4px;text-transform:uppercase">Exchange Flows (24h)</div>';
+    html += flows.slice(0, 4).map(f => {
+      const netColor = f.netFlow > 0 ? '#00d4aa' : '#ff4444';
+      return `<div style="display:flex;justify-content:space-between;padding:2px 0;font-size:9px">
+        <span>${f.exchange}</span><span style="color:${netColor};font-weight:600">${f.netFlow > 0 ? '+' : ''}$${(f.netFlow / 1e6).toFixed(1)}M</span>
+      </div>`;
+    }).join('');
+  }
+  // Smart money signal
+  const stats = w.stats;
+  if (stats) {
+    const signalColor = stats.smartMoneySignal === 'BULLISH' ? '#00d4aa' : stats.smartMoneySignal === 'BEARISH' ? '#ff4444' : '#6b7a8d';
+    html += `<div style="margin-top:8px;padding:6px;background:#141c28;border-radius:4px;font-size:9px">
+      <div>Smart Money: <b style="color:${signalColor}">${stats.smartMoneySignal}</b></div>
+      <div style="font-size:8px;color:#6b7a8d">Liq Risk: ${stats.liquidationRisk}/100 | Net Flow: $${(stats.netExchangeFlow24h / 1e6).toFixed(0)}M</div>
+    </div>`;
+  }
+  if (!html) html = '<div class="emp">No whale activity detected</div>';
+  $('whaleAlerts').innerHTML = html;
+}
+
+function renderLiqHeatmap() {
+  const w = data.whale;
+  const liq = w?.liquidationHeatmap;
+  if (!liq || !liq.levels || !liq.levels.length) { $('liqHeatmap').innerHTML = '<div class="emp">No liquidation data</div>'; return; }
+  $('liqBadge').textContent = liq.symbol + ' $' + (liq.totalLongLiquidations + liq.totalShortLiquidations > 1e9 ? ((liq.totalLongLiquidations + liq.totalShortLiquidations) / 1e9).toFixed(1) + 'B' : ((liq.totalLongLiquidations + liq.totalShortLiquidations) / 1e6).toFixed(0) + 'M');
+  const maxLiq = Math.max(...liq.levels.map(l => l.totalLiquidations));
+  let html = `<div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:9px">
+    <span>Price: <b style="color:#00d4aa">$${liq.currentPrice?.toLocaleString()}</b></span>
+    <span>Squeeze: <b style="color:${liq.squeezeDirection === 'UP' ? '#00d4aa' : liq.squeezeDirection === 'DOWN' ? '#ff4444' : '#6b7a8d'}">${liq.squeezeDirection}</b></span>
+  </div>`;
+  html += liq.levels.slice(0, 10).map(l => {
+    const barWidth = Math.max(5, (l.totalLiquidations / maxLiq) * 100);
+    const barClass = l.side === 'LONG' ? 'long' : 'short';
+    return `<div class="liq-bar">
+      <span class="price">$${l.price?.toLocaleString()}</span>
+      <span class="bar ${barClass}" style="width:${barWidth}%"></span>
+      <span class="val">${l.totalLiquidations > 1e6 ? (l.totalLiquidations / 1e6).toFixed(1) + 'M' : (l.totalLiquidations / 1e3).toFixed(0) + 'K'}</span>
+    </div>`;
+  }).join('');
+  $('liqHeatmap').innerHTML = html;
 }
 
 // Kelly

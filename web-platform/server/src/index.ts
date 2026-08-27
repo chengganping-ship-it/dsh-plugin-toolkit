@@ -43,6 +43,7 @@ import { addAccount, removeAccount, listAccounts, getAggregatedPortfolio, getBal
 import { aggregateYields, getTopYields, getYieldsByRisk, getYieldSummary, clearYieldCache, YieldOpportunity } from './engine/yield.js';
 import { analyzeSentiment, getSentimentHistory, getCachedSentiment, clearSentimentCache, SentimentSummary, NewsItem } from './engine/sentiment.js';
 import { getBestRoute, clearQuoteCache, DexQuote } from './engine/dexRouter.js';
+import { analyzeWhaleActivity, getCachedWhaleSummary, clearWhaleCache, WhaleSummary } from './engine/whale.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -126,6 +127,8 @@ let lastYieldFetch = 0;
 let latestSentiment: SentimentSummary | null = null;
 let lastSentimentFetch = 0;
 let latestDexQuote: DexQuote | null = null;
+let latestWhaleSummary: WhaleSummary | null = null;
+let lastWhaleFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -341,10 +344,21 @@ async function poll() {
       }
     }
 
+    // v7.1: Whale tracking (every 4 minutes)
+    if (pollCount % 8 === 0 || !latestWhaleSummary) {
+      try {
+        latestWhaleSummary = await analyzeWhaleActivity(['BTC', 'ETH', 'SOL']);
+        lastWhaleFetch = Date.now();
+      } catch (e) {
+        // Whale fetch failed, keep cached data
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
-    console.log(`[#${pollCount}] ${new Date().toLocaleTimeString('zh-CN')} | ${rates.length}rates | ${[...new Set(rates.map(r => r.exchange))].length}ex | ${latestOpportunities.length}opps | ML:${latestMLPredictions.length} Regime:${latestRegime?.current || '?'} Strat:${strategyHits} Router:${tradeActions} | ${elapsed}ms`);
+    const whaleHits = latestWhaleSummary?.alerts?.length || 0;
+    console.log(`[#${pollCount}] ${new Date().toLocaleTimeString('zh-CN')} | ${rates.length}rates | ${[...new Set(rates.map(r => r.exchange))].length}ex | ${latestOpportunities.length}opps | ML:${latestMLPredictions.length} Regime:${latestRegime?.current || '?'} Strat:${strategyHits} Whale:${whaleHits} | ${elapsed}ms`);
 
     broadcast();
   } catch (err: any) {
@@ -421,6 +435,7 @@ function broadcast() {
       yields: latestYields.slice(0, 12),
       sentiment: latestSentiment,
       dexQuote: latestDexQuote,
+      whale: latestWhaleSummary,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -469,6 +484,7 @@ wss.on('connection', (ws) => {
         yields: latestYields.slice(0, 12),
         sentiment: latestSentiment,
         dexQuote: latestDexQuote,
+        whale: latestWhaleSummary,
         stats: {
           totalRates: latestRates.length,
           exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -947,6 +963,47 @@ app.get('/api/v7/dex/latest', authMiddleware('read'), (_req, res) => {
 app.post('/api/v7/dex/clear-cache', authMiddleware('write'), (_req, res) => {
   clearQuoteCache();
   res.json({ success: true });
+});
+
+// ==================== v7.1: Whale Tracking API ====================
+
+app.get('/api/v7/whale', authMiddleware('read'), (_req, res) => {
+  res.json({
+    whale: latestWhaleSummary,
+    updatedAt: lastWhaleFetch,
+  });
+});
+
+app.get('/api/v7/whale/alerts', authMiddleware('read'), (_req, res) => {
+  res.json({
+    alerts: latestWhaleSummary?.alerts || [],
+    stats: latestWhaleSummary?.stats || null,
+  });
+});
+
+app.get('/api/v7/whale/liquidations/:symbol', authMiddleware('read'), (req, res) => {
+  const symbol = req.params.symbol.toUpperCase();
+  const heatmap = latestWhaleSummary?.liquidationHeatmap;
+  if (heatmap && heatmap.symbol === symbol) {
+    res.json(heatmap);
+  } else {
+    res.json({ error: 'No liquidation data for ' + symbol });
+  }
+});
+
+app.get('/api/v7/whale/flows', authMiddleware('read'), (_req, res) => {
+  res.json({ flows: latestWhaleSummary?.exchangeFlows || [] });
+});
+
+app.post('/api/v7/whale/refresh', authMiddleware('write'), async (_req, res) => {
+  clearWhaleCache();
+  try {
+    latestWhaleSummary = await analyzeWhaleActivity(['BTC', 'ETH', 'SOL']);
+    lastWhaleFetch = Date.now();
+    res.json({ success: true, whale: latestWhaleSummary });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze whale activity' });
+  }
 });
 
 // ---- v6.0: Telegram/Discord Bot API ----
