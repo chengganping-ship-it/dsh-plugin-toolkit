@@ -44,6 +44,7 @@ import { aggregateYields, getTopYields, getYieldsByRisk, getYieldSummary, clearY
 import { analyzeSentiment, getSentimentHistory, getCachedSentiment, clearSentimentCache, SentimentSummary, NewsItem } from './engine/sentiment.js';
 import { getBestRoute, clearQuoteCache, DexQuote } from './engine/dexRouter.js';
 import { analyzeWhaleActivity, getCachedWhaleSummary, clearWhaleCache, WhaleSummary } from './engine/whale.js';
+import { analyzeBridges, getCachedBridgeSummary, clearBridgeCache, BridgeSummary } from './engine/bridge.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -129,6 +130,8 @@ let lastSentimentFetch = 0;
 let latestDexQuote: DexQuote | null = null;
 let latestWhaleSummary: WhaleSummary | null = null;
 let lastWhaleFetch = 0;
+let latestBridgeSummary: BridgeSummary | null = null;
+let lastBridgeFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -354,6 +357,22 @@ async function poll() {
       }
     }
 
+    // v7.1: Cross-bridge monitoring (every 5 minutes)
+    if (pollCount % 10 === 0 || !latestBridgeSummary) {
+      try {
+        // Get funding rates organized by chain for cross-chain arb
+        const chainRates = latestOpportunities.slice(0, 20).map(o => ({
+          chain: o.longEx === 'Binance' ? 'Ethereum' : o.longEx === 'Bybit' ? 'Arbitrum' : 'Optimism',
+          symbol: o.symbol,
+          rate: o.netAnnualized / 100 / 1095,
+        }));
+        latestBridgeSummary = await analyzeBridges(chainRates);
+        lastBridgeFetch = Date.now();
+      } catch (e) {
+        // Bridge fetch failed, keep cached data
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
@@ -436,6 +455,7 @@ function broadcast() {
       sentiment: latestSentiment,
       dexQuote: latestDexQuote,
       whale: latestWhaleSummary,
+      bridge: latestBridgeSummary,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -485,6 +505,7 @@ wss.on('connection', (ws) => {
         sentiment: latestSentiment,
         dexQuote: latestDexQuote,
         whale: latestWhaleSummary,
+        bridge: latestBridgeSummary,
         stats: {
           totalRates: latestRates.length,
           exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -1003,6 +1024,39 @@ app.post('/api/v7/whale/refresh', authMiddleware('write'), async (_req, res) => 
     res.json({ success: true, whale: latestWhaleSummary });
   } catch (e) {
     res.status(500).json({ error: 'Failed to analyze whale activity' });
+  }
+});
+
+// ==================== v7.1: Cross-Chain Bridge API ====================
+
+app.get('/api/v7/bridge', authMiddleware('read'), (_req, res) => {
+  res.json({ bridge: latestBridgeSummary, updatedAt: lastBridgeFetch });
+});
+
+app.get('/api/v7/bridge/opportunities', authMiddleware('read'), (_req, res) => {
+  res.json({ opportunities: latestBridgeSummary?.opportunities || [], count: latestBridgeSummary?.opportunities?.length || 0 });
+});
+
+app.get('/api/v7/bridge/status', authMiddleware('read'), (_req, res) => {
+  res.json({ bridges: latestBridgeSummary?.bridges || [], chainStatus: Object.fromEntries(latestBridgeSummary?.chainStatus || new Map()) });
+});
+
+app.get('/api/v7/bridge/quotes', authMiddleware('read'), (req, res) => {
+  const { from, to, token } = req.query;
+  const filtered = (latestBridgeSummary?.quotes || []).filter(q =>
+    (!from || q.fromChain === from) && (!to || q.toChain === to) && (!token || q.token === token)
+  );
+  res.json({ quotes: filtered });
+});
+
+app.post('/api/v7/bridge/refresh', authMiddleware('write'), async (_req, res) => {
+  clearBridgeCache();
+  try {
+    latestBridgeSummary = await analyzeBridges();
+    lastBridgeFetch = Date.now();
+    res.json({ success: true, bridge: latestBridgeSummary });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze bridges' });
   }
 });
 

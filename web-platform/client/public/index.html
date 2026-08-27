@@ -152,6 +152,16 @@
     .liq-bar .bar.long{background:linear-gradient(90deg,#ff4444,#ff6666)}
     .liq-bar .bar.short{background:linear-gradient(90deg,#00d4aa,#44ffaa)}
     .liq-bar .val{width:50px;font-size:7px;color:#6b7a8d}
+    .bridge-row{display:flex;align-items:center;gap:6px;padding:4px;border-bottom:1px solid #141c28;font-size:9px}
+    .bridge-row .name{font-weight:600;min-width:80px}
+    .bridge-row .status{padding:1px 5px;border-radius:3px;font-size:7px;font-weight:600}
+    .bridge-row .status.ONLINE{background:#00d4aa22;color:#00d4aa}
+    .bridge-row .status.DEGRADED{background:#f5a62322;color:#f5a623}
+    .bridge-row .status.PAUSED{background:#ff444422;color:#ff4444}
+    .bridge-row .status.OFFLINE{background:#ff4444;color:#fff}
+    .cc-arb{padding:5px;background:#141c28;border-radius:4px;margin-bottom:4px;font-size:9px;border-left:3px solid #4a9eff}
+    .cc-arb .roi{color:#00d4aa;font-weight:700}
+    .cc-arb .route{color:#4a9eff;font-family:monospace;font-size:8px}
     @media(max-width:1100px){.g{grid-template-columns:repeat(3,1fr)}.g5{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:800px){.g{grid-template-columns:repeat(2,1fr)}.g2,.g3,.g5{grid-template-columns:1fr}.c{padding:6px}.hdr{padding:6px 10px}.stats{gap:5px}}
     @media(max-width:500px){.g{grid-template-columns:1fr}.hm{grid-template-columns:repeat(auto-fill,minmax(65px,1fr))}.stats .lb{font-size:9px}}
@@ -174,6 +184,7 @@
     <div>Sent: <span class="v" id="snC">-</span></div>
     <div>DEX: <span class="v" id="dxC">-</span></div>
     <div>Whale: <span class="v" id="wlC">-</span></div>
+    <div>Bridge: <span class="v" id="brC">-</span></div>
   </div>
 </div>
 <div class="c">
@@ -308,6 +319,18 @@
     </div>
   </div>
 
+  <!-- v7.1: Cross-Chain Bridge Monitor -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v7.1: Cross-Chain Bridge Status <span id="bridgeBadge" class="tag bd bb">-</span></h2>
+      <div id="bridgeStatus" style="max-height:250px;overflow-y:auto"><div class="emp">Checking bridges...</div></div>
+    </div>
+    <div class="card">
+      <h2>v7.1: Cross-Chain Arbitrage <span id="ccBadge" class="tag bd bb">-</span></h2>
+      <div id="ccArb" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Scanning chains...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -372,6 +395,7 @@ function render() {
   $('snC').textContent = data.sentiment?.overallScore?.toFixed(0) || '-';
   $('dxC').textContent = data.dexQuote?.routes?.length || '-';
   $('wlC').textContent = data.whale?.alerts?.length || '-';
+  $('brC').textContent = data.bridge?.opportunities?.length || '-';
   renderHM(); renderOpps(); renderAnom(); renderML(); renderCP(); renderPP();
   renderPort(); renderCDN(); renderRegime(); renderRouter(); renderHealth(); renderEquity();
   renderStratSignals(); renderFeeBreakdown(); renderVolSurface();
@@ -379,6 +403,7 @@ function render() {
   renderSentiment(); renderSentimentAlerts();
   renderDexRoutes(); renderDexMev();
   renderWhaleAlerts(); renderLiqHeatmap();
+  renderBridgeStatus(); renderCcArb();
 }
 
 function renderHM() {
@@ -873,6 +898,35 @@ function renderLiqHeatmap() {
     </div>`;
   }).join('');
   $('liqHeatmap').innerHTML = html;
+}
+
+function renderBridgeStatus() {
+  const b = data.bridge;
+  if (!b) { $('bridgeStatus').innerHTML = '<div class="emp">Loading bridge data...</div>'; return; }
+  const bridges = b.bridges || [];
+  $('bridgeBadge').textContent = bridges.filter(x => x.status === 'ONLINE').length + '/' + bridges.length + ' online';
+  $('bridgeStatus').innerHTML = bridges.slice(0, 8).map(br =>
+    `<div class="bridge-row">
+      <span class="name">${br.name?.slice(0, 12)}</span>
+      <span class="status ${br.status}">${br.status}</span>
+      <span style="color:#6b7a8d;flex:1">${br.avgDelay}min</span>
+      <span style="color:#4a9eff">{(br.fee?.amount || 0).toFixed(2)}${br.fee?.type === 'PERCENTAGE' ? '%' : '$'}</span>
+    </div>`
+  ).join('') || '<div class="emp">No bridge data</div>';
+}
+
+function renderCcArb() {
+  const b = data.bridge;
+  const opps = b?.opportunities || [];
+  if (!b || !opps.length) { $('ccArb').innerHTML = '<div class="emp">Monitoring cross-chain rates...</div>'; return; }
+  $('ccBadge').textContent = opps.length + ' opps';
+  $('ccArb').innerHTML = opps.slice(0, 6).map(o =>
+    `<div class="cc-arb">
+      <div><span class="roi">${o.roi.toFixed(2)}% ROI</span> <span style="color:#f5a623">${o.urgency}</span></div>
+      <div class="route">${o.symbol} ${o.fromChain} → ${o.toChain}</div>
+      <div style="font-size:8px;color:#6b7a8d">Rate diff: ${(o.rateDifferential * 10000).toFixed(2)}bps | Bridge: ${o.bridge?.bridge?.slice(0, 15)} | Cost: $${o.totalCost.toFixed(0)}</div>
+    </div>`
+  ).join('');
 }
 
 // Kelly
