@@ -74,6 +74,10 @@ import { analyzeOptionGreeks, getCachedOptionGreeks, clearOptionGreeksCache, Opt
 import { analyzeFundingBacktest, getCachedFundingBacktest, clearFundingBacktestCache, FundingBacktestData } from './engine/fundingBacktester.js';
 import { analyzeExchangeSpreads, getCachedExchangeSpreads, clearExchangeSpreadCache, SpreadAlertData } from './engine/exchangeSpreadAlert.js';
 import { analyzeGasOptimizer, getCachedGasOptimizer, clearGasOptimizerCache, GasOptimizerData } from './engine/gasOptimizer.js';
+import { analyzeReputation, getCachedReputation, clearReputationCache, OnChainReputationData } from './engine/onChainReputation.js';
+import { analyzeCrossChainDex, getCachedCrossChainDex, clearCrossChainDexCache, CrossChainDexData } from './engine/crossChainDex.js';
+import { analyzeDerivativesLiquidity, getCachedDerivativesLiquidity, clearDerivativesLiquidityCache, DerivativesLiquidityData } from './engine/derivativesLiquidity.js';
+import { analyzeContractUpgrades, getCachedContractUpgrades, clearContractUpgradeCache, ContractUpgradeData } from './engine/contractUpgrade.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -219,6 +223,14 @@ let latestExchangeSpreads: SpreadAlertData | null = null;
 let lastExchangeSpreadsFetch = 0;
 let latestGasOptimizer: GasOptimizerData | null = null;
 let lastGasOptimizerFetch = 0;
+let latestReputation: OnChainReputationData | null = null;
+let lastReputationFetch = 0;
+let latestCrossChainDex: CrossChainDexData | null = null;
+let lastCrossChainDexFetch = 0;
+let latestDerivativesLiq: DerivativesLiquidityData | null = null;
+let lastDerivativesLiqFetch = 0;
+let latestContractUpgrades: ContractUpgradeData | null = null;
+let lastContractUpgradeFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -791,6 +803,46 @@ async function poll() {
       }
     }
 
+    // v9.16: On-chain reputation (every 30 minutes)
+    if (pollCount % 60 === 0 || !latestReputation) {
+      try {
+        latestReputation = await analyzeReputation();
+        lastReputationFetch = Date.now();
+      } catch (e) {
+        // Reputation failed
+      }
+    }
+
+    // v9.17: Cross-chain DEX aggregator (every 10 minutes)
+    if (pollCount % 20 === 0 || !latestCrossChainDex) {
+      try {
+        latestCrossChainDex = await analyzeCrossChainDex();
+        lastCrossChainDexFetch = Date.now();
+      } catch (e) {
+        // Cross-chain DEX failed
+      }
+    }
+
+    // v9.18: Derivatives liquidity (every 5 minutes)
+    if (pollCount % 10 === 0 || !latestDerivativesLiq) {
+      try {
+        latestDerivativesLiq = await analyzeDerivativesLiquidity();
+        lastDerivativesLiqFetch = Date.now();
+      } catch (e) {
+        // Derivatives liquidity failed
+      }
+    }
+
+    // v9.19: Contract upgrade tracking (every 20 minutes)
+    if (pollCount % 40 === 0 || !latestContractUpgrades) {
+      try {
+        latestContractUpgrades = await analyzeContractUpgrades();
+        lastContractUpgradeFetch = Date.now();
+      } catch (e) {
+        // Contract upgrades failed
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
@@ -902,6 +954,10 @@ function broadcast() {
       fundingBacktest: latestFundingBacktest,
       exchangeSpreads: latestExchangeSpreads,
       gasOptimizer: latestGasOptimizer,
+      reputation: latestReputation,
+      crossChainDex: latestCrossChainDex,
+      derivativesLiq: latestDerivativesLiq,
+      contractUpgrades: latestContractUpgrades,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -2400,6 +2456,114 @@ app.post('/api/v9/gas/refresh', authMiddleware('write'), async (_req, res) => {
     res.json({ success: true, gas: latestGasOptimizer });
   } catch (e) {
     res.status(500).json({ error: 'Failed to optimize gas' });
+  }
+});
+
+// ---- v9.16: On-Chain Reputation API ----
+
+app.get('/api/v9/reputation/addresses', authMiddleware('read'), (_req, res) => {
+  res.json({ addresses: latestReputation?.addresses || [], timestamp: lastReputationFetch });
+});
+
+app.get('/api/v9/reputation/fraud-alerts', authMiddleware('read'), (_req, res) => {
+  res.json({ alerts: latestReputation?.fraudAlerts || [], timestamp: lastReputationFetch });
+});
+
+app.get('/api/v9/reputation/sybil-clusters', authMiddleware('read'), (_req, res) => {
+  res.json({ clusters: latestReputation?.sybilClusters || [], timestamp: lastReputationFetch });
+});
+
+app.get('/api/v9/reputation/trends', authMiddleware('read'), (_req, res) => {
+  res.json({ trends: latestReputation?.trends || [], timestamp: lastReputationFetch });
+});
+
+app.post('/api/v9/reputation/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestReputation = await analyzeReputation();
+    lastReputationFetch = Date.now();
+    res.json({ success: true, reputation: latestReputation });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze reputation' });
+  }
+});
+
+// ---- v9.17: Cross-Chain DEX API ----
+
+app.get('/api/v9/crosschain/routes', authMiddleware('read'), (_req, res) => {
+  res.json({ routes: latestCrossChainDex?.routes || [], timestamp: lastCrossChainDexFetch });
+});
+
+app.get('/api/v9/crosschain/liquidity', authMiddleware('read'), (_req, res) => {
+  res.json({ sources: latestCrossChainDex?.liquiditySources || [], timestamp: lastCrossChainDexFetch });
+});
+
+app.get('/api/v9/crosschain/bridge-routes', authMiddleware('read'), (_req, res) => {
+  res.json({ bridges: latestCrossChainDex?.bridgeRoutes || [], timestamp: lastCrossChainDexFetch });
+});
+
+app.post('/api/v9/crosschain/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestCrossChainDex = await analyzeCrossChainDex();
+    lastCrossChainDexFetch = Date.now();
+    res.json({ success: true, crosschain: latestCrossChainDex });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze cross-chain DEX' });
+  }
+});
+
+// ---- v9.18: Derivatives Liquidity API ----
+
+app.get('/api/v9/derivatives/depth', authMiddleware('read'), (_req, res) => {
+  res.json({ depth: latestDerivativesLiq?.depth || [], timestamp: lastDerivativesLiqFetch });
+});
+
+app.get('/api/v9/derivatives/open-interest', authMiddleware('read'), (_req, res) => {
+  res.json({ oi: latestDerivativesLiq?.openInterest || [], timestamp: lastDerivativesLiqFetch });
+});
+
+app.get('/api/v9/derivatives/liquidation-risk', authMiddleware('read'), (_req, res) => {
+  res.json({ risk: latestDerivativesLiq?.liquidationRisk || [], timestamp: lastDerivativesLiqFetch });
+});
+
+app.get('/api/v9/derivatives/solvency', authMiddleware('read'), (_req, res) => {
+  res.json({ solvency: latestDerivativesLiq?.solvency || [], timestamp: lastDerivativesLiqFetch });
+});
+
+app.post('/api/v9/derivatives/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestDerivativesLiq = await analyzeDerivativesLiquidity();
+    lastDerivativesLiqFetch = Date.now();
+    res.json({ success: true, derivatives: latestDerivativesLiq });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to monitor derivatives liquidity' });
+  }
+});
+
+// ---- v9.19: Contract Upgrade API ----
+
+app.get('/api/v9/contracts/upgrades', authMiddleware('read'), (_req, res) => {
+  res.json({ upgrades: latestContractUpgrades?.upgrades || [], timestamp: lastContractUpgradeFetch });
+});
+
+app.get('/api/v9/contracts/proposals', authMiddleware('read'), (_req, res) => {
+  res.json({ proposals: latestContractUpgrades?.proposals || [], timestamp: lastContractUpgradeFetch });
+});
+
+app.get('/api/v9/contracts/timelocks', authMiddleware('read'), (_req, res) => {
+  res.json({ timelocks: latestContractUpgrades?.timelocks || [], timestamp: lastContractUpgradeFetch });
+});
+
+app.get('/api/v9/contracts/audits', authMiddleware('read'), (_req, res) => {
+  res.json({ audits: latestContractUpgrades?.audits || [], timestamp: lastContractUpgradeFetch });
+});
+
+app.post('/api/v9/contracts/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestContractUpgrades = await analyzeContractUpgrades();
+    lastContractUpgradeFetch = Date.now();
+    res.json({ success: true, contracts: latestContractUpgrades });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to track contract upgrades' });
   }
 });
 

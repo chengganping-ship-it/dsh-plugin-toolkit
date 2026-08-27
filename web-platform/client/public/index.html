@@ -1125,6 +1125,54 @@
     </div>
   </div>
 
+  <!-- v9.16: On-Chain Reputation -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v9.16: Address Reputation <span id="repBadge" class="tag bd bb">-</span></h2>
+      <div id="repAddresses" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading reputation...</div></div>
+    </div>
+    <div class="card">
+      <h2>v9.16: Fraud Alerts <span id="fraudBadge" class="tag bd br">-</span></h2>
+      <div id="fraudAlerts" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Scanning fraud...</div></div>
+    </div>
+  </div>
+
+  <!-- v9.17: Cross-Chain DEX -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v9.17: Optimal Routes <span id="routeBadge" class="tag bd bb">-</span></h2>
+      <div id="optimalRoutes" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Finding routes...</div></div>
+    </div>
+    <div class="card">
+      <h2>v9.17: Cross-Chain Sources <span id="ccSrcBadge" class="tag bd bb">-</span></h2>
+      <div id="ccSources" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading sources...</div></div>
+    </div>
+  </div>
+
+  <!-- v9.18: Derivatives Liquidity -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v9.18: Depth Analysis <span id="depthBadge" class="tag bd bb">-</span></h2>
+      <div id="depthAnalysis" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Analyzing depth...</div></div>
+    </div>
+    <div class="card">
+      <h2>v9.18: Liquidation Risk <span id="liqRiskBadge" class="tag bd br">-</span></h2>
+      <div id="liqRiskPanel" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Scanning risk...</div></div>
+    </div>
+  </div>
+
+  <!-- v9.19: Contract Upgrade Tracker -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v9.19: Upcoming Upgrades <span id="upgrBadge" class="tag bd by">-</span></h2>
+      <div id="upcomingUpgrades" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading upgrades...</div></div>
+    </div>
+    <div class="card">
+      <h2>v9.19: Governance Proposals <span id="govPropBadge" class="tag bd bp">-</span></h2>
+      <div id="govProposals" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading proposals...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -1228,6 +1276,10 @@ function render() {
   renderFundingSpreads(); renderOptimalEntries();
   renderSpreadOpps(); renderTriangularArb();
   renderGasPrices(); renderL2Comparison();
+  renderRepAddresses(); renderFraudAlerts();
+  renderOptimalRoutes(); renderCCSources();
+  renderDepthAnalysis(); renderLiqRiskPanel();
+  renderUpcomingUpgrades(); renderGovProposals();
 }
 
 function renderHM() {
@@ -2174,7 +2226,17 @@ function renderOptimalEntries(){var f=data.fundingBacktest;if(!f){$('optimalEntr
 function renderSpreadOpps(){var s=data.exchangeSpreads;if(!s){$('spreadOpps').innerHTML='<div class="emp">Loading...</div>';return}var o=(s.spreads||[]).slice(0,6);$('spreadOppBadge').textContent=o.length+' opps';var h='';for(var x of o){h+='<div class="spread-opp '+(x.netProfit>50?'high':x.netProfit>20?'med':'low')+'"><span class="opp-sym">'+x.symbol.slice(0,8)+'</span><span class="opp-spread">'+x.spreadPct.toFixed(3)+'%</span><span class="opp-profit">$'+x.netProfit.toFixed(0)+'</span></div>'}$('spreadOpps').innerHTML=h||'<div class="emp">No opportunities</div>'}
 function renderTriangularArb(){var s=data.exchangeSpreads;if(!s){$('triangularArb').innerHTML='<div class="emp">Loading...</div>';return}var t=(s.triangularArbs||[]).slice(0,3);$('triArbBadge').textContent=t.length+' paths';var h='';for(var x of t){h+='<div class="tri-arb"><span class="tri-ex">'+x.exchange.slice(0,8)+'</span><span class="tri-path">'+x.path.join('→')+'</span><span class="tri-profit '+(x.profitPct>0.3?'high':'med')+'">'+x.profitPct.toFixed(2)+'%</span></div>'}$('triangularArb').innerHTML=h||'<div class="emp">No triangular arb</div>'}
 function renderGasPrices(){var g=data.gasOptimizer;if(!g){$('gasPrices').innerHTML='<div class="emp">Loading...</div>';return}var p=(g.gasPrices||[]).slice(0,6);$('gasBadge').textContent=p.length+' chains';var h='';for(var x of p){h+='<div class="gas-item '+x.congestionLevel.toLowerCase()+'"><span class="gas-chain">'+x.chain.slice(0,8)+'</span><span class="gas-gwei">'+x.gwei.toFixed(1)+' gwei</span><span class="gas-usd">$'+x.usdCost.toFixed(2)+'</span></div>'}$('gasPrices').innerHTML=h||'<div class="emp">No gas data</div>'}
-function renderL2Comparison(){var g=data.gasOptimizer;if(!g){$('l2Comparison').innerHTML='<div class="emp">Loading...</div>';return}var c=g.l2Comparison||{};$('l2Badge').textContent=(c.l2Costs||[]).length+' L2s';var h='<div class="l2-l1">L1 Cost: $'+(c.l1Cost||0).toFixed(2)+'</div>';for(var l of(c.l2Costs||[]).slice(0,4)){h+='<div class="l2-item"><span class="l2-chain">'+l.chain.slice(0,8)+'</span><span class="l2-cost">$'+l.cost.toFixed(3)+'</span><span class="l2-save '+l.savings>95?'high':'med')+'">-'+l.savings.toFixed(0)+'%</span></div>'}$('l2Comparison').innerHTML=h}
+function renderL2Comparison(){var g=data.gasOptimizer;if(!g){$('l2Comparison').innerHTML='<div class="emp">Loading...</div>';return}var c=g.l2Comparison||{};$('l2Badge').textContent=(c.l2Costs||[]).length+' L2s';var h='<div class="l2-l1">L1 Cost: $'+(c.l1Cost||0).toFixed(2)+'</div>';for(var l of(c.l2Costs||[]).slice(0,4)){h+='<div class="l2-item"><span class="l2-chain">'+l.chain.slice(0,8)+'</span><span class="l2-cost">$'+l.cost.toFixed(3)+'</span><span class="l2-save '+(l.savings>95?'high':'med')+'">-'+l.savings.toFixed(0)+'%</span></div>'}$('l2Comparison').innerHTML=h}
+
+// ==================== v9.16-v9.19 Renders ====================
+function renderRepAddresses(){var r=data.reputation;if(!r){$('repAddresses').innerHTML='<div class="emp">Loading...</div>';return}var a=(r.addresses||[]).slice(0,6);$('repBadge').textContent=a.length+' scored';var h='';for(var x of a){h+='<div class="rep-addr '+(x.score>=80?'trusted':x.score>=50?'neutral':'risky')+'"><span class="addr-hash">'+x.address.slice(0,10)+'...</span><span class="addr-score '+(x.score>=80?'high':x.score>=50?'med':'low')+'">'+x.score+'</span><span class="addr-tier '+x.tier.toLowerCase()+'">'+x.tier.slice(0,4)+'</span></div>'}$('repAddresses').innerHTML=h||'<div class="emp">No addresses</div>'}
+function renderFraudAlerts(){var r=data.reputation;if(!r){$('fraudAlerts').innerHTML='<div class="emp">Loading...</div>';return}var a=(r.fraudAlerts||[]).slice(0,5);$('fraudBadge').textContent=a.length+' alerts';var h='';for(var x of a){h+='<div class="fraud-alert '+x.severity.toLowerCase()+'"><span class="fraud-type">'+x.type.replace(/_/g,' ')+'</span><span class="fraud-sev '+x.severity.toLowerCase()+'">'+x.severity.slice(0,4)+'</span><span class="fraud-conf">'+(x.confidence*100).toFixed(0)+'%</span></div>'}$('fraudAlerts').innerHTML=h||'<div class="emp">No fraud alerts</div>'}
+function renderOptimalRoutes(){var c=data.crossChainDex;if(!c){$('optimalRoutes').innerHTML='<div class="emp">Loading...</div>';return}var r=(c.routes||[]).slice(0,5);$('routeBadge').textContent=r.length+' routes';var h='';for(var x of r){h+='<div class="route-item '+(x.optimal?'optimal':'')+'"><span class="route-path">'+x.fromChain.slice(0,4)+'→'+x.toChain.slice(0,4)+'</span><span class="route-output">'+x.expectedOutput.toFixed(2)+'</span><span class="route-gas">$'+x.gasCost.toFixed(1)+'</span></div>'}$('optimalRoutes').innerHTML=h||'<div class="emp">No routes</div>'}
+function renderCCSources(){var c=data.crossChainDex;if(!c){$('ccSources').innerHTML='<div class="emp">Loading...</div>';return}var s=(c.liquiditySources||[]).slice(0,6);$('ccSrcBadge').textContent=s.length+' sources';var h='';for(var x of s){h+='<div class="cc-source"><span class="src-name">'+x.name.slice(0,10)+'</span><span class="src-liq">$'+((x.liquidity||0)/1e6).toFixed(0)+'M</span><span class="src-chain">'+x.chain.slice(0,5)+'</span></div>'}$('ccSources').innerHTML=h||'<div class="emp">No sources</div>'}
+function renderDepthAnalysis(){var d=data.derivativesLiq;if(!d){$('depthAnalysis').innerHTML='<div class="emp">Loading...</div>';return}var dep=(d.depth||[]).slice(0,5);$('depthBadge').textContent=dep.length+' markets';var h='';for(var x of dep){h+='<div class="depth-item"><span class="depth-sym">'+x.symbol.slice(0,8)+'</span><span class="depth-bid">'+x.bidDepth.toFixed(0)+'</span><span class="depth-ask">'+x.askDepth.toFixed(0)+'</span><span class="depth-ratio '+(x.imbalance>0?'pos':'neg')+'">'+(x.imbalance>0?'+':'')+(x.imbalance*100).toFixed(0)+'%</span></div>'}$('depthAnalysis').innerHTML=h||'<div class="emp">No depth data</div>'}
+function renderLiqRiskPanel(){var d=data.derivativesLiq;if(!d){$('liqRiskPanel').innerHTML='<div class="emp">Loading...</div>';return}var r=(d.liquidationRisk||[]).slice(0,5);$('liqRiskBadge').textContent=r.length+' risks';var h='';for(var x of r){h+='<div class="liq-risk '+x.riskLevel.toLowerCase()+'"><span class="risk-sym">'+x.symbol.slice(0,8)+'</span><span class="risk-level '+x.riskLevel.toLowerCase()+'">'+x.riskLevel.slice(0,4)+'</span><span class="risk-price">$'+x.liquidationPrice.toFixed(0)+'</span></div>'}$('liqRiskPanel').innerHTML=h||'<div class="emp">No liquidation risk</div>'}
+function renderUpcomingUpgrades(){var u=data.contractUpgrades;if(!u){$('upcomingUpgrades').innerHTML='<div class="emp">Loading...</div>';return}var up=(u.upgrades||[]).slice(0,5);$('upgrBadge').textContent=up.length+' upgrades';var h='';for(var x of up){h+='<div class="upgrade-item '+x.riskLevel.toLowerCase()+'"><span class="upgr-name">'+x.name.slice(0,15)+'</span><span class="upgr-date">'+x.executionDate.slice(0,10)+'</span><span class="upgr-risk '+x.riskLevel.toLowerCase()+'">'+x.riskLevel.slice(0,4)+'</span></div>'}$('upcomingUpgrades').innerHTML=h||'<div class="emp">No upgrades</div>'}
+function renderGovProposals(){var u=data.contractUpgrades;if(!u){$('govProposals').innerHTML='<div class="emp">Loading...</div>';return}var p=(u.proposals||[]).slice(0,5);$('govPropBadge').textContent=p.length+' proposals';var h='';for(var x of p){h+='<div class="gov-proposal '+x.status.toLowerCase()+'"><span class="prop-title">'+x.title.slice(0,20)+'</span><span class="prop-status '+x.status.toLowerCase()+'">'+x.status.slice(0,6)+'</span><span class="prop-eta">'+x.eta.slice(0,10)+'</span></div>'}$('govProposals').innerHTML=h||'<div class="emp">No proposals</div>'}
 
 // Kelly
 $('kB')?.addEventListener('click', async () => {
