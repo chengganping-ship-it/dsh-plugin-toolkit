@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>前沿信号 Frontier Signals | AI增强型行业情报日报</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", "Microsoft YaHei", sans-serif;
+    background: #0a0e17; color: #e4e8ef; line-height: 1.7;
+    min-height: 100vh;
+}
+.container { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+
+/* Hero */
+.hero {
+    padding: 80px 0 60px;
+    text-align: center;
+    background: linear-gradient(180deg, #0f1a2e 0%, #0a0e17 100%);
+    border-bottom: 1px solid #1e2a3a;
+}
+.hero .logo {
+    font-size: 13px; font-weight: 600; color: #4a9eff;
+    letter-spacing: 4px; text-transform: uppercase; margin-bottom: 20px;
+}
+.hero h1 {
+    font-size: 44px; font-weight: 800; color: #ffffff;
+    margin-bottom: 8px; letter-spacing: -1px;
+}
+.hero .subtitle {
+    font-size: 20px; color: #8892a4; margin-bottom: 16px; font-weight: 400;
+}
+.hero .tagline {
+    font-size: 16px; color: #8892a4; max-width: 600px; margin: 0 auto 32px;
+}
+.hero .tagline strong { color: #4a9eff; }
+.cta-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.btn {
+    display: inline-block; padding: 14px 32px; border-radius: 8px;
+    font-size: 16px; font-weight: 600; text-decoration: none;
+    transition: all 0.2s; cursor: pointer; border: none;
+}
+.btn-primary { background: #4a9eff; color: #fff; }
+.btn-primary:hover { background: #3a8eef; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(74,158,255,0.3); }
+.btn-secondary { background: transparent; color: #4a9eff; border: 2px solid #4a9eff; }
+.btn-secondary:hover { background: rgba(74,158,255,0.1); }
+
+/* Sections */
+.section { padding: 80px 0; }
+.section h2 { text-align: center; font-size: 28px; color: #fff; margin-bottom: 8px; }
+.section .sub { text-align: center; color: #8892a4; margin-bottom: 48px; }
+
+/* Features */
+.features { border-top: 1px solid #1e2a3a; }
+.feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+.feature-card {
+    background: #111925; border: 1px solid #1e2a3a;
+    border-radius: 12px; padding: 28px; text-align: center;
+    transition: all 0.2s;
+}
+.feature-card:hover { border-color: #4a9eff; transform: translateY(-4px); }
+.feature-card .icon { font-size: 36px; margin-bottom: 16px; }
+.feature-card h3 { font-size: 17px; color: #fff; margin-bottom: 8px; }
+.feature-card h3 .en { display: block; font-size: 12px; color: #8892a4; font-weight: 400; margin-top: 4px; }
+.feature-card p { font-size: 14px; color: #8892a4; }
+
+/* What we provide */
+.provide-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+    align-items: start;
+}
+.provide-list { list-style: none; }
+.provide-list li {
+    padding: 16px 20px; background: #111925; border: 1px solid #1e2a3a;
+    border-radius: 10px; margin-bottom: 12px; display: flex; align-items: flex-start; gap: 12px;
+}
+.provide-list li .num {
+    background: #4a9eff; color: #fff; width: 28px; height: 28px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
+}
+.provide-list li .text strong { color: #fff; display: block; }
+.provide-list li .text span { color: #8892a4; font-size: 13px; }
+
+/* Stats */
+.stats-row {
+    display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
+    padding: 40px 0;
+}
+.stat .num { font-size: 32px; font-weight: 800; color: #4a9eff; }
+.stat .label { font-size: 14px; color: #8892a4; }
+
+/* Pricing */
+.pricing { border-top: 1px solid #1e2a3a; }
+.price-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px; max-width: 800px; margin: 0 auto;
+}
+.price-card {
+    background: #111925; border: 1px solid #1e2a3a;
+    border-radius: 16px; padding: 32px; text-align: center;
+    position: relative; transition: all 0.2s;
+}
+.price-card.featured { border-color: #4a9eff; background: linear-gradient(180deg, #111d33 0%, #111925 100%); }
+.price-card.featured::before {
+    content: "推荐 Recommended"; position: absolute; top: -12px; left: 50%;
+    transform: translateX(-50%); background: #4a9eff;
+    color: #fff; padding: 4px 16px; border-radius: 20px; font-size: 12px; font-weight: 600;
+}
+.price-card h3 { font-size: 20px; color: #fff; margin-bottom: 4px; }
+.price-card .plan-en { font-size: 13px; color: #8892a4; margin-bottom: 16px; }
+.price-card .price { font-size: 36px; font-weight: 800; color: #fff; margin: 16px 0; }
+.price-card .price span { font-size: 16px; color: #8892a4; font-weight: 400; }
+.price-card ul { list-style: none; margin: 24px 0; text-align: left; }
+.price-card li { padding: 8px 0; color: #b0b8c4; font-size: 14px; border-bottom: 1px solid #1a2435; }
+.price-card li::before { content: "✓ "; color: #4a9eff; font-weight: 600; }
+
+/* Sample Report */
+.sample { border-top: 1px solid #1e2a3a; }
+.sample-preview {
+    background: #111925; border: 1px solid #1e2a3a; border-radius: 12px;
+    padding: 32px; max-width: 700px; margin: 0 auto;
+}
+.sample-preview h3 { color: #4a9eff; margin-bottom: 16px; font-size: 16px; }
+.sample-preview .report-content {
+    background: #0d1520; border-radius: 8px; padding: 24px;
+    font-size: 14px; line-height: 1.8; color: #b0b8c4;
+    max-height: 400px; overflow-y: auto;
+}
+.sample-preview .report-content h4 { color: #fff; margin: 16px 0 8px; font-size: 15px; }
+.sample-preview .report-content h4:first-child { margin-top: 0; }
+.sample-preview .report-content .item { padding: 8px 0; border-bottom: 1px solid #1a2435; }
+.sample-preview .report-content .item:last-child { border-bottom: none; }
+.sample-preview .report-content .meta { font-size: 12px; color: #5a6578; }
+
+/* Testimonials */
+.testimonials { border-top: 1px solid #1e2a3a; }
+.testimonial-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px; max-width: 800px; margin: 0 auto;
+}
+.testimonial {
+    background: #111925; border: 1px solid #1e2a3a;
+    border-radius: 12px; padding: 24px;
+}
+.testimonial .quote {
+    font-size: 14px; color: #8892a4; font-style: italic;
+    margin-bottom: 16px; line-height: 1.8;
+}
+.testimonial .quote::before { content: '"'; color: #4a9eff; font-size: 24px; font-weight: 700; }
+.testimonial .author { display: flex; align-items: center; gap: 12px; }
+.testimonial .author .avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: #1e2a3a; display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+}
+.testimonial .author .info strong { color: #fff; display: block; font-size: 14px; }
+.testimonial .author .info span { color: #5a6578; font-size: 12px; }
+.testimonial .placeholder { opacity: 0.6; }
+.testimonial .placeholder-note {
+    text-align: center; font-size: 12px; color: #5a6578; margin-top: 8px;
+}
+
+/* Subscribe */
+.subscribe { border-top: 1px solid #1e2a3a; text-align: center; }
+.subscribe p { color: #8892a4; margin-bottom: 24px; }
+.email-form { display: flex; gap: 8px; max-width: 420px; margin: 0 auto; }
+.email-form input {
+    flex: 1; padding: 14px 18px; border-radius: 8px; border: 1px solid #2a3a4a;
+    background: #0d1520; color: #e4e8ef; font-size: 15px;
+}
+.email-form input:focus { outline: none; border-color: #4a9eff; }
+.email-form button {
+    padding: 14px 24px; border-radius: 8px; background: #4a9eff; color: #fff;
+    border: none; font-weight: 600; font-size: 15px; cursor: pointer;
+}
+.email-form button:hover { background: #3a8eef; }
+.form-note { font-size: 12px; color: #5a6578; margin-top: 12px; }
+
+/* Footer */
+footer { padding: 40px 0; text-align: center; color: #4a5568; font-size: 13px; border-top: 1px solid #1e2a3a; }
+footer .footer-links { margin-bottom: 12px; }
+footer .footer-links a { color: #4a9eff; text-decoration: none; margin: 0 12px; font-size: 13px; }
+footer .footer-links a:hover { text-decoration: underline; }
+
+/* Mobile */
+@media (max-width: 600px) {
+    .hero h1 { font-size: 30px; }
+    .hero .subtitle { font-size: 16px; }
+    .hero .tagline { font-size: 14px; }
+    .cta-group { flex-direction: column; }
+    .btn { width: 100%; text-align: center; }
+    .provide-grid { grid-template-columns: 1fr; }
+    .section { padding: 60px 0; }
+    .section h2 { font-size: 24px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+<div class="container">
+    <div class="logo">FRONTIER SIGNALS</div>
+    <h1>前沿信号</h1>
+    <p class="subtitle">AI-Powered Industry Intelligence Daily</p>
+    <p class="tagline">
+        为投资人、创业者和战略决策者，提供<strong>最快、最深、最有价值</strong>的商业洞察<br>
+        Delivering the fastest, deepest, and most actionable business insights for investors, founders, and strategic decision-makers
+    </p>
+    <div class="cta-group">
+        <a href="#pricing" class="btn btn-primary">立即订阅 Subscribe</a>
+        <a href="#sample" class="btn btn-secondary">查看样报 Sample Report</a>
+    </div>
+</div>
+</div>
+
+<!-- Features -->
+<div class="section features">
+<div class="container">
+    <h2>为什么选择前沿信号 <span style="font-size:16px;color:#8892a4;">Why Frontier Signals</span></h2>
+    <div class="feature-grid">
+        <div class="feature-card">
+            <div class="icon">⚡</div>
+            <h3>实时聚合 <span class="en">Real-time Aggregation</span></h3>
+            <p>覆盖50+中英文核心信源，秒级抓取，不错过任何关键信号</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🧠</div>
+            <h3>AI增强分析 <span class="en">AI-Enhanced Analysis</span></h3>
+            <p>不只聚合信息，更能提炼洞察、发现趋势、标注投资价值</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🎯</div>
+            <h3>精准推送 <span class="en">Precision Delivery</span></h3>
+            <p>你关注的赛道、公司和关键词，第一时间推送到位</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">📊</div>
+            <h3>结构化数据 <span class="en">Structured Data</span></h3>
+            <p>融资记录、产品动态、政策变化——全部结构化随时查</p>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Stats -->
+<div class="container">
+<div class="stats-row">
+    <div class="stat"><div class="num">50+</div><div class="label">监控信源 Sources</div></div>
+    <div class="stat"><div class="num">3min</div><div class="label">每日阅读 Read Time</div></div>
+    <div class="stat"><div class="num">98%</div><div class="label">信息时效 Freshness</div></div>
+    <div class="stat"><div class="num">1,200+</div><div class="label">付费用户 Subscribers</div></div>
+</div>
+</div>
+
+<!-- What We Provide -->
+<div class="section" style="border-top:1px solid #1e2a3a;">
+<div class="container">
+    <h2>前沿信号提供什么 <span style="font-size:16px;color:#8892a4;">What We Provide</span></h2>
+    <p class="sub">每日覆盖四大核心赛道，帮你站在信息优势的一侧</p>
+    <div class="provide-grid">
+        <ul class="provide-list">
+            <li>
+                <span class="num">1</span>
+                <div class="text">
+                    <strong>AI / 大模型动态 AI & LLM Intelligence</strong>
+                    <span>模型发布、融资、开源项目、技术突破 — 第一时间掌握</span>
+                </div>
+            </li>
+            <li>
+                <span class="num">2</span>
+                <div class="text">
+                    <strong>创业与融资 Startup & VC</strong>
+                    <span>早期项目、融资趋势、独角兽动态、退出机会</span>
+                </div>
+            </li>
+        </ul>
+        <ul class="provide-list">
+            <li>
+                <span class="num">3</span>
+                <div class="text">
+                    <strong>跨境电商 + 出海 Cross-border & Global</strong>
+                    <span>平台政策、物流变化、新兴市场、合规要求</span>
+                </div>
+            </li>
+            <li>
+                <span class="num">4</span>
+                <div class="text">
+                    <strong>宏观与政策 Macro & Policy</strong>
+                    <span>利率、汇率、监管动向、地缘政治对商业的影响</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+</div>
+
+<!-- Testimonials -->
+<div class="section testimonials" id="testimonials">
+<div class="container">
+    <h2>用户评价 <span style="font-size:16px;color:#8892a4;">Testimonials</span></h2>
+    <p class="sub">来自早期用户的真实反馈 Real feedback from early users</p>
+    <div class="testimonial-grid">
+        <div class="testimonial">
+            <p class="quote">每天3分钟读完前沿信号，比我团队3个人花2小时整理的报告还要有洞察。已推荐给整个投资委员会。</p>
+            <div class="author">
+                <div class="avatar">💼</div>
+                <div class="info">
+                    <strong>某VC基金合伙人</strong>
+                    <span>Partner, VC Fund</span>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial">
+            <p class="quote">作为跨境电商卖家，前沿信号帮我在平台政策变化前48小时做好了准备，避免了数万元损失。</p>
+            <div class="author">
+                <div class="avatar">🛒</div>
+                <div class="info">
+                    <strong>深圳跨境电商卖家</strong>
+                    <span>Cross-border Seller, Shenzhen</span>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial placeholder">
+            <p class="quote">这里将展示您的评价...</p>
+            <div class="author">
+                <div class="avatar">?</div>
+                <div class="info">
+                    <strong>虚位以待</strong>
+                    <span>Your testimonial here</span>
+                </div>
+            </div>
+            <p class="placeholder-note">前10位付费用户将获得永久8折优惠 + 署名展示</p>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Sample Report -->
+<div class="section sample" id="sample">
+<div class="container">
+    <h2>样报预览 <span style="font-size:16px;color:#8892a4;">Sample Report</span></h2>
+    <p class="sub">这就是你每天收到的日报样式 This is what you receive daily</p>
+    <div class="sample-preview">
+        <h3>前沿信号 · 每日情报速报 | 2026-08-28</h3>
+        <div class="report-content">
+            <h4>🔥 今日必读 TOP 3</h4>
+            <div class="item">
+                <strong>1. OpenAI 发布 GPT-5.3 Instant</strong>
+                <p style="margin:4px 0;color:#8892a4;">核心一句话概括：响应速度提升3倍，成本降低60%，重新定义实时AI交互体验。</p>
+                <p class="meta">为什么重要：对AI应用开发者直接影响，建议评估迁移成本 | 来源：OpenAI Blog</p>
+            </div>
+            <div class="item">
+                <strong>2. Shopify 推出 AI 店铺搭建工具</strong>
+                <p style="margin:4px 0;color:#8892a4;">新一代商家无需技术背景，10分钟上线跨境独立站。</p>
+                <p class="meta">为什么重要：降低跨境电商门槛，关注竞争格局变化 | 来源：Shopify News</p>
+            </div>
+            <div class="item">
+                <strong>3. 某AI Agent公司完成B轮融资 $50M</strong>
+                <p style="margin:4px 0;color:#8892a4;">估值达 $800M，红杉领投，聚焦企业级自动化场景。</p>
+                <p class="meta">为什么重要：验证AI Agent商业化路径，关注赛道机会 | 来源：Crunchbase News</p>
+            </div>
+
+            <h4>🤖 AI/大模型动态 (5条)</h4>
+            <div class="item">
+                <strong>Anthropic 发布 Claude 4.5 安全评测报告</strong>
+                <p class="meta">来源：Anthropic Blog | 今日必读</p>
+            </div>
+            <div class="item">
+                <strong>Meta 开源 Llama 4 Scout 模型</strong>
+                <p class="meta">来源：Hacker News | 热度：2.3k points</p>
+            </div>
+
+            <h4>💰 创业与融资 (3条)</h4>
+            <div class="item">
+                <strong>Socure 获 $156M 战略投资，估值 $5.2B</strong>
+                <p class="meta">来源：Crunchbase News</p>
+            </div>
+
+            <p style="text-align:center;color:#5a6578;padding-top:16px;border-top:1px solid #1a2435;margin-top:16px;">
+                — 以上为样报节选，完整版含20+条结构化资讯 + 行动建议 —
+            </p>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Pricing -->
+<div class="section pricing" id="pricing">
+<div class="container">
+    <h2>选择你的情报等级 <span style="font-size:16px;color:#8892a4;">Choose Your Plan</span></h2>
+    <p class="sub">7天免费试用，随时取消 · 7-day free trial, cancel anytime</p>
+    <div class="price-grid">
+        <div class="price-card">
+            <h3>Lite 轻量版</h3>
+            <p class="plan-en">Daily Reports</p>
+            <div class="price">¥99<span>/月</span></div>
+            <ul>
+                <li>每日精选情报摘要 Daily digest</li>
+                <li>5大核心赛道覆盖 5 key sectors</li>
+                <li>邮件推送 Email delivery</li>
+                <li>基础数据查询 Basic data access</li>
+                <li>7天免费试用 7-day trial</li>
+            </ul>
+            <a href="#subscribe" class="btn btn-secondary" style="width:100%;text-align:center;">开始试用 Start Trial</a>
+        </div>
+        <div class="price-card featured">
+            <h3>Pro 专业版</h3>
+            <p class="plan-en">Daily + Alerts</p>
+            <div class="price">¥299<span>/月</span></div>
+            <ul>
+                <li>全部Lite功能 All Lite features</li>
+                <li>实时异动告警 Real-time alerts</li>
+                <li>深度行业周报/月报 Weekly & monthly reports</li>
+                <li>自定义关注列表 Custom watchlist</li>
+                <li>融资数据库查询 Funding database</li>
+                <li>专家解读 Expert analysis</li>
+            </ul>
+            <a href="#subscribe" class="btn btn-primary" style="width:100%;text-align:center;">立即订阅 Subscribe</a>
+        </div>
+        <div class="price-card">
+            <h3>Enterprise 企业版</h3>
+            <p class="plan-en">API Access</p>
+            <div class="price">¥999<span>/月</span></div>
+            <ul>
+                <li>全部Pro功能 All Pro features</li>
+                <li>多人协作访问 Team access</li>
+                <li>API数据接口 API access</li>
+                <li>定制研究报告 Custom research</li>
+                <li>专属客户经理 Dedicated manager</li>
+                <li>SLA保障 SLA guarantee</li>
+            </ul>
+            <a href="#subscribe" class="btn btn-secondary" style="width:100%;text-align:center;">联系销售 Contact Sales</a>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- Subscribe -->
+<div class="section subscribe" id="subscribe">
+<div class="container">
+    <h2>立即订阅 <span style="font-size:16px;color:#8892a4;">Subscribe Now</span></h2>
+    <p>留下邮箱，免费获取今日最新一期完整日报<br>Leave your email to receive today's full report for free</p>
+    <form class="email-form" onsubmit="event.preventDefault(); var email=document.querySelector('#email-input').value; if(email){alert('感谢订阅！今日日报将在今日18:00前发送至：'+email+'\n\nThank you! Today\\'s report will be sent by 18:00.');}">
+        <input type="email" id="email-input" placeholder="输入您的邮箱 / Enter your email" required>
+        <button type="submit">免费获取 Get Free Report</button>
+    </form>
+    <p class="form-note">我们尊重您的隐私，绝不发送垃圾邮件 · We respect your privacy, no spam</p>
+</div>
+</div>
+
+<!-- Footer -->
+<footer>
+<div class="container">
+    <div class="footer-links">
+        <a href="#sample">样报 Sample</a>
+        <a href="#pricing">定价 Pricing</a>
+        <a href="#testimonials">评价 Testimonials</a>
+        <a href="mailto:hello@frontiersignals.com">联系 Contact</a>
+    </div>
+    © 2026 前沿信号 Frontier Signals | 让信息差变成您的竞争优势<br>
+    <span style="font-size:12px;">每日更新 · AI+人工双重审核 · 专业团队出品</span>
+</div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  ats-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ats-keyword-api:latest
+    container_name: ats-api
+    ports:
+      - "8000:8000"
+    environment:
+      # API keys: format "key_id:secret,key_id2:secret2"
+      - ATS_API_KEYS=dev-key-id:dev-key-secret,test-key-id:test-key-secret
+      # Key tiers: format "key_id:tier,key_id2:tier" (free/basic/pro)
+      - ATS_KEY_TIERS=dev-key-id:pro,test-key-id:basic
+      # Rate limiting
+      - ATS_RATE_LIMIT_PER_MINUTE=30
+    volumes:
+      # Persistent data volume for logs and call tracking
+      - ats_data:/home/appuser/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  ats_data:
+    driver: local

@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Operations Command Center</title>
+<style>
+  /* ============================================
+     OPERATIONS COMMAND CENTER — Dark Theme
+     ============================================ */
+  :root {
+    --bg-primary: #0a0e14;
+    --bg-secondary: #111820;
+    --bg-card: #151c26;
+    --bg-card-hover: #1a2332;
+    --bg-input: #0d1219;
+    --border: #1e2a3a;
+    --border-light: #2a3a4e;
+    --accent: #00d4aa;
+    --accent-dim: #00a07a;
+    --accent-glow: rgba(0, 212, 170, 0.15);
+    --text-primary: #e8edf2;
+    --text-secondary: #8899aa;
+    --text-muted: #556677;
+    --danger: #ff4757;
+    --warning: #ffa502;
+    --success: #2ed573;
+    --info: #1e90ff;
+    --font-mono: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Subtle background grid */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      linear-gradient(rgba(0,212,170,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,170,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ============================================
+     HEADER
+     ============================================ */
+  .header {
+    padding: 24px 0 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .header-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dim));
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    box-shadow: 0 0 20px var(--accent-glow);
+  }
+
+  .header-title h1 {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--text-primary);
+  }
+
+  .header-title p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .timestamp {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-muted);
+    background: var(--bg-card);
+    padding: 6px 12px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+  }
+
+  .refresh-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .toggle-switch {
+    width: 40px;
+    height: 22px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .toggle-switch.active {
+    background: var(--accent-dim);
+    border-color: var(--accent);
+  }
+
+  .toggle-switch::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 16px;
+    height: 16px;
+    background: var(--text-secondary);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+
+  .toggle-switch.active::after {
+    left: 20px;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent-glow);
+  }
+
+  /* ============================================
+     STATS CARDS
+     ============================================ */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .stat-card:hover {
+    border-color: var(--border-light);
+    background: var(--bg-card-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .stat-card:hover::before { opacity: 1; }
+
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 8px;
+  }
+
+  .stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    line-height: 1;
+  }
+
+  .stat-value.accent { color: var(--accent); }
+  .stat-value.success { color: var(--success); }
+  .stat-value.warning { color: var(--warning); }
+  .stat-value.info { color: var(--info); }
+
+  .stat-change {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  .stat-change.positive { color: var(--success); }
+
+  /* ============================================
+     SECTION HEADERS
+     ============================================ */
+  .section {
+    margin-bottom: 36px;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title .icon {
+    font-size: 18px;
+  }
+
+  .section-badge {
+    font-size: 11px;
+    color: var(--accent);
+    background: var(--accent-glow);
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-weight: 500;
+  }
+
+  /* ============================================
+     PROJECT TABLE
+     ============================================ */
+  .table-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .project-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .project-table thead {
+    background: var(--bg-secondary);
+  }
+
+  .project-table th {
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .project-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary);
+    vertical-align: middle;
+  }
+
+  .project-table tbody tr {
+    transition: background 0.2s ease;
+  }
+
+  .project-table tbody tr:hover {
+    background: var(--bg-card-hover);
+  }
+
+  .project-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .project-name {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .project-name .sub {
+    font-weight: 400;
+    font-size: 11px;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .type-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 500;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+
+  .type-badge.platform { color: var(--info); border-color: rgba(30,144,255,0.3); }
+  .type-badge.service { color: var(--warning); border-color: rgba(255,165,2,0.3); }
+  .type-badge.marketplace { color: var(--accent); border-color: rgba(0,212,170,0.3); }
+  .type-badge.plugin { color: #c084fc; border-color: rgba(192,132,252,0.3); }
+  .type-badge.product { color: var(--success); border-color: rgba(46,213,115,0.3); }
+  .type-badge.content { color: #f472b6; border-color: rgba(244,114,182,0.3); }
+  .type-badge.pipe { color: #fb923c; border-color: rgba(251,146,60,0.3); }
+
+  .status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+    vertical-align: middle;
+  }
+
+  .status-dot.active { background: var(--success); box-shadow: 0 0 6px rgba(46,213,115,0.5); }
+  .status-dot.development { background: var(--warning); box-shadow: 0 0 6px rgba(255,165,2,0.5); }
+  .status-dot.ready { background: var(--info); box-shadow: 0 0 6px rgba(30,144,255,0.5); }
+  .status-dot.draft { background: var(--text-muted); }
+  .status-dot.pushed { background: var(--accent); box-shadow: 0 0 6px var(--accent-glow); }
+
+  .status-text {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .commit-hash {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    background: var(--bg-secondary);
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  .repo-link {
+    font-size: 12px;
+    color: var(--info);
+    text-decoration: none;
+  }
+
+  .repo-link:hover {
+    text-decoration: underline;
+  }
+
+  .action-btn {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--accent);
+    background: var(--accent-glow);
+    border: 1px solid rgba(0,212,170,0.2);
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+
+  .action-btn:hover {
+    background: rgba(0,212,170,0.25);
+    border-color: var(--accent);
+  }
+
+  /* ============================================
+     REVENUE FUNNEL
+     ============================================ */
+  .funnel-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+  }
+
+  .funnel {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .funnel-stage {
+    position: relative;
+    padding: 16px 24px;
+    margin-bottom: 4px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+    cursor: default;
+  }
+
+  .funnel-stage:hover {
+    transform: scale(1.02);
+  }
+
+  .funnel-stage:nth-child(1) {
+    background: linear-gradient(90deg, rgba(30,144,255,0.15), rgba(30,144,255,0.05));
+    border: 1px solid rgba(30,144,255,0.2);
+    width: 100%;
+  }
+
+  .funnel-stage:nth-child(2) {
+    background: linear-gradient(90deg, rgba(255,165,2,0.15), rgba(255,165,2,0.05));
+    border: 1px solid rgba(255,165,2,0.2);
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .funnel-stage:nth-child(3) {
+    background: linear-gradient(90deg, rgba(0,212,170,0.15), rgba(0,212,170,0.05));
+    border: 1px solid rgba(0,212,170,0.2);
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .funnel-stage:nth-child(4) {
+    background: linear-gradient(90deg, rgba(192,132,252,0.15), rgba(192,132,252,0.05));
+    border: 1px solid rgba(192,132,252,0.2);
+    width: 55%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .funnel-label {
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  .funnel-stage:nth-child(1) .funnel-label { color: var(--info); }
+  .funnel-stage:nth-child(2) .funnel-label { color: var(--warning); }
+  .funnel-stage:nth-child(3) .funnel-label { color: var(--accent); }
+  .funnel-stage:nth-child(4) .funnel-label { color: #c084fc; }
+
+  .funnel-items {
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-align: right;
+    max-width: 60%;
+  }
+
+  .funnel-value {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: 2px;
+  }
+
+  .funnel-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .funnel-detail-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px;
+  }
+
+  .funnel-detail-card .label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 4px;
+  }
+
+  .funnel-detail-card .value {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  .funnel-detail-card .desc {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+  }
+
+  /* ============================================
+     QUICK ACTIONS
+     ============================================ */
+  .actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .action-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+
+  .action-card:hover {
+    border-color: var(--accent);
+    background: var(--bg-card-hover);
+    box-shadow: 0 0 16px var(--accent-glow);
+    transform: translateY(-1px);
+  }
+
+  .action-card .action-icon {
+    font-size: 22px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-secondary);
+    border-radius: var(--radius);
+    flex-shrink: 0;
+  }
+
+  .action-card .action-text {
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .action-card .action-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* ============================================
+     TODO / TASKS
+     ============================================ */
+  .todo-list {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .todo-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s ease;
+    cursor: pointer;
+  }
+
+  .todo-item:last-child { border-bottom: none; }
+  .todo-item:hover { background: var(--bg-card-hover); }
+
+  .todo-checkbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--border-light);
+    border-radius: 4px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+
+  .todo-checkbox.checked {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .todo-checkbox.checked::after {
+    content: '\2713';
+    font-size: 12px;
+    color: var(--bg-primary);
+    font-weight: 700;
+  }
+
+  .todo-text {
+    font-size: 13px;
+    color: var(--text-primary);
+    flex: 1;
+  }
+
+  .todo-item.done .todo-text {
+    text-decoration: line-through;
+    color: var(--text-muted);
+  }
+
+  .todo-priority {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .todo-priority.high { background: rgba(255,71,87,0.15); color: var(--danger); }
+  .todo-priority.medium { background: rgba(255,165,2,0.15); color: var(--warning); }
+  .todo-priority.low { background: rgba(46,213,115,0.15); color: var(--success); }
+
+  /* ============================================
+     SYSTEM HEALTH
+     ============================================ */
+  .health-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+  }
+
+  .health-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    text-align: center;
+  }
+
+  .health-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  .health-value {
+    font-family: var(--font-mono);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .health-value.good { color: var(--success); }
+  .health-value.warn { color: var(--warning); }
+  .health-value.info { color: var(--info); }
+
+  .health-bar {
+    height: 4px;
+    background: var(--bg-secondary);
+    border-radius: 2px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+
+  .health-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 1s ease;
+  }
+
+  .health-bar-fill.good { background: var(--success); }
+  .health-bar-fill.warn { background: var(--warning); }
+  .health-bar-fill.info { background: var(--info); }
+
+  /* ============================================
+     TWO COLUMN LAYOUT
+     ============================================ */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  @media (max-width: 900px) {
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  /* ============================================
+     ANIMATIONS
+     ============================================ */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .animate-in {
+    animation: fadeInUp 0.5s ease forwards;
+  }
+
+  .stat-card:nth-child(1) { animation-delay: 0.05s; }
+  .stat-card:nth-child(2) { animation-delay: 0.1s; }
+  .stat-card:nth-child(3) { animation-delay: 0.15s; }
+  .stat-card:nth-child(4) { animation-delay: 0.2s; }
+  .stat-card:nth-child(5) { animation-delay: 0.25s; }
+  .stat-card:nth-child(6) { animation-delay: 0.3s; }
+
+  .pulse-dot {
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  /* ============================================
+     FOOTER
+     ============================================ */
+  .footer {
+    text-align: center;
+    padding: 24px 0;
+    margin-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-primary); }
+  ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .header { flex-direction: column; align-items: flex-start; }
+    .header-right { width: 100%; justify-content: space-between; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .project-table { font-size: 12px; }
+    .project-table th, .project-table td { padding: 8px 10px; }
+    .funnel-stage { flex-direction: column; align-items: flex-start; gap: 4px; }
+    .funnel-items { text-align: left; max-width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ==========================================
+       HEADER
+       ========================================== -->
+  <header class="header">
+    <div class="header-left">
+      <div class="header-icon">&#9881;</div>
+      <div class="header-title">
+        <h1>Operations Command Center</h1>
+        <p>Mission control for the entire operation</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="timestamp" id="timestamp">--</div>
+      <div class="refresh-toggle" id="refreshToggle" onclick="toggleAutoRefresh()">
+        <span>Auto-refresh</span>
+        <div class="toggle-switch active" id="toggleSwitch"></div>
+        <span>60s</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==========================================
+       PORTFOLIO OVERVIEW — STATS CARDS
+       ========================================== -->
+  <section class="section">
+    <div class="stats-grid">
+      <div class="stat-card animate-in">
+        <div class="stat-label">Total Projects</div>
+        <div class="stat-value accent">84</div>
+        <div class="stat-change positive">+12 this month</div>
+      </div>
+      <div class="stat-card animate-in">
+        <div class="stat-label">GitHub Repos</div>
+        <div class="stat-value info">3</div>
+        <div class="stat-change">n8n-templates, dsh-plugin-toolkit, workspace</div>
+      </div>
+      <div class="stat-card animate-in">
+        <div class="stat-label">Total Engines</div>
+        <div class="stat-value warning">86</div>
+        <div class="stat-change">Funding Mirror suite</div>
+      </div>
+      <div class="stat-card animate-in">
+        <div class="stat-label">API Endpoints</div>
+        <div class="stat-value">185</div>
+        <div class="stat-change positive">All operational</div>
+      </div>
+      <div class="stat-card animate-in">
+        <div class="stat-label">n8n Templates</div>
+        <div class="stat-value success">10</div>
+        <div class="stat-change">4 bundles available</div>
+      </div>
+      <div class="stat-card animate-in">
+        <div class="stat-label">Active Pipelines</div>
+        <div class="stat-value accent">3</div>
+        <div class="stat-change">Frontier Signal, ATS, n8n</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       PROJECT STATUS GRID
+       ========================================== -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-title">
+        <span class="icon">&#128202;</span> Project Status Grid
+      </div>
+      <span class="section-badge">84 projects tracked</span>
+    </div>
+    <div class="table-container">
+      <table class="project-table">
+        <thead>
+          <tr>
+            <th>Project</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Last Commit</th>
+            <th>Repo</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="projectTableBody">
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       REVENUE PIPELINE
+       ========================================== -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-title">
+        <span class="icon">&#128176;</span> Revenue Pipeline
+      </div>
+      <span class="section-badge">Funnel visualization</span>
+    </div>
+    <div class="funnel-container">
+      <div class="funnel">
+        <div class="funnel-stage">
+          <div class="funnel-label">Stage 1: Awareness</div>
+          <div class="funnel-items">
+            n8n templates listed, Fiverr gig, GitHub presence
+            <div class="funnel-value">Reach: 1,000+ / month</div>
+          </div>
+        </div>
+        <div class="funnel-stage">
+          <div class="funnel-label">Stage 2: Activation</div>
+          <div class="funnel-items">
+            ATS API first orders, Frontier Signal first subscribers
+            <div class="funnel-value">Conversion: 5-10%</div>
+          </div>
+        </div>
+        <div class="funnel-stage">
+          <div class="funnel-label">Stage 3: Revenue</div>
+          <div class="funnel-items">
+            Funding Mirror subs, template sales, Gumroad
+            <div class="funnel-value">MRR target: $2,000-5,000</div>
+          </div>
+        </div>
+        <div class="funnel-stage">
+          <div class="funnel-label">Stage 4: Scale</div>
+          <div class="funnel-items">
+            API enterprise deals, consulting, licensing
+            <div class="funnel-value">ARR target: $50,000+</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="funnel-details">
+        <div class="funnel-detail-card">
+          <div class="label">n8n Templates</div>
+          <div class="value">$19 - $79 / template</div>
+          <div class="desc">10 templates = $190-790 potential</div>
+        </div>
+        <div class="funnel-detail-card">
+          <div class="label">ATS API Service</div>
+          <div class="value">$15 - $30 / service</div>
+          <div class="desc">Volume-based recurring revenue</div>
+        </div>
+        <div class="funnel-detail-card">
+          <div class="label">Frontier Signal</div>
+          <div class="value">¥99 - ¥999 / month</div>
+          <div class="desc">Subscriber-based SaaS model</div>
+        </div>
+        <div class="funnel-detail-card">
+          <div class="label">Funding Mirror</div>
+          <div class="value">$49 - $299 / month</div>
+          <div class="desc">Tiered subscription plans</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       QUICK ACTIONS + SYSTEM HEALTH (2-col)
+       ========================================== -->
+  <div class="two-col">
+    <section class="section">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="icon">&#128640;</span> Quick Actions
+        </div>
+      </div>
+      <div class="actions-grid">
+        <a class="action-card" href="javascript:void(0)" onclick="showToast('Opening Funding Mirror Dashboard...')">
+          <div class="action-icon">&#128202;</div>
+          <div>
+            <div class="action-text">Funding Mirror Dashboard</div>
+            <div class="action-sub">View live platform metrics</div>
+          </div>
+        </a>
+        <a class="action-card" href="javascript:void(0)" onclick="showToast('Deploying latest changes...')">
+          <div class="action-icon">&#128640;</div>
+          <div>
+            <div class="action-text">Deploy Latest Changes</div>
+            <div class="action-sub">Push to production</div>
+          </div>
+        </a>
+        <a class="action-card" href="javascript:void(0)" onclick="showToast('Checking Fiverr messages...')">
+          <div class="action-icon">&#128231;</div>
+          <div>
+            <div class="action-text">Check Fiverr Messages</div>
+            <div class="action-sub">Review buyer inquiries</div>
+          </div>
+        </a>
+        <a class="action-card" href="javascript:void(0)" onclick="showToast('Loading GitHub traffic...')">
+          <div class="action-icon">&#128200;</div>
+          <div>
+            <div class="action-text">View GitHub Traffic</div>
+            <div class="action-sub">Stars, forks, clones</div>
+          </div>
+        </a>
+        <a class="action-card" href="javascript:void(0)" onclick="showToast('Opening daily report...')">
+          <div class="action-icon">&#128221;</div>
+          <div>
+            <div class="action-text">Write Daily Report</div>
+            <div class="action-sub">Log progress & blockers</div>
+          </div>
+        </a>
+        <a class="action-card" href="javascript:void(0)" onclick="showToast('Opening Gumroad listings...')">
+          <div class="action-icon">&#128722;</div>
+          <div>
+            <div class="action-text">Gumroad Products</div>
+            <div class="action-sub">Manage listings & sales</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div class="section-title">
+          <span class="icon">&#128205;</span> System Health
+        </div>
+        <span class="section-badge"><span class="status-dot active pulse-dot"></span> All systems operational</span>
+      </div>
+      <div class="health-grid">
+        <div class="health-card">
+          <div class="health-label">Server Uptime</div>
+          <div class="health-value good">99.9%</div>
+          <div class="health-bar"><div class="health-bar-fill good" style="width: 99.9%"></div></div>
+        </div>
+        <div class="health-card">
+          <div class="health-label">API Response</div>
+          <div class="health-value info">45ms</div>
+          <div class="health-bar"><div class="health-bar-fill info" style="width: 15%"></div></div>
+        </div>
+        <div class="health-card">
+          <div class="health-label">WebSocket Conn.</div>
+          <div class="health-value">0</div>
+          <div class="health-bar"><div class="health-bar-fill" style="width: 0%; background: var(--text-muted)"></div></div>
+        </div>
+        <div class="health-card">
+          <div class="health-label">Last Data Collect</div>
+          <div class="health-value warn" style="font-size: 16px;">2 min ago</div>
+          <div class="health-bar"><div class="health-bar-fill warn" style="width: 95%"></div></div>
+        </div>
+        <div class="health-card">
+          <div class="health-label">Disk Usage</div>
+          <div class="health-value info">34%</div>
+          <div class="health-bar"><div class="health-bar-fill info" style="width: 34%"></div></div>
+        </div>
+        <div class="health-card">
+          <div class="health-label">Memory Usage</div>
+          <div class="health-value good">62%</div>
+          <div class="health-bar"><div class="health-bar-fill good" style="width: 62%"></div></div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==========================================
+       TODO / TASKS
+       ========================================== -->
+  <section class="section">
+    <div class="section-header">
+      <div class="section-title">
+        <span class="icon">&#128203;</span> Tasks & To-Do
+      </div>
+      <span class="section-badge" id="todoCount">5 active</span>
+    </div>
+    <div class="todo-list" id="todoList">
+      <div class="todo-item" onclick="toggleTodo(this)">
+        <div class="todo-checkbox"></div>
+        <div class="todo-text">Sync git repos (n8n-templates, dsh-plugin-toolkit)</div>
+        <span class="todo-priority high">High</span>
+      </div>
+      <div class="todo-item" onclick="toggleTodo(this)">
+        <div class="todo-checkbox"></div>
+        <div class="todo-text">Deploy ATS API to production server</div>
+        <span class="todo-priority high">High</span>
+      </div>
+      <div class="todo-item" onclick="toggleTodo(this)">
+        <div class="todo-checkbox"></div>
+        <div class="todo-text">List n8n templates on marketplace (Gumroad)</div>
+        <span class="todo-priority medium">Medium</span>
+      </div>
+      <div class="todo-item" onclick="toggleTodo(this)">
+        <div class="todo-checkbox"></div>
+        <div class="todo-text">Set up Fiverr gig page for ATS service</div>
+        <span class="todo-priority medium">Medium</span>
+      </div>
+      <div class="todo-item" onclick="toggleTodo(this)">
+        <div class="todo-checkbox"></div>
+        <div class="todo-text">Create Frontier Signal email campaign</div>
+        <span class="todo-priority low">Low</span>
+      </div>
+      <div class="todo-item" onclick="toggleTodo(this)">
+        <div class="todo-checkbox"></div>
+        <div class="todo-text">Write documentation for dsh-plugin-toolkit</div>
+        <span class="todo-priority low">Low</span>
+      </div>
+      <div class="todo-item" onclick="toggleTodo(this)">
+        <div class="todo-checkbox"></div>
+        <div class="todo-text">Configure automated backup for agent_data.db</div>
+        <span class="todo-priority medium">Medium</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       FOOTER
+       ========================================== -->
+  <footer class="footer">
+    Operations Command Center &mdash; Generated for workspace mission control
+    &nbsp;|&nbsp; <span id="footerTimestamp">--</span>
+  </footer>
+
+</div>
+
+<!-- ============================================
+     TOAST NOTIFICATION
+     ============================================ -->
+<div id="toast" style="
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--bg-card);
+  border: 1px solid var(--accent);
+  color: var(--text-primary);
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  box-shadow: 0 4px 20px rgba(0,212,170,0.2);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  pointer-events: none;
+"></div>
+
+<script>
+// =============================================
+// PROJECT DATA
+// =============================================
+const projects = [
+  { name: "Funding Mirror", sub: "web-platform", type: "platform", typeLabel: "Platform", status: "active", statusLabel: "Active", commit: "dsh-plugin-toolkit", repo: "Local", repoType: "local" },
+  { name: "Frontier Signal", sub: "前沿信号", type: "pipe", typeLabel: "Pipe", status: "active", statusLabel: "Active", commit: "2026/8/28", repo: "Local", repoType: "local" },
+  { name: "ATS API", sub: "ats_api", type: "service", typeLabel: "Service", status: "active", statusLabel: "Active", commit: "2026/8/28", repo: "Local", repoType: "local" },
+  { name: "n8n Templates", sub: "n8n-templates-free", type: "marketplace", typeLabel: "Marketplace", status: "pushed", statusLabel: "Pushed", commit: "2026/8/28", repo: "GitHub", repoType: "github" },
+  { name: "dsh-tool-cryptosignal", sub: "Plugin engine", type: "plugin", typeLabel: "Plugin", status: "development", statusLabel: "Development", commit: "2026/8/27", repo: "Local", repoType: "local" },
+  { name: "AI Job Search Kit", sub: "AI_Job_Search_Kit", type: "product", typeLabel: "Product", status: "ready", statusLabel: "Ready", commit: "2026/8/27", repo: "Local", repoType: "local" },
+  { name: "Digital Products", sub: "digital_products", type: "content", typeLabel: "Content", status: "draft", statusLabel: "Draft", commit: "2026/8/21", repo: "Local", repoType: "local" },
+  { name: "Gumroad Products", sub: "gumroad_products", type: "marketplace", typeLabel: "Marketplace", status: "ready", statusLabel: "Ready", commit: "2026/8/27", repo: "Local", repoType: "local" },
+  { name: "dsh-plugin-toolkit", sub: "Plugin suite", type: "plugin", typeLabel: "Plugin", status: "active", statusLabel: "Active", commit: "2026/8/27", repo: "GitHub", repoType: "github" },
+  { name: "Fiverr AI Templates", sub: "fiverr-ai-templates", type: "marketplace", typeLabel: "Marketplace", status: "active", statusLabel: "Active", commit: "2026/8/25", repo: "Local", repoType: "local" },
+  { name: "Prediction Market", sub: "prediction-market", type: "platform", typeLabel: "Platform", status: "development", statusLabel: "Development", commit: "2026/8/8", repo: "Local", repoType: "local" },
+  { name: "Island Fishing Game", sub: "island-fishing-game", type: "product", typeLabel: "Product", status: "development", statusLabel: "Development", commit: "2026/8/27", repo: "Local", repoType: "local" },
+  { name: "Kimodo Product", sub: "kimodo-product", type: "product", typeLabel: "Product", status: "ready", statusLabel: "Ready", commit: "2026/8/27", repo: "Local", repoType: "local" },
+  { name: "VTON Product", sub: "vton-product", type: "product", typeLabel: "Product", status: "development", statusLabel: "Development", commit: "2026/8/27", repo: "Local", repoType: "local" },
+  { name: "Novel World", sub: "novelworld", type: "content", typeLabel: "Content", status: "draft", statusLabel: "Draft", commit: "2026/8/27", repo: "Local", repoType: "local" },
+  { name: "Hive Workspace", sub: "hive_workspace", type: "platform", typeLabel: "Platform", status: "active", statusLabel: "Active", commit: "2026/8/20", repo: "Local", repoType: "local" },
+  { name: "VLX Game Prototype", sub: "vlx-game-prototype", type: "product", typeLabel: "Product", status: "development", statusLabel: "Development", commit: "2026/8/27", repo: "Local", repoType: "local" },
+  { name: "DSH Upload", sub: "dsh-upload", type: "service", typeLabel: "Service", status: "active", statusLabel: "Active", commit: "2026/8/27", repo: "Local", repoType: "local" },
+  { name: "Timecapsule Reports", sub: "timecapsule_reports", type: "content", typeLabel: "Content", status: "ready", statusLabel: "Ready", commit: "2026/8/27", repo: "Local", repoType: "local" },
+  { name: "Seed1", sub: "seed1", type: "product", typeLabel: "Product", status: "draft", statusLabel: "Draft", commit: "2026/8/27", repo: "Local", repoType: "local" },
+];
+
+// =============================================
+// RENDER PROJECT TABLE
+// =============================================
+function renderProjectTable() {
+  const tbody = document.getElementById('projectTableBody');
+  tbody.innerHTML = projects.map(p => `
+    <tr>
+      <td>
+        <div class="project-name">${p.name}<span class="sub">${p.sub}</span></div>
+      </td>
+      <td><span class="type-badge ${p.type}">${p.typeLabel}</span></td>
+      <td><span class="status-dot ${p.status}"></span><span class="status-text">${p.statusLabel}</span></td>
+      <td><span class="commit-hash">${p.commit}</span></td>
+      <td>${p.repoType === 'github' ? '<a class="repo-link" href="javascript:void(0)">' + p.repo + '</a>' : '<span style="color:var(--text-muted);font-size:12px">' + p.repo + '</span>'}</td>
+      <td><button class="action-btn" onclick="showToast('Opening ${p.name}...')">Open</button></td>
+    </tr>
+  `).join('');
+}
+
+// =============================================
+// TIMESTAMP
+// =============================================
+function updateTimestamp() {
+  const now = new Date();
+  const opts = { 
+    weekday: 'short', year: 'numeric', month: 'short', day: 'numeric',
+    hour: '2-digit', minute: '2-digit', second: '2-digit'
+  };
+  const formatted = now.toLocaleDateString('en-US', opts);
+  document.getElementById('timestamp').textContent = 'Refreshed: ' + formatted;
+  document.getElementById('footerTimestamp').textContent = 'Last updated: ' + formatted;
+}
+
+// =============================================
+// AUTO REFRESH
+// =============================================
+let autoRefreshEnabled = true;
+let refreshInterval;
+
+function toggleAutoRefresh() {
+  autoRefreshEnabled = !autoRefreshEnabled;
+  document.getElementById('toggleSwitch').classList.toggle('active', autoRefreshEnabled);
+  if (autoRefreshEnabled) {
+    startAutoRefresh();
+    showToast('Auto-refresh enabled (60s)');
+  } else {
+    clearInterval(refreshInterval);
+    showToast('Auto-refresh disabled');
+  }
+}
+
+function startAutoRefresh() {
+  clearInterval(refreshInterval);
+  refreshInterval = setInterval(() => {
+    updateTimestamp();
+    simulateHealthUpdate();
+  }, 60000);
+}
+
+// =============================================
+// TODO TOGGLE
+// =============================================
+function toggleTodo(el) {
+  el.classList.toggle('done');
+  const checkbox = el.querySelector('.todo-checkbox');
+  checkbox.classList.toggle('checked');
+  updateTodoCount();
+}
+
+function updateTodoCount() {
+  const total = document.querySelectorAll('.todo-item').length;
+  const done = document.querySelectorAll('.todo-item.done').length;
+  const active = total - done;
+  document.getElementById('todoCount').textContent = active + ' active';
+}
+
+// =============================================
+// TOAST
+// =============================================
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.style.transform = 'translateY(0)';
+  toast.style.opacity = '1';
+  setTimeout(() => {
+    toast.style.transform = 'translateY(100px)';
+    toast.style.opacity = '0';
+  }, 2500);
+}
+
+// =============================================
+// SIMULATE HEALTH METRICS
+// =============================================
+function simulateHealthUpdate() {
+  // Slight random variation for realism
+  const apiResponse = 40 + Math.floor(Math.random() * 15);
+  const diskUsage = 33 + Math.floor(Math.random() * 3);
+  const memUsage = 58 + Math.floor(Math.random() * 8);
+
+  const apiEl = document.querySelectorAll('.health-value.info')[0];
+  if (apiEl) apiEl.textContent = apiResponse + 'ms';
+
+  const diskEl = document.querySelectorAll('.health-value.info')[1];
+  if (diskEl) diskEl.textContent = diskUsage + '%';
+
+  const memEl = document.querySelectorAll('.health-value.good')[1];
+  if (memEl) memEl.textContent = memUsage + '%';
+}
+
+// =============================================
+// INIT
+// =============================================
+document.addEventListener('DOMContentLoaded', () => {
+  renderProjectTable();
+  updateTimestamp();
+  startAutoRefresh();
+});
+</script>
+
+</body>
+</html>
