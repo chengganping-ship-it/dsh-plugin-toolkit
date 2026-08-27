@@ -58,6 +58,10 @@ import { optimizeResume, getCachedResumeOptimization, clearResumeCache, ResumeOp
 import { analyzeNFTArbitrage, getCachedNFTSummary, clearNFTCache, NFTArbitrageSummary } from './engine/nftArbitrage.js';
 import { analyzeRWA, getCachedRWA, clearRWACache, RWASummary } from './engine/rwaTracker.js';
 import { getTemplateStore, getCachedStore, clearStoreCache, TemplateStore } from './engine/templateStore.js';
+import { analyzeAirdropFarm, getCachedAirdropFarm, clearAirdropCache, AirdropFarmSummary } from './engine/airdropFarm.js';
+import { analyzePerpDex, getCachedPerpDex, clearPerpCache, PerpDexSummary } from './engine/perpetualDex.js';
+import { analyzeSecurity, getCachedSecurity, clearSecurityCache, SecurityScanSummary } from './engine/securityScanner.js';
+import { analyzeSmartMoney, getCachedSmartMoney, clearSmartMoneyCache, SmartMoneySummary } from './engine/smartMoney.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -171,6 +175,14 @@ let latestRWA: RWASummary | null = null;
 let lastRWAFetch = 0;
 let latestTemplateStore: TemplateStore | null = null;
 let lastTemplateStoreFetch = 0;
+let latestAirdropFarm: AirdropFarmSummary | null = null;
+let lastAirdropFetch = 0;
+let latestPerpDex: PerpDexSummary | null = null;
+let lastPerpFetch = 0;
+let latestSecurity: SecurityScanSummary | null = null;
+let lastSecurityFetch = 0;
+let latestSmartMoney: SmartMoneySummary | null = null;
+let lastSmartMoneyFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -583,6 +595,46 @@ async function poll() {
       }
     }
 
+    // v9.0: Airdrop farming (every 15 minutes)
+    if (pollCount % 30 === 0 || !latestAirdropFarm) {
+      try {
+        latestAirdropFarm = await analyzeAirdropFarm();
+        lastAirdropFetch = Date.now();
+      } catch (e) {
+        // Airdrop analysis failed
+      }
+    }
+
+    // v9.1: Perpetual DEX (every 5 minutes)
+    if (pollCount % 10 === 0 || !latestPerpDex) {
+      try {
+        latestPerpDex = await analyzePerpDex();
+        lastPerpFetch = Date.now();
+      } catch (e) {
+        // Perp DEX analysis failed
+      }
+    }
+
+    // v9.2: Security scanning (every 30 minutes)
+    if (pollCount % 60 === 0 || !latestSecurity) {
+      try {
+        latestSecurity = await analyzeSecurity();
+        lastSecurityFetch = Date.now();
+      } catch (e) {
+        // Security scan failed
+      }
+    }
+
+    // v9.3: Smart money tracking (every 10 minutes)
+    if (pollCount % 20 === 0 || !latestSmartMoney) {
+      try {
+        latestSmartMoney = await analyzeSmartMoney();
+        lastSmartMoneyFetch = Date.now();
+      } catch (e) {
+        // Smart money analysis failed
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
@@ -678,6 +730,10 @@ function broadcast() {
       nftArbitrage: latestNFTSummary,
       rwa: latestRWA,
       templateStore: latestTemplateStore,
+      airdropFarm: latestAirdropFarm,
+      perpDex: latestPerpDex,
+      security: latestSecurity,
+      smartMoney: latestSmartMoney,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -740,6 +796,10 @@ wss.on('connection', (ws) => {
         nftArbitrage: latestNFTSummary,
         rwa: latestRWA,
         templateStore: latestTemplateStore,
+        airdropFarm: latestAirdropFarm,
+        perpDex: latestPerpDex,
+        security: latestSecurity,
+        smartMoney: latestSmartMoney,
         stats: {
           totalRates: latestRates.length,
           exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -1696,6 +1756,110 @@ app.post('/api/v8/templates/refresh', authMiddleware('write'), async (_req, res)
     res.json({ success: true, store: latestTemplateStore });
   } catch (e) {
     res.status(500).json({ error: 'Failed to fetch template store' });
+  }
+});
+
+// ---- v9.0: Airdrop Farming API ----
+
+app.get('/api/v9/airdrop/active', authMiddleware('read'), (_req, res) => {
+  res.json({ airdrops: latestAirdropFarm?.activeAirdrops || [], timestamp: lastAirdropFetch });
+});
+
+app.get('/api/v9/airdrop/upcoming', authMiddleware('read'), (_req, res) => {
+  res.json({ airdrops: latestAirdropFarm?.upcomingAirdrops || [], timestamp: lastAirdropFetch });
+});
+
+app.get('/api/v9/airdrop/strategies', authMiddleware('read'), (_req, res) => {
+  res.json({ strategies: latestAirdropFarm?.strategies || [], timestamp: lastAirdropFetch });
+});
+
+app.get('/api/v9/airdrop/historical', authMiddleware('read'), (_req, res) => {
+  res.json({ historical: latestAirdropFarm?.historical || [], timestamp: lastAirdropFetch });
+});
+
+app.post('/api/v9/airdrop/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestAirdropFarm = await analyzeAirdropFarm();
+    lastAirdropFetch = Date.now();
+    res.json({ success: true, farm: latestAirdropFarm });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze airdrop farming' });
+  }
+});
+
+// ---- v9.1: Perpetual DEX API ----
+
+app.get('/api/v9/perp/dexes', authMiddleware('read'), (_req, res) => {
+  res.json({ dexes: latestPerpDex?.dexes || [], timestamp: lastPerpFetch });
+});
+
+app.get('/api/v9/perp/markets', authMiddleware('read'), (_req, res) => {
+  res.json({ markets: latestPerpDex?.markets || [], timestamp: lastPerpFetch });
+});
+
+app.get('/api/v9/perp/arbitrage', authMiddleware('read'), (_req, res) => {
+  res.json({ arbitrage: latestPerpDex?.arbitrage || [], timestamp: lastPerpFetch });
+});
+
+app.get('/api/v9/perp/best-funding', authMiddleware('read'), (_req, res) => {
+  res.json({ bestFunding: latestPerpDex?.bestFunding || {}, timestamp: lastPerpFetch });
+});
+
+app.post('/api/v9/perp/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestPerpDex = await analyzePerpDex();
+    lastPerpFetch = Date.now();
+    res.json({ success: true, perp: latestPerpDex });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze perpetual DEX' });
+  }
+});
+
+// ---- v9.2: Security Scanner API ----
+
+app.get('/api/v9/security/reports', authMiddleware('read'), (_req, res) => {
+  res.json({ reports: latestSecurity?.reports || [], timestamp: lastSecurityFetch });
+});
+
+app.get('/api/v9/security/summary', authMiddleware('read'), (_req, res) => {
+  res.json({ summary: latestSecurity || null, timestamp: lastSecurityFetch });
+});
+
+app.post('/api/v9/security/scan', authMiddleware('write'), async (req, res) => {
+  try {
+    latestSecurity = await analyzeSecurity();
+    lastSecurityFetch = Date.now();
+    res.json({ success: true, security: latestSecurity });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to scan security' });
+  }
+});
+
+// ---- v9.3: Smart Money API ----
+
+app.get('/api/v9/smart/wallets', authMiddleware('read'), (_req, res) => {
+  res.json({ wallets: latestSmartMoney?.wallets || [], timestamp: lastSmartMoneyFetch });
+});
+
+app.get('/api/v9/smart/transactions', authMiddleware('read'), (_req, res) => {
+  res.json({ transactions: latestSmartMoney?.transactions || [], timestamp: lastSmartMoneyFetch });
+});
+
+app.get('/api/v9/smart/signals', authMiddleware('read'), (_req, res) => {
+  res.json({ signals: latestSmartMoney?.copySignals || [], timestamp: lastSmartMoneyFetch });
+});
+
+app.get('/api/v9/smart/flows', authMiddleware('read'), (_req, res) => {
+  res.json({ flows: latestSmartMoney?.exchangeFlows || [], timestamp: lastSmartMoneyFetch });
+});
+
+app.post('/api/v9/smart/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestSmartMoney = await analyzeSmartMoney();
+    lastSmartMoneyFetch = Date.now();
+    res.json({ success: true, smart: latestSmartMoney });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze smart money' });
   }
 });
 

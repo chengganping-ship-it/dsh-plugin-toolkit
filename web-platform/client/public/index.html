@@ -367,6 +367,75 @@
     .tmpl-price.free{color:#00d4aa}
     .tmpl-price.paid{color:#f5a623}
     .tmpl-price.freemium{color:#4a9eff}
+    .airdrop-item{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .airdrop-chain{width:50px;color:#8899aa;font-size:7px}
+    .airdrop-name{flex:1;color:#4a9eff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .airdrop-value{width:55px;text-align:right;color:#00d4aa}
+    .airdrop-status{width:45px;text-align:center;font-size:7px;padding:1px 3px;border-radius:3px}
+    .airdrop-status.active{background:#00d4aa22;color:#00d4aa}
+    .airdrop-status.upcoming{background:#4a9eff22;color:#4a9eff}
+    .airdrop-status.ended{background:#6b7a8d22;color:#6b7a8d}
+    .strat-item{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .strat-name{flex:1;color:#9b59b6;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .strat-roi{width:50px;text-align:right;font-weight:600}
+    .strat-roi.pos{color:#00d4aa}
+    .strat-roi.neg{color:#ff4444}
+    .strat-risk{width:35px;text-align:center;font-size:7px;padding:1px 3px;border-radius:3px}
+    .strat-risk.low{background:#00d4aa22;color:#00d4aa}
+    .strat-risk.medium{background:#f5a62322;color:#f5a623}
+    .strat-risk.high{background:#ff444422;color:#ff4444}
+    .perp-dex{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .perp-name{width:55px;color:#4a9eff}
+    .perp-rate{width:70px;text-align:right;font-weight:600}
+    .perp-rate.pos{color:#00d4aa}
+    .perp-rate.neg{color:#ff4444}
+    .perp-oi{margin-left:auto;color:#8899aa;font-size:7px}
+    .perp-arb{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .arb-pair{width:60px;color:#9b59b6}
+    .arb-buy{width:45px;color:#00d4aa;font-size:7px}
+    .arb-sell{width:45px;color:#ff4444;font-size:7px}
+    .arb-spread{width:60px;text-align:right;font-weight:600}
+    .arb-spread.pos{color:#00d4aa}
+    .arb-spread.neg{color:#ff4444}
+    .sec-report{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .sec-name{flex:1;color:#4a9eff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .sec-risk{width:40px;text-align:center;font-size:7px;padding:1px 3px;border-radius:3px}
+    .sec-risk.critical{background:#ff444422;color:#ff4444}
+    .sec-risk.high{background:#ff660022;color:#ff6600}
+    .sec-risk.medium{background:#f5a62322;color:#f5a623}
+    .sec-risk.low{background:#00d4aa22;color:#00d4aa}
+    .sec-score{width:35px;text-align:right;font-weight:600}
+    .sec-overview{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:4px;margin-bottom:6px}
+    .sec-stat{text-align:center;padding:4px;background:#0d1117;border-radius:3px}
+    .sec-label{display:block;font-size:7px;color:#6b7a8d;margin-bottom:2px}
+    .sec-val{font-size:12px;font-weight:700}
+    .sec-val.critical{color:#ff4444}
+    .sec-val.high{color:#ff6600}
+    .sec-val.medium{color:#f5a623}
+    .sec-val.low{color:#00d4aa}
+    .vuln-item{display:flex;justify-content:space-between;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28}
+    .vuln-type{color:#8899aa}
+    .vuln-sev{font-size:7px;padding:1px 4px;border-radius:3px}
+    .vuln-sev.critical{background:#ff444422;color:#ff4444}
+    .vuln-sev.high{background:#ff660022;color:#ff6600}
+    .vuln-sev.medium{background:#f5a62322;color:#f5a623}
+    .vuln-sev.low{background:#00d4aa22;color:#00d4aa}
+    .smart-wallet{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .wallet-addr{width:60px;color:#8899aa;font-family:monospace;font-size:7px}
+    .wallet-pnl{width:55px;text-align:right;font-weight:600}
+    .wallet-pnl.pos{color:#00d4aa}
+    .wallet-pnl.neg{color:#ff4444}
+    .wallet-tier{width:35px;text-align:center;font-size:7px;padding:1px 3px;border-radius:3px}
+    .wallet-tier.gold{background:#f5a62322;color:#f5a623}
+    .wallet-tier.silver{background:#8899aa22;color:#8899aa}
+    .wallet-tier.bronze{background:#cd7f3222;color:#cd7f32}
+    .signal-item{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .signal-action{width:40px;text-align:center;font-size:7px;padding:1px 3px;border-radius:3px;font-weight:600}
+    .signal-action.buy{background:#00d4aa22;color:#00d4aa}
+    .signal-action.sell{background:#ff444422;color:#ff4444}
+    .signal-action.hold{background:#f5a62322;color:#f5a623}
+    .signal-token{flex:1;color:#4a9eff}
+    .signal-conf{width:40px;text-align:right;color:#8899aa}
     @media(max-width:1100px){.g{grid-template-columns:repeat(3,1fr)}.g5{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:800px){.g{grid-template-columns:repeat(2,1fr)}.g2,.g3,.g5{grid-template-columns:1fr}.c{padding:6px}.hdr{padding:6px 10px}.stats{gap:5px}}
     @media(max-width:500px){.g{grid-template-columns:1fr}.hm{grid-template-columns:repeat(auto-fill,minmax(65px,1fr))}.stats .lb{font-size:9px}}
@@ -693,6 +762,54 @@
     </div>
   </div>
 
+  <!-- v9.0: Airdrop Farming -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v9.0: Active Airdrops <span id="airdropBadge" class="tag bd bb">-</span></h2>
+      <div id="airdropActive" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading airdrops...</div></div>
+    </div>
+    <div class="card">
+      <h2>v9.0: Farming Strategies <span id="airdropStratBadge" class="tag bd bb">-</span></h2>
+      <div id="airdropStrategies" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Calculating strategies...</div></div>
+    </div>
+  </div>
+
+  <!-- v9.1: Perpetual DEX -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v9.1: DEX Funding Rates <span id="perpBadge" class="tag bd bb">-</span></h2>
+      <div id="perpDexes" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading DEX data...</div></div>
+    </div>
+    <div class="card">
+      <h2>v9.1: Cross-DEX Arbitrage <span id="perpArbBadge" class="tag bd bb">-</span></h2>
+      <div id="perpArb" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Scanning arbitrage...</div></div>
+    </div>
+  </div>
+
+  <!-- v9.2: Security Scanner -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v9.2: Security Reports <span id="secBadge" class="tag bd bb">-</span></h2>
+      <div id="secReports" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading reports...</div></div>
+    </div>
+    <div class="card">
+      <h2>v9.2: Vulnerability Summary <span id="secVulnBadge" class="tag bd bb">-</span></h2>
+      <div id="secSummary" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Analyzing...</div></div>
+    </div>
+  </div>
+
+  <!-- v9.3: Smart Money -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v9.3: Smart Wallets <span id="smartBadge" class="tag bd bb">-</span></h2>
+      <div id="smartWallets" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Tracking wallets...</div></div>
+    </div>
+    <div class="card">
+      <h2>v9.3: Copy Signals <span id="smartSigBadge" class="tag bd bb">-</span></h2>
+      <div id="smartSignals" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Analyzing signals...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -780,6 +897,10 @@ function render() {
   renderNFTFloors(); renderNFTArb();
   renderRWAProtocols(); renderRWAOpps();
   renderTmplStore(); renderTmplFeatured();
+  renderAirdropActive(); renderAirdropStrategies();
+  renderPerpDexes(); renderPerpArb();
+  renderSecReports(); renderSecSummary();
+  renderSmartWallets(); renderSmartSignals();
 }
 
 function renderHM() {
@@ -1687,6 +1808,16 @@ function renderRWAOpps(){var r=data.rwa;if(!r){$('rwaOpps').innerHTML='<div clas
 function renderTmplStore(){var s=data.templateStore;if(!s){$('tmplStore').innerHTML='<div class="emp">Loading...</div>';return}var st=s.stats||{};$('tmplBadge').textContent=(st.totalTemplates||0)+' templates';var h='<div class="tmpl-stats"><span>'+(st.totalTemplates||0)+' templates</span><span>'+(st.totalDownloads||0).toLocaleString()+' downloads</span></div>';for(var c of(s.categories||[]).slice(0,6)){h+='<div class="tmpl-cat"><span class="cat-icon">'+c.icon+'</span><span class="cat-name">'+c.name+'</span><span class="cat-count">'+c.count+'</span></div>'}$('tmplStore').innerHTML=h}
 
 function renderTmplFeatured(){var s=data.templateStore;if(!s){$('tmplFeatured').innerHTML='<div class="emp">Loading...</div>';return}var f=(s.featured||[]).slice(0,4);$('tmplFeatBadge').textContent=f.length+' featured';var h='';for(var t of f){h+='<div class="tmpl-card"><div class="tmpl-name">'+t.name.slice(0,25)+'</div><div class="tmpl-meta"><span class="tmpl-platform">'+t.platform+'</span><span class="tmpl-rating">★ '+t.rating.toFixed(1)+'</span><span class="tmpl-price '+t.pricing.toLowerCase()+'">'+(t.pricing==='FREE'?'FREE':'$'+t.price)+'</span></div></div>'}$('tmplFeatured').innerHTML=h||'<div class="emp">No featured</div>'}
+
+// ==================== v9.0-v9.3 Renders ====================
+function renderAirdropActive(){var a=data.airdropFarm;if(!a){$('airdropActive').innerHTML='<div class="emp">Loading...</div>';return}var d=(a.activeAirdrops||[]).slice(0,6);$('airdropBadge').textContent=d.length+' active';var h='';for(var x of d){h+='<div class="airdrop-item"><span class="airdrop-chain">'+x.chain.slice(0,8)+'</span><span class="airdrop-name">'+x.name.slice(0,18)+'</span><span class="airdrop-value">~$${x.estimatedValue}</span><span class="airdrop-status '+x.status.toLowerCase()+'">'+x.status.slice(0,6)+'</span></div>'}$('airdropActive').innerHTML=h||'<div class="emp">No active airdrops</div>'}
+function renderAirdropStrategies(){var a=data.airdropFarm;if(!a){$('airdropStrategies').innerHTML='<div class="emp">Loading...</div>';return}var s=(a.strategies||[]).slice(0,5);$('airdropStratBadge').textContent=s.length+' strategies';var h='';for(var x of s){h+='<div class="strat-item"><span class="strat-name">'+x.name.slice(0,20)+'</span><span class="strat-roi '+(x.expectedROI>0?'pos':'neg')+'">'+(x.expectedROI>0?'+':'')+x.expectedROI.toFixed(0)+'%</span><span class="strat-risk '+x.riskLevel.toLowerCase()+'">'+x.riskLevel.slice(0,4)+'</span></div>'}$('airdropStrategies').innerHTML=h||'<div class="emp">No strategies</div>'}
+function renderPerpDexes(){var p=data.perpDex;if(!p){$('perpDexes').innerHTML='<div class="emp">Loading...</div>';return}var d=(p.dexes||[]).slice(0,6);$('perpBadge').textContent=d.length+' DEXs';var h='';for(var x of d){h+='<div class="perp-dex"><span class="perp-name">'+x.name.slice(0,10)+'</span><span class="perp-rate '+(x.fundingRate>0?'pos':'neg')+'">'+(x.fundingRate>0?'+':'')+(x.fundingRate*100).toFixed(4)+'%</span><span class="perp-oi">$${(x.openInterest/1e6).toFixed(0)}M</span></div>'}$('perpDexes').innerHTML=h||'<div class="emp">No DEX data</div>'}
+function renderPerpArb(){var p=data.perpDex;if(!p){$('perpArb').innerHTML='<div class="emp">Scanning...</div>';return}var a=(p.arbitrage||[]).slice(0,5);$('perpArbBadge').textContent=a.length+' ops';var h='';for(var x of a){h+='<div class="perp-arb"><span class="arb-pair">'+x.pair.slice(0,10)+'</span><span class="arb-buy">'+x.buyDex.slice(0,6)+'</span><span class="arb-sell">'+x.sellDex.slice(0,6)+'</span><span class="arb-spread '+(x.spreadPct>0?'pos':'neg')+'">'+(x.spreadPct>0?'+':'')+x.spreadPct.toFixed(3)+'%</span></div>'}$('perpArb').innerHTML=h||'<div class="emp">No arbitrage</div>'}
+function renderSecReports(){var s=data.security;if(!s){$('secReports').innerHTML='<div class="emp">Loading...</div>';return}var r=(s.reports||[]).slice(0,5);$('secBadge').textContent=r.length+' reports';var h='';for(var x of r){h+='<div class="sec-report"><span class="sec-name">'+x.contractName.slice(0,15)+'</span><span class="sec-risk '+x.riskLevel.toLowerCase()+'">'+x.riskLevel.slice(0,4)+'</span><span class="sec-score">'+x.securityScore+'</span></div>'}$('secReports').innerHTML=h||'<div class="emp">No reports</div>'}
+function renderSecSummary(){var s=data.security;if(!s){$('secSummary').innerHTML='<div class="emp">Analyzing...</div>';return}var sum=s.summary||{};$('secVulnBadge').textContent=(sum.totalVulnerabilities||0)+' vulns';var h='<div class="sec-overview"><div class="sec-stat"><span class="sec-label">Critical</span><span class="sec-val critical">'+(sum.critical||0)+'</span></div><div class="sec-stat"><span class="sec-label">High</span><span class="sec-val high">'+(sum.high||0)+'</span></div><div class="sec-stat"><span class="sec-label">Medium</span><span class="sec-val medium">'+(sum.medium||0)+'</span></div><div class="sec-stat"><span class="sec-label">Low</span><span class="sec-val low">'+(sum.low||0)+'</span></div></div>';for(var v of(s.topVulnerabilities||[]).slice(0,4)){h+='<div class="vuln-item"><span class="vuln-type">'+v.type.slice(0,18)+'</span><span class="vuln-sev '+v.severity.toLowerCase()+'">'+v.severity.slice(0,4)+'</span></div>'}$('secSummary').innerHTML=h}
+function renderSmartWallets(){var s=data.smartMoney;if(!s){$('smartWallets').innerHTML='<div class="emp">Loading...</div>';return}var w=(s.wallets||[]).slice(0,6);$('smartBadge').textContent=w.length+' wallets';var h='';for(var x of w){h+='<div class="smart-wallet"><span class="wallet-addr">'+x.address.slice(0,8)+'...</span><span class="wallet-pnl '+(x.totalPnl>0?'pos':'neg')+'">'+(x.totalPnl>0?'+':'')+x.totalPnl.toFixed(0)+'%</span><span class="wallet-tier '+x.tier.toLowerCase()+'">'+x.tier.slice(0,4)+'</span></div>'}$('smartWallets').innerHTML=h||'<div class="emp">No wallets</div>'}
+function renderSmartSignals(){var s=data.smartMoney;if(!s){$('smartSignals').innerHTML='<div class="emp">Analyzing...</div>';return}var sig=(s.copySignals||[]).slice(0,5);$('smartSigBadge').textContent=sig.length+' signals';var h='';for(var x of sig){h+='<div class="signal-item"><span class="signal-action '+x.action.toLowerCase()+'">'+x.action.slice(0,4)+'</span><span class="signal-token">'+x.token.slice(0,10)+'</span><span class="signal-conf">'+x.confidence.toFixed(0)+'%</span></div>'}$('smartSignals').innerHTML=h||'<div class="emp">No signals</div>'}
 
 // Kelly
 $('kB')?.addEventListener('click', async () => {
