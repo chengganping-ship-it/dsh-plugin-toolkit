@@ -247,6 +247,20 @@
     .q-item .q-val.bad{color:#ff4444}
     .exec-rec{padding:3px 5px;background:#4a9eff11;border-radius:3px;margin-bottom:3px;font-size:8px;border-left:2px solid #4a9eff}
     .exec-warn{padding:3px 5px;background:#ff444411;border-radius:3px;margin-bottom:3px;font-size:8px;border-left:2px solid #ff4444}
+    .risk-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;margin-bottom:6px}
+    .risk-item{display:flex;justify-content:space-between;padding:3px 5px;background:#0d1117;border-radius:3px;font-size:8px}
+    .risk-item .r-label{color:#6b7a8d}
+    .risk-item .r-val{font-weight:600}
+    .risk-item .r-val.good{color:#00d4aa}
+    .risk-item .r-val.warn{color:#f5a623}
+    .risk-item .r-val.bad{color:#ff4444}
+    .risk-warn{padding:3px 5px;background:#ff444411;border-radius:3px;margin-top:4px;font-size:8px;border-left:2px solid #ff4444}
+    .stress-scenario{padding:5px;background:#141c28;border-radius:4px;margin-bottom:4px;font-size:9px;border-left:3px solid #4a9eff}
+    .stress-scenario.crit{border-left-color:#ff4444;background:#2a1515}
+    .stress-scenario.high{border-left-color:#ff6600}
+    .stress-scenario.med{border-left-color:#f5a623}
+    .stress-scenario .scen-name{font-weight:600;color:#4a9eff}
+    .stress-scenario .scen-desc{font-size:8px;color:#8899aa;margin-top:2px}
     @media(max-width:1100px){.g{grid-template-columns:repeat(3,1fr)}.g5{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:800px){.g{grid-template-columns:repeat(2,1fr)}.g2,.g3,.g5{grid-template-columns:1fr}.c{padding:6px}.hdr{padding:6px 10px}.stats{gap:5px}}
     @media(max-width:500px){.g{grid-template-columns:1fr}.hm{grid-template-columns:repeat(auto-fill,minmax(65px,1fr))}.stats .lb{font-size:9px}}
@@ -477,6 +491,18 @@
     </div>
   </div>
 
+  <!-- v7.5: Risk Management -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v7.5: Risk Metrics & VaR <span id="riskBadge" class="tag bd bb">-</span></h2>
+      <div id="riskMetrics" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Analyzing risk...</div></div>
+    </div>
+    <div class="card">
+      <h2>v7.5: Stress Test & Scenarios <span id="stressBadge" class="tag bd bb">-</span></h2>
+      <div id="stressTest" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Running stress tests...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -556,6 +582,7 @@ function render() {
   renderLiqWarnings(); renderLiqClusters();
   renderTSCurve(); renderTSPredictions();
   renderExecOverview(); renderExecQuality();
+  renderRiskMetrics(); renderStressTest();
 }
 
 function renderHM() {
@@ -1304,6 +1331,43 @@ function renderExecQuality() {
     ${recsHtml ? '<div style="font-size:7px;color:#6b7a8d;margin-top:4px">Recommendations:</div>' + recsHtml : ''}
     ${warningsHtml || ''}
   `;
+}
+
+function renderRiskMetrics() {
+  const risk = data.risk;
+  if (!risk) { $('riskMetrics').innerHTML = '<div class="emp">Analyzing risk...</div>'; return; }
+  const m = risk.metrics;
+  const margin = risk.margin;
+  const var95 = risk.var?.[0];
+  $('riskBadge').textContent = 'Sharpe ' + m.sharpeRatio.toFixed(2);
+  const warningsHtml = (risk.warnings || []).slice(0, 2).map(w => `<div class="risk-warn">${w}</div>`).join('');
+  $('riskMetrics').innerHTML = `
+    <div class="risk-grid">
+      <div class="risk-item"><span class="r-label">Sharpe</span><span class="r-val ${m.sharpeRatio > 1 ? 'good' : 'warn'}">${m.sharpeRatio.toFixed(2)}</span></div>
+      <div class="risk-item"><span class="r-label">Sortino</span><span class="r-val ${m.sortinoRatio > 1.5 ? 'good' : 'warn'}">${m.sortinoRatio.toFixed(2)}</span></div>
+      <div class="risk-item"><span class="r-label">Calmar</span><span class="r-val ${m.calmarRatio > 1 ? 'good' : 'warn'}">${m.calmarRatio.toFixed(2)}</span></div>
+      <div class="risk-item"><span class="r-label">Max DD</span><span class="r-val bad">${(m.maxDrawdown * 100).toFixed(1)}%</span></div>
+      <div class="risk-item"><span class="r-label">Win Rate</span><span class="r-val">${m.winRate.toFixed(0)}%</span></div>
+      <div class="risk-item"><span class="r-label">Profit Factor</span><span class="r-val ${m.profitFactor > 1.5 ? 'good' : 'warn'}">${m.profitFactor.toFixed(2)}</span></div>
+    </div>
+    <div style="font-size:7px;color:#6b7a8d;margin:4px 0">VaR (95%): <span style="color:#ff4444">${(var95?.historical * 100 || 0).toFixed(2)}%</span> | CVaR: <span style="color:#ff4444">${(var95?.expectedShortfall * 100 || 0).toFixed(2)}%</span></div>
+    <div style="font-size:7px;color:#6b7a8d">Margin: ${(margin.marginRatio * 100).toFixed(0)}% used | Liq Risk: <span style="color:${margin.liquidationRisk > 50 ? '#ff4444' : '#00d4aa'}">${margin.liquidationRisk.toFixed(0)}%</span> | Rec. Leverage: ${margin.recommendedLeverage}x</div>
+    ${warningsHtml}
+  `;
+}
+
+function renderStressTest() {
+  const risk = data.risk;
+  if (!risk) { $('stressTest').innerHTML = '<div class="emp">Running stress tests...</div>'; return; }
+  const scenarios = risk.stressScenarios || [];
+  $('stressBadge').textContent = scenarios.length + ' scenarios';
+  $('stressTest').innerHTML = scenarios.slice(0, 5).map(s => `
+    <div class="stress-scenario ${s.portfolioImpact < -0.3 ? 'crit' : s.portfolioImpact < -0.15 ? 'high' : 'med'}">
+      <div><span class="scen-name">${s.name}</span> <span style="color:${s.portfolioImpact < -0.2 ? '#ff4444' : '#f5a623'}">${(s.portfolioImpact * 100).toFixed(0)}%</span></div>
+      <div class="scen-desc">${s.description}</div>
+      <div style="font-size:7px;color:#6b7a8d">Worst: ${s.worstPosition} | Recovery: ${s.recoveryDays}d | Shock: ${(s.priceShock * 100).toFixed(0)}%</div>
+    </div>
+  `).join('');
 }
 
 // Kelly

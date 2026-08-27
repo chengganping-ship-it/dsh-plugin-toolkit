@@ -50,6 +50,7 @@ import { optimizeGrid, getCachedGrids, clearGridCache, GridOptimization } from '
 import { analyzeLiquidations, getCachedLiquidations, clearLiquidationCache, LiquidationAnalysis } from './engine/liquidation.js';
 import { analyzeTermStructure, getCachedTermStructures, clearTermStructureCache, TermStructureAnalysis } from './engine/termstructure.js';
 import { analyzeExecution, getActiveOrders, getExecutionHistory, clearExecutionHistory, ExecutionAnalysis } from './engine/execution.js';
+import { analyzeRisk, getCachedRisk, clearRiskCache, RiskAnalysis } from './engine/risk.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -147,6 +148,8 @@ let latestTermStructures: Map<string, TermStructureAnalysis> = new Map();
 let lastTermStructureFetch = 0;
 let latestExecution: ExecutionAnalysis | null = null;
 let lastExecutionFetch = 0;
+let latestRisk: RiskAnalysis | null = null;
+let lastRiskFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -486,6 +489,16 @@ async function poll() {
       }
     }
 
+    // v7.5: Risk analysis (every 5 minutes)
+    if (pollCount % 10 === 0 || !latestRisk) {
+      try {
+        latestRisk = await analyzeRisk();
+        lastRiskFetch = Date.now();
+      } catch (e) {
+        // Risk analysis failed
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
@@ -574,6 +587,7 @@ function broadcast() {
       liquidation: latestLiquidation,
       termStructure: Array.from(latestTermStructures.values()),
       execution: latestExecution,
+      risk: latestRisk,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -629,6 +643,7 @@ wss.on('connection', (ws) => {
         liquidation: latestLiquidation,
         termStructure: Array.from(latestTermStructures.values()),
         execution: latestExecution,
+        risk: latestRisk,
         stats: {
           totalRates: latestRates.length,
           exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -1340,6 +1355,35 @@ app.post('/api/v7/execution/analyze', authMiddleware('write'), async (req, res) 
     res.json({ success: true, execution: latestExecution });
   } catch (e) {
     res.status(500).json({ error: 'Failed to analyze execution' });
+  }
+});
+
+// ---- v7.5: Risk Management API ----
+
+app.get('/api/v7/risk', authMiddleware('read'), (_req, res) => {
+  if (!latestRisk) { res.status(503).json({ error: 'No risk data yet' }); return; }
+  res.json(latestRisk);
+});
+
+app.get('/api/v7/risk/var', authMiddleware('read'), (_req, res) => {
+  res.json({ var: latestRisk?.var || [], timestamp: lastRiskFetch });
+});
+
+app.get('/api/v7/risk/stress', authMiddleware('read'), (_req, res) => {
+  res.json({ scenarios: latestRisk?.stressScenarios || [], timestamp: lastRiskFetch });
+});
+
+app.get('/api/v7/risk/metrics', authMiddleware('read'), (_req, res) => {
+  res.json({ metrics: latestRisk?.metrics || null, margin: latestRisk?.margin || null, timestamp: lastRiskFetch });
+});
+
+app.post('/api/v7/risk/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestRisk = await analyzeRisk();
+    lastRiskFetch = Date.now();
+    res.json({ success: true, risk: latestRisk });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze risk' });
   }
 });
 
