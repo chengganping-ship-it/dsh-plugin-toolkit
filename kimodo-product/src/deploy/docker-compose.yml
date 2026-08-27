@@ -1,0 +1,57 @@
+# Kimodo Product - Docker 部署配置
+# 一键启动完整服务 (API + GUI)
+
+version: "3.8"
+
+services:
+  kimodo-api:
+    build:
+      context: ../..
+      dockerfile: src/deploy/Dockerfile
+    container_name: kimodo-api
+    ports:
+      - "8765:8765"
+    volumes:
+      - kimodo-data:/app/data
+      - kimodo-models:/app/data/models
+    environment:
+      - PYTHONUNBUFFERED=1
+      - CUDA_VISIBLE_DEVICES=0
+      - KIMODO_MODEL=SOMA-RP
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8765/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  kimodo-gui:
+    image: python:3.11-slim
+    container_name: kimodo-gui
+    ports:
+      - "7860:7860"
+    working_dir: /app
+    volumes:
+      - ./../../src/gui:/app/gui
+      - ./../../src/api:/app/api
+    command: >
+      bash -c "pip install gradio requests &&
+               python gui/app.py"
+    depends_on:
+      - kimodo-api
+    environment:
+      - API_BASE=http://kimodo-api:8765
+    restart: unless-stopped
+
+volumes:
+  kimodo-data:
+    driver: local
+  kimodo-models:
+    driver: local

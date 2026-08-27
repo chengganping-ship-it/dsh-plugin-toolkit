@@ -1,0 +1,37 @@
+{
+  "fetches": [
+    {
+      "timestamp": "2026-08-23T04:14:57.693846",
+      "work_id": "dagon",
+      "source": "hplovecraft",
+      "url": "https://www.hplovecraft.com/writings/texts/fiction/dagon.aspx",
+      "status": "error",
+      "size": 0,
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "timestamp": "2026-08-23T04:21:52.551768",
+      "work_id": "dagon",
+      "source": "hplovecraft",
+      "url": "https://www.hplovecraft.com/writings/texts/fiction/d.aspx",
+      "status": "success",
+      "size": 13968
+    },
+    {
+      "timestamp": "2026-08-23T04:23:14.267415",
+      "work_id": "dagon",
+      "source": "hplovecraft",
+      "url": "https://www.hplovecraft.com/writings/texts/fiction/d.aspx",
+      "status": "success",
+      "size": 13078
+    },
+    {
+      "timestamp": "2026-08-23T04:23:33.434691",
+      "work_id": "call_of_cthulhu",
+      "source": "hplovecraft",
+      "url": "https://www.hplovecraft.com/writings/texts/fiction/cc.aspx",
+      "status": "success",
+      "size": 72584
+    }
+  ]
+}

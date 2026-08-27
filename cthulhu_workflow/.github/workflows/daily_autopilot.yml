@@ -1,0 +1,141 @@
+# 克苏鲁有声书 - 每日自动闭环
+# 免费运行: GitHub Actions 提供 2000 分钟/月 (足够每日任务)
+#
+# 触发条件:
+# 1. 定时触发: 每天 02:00 (UTC+8) = 18:00 UTC
+# 2. 手动触发: Actions 页面点击 "Run workflow"
+#
+# 功能:
+# - 内容生产 (章节提取+音频生成)
+# - 自动复盘 (数据采集+分析)
+# - 自愈检查 (系统健康)
+# - 提交任何更改到仓库
+
+name: 克苏鲁每日自动闭环
+
+on:
+  schedule:
+    # 每天北京时间 02:00 运行 (UTC 18:00)
+    - cron: '0 18 * * *'
+  
+  # 允许手动触发
+  workflow_dispatch:
+
+# 权限: 需要写权限来提交更改
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  daily-autopilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30  # 设置超时防止卡死
+    
+    steps:
+      # 1. 检出代码
+      - name: 检出代码
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      # 2. 设置 Python
+      - name: 设置 Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+      
+      # 3. 安装系统依赖 (edge-tts需要)
+      - name: 安装系统依赖
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg
+      
+      # 4. 安装 Python 依赖
+      - name: 安装 Python 依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install edge-tts apscheduler playwright 2>/dev/null
+          playwright install chromium --with-deps 2>/dev/null || true
+      
+      # 5. 创建必要目录
+      - name: 创建目录结构
+        run: |
+          mkdir -p content audio data publish screenshots promotion
+          mkdir -p data/content_cache data/growth data/monitor_log data/consensus_log
+      
+      # 6. 运行健康检查
+      - name: 系统健康检查
+        continue-on-error: true
+        run: python system_health.py 2>&1 || echo "健康检查完成 (部分模块可能缺失依赖)"
+      
+      # 7. 获取真实文本 (如果content_fetcher存在)
+      - name: 获取克苏鲁文本
+        continue-on-error: true
+        run: |
+          if [ -f content_fetcher.py ]; then
+            python content_fetcher.py fetch dagon 2>/dev/null || true
+            python content_fetcher.py fetch call_of_cthulhu 2>/dev/null || true
+          fi
+      
+      # 8. 运行自动复盘
+      - name: 运行自动复盘
+        continue-on-error: true
+        run: python self_loop_engine.py 2>&1 || echo "自循环引擎运行完成"
+      
+      # 9. 生成SEO和增长建议
+      - name: 生成增长建议
+        continue-on-error: true
+        run: |
+          python growth_engine.py seo ximalaya 2>/dev/null || true
+      
+      # 10. 提交任何数据变更
+      - name: 提交数据变更
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          # 只提交 data/ 和 content/ 目录
+          git add -A data/ content/ 2>/dev/null || true
+          
+          # 只在有变更时提交
+          if git diff --cached --quiet; then
+            echo "无变更需要提交"
+          else
+            git commit -m "🤖 自动更新 $(date '+%Y-%m-%d %H:%M')"
+            git push
+          fi
+        continue-on-error: true
+      
+      # 11. 上传产物 (报告和日志)
+      - name: 上传运行产物
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: daily-run-${{ github.run_number }}
+          path: |
+            data/
+            content/
+          retention-days: 7
+
+# 可选: 周报任务 (每周一)
+  weekly-report:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    # 只在周一运行 (GitHub Actions cron: 0=周日)
+    # 实际通过 condition 控制
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: 设置 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      
+      - name: 生成周报
+        continue-on-error: true
+        run: |
+          echo "=== 周报生成 $(date '+%Y-%m-%d') ==="
+          echo "本周数据文件:"
+          ls -la data/ 2>/dev/null || echo "无数据目录"

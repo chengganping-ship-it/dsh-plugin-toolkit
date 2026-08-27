@@ -1,0 +1,38 @@
+{
+  "name": "dsh-tool-salesengine",
+  "version": "0.1.0",
+  "description": "AI-powered sales engine for DSH - lead scoring, outreach crafting, deal inspection, competitive intelligence, sales coaching, pipeline prediction, customer 360, and smart playbook automation",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-salesengine.git"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "ai-agent",
+    "cordis",
+    "sales",
+    "crm",
+    "business-development",
+    "revenue",
+    "lead-scoring",
+    "sales-automation",
+    "pipeline",
+    "outreach"
+  ]
+}

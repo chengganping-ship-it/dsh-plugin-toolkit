@@ -1,0 +1,55 @@
+{
+  "timestamp": "2026-08-22T23:17:21.833100",
+  "modules": {
+    "workflow_engine": "ok",
+    "memory_store": "ok",
+    "self_loop_engine": "ok",
+    "free_ai_client": "ok",
+    "cover_generator": "ok",
+    "publish_automation": "ok",
+    "data_collector": "ok",
+    "full_autopilot": "ok",
+    "scheduler": "ok",
+    "dashboard": "ok",
+    "content_expander": "ok",
+    "promotion_engine": "ok"
+  },
+  "dependencies": {
+    "edge_tts": "ok (7.2.8)",
+    "playwright": "ok (installed)",
+    "apscheduler": "ok (3.11.3)",
+    "sqlite3": "ok (installed)"
+  },
+  "data_integrity": {
+    "tables": [
+      "hypotheses",
+      "sqlite_sequence",
+      "content_performance",
+      "strategy_snapshots",
+      "evolution_log",
+      "action_log",
+      "todo_list"
+    ],
+    "hypotheses_count": 15,
+    "content_performance_count": 2,
+    "strategy_snapshots_count": 1,
+    "evolution_log_count": 0,
+    "action_log_count": 26,
+    "database": "ok"
+  },
+  "directories": {
+    "content": "ok (10 items)",
+    "audio": "ok (8 items)",
+    "data": "ok (11 items)",
+    "publish": "ok (4 items)",
+    "covers": "missing",
+    "promotion": "ok (4 items)"
+  },
+  "overall_status": "healthy",
+  "scheduler": {
+    "status": "running",
+    "log_lines": 12,
+    "last_entry": "[2026-08-22 22:14:52] =================================================="
+  },
+  "issues": []
+}

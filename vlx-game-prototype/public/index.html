@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VLX-Seek AI Native Game Prototype</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 20px 40px;
+            border-bottom: 1px solid #2a2a4a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            background: linear-gradient(90deg, #00d4ff, #7b2ff7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: #888;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #ff4444;
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.connected { background: #00ff88; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background: #12121a;
+            border-bottom: 2px solid #2a2a4a;
+            padding: 0 20px;
+        }
+
+        .tab {
+            padding: 14px 24px;
+            cursor: pointer;
+            color: #666;
+            font-size: 0.95rem;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tab:hover { color: #aaa; background: #1a1a2e; }
+
+        .tab.active {
+            color: #00d4ff;
+            border-bottom-color: #00d4ff;
+        }
+
+        .tab-icon { font-size: 1.2rem; }
+
+        /* Main Content */
+        .main-container {
+            display: flex;
+            height: calc(100vh - 120px);
+        }
+
+        .demo-area {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            overflow-y: auto;
+        }
+
+        .panel {
+            background: #12121a;
+            border: 1px solid #2a2a4a;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .panel-title {
+            font-size: 0.85rem;
+            color: #7b2ff7;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        /* Canvas / Display Area */
+        .canvas-container {
+            position: relative;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0a0a0f;
+            border-radius: 12px;
+            overflow: hidden;
+            min-height: 400px;
+        }
+
+        .game-canvas {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 8px;
+            cursor: crosshair;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px;
+            background: #12121a;
+            border-left: 1px solid #2a2a4a;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .instruction-box {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border: 1px solid #2a2a4a;
+            border-radius: 10px;
+            padding: 16px;
+        }
+
+        .instruction-text {
+            font-size: 1.1rem;
+            color: #00d4ff;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7b2ff7, #00d4ff);
+            color: white;
+        }
+
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(123, 47, 247, 0.4); }
+
+        .btn-secondary {
+            background: #2a2a4a;
+            color: #e0e0e0;
+        }
+
+        .btn-secondary:hover { background: #3a3a5a; }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 16px;
+            background: #1a1a2e;
+            border: 1px solid #2a2a4a;
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .input-field:focus { border-color: #7b2ff7; }
+
+        /* Result Display */
+        .result-display {
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.5s;
+        }
+
+        .result-success {
+            background: rgba(0, 255, 136, 0.15);
+            border: 1px solid #00ff88;
+            color: #00ff88;
+            animation: successPulse 0.5s;
+        }
+
+        .result-fail {
+            background: rgba(255, 68, 68, 0.15);
+            border: 1px solid #ff4444;
+            color: #ff4444;
+            animation: failShake 0.5s;
+        }
+
+        @keyframes successPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes failShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* Glitch Effect for Demo 1 */
+        .glitch-effect {
+            animation: glitch 0.3s infinite;
+        }
+
+        @keyframes glitch {
+            0% { filter: hue-rotate(0deg) saturate(1); }
+            25% { filter: hue-rotate(90deg) saturate(2); }
+            50% { filter: hue-rotate(180deg) saturate(3); transform: skewX(2deg); }
+            75% { filter: hue-rotate(270deg) saturate(2); }
+            100% { filter: hue-rotate(360deg) saturate(1); }
+        }
+
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+            animation: scanMove 2s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scanMove {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        /* Lock-on effect for Demo 2 */
+        .lock-on-box {
+            position: absolute;
+            border: 2px solid #00d4ff;
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
+            pointer-events: none;
+            transition: all 0.3s;
+        }
+
+        .lock-on-box::before,
+        .lock-on-box::after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-color: #00d4ff;
+            border-style: solid;
+        }
+
+        .lock-on-box::before {
+            top: -2px; left: -2px;
+            border-width: 3px 0 0 3px;
+        }
+
+        .lock-on-box::after {
+            bottom: -2px; right: -2px;
+            border-width: 0 3px 3px 0;
+        }
+
+        .lock-text {
+            position: absolute;
+            top: -25px;
+            left: 0;
+            color: #00d4ff;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* Possession effect for Demo 3 */
+        .possess-flash {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle, rgba(123, 47, 247, 0.4) 0%, transparent 70%);
+            animation: possessFlash 0.8s ease-out forwards;
+            pointer-events: none;
+        }
+
+        @keyframes possessFlash {
+            0% { opacity: 1; transform: scale(0.5); }
+            100% { opacity: 0; transform: scale(2); }
+        }
+
+        /* Score */
+        .score-display {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: #1a1a2e;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .score-value { color: #00d4ff; font-weight: 700; }
+
+        /* Hidden */
+        .hidden { display: none !important; }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .main-container { flex-direction: column; }
+            .sidebar { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <h1>VLX-Seek AI Native Game Prototype</h1>
+        <div class="status">
+            <div class="status-dot" id="serverStatus"></div>
+            <span id="statusText">Connecting...</span>
+        </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <div class="tab active" data-demo="1">
+            <span class="tab-icon">🔍</span> 异常审查员
+        </div>
+        <div class="tab" data-demo="2">
+            <span class="tab-icon">🔮</span> 言灵黑客
+        </div>
+        <div class="tab" data-demo="3">
+            <span class="tab-icon">👻</span> 语义附身
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Demo Area -->
+        <div class="demo-area">
+            <!-- Demo 1: Anomaly Inspector -->
+            <div id="demo1-panel" class="demo-panel">
+                <div class="panel">
+                    <div class="panel-title">任务指令</div>
+                    <div class="instruction-text" id="demo1-instruction">找出画面中不属于这个房间的东西</div>
+                </div>
+
+                <div class="canvas-container" id="demo1-container">
+                    <div class="scan-line"></div>
+                    <canvas id="demo1-canvas" class="game-canvas"></canvas>
+                    <div id="demo1-selection-box" class="hidden" style="position:absolute;border:2px dashed #00d4ff;pointer-events:none;"></div>
+                </div>
+
+                <div class="panel">
+                    <div class="score-display">
+                        <span>得分: <span class="score-value" id="demo1-score">0</span></span>
+                        <span>已找: <span class="score-value" id="demo1-found">0</span>/3</span>
+                        <span>状态: <span class="score-value" id="demo1-state">等待操作</span></span>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <button class="btn btn-primary" id="demo1-submit">提交审查</button>
+                    <button class="btn btn-secondary" id="demo1-reset">换一张图</button>
+                    <div id="demo1-result" class="hidden" style="margin-top: 12px;"></div>
+                </div>
+            </div>
+
+            <!-- Demo 2: Word Spirit Hacker -->
+            <div id="demo2-panel" class="demo-panel hidden">
+                <div class="panel">
+                    <div class="panel-title">AR 寻宝指令</div>
+                    <div class="instruction-text" id="demo2-instruction">寻找一个红色的圆柱体</div>
+                </div>
+
+                <div class="canvas-container" id="demo2-container">
+                    <video id="demo2-video" class="game-canvas" autoplay playsinline muted></video>
+                    <canvas id="demo2-overlay" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;"></canvas>
+                </div>
+
+                <div class="panel">
+                    <div class="score-display">
+                        <span>已收集: <span class="score-value" id="demo2-collected">0</span>/5</span>
+                        <span>FPS: <span class="score-value" id="demo2-fps">0</span></span>
+                        <span>延迟: <span class="score-value" id="demo2-latency">0</span>ms</span>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <button class="btn btn-primary" id="demo2-start">开启摄像头</button>
+                    <button class="btn btn-secondary" id="demo2-change">换一个目标</button>
+                    <div id="demo2-result" class="hidden" style="margin-top: 12px;"></div>
+                </div>
+            </div>
+
+            <!-- Demo 3: Semantic Possession -->
+            <div id="demo3-panel" class="demo-panel hidden">
+                <div class="panel">
+                    <div class="panel-title">附身指令</div>
+                    <div class="instruction-text">输入你想"变成"的物体，瞬移到它身上！</div>
+                </div>
+
+                <div class="canvas-container" id="demo3-container">
+                    <canvas id="demo3-canvas" class="game-canvas"></canvas>
+                </div>
+
+                <div class="panel">
+                    <input type="text" class="input-field" id="demo3-input" placeholder="例如：变成那个蓝色的闹钟" style="margin-bottom: 12px;">
+                    <button class="btn btn-primary" id="demo3-execute">执行附身!</button>
+                    <button class="btn btn-secondary" id="demo3-reset">重置场景</button>
+                    <div id="demo3-result" class="hidden" style="margin-top: 12px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="panel">
+                <div class="panel-title">服务器状态</div>
+                <div id="server-model" style="font-size: 0.9rem; color: #888;">Model: ...</div>
+                <div id="server-mode" style="font-size: 0.9rem; color: #888;">Mode: ...</div>
+                <div id="server-latency" style="font-size: 0.9rem; color: #888;">Latency: ...</div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">调试日志</div>
+                <div id="debug-log" style="font-size: 0.78rem; color: #666; max-height: 300px; overflow-y: auto; font-family: monospace; line-height: 1.6;">
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-title">操作说明</div>
+                <div id="help-text" style="font-size: 0.85rem; color: #999; line-height: 1.6;">
+                    <strong>Demo 1</strong>: 鼠标拖拽框选可疑区域，点击"提交审查"<br><br>
+                    <strong>Demo 2</strong>: 点击"开启摄像头"，对准物体<br><br>
+                    <strong>Demo 3</strong>: 输入文字，点击"执行附身"
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="demo.js"></script>
+</body>
+</html>

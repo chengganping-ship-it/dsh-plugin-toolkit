@@ -1,0 +1,59 @@
+# Kimodo Product - 默认配置
+
+app:
+  name: "Kimodo Product"
+  version: "0.1.0"
+  debug: false
+
+server:
+  host: "0.0.0.0"
+  port: 8765
+  workers: 1
+
+gui:
+  host: "0.0.0.0"
+  port: 7860
+  theme: "soft"
+  share: false
+
+pipeline:
+  # Kimodo 模型配置
+  kimodo:
+    model_name: "SOMA-RP-v1.1"
+    model_path: "data/models/kimodo/SOMA-RP-v1.1"
+    default_skeleton: "SOMA-RP"
+    default_denoising_steps: 500
+    max_duration_seconds: 10.0
+    fps: 30
+    device: "auto"  # auto/cpu/cuda
+
+  # 可选模块
+  whisper:
+    enabled: false
+    model: "small"  # tiny/base/small/medium/large
+    language: "en"
+
+  llama:
+    enabled: false
+    model_path: "data/models/llama/*.gguf"
+    n_ctx: 2048
+    n_gpu_layers: -1  # -1 = 全部 offload 到 GPU
+
+  retargeting:
+    enabled: false
+    target_skeleton: "VRM"  # VRM/Unitree-G1/SMPL-X
+
+storage:
+  output_dir: "data/output"
+  model_dir: "data/models"
+  max_output_files: 1000
+  cleanup_after_days: 30
+
+logging:
+  level: "INFO"
+  file: "data/logs/kimodo.log"
+  max_size_mb: 100
+
+rate_limit:
+  enabled: true
+  requests_per_minute: 30

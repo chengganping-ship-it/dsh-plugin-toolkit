@@ -1,0 +1,20 @@
+# 克苏鲁有声书系统 - Python依赖
+# 全部免费开源
+
+# 核心依赖
+edge-tts>=7.0          # 微软免费TTS
+apscheduler>=3.10       # 定时调度
+playwright>=1.40        # 浏览器自动化
+
+# 可选增强
+requests>=2.28          # HTTP请求
+beautifulsoup4>=4.12    # HTML解析
+lxml>=4.9              # XML解析
+
+# 数据存储 (标准库足够，不需要额外安装)
+# sqlite3 (内置)
+# json (内置)
+# csv (内置)
+
+# AI客户端 (标准库足够)
+# urllib (内置)

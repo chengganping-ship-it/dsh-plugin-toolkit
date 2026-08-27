@@ -1,0 +1,17 @@
+# DeepSeek Harness Plugin: eDiscovery Pro v0.1.0
+# Electronic discovery, document review, privilege analysis, and litigation strategy
+
+- id: dsh-tool-legaldiscovery
+  name: dsh-tool-legaldiscovery
+  version: 0.1.0
+  description: eDiscovery Pro - electronic evidence collection, document review, concept clustering, privilege log analysis, redaction engine, production setter, review workflow monitor, dispute strategy
+  author: chengganping-ship-it
+  tools:
+    - ediscovery_collection
+    - document_review
+    - concept_clustering
+    - privilege_log_reader
+    - redaction_engine
+    - production_setter
+    - review_workflow_monitor
+    - dispute_strategy

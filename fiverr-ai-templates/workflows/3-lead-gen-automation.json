@@ -1,0 +1,279 @@
+{
+  "name": "Lead Gen Automation - Scrape, Score & CRM",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 6
+            }
+          ]
+        }
+      },
+      "id": "schedule-trigger",
+      "name": "Schedule - Every 6 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://api.apollo.io/v1/mixed_people/search",
+        "method": "POST",
+        "sendBody": true,
+        "body": {
+          "apiKey": "YOUR_APOLLO_API_KEY",
+          "q_organization_domains": "shopify.com,stripe.com,notion.so",
+          "person_titles": ["founder", "CEO", "head of growth", "VP marketing"],
+          "page": 1,
+          "per_page": 10
+        },
+        "options": {}
+      },
+      "id": "http-fetch-leads",
+      "name": "HTTP - Fetch Leads from Apollo",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "你是一个 B2B 销售线索评分专家。请根据以下潜在客户信息评分（1-100）并给出理由。\n\n评分标准：\n- 职位相关性（30分）：是否是决策者（创始人/CEO/CFO 等高）\n- 公司规模（20分）：公司人数/融资阶段\n- 技术栈匹配（20分）：是否使用与你产品相关的技术\n- 意向信号（30分）：近期是否有招聘/融资/产品发布\n\n请严格按以下 JSON 数组格式输出：\n[{\"name\": \"...\", \"score\": N, \"reason\": \"...\", \"suggested_action\": \"email/LinkedIn/call\"}]"
+            },
+            {
+              "role": "user",
+              "content": "潜在客户数据: {{ JSON.stringify($json.people.slice(0, 5)) }}"
+            }
+          ]
+        },
+        "options": {
+          "temperature": 0.4,
+          "maxTokens": 2500
+        }
+      },
+      "id": "openai-lead-scorer",
+      "name": "GPT-4o Lead Scorer",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 1,
+      "position": [650, 300],
+      "credentials": {
+        "openAiApi": {
+          "id": "YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI API"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "filter-hot-leads",
+              "leftValue: {{ $json.score }}",
+              "rightValue": 70,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "filter-hot-leads",
+      "name": "Score >= 70?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "list"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Hot Leads",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Date": "={{ $now.toFormat('yyyy-MM-dd HH:mm') }}",
+            "Name": "={{ $json.name }}",
+            "Title": "={{ $json.title ?? '' }}",
+            "Company": "={{ $json.organization_name ?? '' }}",
+            "Score": "={{ $json.score }}",
+            "Action": "={{ $json.suggested_action }}",
+            "Email": "={{ $json.email ?? 'N/A' }}",
+            "LinkedIn": "={{ $json.linkedin_url ?? '' }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "save-hot-leads",
+      "name": "Save Hot Leads to Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.1,
+      "position": [1050, 200],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YOUR_GOOGLE_CREDENTIAL_ID",
+          "name": "Google Sheets"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "chatId": "YOUR_TELEGRAM_CHAT_ID",
+        "text": "🔥 发现 {{ $json.length }} 个高意向客户！\n\n{{ $json.map(l => `${l.name} (${l.company}) - ${l.score}分 - 建议: ${l.suggested_action}`).join('\n') }}\n\n详细列表已更新到 Google Sheets",
+        "additionalFields": {}
+      },
+      "id": "telegram-alert-hot",
+      "name": "Telegram Alert - Hot Leads",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.1,
+      "position": [1250, 200],
+      "credentials": {
+        "telegramApi": {
+          "id": "YOUR_TELEGRAM_CREDENTIAL_ID",
+          "name": "Telegram Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "list"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Cold Leads Archive",
+          "mode": "list"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Date": "={{ $now.toFormat('yyyy-MM-dd HH:mm') }}",
+            "Name": "={{ $json.name }}",
+            "Score": "={{ $json.score }}",
+            "Status": "Archived - Below Threshold"
+          }
+        },
+        "options": {}
+      },
+      "id": "archive-cold-leads",
+      "name": "Archive Cold Leads",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.1,
+      "position": [1050, 400],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "YOUR_GOOGLE_CREDENTIAL_ID",
+          "name": "Google Sheets"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Schedule - Every 6 Hours": {
+      "main": [
+        [
+          {
+            "node": "HTTP - Fetch Leads from Apollo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP - Fetch Leads from Apollo": {
+      "main": [
+        [
+          {
+            "node": "GPT-4o Lead Scorer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GPT-4o Lead Scorer": {
+      "main": [
+        [
+          {
+            "node": "Score >= 70?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Score >= 70?": {
+      "main": [
+        [
+          {
+            "node": "Save Hot Leads to Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Archive Cold Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save Hot Leads to Sheets": {
+      "main": [
+        [
+          {
+            "node": "Telegram Alert - Hot Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Shanghai",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": ""
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "Lead Generation",
+      "entityType": "workflow"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2026-08-25T10:00:00.000Z",
+  "versionId": "1"
+}

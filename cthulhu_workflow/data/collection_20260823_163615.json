@@ -1,0 +1,20 @@
+{
+  "ximalaya": {
+    "platform": "ximalaya",
+    "collected_at": "2026-08-23T16:36:05.994504",
+    "status": "error",
+    "error": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://creator.ximalaya.com/stats\nCall log:\n  - navigating to \"https://creator.ximalaya.com/stats\", waiting until \"networkidle\"\n"
+  },
+  "xiaoyuzhou": {
+    "platform": "xiaoyuzhou",
+    "collected_at": "2026-08-23T16:36:06.278666",
+    "status": "error",
+    "error": "Page.goto: Navigation to \"https://www.xiaoyuzhoufm.com/stats\" is interrupted by another navigation to \"chrome-error://chromewebdata/\"\nCall log:\n  - navigating to \"https://www.xiaoyuzhoufm.com/stats\", waiting until \"networkidle\"\n"
+  },
+  "qingting": {
+    "platform": "qingting",
+    "collected_at": "2026-08-23T16:36:13.135684",
+    "status": "error",
+    "error": "Page.goto: Navigation to \"https://open.qingting.fm/stats\" is interrupted by another navigation to \"https://www.xiaoyuzhoufm.com/stats\"\nCall log:\n  - navigating to \"https://open.qingting.fm/stats\", waiting until \"networkidle\"\n"
+  }
+}

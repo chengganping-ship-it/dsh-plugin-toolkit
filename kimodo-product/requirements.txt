@@ -1,0 +1,29 @@
+# Kimodo Product - Python 依赖
+
+# === Web 框架 ===
+fastapi>=0.110.0
+uvicorn[standard]>=0.27.0
+pydantic>=2.0.0
+
+# === GUI ===
+gradio>=4.0.0
+requests>=2.31.0
+
+# === 科学计算 ===
+numpy>=1.24.0
+scipy>=1.10.0
+
+# === 数据处理 ===
+pyyaml>=6.0
+tqdm>=4.65.0
+
+# === 可选：PyTorch (Kimodo 核心依赖，需根据 CUDA 版本安装) ===
+# torch>=2.1.0
+# torchvision>=0.16.0
+
+# === 可选：GPU 加速 ===
+# onnxruntime-gpu>=1.16.0
+
+# === 开发工具 ===
+python-dotenv>=1.0.0
+httpx>=0.26.0

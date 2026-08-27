@@ -1,0 +1,57 @@
+AI Prompt Engineering Toolkit
+==============================
+
+Welcome to the AI Prompt Engineering Toolkit - your comprehensive collection of 500+ carefully crafted AI prompts for ChatGPT, Claude, Gemini, and more.
+
+TABLE OF CONTENTS
+------------------
+1. Content Creation Prompts (50+)
+2. Coding & Development Prompts (60+)
+3. Marketing & Sales Prompts (45+)
+4. Business Strategy Prompts (40+)
+5. Education & Learning Prompts (35+)
+6. Personal Productivity Prompts (40+)
+7. Data Analysis Prompts (50+)
+8. Creative Writing Prompts (55+)
+9. Social Media Prompts (40+)
+10. Research & Analysis Prompts (45+)
+11. Prompt Chaining Blueprints (30+)
+12. Advanced Techniques Guide (50+)
+
+SAMPLE PROMPTS
+--------------
+
+## Content Creation
+- "Write a 1000-word blog post about [TOPIC] in the style of [PUBLICATION]. Include an engaging introduction, 3 main points with supporting evidence, and a compelling conclusion."
+- "Create a 30-day content calendar for a [INDUSTRY] business, including post topics, formats, and optimal posting times."
+
+## Coding & Development
+- "Review the following code and suggest 3 optimizations: [CODE]. Explain each optimization and its impact on performance."
+- "Write a Python function that [FUNCTIONALITY]. Include error handling, type hints, and docstrings."
+
+## Data Analysis
+- "Analyze this dataset [DATA] and provide: 1) Key statistics, 2) Trend analysis, 3) Anomaly detection, 4) Actionable recommendations."
+- "Create a step-by-step analysis plan for [TYPE] data to answer [QUESTION]."
+
+BONUS: Prompt Chaining Blueprints
+----------------------------------
+Learn to chain multiple prompts together for complex tasks:
+- Blueprint 1: Research → Outline → Draft → Edit → Polish
+- Blueprint 2: Data Collection → Cleaning → Analysis → Visualization → Report
+- Blueprint 3: Ideation → Validation → Planning → Execution → Review
+
+BONUS: Advanced Techniques
+---------------------------
+- Few-shot learning templates
+- Role-based prompting
+- Chain-of-thought prompting
+- Constitutional AI techniques
+- Tree of thoughts method
+
+LICENSE
+-------
+Personal Use License included. Use these prompts for your own projects and content creation.
+
+For questions or support, contact the seller.
+
+© 2026 AI Prompt Engineering Toolkit. All rights reserved.

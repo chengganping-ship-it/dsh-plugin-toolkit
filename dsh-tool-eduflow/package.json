@@ -1,0 +1,37 @@
+{
+  "name": "dsh-tool-eduflow",
+  "version": "0.1.0",
+  "description": "AI教育/人才培养引擎 for DSH — 学习者画像、技能差距分析、个性化学习路径、微学习、认证备考、同伴匹配、职业模拟、学习分析",
+  "type": "module",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-plugin-toolkit.git"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "education",
+    "learning",
+    "skill-development",
+    "career",
+    "ai-education",
+    "personalized-learning",
+    "micro-learning",
+    "certification",
+    "z-generation",
+    "future-skills"
+  ]
+}

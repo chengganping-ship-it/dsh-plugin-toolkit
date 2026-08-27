@@ -1,0 +1,14 @@
+{
+  "posts": [
+    {
+      "content_title": "克苏鲁的呼唤",
+      "timestamp": "2026-08-22T23:16:20.137158",
+      "platforms": [
+        "xhs_post",
+        "weibo_post",
+        "zhihu_post",
+        "bilibili_post"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "vlx-game-prototype",
+  "version": "1.0.0",
+  "description": "VLX-Seek AI Native Game Prototype - 视觉语义裁判 Demo",
+  "scripts": {
+    "dev": "npx serve public -l 3000",
+    "start": "npx serve public -l 3000"
+  },
+  "devDependencies": {
+    "serve": "^14.2.0"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "timestamp": "2026-08-23T16:34:44.605342",
+  "steps": {
+    "content": {
+      "status": "success",
+      "result": "{'chapters': [{'title': '序章', 'content': '达贡'}, {'title': 'I.\\n\\n我写下这些，是因为精神医生告诉我这样做有助于我的康复。但我心里清楚，我永远不会康复了。那些深海中的古老存在不会让我安宁，它们在我的梦境中低语，在我的幻觉中招手。我所知道的真相太过可怕，无法与他人分享，但我至少可以把这份记录留下来，让后来者知道，这个世界上有些东西是人类不"
+    },
+    "publish": {
+      "status": "success",
+      "results": [
+        {
+          "status": "error",
+          "platform": "ximalaya",
+          "error": "Page.goto: net::ERR_NAME_NOT_RESOLVED at https://creator.ximalaya.com/\nCall log:\n  - navigating to \"https://creator.ximalaya.com/\", waiting until \"networkidle\"\n"
+        },
+        {
+          "status": "error",
+          "platform": "qingting",
+          "error": "Page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://open.qingting.fm/\", waiting until \"networkidle\"\n"
+        },
+        {
+          "status": "error",
+          "message": "不支持的平台: lrts"
+        },
+        {
+          "status": "error",
+          "platform": "xiaoyuzhou",
+          "error": "Page.goto: Timeout 30000ms exceeded.\nCall log:\n  - navigating to \"https://www.xiaoyuzhoufm.com/publish\", waiting until \"networkidle\"\n"
+        }
+      ]
+    },
+    "data": {
+      "status": "success",
+      "platforms": 3
+    },
+    "review": {
+      "status": "success",
+      "actions": 6
+    }
+  }
+}

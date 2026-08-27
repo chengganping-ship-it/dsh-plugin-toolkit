@@ -1,0 +1,69 @@
+{
+  "works": [
+    {
+      "id": "call_of_cthulhu",
+      "title_cn": "克苏鲁的呼唤",
+      "title_en": "The Call of Cthulhu",
+      "file": "03_克苏鲁的呼唤.txt",
+      "added": "2026-08-22T23:08:48.469347",
+      "status": "full"
+    },
+    {
+      "id": "shadow_over_innsmouth",
+      "title_cn": "印斯茅斯之影",
+      "title_en": "The Shadow over Innsmouth",
+      "file": "04_印斯茅斯之影.txt",
+      "added": "2026-08-22T23:08:48.470323",
+      "status": "full"
+    },
+    {
+      "id": "colour_out_of_space",
+      "title_cn": "星之彩",
+      "title_en": "The Colour Out of Space",
+      "file": "05_星之彩.txt",
+      "added": "2026-08-22T23:08:48.473256",
+      "status": "full"
+    },
+    {
+      "id": "whisperer_in_darkness",
+      "title_cn": "暗夜低语",
+      "title_en": "The Whisperer in Darkness",
+      "file": "06_暗夜低语.txt",
+      "added": "2026-08-22T23:09:03.751834",
+      "status": "full"
+    },
+    {
+      "id": "dreams_in_the_witch_house",
+      "title_cn": "屋中梦魇",
+      "title_en": "The Dreams in the Witch-House",
+      "file": "07_屋中梦魇.txt",
+      "added": "2026-08-22T23:09:03.753786",
+      "status": "full"
+    },
+    {
+      "id": "haunter_of_the_dark",
+      "title_cn": "黑暗中的幽灵",
+      "title_en": "The Haunter of the Dark",
+      "file": "08_黑暗中的幽灵.txt",
+      "added": "2026-08-22T23:09:03.755739",
+      "status": "full"
+    },
+    {
+      "id": "shadow_out_of_time",
+      "title_cn": "超越时间之影",
+      "title_en": "The Shadow Out of Time",
+      "file": "09_超越时间之影.txt",
+      "added": "2026-08-22T23:09:03.757691",
+      "status": "full"
+    },
+    {
+      "id": "thing_on_the_doorstep",
+      "title_cn": "门阶上的东西",
+      "title_en": "The Thing on the Doorstep",
+      "file": "10_门阶上的东西.txt",
+      "added": "2026-08-22T23:09:03.758668",
+      "status": "full"
+    }
+  ],
+  "last_updated": "2026-08-22T23:09:03.758668"
+}

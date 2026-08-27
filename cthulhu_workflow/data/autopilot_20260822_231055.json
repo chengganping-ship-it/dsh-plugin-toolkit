@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-08-22T23:10:14.085476",
+  "steps": {
+    "content": {
+      "status": "success",
+      "result": "{'chapters': [{'title': '序章', 'content': '达贡'}, {'title': 'I.\\n\\n我写下这些，是因为精神医生告诉我这样做有助于我的康复。但我心里清楚，我永远不会康复了。那些深海中的古老存在不会让我安宁，它们在我的梦境中低语，在我的幻觉中招手。我所知道的真相太过可怕，无法与他人分享，但我至少可以把这份记录留下来，让后来者知道，这个世界上有些东西是人类不"
+    },
+    "publish": {
+      "status": "error",
+      "error": "'PublishAutomation' object has no attribute 'publish_from_checklists'"
+    },
+    "data": {
+      "status": "success",
+      "platforms": 3
+    },
+    "review": {
+      "status": "success",
+      "actions": 6
+    }
+  }
+}

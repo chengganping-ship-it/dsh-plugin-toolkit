@@ -1,0 +1,16 @@
+{
+  "_comment": "免费AI API Key配置。每个API都可以零成本获取，无需信用卡。获取指南: GET_API_KEYS.md",
+  "api_keys": {
+    "openrouter": "",
+    "groq": "",
+    "cerebras": "",
+    "google": "",
+    "cloudflare": ""
+  },
+  "_comment2": "如果留空，系统会自动跳过该API，使用下一个可用API",
+  "preferred_order": ["cerebras", "groq", "openrouter", "google"],
+  "daily_analysis_enabled": true,
+  "auto_title_generation": true,
+  "auto_cover_generation": true,
+  "hypothesis_auto_test": true
+}

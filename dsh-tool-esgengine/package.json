@@ -1,0 +1,39 @@
+{
+  "name": "dsh-tool-esgengine",
+  "version": "0.1.0",
+  "description": "ESG & Sustainability Engine for DSH - carbon calculator, ESG reporter, supply chain ESG, green finance, DEI, circular economy, climate risk, and ESG scorecard with forest green dashboard",
+  "type": "module",
+  "main": "lib/index.js",
+  "dependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-tools": "^0.0.1-rc.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chengganping-ship-it/dsh-tool-esgengine.git"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "ai-agent",
+    "cordis",
+    "esg",
+    "sustainability",
+    "carbon",
+    "climate",
+    "greFi",
+    "gri",
+    "sasb",
+    "issb",
+    "tcfd"
+  ]
+}

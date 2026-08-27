@@ -1,0 +1,34 @@
+{
+  "name": "dsh-tool-testpilot",
+  "version": "1.0.0",
+  "description": "AI-Enhanced Testing Toolkit - Test case generation, AI defect prediction, coverage optimization, flaky test detection, performance benchmarking, intelligent reporting, and API contract testing",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "license": "MIT",
+  "author": "chengganping-ship-it",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "testing",
+    "qa",
+    "test-automation",
+    "quality-assurance",
+    "test-case-generation",
+    "defect-prediction",
+    "coverage-optimization",
+    "flaky-test-detection",
+    "performance-benchmarking",
+    "api-contract-testing",
+    "typescript-strict"
+  ],
+  "dependencies": {
+    "typescript": "^5.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0"
+  }
+}
