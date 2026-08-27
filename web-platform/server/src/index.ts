@@ -84,6 +84,12 @@ import { analyzeIntentTrading, IntentTradingData } from './engine/intentTrading.
 import { analyzeInsurance, InsuranceData } from './engine/insurance.js';
 import { analyzeCryptoMacro, MacroData } from './engine/cryptoMacro.js';
 import { analyzeLayerZero, LayerZeroData } from './engine/layerZeroTracker.js';
+import { analyzeFlashLoanArb, FlashLoanArbData } from './engine/flashLoanArb.js';
+import { analyzeOnChainCredit, OnChainCreditData } from './engine/onChainCredit.js';
+import { analyzeNFTLending, NFTLendingData } from './engine/nftLending.js';
+import { analyzeYieldOptimizer, YieldOptimizerData } from './engine/yieldOptimizer.js';
+import { analyzeMEVShare, MEVShareData } from './engine/mevShare.js';
+import { analyzeOptionsDex, OptionsDexData } from './engine/optionsDex.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -251,6 +257,20 @@ let latestMacro: MacroData | null = null;
 let lastMacroFetch = 0;
 let latestLayerZero: LayerZeroData | null = null;
 let lastLayerZeroFetch = 0;
+
+// ==================== v11.0-v11.5 ENGINE STATE ====================
+let latestFlashLoanArb: FlashLoanArbData | null = null;
+let lastFlashLoanArbFetch = 0;
+let latestOnChainCredit: OnChainCreditData | null = null;
+let lastOnChainCreditFetch = 0;
+let latestNFTLending: NFTLendingData | null = null;
+let lastNFTLendingFetch = 0;
+let latestYieldOptimizer: YieldOptimizerData | null = null;
+let lastYieldOptimizerFetch = 0;
+let latestMEVShare: MEVShareData | null = null;
+let lastMEVShareFetch = 0;
+let latestOptionsDex: OptionsDexData | null = null;
+let lastOptionsDexFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -923,6 +943,66 @@ async function poll() {
       }
     }
 
+    // v11.0: Flash loan arbitrage (every 5 minutes)
+    if (pollCount % 10 === 0 || !latestFlashLoanArb) {
+      try {
+        latestFlashLoanArb = await analyzeFlashLoanArb();
+        lastFlashLoanArbFetch = Date.now();
+      } catch (e) {
+        // Flash loan arb analysis failed
+      }
+    }
+
+    // v11.1: On-chain credit tracking (every 20 minutes)
+    if (pollCount % 40 === 0 || !latestOnChainCredit) {
+      try {
+        latestOnChainCredit = await analyzeOnChainCredit();
+        lastOnChainCreditFetch = Date.now();
+      } catch (e) {
+        // Credit tracking failed
+      }
+    }
+
+    // v11.2: NFT lending liquidations (every 10 minutes)
+    if (pollCount % 20 === 0 || !latestNFTLending) {
+      try {
+        latestNFTLending = await analyzeNFTLending();
+        lastNFTLendingFetch = Date.now();
+      } catch (e) {
+        // NFT lending analysis failed
+      }
+    }
+
+    // v11.3: Yield optimizer (every 15 minutes)
+    if (pollCount % 30 === 0 || !latestYieldOptimizer) {
+      try {
+        latestYieldOptimizer = await analyzeYieldOptimizer();
+        lastYieldOptimizerFetch = Date.now();
+      } catch (e) {
+        // Yield optimization failed
+      }
+    }
+
+    // v11.4: MEV-Share earnings (every 10 minutes)
+    if (pollCount % 20 === 0 || !latestMEVShare) {
+      try {
+        latestMEVShare = await analyzeMEVShare();
+        lastMEVShareFetch = Date.now();
+      } catch (e) {
+        // MEV-Share analysis failed
+      }
+    }
+
+    // v11.5: Options DEX analysis (every 10 minutes)
+    if (pollCount % 20 === 0 || !latestOptionsDex) {
+      try {
+        latestOptionsDex = await analyzeOptionsDex();
+        lastOptionsDexFetch = Date.now();
+      } catch (e) {
+        // Options DEX analysis failed
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
@@ -1044,6 +1124,12 @@ function broadcast() {
       insurance: latestInsurance,
       macro: latestMacro,
       layerZero: latestLayerZero,
+      flashLoanArb: latestFlashLoanArb,
+      onChainCredit: latestOnChainCredit,
+      nftLending: latestNFTLending,
+      yieldOptimizer: latestYieldOptimizer,
+      mevShare: latestMEVShare,
+      optionsDex: latestOptionsDex,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -2826,6 +2912,162 @@ app.post('/api/v10/layerzero/refresh', authMiddleware('write'), async (_req, res
     res.json({ success: true, layerzero: latestLayerZero });
   } catch (e) {
     res.status(500).json({ error: 'Failed to track LayerZero' });
+  }
+});
+
+// ---- v11.0: Flash Loan Arbitrage API ----
+
+app.get('/api/v11/flash/providers', authMiddleware('read'), (_req, res) => {
+  res.json({ providers: latestFlashLoanArb?.providers || [], timestamp: lastFlashLoanArbFetch });
+});
+
+app.get('/api/v11/flash/opportunities', authMiddleware('read'), (_req, res) => {
+  res.json({ opportunities: latestFlashLoanArb?.opportunities || [], timestamp: lastFlashLoanArbFetch });
+});
+
+app.get('/api/v11/flash/events', authMiddleware('read'), (_req, res) => {
+  res.json({ events: latestFlashLoanArb?.recentEvents || [], timestamp: lastFlashLoanArbFetch });
+});
+
+app.post('/api/v11/flash/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestFlashLoanArb = await analyzeFlashLoanArb();
+    lastFlashLoanArbFetch = Date.now();
+    res.json({ success: true, flash: latestFlashLoanArb });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze flash loan arbitrage' });
+  }
+});
+
+// ---- v11.1: On-Chain Credit API ----
+
+app.get('/api/v11/credit/scores', authMiddleware('read'), (_req, res) => {
+  res.json({ scores: latestOnChainCredit?.creditScores || [], timestamp: lastOnChainCreditFetch });
+});
+
+app.get('/api/v11/credit/liquidations', authMiddleware('read'), (_req, res) => {
+  res.json({ alerts: latestOnChainCredit?.liquidationAlerts || [], timestamp: lastOnChainCreditFetch });
+});
+
+app.get('/api/v11/credit/refinance', authMiddleware('read'), (_req, res) => {
+  res.json({ opportunities: latestOnChainCredit?.refinanceOps || [], timestamp: lastOnChainCreditFetch });
+});
+
+app.post('/api/v11/credit/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestOnChainCredit = await analyzeOnChainCredit();
+    lastOnChainCreditFetch = Date.now();
+    res.json({ success: true, credit: latestOnChainCredit });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze credit' });
+  }
+});
+
+// ---- v11.2: NFT Lending API ----
+
+app.get('/api/v11/nft-lending/protocols', authMiddleware('read'), (_req, res) => {
+  res.json({ protocols: latestNFTLending?.protocols || [], timestamp: lastNFTLendingFetch });
+});
+
+app.get('/api/v11/nft-lending/loans', authMiddleware('read'), (_req, res) => {
+  res.json({ loans: latestNFTLending?.loans || [], timestamp: lastNFTLendingFetch });
+});
+
+app.get('/api/v11/nft-lending/liquidations', authMiddleware('read'), (_req, res) => {
+  res.json({ liquidations: latestNFTLending?.liquidations || [], timestamp: lastNFTLendingFetch });
+});
+
+app.get('/api/v11/nft-lending/opportunities', authMiddleware('read'), (_req, res) => {
+  res.json({ opportunities: latestNFTLending?.opportunities || [], timestamp: lastNFTLendingFetch });
+});
+
+app.post('/api/v11/nft-lending/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestNFTLending = await analyzeNFTLending();
+    lastNFTLendingFetch = Date.now();
+    res.json({ success: true, nftLending: latestNFTLending });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze NFT lending' });
+  }
+});
+
+// ---- v11.3: Yield Optimizer API ----
+
+app.get('/api/v11/yield/sources', authMiddleware('read'), (_req, res) => {
+  res.json({ sources: latestYieldOptimizer?.sources || [], timestamp: lastYieldOptimizerFetch });
+});
+
+app.get('/api/v11/yield/paths', authMiddleware('read'), (_req, res) => {
+  res.json({ paths: latestYieldOptimizer?.optimalPaths || [], timestamp: lastYieldOptimizerFetch });
+});
+
+app.get('/api/v11/yield/auto-compound', authMiddleware('read'), (_req, res) => {
+  res.json({ configs: latestYieldOptimizer?.autoCompoundConfigs || [], timestamp: lastYieldOptimizerFetch });
+});
+
+app.post('/api/v11/yield/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestYieldOptimizer = await analyzeYieldOptimizer();
+    lastYieldOptimizerFetch = Date.now();
+    res.json({ success: true, yield: latestYieldOptimizer });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to optimize yield' });
+  }
+});
+
+// ---- v11.4: MEV-Share API ----
+
+app.get('/api/v11/mev/builders', authMiddleware('read'), (_req, res) => {
+  res.json({ builders: latestMEVShare?.builders || [], timestamp: lastMEVShareFetch });
+});
+
+app.get('/api/v11/mev/validators', authMiddleware('read'), (_req, res) => {
+  res.json({ validators: latestMEVShare?.validatorRewards || [], timestamp: lastMEVShareFetch });
+});
+
+app.get('/api/v11/mev/bundles', authMiddleware('read'), (_req, res) => {
+  res.json({ bundles: latestMEVShare?.recentBundles || [], timestamp: lastMEVShareFetch });
+});
+
+app.get('/api/v11/mev/daily', authMiddleware('read'), (_req, res) => {
+  res.json({ daily: latestMEVShare?.dailyStats || [], timestamp: lastMEVShareFetch });
+});
+
+app.post('/api/v11/mev/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestMEVShare = await analyzeMEVShare();
+    lastMEVShareFetch = Date.now();
+    res.json({ success: true, mev: latestMEVShare });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze MEV-Share' });
+  }
+});
+
+// ---- v11.5: Options DEX API ----
+
+app.get('/api/v11/options/protocols', authMiddleware('read'), (_req, res) => {
+  res.json({ protocols: latestOptionsDex?.protocols || [], timestamp: lastOptionsDexFetch });
+});
+
+app.get('/api/v11/options/markets', authMiddleware('read'), (_req, res) => {
+  res.json({ markets: latestOptionsDex?.markets || [], timestamp: lastOptionsDexFetch });
+});
+
+app.get('/api/v11/options/iv-arb', authMiddleware('read'), (_req, res) => {
+  res.json({ arbitrage: latestOptionsDex?.ivArbitrage || [], timestamp: lastOptionsDexFetch });
+});
+
+app.get('/api/v11/options/flows', authMiddleware('read'), (_req, res) => {
+  res.json({ flows: latestOptionsDex?.recentFlows || [], timestamp: lastOptionsDexFetch });
+});
+
+app.post('/api/v11/options/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestOptionsDex = await analyzeOptionsDex();
+    lastOptionsDexFetch = Date.now();
+    res.json({ success: true, options: latestOptionsDex });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze options DEX' });
   }
 });
 

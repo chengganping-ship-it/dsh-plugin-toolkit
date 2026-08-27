@@ -1245,6 +1245,78 @@
     </div>
   </div>
 
+  <!-- v11.0: Flash Loan Arbitrage -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v11.0: Arb Paths <span id="flashArbBadge" class="tag bd bg">-</span></h2>
+      <div id="flashArbPaths" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading arb paths...</div></div>
+    </div>
+    <div class="card">
+      <h2>v11.0: FL Providers <span id="flProvBadge" class="tag bd bb">-</span></h2>
+      <div id="flProviders" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading providers...</div></div>
+    </div>
+  </div>
+
+  <!-- v11.1: Credit Scores -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v11.1: Credit Scores <span id="creditBadge" class="tag bd bb">-</span></h2>
+      <div id="creditScores" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading scores...</div></div>
+    </div>
+    <div class="card">
+      <h2>v11.1: Liq Alerts <span id="creditLiqBadge" class="tag bd br">-</span></h2>
+      <div id="creditLiqAlerts" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Scanning liquidations...</div></div>
+    </div>
+  </div>
+
+  <!-- v11.2: NFT Lending -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v11.2: NFT Loans <span id="nftLoanBadge" class="tag bd bb">-</span></h2>
+      <div id="nftLoans" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading loans...</div></div>
+    </div>
+    <div class="card">
+      <h2>v11.2: NFT Liq Ops <span id="nftLiqOpsBadge" class="tag bd br">-</span></h2>
+      <div id="nftLiqOps" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Scanning liquidations...</div></div>
+    </div>
+  </div>
+
+  <!-- v11.3: Yield Optimizer -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v11.3: Optimal Paths <span id="yieldPathBadge" class="tag bd bg">-</span></h2>
+      <div id="yieldPaths" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Optimizing paths...</div></div>
+    </div>
+    <div class="card">
+      <h2>v11.3: Auto-Compound <span id="autoCompBadge" class="tag bd bb">-</span></h2>
+      <div id="autoCompound" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Calculating...</div></div>
+    </div>
+  </div>
+
+  <!-- v11.4: MEV-Share -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v11.4: Builder Rankings <span id="builderBadge" class="tag bd bb">-</span></h2>
+      <div id="builderRankings" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading builders...</div></div>
+    </div>
+    <div class="card">
+      <h2>v11.4: Bundles <span id="bundleBadge" class="tag bd bp">-</span></h2>
+      <div id="bundleProfits" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading bundles...</div></div>
+    </div>
+  </div>
+
+  <!-- v11.5: Options DEX -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v11.5: Options Markets <span id="optMktBadge" class="tag bd bb">-</span></h2>
+      <div id="optionsMarkets" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading markets...</div></div>
+    </div>
+    <div class="card">
+      <h2>v11.5: IV Arbitrage <span id="ivArbBadge" class="tag bd bg">-</span></h2>
+      <div id="ivArbitrage" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Scanning IV...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -1358,6 +1430,12 @@ function render() {
   renderInsuranceCoverage(); renderActiveClaims();
   renderMacroIndicators(); renderFomcCalendar();
   renderOftTokens(); renderChainFlows();
+  renderFlashArbPaths(); renderFlProviders();
+  renderCreditScores(); renderCreditLiqAlerts();
+  renderNftLoans(); renderNftLiqOps();
+  renderYieldPaths(); renderAutoCompound();
+  renderBuilderRankings(); renderBundleProfits();
+  renderOptionsMarkets(); renderIvArbitrage();
 }
 
 function renderHM() {
@@ -2329,6 +2407,20 @@ function renderMacroIndicators(){var m=data.macro;if(!m){$('macroIndicators').in
 function renderFomcCalendar(){var m=data.macro;if(!m){$('fomcCalendar').innerHTML='<div class="emp">Loading...</div>';return}var e=(m.fomcEvents||[]).slice(0,4);$('fomcBadge').textContent=e.length+' events';var h='';for(var x of e){h+='<div class="fomc-event '+x.cryptoImpact.toLowerCase()+'"><span class="fomc-date">'+x.date.slice(5)+'</span><span class="fomc-rate">'+x.currentRate+'%</span><span class="fomc-prob">'+x.probability+'%</span></div>'}$('fomcCalendar').innerHTML=h||'<div class="emp">No FOMC events</div>'}
 function renderOftTokens(){var l=data.layerZero;if(!l){$('oftTokens').innerHTML='<div class="emp">Loading...</div>';return}var t=(l.tokens||[]).slice(0,4);$('oftBadge').textContent=t.length+' OFTs';var h='';for(var x of t){h+='<div class="oft-token"><span class="oft-sym">'+x.symbol.slice(0,6)+'</span><span class="oft-supply">'+(x.totalSupply/1e6).toFixed(0)+'M</span><span class="oft-spread">'+x.priceSpread.toFixed(4)+'</span></div>'}$('oftTokens').innerHTML=h||'<div class="emp">No OFT tokens</div>'}
 function renderChainFlows(){var l=data.layerZero;if(!l){$('chainFlows').innerHTML='<div class="emp">Loading...</div>';return}var f=(l.chainFlows||[]).slice(0,6);$('flowLZBadge').textContent=f.length+' chains';var h='';for(var x of f){h+='<div class="lz-flow"><span class="flow-chain">'+x.chain.slice(0,6)+'</span><span class="flow-net '+(x.netFlow24h>0?'pos':'neg')+'">'+(x.netFlow24h>0?'+':'')+'$'+(Math.abs(x.netFlow24h)/1e6).toFixed(0)+'M</span><span class="flow-tvl">'+x.utilizationPct+'%</span></div>'}$('chainFlows').innerHTML=h||'<div class="emp">No flows</div>'}
+
+// ==================== v11.0-v11.5 Renders ====================
+function renderFlashArbPaths(){var f=data.flashLoanArb;if(!f){$('flashArbPaths').innerHTML='<div class="emp">Loading...</div>';return}var o=(f.opportunities||[]).slice(0,6);$('flashArbBadge').textContent=o.length+' paths';var h='';for(var x of o){h+='<div class="flash-arb '+(x.netProfit>100?'high':x.netProfit>30?'med':'low')+'"><span class="arb-path">'+x.path.slice(0,3).join('→')+'</span><span class="arb-profit">$'+x.netProfit+'</span><span class="arb-roi '+(x.roi>0.3?'high':'med')+'">'+x.roi.toFixed(2)+'%</span></div>'}$('flashArbPaths').innerHTML=h||'<div class="emp">No arb paths</div>'}
+function renderFlProviders(){var f=data.flashLoanArb;if(!f){$('flProviders').innerHTML='<div class="emp">Loading...</div>';return}var p=(f.providers||[]).slice(0,5);$('flProvBadge').textContent=p.length+' providers';var h='';for(var x of p){h+='<div class="fl-prov '+x.status.toLowerCase()+'"><span class="prov-name">'+x.name.slice(0,10)+'</span><span class="prov-fee">'+x.feeBps+'bps</span><span class="prov-util">'+x.utilization24h+'%</span></div>'}$('flProviders').innerHTML=h||'<div class="emp">No providers</div>'}
+function renderCreditScores(){var c=data.onChainCredit;if(!c){$('creditScores').innerHTML='<div class="emp">Loading...</div>';return}var s=(c.creditScores||[]).slice(0,6);$('creditBadge').textContent=s.length+' wallets';var h='';for(var x of s){h+='<div class="credit-score '+x.tier.toLowerCase()+'"><span class="score-addr">'+x.address.slice(0,8)+'...</span><span class="score-val '+(x.score>=650?'high':x.score>=500?'med':'low')+'">'+x.score+'</span><span class="score-tier '+x.tier.toLowerCase()+'">'+x.tier.slice(0,4)+'</span></div>'}$('creditScores').innerHTML=h||'<div class="emp">No scores</div>'}
+function renderCreditLiqAlerts(){var c=data.onChainCredit;if(!c){$('creditLiqAlerts').innerHTML='<div class="emp">Loading...</div>';return}var a=(c.liquidationAlerts||[]).slice(0,5);$('creditLiqBadge').textContent=a.length+' alerts';var h='';for(var x of a){h+='<div class="credit-liq '+x.urgency.toLowerCase()+'"><span class="liq-proto">'+x.protocol.slice(0,8)+'</span><span class="liq-hf '+(x.healthFactor<1.2?'critical':'warning')+'">'+x.healthFactor.toFixed(2)+'</span><span class="liq-dist">'+x.distanceToLiquidation.toFixed(1)+'%</span></div>'}$('creditLiqAlerts').innerHTML=h||'<div class="emp">No alerts</div>'}
+function renderNftLoans(){var n=data.nftLending;if(!n){$('nftLoans').innerHTML='<div class="emp">Loading...</div>';return}var l=(n.loans||[]).slice(0,6);$('nftLoanBadge').textContent=l.length+' loans';var h='';for(var x of l){h+='<div class="nft-loan '+x.status.toLowerCase()+'"><span class="loan-col">'+x.collection.slice(0,8)+'</span><span class="loan-hf '+(x.healthFactor<1.5?'risky':'safe')+'">'+x.healthFactor.toFixed(2)+'</span><span class="loan-amt">'+x.loanAmount.toFixed(1)+'Ξ</span></div>'}$('nftLoans').innerHTML=h||'<div class="emp">No loans</div>'}
+function renderNftLiqOps(){var n=data.nftLending;if(!n){$('nftLiqOps').innerHTML='<div class="emp">Loading...</div>';return}var o=(n.opportunities||[]).slice(0,5);$('nftLiqOpsBadge').textContent=o.length+' ops';var h='';for(var x of o){h+='<div class="nft-liq-op '+x.urgency.toLowerCase()+'"><span class="liqop-col">'+x.collection.slice(0,8)+'</span><span class="liqop-profit '+(x.potentialProfit>0.5?'high':'med')+'">'+x.potentialProfit.toFixed(2)+'Ξ</span><span class="liqop-risk '+x.risk.toLowerCase()+'">'+x.risk.slice(0,4)+'</span></div>'}$('nftLiqOps').innerHTML=h||'<div class="emp">No opportunities</div>'}
+function renderYieldPaths(){var y=data.yieldOptimizer;if(!y){$('yieldPaths').innerHTML='<div class="emp">Loading...</div>';return}var p=(y.optimalPaths||[]).slice(0,6);$('yieldPathBadge').textContent=p.length+' paths';var h='';for(var x of p){h+='<div class="yield-path '+(x.riskLevel==='LOW'?'safe':x.riskLevel==='MEDIUM'?'med':'risky')+'"><span class="path-name">'+x.name.slice(0,15)+'</span><span class="path-apy '+(x.gasAdjustedApy>15?'high':x.gasAdjustedApy>8?'med':'low')+'">'+x.gasAdjustedApy.toFixed(1)+'%</span><span class="path-risk '+x.riskLevel.toLowerCase()+'">'+x.riskLevel.slice(0,4)+'</span></div>'}$('yieldPaths').innerHTML=h||'<div class="emp">No paths</div>'}
+function renderAutoCompound(){var y=data.yieldOptimizer;if(!y){$('autoCompound').innerHTML='<div class="emp">Loading...</div>';return}var c=(y.autoCompoundConfigs||[]).slice(0,5);$('autoCompBadge').textContent=c.length+' configs';var h='';for(var x of c){h+='<div class="auto-comp '+(x.recommended?'recommended':'')+'"><span class="comp-proto">'+x.protocol.slice(0,10)+'</span><span class="comp-boost '+(x.boostApy>1?'pos':'neg')+'">+'+x.boostApy.toFixed(2)+'%</span><span class="comp-freq">'+x.optimalFreq+'x/d</span></div>'}$('autoCompound').innerHTML=h||'<div class="emp">No configs</div>'}
+function renderBuilderRankings(){var m=data.mevShare;if(!m){$('builderRankings').innerHTML='<div class="emp">Loading...</div>';return}var b=(m.builders||[]).slice(0,5);$('builderBadge').textContent=b.length+' builders';var h='';for(var x of b){h+='<div class="builder-rank"><span class="rank-name">'+x.name.slice(0,10)+'</span><span class="rank-share">'+x.marketShare+'%</span><span class="rank-blocks">'+x.blocksBuilt24h+'</span></div>'}$('builderRankings').innerHTML=h||'<div class="emp">No builders</div>'}
+function renderBundleProfits(){var m=data.mevShare;if(!m){$('bundleProfits').innerHTML='<div class="emp">Loading...</div>';return}var b=(m.recentBundles||[]).slice(0,6);$('bundleBadge').textContent=b.length+' bundles';var h='';for(var x of b){h+='<div class="bundle-item '+(x.success?'success':'failed')+'"><span class="bundle-type">'+x.mevType.slice(0,6)+'</span><span class="bundle-profit '+(x.profit>0.5?'high':x.profit>0.1?'med':'low')+'">'+x.profit.toFixed(3)+'Ξ</span><span class="bundle-builder">'+x.builder.slice(0,6)+'</span></div>'}$('bundleProfits').innerHTML=h||'<div class="emp">No bundles</div>'}
+function renderOptionsMarkets(){var o=data.optionsDex;if(!o){$('optionsMarkets').innerHTML='<div class="emp">Loading...</div>';return}var m=(o.markets||[]).slice(0,6);$('optMktBadge').textContent=m.length+' markets';var h='';for(var x of m){h+='<div class="opt-market"><span class="mkt-underlying">'+x.underlying.slice(0,4)+'</span><span class="mkt-type '+x.type.toLowerCase()+'">'+x.type.slice(0,4)+'</span><span class="mkt-iv">'+x.iv.toFixed(0)+'%</span><span class="mkt-price">$'+x.price.toFixed(0)+'</span></div>'}$('optionsMarkets').innerHTML=h||'<div class="emp">No markets</div>'}
+function renderIvArbitrage(){var o=data.optionsDex;if(!o){$('ivArbitrage').innerHTML='<div class="emp">Loading...</div>';return}var a=(o.ivArbitrage||[]).slice(0,5);$('ivArbBadge').textContent=a.length+' arbs';var h='';for(var x of a){h+='<div class="iv-arb '+(x.ivSpread>8?'high':x.ivSpread>4?'med':'low')+'"><span class="iv-underlying">'+x.underlying.slice(0,4)+'</span><span class="iv-spread">'+x.ivSpread.toFixed(1)+'%</span><span class="iv-profit">$'+x.potentialProfit+'</span></div>'}$('ivArbitrage').innerHTML=h||'<div class="emp">No IV arb</div>'}
 
 // Kelly
 $('kB')?.addEventListener('click', async () => {
