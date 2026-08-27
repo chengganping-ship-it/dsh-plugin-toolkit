@@ -1173,6 +1173,78 @@
     </div>
   </div>
 
+  <!-- v10.0: Stablecoin Depeg -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v10.0: Stablecoin Prices <span id="depegPriceBadge" class="tag bd bb">-</span></h2>
+      <div id="depegPrices" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading prices...</div></div>
+    </div>
+    <div class="card">
+      <h2>v10.0: Active Depegs <span id="depegEventBadge" class="tag bd br">-</span></h2>
+      <div id="depegEvents" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Scanning depegs...</div></div>
+    </div>
+  </div>
+
+  <!-- v10.1: DeFi Points -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v10.1: Points Programs <span id="pointsBadge" class="tag bd bb">-</span></h2>
+      <div id="pointsPrograms" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading programs...</div></div>
+    </div>
+    <div class="card">
+      <h2>v10.1: Top Opportunities <span id="pointsOppBadge" class="tag bd bg">-</span></h2>
+      <div id="pointsOpps" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Calculating...</div></div>
+    </div>
+  </div>
+
+  <!-- v10.2: Intent Trading -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v10.2: Intent Protocols <span id="intentProtoBadge" class="tag bd bb">-</span></h2>
+      <div id="intentProtocols" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading intents...</div></div>
+    </div>
+    <div class="card">
+      <h2>v10.2: Solver Leaderboard <span id="solverBadge" class="tag bd bp">-</span></h2>
+      <div id="solverLeaderboard" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading solvers...</div></div>
+    </div>
+  </div>
+
+  <!-- v10.3: Insurance -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v10.3: Insurance Coverage <span id="insCovBadge" class="tag bd bb">-</span></h2>
+      <div id="insuranceCoverage" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading coverage...</div></div>
+    </div>
+    <div class="card">
+      <h2>v10.3: Active Claims <span id="claimBadge" class="tag bd by">-</span></h2>
+      <div id="activeClaims" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading claims...</div></div>
+    </div>
+  </div>
+
+  <!-- v10.4: Crypto Macro -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v10.4: Macro Indicators <span id="macroIndBadge" class="tag bd bb">-</span></h2>
+      <div id="macroIndicators" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading indicators...</div></div>
+    </div>
+    <div class="card">
+      <h2>v10.4: FOMC Calendar <span id="fomcBadge" class="tag bd bp">-</span></h2>
+      <div id="fomcCalendar" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading FOMC...</div></div>
+    </div>
+  </div>
+
+  <!-- v10.5: LayerZero -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v10.5: OFT Tokens <span id="oftBadge" class="tag bd bb">-</span></h2>
+      <div id="oftTokens" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading OFTs...</div></div>
+    </div>
+    <div class="card">
+      <h2>v10.5: Chain Flows <span id="flowLZBadge" class="tag bd bg">-</span></h2>
+      <div id="chainFlows" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading flows...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -1280,6 +1352,12 @@ function render() {
   renderOptimalRoutes(); renderCCSources();
   renderDepthAnalysis(); renderLiqRiskPanel();
   renderUpcomingUpgrades(); renderGovProposals();
+  renderDepegPrices(); renderDepegEvents();
+  renderPointsPrograms(); renderPointsOpps();
+  renderIntentProtocols(); renderSolverLeaderboard();
+  renderInsuranceCoverage(); renderActiveClaims();
+  renderMacroIndicators(); renderFomcCalendar();
+  renderOftTokens(); renderChainFlows();
 }
 
 function renderHM() {
@@ -2237,6 +2315,20 @@ function renderDepthAnalysis(){var d=data.derivativesLiq;if(!d){$('depthAnalysis
 function renderLiqRiskPanel(){var d=data.derivativesLiq;if(!d){$('liqRiskPanel').innerHTML='<div class="emp">Loading...</div>';return}var r=(d.liquidationRisk||[]).slice(0,5);$('liqRiskBadge').textContent=r.length+' risks';var h='';for(var x of r){h+='<div class="liq-risk '+x.riskLevel.toLowerCase()+'"><span class="risk-sym">'+x.symbol.slice(0,8)+'</span><span class="risk-level '+x.riskLevel.toLowerCase()+'">'+x.riskLevel.slice(0,4)+'</span><span class="risk-price">$'+x.liquidationPrice.toFixed(0)+'</span></div>'}$('liqRiskPanel').innerHTML=h||'<div class="emp">No liquidation risk</div>'}
 function renderUpcomingUpgrades(){var u=data.contractUpgrades;if(!u){$('upcomingUpgrades').innerHTML='<div class="emp">Loading...</div>';return}var up=(u.upgrades||[]).slice(0,5);$('upgrBadge').textContent=up.length+' upgrades';var h='';for(var x of up){h+='<div class="upgrade-item '+x.riskLevel.toLowerCase()+'"><span class="upgr-name">'+x.name.slice(0,15)+'</span><span class="upgr-date">'+x.executionDate.slice(0,10)+'</span><span class="upgr-risk '+x.riskLevel.toLowerCase()+'">'+x.riskLevel.slice(0,4)+'</span></div>'}$('upcomingUpgrades').innerHTML=h||'<div class="emp">No upgrades</div>'}
 function renderGovProposals(){var u=data.contractUpgrades;if(!u){$('govProposals').innerHTML='<div class="emp">Loading...</div>';return}var p=(u.proposals||[]).slice(0,5);$('govPropBadge').textContent=p.length+' proposals';var h='';for(var x of p){h+='<div class="gov-proposal '+x.status.toLowerCase()+'"><span class="prop-title">'+x.title.slice(0,20)+'</span><span class="prop-status '+x.status.toLowerCase()+'">'+x.status.slice(0,6)+'</span><span class="prop-eta">'+x.eta.slice(0,10)+'</span></div>'}$('govProposals').innerHTML=h||'<div class="emp">No proposals</div>'}
+
+// ==================== v10.0-v10.5 Renders ====================
+function renderDepegPrices(){var d=data.stablecoinDepeg;if(!d){$('depegPrices').innerHTML='<div class="emp">Loading...</div>';return}var p=(d.prices||[]).slice(0,8);$('depegPriceBadge').textContent=p.length+' pairs';var h='';for(var x of p){h+='<div class="depeg-price '+(Math.abs(x.deviationBps)>50?'stressed':'normal')+'"><span class="depeg-sym">'+x.symbol.slice(0,5)+'</span><span class="depeg-ex">'+x.exchange.slice(0,4)+'</span><span class="depeg-val '+(x.deviation>0?'pos':'neg')+'">'+x.price.toFixed(4)+'</span></div>'}$('depegPrices').innerHTML=h||'<div class="emp">No prices</div>'}
+function renderDepegEvents(){var d=data.stablecoinDepeg;if(!d){$('depegEvents').innerHTML='<div class="emp">Loading...</div>';return}var e=(d.depegEvents||[]).slice(0,5);$('depegEventBadge').textContent=e.length+' active';var h='';for(var x of e){h+='<div class="depeg-event '+x.severity.toLowerCase()+'"><span class="event-sym">'+x.symbol.slice(0,5)+'</span><span class="event-sev '+x.severity.toLowerCase()+'">'+x.severity.slice(0,4)+'</span><span class="event-rec">'+(x.recoveryProbability).toFixed(0)+'%</span></div>'}$('depegEvents').innerHTML=h||'<div class="emp">No active depegs</div>'}
+function renderPointsPrograms(){var p=data.deFiPoints;if(!p){$('pointsPrograms').innerHTML='<div class="emp">Loading...</div>';return}var pr=(p.programs||[]).slice(0,6);$('pointsBadge').textContent=pr.length+' programs';var h='';for(var x of pr){h+='<div class="points-prog '+x.status.toLowerCase()+'"><span class="prog-name">'+x.protocol.slice(0,10)+'</span><span class="prog-rate">'+x.currentRate.toFixed(1)+'/d</span><span class="prog-mult">x'+x.multiplier+'</span></div>'}$('pointsPrograms').innerHTML=h||'<div class="emp">No programs</div>'}
+function renderPointsOpps(){var p=data.deFiPoints;if(!p){$('pointsOpps').innerHTML='<div class="emp">Loading...</div>';return}var o=(p.opportunities||[]).slice(0,6);$('pointsOppBadge').textContent=o.length+' opps';var h='';for(var x of o){h+='<div class="points-opp '+(x.roi>50?'high':x.roi>20?'med':'low')+'"><span class="opp-proto">'+x.protocol.slice(0,10)+'</span><span class="opp-roi '+(x.roi>0?'pos':'neg')+'">'+(x.roi>0?'+':'')+x.roi.toFixed(0)+'%</span><span class="opp-diff '+x.difficulty.toLowerCase()+'">'+x.difficulty.slice(0,4)+'</span></div>'}$('pointsOpps').innerHTML=h||'<div class="emp">No opportunities</div>'}
+function renderIntentProtocols(){var i=data.intentTrading;if(!i){$('intentProtocols').innerHTML='<div class="emp">Loading...</div>';return}var p=(i.protocols||[]).slice(0,6);$('intentProtoBadge').textContent=p.length+' protocols';var h='';for(var x of p){h+='<div class="intent-proto"><span class="proto-name">'+x.name.slice(0,10)+'</span><span class="proto-vol">$'+((x.volumeUsd24h||0)/1e6).toFixed(0)+'M</span><span class="proto-mev">'+x.mevProtectionScore+'%</span></div>'}$('intentProtocols').innerHTML=h||'<div class="emp">No protocols</div>'}
+function renderSolverLeaderboard(){var i=data.intentTrading;if(!i){$('solverLeaderboard').innerHTML='<div class="emp">Loading...</div>';return}var s=(i.solvers||[]).slice(0,5);$('solverBadge').textContent=s.length+' solvers';var h='';for(var x of s){h+='<div class="solver-item"><span class="solver-name">'+x.name.slice(0,12)+'</span><span class="solver-rate">'+x.winRate+'%</span><span class="solver-vol">$'+((x.totalVolume||0)/1e6).toFixed(0)+'M</span></div>'}$('solverLeaderboard').innerHTML=h||'<div class="emp">No solvers</div>'}
+function renderInsuranceCoverage(){var i=data.insurance;if(!i){$('insuranceCoverage').innerHTML='<div class="emp">Loading...</div>';return}var p=(i.protocols||[]).slice(0,5);$('insCovBadge').textContent=p.length+' protocols';var h='';for(var x of p){h+='<div class="ins-proto"><span class="ins-name">'+x.name.slice(0,12)+'</span><span class="ins-cover">$'+((x.activeCover||0)/1e6).toFixed(0)+'M</span><span class="ins-solv '+(x.solvencyRatio>150?'high':x.solvencyRatio>100?'med':'low')+'">'+x.solvencyRatio+'%</span></div>'}$('insuranceCoverage').innerHTML=h||'<div class="emp">No coverage</div>'}
+function renderActiveClaims(){var i=data.insurance;if(!i){$('activeClaims').innerHTML='<div class="emp">Loading...</div>';return}var c=(i.claims||[]).slice(0,4);$('claimBadge').textContent=c.length+' claims';var h='';for(var x of c){h+='<div class="claim-item '+x.status.toLowerCase()+'"><span class="claim-proto">'+x.insuredProtocol.slice(0,8)+'</span><span class="claim-amt">$'+(x.claimAmount/1e3).toFixed(0)+'K</span><span class="claim-status '+x.status.toLowerCase()+'">'+x.status.slice(0,6)+'</span></div>'}$('activeClaims').innerHTML=h||'<div class="emp">No claims</div>'}
+function renderMacroIndicators(){var m=data.macro;if(!m){$('macroIndicators').innerHTML='<div class="emp">Loading...</div>';return}var ind=(m.indicators||[]).slice(0,6);$('macroIndBadge').textContent=ind.length+' indicators';var h='';for(var x of ind){h+='<div class="macro-ind '+x.signal.toLowerCase()+'"><span class="ind-name">'+x.symbol.slice(0,6)+'</span><span class="ind-val">'+x.value.toFixed(2)+'</span><span class="ind-chg '+(x.change24h>0?'pos':'neg')+'">'+(x.change24h>0?'+':'')+x.change24h.toFixed(2)+'</span></div>'}$('macroIndicators').innerHTML=h||'<div class="emp">No indicators</div>'}
+function renderFomcCalendar(){var m=data.macro;if(!m){$('fomcCalendar').innerHTML='<div class="emp">Loading...</div>';return}var e=(m.fomcEvents||[]).slice(0,4);$('fomcBadge').textContent=e.length+' events';var h='';for(var x of e){h+='<div class="fomc-event '+x.cryptoImpact.toLowerCase()+'"><span class="fomc-date">'+x.date.slice(5)+'</span><span class="fomc-rate">'+x.currentRate+'%</span><span class="fomc-prob">'+x.probability+'%</span></div>'}$('fomcCalendar').innerHTML=h||'<div class="emp">No FOMC events</div>'}
+function renderOftTokens(){var l=data.layerZero;if(!l){$('oftTokens').innerHTML='<div class="emp">Loading...</div>';return}var t=(l.tokens||[]).slice(0,4);$('oftBadge').textContent=t.length+' OFTs';var h='';for(var x of t){h+='<div class="oft-token"><span class="oft-sym">'+x.symbol.slice(0,6)+'</span><span class="oft-supply">'+(x.totalSupply/1e6).toFixed(0)+'M</span><span class="oft-spread">'+x.priceSpread.toFixed(4)+'</span></div>'}$('oftTokens').innerHTML=h||'<div class="emp">No OFT tokens</div>'}
+function renderChainFlows(){var l=data.layerZero;if(!l){$('chainFlows').innerHTML='<div class="emp">Loading...</div>';return}var f=(l.chainFlows||[]).slice(0,6);$('flowLZBadge').textContent=f.length+' chains';var h='';for(var x of f){h+='<div class="lz-flow"><span class="flow-chain">'+x.chain.slice(0,6)+'</span><span class="flow-net '+(x.netFlow24h>0?'pos':'neg')+'">'+(x.netFlow24h>0?'+':'')+'$'+(Math.abs(x.netFlow24h)/1e6).toFixed(0)+'M</span><span class="flow-tvl">'+x.utilizationPct+'%</span></div>'}$('chainFlows').innerHTML=h||'<div class="emp">No flows</div>'}
 
 // Kelly
 $('kB')?.addEventListener('click', async () => {

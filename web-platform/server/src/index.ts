@@ -78,6 +78,12 @@ import { analyzeReputation, getCachedReputation, clearReputationCache, OnChainRe
 import { analyzeCrossChainDex, getCachedCrossChainDex, clearCrossChainDexCache, CrossChainDexData } from './engine/crossChainDex.js';
 import { analyzeDerivativesLiquidity, getCachedDerivativesLiquidity, clearDerivativesLiquidityCache, DerivativesLiquidityData } from './engine/derivativesLiquidity.js';
 import { analyzeContractUpgrades, getCachedContractUpgrades, clearContractUpgradeCache, ContractUpgradeData } from './engine/contractUpgrade.js';
+import { analyzeStablecoinDepeg, StablecoinDepegData } from './engine/stablecoinDepeg.js';
+import { analyzeDeFiPoints, DeFiPointsData } from './engine/deFiPoints.js';
+import { analyzeIntentTrading, IntentTradingData } from './engine/intentTrading.js';
+import { analyzeInsurance, InsuranceData } from './engine/insurance.js';
+import { analyzeCryptoMacro, MacroData } from './engine/cryptoMacro.js';
+import { analyzeLayerZero, LayerZeroData } from './engine/layerZeroTracker.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -231,6 +237,20 @@ let latestDerivativesLiq: DerivativesLiquidityData | null = null;
 let lastDerivativesLiqFetch = 0;
 let latestContractUpgrades: ContractUpgradeData | null = null;
 let lastContractUpgradeFetch = 0;
+
+// ==================== v10.0-v10.5 ENGINE STATE ====================
+let latestStablecoinDepeg: StablecoinDepegData | null = null;
+let lastStablecoinDepegFetch = 0;
+let latestDeFiPoints: DeFiPointsData | null = null;
+let lastDeFiPointsFetch = 0;
+let latestIntentTrading: IntentTradingData | null = null;
+let lastIntentTradingFetch = 0;
+let latestInsurance: InsuranceData | null = null;
+let lastInsuranceFetch = 0;
+let latestMacro: MacroData | null = null;
+let lastMacroFetch = 0;
+let latestLayerZero: LayerZeroData | null = null;
+let lastLayerZeroFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -843,6 +863,66 @@ async function poll() {
       }
     }
 
+    // v10.0: Stablecoin depeg monitoring (every 5 minutes)
+    if (pollCount % 10 === 0 || !latestStablecoinDepeg) {
+      try {
+        latestStablecoinDepeg = await analyzeStablecoinDepeg();
+        lastStablecoinDepegFetch = Date.now();
+      } catch (e) {
+        // Stablecoin depeg analysis failed
+      }
+    }
+
+    // v10.1: DeFi points aggregation (every 20 minutes)
+    if (pollCount % 40 === 0 || !latestDeFiPoints) {
+      try {
+        latestDeFiPoints = await analyzeDeFiPoints();
+        lastDeFiPointsFetch = Date.now();
+      } catch (e) {
+        // DeFi points analysis failed
+      }
+    }
+
+    // v10.2: Intent trading analytics (every 10 minutes)
+    if (pollCount % 20 === 0 || !latestIntentTrading) {
+      try {
+        latestIntentTrading = await analyzeIntentTrading();
+        lastIntentTradingFetch = Date.now();
+      } catch (e) {
+        // Intent trading analysis failed
+      }
+    }
+
+    // v10.3: DeFi insurance monitoring (every 30 minutes)
+    if (pollCount % 60 === 0 || !latestInsurance) {
+      try {
+        latestInsurance = await analyzeInsurance();
+        lastInsuranceFetch = Date.now();
+      } catch (e) {
+        // Insurance monitoring failed
+      }
+    }
+
+    // v10.4: Crypto macro dashboard (every 10 minutes)
+    if (pollCount % 20 === 0 || !latestMacro) {
+      try {
+        latestMacro = await analyzeCryptoMacro();
+        lastMacroFetch = Date.now();
+      } catch (e) {
+        // Macro analysis failed
+      }
+    }
+
+    // v10.5: LayerZero omnichain tracker (every 10 minutes)
+    if (pollCount % 20 === 0 || !latestLayerZero) {
+      try {
+        latestLayerZero = await analyzeLayerZero();
+        lastLayerZeroFetch = Date.now();
+      } catch (e) {
+        // LayerZero tracking failed
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
@@ -958,6 +1038,12 @@ function broadcast() {
       crossChainDex: latestCrossChainDex,
       derivativesLiq: latestDerivativesLiq,
       contractUpgrades: latestContractUpgrades,
+      stablecoinDepeg: latestStablecoinDepeg,
+      deFiPoints: latestDeFiPoints,
+      intentTrading: latestIntentTrading,
+      insurance: latestInsurance,
+      macro: latestMacro,
+      layerZero: latestLayerZero,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -2564,6 +2650,182 @@ app.post('/api/v9/contracts/refresh', authMiddleware('write'), async (_req, res)
     res.json({ success: true, contracts: latestContractUpgrades });
   } catch (e) {
     res.status(500).json({ error: 'Failed to track contract upgrades' });
+  }
+});
+
+// ---- v10.0: Stablecoin Depeg API ----
+
+app.get('/api/v10/stablecoin/prices', authMiddleware('read'), (_req, res) => {
+  res.json({ prices: latestStablecoinDepeg?.prices || [], timestamp: lastStablecoinDepegFetch });
+});
+
+app.get('/api/v10/stablecoin/depegs', authMiddleware('read'), (_req, res) => {
+  res.json({ events: latestStablecoinDepeg?.depegEvents || [], timestamp: lastStablecoinDepegFetch });
+});
+
+app.get('/api/v10/stablecoin/arbitrage', authMiddleware('read'), (_req, res) => {
+  res.json({ arbitrage: latestStablecoinDepeg?.arbitrage || [], timestamp: lastStablecoinDepegFetch });
+});
+
+app.get('/api/v10/stablecoin/history', authMiddleware('read'), (_req, res) => {
+  res.json({ history: latestStablecoinDepeg?.historicalEvents || [], timestamp: lastStablecoinDepegFetch });
+});
+
+app.post('/api/v10/stablecoin/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestStablecoinDepeg = await analyzeStablecoinDepeg();
+    lastStablecoinDepegFetch = Date.now();
+    res.json({ success: true, stablecoin: latestStablecoinDepeg });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze stablecoin depeg' });
+  }
+});
+
+// ---- v10.1: DeFi Points API ----
+
+app.get('/api/v10/points/programs', authMiddleware('read'), (_req, res) => {
+  res.json({ programs: latestDeFiPoints?.programs || [], timestamp: lastDeFiPointsFetch });
+});
+
+app.get('/api/v10/points/opportunities', authMiddleware('read'), (_req, res) => {
+  res.json({ opportunities: latestDeFiPoints?.opportunities || [], timestamp: lastDeFiPointsFetch });
+});
+
+app.get('/api/v10/points/wallet', authMiddleware('read'), (_req, res) => {
+  res.json({ positions: latestDeFiPoints?.walletPositions || [], timestamp: lastDeFiPointsFetch });
+});
+
+app.get('/api/v10/points/upcoming', authMiddleware('read'), (_req, res) => {
+  res.json({ upcoming: latestDeFiPoints?.upcomingDrops || [], timestamp: lastDeFiPointsFetch });
+});
+
+app.post('/api/v10/points/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestDeFiPoints = await analyzeDeFiPoints();
+    lastDeFiPointsFetch = Date.now();
+    res.json({ success: true, points: latestDeFiPoints });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze DeFi points' });
+  }
+});
+
+// ---- v10.2: Intent Trading API ----
+
+app.get('/api/v10/intent/protocols', authMiddleware('read'), (_req, res) => {
+  res.json({ protocols: latestIntentTrading?.protocols || [], timestamp: lastIntentTradingFetch });
+});
+
+app.get('/api/v10/intent/orders', authMiddleware('read'), (_req, res) => {
+  res.json({ orders: latestIntentTrading?.recentOrders || [], timestamp: lastIntentTradingFetch });
+});
+
+app.get('/api/v10/intent/solvers', authMiddleware('read'), (_req, res) => {
+  res.json({ solvers: latestIntentTrading?.solvers || [], timestamp: lastIntentTradingFetch });
+});
+
+app.get('/api/v10/intent/arbitrage', authMiddleware('read'), (_req, res) => {
+  res.json({ arbitrage: latestIntentTrading?.arbitrage || [], timestamp: lastIntentTradingFetch });
+});
+
+app.post('/api/v10/intent/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestIntentTrading = await analyzeIntentTrading();
+    lastIntentTradingFetch = Date.now();
+    res.json({ success: true, intent: latestIntentTrading });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze intent trading' });
+  }
+});
+
+// ---- v10.3: Insurance API ----
+
+app.get('/api/v10/insurance/protocols', authMiddleware('read'), (_req, res) => {
+  res.json({ protocols: latestInsurance?.protocols || [], timestamp: lastInsuranceFetch });
+});
+
+app.get('/api/v10/insurance/policies', authMiddleware('read'), (_req, res) => {
+  res.json({ policies: latestInsurance?.policies || [], timestamp: lastInsuranceFetch });
+});
+
+app.get('/api/v10/insurance/claims', authMiddleware('read'), (_req, res) => {
+  res.json({ claims: latestInsurance?.claims || [], timestamp: lastInsuranceFetch });
+});
+
+app.get('/api/v10/insurance/pools', authMiddleware('read'), (_req, res) => {
+  res.json({ pools: latestInsurance?.pools || [], timestamp: lastInsuranceFetch });
+});
+
+app.post('/api/v10/insurance/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestInsurance = await analyzeInsurance();
+    lastInsuranceFetch = Date.now();
+    res.json({ success: true, insurance: latestInsurance });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze insurance' });
+  }
+});
+
+// ---- v10.4: Crypto Macro API ----
+
+app.get('/api/v10/macro/indicators', authMiddleware('read'), (_req, res) => {
+  res.json({ indicators: latestMacro?.indicators || [], timestamp: lastMacroFetch });
+});
+
+app.get('/api/v10/macro/correlations', authMiddleware('read'), (_req, res) => {
+  res.json({ correlations: latestMacro?.correlations || [], timestamp: lastMacroFetch });
+});
+
+app.get('/api/v10/macro/fomc', authMiddleware('read'), (_req, res) => {
+  res.json({ events: latestMacro?.fomcEvents || [], timestamp: lastMacroFetch });
+});
+
+app.get('/api/v10/macro/regimes', authMiddleware('read'), (_req, res) => {
+  res.json({ regimes: latestMacro?.regimes || [], timestamp: lastMacroFetch });
+});
+
+app.get('/api/v10/macro/yield-curve', authMiddleware('read'), (_req, res) => {
+  res.json({ curve: latestMacro?.yieldCurve || [], timestamp: lastMacroFetch });
+});
+
+app.post('/api/v10/macro/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestMacro = await analyzeCryptoMacro();
+    lastMacroFetch = Date.now();
+    res.json({ success: true, macro: latestMacro });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze macro' });
+  }
+});
+
+// ---- v10.5: LayerZero API ----
+
+app.get('/api/v10/layerzero/tokens', authMiddleware('read'), (_req, res) => {
+  res.json({ tokens: latestLayerZero?.tokens || [], timestamp: lastLayerZeroFetch });
+});
+
+app.get('/api/v10/layerzero/flows', authMiddleware('read'), (_req, res) => {
+  res.json({ flows: latestLayerZero?.chainFlows || [], timestamp: lastLayerZeroFetch });
+});
+
+app.get('/api/v10/layerzero/transfers', authMiddleware('read'), (_req, res) => {
+  res.json({ transfers: latestLayerZero?.recentTransfers || [], timestamp: lastLayerZeroFetch });
+});
+
+app.get('/api/v10/layerzero/pools', authMiddleware('read'), (_req, res) => {
+  res.json({ pools: latestLayerZero?.poolBalances || [], timestamp: lastLayerZeroFetch });
+});
+
+app.get('/api/v10/layerzero/arbitrage', authMiddleware('read'), (_req, res) => {
+  res.json({ arbitrage: latestLayerZero?.arbitrage || [], timestamp: lastLayerZeroFetch });
+});
+
+app.post('/api/v10/layerzero/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestLayerZero = await analyzeLayerZero();
+    lastLayerZeroFetch = Date.now();
+    res.json({ success: true, layerzero: latestLayerZero });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to track LayerZero' });
   }
 });
 
