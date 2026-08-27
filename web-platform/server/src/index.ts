@@ -90,6 +90,12 @@ import { analyzeNFTLending, NFTLendingData } from './engine/nftLending.js';
 import { analyzeYieldOptimizer, YieldOptimizerData } from './engine/yieldOptimizer.js';
 import { analyzeMEVShare, MEVShareData } from './engine/mevShare.js';
 import { analyzeOptionsDex, OptionsDexData } from './engine/optionsDex.js';
+import { analyzeTokenUnlocks, TokenUnlockData } from './engine/tokenUnlock.js';
+import { analyzeRPCPerformance, RPCPerformanceData } from './engine/rpcMonitor.js';
+import { analyzeStablecoinResidualArb, StablecoinResidualArbData } from './engine/stablecoinResidualArb.js';
+import { analyzeFundingHeatmap, FundingHeatmapData } from './engine/fundingHeatmap.js';
+import { analyzeBridgeTVL, BridgeTVLData } from './engine/bridgeTVLMonitor.js';
+import { analyzeProofOfReserves, ProofOfReservesData } from './engine/proofOfReserves.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -271,6 +277,20 @@ let latestMEVShare: MEVShareData | null = null;
 let lastMEVShareFetch = 0;
 let latestOptionsDex: OptionsDexData | null = null;
 let lastOptionsDexFetch = 0;
+
+// ==================== v12.0 ENGINE STATE ====================
+let latestTokenUnlocks: TokenUnlockData | null = null;
+let lastTokenUnlockFetch = 0;
+let latestRPCPerformance: RPCPerformanceData | null = null;
+let lastRPCPerformanceFetch = 0;
+let latestStablecoinResidual: StablecoinResidualArbData | null = null;
+let lastStablecoinResidualFetch = 0;
+let latestFundingHeatmap: FundingHeatmapData | null = null;
+let lastFundingHeatmapFetch = 0;
+let latestBridgeTVL: BridgeTVLData | null = null;
+let lastBridgeTVLFetch = 0;
+let latestProofOfReserves: ProofOfReservesData | null = null;
+let lastProofOfReservesFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -1003,6 +1023,68 @@ async function poll() {
       }
     }
 
+    // ==================== v12.0 POLLING ====================
+
+    // v12.0: Token unlock schedule (every 30 minutes)
+    if (pollCount % 60 === 0 || !latestTokenUnlocks) {
+      try {
+        latestTokenUnlocks = await analyzeTokenUnlocks();
+        lastTokenUnlockFetch = Date.now();
+      } catch (e) {
+        // Token unlock analysis failed
+      }
+    }
+
+    // v12.1: RPC performance monitor (every 5 minutes)
+    if (pollCount % 10 === 0 || !latestRPCPerformance) {
+      try {
+        latestRPCPerformance = await analyzeRPCPerformance();
+        lastRPCPerformanceFetch = Date.now();
+      } catch (e) {
+        // RPC performance analysis failed
+      }
+    }
+
+    // v12.2: Stablecoin residual arbitrage (every 5 minutes)
+    if (pollCount % 10 === 0 || !latestStablecoinResidual) {
+      try {
+        latestStablecoinResidual = await analyzeStablecoinResidualArb();
+        lastStablecoinResidualFetch = Date.now();
+      } catch (e) {
+        // Stablecoin residual arb analysis failed
+      }
+    }
+
+    // v12.3: Funding rate heatmap (every 15 minutes)
+    if (pollCount % 30 === 0 || !latestFundingHeatmap) {
+      try {
+        latestFundingHeatmap = await analyzeFundingHeatmap();
+        lastFundingHeatmapFetch = Date.now();
+      } catch (e) {
+        // Funding heatmap analysis failed
+      }
+    }
+
+    // v12.4: Bridge TVL anomaly detection (every 20 minutes)
+    if (pollCount % 40 === 0 || !latestBridgeTVL) {
+      try {
+        latestBridgeTVL = await analyzeBridgeTVL();
+        lastBridgeTVLFetch = Date.now();
+      } catch (e) {
+        // Bridge TVL analysis failed
+      }
+    }
+
+    // v12.5: Proof of Reserves tracker (every 30 minutes)
+    if (pollCount % 60 === 0 || !latestProofOfReserves) {
+      try {
+        latestProofOfReserves = await analyzeProofOfReserves();
+        lastProofOfReservesFetch = Date.now();
+      } catch (e) {
+        // Proof of Reserves analysis failed
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
@@ -1130,6 +1212,12 @@ function broadcast() {
       yieldOptimizer: latestYieldOptimizer,
       mevShare: latestMEVShare,
       optionsDex: latestOptionsDex,
+      tokenUnlocks: latestTokenUnlocks,
+      rpcPerformance: latestRPCPerformance,
+      stablecoinResidual: latestStablecoinResidual,
+      fundingHeatmap: latestFundingHeatmap,
+      bridgeTVL: latestBridgeTVL,
+      proofOfReserves: latestProofOfReserves,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -3068,6 +3156,176 @@ app.post('/api/v11/options/refresh', authMiddleware('write'), async (_req, res) 
     res.json({ success: true, options: latestOptionsDex });
   } catch (e) {
     res.status(500).json({ error: 'Failed to analyze options DEX' });
+  }
+});
+
+// ==================== v12.0 API ====================
+
+// ---- v12.0: Token Unlock Schedule API ----
+
+app.get('/api/v12/token-unlocks/upcoming', authMiddleware('read'), (_req, res) => {
+  res.json({ unlocks: latestTokenUnlocks?.unlocks || [], timestamp: lastTokenUnlockFetch });
+});
+
+app.get('/api/v12/token-unlocks/daily-pressure', authMiddleware('read'), (_req, res) => {
+  res.json({ dailyPressure: latestTokenUnlocks?.dailyPressure || [], timestamp: lastTokenUnlockFetch });
+});
+
+app.get('/api/v12/token-unlocks/top-risks', authMiddleware('read'), (_req, res) => {
+  res.json({ topRisks: latestTokenUnlocks?.topRisks || [], timestamp: lastTokenUnlockFetch });
+});
+
+app.get('/api/v12/token-unlocks/next-major', authMiddleware('read'), (_req, res) => {
+  res.json({ nextMajorUnlock: latestTokenUnlocks?.nextMajorUnlock || null, timestamp: lastTokenUnlockFetch });
+});
+
+app.post('/api/v12/token-unlocks/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestTokenUnlocks = await analyzeTokenUnlocks();
+    lastTokenUnlockFetch = Date.now();
+    res.json({ success: true, tokenUnlocks: latestTokenUnlocks });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze token unlocks' });
+  }
+});
+
+// ---- v12.1: RPC Performance API ----
+
+app.get('/api/v12/rpc/endpoints', authMiddleware('read'), (_req, res) => {
+  res.json({ endpoints: latestRPCPerformance?.endpoints || [], timestamp: lastRPCPerformanceFetch });
+});
+
+app.get('/api/v12/rpc/chain-status', authMiddleware('read'), (_req, res) => {
+  res.json({ chainStatus: latestRPCPerformance?.chainStatus || [], timestamp: lastRPCPerformanceFetch });
+});
+
+app.get('/api/v12/rpc/alerts', authMiddleware('read'), (_req, res) => {
+  res.json({ alerts: latestRPCPerformance?.alerts || [], timestamp: lastRPCPerformanceFetch });
+});
+
+app.get('/api/v12/rpc/recommendations', authMiddleware('read'), (_req, res) => {
+  res.json({ recommendations: latestRPCPerformance?.recommendations || [], timestamp: lastRPCPerformanceFetch });
+});
+
+app.post('/api/v12/rpc/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestRPCPerformance = await analyzeRPCPerformance();
+    lastRPCPerformanceFetch = Date.now();
+    res.json({ success: true, rpc: latestRPCPerformance });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to monitor RPC performance' });
+  }
+});
+
+// ---- v12.2: Stablecoin Residual Arbitrage API ----
+
+app.get('/api/v12/stablecoin/pairs', authMiddleware('read'), (_req, res) => {
+  res.json({ pairs: latestStablecoinResidual?.pairs || [], timestamp: lastStablecoinResidualFetch });
+});
+
+app.get('/api/v12/stablecoin/opportunities', authMiddleware('read'), (_req, res) => {
+  res.json({ opportunities: latestStablecoinResidual?.opportunities || [], timestamp: lastStablecoinResidualFetch });
+});
+
+app.get('/api/v12/stablecoin/historical', authMiddleware('read'), (_req, res) => {
+  res.json({ historical: latestStablecoinResidual?.historicalConvergence || [], timestamp: lastStablecoinResidualFetch });
+});
+
+app.get('/api/v12/stablecoin/summary', authMiddleware('read'), (_req, res) => {
+  res.json({ summary: latestStablecoinResidual?.summary || {}, timestamp: lastStablecoinResidualFetch });
+});
+
+app.post('/api/v12/stablecoin/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestStablecoinResidual = await analyzeStablecoinResidualArb();
+    lastStablecoinResidualFetch = Date.now();
+    res.json({ success: true, stablecoin: latestStablecoinResidual });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze stablecoin residual arb' });
+  }
+});
+
+// ---- v12.3: Funding Rate Heatmap API ----
+
+app.get('/api/v12/funding/heatmap', authMiddleware('read'), (_req, res) => {
+  res.json({ heatmap: latestFundingHeatmap?.heatmap || [], timestamp: lastFundingHeatmapFetch });
+});
+
+app.get('/api/v12/funding/arbitrage', authMiddleware('read'), (_req, res) => {
+  res.json({ arbitrageOpportunities: latestFundingHeatmap?.arbitrageOpportunities || [], timestamp: lastFundingHeatmapFetch });
+});
+
+app.get('/api/v12/funding/historical', authMiddleware('read'), (_req, res) => {
+  res.json({ historicalTrend: latestFundingHeatmap?.historicalTrend || [], timestamp: lastFundingHeatmapFetch });
+});
+
+app.get('/api/v12/funding/summary', authMiddleware('read'), (_req, res) => {
+  res.json({ summary: latestFundingHeatmap?.summary || {}, timestamp: lastFundingHeatmapFetch });
+});
+
+app.post('/api/v12/funding/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestFundingHeatmap = await analyzeFundingHeatmap();
+    lastFundingHeatmapFetch = Date.now();
+    res.json({ success: true, funding: latestFundingHeatmap });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze funding heatmap' });
+  }
+});
+
+// ---- v12.4: Bridge TVL Anomaly API ----
+
+app.get('/api/v12/bridge-tvl/bridges', authMiddleware('read'), (_req, res) => {
+  res.json({ bridges: latestBridgeTVL?.bridges || [], timestamp: lastBridgeTVLFetch });
+});
+
+app.get('/api/v12/bridge-tvl/anomalies', authMiddleware('read'), (_req, res) => {
+  res.json({ anomalies: latestBridgeTVL?.anomalies || [], timestamp: lastBridgeTVLFetch });
+});
+
+app.get('/api/v12/bridge-tvl/chain-flows', authMiddleware('read'), (_req, res) => {
+  res.json({ chainFlows: latestBridgeTVL?.chainFlows || [], timestamp: lastBridgeTVLFetch });
+});
+
+app.get('/api/v12/bridge-tvl/summary', authMiddleware('read'), (_req, res) => {
+  res.json({ summary: latestBridgeTVL?.summary || {}, timestamp: lastBridgeTVLFetch });
+});
+
+app.post('/api/v12/bridge-tvl/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestBridgeTVL = await analyzeBridgeTVL();
+    lastBridgeTVLFetch = Date.now();
+    res.json({ success: true, bridgeTVL: latestBridgeTVL });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to monitor bridge TVL' });
+  }
+});
+
+// ---- v12.5: Proof of Reserves API ----
+
+app.get('/api/v12/por/exchanges', authMiddleware('read'), (_req, res) => {
+  res.json({ exchanges: latestProofOfReserves?.exchanges || [], timestamp: lastProofOfReservesFetch });
+});
+
+app.get('/api/v12/por/alerts', authMiddleware('read'), (_req, res) => {
+  res.json({ alerts: latestProofOfReserves?.alerts || [], timestamp: lastProofOfReservesFetch });
+});
+
+app.get('/api/v12/por/reserve-ratios', authMiddleware('read'), (_req, res) => {
+  res.json({ reserveRatio: latestProofOfReserves?.reserveRatio || [], timestamp: lastProofOfReservesFetch });
+});
+
+app.get('/api/v12/por/historical', authMiddleware('read'), (_req, res) => {
+  res.json({ historicalTrend: latestProofOfReserves?.historicalTrend || [], timestamp: lastProofOfReservesFetch });
+});
+
+app.post('/api/v12/por/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestProofOfReserves = await analyzeProofOfReserves();
+    lastProofOfReservesFetch = Date.now();
+    res.json({ success: true, por: latestProofOfReserves });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to track proof of reserves' });
   }
 });
 

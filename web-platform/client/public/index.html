@@ -1317,6 +1317,78 @@
     </div>
   </div>
 
+  <!-- v12.0: Token Unlock Schedule -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v12.0: Upcoming Unlocks <span id="unlockBadge" class="tag bd bb">-</span></h2>
+      <div id="upcomingUnlocks" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading unlocks...</div></div>
+    </div>
+    <div class="card">
+      <h2>v12.0: Daily Pressure <span id="pressureBadge" class="tag bd br">-</span></h2>
+      <div id="dailyPressure" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Calculating...</div></div>
+    </div>
+  </div>
+
+  <!-- v12.1: RPC Performance -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v12.1: RPC Endpoints <span id="rpcEndBadge" class="tag bd bb">-</span></h2>
+      <div id="rpcEndpoints" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Pinging RPCs...</div></div>
+    </div>
+    <div class="card">
+      <h2>v12.1: RPC Alerts <span id="rpcAlertBadge" class="tag bd br">-</span></h2>
+      <div id="rpcAlerts" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Checking health...</div></div>
+    </div>
+  </div>
+
+  <!-- v12.2: Stablecoin Residual Arbitrage -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v12.2: SC Pairs <span id="scPairBadge" class="tag bd bb">-</span></h2>
+      <div id="scPairs" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Scanning pairs...</div></div>
+    </div>
+    <div class="card">
+      <h2>v12.2: SC Arb Ops <span id="scArbBadge" class="tag bd bg">-</span></h2>
+      <div id="scArbOps" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Finding opportunities...</div></div>
+    </div>
+  </div>
+
+  <!-- v12.3: Funding Rate Heatmap -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v12.3: Funding Heatmap <span id="heatBadge" class="tag bd bb">-</span></h2>
+      <div id="fundingHeatmap" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Building heatmap...</div></div>
+    </div>
+    <div class="card">
+      <h2>v12.3: Cross-Ex Arb <span id="crossExArbBadge" class="tag bd bg">-</span></h2>
+      <div id="crossExArb" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Comparing exchanges...</div></div>
+    </div>
+  </div>
+
+  <!-- v12.4: Bridge TVL Anomaly -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v12.4: Bridge TVL <span id="bridgeTvlBadge" class="tag bd bb">-</span></h2>
+      <div id="bridgeTvl" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Monitoring bridges...</div></div>
+    </div>
+    <div class="card">
+      <h2>v12.4: TVL Anomalies <span id="tvlAnomBadge" class="tag bd br">-</span></h2>
+      <div id="tvlAnomalies" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Detecting anomalies...</div></div>
+    </div>
+  </div>
+
+  <!-- v12.5: Proof of Reserves -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v12.5: CEX Reserves <span id="porExBadge" class="tag bd bb">-</span></h2>
+      <div id="cexReserves" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Verifying reserves...</div></div>
+    </div>
+    <div class="card">
+      <h2>v12.5: POR Alerts <span id="porAlertBadge" class="tag bd br">-</span></h2>
+      <div id="porAlerts" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Checking audits...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -1436,6 +1508,12 @@ function render() {
   renderYieldPaths(); renderAutoCompound();
   renderBuilderRankings(); renderBundleProfits();
   renderOptionsMarkets(); renderIvArbitrage();
+  renderUpcomingUnlocks(); renderDailyPressure();
+  renderRPCEndpoints(); renderRPCAlerts();
+  renderSCPairs(); renderSCArbOps();
+  renderFundingHeatmap(); renderCrossExArb();
+  renderBridgeTVL(); renderTVLAnomalies();
+  renderCEXReserves(); renderPORAlerts();
 }
 
 function renderHM() {
@@ -2421,6 +2499,20 @@ function renderBuilderRankings(){var m=data.mevShare;if(!m){$('builderRankings')
 function renderBundleProfits(){var m=data.mevShare;if(!m){$('bundleProfits').innerHTML='<div class="emp">Loading...</div>';return}var b=(m.recentBundles||[]).slice(0,6);$('bundleBadge').textContent=b.length+' bundles';var h='';for(var x of b){h+='<div class="bundle-item '+(x.success?'success':'failed')+'"><span class="bundle-type">'+x.mevType.slice(0,6)+'</span><span class="bundle-profit '+(x.profit>0.5?'high':x.profit>0.1?'med':'low')+'">'+x.profit.toFixed(3)+'Ξ</span><span class="bundle-builder">'+x.builder.slice(0,6)+'</span></div>'}$('bundleProfits').innerHTML=h||'<div class="emp">No bundles</div>'}
 function renderOptionsMarkets(){var o=data.optionsDex;if(!o){$('optionsMarkets').innerHTML='<div class="emp">Loading...</div>';return}var m=(o.markets||[]).slice(0,6);$('optMktBadge').textContent=m.length+' markets';var h='';for(var x of m){h+='<div class="opt-market"><span class="mkt-underlying">'+x.underlying.slice(0,4)+'</span><span class="mkt-type '+x.type.toLowerCase()+'">'+x.type.slice(0,4)+'</span><span class="mkt-iv">'+x.iv.toFixed(0)+'%</span><span class="mkt-price">$'+x.price.toFixed(0)+'</span></div>'}$('optionsMarkets').innerHTML=h||'<div class="emp">No markets</div>'}
 function renderIvArbitrage(){var o=data.optionsDex;if(!o){$('ivArbitrage').innerHTML='<div class="emp">Loading...</div>';return}var a=(o.ivArbitrage||[]).slice(0,5);$('ivArbBadge').textContent=a.length+' arbs';var h='';for(var x of a){h+='<div class="iv-arb '+(x.ivSpread>8?'high':x.ivSpread>4?'med':'low')+'"><span class="iv-underlying">'+x.underlying.slice(0,4)+'</span><span class="iv-spread">'+x.ivSpread.toFixed(1)+'%</span><span class="iv-profit">$'+x.potentialProfit+'</span></div>'}$('ivArbitrage').innerHTML=h||'<div class="emp">No IV arb</div>'}
+
+// ==================== v12.0 Renders ====================
+function renderUpcomingUnlocks(){var t=data.tokenUnlocks;if(!t){$('upcomingUnlocks').innerHTML='<div class="emp">Loading...</div>';return}var u=(t.unlocks||[]).slice(0,8);$('unlockBadge').textContent=u.length+' unlocks';var h='';for(var x of u){h+='<div class="unlock-item '+x.pressureLevel.toLowerCase()+'"><span class="unlock-sym">'+x.symbol.slice(0,6)+'</span><span class="unlock-date">'+x.unlockDate.slice(5,10)+'</span><span class="unlock-amt">$'+(x.amountUSD/1e6).toFixed(0)+'M</span><span class="unlock-press '+x.pressureLevel.toLowerCase()+'">'+x.pressureLevel.slice(0,4)+'</span></div>'}$('upcomingUnlocks').innerHTML=h||'<div class="emp">No unlocks</div>'}
+function renderDailyPressure(){var t=data.tokenUnlocks;if(!t){$('dailyPressure').innerHTML='<div class="emp">Loading...</div>';return}var d=(t.dailyPressure||[]).slice(0,7);$('pressureBadge').textContent=d.length+' days';var h='';for(var x of d){h+='<div class="pressure-item '+(x.pressureScore>70?'high':x.pressureScore>40?'med':'low')+'"><span class="press-date">'+x.date.slice(5,10)+'</span><span class="press-usd">$'+(x.totalUnlockUSD/1e6).toFixed(0)+'M</span><span class="press-score '+(x.pressureScore>60?'high':'med')+'">'+x.pressureScore+'</span></div>'}$('dailyPressure').innerHTML=h||'<div class="emp">No pressure data</div>'}
+function renderRPCEndpoints(){var r=data.rpcPerformance;if(!r){$('rpcEndpoints').innerHTML='<div class="emp">Loading...</div>';return}var e=(r.endpoints||[]).slice(0,8);$('rpcEndBadge').textContent=e.length+' endpoints';var h='';for(var x of e){h+='<div class="rpc-endpoint '+x.status.toLowerCase()+'"><span class="rpc-chain">'+x.chain.slice(0,5)+'</span><span class="rpc-provider">'+x.provider.slice(0,8)+'</span><span class="rpc-lat '+(x.latencyMs<200?'low':x.latencyMs<500?'med':'high')+'">'+x.latencyMs+'ms</span><span class="rpc-status '+x.status.toLowerCase()+'">'+x.status.slice(0,4)+'</span></div>'}$('rpcEndpoints').innerHTML=h||'<div class="emp">No endpoints</div>'}
+function renderRPCAlerts(){var r=data.rpcPerformance;if(!r){$('rpcAlerts').innerHTML='<div class="emp">Loading...</div>';return}var a=(r.alerts||[]).slice(0,6);$('rpcAlertBadge').textContent=a.length+' alerts';var h='';for(var x of a){h+='<div class="rpc-alert '+x.severity.toLowerCase()+'"><span class="alert-chain">'+x.chain.slice(0,5)+'</span><span class="alert-sev '+x.severity.toLowerCase()+'">'+x.severity.slice(0,4)+'</span><span class="alert-msg">'+x.message.slice(0,25)+'</span></div>'}$('rpcAlerts').innerHTML=h||'<div class="emp">No alerts</div>'}
+function renderSCPairs(){var s=data.stablecoinResidual;if(!s){$('scPairs').innerHTML='<div class="emp">Loading...</div>';return}var p=(s.pairs||[]).slice(0,6);$('scPairBadge').textContent=p.length+' pairs';var h='';for(var x of p){h+='<div class="sc-pair '+(x.depegBps>20?'high':x.depegBps>10?'med':'low')+'"><span class="sc-pair-name">'+x.pair.slice(0,10)+'</span><span class="sc-depeg '+(x.depegBps>0?'pos':'neg')+'">'+(x.depegBps>0?'+':'')+x.depegBps+'bps</span><span class="sc-dir">'+x.direction.slice(0,4)+'</span></div>'}$('scPairs').innerHTML=h||'<div class="emp">No pairs</div>'}
+function renderSCArbOps(){var s=data.stablecoinResidual;if(!s){$('scArbOps').innerHTML='<div class="emp">Loading...</div>';return}var o=(s.opportunities||[]).slice(0,5);$('scArbBadge').textContent=o.length+' ops';var h='';for(var x of o){h+='<div class="sc-arb '+x.risk.toLowerCase()+'"><span class="sc-arb-pair">'+x.pair.slice(0,8)+'</span><span class="sc-arb-ret '+(x.expectedReturn>0.5?'high':'med')+'">'+x.expectedReturn.toFixed(2)+'%</span><span class="sc-arb-risk '+x.risk.toLowerCase()+'">'+x.risk.slice(0,4)+'</span></div>'}$('scArbOps').innerHTML=h||'<div class="emp">No opportunities</div>'}
+function renderFundingHeatmap(){var f=data.fundingHeatmap;if(!f){$('fundingHeatmap').innerHTML='<div class="emp">Loading...</div>';return}var hm=(f.heatmap||[]).slice(0,8);$('heatBadge').textContent=hm.length+' pairs';var h='';for(var x of hm){h+='<div class="heat-item"><span class="heat-sym">'+x.symbol.slice(0,8)+'</span><span class="heat-avg '+(x.average>0.03?'high':x.average>0.01?'med':'low')+'">'+(x.average*100).toFixed(3)+'%</span><span class="heat-spread '+(x.spread>0.04?'high':'med')+'">'+(x.spread*100).toFixed(2)+'</span><span class="heat-long">'+x.bestShort.slice(0,4)+'</span></div>'}$('fundingHeatmap').innerHTML=h||'<div class="emp">No heatmap data</div>'}
+function renderCrossExArb(){var f=data.fundingHeatmap;if(!f){$('crossExArb').innerHTML='<div class="emp">Loading...</div>';return}var a=(f.arbitrageOpportunities||[]).slice(0,5);$('crossExArbBadge').textContent=a.length+' arbs';var h='';for(var x of a){h+='<div class="cross-ex-arb '+(x.estimatedAPY>50?'high':x.estimatedAPY>20?'med':'low')+'"><span class="cex-sym">'+x.symbol.slice(0,6)+'</span><span class="cex-net '+(x.netRate>0?'pos':'neg')+'">'+(x.netRate>0?'+':'')+(x.netRate*100).toFixed(3)+'%</span><span class="cex-apy">'+x.estimatedAPY.toFixed(0)+'%</span></div>'}$('crossExArb').innerHTML=h||'<div class="emp">No cross-ex arb</div>'}
+function renderBridgeTVL(){var b=data.bridgeTVL;if(!b){$('bridgeTvl').innerHTML='<div class="emp">Loading...</div>';return}var br=(b.bridges||[]).slice(0,6);$('bridgeTvlBadge').textContent=br.length+' bridges';var h='';for(var x of br){h+='<div class="bridge-tvl '+x.status.toLowerCase()+'"><span class="btvl-name">'+x.name.slice(0,10)+'</span><span class="btvl-usd">$'+(x.currentTVL/1e6).toFixed(0)+'M</span><span class="btvl-chg '+(x.change24h>0?'pos':'neg')+'">'+(x.change24h>0?'+':'')+x.change24h.toFixed(1)+'%</span></div>'}$('bridgeTvl').innerHTML=h||'<div class="emp">No bridge data</div>'}
+function renderTVLAnomalies(){var b=data.bridgeTVL;if(!b){$('tvlAnomalies').innerHTML='<div class="emp">Loading...</div>';return}var a=(b.anomalies||[]).slice(0,5);$('tvlAnomBadge').textContent=a.length+' anomalies';var h='';for(var x of a){h+='<div class="tvl-anom '+x.severity.toLowerCase()+'"><span class="anom-bridge">'+x.bridge.slice(0,10)+'</span><span class="anom-sev '+x.severity.toLowerCase()+'">'+x.severity.slice(0,4)+'</span><span class="anom-chg">'+(x.tvlChange*100).toFixed(1)+'%</span></div>'}$('tvlAnomalies').innerHTML=h||'<div class="emp">No anomalies</div>'}
+function renderCEXReserves(){var p=data.proofOfReserves;if(!p){$('cexReserves').innerHTML='<div class="emp">Loading...</div>';return}var e=(p.exchanges||[]).slice(0,6);$('porExBadge').textContent=e.length+' exchanges';var h='';for(var x of e){h+='<div class="por-ex '+x.riskLevel.toLowerCase()+'"><span class="por-name">'+x.name.slice(0,6)+'</span><span class="por-res">$'+(x.totalReservesUSD/1e9).toFixed(1)+'B</span><span class="por-cov '+(x.coverage>100?'pos':'neg')+'">'+x.coverage.toFixed(0)+'%</span></div>'}$('cexReserves').innerHTML=h||'<div class="emp">No reserve data</div>'}
+function renderPORAlerts(){var p=data.proofOfReserves;if(!p){$('porAlerts').innerHTML='<div class="emp">Loading...</div>';return}var a=(p.alerts||[]).slice(0,5);$('porAlertBadge').textContent=a.length+' alerts';var h='';for(var x of a){h+='<div class="por-alert '+x.severity.toLowerCase()+'"><span class="por-alert-ex">'+x.exchange.slice(0,6)+'</span><span class="por-alert-sev '+x.severity.toLowerCase()+'">'+x.severity.slice(0,4)+'</span><span class="por-alert-msg">'+x.message.slice(0,25)+'</span></div>'}$('porAlerts').innerHTML=h||'<div class="emp">No POR alerts</div>'}
 
 // Kelly
 $('kB')?.addEventListener('click', async () => {
