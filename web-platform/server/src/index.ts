@@ -101,6 +101,12 @@ import { analyzeKalshiMarkets, PredictionMarketData } from './engine/predictionM
 import { analyzeETFFlows, ETFFlowData } from './engine/cryptoETFFlowTracker.js';
 import { analyzeOptionsFlow, OptionsFlowData } from './engine/optionsFlowAnalytics.js';
 import { analyzeCurveFinance, CurveData } from './engine/stablecoinCurveTracker.js';
+import { analyzeAirdropFarming, AirdropFarmingData } from './engine/airdropFarmingIntelligence.js';
+import { analyzeCryptoNewsSentiment, CryptoNewsSentimentData } from './engine/cryptoNewsSentiment.js';
+import { analyzeBTCL2Tracker, BTCL2TrackerData } from './engine/btcLayer2Tracker.js';
+import { analyzePerpetualDexAgg, PerpetualDexData } from './engine/perpetualDexAggregator.js';
+import { analyzeL2Revenue, L2RevenueTrackerData } from './engine/l2RevenueTracker.js';
+import { analyzeAggregators, AggregatorData } from './engine/defiAggregatorsTracker.js';
 import { createApiKey as createSubApiKey, validateApiKey as validateSubApiKey, checkRateLimit, revokeApiKey as revokeSubApiKey, getApiKeyUsage, getTierConfig, isEngineAllowed, getAllowedEngines, getSubscriptionSummary, cleanupExpiredKeys, SubscriptionTier, ApiKey as SubApiKey } from './subscription.js';
 import { analyzeTokenUnlocks, TokenUnlockData } from './engine/tokenUnlock.js';
 import { analyzeRPCPerformance, RPCPerformanceData } from './engine/rpcMonitor.js';
@@ -381,6 +387,20 @@ let latestOptionsFlow: OptionsFlowData | null = null;
 let lastOptionsFlowFetch = 0;
 let latestCurveFinance: CurveData | null = null;
 let lastCurveFinanceFetch = 0;
+
+// ==================== v15.0 ENGINE STATE ====================
+let latestAirdropFarming: AirdropFarmingData | null = null;
+let lastAirdropFarmingFetch = 0;
+let latestNewsSentiment: CryptoNewsSentimentData | null = null;
+let lastNewsSentimentFetch = 0;
+let latestBTCL2: BTCL2TrackerData | null = null;
+let lastBTCL2Fetch = 0;
+let latestPerpDexAgg: PerpetualDexData | null = null;
+let lastPerpDexAggFetch = 0;
+let latestL2Revenue: L2RevenueTrackerData | null = null;
+let lastL2RevenueFetch = 0;
+let latestAggregators: AggregatorData | null = null;
+let lastAggregatorsFetch = 0;
 
 // ==================== v12.0 ENGINE STATE ====================
 let latestTokenUnlocks: TokenUnlockData | null = null;
@@ -1211,15 +1231,65 @@ async function poll() {
       } catch (e) { /* Options flow analysis failed */ }
     }
 
-    // v14.5: Curve finance (every 20 minutes)
-    if (pollCount % 40 === 0 || !latestCurveFinance) {
-      try {
-        latestCurveFinance = await analyzeCurveFinance();
-        lastCurveFinanceFetch = Date.now();
-      } catch (e) { /* Curve finance analysis failed */ }
-    }
+// v14.5: Curve finance (every 20 minutes)
+if (pollCount % 40 === 0 || !latestCurveFinance) {
+  try {
+    latestCurveFinance = await analyzeCurveFinance();
+    lastCurveFinanceFetch = Date.now();
+  } catch (e) { /* Curve finance analysis failed */ }
+}
 
-    // ==================== v12.0 POLLING ====================
+// ==================== v15.0 POLLING ====================
+
+// v15.0: Airdrop farming (every 30 minutes)
+if (pollCount % 60 === 0 || !latestAirdropFarming) {
+  try {
+    latestAirdropFarming = await analyzeAirdropFarming();
+    lastAirdropFarmingFetch = Date.now();
+  } catch (e) { /* Airdrop farming analysis failed */ }
+}
+
+// v15.1: Crypto news sentiment (every 15 minutes)
+if (pollCount % 30 === 0 || !latestNewsSentiment) {
+  try {
+    latestNewsSentiment = await analyzeCryptoNewsSentiment();
+    lastNewsSentimentFetch = Date.now();
+  } catch (e) { /* News sentiment analysis failed */ }
+}
+
+// v15.2: BTC L2 tracker (every 30 minutes)
+if (pollCount % 60 === 0 || !latestBTCL2) {
+  try {
+    latestBTCL2 = await analyzeBTCL2Tracker();
+    lastBTCL2Fetch = Date.now();
+  } catch (e) { /* BTC L2 analysis failed */ }
+}
+
+// v15.3: Perp DEX aggregator (every 20 minutes)
+if (pollCount % 40 === 0 || !latestPerpDexAgg) {
+  try {
+    latestPerpDexAgg = await analyzePerpetualDexAgg();
+    lastPerpDexAggFetch = Date.now();
+  } catch (e) { /* Perp DEX analysis failed */ }
+}
+
+// v15.4: L2 revenue tracker (every 30 minutes)
+if (pollCount % 60 === 0 || !latestL2Revenue) {
+  try {
+    latestL2Revenue = await analyzeL2Revenue();
+    lastL2RevenueFetch = Date.now();
+  } catch (e) { /* L2 revenue analysis failed */ }
+}
+
+// v15.5: DeFi aggregators (every 30 minutes)
+if (pollCount % 60 === 0 || !latestAggregators) {
+  try {
+    latestAggregators = await analyzeAggregators();
+    lastAggregatorsFetch = Date.now();
+  } catch (e) { /* Aggregators analysis failed */ }
+}
+
+// ==================== v12.0 POLLING ====================
 
     // v12.0: Token unlock schedule (every 30 minutes)
     if (pollCount % 60 === 0 || !latestTokenUnlocks) {
@@ -1425,6 +1495,12 @@ function broadcast() {
       etfFlows: latestETFFlows,
       optionsFlow: latestOptionsFlow,
       curveFinance: latestCurveFinance,
+airdropFarming: latestAirdropFarming,
+newsSentiment: latestNewsSentiment,
+btcLayer2: latestBTCL2,
+perpDexAgg: latestPerpDexAgg,
+l2Revenue: latestL2Revenue,
+aggregators: latestAggregators,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -3364,6 +3440,113 @@ app.post('/api/v11/options/refresh', authMiddleware('write'), async (_req, res) 
   } catch (e) {
     res.status(500).json({ error: 'Failed to analyze options DEX' });
   }
+});
+
+// ==================== v15.0 API ====================
+
+// ---- v15.0: Airdrop Farming Intelligence API ----
+app.get('/api/v15/airdrop-farming/protocols', authMiddleware('read'), (_req, res) => {
+  res.json({ protocols: latestAirdropFarming?.protocols || [], timestamp: lastAirdropFarmingFetch });
+});
+app.get('/api/v15/airdrop-farming/top-opportunities', authMiddleware('read'), (_req, res) => {
+  res.json({ opportunities: latestAirdropFarming?.topOpportunities || [], timestamp: lastAirdropFarmingFetch });
+});
+app.get('/api/v15/airdrop-farming/roi-summary', authMiddleware('read'), (_req, res) => {
+  res.json({ averageRoi: latestAirdropFarming?.averageRoi || 0, totalValue: latestAirdropFarming?.totalEstimatedValue || 0, totalCost: latestAirdropFarming?.totalFarmingCost || 0, timestamp: lastAirdropFarmingFetch });
+});
+app.get('/api/v15/airdrop-farming/by-chain', authMiddleware('read'), (_req, res) => {
+  res.json({ byChain: latestAirdropFarming?.byChain || {}, byDifficulty: latestAirdropFarming?.byDifficulty || {}, timestamp: lastAirdropFarmingFetch });
+});
+app.post('/api/v15/airdrop-farming/refresh', authMiddleware('write'), async (_req, res) => {
+  try { latestAirdropFarming = await analyzeAirdropFarming(); lastAirdropFarmingFetch = Date.now(); res.json({ success: true, data: latestAirdropFarming }); } catch (e) { res.status(500).json({ error: 'Failed' }); }
+});
+
+// ---- v15.1: Crypto News Sentiment API ----
+app.get('/api/v15/news-sentiment/articles', authMiddleware('read'), (_req, res) => {
+  res.json({ articles: latestNewsSentiment?.articles || [], timestamp: lastNewsSentimentFetch });
+});
+app.get('/api/v15/news-sentiment/sentiment', authMiddleware('read'), (_req, res) => {
+  res.json({ sentiment: latestNewsSentiment?.overallSentiment || {}, timestamp: lastNewsSentimentFetch });
+});
+app.get('/api/v15/news-sentiment/trending', authMiddleware('read'), (_req, res) => {
+  res.json({ trending: latestNewsSentiment?.trendingTopics || [], timestamp: lastNewsSentimentFetch });
+});
+app.get('/api/v15/news-sentiment/breaking', authMiddleware('read'), (_req, res) => {
+  res.json({ breaking: latestNewsSentiment?.breakingNews || [], timestamp: lastNewsSentimentFetch });
+});
+app.post('/api/v15/news-sentiment/refresh', authMiddleware('write'), async (_req, res) => {
+  try { latestNewsSentiment = await analyzeCryptoNewsSentiment(); lastNewsSentimentFetch = Date.now(); res.json({ success: true, data: latestNewsSentiment }); } catch (e) { res.status(500).json({ error: 'Failed' }); }
+});
+
+// ---- v15.2: BTC L2 Tracker API ----
+app.get('/api/v15/btc-l2/networks', authMiddleware('read'), (_req, res) => {
+  res.json({ networks: latestBTCL2?.networks || [], timestamp: lastBTCL2Fetch });
+});
+app.get('/api/v15/btc-l2/bridges', authMiddleware('read'), (_req, res) => {
+  res.json({ bridges: latestBTCL2?.bridges || [], timestamp: lastBTCL2Fetch });
+});
+app.get('/api/v15/btc-l2/flows', authMiddleware('read'), (_req, res) => {
+  res.json({ flows: latestBTCL2?.flows || [], timestamp: lastBTCL2Fetch });
+});
+app.get('/api/v15/btc-l2/stats', authMiddleware('read'), (_req, res) => {
+  res.json({ stats: latestBTCL2?.stats || {}, timestamp: lastBTCL2Fetch });
+});
+app.post('/api/v15/btc-l2/refresh', authMiddleware('write'), async (_req, res) => {
+  try { latestBTCL2 = await analyzeBTCL2Tracker(); lastBTCL2Fetch = Date.now(); res.json({ success: true, data: latestBTCL2 }); } catch (e) { res.status(500).json({ error: 'Failed' }); }
+});
+
+// ---- v15.3: Perp DEX Aggregator API ----
+app.get('/api/v15/perp-dex/comparisons', authMiddleware('read'), (_req, res) => {
+  res.json({ comparisons: latestPerpDexAgg?.comparisons || [], timestamp: lastPerpDexAggFetch });
+});
+app.get('/api/v15/perp-dex/dexes', authMiddleware('read'), (_req, res) => {
+  res.json({ dexes: latestPerpDexAgg?.dexes || [], timestamp: lastPerpDexAggFetch });
+});
+app.get('/api/v15/perp-dex/stats', authMiddleware('read'), (_req, res) => {
+  res.json({ stats: latestPerpDexAgg?.stats || {}, timestamp: lastPerpDexAggFetch });
+});
+app.get('/api/v15/perp-dex/top-by-volume', authMiddleware('read'), (_req, res) => {
+  const sorted = [...(latestPerpDexAgg?.dexes || [])].sort((a, b) => b.dailyVolume - a.dailyVolume).slice(0, 5);
+  res.json({ top: sorted, timestamp: lastPerpDexAggFetch });
+});
+app.post('/api/v15/perp-dex/refresh', authMiddleware('write'), async (_req, res) => {
+  try { latestPerpDexAgg = await analyzePerpetualDexAgg(); lastPerpDexAggFetch = Date.now(); res.json({ success: true, data: latestPerpDexAgg }); } catch (e) { res.status(500).json({ error: 'Failed' }); }
+});
+
+// ---- v15.4: L2 Revenue Tracker API ----
+app.get('/api/v15/l2-revenue/l2s', authMiddleware('read'), (_req, res) => {
+  res.json({ l2s: latestL2Revenue?.l2s || [], timestamp: lastL2RevenueFetch });
+});
+app.get('/api/v15/l2-revenue/cost-breakdowns', authMiddleware('read'), (_req, res) => {
+  res.json({ costBreakdowns: latestL2Revenue?.costBreakdowns || [], timestamp: lastL2RevenueFetch });
+});
+app.get('/api/v15/l2-revenue/stats', authMiddleware('read'), (_req, res) => {
+  res.json({ stats: latestL2Revenue?.stats || {}, timestamp: lastL2RevenueFetch });
+});
+app.get('/api/v15/l2-revenue/most-profitable', authMiddleware('read'), (_req, res) => {
+  const sorted = [...(latestL2Revenue?.l2s || [])].sort((a, b) => b.grossProfitDaily - a.grossProfitDaily).slice(0, 5);
+  res.json({ mostProfitable: sorted, timestamp: lastL2RevenueFetch });
+});
+app.post('/api/v15/l2-revenue/refresh', authMiddleware('write'), async (_req, res) => {
+  try { latestL2Revenue = await analyzeL2Revenue(); lastL2RevenueFetch = Date.now(); res.json({ success: true, data: latestL2Revenue }); } catch (e) { res.status(500).json({ error: 'Failed' }); }
+});
+
+// ---- v15.5: DeFi Aggregators API ----
+app.get('/api/v15/aggregators/list', authMiddleware('read'), (_req, res) => {
+  res.json({ aggregators: latestAggregators?.aggregators || [], timestamp: lastAggregatorsFetch });
+});
+app.get('/api/v15/aggregators/route-comparisons', authMiddleware('read'), (_req, res) => {
+  res.json({ routeComparisons: latestAggregators?.routeComparisons || [], timestamp: lastAggregatorsFetch });
+});
+app.get('/api/v15/aggregators/stats', authMiddleware('read'), (_req, res) => {
+  res.json({ stats: latestAggregators?.stats || {}, timestamp: lastAggregatorsFetch });
+});
+app.get('/api/v15/aggregators/top-by-volume', authMiddleware('read'), (_req, res) => {
+  const sorted = [...(latestAggregators?.aggregators || [])].sort((a, b) => b.dailyVolume - a.dailyVolume).slice(0, 5);
+  res.json({ top: sorted, timestamp: lastAggregatorsFetch });
+});
+app.post('/api/v15/aggregators/refresh', authMiddleware('write'), async (_req, res) => {
+  try { latestAggregators = await analyzeAggregators(); lastAggregatorsFetch = Date.now(); res.json({ success: true, data: latestAggregators }); } catch (e) { res.status(500).json({ error: 'Failed' }); }
 });
 
 // ==================== v14.0 API ====================
