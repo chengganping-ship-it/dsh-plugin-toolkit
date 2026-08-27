@@ -96,6 +96,11 @@ import { analyzeTokenomics, TokenomicsData } from './engine/tokenomicsAnalyzer.j
 import { analyzeSentimentIndex, SentimentIndexData } from './engine/sentimentIndex.js';
 import { analyzeSmartMoneyHoldings, SmartMoneyHoldingsData } from './engine/smartMoneyHoldings.js';
 import { analyzeMEVBuilderRevenue, MEVBuilderRevenueData } from './engine/mevBuilderRevenue.js';
+import { analyzeGovernanceVoters, GovernanceVoterData } from './engine/governanceVoterTracker.js';
+import { analyzeKalshiMarkets, PredictionMarketData } from './engine/predictionMarketAnalytics.js';
+import { analyzeETFFlows, ETFFlowData } from './engine/cryptoETFFlowTracker.js';
+import { analyzeOptionsFlow, OptionsFlowData } from './engine/optionsFlowAnalytics.js';
+import { analyzeCurveFinance, CurveData } from './engine/stablecoinCurveTracker.js';
 import { analyzeTokenUnlocks, TokenUnlockData } from './engine/tokenUnlock.js';
 import { analyzeRPCPerformance, RPCPerformanceData } from './engine/rpcMonitor.js';
 import { analyzeStablecoinResidualArb, StablecoinResidualArbData } from './engine/stablecoinResidualArb.js';
@@ -297,6 +302,18 @@ let latestSmartMoneyHoldings: SmartMoneyHoldingsData | null = null;
 let lastSmartMoneyHoldingsFetch = 0;
 let latestMEVBuilderRev: MEVBuilderRevenueData | null = null;
 let lastMEVBuilderRevFetch = 0;
+
+// ==================== v14.0 ENGINE STATE ====================
+let latestGovVoters: GovernanceVoterData | null = null;
+let lastGovVotersFetch = 0;
+let latestKalshi: PredictionMarketData | null = null;
+let lastKalshiFetch = 0;
+let latestETFFlows: ETFFlowData | null = null;
+let lastETFFlowsFetch = 0;
+let latestOptionsFlow: OptionsFlowData | null = null;
+let lastOptionsFlowFetch = 0;
+let latestCurveFinance: CurveData | null = null;
+let lastCurveFinanceFetch = 0;
 
 // ==================== v12.0 ENGINE STATE ====================
 let latestTokenUnlocks: TokenUnlockData | null = null;
@@ -1093,6 +1110,48 @@ async function poll() {
       } catch (e) { /* MEV builder revenue analysis failed */ }
     }
 
+    // ==================== v14.0 POLLING ====================
+
+    // v14.0: Governance voters (every 30 minutes)
+    if (pollCount % 60 === 0 || !latestGovVoters) {
+      try {
+        latestGovVoters = await analyzeGovernanceVoters();
+        lastGovVotersFetch = Date.now();
+      } catch (e) { /* Governance voters analysis failed */ }
+    }
+
+    // v14.1: Kalshi markets (every 15 minutes)
+    if (pollCount % 30 === 0 || !latestKalshi) {
+      try {
+        latestKalshi = await analyzeKalshiMarkets();
+        lastKalshiFetch = Date.now();
+      } catch (e) { /* Kalshi markets analysis failed */ }
+    }
+
+    // v14.3: ETF flows (every 30 minutes)
+    if (pollCount % 60 === 0 || !latestETFFlows) {
+      try {
+        latestETFFlows = await analyzeETFFlows();
+        lastETFFlowsFetch = Date.now();
+      } catch (e) { /* ETF flows analysis failed */ }
+    }
+
+    // v14.4: Options flow (every 15 minutes)
+    if (pollCount % 30 === 0 || !latestOptionsFlow) {
+      try {
+        latestOptionsFlow = await analyzeOptionsFlow();
+        lastOptionsFlowFetch = Date.now();
+      } catch (e) { /* Options flow analysis failed */ }
+    }
+
+    // v14.5: Curve finance (every 20 minutes)
+    if (pollCount % 40 === 0 || !latestCurveFinance) {
+      try {
+        latestCurveFinance = await analyzeCurveFinance();
+        lastCurveFinanceFetch = Date.now();
+      } catch (e) { /* Curve finance analysis failed */ }
+    }
+
     // ==================== v12.0 POLLING ====================
 
     // v12.0: Token unlock schedule (every 30 minutes)
@@ -1294,6 +1353,11 @@ function broadcast() {
       sentimentIdx: latestSentimentIdx,
       smartMoneyHoldings: latestSmartMoneyHoldings,
       mevBuilderRev: latestMEVBuilderRev,
+      govVoters: latestGovVoters,
+      kalshiMarkets: latestKalshi,
+      etfFlows: latestETFFlows,
+      optionsFlow: latestOptionsFlow,
+      curveFinance: latestCurveFinance,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -3232,6 +3296,177 @@ app.post('/api/v11/options/refresh', authMiddleware('write'), async (_req, res) 
     res.json({ success: true, options: latestOptionsDex });
   } catch (e) {
     res.status(500).json({ error: 'Failed to analyze options DEX' });
+  }
+});
+
+// ==================== v14.0 API ====================
+
+// ---- v14.0: Governance Voter Tracker API ----
+
+app.get('/api/v14/governance/voters', authMiddleware('read'), (_req, res) => {
+  res.json({ voters: latestGovVoters?.voters || [], timestamp: lastGovVotersFetch });
+});
+
+app.get('/api/v14/governance/proposals', authMiddleware('read'), (_req, res) => {
+  res.json({ proposals: latestGovVoters?.proposals || [], timestamp: lastGovVotersFetch });
+});
+
+app.get('/api/v14/governance/delegations', authMiddleware('read'), (_req, res) => {
+  res.json({ delegations: latestGovVoters?.delegations || [], timestamp: lastGovVotersFetch });
+});
+
+app.get('/api/v14/governance/stats', authMiddleware('read'), (_req, res) => {
+  res.json({ stats: latestGovVoters?.stats || {}, timestamp: lastGovVotersFetch });
+});
+
+app.post('/api/v14/governance/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestGovVoters = await analyzeGovernanceVoters();
+    lastGovVotersFetch = Date.now();
+    res.json({ success: true, govVoters: latestGovVoters });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze governance voters' });
+  }
+});
+
+// ---- v14.1: Kalshi Prediction Markets API ----
+
+app.get('/api/v14/kalshi/markets', authMiddleware('read'), (_req, res) => {
+  res.json({ markets: latestKalshi?.kalshiMarkets || [], timestamp: lastKalshiFetch });
+});
+
+app.get('/api/v14/kalshi/events', authMiddleware('read'), (_req, res) => {
+  res.json({ events: latestKalshi?.events || [], timestamp: lastKalshiFetch });
+});
+
+app.get('/api/v14/kalshi/volume', authMiddleware('read'), (_req, res) => {
+  res.json({ volumeTrend: latestKalshi?.volumeTrend || [], totalVolume24h: latestKalshi?.stats?.totalVolume24h || 0, timestamp: lastKalshiFetch });
+});
+
+app.get('/api/v14/kalshi/alerts', authMiddleware('read'), (_req, res) => {
+  res.json({ topMovers: latestKalshi?.topMovers || [], categoryBreakdown: latestKalshi?.categoryBreakdown || [], timestamp: lastKalshiFetch });
+});
+
+app.post('/api/v14/kalshi/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestKalshi = await analyzeKalshiMarkets();
+    lastKalshiFetch = Date.now();
+    res.json({ success: true, kalshi: latestKalshi });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze Kalshi markets' });
+  }
+});
+
+// ---- v14.2: RWA Yield Aggregator API ----
+
+app.get('/api/v14/rwa-yield/protocols', authMiddleware('read'), (_req, res) => {
+  res.json({ protocols: latestRWAYield?.protocols || [], timestamp: lastRWAYieldFetch });
+});
+
+app.get('/api/v14/rwa-yield/opportunities', authMiddleware('read'), (_req, res) => {
+  res.json({ opportunities: latestRWAYield?.opportunities || [], timestamp: lastRWAYieldFetch });
+});
+
+app.get('/api/v14/rwa-yield/best-yields', authMiddleware('read'), (_req, res) => {
+  res.json({ topProtocols: latestRWAYield?.topProtocols || [], categoryDistribution: latestRWAYield?.categoryDistribution || [], timestamp: lastRWAYieldFetch });
+});
+
+app.get('/api/v14/rwa-yield/summary', authMiddleware('read'), (_req, res) => {
+  res.json({ stats: latestRWAYield?.stats || {}, categoryDistribution: latestRWAYield?.categoryDistribution || [], timestamp: lastRWAYieldFetch });
+});
+
+app.post('/api/v14/rwa-yield/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestRWAYield = await analyzeRWAYield();
+    lastRWAYieldFetch = Date.now();
+    res.json({ success: true, rwaYield: latestRWAYield });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze RWA yield' });
+  }
+});
+
+// ---- v14.3: Crypto ETF Flow Tracker API ----
+
+app.get('/api/v14/etf-flows/daily', authMiddleware('read'), (_req, res) => {
+  res.json({ flows: latestETFFlows?.flows || [], timestamp: lastETFFlowsFetch });
+});
+
+app.get('/api/v14/etf-flows/products', authMiddleware('read'), (_req, res) => {
+  res.json({ products: latestETFFlows?.products || [], timestamp: lastETFFlowsFetch });
+});
+
+app.get('/api/v14/etf-flows/aum', authMiddleware('read'), (_req, res) => {
+  res.json({ stats: latestETFFlows?.stats || {}, issuerBreakdown: latestETFFlows?.issuerBreakdown || [], timestamp: lastETFFlowsFetch });
+});
+
+app.get('/api/v14/etf-flows/trends', authMiddleware('read'), (_req, res) => {
+  res.json({ flowTrend: latestETFFlows?.flowTrend || [], topInflows: latestETFFlows?.topInflows || [], topOutflows: latestETFFlows?.topOutflows || [], timestamp: lastETFFlowsFetch });
+});
+
+app.post('/api/v14/etf-flows/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestETFFlows = await analyzeETFFlows();
+    lastETFFlowsFetch = Date.now();
+    res.json({ success: true, etfFlows: latestETFFlows });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze ETF flows' });
+  }
+});
+
+// ---- v14.4: Options Flow Analytics API ----
+
+app.get('/api/v14/options-flow/flows', authMiddleware('read'), (_req, res) => {
+  res.json({ flows: latestOptionsFlow?.flows || [], timestamp: lastOptionsFlowFetch });
+});
+
+app.get('/api/v14/options-flow/block-trades', authMiddleware('read'), (_req, res) => {
+  res.json({ blockTrades: latestOptionsFlow?.blockTrades || [], timestamp: lastOptionsFlowFetch });
+});
+
+app.get('/api/v14/options-flow/sweeps', authMiddleware('read'), (_req, res) => {
+  const sweeps = (latestOptionsFlow?.flows || []).filter(f => f.isSweep);
+  res.json({ sweeps, timestamp: lastOptionsFlowFetch });
+});
+
+app.get('/api/v14/options-flow/gamma', authMiddleware('read'), (_req, res) => {
+  res.json({ netGammaExposure: latestOptionsFlow?.stats?.netGammaExposure || 0, putCallTrend: latestOptionsFlow?.putCallTrend || [], smartMoneySignals: latestOptionsFlow?.smartMoneySignals || [], timestamp: lastOptionsFlowFetch });
+});
+
+app.post('/api/v14/options-flow/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestOptionsFlow = await analyzeOptionsFlow();
+    lastOptionsFlowFetch = Date.now();
+    res.json({ success: true, optionsFlow: latestOptionsFlow });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze options flow' });
+  }
+});
+
+// ---- v14.5: Curve Finance Pool Tracker API ----
+
+app.get('/api/v14/curve/pools', authMiddleware('read'), (_req, res) => {
+  res.json({ pools: latestCurveFinance?.pools || [], timestamp: lastCurveFinanceFetch });
+});
+
+app.get('/api/v14/curve/gauges', authMiddleware('read'), (_req, res) => {
+  res.json({ gauges: latestCurveFinance?.gauges || [], timestamp: lastCurveFinanceFetch });
+});
+
+app.get('/api/v14/curve/peg-alerts', authMiddleware('read'), (_req, res) => {
+  res.json({ pegAlerts: latestCurveFinance?.pegAlerts || [], avgPegStatus: latestCurveFinance?.stats?.avgPegStatus || 0, timestamp: lastCurveFinanceFetch });
+});
+
+app.get('/api/v14/curve/emissions', authMiddleware('read'), (_req, res) => {
+  res.json({ stats: latestCurveFinance?.stats || {}, chainDistribution: latestCurveFinance?.chainDistribution || [], aprTrend: latestCurveFinance?.aprTrend || [], timestamp: lastCurveFinanceFetch });
+});
+
+app.post('/api/v14/curve/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestCurveFinance = await analyzeCurveFinance();
+    lastCurveFinanceFetch = Date.now();
+    res.json({ success: true, curveFinance: latestCurveFinance });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze Curve finance' });
   }
 });
 

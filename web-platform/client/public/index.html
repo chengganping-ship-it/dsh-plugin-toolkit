@@ -1461,6 +1461,78 @@
     </div>
   </div>
 
+  <!-- v13.4: Governance Voters + Proposals -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v13.4: Governance Voters <span id="gvBadge" class="tag bd bb">-</span></h2>
+      <div id="govVoters" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+    <div class="card">
+      <h2>v13.4: Proposals <span id="gpBadge" class="tag bd bg">-</span></h2>
+      <div id="proposals" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- v13.5: Kalshi Markets + Kalshi Events -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v13.5: Kalshi Markets <span id="kmBadge" class="tag bd bb">-</span></h2>
+      <div id="kalshiMarkets" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+    <div class="card">
+      <h2>v13.5: Kalshi Events <span id="keBadge" class="tag bd bg">-</span></h2>
+      <div id="kalshiEvents" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- v14.0: RWA Protocols + RWA Opportunities -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v14.0: RWA Protocols <span id="rwaBadge" class="tag bd bb">-</span></h2>
+      <div id="rwaProtocols" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+    <div class="card">
+      <h2>v14.0: RWA Opportunities <span id="rwaOBadge" class="tag bd bg">-</span></h2>
+      <div id="rwaOpps" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- v14.1: ETF Products + ETF Daily Flows -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v14.1: ETF Products <span id="etfBadge" class="tag bd bb">-</span></h2>
+      <div id="etfProducts" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+    <div class="card">
+      <h2>v14.1: ETF Daily Flows <span id="etfDBadge" class="tag bd bg">-</span></h2>
+      <div id="etfDaily" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- v14.2: Options Flows + Block Trades -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v14.2: Options Flows <span id="ofBadge" class="tag bd bb">-</span></h2>
+      <div id="optionsFlows" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+    <div class="card">
+      <h2>v14.2: Block Trades <span id="btBadge" class="tag bd bg">-</span></h2>
+      <div id="blockTrades" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- v14.3: Curve Pools + Peg Alerts -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v14.3: Curve Pools <span id="cpBadge" class="tag bd bb">-</span></h2>
+      <div id="curvePools" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+    <div class="card">
+      <h2>v14.3: Peg Alerts <span id="paBadge" class="tag bd bg">-</span></h2>
+      <div id="pegAlerts" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -1592,6 +1664,12 @@ function render() {
   renderFearGreed(); renderSentSignals();
   renderSmartMoney(); renderTopMovers();
   renderBuilders(); renderBuilderRevenue();
+  renderGovVoters(); renderProposals();
+  renderKalshiMarkets(); renderKalshiEvents();
+  renderRWAProtocols(); renderRWAOpps();
+  renderETFProducts(); renderETFDaily();
+  renderOptionsFlows(); renderBlockTrades();
+  renderCurvePools(); renderPegAlerts();
 }
 
 function renderHM() {
@@ -2605,6 +2683,20 @@ function renderSmartMoney(){var s=data.smartMoneyHoldings;if(!s){$('smartMoney')
 function renderTopMovers(){var s=data.smartMoneyHoldings;if(!s){$('topMovers').innerHTML='<div class="emp">Loading...</div>';return}var m=(s.movers||[]).slice(0,5);$('tmmBadge').textContent=m.length+' movers';var h='';for(var x of m){h+='<div class="tm-mover '+(x.change24h>10?'high':x.change24h>5?'med':'low')+'"><span class="tm-sym">'+x.symbol.slice(0,6)+'</span><span class="tm-chg '+(x.change24h>0?'pos':'neg')+'">'+(x.change24h>0?'+':'')+x.change24h.toFixed(1)+'%</span><span class="tm-vol">$'+(x.volume24h/1e6).toFixed(0)+'M</span></div>'}$('topMovers').innerHTML=h||'<div class="emp">No movers</div>'}
 function renderBuilders(){var m=data.mevBuilderRev;if(!m){$('builders').innerHTML='<div class="emp">Loading...</div>';return}var b=(m.builders||[]).slice(0,6);$('bldBadge').textContent=b.length+' builders';var h='';for(var x of b){h+='<div class="bld-item '+(x.marketShare>20?'high':x.marketShare>10?'med':'low')+'"><span class="bld-name">'+x.name.slice(0,10)+'</span><span class="bld-share">'+x.marketShare.toFixed(1)+'%</span><span class="bld-blocks">'+x.blocks24h+'</span></div>'}$('builders').innerHTML=h||'<div class="emp">No builders</div>'}
 function renderBuilderRevenue(){var m=data.mevBuilderRev;if(!m){$('builderRevenue').innerHTML='<div class="emp">Loading...</div>';return}var r=(m.revenue||[]).slice(0,5);$('revBadge').textContent=r.length+' entries';var h='';for(var x of r){h+='<div class="rev-item '>(x.dailyRevenue>10?'high':x.dailyRevenue>5?'med':'low')+'"><span class="rev-name">'+x.builder.slice(0,10)+'</span><span class="rev-daily">'+x.dailyRevenue.toFixed(2)+'Ξ</span><span class="rev-total">$'+(x.totalUSD/1e6).toFixed(1)+'M</span></div>'}$('builderRevenue').innerHTML=h||'<div class="emp">No revenue data</div>'}
+
+// ==================== v14.0 Renders ====================
+function renderGovVoters(){var g=data.govVoters;if(!g){$('govVoters').innerHTML='<div class="emp">Loading...</div>';return}var v=(g.voters||[]).slice(0,8);$('gvBadge').textContent=v.length+' voters';var h='';for(var x of v){h+='<div class="gv-voter '+(x.isWhale?'high':x.votingPowerPercent>0.1?'med':'low')+'"><span class="gv-addr">'+x.address.slice(0,10)+'</span><span class="gv-dao">'+x.dao.slice(0,6)+'</span><span class="gv-power '+(x.votingPowerPercent>1?'high':'med')+'">'+x.votingPowerPercent.toFixed(3)+'%</span><span class="gv-part">'+x.participationRate+'%</span></div>'}$('govVoters').innerHTML=h||'<div class="emp">No voter data</div>'}
+function renderProposals(){var g=data.govVoters;if(!g){$('proposals').innerHTML='<div class="emp">Loading...</div>';return}var p=(g.proposals||[]).slice(0,6);$('gpBadge').textContent=p.length+' proposals';var h='';for(var x of p){h+='<div class="gp-prop '+x.status.toLowerCase()+'"><span class="gp-dao">'+x.dao.slice(0,6)+'</span><span class="gp-title">'+x.title.slice(0,30)+'</span><span class="gp-status '+x.status.toLowerCase()+'">'+x.status.slice(0,4)+'</span><span class="gp-pred '+x.predictedOutcome.toLowerCase()+'">'+x.predictedOutcome.slice(0,4)+'</span></div>'}$('proposals').innerHTML=h||'<div class="emp">No proposals</div>'}
+function renderKalshiMarkets(){var k=data.kalshiMarkets;if(!k){$('kalshiMarkets').innerHTML='<div class="emp">Loading...</div>';return}var m=(k.kalshiMarkets||[]).filter(x=>x.outcome==='YES').slice(0,8);$('kmBadge').textContent=m.length+' markets';var h='';for(var x of m){h+='<div class="km-mkt '+(x.trend==='RISING'?'high':x.trend==='FALLING'?'low':'med')+'"><span class="km-q">'+x.question.slice(0,30)+'</span><span class="km-prob '+(x.trend==='RISING'?'pos':'neg')+'">'+(x.probability*100).toFixed(1)+'%</span><span class="km-chg '+(x.change24h>0?'pos':'neg')+'">'+(x.change24h>0?'+':'')+x.change24h.toFixed(1)+'</span></div>'}$('kalshiMarkets').innerHTML=h||'<div class="emp">No Kalshi markets</div>'}
+function renderKalshiEvents(){var k=data.kalshiMarkets;if(!k){$('kalshiEvents').innerHTML='<div class="emp">Loading...</div>';return}var e=(k.events||[]).slice(0,6);$('keBadge').textContent=e.length+' events';var h='';for(var x of e){h+='<div class="ke-evt '+(x.category==='Crypto'?'high':'med')+'"><span class="ke-title">'+x.title.slice(0,30)+'</span><span class="ke-cat">'+x.category.slice(0,6)+'</span><span class="ke-vol">$'+(x.volume/1e6).toFixed(0)+'M</span></div>'}$('kalshiEvents').innerHTML=h||'<div class="emp">No Kalshi events</div>'}
+function renderRWAProtocols(){var r=data.rwaYield;if(!r){$('rwaProtocols').innerHTML='<div class="emp">Loading...</div>';return}var p=(r.protocols||[]).slice(0,8);$('rwaBadge').textContent=p.length+' protocols';var h='';for(var x of p){h+='<div class="rwa-proto '+(x.apy>8?'high':x.apy>5?'med':'low')+'"><span class="rwa-name">'+x.name.slice(0,12)+'</span><span class="rwa-apy '+(x.apy>8?'high':'med')+'">'+x.apy.toFixed(1)+'%</span><span class="rwa-tvl">$'+(x.tvl/1e6).toFixed(0)+'M</span><span class="rwa-risk '+x.riskScore<15?'low':x.riskScore<35?'med':'high'+'">'+x.riskScore+'</span></div>'}$('rwaProtocols').innerHTML=h||'<div class="emp">No RWA protocols</div>'}
+function renderRWAOpps(){var r=data.rwaYield;if(!r){$('rwaOpps').innerHTML='<div class="emp">Loading...</div>';return}var o=(r.opportunities||[]).slice(0,6);$('rwaOBadge').textContent=o.length+' opps';var h='';for(var x of o){h+='<div class="rwa-opp '+(x.recommended?'high':x.risk==='LOW'?'med':'low')+'"><span class="rwa-opp-proto">'+x.protocol.slice(0,10)+'</span><span class="rwa-opp-net '+(x.netApy>7?'high':'med')+'">'+x.netApy.toFixed(1)+'%</span><span class="rwa-opp-risk '+x.risk.toLowerCase()+'">'+x.risk.slice(0,4)+'</span></div>'}$('rwaOpps').innerHTML=h||'<div class="emp">No RWA opportunities</div>'}
+function renderETFProducts(){var e=data.etfFlows;if(!e){$('etfProducts').innerHTML='<div class="emp">Loading...</div>';return}var p=(e.products||[]).slice(0,8);$('etfBadge').textContent=p.length+' ETFs';var h='';for(var x of p){h+='<div class="etf-prod '+(x.flowMomentum==='ACCUMULATING'?'high':x.flowMomentum==='DISTRIBUTING'?'low':'med')+'"><span class="etf-ticker">'+x.ticker.slice(0,6)+'</span><span class="etf-aum">$'+(x.aum/1e9).toFixed(1)+'B</span><span class="etf-mom '+x.flowMomentum.toLowerCase()+'">'+x.flowMomentum.slice(0,4)+'</span></div>'}$('etfProducts').innerHTML=h||'<div class="emp">No ETF products</div>'}
+function renderETFDaily(){var e=data.etfFlows;if(!e){$('etfDaily').innerHTML='<div class="emp">Loading...</div>';return}var f=(e.flows||[]).slice(0,6);$('etfDBadge').textContent=f.length+' flows';var h='';for(var x of f){h+='<div class="etf-flow '+(x.netFlow>0?'high':'low')+'"><span class="etf-flow-ticker">'+x.ticker.slice(0,6)+'</span><span class="etf-flow-net '+(x.netFlow>0?'pos':'neg')+'">'+((x.netFlow>0?'+':'')+(x.netFlow/1e6).toFixed(1))+'M</span><span class="etf-flow-vol">$'+(x.volume/1e6).toFixed(0)+'M</span></div>'}$('etfDaily').innerHTML=h||'<div class="emp">No daily flows</div>'}
+function renderOptionsFlows(){var o=data.optionsFlow;if(!o){$('optionsFlows').innerHTML='<div class="emp">Loading...</div>';return}var f=(o.flows||[]).filter(x=>x.isUnusual).slice(0,8);$('ofBadge').textContent=f.length+' unusual';var h='';for(var x of f){h+='<div class="of-flow '+(x.type==='CALL'?'high':'low')+'"><span class="of-ticker">'+x.ticker+'</span><span class="of-type '+x.type.toLowerCase()+'">'+x.type.slice(0,4)+'</span><span class="of-strike">'+x.strike+'</span><span class="of-ratio '+(x.unusualRatio>5?'high':'med')+'">'+x.unusualRatio.toFixed(1)+'x</span></div>'}$('optionsFlows').innerHTML=h||'<div class="emp">No unusual flows</div>'}
+function renderBlockTrades(){var o=data.optionsFlow;if(!o){$('blockTrades').innerHTML='<div class="emp">Loading...</div>';return}var b=(o.blockTrades||[]).slice(0,6);$('btBadge').textContent=b.length+' blocks';var h='';for(var x of b){h+='<div class="bt-trade '+(x.impliedDirection==='BULLISH'?'high':x.impliedDirection==='BEARISH'?'low':'med')+'"><span class="bt-ticker">'+x.ticker+'</span><span class="bt-dir '+x.impliedDirection.toLowerCase()+'">'+x.impliedDirection.slice(0,4)+'</span><span class="bt-prem">$'+(x.premiumUsd/1e6).toFixed(1)+'M</span><span class="bt-strat">'+x.strategy.slice(0,12)+'</span></div>'}$('blockTrades').innerHTML=h||'<div class="emp">No block trades</div>'}
+function renderCurvePools(){var c=data.curveFinance;if(!c){$('curvePools').innerHTML='<div class="emp">Loading...</div>';return}var p=(c.pools||[]).slice(0,8);$('cpBadge').textContent=p.length+' pools';var h='';for(var x of p){h+='<div class="cp-pool '+(x.totalApr>6?'high':x.totalApr>3?'med':'low')+'"><span class="cp-name">'+x.name.slice(0,14)+'</span><span class="cp-apr '+(x.totalApr>6?'high':'med')+'">'+x.totalApr.toFixed(1)+'%</span><span class="cp-tvl">$'+(x.tvl/1e6).toFixed(0)+'M</span><span class="cp-peg '+(x.pegStatus>99?'low':x.pegStatus>98?'med':'high')+'">'+x.pegStatus.toFixed(1)+'</span></div>'}$('curvePools').innerHTML=h||'<div class="emp">No Curve pools</div>'}
+function renderPegAlerts(){var c=data.curveFinance;if(!c){$('pegAlerts').innerHTML='<div class="emp">Loading...</div>';return}var a=(c.pegAlerts||[]).slice(0,6);$('paBadge').textContent=a.length+' alerts';var h='';for(var x of a){h+='<div class="pa-alert '+x.severity.toLowerCase()+'"><span class="pa-pool">'+x.pool.slice(0,14)+'</span><span class="pa-peg">'+x.pegStatus.toFixed(2)+'</span><span class="pa-dev '+x.severity.toLowerCase()+'">'+x.deviation.toFixed(2)+'</span><span class="pa-sev '+x.severity.toLowerCase()+'">'+x.severity.slice(0,4)+'</span></div>'}$('pegAlerts').innerHTML=h||'<div class="emp">No peg alerts</div>'}
 
 // Kelly
 $('kB')?.addEventListener('click', async () => {
