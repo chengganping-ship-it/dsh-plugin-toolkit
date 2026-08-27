@@ -49,6 +49,7 @@ import { analyzeOptions, getOptionsSummary, GreeksSummary } from './engine/optio
 import { optimizeGrid, getCachedGrids, clearGridCache, GridOptimization } from './engine/grid.js';
 import { analyzeLiquidations, getCachedLiquidations, clearLiquidationCache, LiquidationAnalysis } from './engine/liquidation.js';
 import { analyzeTermStructure, getCachedTermStructures, clearTermStructureCache, TermStructureAnalysis } from './engine/termstructure.js';
+import { analyzeExecution, getActiveOrders, getExecutionHistory, clearExecutionHistory, ExecutionAnalysis } from './engine/execution.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -144,6 +145,8 @@ let latestLiquidation: LiquidationAnalysis | null = null;
 let lastLiquidationFetch = 0;
 let latestTermStructures: Map<string, TermStructureAnalysis> = new Map();
 let lastTermStructureFetch = 0;
+let latestExecution: ExecutionAnalysis | null = null;
+let lastExecutionFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -461,6 +464,28 @@ async function poll() {
       }
     }
 
+    // v7.4: Execution analysis (every 10 minutes)
+    if (pollCount % 20 === 0 || !latestExecution) {
+      try {
+        const btcRate = latestRates.find(r => r.symbol === 'BTCUSDT');
+        if (btcRate) {
+          latestExecution = await analyzeExecution(
+            'BTC',
+            'BUY',
+            0.5,
+            'TWAP',
+            btcRate.markPrice || 65000,
+            btcRate.volume24h || 1e9,
+            0.03,
+            0.02
+          );
+          lastExecutionFetch = Date.now();
+        }
+      } catch (e) {
+        // Execution analysis failed
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
@@ -548,6 +573,7 @@ function broadcast() {
       grid: latestGridOptimizations,
       liquidation: latestLiquidation,
       termStructure: Array.from(latestTermStructures.values()),
+      execution: latestExecution,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -602,6 +628,7 @@ wss.on('connection', (ws) => {
         grid: latestGridOptimizations,
         liquidation: latestLiquidation,
         termStructure: Array.from(latestTermStructures.values()),
+        execution: latestExecution,
         stats: {
           totalRates: latestRates.length,
           exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -1277,6 +1304,42 @@ app.post('/api/v7/termstructure/refresh', authMiddleware('write'), async (_req, 
     res.json({ success: true, termStructures: Array.from(latestTermStructures.values()) });
   } catch (e) {
     res.status(500).json({ error: 'Failed to analyze term structure' });
+  }
+});
+
+// ---- v7.4: Smart Execution Engine API ----
+
+app.get('/api/v7/execution', authMiddleware('read'), (_req, res) => {
+  res.json({ execution: latestExecution, timestamp: lastExecutionFetch });
+});
+
+app.get('/api/v7/execution/orders', authMiddleware('read'), (_req, res) => {
+  res.json({ orders: Array.from(getActiveOrders().values()) });
+});
+
+app.get('/api/v7/execution/history', authMiddleware('read'), (req, res) => {
+  const limit = parseInt(req.query.limit as string) || 10;
+  res.json({ history: getExecutionHistory(limit) });
+});
+
+app.post('/api/v7/execution/analyze', authMiddleware('write'), async (req, res) => {
+  try {
+    const { symbol, side, qty, strategy, price, volume, volatility, spread } = req.body;
+    const btcRate = latestRates.find(r => r.symbol === 'BTCUSDT');
+    latestExecution = await analyzeExecution(
+      symbol || 'BTC',
+      side || 'BUY',
+      qty || 0.5,
+      strategy || 'TWAP',
+      price || btcRate?.markPrice || 65000,
+      volume || btcRate?.volume24h || 1e9,
+      volatility || 0.03,
+      spread || 0.02
+    );
+    lastExecutionFetch = Date.now();
+    res.json({ success: true, execution: latestExecution });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze execution' });
   }
 });
 

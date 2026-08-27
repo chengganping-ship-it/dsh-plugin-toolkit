@@ -224,6 +224,29 @@
     .pred-row .bounds{margin-left:auto;font-size:7px;color:#6b7a8d}
     .ts-signal{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28}
     .ts-signal .sig-type{flex:1}
+    .exec-header{display:flex;gap:8px;font-size:8px;margin-bottom:4px;align-items:center;flex-wrap:wrap}
+    .exec-sym{font-weight:600;color:#9b59b6}
+    .exec-side{padding:1px 5px;border-radius:3px;font-size:7px;font-weight:600}
+    .exec-side.buy{background:#00d4aa22;color:#00d4aa}
+    .exec-side.sell{background:#ff444422;color:#ff4444}
+    .exec-progress{height:6px;background:#141c28;border-radius:3px;margin-bottom:6px;overflow:hidden}
+    .exec-bar{height:100%;background:linear-gradient(90deg,#9b59b6,#4a9eff);border-radius:3px;transition:width 0.3s}
+    .exec-slice{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28}
+    .exec-slice .slice-id{width:50px;color:#6b7a8d}
+    .exec-slice .slice-qty{width:55px}
+    .exec-slice .slice-price{width:60px;color:#4a9eff}
+    .exec-slice .slice-status{width:50px;text-align:center;font-size:7px;padding:1px 3px;border-radius:3px}
+    .exec-slice.filled .slice-status{background:#00d4aa22;color:#00d4aa}
+    .exec-slice.partial .slice-status{background:#f5a62322;color:#f5a623}
+    .exec-slice.pending .slice-status{background:#6b7a8d22;color:#6b7a8d}
+    .quality-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:6px}
+    .q-item{display:flex;justify-content:space-between;padding:3px 5px;background:#0d1117;border-radius:3px;font-size:8px}
+    .q-item .q-label{color:#6b7a8d}
+    .q-item .q-val{font-weight:600}
+    .q-item .q-val.good{color:#00d4aa}
+    .q-item .q-val.bad{color:#ff4444}
+    .exec-rec{padding:3px 5px;background:#4a9eff11;border-radius:3px;margin-bottom:3px;font-size:8px;border-left:2px solid #4a9eff}
+    .exec-warn{padding:3px 5px;background:#ff444411;border-radius:3px;margin-bottom:3px;font-size:8px;border-left:2px solid #ff4444}
     @media(max-width:1100px){.g{grid-template-columns:repeat(3,1fr)}.g5{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:800px){.g{grid-template-columns:repeat(2,1fr)}.g2,.g3,.g5{grid-template-columns:1fr}.c{padding:6px}.hdr{padding:6px 10px}.stats{gap:5px}}
     @media(max-width:500px){.g{grid-template-columns:1fr}.hm{grid-template-columns:repeat(auto-fill,minmax(65px,1fr))}.stats .lb{font-size:9px}}
@@ -442,6 +465,18 @@
     </div>
   </div>
 
+  <!-- v7.4: Smart Execution Engine -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v7.4: Smart Order Execution <span id="execBadge" class="tag bd bb">-</span></h2>
+      <div id="execOverview" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Analyzing execution...</div></div>
+    </div>
+    <div class="card">
+      <h2>v7.4: Execution Quality & Impact <span id="execQualityBadge" class="tag bd bb">-</span></h2>
+      <div id="execQuality" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Measuring quality...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -520,6 +555,7 @@ function render() {
   renderGridOverview(); renderMCResults();
   renderLiqWarnings(); renderLiqClusters();
   renderTSCurve(); renderTSPredictions();
+  renderExecOverview(); renderExecQuality();
 }
 
 function renderHM() {
@@ -1213,6 +1249,60 @@ function renderTSPredictions() {
         <span style="color:#4a9eff">+${s.expectedReturn.toFixed(1)}%</span>
       </div>
     `).join('')}
+  `;
+}
+
+function renderExecOverview() {
+  const exec = data.execution;
+  if (!exec) { $('execOverview').innerHTML = '<div class="emp">Analyzing execution...</div>'; return; }
+  const order = exec.order;
+  $('execBadge').textContent = order.strategy + ' ' + order.status;
+  const slicesHtml = (order.slices || []).slice(0, 6).map(s => `
+    <div class="exec-slice ${s.status.toLowerCase()}">
+      <span class="slice-id">${s.id?.slice(-6)}</span>
+      <span class="slice-qty">${s.qty?.toFixed(4)}</span>
+      <span class="slice-price">${s.price ? '$' + s.price.toFixed(0) : '-'}</span>
+      <span class="slice-status">${s.status}</span>
+    </div>
+  `).join('');
+  $('execOverview').innerHTML = `
+    <div class="exec-header">
+      <span class="exec-sym">${order.symbol}</span>
+      <span class="exec-side ${order.side.toLowerCase()}">${order.side}</span>
+      <span>Qty: ${order.totalQty.toFixed(4)}</span>
+      <span>Filled: ${order.filledQty.toFixed(4)} (${((order.filledQty/order.totalQty)*100).toFixed(0)}%)</span>
+    </div>
+    <div class="exec-progress"><div class="exec-bar" style="width:${(order.filledQty/order.totalQty)*100}%"></div></div>
+    <div style="font-size:7px;color:#6b7a8d;margin:4px 0">Slices:</div>
+    ${slicesHtml}
+    <div style="font-size:7px;color:#6b7a8d;margin-top:4px">Duration: ${(order.params.duration / 60).toFixed(0)}min | Urgency: ${order.params.urgency}</div>
+  `;
+}
+
+function renderExecQuality() {
+  const exec = data.execution;
+  if (!exec) { $('execQuality').innerHTML = '<div class="emp">Measuring quality...</div>'; return; }
+  const q = exec.quality;
+  const mi = exec.marketImpact;
+  $('execQualityBadge').textContent = q.vwapSlippage > 0.1 ? 'High Slip' : 'Good';
+  const recsHtml = (exec.recommendations || []).slice(0, 3).map(r => `
+    <div class="exec-rec">${r}</div>
+  `).join('');
+  const warningsHtml = (exec.riskWarnings || []).map(w => `
+    <div class="exec-warn">${w}</div>
+  `).join('');
+  $('execQuality').innerHTML = `
+    <div class="quality-grid">
+      <div class="q-item"><span class="q-label">VWAP Slippage</span><span class="q-val ${q.vwapSlippage > 0.1 ? 'bad' : 'good'}">${q.vwapSlippage > 0 ? '+' : ''}${q.vwapSlippage.toFixed(3)}%</span></div>
+      <div class="q-item"><span class="q-label">Impl Shortfall</span><span class="q-val ${q.implementationShortfall > 0.15 ? 'bad' : 'good'}">${q.implementationShortfall > 0 ? '+' : ''}${q.implementationShortfall.toFixed(3)}%</span></div>
+      <div class="q-item"><span class="q-label">Avg Fill</span><span class="q-val">$${q.averageFillPrice.toFixed(0)}</span></div>
+      <div class="q-item"><span class="q-label">Fill Rate</span><span class="q-val">${q.fillRate.toFixed(0)}%</span></div>
+      <div class="q-item"><span class="q-label">Total Cost</span><span class="q-val">$${q.totalCost.toFixed(2)}</span></div>
+      <div class="q-item"><span class="q-label">Market Impact</span><span class="q-val ${mi.totalImpact > 0.5 ? 'bad' : 'good'}">${mi.totalImpact.toFixed(3)}%</span></div>
+    </div>
+    <div style="font-size:7px;color:#6b7a8d;margin-top:4px">Cost Breakdown: Market $${q.marketCost.toFixed(2)} | Timing $${q.timingCost.toFixed(2)} | Opportunity $${q.opportunityCost.toFixed(2)}</div>
+    ${recsHtml ? '<div style="font-size:7px;color:#6b7a8d;margin-top:4px">Recommendations:</div>' + recsHtml : ''}
+    ${warningsHtml || ''}
   `;
 }
 
