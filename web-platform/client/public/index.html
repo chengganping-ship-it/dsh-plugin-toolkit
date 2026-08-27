@@ -162,6 +162,15 @@
     .cc-arb{padding:5px;background:#141c28;border-radius:4px;margin-bottom:4px;font-size:9px;border-left:3px solid #4a9eff}
     .cc-arb .roi{color:#00d4aa;font-weight:700}
     .cc-arb .route{color:#4a9eff;font-family:monospace;font-size:8px}
+    .opt-row{display:flex;align-items:center;gap:6px;padding:3px 0;font-size:9px;border-bottom:1px solid #141c28}
+    .opt-row .label{width:55px;color:#6b7a8d;font-size:8px}
+    .opt-row .val{font-weight:600}
+    .fv-signal{padding:5px;background:#141c28;border-radius:4px;margin-bottom:4px;font-size:9px;border-left:3px solid #ff4444}
+    .fv-signal .type{font-weight:600;color:#ff4444}
+    .fv-signal .desc{font-size:8px;color:#6b7a8d}
+    .fv-signal .action{padding:1px 5px;border-radius:3px;font-size:7px;font-weight:600}
+    .fv-signal .action.SELL_OPTIONS{background:#ff444422;color:#ff4444}
+    .fv-signal .action.BUY_OPTIONS{background:#00d4aa22;color:#00d4aa}
     @media(max-width:1100px){.g{grid-template-columns:repeat(3,1fr)}.g5{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:800px){.g{grid-template-columns:repeat(2,1fr)}.g2,.g3,.g5{grid-template-columns:1fr}.c{padding:6px}.hdr{padding:6px 10px}.stats{gap:5px}}
     @media(max-width:500px){.g{grid-template-columns:1fr}.hm{grid-template-columns:repeat(auto-fill,minmax(65px,1fr))}.stats .lb{font-size:9px}}
@@ -185,6 +194,7 @@
     <div>DEX: <span class="v" id="dxC">-</span></div>
     <div>Whale: <span class="v" id="wlC">-</span></div>
     <div>Bridge: <span class="v" id="brC">-</span></div>
+    <div>Opt: <span class="v" id="opC">-</span></div>
   </div>
 </div>
 <div class="c">
@@ -331,6 +341,18 @@
     </div>
   </div>
 
+  <!-- v7.1: Options Greeks -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v7.1: Options Greeks & IV Surface <span id="optBadge" class="tag bd bb">-</span></h2>
+      <div id="optGreeks" style="max-height:250px;overflow-y:auto"><div class="emp">Loading options chain...</div></div>
+    </div>
+    <div class="card">
+      <h2>v7.1: Funding-Vol Arbitrage Signals <span id="fvBadge" class="tag bd bb">-</span></h2>
+      <div id="fvSignals" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Analyzing divergence...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -396,6 +418,7 @@ function render() {
   $('dxC').textContent = data.dexQuote?.routes?.length || '-';
   $('wlC').textContent = data.whale?.alerts?.length || '-';
   $('brC').textContent = data.bridge?.opportunities?.length || '-';
+  $('opC').textContent = data.options?.[0]?.stats?.atmIv30d ? (data.options[0].stats.atmIv30d * 100).toFixed(0) + '%' : '-';
   renderHM(); renderOpps(); renderAnom(); renderML(); renderCP(); renderPP();
   renderPort(); renderCDN(); renderRegime(); renderRouter(); renderHealth(); renderEquity();
   renderStratSignals(); renderFeeBreakdown(); renderVolSurface();
@@ -404,6 +427,7 @@ function render() {
   renderDexRoutes(); renderDexMev();
   renderWhaleAlerts(); renderLiqHeatmap();
   renderBridgeStatus(); renderCcArb();
+  renderOptGreeks(); renderFvSignals();
 }
 
 function renderHM() {
@@ -927,6 +951,43 @@ function renderCcArb() {
       <div style="font-size:8px;color:#6b7a8d">Rate diff: ${(o.rateDifferential * 10000).toFixed(2)}bps | Bridge: ${o.bridge?.bridge?.slice(0, 15)} | Cost: $${o.totalCost.toFixed(0)}</div>
     </div>`
   ).join('');
+}
+
+function renderOptGreeks() {
+  const opts = data.options || [];
+  if (!opts.length) { $('optGreeks').innerHTML = '<div class="emp">Loading options...</div>'; return; }
+  const btc = opts.find(o => o.symbol === 'BTC') || opts[0];
+  if (!btc) { $('optGreeks').innerHTML = '<div class="emp">No options data</div>'; return; }
+  $('optBadge').textContent = btc.symbol + ' IV ' + (btc.stats?.atmIv30d * 100).toFixed(1) + '%';
+  const s = btc.stats || {};
+  $('optGreeks').innerHTML = `
+    <div style="font-size:8px;color:#6b7a8d;margin-bottom:4px;text-transform:uppercase">${btc.symbol} Options Overview</div>
+    <div class="opt-row"><span class="label">ATM IV(30d)</span><span class="val" style="color:#00d4aa">${(s.atmIv30d * 100).toFixed(2)}%</span></div>
+    <div class="opt-row"><span class="label">HV(20d)</span><span class="val">${(s.hv20d * 100).toFixed(2)}%</span></div>
+    <div class="opt-row"><span class="label">IV-HV Spread</span><span class="val" style="color:${s.ivHvSpread > 0 ? '#ff4444' : '#00d4aa'}">${(s.ivHvSpread * 100).toFixed(2)}%</span></div>
+    <div class="opt-row"><span class="label">IV Percentile</span><span class="val">${s.ivPercentile30d.toFixed(0)}%</span></div>
+    <div class="opt-row"><span class="label">Put/Call Ratio</span><span class="val">${s.putCallRatio.toFixed(2)}</span></div>
+    <div class="opt-row"><span class="label">Max Pain</span><span class="val">$${s.maxPain?.toLocaleString()}</span></div>
+    <div class="opt-row"><span class="label">Total OI</span><span class="val">$${s.totalOi > 1e9 ? (s.totalOi / 1e9).toFixed(1) + 'B' : (s.totalOi / 1e6).toFixed(0) + 'M'}</span></div>
+    <div class="opt-row"><span class="label">Fund-IV Corr</span><span class="val">${s.fundingIvCorrelation.toFixed(2)}</span></div>
+    <div style="margin-top:6px;font-size:8px;color:#6b7a8d">IV Term Structure</div>
+    ${(btc.surfaces?.[0]?.atmTermStructure || []).slice(0, 4).map(t =>
+      `<div class="opt-row"><span class="label">${t.dte}d</span><span class="val" style="color:#4a9eff">${(t.iv * 100).toFixed(1)}%</span></div>`
+    ).join('')}`;
+}
+
+function renderFvSignals() {
+  const opts = data.options || [];
+  const allSignals = opts.flatMap(o => (o.signals || []).map(s => ({ ...s, symbol: o.symbol })));
+  if (!allSignals.length) { $('fvSignals').innerHTML = '<div class="emp">No vol signals</div>'; return; }
+  $('fvBadge').textContent = allSignals.length + ' signals';
+  $('fvSignals').innerHTML = allSignals.slice(0, 5).map(s => `
+    <div class="fv-signal">
+      <div><span class="type">${s.type?.replace(/_/g, ' ')}</span> <span class="action ${s.action}">${s.action?.replace(/_/g, ' ')}</span> <span style="color:#f5a623">Sev ${s.severity.toFixed(0)}</span></div>
+      <div class="desc">${s.description}</div>
+      <div style="font-size:7px;color:#6b7a8d;margin-top:2px">IV: ${(s.currentIv * 100).toFixed(1)}% | Funding: ${(s.fundingRate * 10000).toFixed(2)}bps | IV%ile: ${s.ivPercentile.toFixed(0)}%</div>
+    </div>
+  `).join('');
 }
 
 // Kelly

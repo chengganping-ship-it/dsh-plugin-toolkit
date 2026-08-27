@@ -45,6 +45,7 @@ import { analyzeSentiment, getSentimentHistory, getCachedSentiment, clearSentime
 import { getBestRoute, clearQuoteCache, DexQuote } from './engine/dexRouter.js';
 import { analyzeWhaleActivity, getCachedWhaleSummary, clearWhaleCache, WhaleSummary } from './engine/whale.js';
 import { analyzeBridges, getCachedBridgeSummary, clearBridgeCache, BridgeSummary } from './engine/bridge.js';
+import { analyzeOptions, getOptionsSummary, GreeksSummary } from './engine/options.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -132,6 +133,8 @@ let latestWhaleSummary: WhaleSummary | null = null;
 let lastWhaleFetch = 0;
 let latestBridgeSummary: BridgeSummary | null = null;
 let lastBridgeFetch = 0;
+let latestOptions: GreeksSummary[] = [];
+let lastOptionsFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -373,6 +376,20 @@ async function poll() {
       }
     }
 
+    // v7.1: Options Greeks analysis (every 5 minutes)
+    if (pollCount % 10 === 0 || latestOptions.length === 0) {
+      try {
+        const fundingRates = latestOpportunities.slice(0, 5).map(o => ({
+          symbol: o.symbol,
+          rate: o.netAnnualized / 100 / 1095,
+        }));
+        latestOptions = await analyzeOptions(['BTC', 'ETH'], fundingRates);
+        lastOptionsFetch = Date.now();
+      } catch (e) {
+        // Options analysis failed
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
@@ -456,6 +473,7 @@ function broadcast() {
       dexQuote: latestDexQuote,
       whale: latestWhaleSummary,
       bridge: latestBridgeSummary,
+      options: latestOptions,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -506,6 +524,7 @@ wss.on('connection', (ws) => {
         dexQuote: latestDexQuote,
         whale: latestWhaleSummary,
         bridge: latestBridgeSummary,
+        options: latestOptions,
         stats: {
           totalRates: latestRates.length,
           exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -1057,6 +1076,34 @@ app.post('/api/v7/bridge/refresh', authMiddleware('write'), async (_req, res) =>
     res.json({ success: true, bridge: latestBridgeSummary });
   } catch (e) {
     res.status(500).json({ error: 'Failed to analyze bridges' });
+  }
+});
+
+// ==================== v7.1: Options Greeks API ====================
+
+app.get('/api/v7/options', authMiddleware('read'), (_req, res) => {
+  res.json({ options: latestOptions, updatedAt: lastOptionsFetch });
+});
+
+app.get('/api/v7/options/:symbol', authMiddleware('read'), (req, res) => {
+  const symbol = req.params.symbol.toUpperCase();
+  const opt = latestOptions.find(o => o.symbol === symbol);
+  res.json({ options: opt || null });
+});
+
+app.get('/api/v7/options/:symbol/signals', authMiddleware('read'), (req, res) => {
+  const symbol = req.params.symbol.toUpperCase();
+  const opt = latestOptions.find(o => o.symbol === symbol);
+  res.json({ signals: opt?.signals || [], stats: opt?.stats || null });
+});
+
+app.post('/api/v7/options/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestOptions = await analyzeOptions(['BTC', 'ETH']);
+    lastOptionsFetch = Date.now();
+    res.json({ success: true, options: latestOptions });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze options' });
   }
 });
 
