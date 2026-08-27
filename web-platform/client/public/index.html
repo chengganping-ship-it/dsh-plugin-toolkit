@@ -278,6 +278,28 @@
     .ob-wall .wall-dist{margin-left:auto;color:#6b7a8d}
     .ob-signal{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28}
     .ob-signal .sig-type{flex:1}
+    .alloc-row{display:flex;align-items:center;gap:6px;padding:3px 0;font-size:8px}
+    .alloc-row .alloc-sym{width:40px;font-weight:600;color:#4a9eff}
+    .alloc-row .alloc-bar-container{flex:1;height:12px;background:#141c28;border-radius:3px;position:relative;overflow:hidden}
+    .alloc-row .alloc-bar{height:100%;border-radius:3px}
+    .alloc-row .alloc-bar.current{background:#4a9eff}
+    .alloc-row .alloc-target{position:absolute;top:0;width:2px;height:100%;background:#f5a623}
+    .alloc-row .alloc-weights{width:80px;text-align:right;color:#8899aa}
+    .alloc-row .alloc-action{width:35px;text-align:center;font-size:7px;padding:1px 3px;border-radius:3px}
+    .alloc-row .alloc-action.buy{background:#00d4aa22;color:#00d4aa}
+    .alloc-row .alloc-action.sell{background:#ff444422;color:#ff4444}
+    .alloc-row .alloc-action.hold{background:#6b7a8d22;color:#6b7a8d}
+    .rebal-trade{display:flex;gap:6px;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28;align-items:center}
+    .rebal-trade .trade-action{width:35px;font-weight:600;text-align:center;padding:1px 3px;border-radius:3px;font-size:7px}
+    .rebal-trade.buy .trade-action{background:#00d4aa22;color:#00d4aa}
+    .rebal-trade.sell .trade-action{background:#ff444422;color:#ff4444}
+    .rebal-trade .trade-sym{width:45px;color:#4a9eff}
+    .rebal-trade .trade-amt{width:60px;text-align:right}
+    .rebal-trade .trade-urg{width:40px;text-align:center;font-size:7px}
+    .rebal-trade.high .trade-urg{color:#ff4444}
+    .rebal-trade.medium .trade-urg{color:#f5a623}
+    .rebal-trade.low .trade-urg{color:#6b7a8d}
+    .tax-harvest{display:flex;justify-content:space-between;padding:3px 0;font-size:8px;border-bottom:1px solid #141c28}
     @media(max-width:1100px){.g{grid-template-columns:repeat(3,1fr)}.g5{grid-template-columns:repeat(3,1fr)}}
     @media(max-width:800px){.g{grid-template-columns:repeat(2,1fr)}.g2,.g3,.g5{grid-template-columns:1fr}.c{padding:6px}.hdr{padding:6px 10px}.stats{gap:5px}}
     @media(max-width:500px){.g{grid-template-columns:1fr}.hm{grid-template-columns:repeat(auto-fill,minmax(65px,1fr))}.stats .lb{font-size:9px}}
@@ -532,6 +554,18 @@
     </div>
   </div>
 
+  <!-- v7.7: Portfolio Rebalancing -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v7.7: Portfolio Allocation <span id="allocBadge" class="tag bd bb">-</span></h2>
+      <div id="allocOverview" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Analyzing allocation...</div></div>
+    </div>
+    <div class="card">
+      <h2>v7.7: Rebalance Trades & Tax <span id="rebalBadge" class="tag bd bb">-</span></h2>
+      <div id="rebalTrades" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Calculating trades...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -613,6 +647,7 @@ function render() {
   renderExecOverview(); renderExecQuality();
   renderRiskMetrics(); renderStressTest();
   renderOBImbalance(); renderOBSignals();
+  renderAllocOverview(); renderRebalTrades();
 }
 
 function renderHM() {
@@ -1444,6 +1479,58 @@ function renderOBSignals() {
     </div>
   `).join('');
   $('obSignals').innerHTML = wallsHtml + (wallsHtml && signalsHtml ? '<div style="font-size:7px;color:#6b7a8d;margin:4px 0">Signals:</div>' : '') + signalsHtml;
+}
+
+function renderAllocOverview() {
+  const rebal = data.rebalance;
+  if (!rebal) { $('allocOverview').innerHTML = '<div class="emp">Analyzing allocation...</div>'; return; }
+  const allocs = rebal.currentAllocations || [];
+  const opt = rebal.optimization;
+  $('allocBadge').textContent = opt.method;
+  const allocBars = allocs.map(a => `
+    <div class="alloc-row">
+      <span class="alloc-sym">${a.symbol}</span>
+      <div class="alloc-bar-container">
+        <div class="alloc-bar current" style="width:${a.currentWeight}%"></div>
+        <div class="alloc-target" style="left:${a.targetWeight}%"></div>
+      </div>
+      <span class="alloc-weights">${a.currentWeight.toFixed(0)}% → ${a.targetWeight.toFixed(0)}%</span>
+      <span class="alloc-action ${a.action.toLowerCase()}">${a.action}</span>
+    </div>
+  `).join('');
+  $('allocOverview').innerHTML = allocBars + `
+    <div style="font-size:7px;color:#6b7a8d;margin-top:6px">
+      ${opt.method}: Return ${(opt.expectedReturn * 100).toFixed(0)}% | Risk ${(opt.expectedRisk * 100).toFixed(0)}% | Sharpe ${opt.sharpeRatio.toFixed(2)} | Diversification ${opt.diversificationRatio.toFixed(2)}x
+    </div>
+  `;
+}
+
+function renderRebalTrades() {
+  const rebal = data.rebalance;
+  if (!rebal) { $('rebalTrades').innerHTML = '<div class="emp">Calculating trades...</div>'; return; }
+  const trades = rebal.trades || [];
+  const taxHarvests = rebal.taxLossHarvests || [];
+  $('rebalBadge').textContent = trades.length + ' trades';
+  const tradesHtml = trades.slice(0, 5).map(t => `
+    <div class="rebal-trade ${t.action.toLowerCase()} ${t.urgency.toLowerCase()}">
+      <span class="trade-action">${t.action}</span>
+      <span class="trade-sym">${t.symbol}</span>
+      <span class="trade-amt">$${t.amount.toFixed(0)}</span>
+      <span class="trade-urg">${t.urgency}</span>
+    </div>
+  `).join('');
+  const taxHtml = taxHarvests.length ? `
+    <div style="font-size:7px;color:#6b7a8d;margin-top:4px">Tax-Loss Harvesting:</div>
+    ${taxHarvests.slice(0, 2).map(t => `
+      <div class="tax-harvest">
+        <span>${t.symbol} → ${t.replacement}</span>
+        <span style="color:#00d4aa">+$${t.taxSavings.toFixed(0)}</span>
+      </div>
+    `).join('')}
+  ` : '';
+  $('rebalTrades').innerHTML = tradesHtml + taxHtml + `
+    <div style="font-size:7px;color:#6b7a8d;margin-top:4px">Cost: $${rebal.totalRebalanceCost.toFixed(2)} | Tax: $${rebal.totalTaxImpact.toFixed(0)} | Next: ${rebal.nextRebalanceDate}</div>
+  `;
 }
 
 // Kelly

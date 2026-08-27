@@ -52,6 +52,7 @@ import { analyzeTermStructure, getCachedTermStructures, clearTermStructureCache,
 import { analyzeExecution, getActiveOrders, getExecutionHistory, clearExecutionHistory, ExecutionAnalysis } from './engine/execution.js';
 import { analyzeRisk, getCachedRisk, clearRiskCache, RiskAnalysis } from './engine/risk.js';
 import { analyzeOrderBooks, getCachedOrderBooks, clearOrderBookCache, OrderBookAnalysis } from './engine/orderbook.js';
+import { analyzeRebalance, getCachedRebalance, clearRebalanceCache, RebalanceAnalysis } from './engine/rebalance.js';
 import { generateApiKey, validateApiKey, checkPermission, listApiKeys, revokeApiKey, ApiKey } from './auth/auth.js';
 import { initDb, insertRates, insertOpportunity, getDbStats, getTopOpportunities, getAnomalySummary } from './store/db.js';
 import * as path from 'path';
@@ -153,6 +154,8 @@ let latestRisk: RiskAnalysis | null = null;
 let lastRiskFetch = 0;
 let latestOrderBook: OrderBookAnalysis | null = null;
 let lastOrderBookFetch = 0;
+let latestRebalance: RebalanceAnalysis | null = null;
+let lastRebalanceFetch = 0;
 
 // ==================== POLLING ====================
 
@@ -515,6 +518,16 @@ async function poll() {
       }
     }
 
+    // v7.7: Rebalance analysis (every 30 minutes)
+    if (pollCount % 60 === 0 || !latestRebalance) {
+      try {
+        latestRebalance = await analyzeRebalance(currentEquity || 100000);
+        lastRebalanceFetch = Date.now();
+      } catch (e) {
+        // Rebalance analysis failed
+      }
+    }
+
     const elapsed = Date.now() - t0;
     const tradeActions = latestRouterDecisions.filter(d => d.action !== 'SKIP' && d.action !== 'WAIT').length;
     const strategyHits = latestStrategySignals.length;
@@ -605,6 +618,7 @@ function broadcast() {
       execution: latestExecution,
       risk: latestRisk,
       orderBook: latestOrderBook,
+      rebalance: latestRebalance,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -662,6 +676,7 @@ wss.on('connection', (ws) => {
         execution: latestExecution,
         risk: latestRisk,
         orderBook: latestOrderBook,
+        rebalance: latestRebalance,
         stats: {
           totalRates: latestRates.length,
           exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -1434,6 +1449,37 @@ app.post('/api/v7/orderbook/refresh', authMiddleware('write'), async (_req, res)
     res.json({ success: true, orderBook: latestOrderBook });
   } catch (e) {
     res.status(500).json({ error: 'Failed to analyze order books' });
+  }
+});
+
+// ---- v7.7: Portfolio Rebalancing API ----
+
+app.get('/api/v7/rebalance', authMiddleware('read'), (_req, res) => {
+  if (!latestRebalance) { res.status(503).json({ error: 'No rebalance data yet' }); return; }
+  res.json(latestRebalance);
+});
+
+app.get('/api/v7/rebalance/trades', authMiddleware('read'), (_req, res) => {
+  res.json({ trades: latestRebalance?.trades || [], timestamp: lastRebalanceFetch });
+});
+
+app.get('/api/v7/rebalance/tax-harvest', authMiddleware('read'), (_req, res) => {
+  res.json({ opportunities: latestRebalance?.taxLossHarvests || [], timestamp: lastRebalanceFetch });
+});
+
+app.get('/api/v7/rebalance/optimization', authMiddleware('read'), (_req, res) => {
+  const opt = latestRebalance?.optimization;
+  if (!opt) { res.status(404).json({ error: 'No optimization data' }); return; }
+  res.json({ optimization: { ...opt, weights: Object.fromEntries(opt.weights) } });
+});
+
+app.post('/api/v7/rebalance/refresh', authMiddleware('write'), async (_req, res) => {
+  try {
+    latestRebalance = await analyzeRebalance(currentEquity || 100000);
+    lastRebalanceFetch = Date.now();
+    res.json({ success: true, rebalance: latestRebalance });
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to analyze rebalancing' });
   }
 });
 
