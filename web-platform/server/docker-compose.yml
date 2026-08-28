@@ -1,0 +1,53 @@
+version: "3.8"
+
+services:
+  funding-mirror:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: funding-mirror
+    restart: unless-stopped
+    ports:
+      - "8771:8771"
+    environment:
+      - NODE_ENV=production
+      - PORT=8771
+      # API Keys (uncomment and set as needed)
+      # - OPENAI_API_KEY=${OPENAI_API_KEY}
+      # - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      # - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+    volumes:
+      - funding-mirror-data:/app/data
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8771/api/stats"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "0.5"
+
+  # Optional: Nginx reverse proxy with SSL
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: funding-mirror-nginx
+  #   restart: unless-stopped
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/conf.d/default.conf
+  #     - ./ssl:/etc/nginx/ssl
+  #   depends_on:
+  #     - funding-mirror
+
+volumes:
+  funding-mirror-data:
+    driver: local
