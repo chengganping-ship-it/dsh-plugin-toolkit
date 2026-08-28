@@ -62,7 +62,8 @@ import { analyzeAirdropFarm, getCachedAirdropFarm, clearAirdropCache, AirdropFar
 import { analyzePerpDex, getCachedPerpDex, clearPerpCache, PerpDexSummary } from './engine/perpetualDex.js';
 import { analyzeSecurity, getCachedSecurity, clearSecurityCache, SecurityScanSummary } from './engine/securityScanner.js';
 import { analyzeSmartMoney, getCachedSmartMoney, clearSmartMoneyCache, SmartMoneySummary } from './engine/smartMoney.js';
-import { analyzeMEVProtection, getCachedMEV, clearMEVCache, MEVAnalysis } from './engine/mevProtection.js';
+// v9.0 MEV engine (legacy, kept for backward compat): aliased to avoid conflict with v16.0
+import { analyzeMEVProtection as analyzeMEVProtectionV9, MEVAnalysis } from './engine/mevProtection.js';
 import { analyzeBridgeMonitor, getCachedBridge, clearBridgeMonitorCache, BridgeMonitorData } from './engine/bridgeMonitor.js';
 import { analyzeYieldAggregator, getCachedYield, clearYieldAggCache, YieldAggregatorData } from './engine/yieldAggregator.js';
 import { analyzeNFTPredictions, getCachedNFT, clearNFTPredictorCache, NFTPredictionData } from './engine/nftPricePredictor.js';
@@ -78,7 +79,7 @@ import { analyzeReputation, getCachedReputation, clearReputationCache, OnChainRe
 import { analyzeCrossChainDex, getCachedCrossChainDex, clearCrossChainDexCache, CrossChainDexData } from './engine/crossChainDex.js';
 import { analyzeDerivativesLiquidity, getCachedDerivativesLiquidity, clearDerivativesLiquidityCache, DerivativesLiquidityData } from './engine/derivativesLiquidity.js';
 import { analyzeContractUpgrades, getCachedContractUpgrades, clearContractUpgradeCache, ContractUpgradeData } from './engine/contractUpgrade.js';
-import { analyzeStablecoinDepeg, StablecoinDepegData } from './engine/stablecoinDepeg.js';
+// REMOVED: import { analyzeStablecoinDepeg, StablecoinDepegData } from './engine/stablecoinDepeg.js'; // CONFLICTS WITH v16.0
 import { analyzeDeFiPoints, DeFiPointsData } from './engine/deFiPoints.js';
 import { analyzeIntentTrading, IntentTradingData } from './engine/intentTrading.js';
 import { analyzeInsurance, InsuranceData } from './engine/insurance.js';
@@ -107,8 +108,19 @@ import { analyzeBTCL2Tracker, BTCL2TrackerData } from './engine/btcLayer2Tracker
 import { analyzePerpetualDexAgg, PerpetualDexData } from './engine/perpetualDexAggregator.js';
 import { analyzeL2Revenue, L2RevenueTrackerData } from './engine/l2RevenueTracker.js';
 import { analyzeAggregators, AggregatorData } from './engine/defiAggregatorsTracker.js';
-import { createApiKey as createSubApiKey, validateApiKey as validateSubApiKey, checkRateLimit, revokeApiKey as revokeSubApiKey, getApiKeyUsage, getTierConfig, isEngineAllowed, getAllowedEngines, getSubscriptionSummary, cleanupExpiredKeys, SubscriptionTier, ApiKey as SubApiKey } from './subscription.js';
 import { analyzeTokenUnlocks, TokenUnlockData } from './engine/tokenUnlock.js';
+// ==================== v16.0 IMPORTS ====================
+import { analyzeMEVProtection, MEVData } from './engine/mevProtectionTracker.js';
+import { analyzeStablecoinDepeg as analyzeStablecoinDepegV16, StablecoinDepegData as StablecoinDepegV16Data } from './engine/stablecoinDepegAlert.js';
+import { analyzeBridgeRisk, BridgeRiskData } from './engine/bridgeRiskMonitor.js';
+
+// ==================== v16.0 HELPER FUNCTIONS ====================
+function riskLevelScore(level: string): number {
+  const scores: Record<string, number> = { low: 0, medium: 1, high: 2, critical: 3 };
+  return scores[level] || 0;
+}
+
+import { createApiKey as createSubApiKey, validateApiKey as validateSubApiKey, checkRateLimit, revokeApiKey as revokeSubApiKey, getApiKeyUsage, getTierConfig, isEngineAllowed, getAllowedEngines, getSubscriptionSummary, cleanupExpiredKeys, SubscriptionTier, ApiKey as SubApiKey } from './subscription.js';
 import { analyzeRPCPerformance, RPCPerformanceData } from './engine/rpcMonitor.js';
 import { analyzeStablecoinResidualArb, StablecoinResidualArbData } from './engine/stablecoinResidualArb.js';
 import { analyzeFundingHeatmap, FundingHeatmapData } from './engine/fundingHeatmap.js';
@@ -335,8 +347,7 @@ let latestContractUpgrades: ContractUpgradeData | null = null;
 let lastContractUpgradeFetch = 0;
 
 // ==================== v10.0-v10.5 ENGINE STATE ====================
-let latestStablecoinDepeg: StablecoinDepegData | null = null;
-let lastStablecoinDepegFetch = 0;
+// NOTE: v10.0 stablecoinDepeg replaced by v16.0 stablecoinDepegV16
 let latestDeFiPoints: DeFiPointsData | null = null;
 let lastDeFiPointsFetch = 0;
 let latestIntentTrading: IntentTradingData | null = null;
@@ -401,6 +412,14 @@ let latestL2Revenue: L2RevenueTrackerData | null = null;
 let lastL2RevenueFetch = 0;
 let latestAggregators: AggregatorData | null = null;
 let lastAggregatorsFetch = 0;
+
+// ==================== v16.0 ENGINE STATE ====================
+let latestMEVProtection: MEVData | null = null;
+let lastMEVProtectionFetch = 0;
+let latestStablecoinDepegV16: StablecoinDepegV16Data | null = null;
+let lastStablecoinDepegV16Fetch = 0;
+let latestBridgeRisk: BridgeRiskData | null = null;
+let lastBridgeRiskFetch = 0;
 
 // ==================== v12.0 ENGINE STATE ====================
 let latestTokenUnlocks: TokenUnlockData | null = null;
@@ -870,7 +889,7 @@ async function poll() {
     // v9.4: MEV protection analysis (every 5 minutes)
     if (pollCount % 10 === 0 || !latestMEV) {
       try {
-        latestMEV = await analyzeMEVProtection();
+        latestMEV = await analyzeMEVProtectionV9();
         lastMEVFetch = Date.now();
       } catch (e) {
         // MEV analysis failed
@@ -1024,16 +1043,6 @@ async function poll() {
         lastContractUpgradeFetch = Date.now();
       } catch (e) {
         // Contract upgrades failed
-      }
-    }
-
-    // v10.0: Stablecoin depeg monitoring (every 5 minutes)
-    if (pollCount % 10 === 0 || !latestStablecoinDepeg) {
-      try {
-        latestStablecoinDepeg = await analyzeStablecoinDepeg();
-        lastStablecoinDepegFetch = Date.now();
-      } catch (e) {
-        // Stablecoin depeg analysis failed
       }
     }
 
@@ -1289,6 +1298,32 @@ if (pollCount % 60 === 0 || !latestAggregators) {
   } catch (e) { /* Aggregators analysis failed */ }
 }
 
+// ==================== v16.0 POLLING ====================
+
+// v16.0: MEV protection tracker (every 20 minutes)
+if (pollCount % 40 === 0 || !latestMEVProtection) {
+  try {
+    latestMEVProtection = await analyzeMEVProtection();
+    lastMEVProtectionFetch = Date.now();
+  } catch (e) { /* MEV protection analysis failed */ }
+}
+
+// v16.1: Stablecoin depeg alert (every 15 minutes)
+if (pollCount % 30 === 0 || !latestStablecoinDepegV16) {
+  try {
+    latestStablecoinDepegV16 = await analyzeStablecoinDepegV16();
+    lastStablecoinDepegV16Fetch = Date.now();
+  } catch (e) { /* Stablecoin depeg analysis failed */ }
+}
+
+// v16.2: Bridge risk monitor (every 30 minutes)
+if (pollCount % 60 === 0 || !latestBridgeRisk) {
+  try {
+    latestBridgeRisk = await analyzeBridgeRisk();
+    lastBridgeRiskFetch = Date.now();
+  } catch (e) { /* Bridge risk analysis failed */ }
+}
+
 // ==================== v12.0 POLLING ====================
 
     // v12.0: Token unlock schedule (every 30 minutes)
@@ -1450,7 +1485,6 @@ function broadcast() {
       perpDex: latestPerpDex,
       security: latestSecurity,
       smartMoney: latestSmartMoney,
-      mevProtection: latestMEV,
       bridgeMonitor: latestBridge,
       yieldAggregator: latestYieldAgg,
       nftPrediction: latestNFTPrediction,
@@ -1466,7 +1500,6 @@ function broadcast() {
       crossChainDex: latestCrossChainDex,
       derivativesLiq: latestDerivativesLiq,
       contractUpgrades: latestContractUpgrades,
-      stablecoinDepeg: latestStablecoinDepeg,
       deFiPoints: latestDeFiPoints,
       intentTrading: latestIntentTrading,
       insurance: latestInsurance,
@@ -1501,6 +1534,9 @@ btcLayer2: latestBTCL2,
 perpDexAgg: latestPerpDexAgg,
 l2Revenue: latestL2Revenue,
 aggregators: latestAggregators,
+mevProtection: latestMEVProtection,
+stablecoinDepeg: latestStablecoinDepegV16,
+bridgeRisk: latestBridgeRisk,
       stats: {
         totalRates: latestRates.length,
         exchanges: [...new Set(latestRates.map(r => r.exchange))],
@@ -2654,7 +2690,7 @@ app.get('/api/v9/mev/attackers', authMiddleware('read'), (_req, res) => {
 
 app.post('/api/v9/mev/refresh', authMiddleware('write'), async (_req, res) => {
   try {
-    latestMEV = await analyzeMEVProtection();
+    latestMEV = await analyzeMEVProtectionV9();
     lastMEVFetch = Date.now();
     res.json({ success: true, mev: latestMEV });
   } catch (e) {
@@ -3110,33 +3146,7 @@ app.post('/api/v9/contracts/refresh', authMiddleware('write'), async (_req, res)
   }
 });
 
-// ---- v10.0: Stablecoin Depeg API ----
-
-app.get('/api/v10/stablecoin/prices', authMiddleware('read'), (_req, res) => {
-  res.json({ prices: latestStablecoinDepeg?.prices || [], timestamp: lastStablecoinDepegFetch });
-});
-
-app.get('/api/v10/stablecoin/depegs', authMiddleware('read'), (_req, res) => {
-  res.json({ events: latestStablecoinDepeg?.depegEvents || [], timestamp: lastStablecoinDepegFetch });
-});
-
-app.get('/api/v10/stablecoin/arbitrage', authMiddleware('read'), (_req, res) => {
-  res.json({ arbitrage: latestStablecoinDepeg?.arbitrage || [], timestamp: lastStablecoinDepegFetch });
-});
-
-app.get('/api/v10/stablecoin/history', authMiddleware('read'), (_req, res) => {
-  res.json({ history: latestStablecoinDepeg?.historicalEvents || [], timestamp: lastStablecoinDepegFetch });
-});
-
-app.post('/api/v10/stablecoin/refresh', authMiddleware('write'), async (_req, res) => {
-  try {
-    latestStablecoinDepeg = await analyzeStablecoinDepeg();
-    lastStablecoinDepegFetch = Date.now();
-    res.json({ success: true, stablecoin: latestStablecoinDepeg });
-  } catch (e) {
-    res.status(500).json({ error: 'Failed to analyze stablecoin depeg' });
-  }
-});
+// ---- v10.0: Stablecoin Depeg API (REMOVED - replaced by v16.0) ----
 
 // ---- v10.1: DeFi Points API ----
 
@@ -3547,6 +3557,60 @@ app.get('/api/v15/aggregators/top-by-volume', authMiddleware('read'), (_req, res
 });
 app.post('/api/v15/aggregators/refresh', authMiddleware('write'), async (_req, res) => {
   try { latestAggregators = await analyzeAggregators(); lastAggregatorsFetch = Date.now(); res.json({ success: true, data: latestAggregators }); } catch (e) { res.status(500).json({ error: 'Failed' }); }
+});
+
+// ==================== v16.0 API ====================
+
+// ---- v16.0: MEV Protection Tracker API ----
+app.get('/api/v16/mev-protection', authMiddleware('read'), (_req, res) => {
+  res.json({ data: latestMEVProtection, timestamp: lastMEVProtectionFetch });
+});
+app.get('/api/v16/mev-protection/chains', authMiddleware('read'), (_req, res) => {
+  res.json({ chains: latestMEVProtection?.chains || [], timestamp: lastMEVProtectionFetch });
+});
+app.get('/api/v16/mev-protection/searchers', authMiddleware('read'), (_req, res) => {
+  res.json({ searchers: latestMEVProtection?.topSearchers || [], timestamp: lastMEVProtectionFetch });
+});
+app.get('/api/v16/mev-protection/attacks', authMiddleware('read'), (_req, res) => {
+  res.json({ attacks: latestMEVProtection?.attackPatterns || [], timestamp: lastMEVProtectionFetch });
+});
+app.post('/api/v16/mev-protection/refresh', authMiddleware('write'), async (_req, res) => {
+  try { latestMEVProtection = await analyzeMEVProtection(); lastMEVProtectionFetch = Date.now(); res.json({ success: true, data: latestMEVProtection }); } catch (e) { res.status(500).json({ error: 'Failed to analyze MEV protection' }); }
+});
+
+// ---- v16.1: Stablecoin Depeg Alert API ----
+app.get('/api/v16/stablecoin-depeg', authMiddleware('read'), (_req, res) => {
+  res.json({ data: latestStablecoinDepegV16, timestamp: lastStablecoinDepegV16Fetch });
+});
+app.get('/api/v16/stablecoin-depeg/list', authMiddleware('read'), (_req, res) => {
+  res.json({ stablecoins: latestStablecoinDepegV16?.stablecoins || [], timestamp: lastStablecoinDepegV16Fetch });
+});
+app.get('/api/v16/stablecoin-depeg/alerts', authMiddleware('read'), (_req, res) => {
+  res.json({ alerts: latestStablecoinDepegV16?.alerts || [], timestamp: lastStablecoinDepegV16Fetch });
+});
+app.get('/api/v16/stablecoin-depeg/riskiest', authMiddleware('read'), (_req, res) => {
+  const sorted = [...(latestStablecoinDepegV16?.stablecoins || [])].sort((a, b) => riskLevelScore(b.riskLevel) - riskLevelScore(a.riskLevel)).slice(0, 3);
+  res.json({ riskiest: sorted, timestamp: lastStablecoinDepegV16Fetch });
+});
+app.post('/api/v16/stablecoin-depeg/refresh', authMiddleware('write'), async (_req, res) => {
+  try { latestStablecoinDepegV16 = await analyzeStablecoinDepegV16(); lastStablecoinDepegV16Fetch = Date.now(); res.json({ success: true, data: latestStablecoinDepegV16 }); } catch (e) { res.status(500).json({ error: 'Failed to analyze stablecoin depeg' }); }
+});
+
+// ---- v16.2: Bridge Risk Monitor API ----
+app.get('/api/v16/bridge-risk', authMiddleware('read'), (_req, res) => {
+  res.json({ data: latestBridgeRisk, timestamp: lastBridgeRiskFetch });
+});
+app.get('/api/v16/bridge-risk/list', authMiddleware('read'), (_req, res) => {
+  res.json({ bridges: latestBridgeRisk?.bridges || [], timestamp: lastBridgeRiskFetch });
+});
+app.get('/api/v16/bridge-risk/alerts', authMiddleware('read'), (_req, res) => {
+  res.json({ alerts: latestBridgeRisk?.riskAlerts || [], timestamp: lastBridgeRiskFetch });
+});
+app.get('/api/v16/bridge-risk/incidents', authMiddleware('read'), (_req, res) => {
+  res.json({ incidents: latestBridgeRisk?.recentIncidents || [], timestamp: lastBridgeRiskFetch });
+});
+app.post('/api/v16/bridge-risk/refresh', authMiddleware('write'), async (_req, res) => {
+  try { latestBridgeRisk = await analyzeBridgeRisk(); lastBridgeRiskFetch = Date.now(); res.json({ success: true, data: latestBridgeRisk }); } catch (e) { res.status(500).json({ error: 'Failed to analyze bridge risk' }); }
 });
 
 // ==================== v14.0 API ====================

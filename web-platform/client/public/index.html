@@ -1657,6 +1657,42 @@
     </div>
   </div>
 
+  <!-- v16.0: MEV Protection Tracker -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v16.0: MEV Chain Protection <span id="mev16Badge" class="tag bd bb">-</span></h2>
+      <div id="mev16Chains" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+    <div class="card">
+      <h2>v16.0: Top MEV Searchers <span id="mev16SearchBadge" class="tag bd bg">-</span></h2>
+      <div id="mev16Searchers" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- v16.0: Stablecoin Depeg Alert -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v16.0: Stablecoin Health <span id="sc16Badge" class="tag bd bb">-</span></h2>
+      <div id="sc16List" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+    <div class="card">
+      <h2>v16.0: Depeg Alerts <span id="sc16AlertBadge" class="tag bd bg">-</span></h2>
+      <div id="sc16Alerts" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+  </div>
+
+  <!-- v16.0: Bridge Risk Monitor -->
+  <div class="g g2">
+    <div class="card">
+      <h2>v16.0: Bridge Health <span id="br16Badge" class="tag bd bb">-</span></h2>
+      <div id="br16List" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+    <div class="card">
+      <h2>v16.0: Bridge Risk Alerts <span id="br16RiskBadge" class="tag bd bg">-</span></h2>
+      <div id="br16RiskAlerts" style="max-height:250px;overflow-y:auto;font-size:9px"><div class="emp">Loading...</div></div>
+    </div>
+  </div>
+
   <!-- v7.0: DEX Router -->
   <div class="g g2">
     <div class="card">
@@ -1800,6 +1836,9 @@ renderBTCL2Networks(); renderBtcBridges();
 renderPerpDexCompare(); renderPerpVolume();
 renderL2RevenuePan(); renderL2Profitability();
 renderAggCompare(); renderAggChains();
+renderMEV16Chains(); renderMEV16Searchers();
+renderSC16List(); renderSC16Alerts();
+renderBR16List(); renderBR16RiskAlerts();
 }
 
 function renderHM() {
@@ -2839,6 +2878,14 @@ function renderL2RevenuePan(){var l=data.l2Revenue;if(!l){$('l2RevenuePan').inne
 function renderL2Profitability(){var l=data.l2Revenue;if(!l){$('l2Profitability').innerHTML='<div class="emp">Loading...</div>';return}var n=(l.l2s||[]).filter(x=>(x.grossProfitDaily)>0).slice(0,5);var h='<table class="mini-table"><thead><tr><th>L2</th><th>Net/Day</th><th>Margin</th></tr></thead><tbody>';for(var x of n){var net=x.grossProfitDaily;var margin=x.revenueDaily>0?(x.grossProfitDaily/x.revenueDaily*100):0;h+='<tr><td>'+x.name.slice(0,8)+'</td><td class="'+(x.grossProfitDaily>0?'pos':'neg')+'">$'+net.toFixed(0)+'</td><td>'+margin.toFixed(0)+'%</td></tr>'}</tbody></table>'}$('l2Profitability').innerHTML=h||'<div class="emp">No profit data</div>'}
 function renderAggCompare(){var a=data.aggregators;if(!a){$('aggCompare').innerHTML='<div class="emp">Loading...</div>';return}var d=(a.aggregators||[]).slice(0,8);$('aggBadge').textContent=d.length+' aggregators';var h='';for(var x of d){h+='<div class="agg-item"><span class="agg-name">'+x.name.slice(0,10)+'</span><span class="agg-vol">'+x.avgSlippageBps+'bps</span><span class="agg-fee">$'+x.gasEstimateEth.toFixed(4)+'</span></div><div class="agg-chains">'+(x.chains||[]).slice(0,3).map(c=>'<small>'+c.slice(0,4)+'</small>').join('')+'</div>'}$('aggCompare').innerHTML=h||'<div class="emp">No aggregator data</div>'}
 function renderAggChains(){var a=data.aggregators;if(!a){$('aggChains').innerHTML='<div class="emp">Loading...</div>';return}var c=(a.chainComparison||[]).slice(0,6);var h='';for(var x of c){h+='<div class="chain-item"><span class="chain-name">'+x.chain.slice(0,10)+'</span><span class="chain-aggs">'+x.aggCount+' aggs</span><span class="chain-best">A: '+x.bestForAvg.slice(0,8)+' | C: '+x.bestForComplex.slice(0,8)+'</span></div>'}$('aggChains').innerHTML=h||'<div class="emp">No chain comparison</div>'}
+
+// ==================== v16.0 Renders ====================
+function renderMEV16Chains(){var m=data.mevProtection;if(!m){$('mev16Chains').innerHTML='<div class="emp">Loading...</div>';return}var ch=(m.chains||[]).slice(0,6);$('mev16Badge').textContent=ch.length+' chains';var h='';for(var x of ch){h+='<div class="mev-chain"><span class="mc-name">'+x.name.slice(0,10)+'</span><span class="mc-rate '+(x.protectionRate>=80?'pos':x.protectionRate>=50?'med':'neg')+'">'+x.protectionRate+'%</span><span class="mc-tvl">$'+(x.tvl/1e6).toFixed(0)+'M</span></div>'}$('mev16Chains').innerHTML=h||'<div class="emp">No MEV chain data</div>'}
+function renderMEV16Searchers(){var m=data.mevProtection;if(!m){$('mev16Searchers').innerHTML='<div class="emp">Loading...</div>';return}var s=(m.topSearchers||[]).slice(0,5);$('mev16SearchBadge').textContent=s.length+' searchers';var h='';for(var x of s){h+='<div class="mev-searcher"><span class="ms-name">'+x.name.slice(0,12)+'</span><span class="ms-rev">$'+(x.revenue/1e6).toFixed(2)+'M</span><span class="ms-vol">'+x.volume24h.toFixed(0)+' tx</span></div>'}$('mev16Searchers').innerHTML=h||'<div class="emp">No searcher data</div>'}
+function renderSC16List(){var s=data.stablecoinDepeg;if(!s){$('sc16List').innerHTML='<div class="emp">Loading...</div>';return}var sc=(s.stablecoins||[]).slice(0,8);$('sc16Badge').textContent=sc.length+' stablecoins';var h='';for(var x of sc){h+='<div class="sc-item '+(x.deviation>0.5?'high':x.deviation>0.2?'med':'low')+'"><span class="sc-symbol">'+x.symbol.slice(0,6)+'</span><span class="sc-price">'$'+x.price.toFixed(4)+'</span><span class="sc-dev '+(x.deviation>0.3?'neg':'pos')+'">'+(x.deviation>0?'+':'')+x.deviation.toFixed(3)+'%</span><span class="sc-risk '+x.riskLevel+'">'+x.riskLevel.slice(0,4)+'</span></div>'}$('sc16List').innerHTML=h||'<div class="emp">No stablecoin data</div>'}
+function renderSC16Alerts(){var s=data.stablecoinDepeg;if(!s){$('sc16Alerts').innerHTML='<div class="emp">Loading...</div>';return}var a=(s.alerts||[]).slice(0,5);$('sc16AlertBadge').textContent=a.length+' alerts';var h='';for(var x of a){h+='<div class="sc-alert '+x.severity.toLowerCase()+'"><span class="sa-symbol">'+x.symbol.slice(0,6)+'</span><span class="sa-dev '+(x.deviation>0?'pos':'neg')+'">'+(x.deviation>0?'+':'')+x.deviation.toFixed(3)+'%</span><span class="sa-sev '+x.severity.toLowerCase()+'">'+x.severity.slice(0,4)+'</span></div>'}$('sc16Alerts').innerHTML=h||'<div class="emp">No depeg alerts</div>'}
+function renderBR16List(){var b=data.bridgeRisk;if(!b){$('br16List').innerHTML='<div class="emp">Loading...</div>';return}var br=(b.bridges||[]).slice(0,8);$('br16Badge').textContent=br.length+' bridges';var h='';for(var x of br){h+='<div class="bridge-risk-item '+(x.riskLevel==='critical'?'high':x.riskLevel==='high'?'med':'low')+'"><span class="br-name">'+x.name.slice(0,12)+'</span><span class="br-tvl">$'+(x.tvl/1e6).toFixed(0)+'M</span><span class="br-risk '+x.riskLevel+'">'+x.riskLevel.slice(0,4)+'</span></div>'}$('br16List').innerHTML=h||'<div class="emp">No bridge data</div>'}
+function renderBR16RiskAlerts(){var b=data.bridgeRisk;if(!b){$('br16RiskAlerts').innerHTML='<div class="emp">Loading...</div>';return}var a=(b.riskAlerts||[]).slice(0,5);$('br16RiskBadge').textContent=a.length+' alerts';var h='';for(var x of a){h+='<div class="br-alert '+x.severity.toLowerCase()+'"><span class="br-alert-name">'+x.bridge.slice(0,10)+'</span><span class="br-alert-sev '+x.severity.toLowerCase()+'">'+x.severity.slice(0,4)+'</span><span class="br-alert-tvl '+(x.tvlChange>0?'pos':'neg')+'">'+(x.tvlChange>0?'+':'')+(x.tvlChange*100).toFixed(1)+'%</span></div>'}$('br16RiskAlerts').innerHTML=h||'<div class="emp">No risk alerts</div>'}
 
 // Kelly
 $('kB')?.addEventListener('click', async () => {
